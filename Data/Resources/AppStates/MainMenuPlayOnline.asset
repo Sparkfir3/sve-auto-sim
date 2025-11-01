@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9a2cecf8ebd5a4da6004f6a4b01309, type: 3}
+  m_Name: MainMenuPlayOnline
+  m_EditorClassIdentifier: 
+  <SubstateOf>k__BackingField:
+  - {fileID: 11400000, guid: ba4299bb9202c734ab713e67cb358414, type: 2}
+  <BlockedBy>k__BackingField: []
+  <DoNotOverrideAny>k__BackingField: 0
+  <CantOverrideByDefault>k__BackingField: 0
+  <DoNotOverride>k__BackingField:
+  - {fileID: 11400000, guid: ba4299bb9202c734ab713e67cb358414, type: 2}
+  <AlwaysOverride>k__BackingField: []
+  <ControlTimeScale>k__BackingField: 0
+  <UpdateTimeScaleOnEnable>k__BackingField: 1
+  <TimeScaleOnEnable>k__BackingField: 0
+  <UpdateTimeScaleOnDisable>k__BackingField: 0
+  <TimeScaleOnDisable>k__BackingField: 1
+  <LockCursor>k__BackingField: 0

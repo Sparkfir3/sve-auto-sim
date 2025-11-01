@@ -1,0 +1,491 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using CCGKit;
+using Mirror;
+using UnityEngine;
+using SVESimulator.UI;
+using Random = UnityEngine.Random;
+
+namespace SVESimulator
+{
+    /// <summary>
+    /// Class representing each player
+    /// Handles receiving of messages
+    /// </summary>
+    public class PlayerController : Player
+    {
+        #region Variables
+
+        [Header("Runtime Data"), SyncVar]
+        public int CurrentTurnNumber;
+        [SyncVar]
+        public bool EvolvedThisTurn;
+        [SyncVar]
+        public List<PlayedCardData> CardsPlayedThisTurn = new();
+        [SyncVar]
+        public List<PlayedAbilityData> AbilitiesUsedThisTurn = new();
+
+        public int Combo => CardsPlayedThisTurn.Count;
+        public int Spellchain => localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+        public bool Overflow => localMaxPlayPointStat != null && localMaxPlayPointStat.effectiveValue >= 7;
+        public int Necrocharge => localPlayerZoneController.cemeteryZone.AllCards.Count;
+
+        [Header("Runtime References"), SerializeField, ReadOnly]
+        private PlayerCardZoneController localPlayerZoneController;
+        [SerializeField, ReadOnly]
+        private PlayerCardZoneController opponentPlayerZoneController;
+
+        [field: Header("Object References"), SerializeField]
+        public PlayerEventControllerLocal LocalEvents { get; private set; }
+        [field: SerializeField]
+        public PlayerEventControllerOpponent OpponentEvents { get; private set; }
+        [SerializeField]
+        private PlayerInputController inputController;
+
+        public PlayerCardZoneController ZoneController => localPlayerZoneController;
+        public PlayerCardZoneController OppZoneController => opponentPlayerZoneController;
+        public PlayerInputController InputController => inputController;
+        protected SVEEffectSolver sveEffectSolver => effectSolver as SVEEffectSolver;
+
+        public SVEProperties.GamePhase CurrentPhase => gameState.currentPhase;
+
+        protected Stat localPlayPointStat;
+        protected Stat localMaxPlayPointStat;
+        protected Stat opponentPlayPointStat;
+
+        public Action onEndGameEvent;
+
+        #endregion
+
+        // ------------------------------
+
+        #region Unity Functions
+
+        protected override void Awake()
+        {
+            base.Awake();
+            isHuman = true;
+            localPlayerZoneController = FieldManager.PlayerZones;
+            opponentPlayerZoneController = FieldManager.OpponentZones;
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            if(!isLocalPlayer)
+                return;
+
+            InitializeUI();
+        }
+
+        private void Update()
+        {
+            if(!isLocalPlayer)
+            {
+                return;
+            }
+
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log($"Cards in deck = {localPlayerZoneController.deckZone.Runtime.cards.Count}" +
+                    $" / cards in field = {localPlayerZoneController.fieldZone.Runtime.cards.Count}" +
+                    $" / cards in hand = {localPlayerZoneController.handZone.Runtime.cards.Count}" +
+                    $" / cards in evolve deck = {localPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
+            }
+            if(Input.GetKeyDown(KeyCode.RightAlt))
+            {
+                Debug.Log($"Cards in deck = {opponentPlayerZoneController.deckZone.Runtime.cards.Count}" +
+                    $" / cards in field = {opponentPlayerZoneController.fieldZone.Runtime.cards.Count}" +
+                    $" / cards in hand = {opponentPlayerZoneController.handZone.Runtime.cards.Count}" +
+                    $" / cards in evolve deck = {opponentPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
+            }
+            if(Input.GetKeyDown(KeyCode.L))
+            {
+                Debug.Log($"Local leader def = {playerInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}" +
+                    $" // Opponent leader def = {opponentInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}");
+            }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Initialization
+
+        private void InitializeUI()
+        {
+            GameUIManager.GameControlsUI.OnPressEndTurn += EnterEndPhase;
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region General Game Functions
+
+        public override void StopTurn()
+        {
+            if(!isActivePlayer)
+                return;
+            base.StopTurn();
+        }
+
+        public IEnumerator StopTurnOnDelay(float delay = 0.5f)
+        {
+            if(!isActivePlayer)
+                yield break;
+            yield return new WaitForSecondsRealtime(delay);
+            if(isActivePlayer)
+                StopTurn(); // this is needed because Invoke() doesn't work because of the override wtf
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Networking Events - Game Flow
+
+        public override void OnStartLocalPlayer()
+        {
+            base.OnStartLocalPlayer();
+
+            localPlayerZoneController.InitializeZones(playerInfo);
+            localPlayerZoneController.Player = this;
+            FieldManager.PlayerLeaderHealth.Initialize(playerInfo.namedStats[SVEProperties.PlayerStats.Defense]);
+
+            opponentPlayerZoneController.InitializeZones(opponentInfo);
+            FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
+
+            if(isLocalPlayer && !inputController)
+                inputController = FindObjectOfType<PlayerInputController>();
+            if(inputController)
+                inputController.allowedInputs = PlayerInputController.InputTypes.None;
+        }
+
+        public override void OnStartGame(StartGameMessage msg)
+        {
+            // base.OnStartGame(), modified to use SVEEffectSolver
+            gameStarted = true;
+            playerIndex = msg.playerIndex;
+            turnDuration = msg.turnDuration;
+
+            effectSolver = new SVEEffectSolver(gameState, msg.rngSeed);
+            effectSolver.SetTriggers(playerInfo);
+            effectSolver.SetTriggers(opponentInfo);
+            sveEffectSolver.isPlayerEffectSolver = true;
+
+            LoadPlayerStates(msg.player, msg.opponent);
+
+            // Custom logic
+            SVEEffectPool.Instance.LocalInitialize();
+            SVEQuickTimingController.Instance.LocalInitialize();
+
+            CardsPlayedThisTurn.Clear();
+            AbilitiesUsedThisTurn.Clear();
+            CurrentTurnNumber = 0;
+            EvolvedThisTurn = false;
+            localPlayPointStat = playerInfo.namedStats[SVEProperties.PlayerStats.PlayPoints];
+            localMaxPlayPointStat = playerInfo.namedStats[SVEProperties.PlayerStats.MaxPlayPoints];
+            opponentPlayPointStat = opponentInfo.namedStats[SVEProperties.PlayerStats.PlayPoints];
+
+            LocalEvents.Initialize(playerInfo, opponentInfo, localPlayPointStat, sveEffectSolver, netIdentity);
+            OpponentEvents.Initialize(playerInfo, opponentInfo, opponentPlayPointStat, sveEffectSolver, opponentInfo.netId);
+
+            LocalEvents.InitializeDeckAndLeader();
+            InitializePlayPointMeters();
+            GameUIManager.GameControlsUI.SetTurn(false);
+            GameUIManager.GameControlsUI.SetTurnDisplayActive(true);
+        }
+
+        public override void OnStartTurn(StartTurnMessage msg)
+        {
+            base.OnStartTurn(msg);
+
+            gameState.currentPlayer.numTurn++;
+            if(HandleGameSetupTurn(msg, out bool endTurn))
+            {
+                if(endTurn && msg.isRecipientTheActivePlayer)
+                    StopTurn();
+                return;
+            }
+
+            // -----
+
+            // Set up turn
+            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer);
+            inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
+            sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
+            CardsPlayedThisTurn.Clear();
+            AbilitiesUsedThisTurn.Clear();
+            EvolvedThisTurn = false;
+            SVEEffectPool.Instance.UpdatePassiveDurationsStartOfTurn(this, msg.isRecipientTheActivePlayer);
+
+            // Failsafe Calls
+            GameUIManager.EffectTargeting.CloseOpponentIsTargeting();
+            LocalEvents.OnFinishSpell = null;
+
+            // Start turn
+            if(msg.isRecipientTheActivePlayer)
+            {
+                Debug.Log("Turn starting");
+
+                CurrentTurnNumber++;
+                LocalEvents.IncrementMaxPlayPoints(updateCurrentPoints: true);
+                foreach(CardObject card in localPlayerZoneController.fieldZone.AllCards)
+                    card.OnStartTurn();
+                ReserveAllCardsOnField();
+                localPlayerZoneController.fieldZone.HighlightCardsCanAttack();
+                localPlayerZoneController.fieldZone.SetAllCardsInteractable(true);
+                localPlayerZoneController.handZone.SetAllCardsInteractable(true);
+                if(CurrentTurnNumber > 1 || !playerInfo.isGoingFirst)
+                    LocalEvents.DrawCard();
+            }
+            else
+            {
+                Debug.Log("Opponent turn starting");
+
+                foreach(CardObject card in opponentPlayerZoneController.fieldZone.AllCards)
+                    card.OnStartTurn();
+            }
+        }
+
+        public override void OnEndTurn(EndTurnMessage msg)
+        {
+            base.OnEndTurn(msg);
+            localPlayerZoneController.fieldZone.RemoveAllCardHighlights();
+        }
+
+        public override void OnEndGame(EndGameMessage msg)
+        {
+            base.OnEndGame(msg);
+            if(msg.winnerPlayerIndex == netIdentity)
+                GameUIManager.WinLoseDisplay.WinGame();
+            else
+                GameUIManager.WinLoseDisplay.LoseGame();
+
+            onEndGameEvent?.Invoke();
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Non-Network Message Game Controls
+
+        private bool HandleGameSetupTurn(StartTurnMessage msg, out bool endTurn)
+        {
+            endTurn = false;
+            switch(gameState.currentPlayer.numTurn)
+            {
+                case 1: // pass turn - need to do this for init evolve deck/leader to work (for some reason...)
+                    endTurn = msg.isRecipientTheActivePlayer;
+                    return true;
+
+                case 2: // determine first/second
+                    if(msg.isRecipientTheActivePlayer && playerInfo.isGoingFirstDecided == false)
+                    {
+                        if(IsHostTurn()) // host's turn
+                        {
+                            // 50-50 chance this player chooses who goes first, otherwise other player chooses
+                            if(Random.Range(0f, 1f) < 0.5f)
+                            {
+                                GameUIManager.GoingFirstScreen.SetDisplayMode(SelectGoingFirstScreen.Mode.LocalSelectGoingFirst);
+                                GameUIManager.NetworkedCalls.TargetRpcShowOpponentChoosingFirst(opponentInfo.netId.connectionToClient);
+                            }
+                            else
+                            {
+                                GameUIManager.GoingFirstScreen.SetDisplayMode(SelectGoingFirstScreen.Mode.OpponentSelectGoingFirst);
+                                endTurn = true;
+                            }
+                        }
+                        else // non-host's turn
+                        {
+                            GameUIManager.GoingFirstScreen.SetDisplayMode(SelectGoingFirstScreen.Mode.LocalSelectGoingFirst);
+                        }
+                    }
+                    else
+                        endTurn = true;
+                    return true;
+
+                case 3: // draw 4
+                    endTurn = msg.isRecipientTheActivePlayer;
+                    if(msg.isRecipientTheActivePlayer)
+                    {
+                        DrawStartingHand();
+                    }
+                    return true;
+
+                case 4: // mulligan - first player
+                    if(msg.isRecipientTheActivePlayer && playerInfo.isGoingFirst)
+                    {
+                        GameUIManager.MulliganScreen.ShowLocalMulligan();
+                        GameUIManager.NetworkedCalls.CmdShowOpponentMulligan(opponentInfo.netId);
+                    }
+                    else
+                        endTurn = true;
+                    return true;
+                case 5: // mulligan - second player
+                    if(msg.isRecipientTheActivePlayer && !playerInfo.isGoingFirst)
+                    {
+                        GameUIManager.MulliganScreen.ShowLocalMulligan();
+                        GameUIManager.NetworkedCalls.CmdShowOpponentMulligan(opponentInfo.netId);
+                    }
+                    else
+                        endTurn = true;
+                    return true;
+
+                case 6: // actual game - skip host if they are not first (opponent takes first turn)
+                    GameUIManager.MulliganScreen.Close();
+                    if(IsHostTurn() && !playerInfo.isGoingFirst)
+                    {
+                        endTurn = true;
+                        return true;
+                    }
+                    return false;
+                default:
+                    return false;
+            }
+
+            bool IsHostTurn() => gameState.currentPlayer.numTurn != gameState.currentOpponent.numTurn;
+        }
+
+        public void DrawStartingHand(float delayBeforeDrawing = 0f, float delayBetweenCards = 0.1f)
+        {
+            StartCoroutine(DrawStartingHandCoroutine());
+            IEnumerator DrawStartingHandCoroutine()
+            {
+                yield return new WaitForSeconds(delayBeforeDrawing);
+                for(int i = 0; i < SVEProperties.StartingHandSize; i++)
+                {
+                    LocalEvents.DrawCard();
+                    yield return new WaitForSeconds(delayBetweenCards);
+                }
+            }
+        }
+
+        public void ReserveAllCardsOnField()
+        {
+            List<CardObject> cardsToReserve = localPlayerZoneController.fieldZone.GetAllPrimaryCards();
+            foreach(CardObject card in cardsToReserve)
+            {
+                if(!card || card.RuntimeCard == null)
+                    continue;
+                LocalEvents.ReserveCard(card.RuntimeCard);
+            }
+        }
+
+        public void EnterEndPhase()
+        {
+            if(gameState.currentPhase != SVEProperties.GamePhase.Main)
+                return;
+            StartCoroutine(RunEndPhase());
+
+            IEnumerator RunEndPhase()
+            {
+                // TODO - set end phase on networked effect solver
+                sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.End);
+                ZoneController.fieldZone.RemoveAllCardHighlights();
+
+                bool waiting = true;
+                SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+                {
+                    waiting = false;
+                };
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseTrigger>(gameState, null, localPlayerZoneController.fieldZone.Runtime, playerInfo,
+                    _ => true, true);
+                yield return new WaitUntil(() => !waiting); // TODO - fix confirmation timing call causing extra end turn delay
+
+                SelectWardCardsToEngage(() =>
+                {
+                    inputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    SVEQuickTimingController.Instance.CallQuickTimingEndOfTurn(() =>
+                    {
+                        localPlayerZoneController.fieldZone.RemoveAllCardHighlights();
+                        StartCoroutine(StopTurnOnDelay(0.1f));
+                    });
+                });
+            }
+        }
+
+        public void SelectWardCardsToEngage(Action onComplete = null)
+        {
+            if(!ZoneController.fieldZone.GetAllPrimaryCards().Any(x => x.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward) && !x.Engaged))
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            EffectTargetingUI.TargetCard.SetText("End Phase: Select followers with ward to engage");
+            EffectTargetingUI.TargetCard.Open(this, "k(Ward)m(0,5)R", new List<string> { SVEProperties.Zones.Field }, null);
+            EffectTargetingUI.TargetCard.OnSelectionComplete.AddListener(cards =>
+            {
+                foreach(CardObject card in cards)
+                    LocalEvents.EngageCard(card.RuntimeCard);
+                onComplete?.Invoke();
+            });
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Play Points / Evolve Points
+
+        private void InitializePlayPointMeters()
+        {
+            // Player
+            playerInfo.namedStats[SVEProperties.PlayerStats.MaxPlayPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                OnUpdateMaxPlayPoints(FieldManager.PlayerPlayPoints, newAmount);
+            };
+            playerInfo.namedStats[SVEProperties.PlayerStats.PlayPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                OnUpdateCurrentPlayPoints(FieldManager.PlayerPlayPoints, newAmount);
+            };
+            OnUpdateMaxPlayPoints(FieldManager.PlayerPlayPoints, 0);
+
+            // Opponent
+            opponentInfo.namedStats[SVEProperties.PlayerStats.MaxPlayPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                OnUpdateMaxPlayPoints(FieldManager.OpponentPlayPoints, newAmount);
+            };
+            opponentInfo.namedStats[SVEProperties.PlayerStats.PlayPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                OnUpdateCurrentPlayPoints(FieldManager.OpponentPlayPoints, newAmount);
+            };
+            OnUpdateMaxPlayPoints(FieldManager.OpponentPlayPoints, 0);
+
+            // TODO - maybe need to safe unsubscribe from events?
+        }
+
+        private void OnUpdateMaxPlayPoints(PlayPointMeter meter, int amount)
+        {
+            meter.SetMaxPoints(amount);
+        }
+
+        private void OnUpdateCurrentPlayPoints(PlayPointMeter meter, int amount)
+        {
+            meter.SetCurrentPoints(amount);
+        }
+
+        // -----
+
+        public void InitializeEvolvePointDisplays(bool isGoingFirst)
+        {
+            ZoneController.evolvePointDisplay.Initialize(!isGoingFirst);
+            OppZoneController.evolvePointDisplay.Initialize(isGoingFirst);
+
+            EvolvePointDisplay displayToConnect = isGoingFirst ? OppZoneController.evolvePointDisplay : ZoneController.evolvePointDisplay;
+            PlayerInfo playerInfoToConnect = isGoingFirst ? opponentInfo : playerInfo;
+            playerInfoToConnect.namedStats[SVEProperties.PlayerStats.EvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                displayToConnect.SetEvolvePointCount(newAmount);
+            };
+        }
+
+        #endregion
+
+    }
+}

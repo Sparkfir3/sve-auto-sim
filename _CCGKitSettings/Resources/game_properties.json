@@ -1,0 +1,24 @@
+{
+    "turnDuration": 120,
+    "minDeckSize": 41,
+    "maxDeckSize": 61,
+    "gameStartActions": [
+        {
+            "zoneId": 2,
+            "name": "Shuffle cards",
+            "target": "AllPlayers",
+            "$type": "CCGKit.ShuffleCardsAction"
+        }
+    ],
+    "turnStartActions": [],
+    "turnEndActions": [],
+    "endGameConditions": [
+        {
+            "statId": 0,
+            "op": "LessThanOrEqualTo",
+            "value": 0,
+            "type": "Loss",
+            "$type": "CCGKit.PlayerStatEndGameCondition"
+        }
+    ]
+}

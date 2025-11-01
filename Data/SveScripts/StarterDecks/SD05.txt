@@ -1,0 +1,394 @@
+name Queen Vampire;
+id SD05-001;
+class Abyss;
+type Follower;
+trait Vampire;
+rarity L;
+cost 6;
+stats 5/5;
+
+text "[fanfare] Summon 2 Forest Bat tokens.
+      [act][engage], give your leader [defense]-1: Summon 2 Forest Bat tokens.
+      Whenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward.";
+
+ability Fanfare {
+    text "Summon 2 Forest Bat tokens.";
+    effect SummonToken("Forest Bat", Field, 2);
+}
+ability Activate {
+    cost (EngageSelf), (LeaderDefense, 1);
+    effect SummonToken("Forest Bat", Field, 2);
+    text "[act][engage], leader [defense]-1: Summon 2 Forest Bat tokens.";
+}
+ability OnOtherEnterField {
+    filter Kn(Forest Bat);
+    text "Whenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward.";
+    effect Sequence(GiveStat, GiveKeyword);
+}
+ability Spell name "GiveStat" {
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+ability Spell name "GiveKeyword" {
+    effect GiveKeyword(Ward) to TriggerCard;
+}
+
+// ------------------------------
+
+name Alucard;
+id SD05-002;
+class Abyss;
+type Follower;
+trait Vampire;
+rarity Gold;
+cost 7;
+stats 4/4;
+
+text "Storm.
+      [fanfare] Necrocharge (10): Give this follower [attack]+2.
+      Strike: Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.";
+
+keyword Storm;
+ability Fanfare {
+    condition n(10);
+    text "Necrocharge (10): Give this follower [attack]+2.";
+    effect GiveStat(Atk, 2) to Self;
+}
+ability Strike {
+    text "Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.";
+    effect Sequence("Deal Damage", "Leader Defense");
+}
+ability Spell name "Deal Damage" {
+    effect DealDamage(4) to TargetOpponentCard F;
+    text "Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.";
+}
+ability Spell name "Leader Defense" {
+    effect GiveStat(Def, 4) to Leader;
+}
+
+// ------------------------------
+
+name Playful Necromancer;
+id SD05-003;
+class Abyss;
+type Follower;
+trait Necromancer;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Playful Necromancer (Evolved);
+id SD05-004;
+class Abyss;
+type Evolved Follower;
+trait Necromancer;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Summon 3 Ghost tokens.";
+
+ability OnEvolve {
+    text "Summon 3 Ghost tokens.";
+    effect SummonToken("Ghost", Field, 3);
+}
+
+// ------------------------------
+
+name Midnight Vampire;
+id SD05-005;
+class Abyss;
+type Follower;
+trait Vampire;
+rarity S;
+cost 3;
+stats 2/4;
+
+text "[fanfare] Summon a Forest Bat token.
+      While this card is on your field, your Forest Bat tokens have Drain. (When a follower with Drain attacks and deals damage, its leader gains defense equal to the damage dealt.)";
+
+ability Fanfare {
+    text "Summon a Forest Bat token.";
+    effect SummonToken("Forest Bat", Field, 1);
+}
+ability Passive {
+    effect GiveKeyword(Drain, WhileOnField) to AllPlayerCards Kn("Forest Bat");
+}
+
+// ------------------------------
+
+name Night Horde;
+id SD05-006;
+class Abyss;
+type Spell;
+trait Vampire;
+rarity S;
+cost 3;
+
+text "Summon 2 Forest Bat tokens.
+      Select an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence("Summon", "Damage");
+}
+ability Spell name "Summon" {
+    effect SummonToken("Forest Bat", Field, 2);
+}
+ability Spell name "Damage" {
+    text "Select an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.";
+    effect DealDamage(f(Kn("Forest Bat"))) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Spectre;
+id BP01-119;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 2;
+stats 2/1;
+
+text "Bane.
+      [fanfare] Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.";
+
+keyword Bane;
+ability Fanfare {
+    cost (LeaderDefense, 2);
+    text "Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.";
+    effect Sequence("Rush", "Mill");
+}
+ability Spell name "Rush" {
+    effect GiveKeyword(Rush) to Self;
+}
+ability Spell name "Mill" {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Spartoi Sergeant;
+id BP01-120;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Put the top 2 cards of your deck into your cemetery.";
+
+ability Fanfare {
+    text "Put the top 2 cards of your deck into your cemetery.";
+    effect Mill(2);
+}
+
+// ------------------------------
+
+name Undead King;
+id BP01-124;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 6;
+stats 6/6;
+
+text "[fanfare] Select up to 2 followers in your cemetery and add them to your hand.";
+
+ability Fanfare {
+    text "Select up to 2 followers in your cemetery and add them to your hand.";
+    effect Salvage(m(0,2), F);
+}
+
+// ------------------------------
+
+name Lesser Mummy;
+id SD05-010;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Necrocharge (10): Give this follower Storm. (If your cemetery contains at least 10 cards, perform Necrocharge (10).)";
+
+evolve 1;
+ability Fanfare {
+    condition n(10);
+    text "Necrocharge (10): Give this follower Storm.";
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Lesser Mummy (Evolved);
+id SD05-011;
+class Abyss;
+type Evolved Follower;
+trait Departed;
+rarity B;
+stats 3/3;
+
+text "Strike: Summon a Ghost token.";
+
+ability Strike {
+    text "Summon a Ghost token.";
+    effect SummonToken("Ghost", Field, 1);
+}
+
+// ------------------------------
+
+name Lilith;
+id SD05-012;
+class Abyss;
+type Follower;
+trait Demon;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Put a Forest Bat token into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    text "Put a Forest Bat token into your EX area.";
+    effect SummonToken("Forest Bat", ExArea, 1);
+}
+
+// ------------------------------
+
+name Lilith (Evolved);
+id SD05-013;
+class Abyss;
+type Evolved Follower;
+trait Departed;
+rarity B;
+stats 3/3;
+
+text "Strike: Give your leader [defense]+2.";
+
+ability Strike {
+    text "Give your leader [defense]+2.";
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Razory Claw;
+id BP01-125;
+class Abyss;
+type Spell;
+trait Demon;
+rarity B;
+cost 2;
+
+text "[quick]
+      Deal 2 damage to your leader.
+      Select an enemy leader or enemy follower on the field and deal it 3 damage.";
+
+keyword Quick;
+ability Spell {
+    effect Sequence("Self Damage", "Opponent Damage");
+}
+ability Spell name "Self Damage" {
+    effect DealDamage(2) to Leader;
+}
+ability Spell name "Opponent Damage" {
+    text "Select an enemy leader or enemy follower on the field and deal it 3 damage.";
+    effect DealDamage(3) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Undying Resentment;
+id SD05-015;
+class Abyss;
+type Spell;
+trait Departed;
+rarity B;
+cost 2;
+
+text "[quick]
+      Select an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect Sequence("Damage", "Mill");
+}
+ability Spell name "Damage" {
+    text "Select an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.";
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name "Mill" {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Summon Bloodkin;
+id SD05-016;
+class Abyss;
+type Spell;
+trait Vampire;
+rarity B;
+cost 1;
+
+text "Summon a Forest Bat token.
+      Put a Forest Bat token into your EX area.";
+
+ability Spell {
+    effect Sequence("Summon Field", "Summon EX");
+}
+ability Spell name "Summon Field" {
+    effect SummonToken("Forest Bat", Field, 1);
+}
+ability Spell name "Summon EX" {
+    effect SummonToken("Forest Bat", ExArea, 1);
+}
+
+// ------------------------------
+
+name Luna;
+id BP01-LD09;
+class Abyss;
+type Leader;
+
+// ------------------------------
+
+name Ghost;
+id BP01-T14;
+class Abyss;
+type Follower / Token;
+trait Departed;
+cost 1;
+stats 1/1;
+
+text "Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)
+      At the start of your end phase, banish this card.";
+
+keyword Storm;
+ability StartEndPhase {
+    text "At the start of your end phase, banish this card.";
+    effect Banish() to Self;
+}
+
+// ------------------------------
+
+name Forest Bat;
+id BP01-T15;
+class Abyss;
+type Follower / Token;
+trait Vampire;
+cost 1;
+stats 1/1;

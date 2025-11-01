@@ -1,0 +1,95 @@
+[
+    {
+        "name": "KeywordAbilities",
+        "values": [
+            {
+                "value": "Ward"
+            },
+            {
+                "value": "Storm"
+            },
+            {
+                "value": "Rush"
+            },
+            {
+                "value": "Assail"
+            },
+            {
+                "value": "Intimidate"
+            },
+            {
+                "value": "Drain"
+            },
+            {
+                "value": "Bane"
+            },
+            {
+                "value": "Aura"
+            },
+            {
+                "value": "Quick"
+            }
+        ],
+        "id": 0
+    },
+    {
+        "name": "PassiveAbilities",
+        "values": [
+            {
+                "value": "IgnoreWard"
+            },
+            {
+                "value": "PutOnFieldEngaged"
+            },
+            {
+                "value": "CannotDealDamage"
+            }
+        ],
+        "id": 1
+    },
+    {
+        "name": "PlusDamage",
+        "values": [
+            {
+                "value": "Plus1Damage"
+            },
+            {
+                "value": "Plus2Damage"
+            }
+        ],
+        "id": 2
+    },
+    {
+        "name": "StackCounter",
+        "values": [
+            {
+                "value": "Stack0"
+            },
+            {
+                "value": "Stack1"
+            },
+            {
+                "value": "Stack2"
+            },
+            {
+                "value": "Stack3"
+            }
+        ],
+        "id": 3
+    },
+    {
+        "name": "SpellCounter",
+        "values": [
+            {
+                "value": "Spell0"
+            },
+            {
+                "value": "Spell1"
+            },
+            {
+                "value": "Spell2"
+            }
+        ],
+        "id": 4
+    }
+]

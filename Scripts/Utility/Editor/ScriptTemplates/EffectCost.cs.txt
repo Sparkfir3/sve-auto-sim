@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using CCGKit;
+
+#ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME# : SveCost
+    {
+        // Field variables here
+
+        // ------------------------------
+
+        public override string GetReadableString(GameConfiguration config)
+        {
+            return "Card Cost";
+        }
+
+        public override bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName)
+        {
+            return true;
+        }
+    }
+#ROOTNAMESPACEEND#

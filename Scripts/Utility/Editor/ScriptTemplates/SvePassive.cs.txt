@@ -1,0 +1,22 @@
+using System;
+using UnityEngine;
+using CCGKit;
+
+#ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME# : SvePassiveEffect
+    {
+        // Field variables here
+
+        // ------------------------------
+
+        public override void ApplyPassive(RuntimeCard card, PlayerController player)
+        {
+            #NOTRIM#
+        }
+
+        public override void RemovePassive(RuntimeCard card, PlayerController player)
+        {
+            #NOTRIM#
+        }
+    }
+#ROOTNAMESPACEEND#

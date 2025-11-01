@@ -1,0 +1,468 @@
+name Sea Queen Otohime;
+id BP01-026;
+class Sword;
+type Follower;
+trait Commander / Princess;
+rarity L;
+cost 4;
+stats 3/4;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Summon an Otohime's Bodyguard token.";
+
+evolve 2;
+ability Fanfare {
+    text "Summon an Otohime's Bodyguard token.";
+    effect SummonToken("Otohime's Bodyguard", Field, 1);
+}
+
+// ------------------------------
+
+name Sea Queen Otohime (Evolved);
+id BP01-027;
+class Sword;
+type Evolved Follower;
+trait Commander / Princess;
+rarity L;
+stats 4/5;
+
+text "On Evolve: Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
+
+ability OnEvolve {
+    text "Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
+    effect SummonToken("Otohime's Bodyguard", FieldOverflowToEx, 3);
+}
+
+// ------------------------------
+
+name Aurelia, Regal Saber;
+id BP01-028;
+class Sword;
+type Follower;
+trait Commander / Princess;
+rarity L;
+cost 5;
+stats 4/6;
+
+text "Rush. Assail. Ward.
+      [fanfare] Select an enemy leader. If there are at least 3 cards on their field, give this follower [attack]+2/[defense]+2 and Aura.";
+
+keywords Rush, Assail, Ward;
+ability Fanfare {
+    condition p() > 2;
+    text "Select an enemy leader. If there are at least 3 cards on their field, give this follower [attack]+2/[defense]+2 and Aura.";
+    effect Sequence(Stats, Aura);
+}
+ability Spell name "Stats" {
+    effect GiveStat(AtkDef, 2) to Self;
+}
+ability Spell name "Aura" {
+    effect GiveKeyword(Aura) to Self;
+}
+
+// ------------------------------
+
+name Shadowed Assassin;
+id BP01-029;
+class Sword;
+type Follower;
+trait Assassin;
+rarity G;
+cost 4;
+stats 4/4;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Select an enemy follower on the field and engage it.";
+
+evolve 2;
+ability Fanfare {
+    text "Select an enemy follower on the field and engage it.";
+    effect EngageCard() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Shadowed Assassin (Evolved);
+id BP01-030;
+class Sword;
+type Evolved Follower;
+trait Assassin;
+rarity G;
+stats 5/5;
+
+text "On Evolve: Select an engaged enemy follower and destroy it.";
+
+ability OnEvolve {
+    text "Select an engaged enemy follower and destroy it.";
+    effect Destroy() to TargetOpponentCard FN;
+}
+
+// ------------------------------
+
+name Frontguard General;
+id BP01-031;
+class Sword;
+type Follower;
+trait Commander;
+rarity G;
+cost 7;
+stats 6/8;
+
+text "Ward.
+      [lastwords] Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.";
+
+keyword Ward;
+ability LastWords {
+    text "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.";
+    effect SummonTokenAndTarget(Steelclad Knight, Field, 2, Ward, Engage);
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to AllPlayerCards;
+}
+ability Spell name Engage {
+    text "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.";
+    effect EngageCard() to TargetPlayerCard m(0,2);
+}
+
+// ------------------------------
+
+name Alwida's Command;
+id BP01-032;
+class Sword;
+type Spell;
+trait Thief;
+rarity G;
+cost 5;
+
+text "Summon a Viking, Steelclad Knight, and Knight token.";
+
+ability Spell {
+    effect Sequence(Viking, Steelclad Knight, Knight);
+}
+ability Spell name Viking {
+    effect SummonToken(Viking, Field, 1);
+}
+ability Spell name Steelclad Knight {
+    effect SummonToken(Steelclad Knight, Field, 1);
+}
+ability Spell name Knight {
+    effect SummonToken(Knight, Field, 1);
+}
+
+// ------------------------------
+
+name Royal Banner;
+id BP01-033;
+class Sword;
+type Amulet;
+trait Commander;
+rarity G;
+cost 4;
+
+text "[fanfare] Give each [swordcraft] follower on your field [attack]+1/[defense]+1.
+      Whenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    text "Give each [swordcraft] follower on your field [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to AllPlayerCards c(Sword)F;
+}
+ability OnOtherEnterField {
+    filter c(Sword)F;
+    text "Whenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Maid Leader;
+id BP01-034;
+class Sword;
+type Follower;
+trait Officer / Maid;
+rarity S;
+cost 1;
+stats 1/1;
+
+text "[evolve][cost02]: Evolve this follower.";
+
+evolve 2;
+
+// ------------------------------
+
+name Maid Leader (Evolved);
+id BP01-035;
+class Sword;
+type Evolved Follower;
+trait Officer / Maid;
+rarity S;
+stats 2/2;
+
+text "On Evolve: Search your deck for a follower with [evolve], reveal it, and add it to your hand.";
+
+ability OnEvolve {
+    text "Search your deck for a follower with [evolve], reveal it, and add it to your hand.";
+    effect Search(1, F#e, Hand);
+}
+
+// ------------------------------
+
+name Gemstaff Commander;
+id BP01-036;
+class Sword;
+type Follower;
+trait Commander;
+rarity S;
+cost 3;
+stats 3/2;
+
+text "[fanfare] Search your deck for a [swordcraft] follower, reveal it, and add it to your hand.";
+
+ability Fanfare {
+    text "Search your deck for a [swordcraft] follower, reveal it, and add it to your hand.";
+    effect Search(1, c(sword)F, Hand);
+}
+
+// ------------------------------
+
+name Sage Commander;
+id BP01-037;
+class Sword;
+type Follower;
+trait Commander;
+rarity S;
+cost 5;
+stats 5/5;
+
+text "[fanfare] Give each other follower on your field [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    text "Give each other follower on your field [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to AllPlayerCards FX;
+}
+
+// ------------------------------
+
+name Swordsman;
+id BP01-038;
+class Sword;
+type Follower;
+trait Officer;
+rarity S;
+cost 1;
+stats 2/1;
+
+text "[fanfare] Select an enemy follower on the field and engage it.
+      [act][engage]: Select an enemy follower on the field and engage it.";
+
+ability Fanfare {
+    text "Select an enemy follower on the field and engage it.";
+    effect EngageCard() to TargetOpponentCard F;
+}
+ability Act {
+    condition p(#F);
+    cost (EngageSelf);
+    text "[engage]: Select an enemy follower on the field and engage it.";
+    effect EngageCard() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Pompous Princess;
+id BP01-039;
+class Sword;
+type Follower;
+trait Commander / Princess;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.";
+
+ability Fanfare {
+    text "Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.";
+    effect CheckTop(5, (Field, p(1), m(0,1)), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Ninja Master;
+id BP01-040;
+class Sword;
+type Follower;
+trait Officer / Ninja;
+rarity S;
+cost 4;
+stats 4/4;
+
+text "[fanfare] Search your deck for a Ninja card, reveal it, and add it to your hand.";
+
+ability Fanfare {
+    text "Search your deck for a Ninja card, reveal it, and add it to your hand.";
+    effect Search(1, t(Ninja), Hand);
+}
+
+// ------------------------------
+
+name Arthurian Light;
+id BP01-041;
+class Sword;
+type Amulet;
+trait Commander;
+rarity S;
+cost 2;
+
+text "[act][cost01], [engage]: Summon a Knight token and give it Storm.
+      [act][cost02], [engage]: Select an enemy follower on the field and engage it.
+      [act][cost03], [engage]: Draw a card.";
+
+ability Act name Knight {
+    cost (PP, 1), (EngageSelf);
+    text "[cost01], [engage]: Summon a Knight token and give it Storm.";
+    effect SummonTokenAndTarget(Knight, Field, 1, Storm);
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to AllPlayerCards;
+}
+ability Act name Engage {
+    condition p(#F);
+    cost (PP, 2), (EngageSelf);
+    text "[cost02], [engage]: Select an enemy follower on the field and engage it.";
+    effect EngageCard() to TargetOpponentCard F;
+}
+ability Act name Draw {
+    cost (PP, 3), (EngageSelf);
+    text "[cost03], [engage]: Draw a card.";
+    effect DrawCard(1) to Self;
+}
+
+// ------------------------------
+
+name Fervid Solider;
+id BP01-043;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost02]: Evolve this follower.
+      Whenever another follower is put onto your field, give this follower [attack]+1.";
+
+evolve 2;
+ability OnOtherEnterField {
+    filter F;
+    text "Whenever another follower is put onto your field, give this follower [attack]+1.";
+    effect GiveStat(Atk, 1) to Self;
+}
+
+// ------------------------------
+
+name Fervid Solider (Evolved);
+id BP01-044;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+stats 4/4;
+
+text "Whenever another follower is put onto your field, give this follower [attack]+1.";
+
+ability OnOtherEnterField {
+    filter F;
+    text "Whenever another follower is put onto your field, give this follower [attack]+1.";
+    effect GiveStat(Atk, 1) to Self;
+}
+
+// ------------------------------
+
+name Luminous Knight;
+id BP01-045;
+class Sword;
+type Follower;
+trait Commander;
+rarity B;
+cost 2;
+stats 3/1;
+
+text "[fanfare] Select another follower on your field and give it [attack]+1.
+      [lastwords] Select a follower on your field and give it [attack]+1.";
+
+ability Fanfare {
+    text "Select another follower on your field and give it [attack]+1.";
+    effect GiveStat(Atk, 1) to TargetPlayerCard FX;
+}
+ability LastWords {
+    text "Select a follower on your field and give it [attack]+1.";
+    effect GiveStat(Atk, 1) to TargetPlayerCard F;
+}
+
+// ------------------------------
+
+name Navy Lieutenant;
+id BP01-047;
+class Sword;
+type Follower;
+trait Commander;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Select another follower on your field and give it Assail.";
+
+ability Fanfare {
+    text "Select another follower on your field and give it Assail.";
+    effect GiveKeyword(Assail) to TargetPlayerCard FX;
+}
+
+// ------------------------------
+
+name Novice Trooper;
+id BP01-048;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Aurelia, Blooming Blade;
+id BP01-LD04;
+class Sword;
+type Leader;
+
+// ------------------------------
+
+name Otohime's Bodyguard;
+id BP01-T04;
+class Sword;
+type Follower / Token;
+trait Officer;
+cost 1;
+stats 1/2;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Viking;
+id BP01-T06;
+class Sword;
+type Follower / Token;
+trait Thief;
+cost 3;
+stats 3/2;
+
+text "Storm.";
+
+keyword Storm;

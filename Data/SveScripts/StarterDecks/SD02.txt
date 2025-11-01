@@ -1,0 +1,343 @@
+name Tsubaki;
+id SD02-001;
+class Sword;
+type Follower;
+trait Assassin / Ninja;
+rarity L;
+cost 6;
+stats 5/4;
+
+text "[fanfare] Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)";
+
+ability Fanfare {
+    effect ChooseFromList("Destroy Enemy", "Give Storm");
+    text "Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.";
+}
+ability Spell name "Destroy Enemy" {
+    effect DestroyCard() to TargetOpponentCard F;
+    text "Select an enemy follower on the field and destroy it.";
+}
+ability Spell name "Give Storm" {
+    effect GiveKeyword(Storm) to Self;
+    text "Give this follower Storm.";
+}
+
+// ------------------------------
+
+name Latham, Vanguard Captain;
+id SD02-002;
+class Sword;
+type Follower;
+trait Commander;
+rarity G;
+cost 2;
+stats 3/3;
+
+// ------------------------------
+
+name Floral Fencer;
+id SD02-003;
+class Sword;
+type Follower;
+trait Officer;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Floral Fencer (Evolved);
+id SD02-004;
+class Sword;
+type Evolved Follower;
+trait Officer;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Summon a Steelclad Knight and Knight token.";
+
+ability OnEvolve name "On Evolve" {
+    text "Summon a Steelclad Knight and Knight token.";
+    effect Sequence("Steelclad Knight", "Knight");
+}
+ability Spell name "Steelclad Knight" {
+    effect SummonToken(Steelclad Knight, Field, 1);
+}
+ability Spell name "Knight" {
+    effect SummonToken(Knight, Field, 1);
+}
+
+// ------------------------------
+
+name Moonlight Assassin;
+id SD02-005;
+class Sword;
+type Follower;
+trait Assassin;
+rarity S;
+cost 2;
+stats 3/2;
+
+text "[act][cost01]: Give this follower Bane. (Followers attacking or attacked by a follower with Bane are destroyed after damage is exchanged.)";
+
+ability Act name "Act" {
+    cost (PP, 1);
+    effect GiveKeyword(Bane) to Self;
+    text "[act][cost01]: Give this follower Bane.";
+}
+
+// ------------------------------
+
+name White General;
+id SD02-006;
+class Sword;
+type Follower;
+trait Commander;
+rarity S;
+cost 4;
+stats 5/3;
+
+text "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)
+Strike: Select another follower on your field and give it [attack]+2.";
+
+keywords Rush;
+ability Strike {
+    effect GiveStat(Atk, 2) to TargetPlayerCard FX;
+    text "Select another follower on your field and give it [attack]+2.";
+}
+
+// ------------------------------
+
+name Ninja Trainee;
+id BP01-042;
+class Sword;
+type Follower;
+trait Officer / Ninja;
+rarity B;
+cost 1;
+stats 2/2;
+
+// ------------------------------
+
+name Veteran Lancer;
+id BP01-046;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)";
+
+keywords Ward;
+
+// ------------------------------
+
+name Fencer;
+id SD02-009;
+class Sword;
+type Follower;
+trait Commander / Noble;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Select another follower on your field and give it [attack]+1/[defense]+1.";
+
+ability Fanfare name "Fanfare" {
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard FX;
+    text "Select another follower on your field and give it [attack]+1/[defense]+1.";
+}
+
+// ------------------------------
+
+name Oathless Knight;
+id SD02-010;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 1/1;
+
+text "[evolve][cost01]: Evolve this follower.
+[fanfare] Summon a Knight token.";
+
+evolve 1;
+ability Fanfare name "Fanfare" {
+    text "Summon a Knight token.";
+    effect SummonToken(Knight, Field, 1);
+}
+
+// ------------------------------
+
+name Oathless Knight (Evolved);
+id SD02-011;
+class Sword;
+type Evolved Follower;
+trait Officer;
+rarity B;
+stats 3/1;
+
+text "Assail. (Followers with Assail can attack reserved followers.)";
+
+keyword Assail;
+
+// ------------------------------
+
+name Quickblader;
+id SD02-012;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 1;
+stats 1/1;
+
+text "[evolve][cost03]: Evolve this follower.
+Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)";
+
+evolve 3;
+keyword Storm;
+
+// ------------------------------
+
+name Quickblader (Evolved);
+id SD02-013;
+class Sword;
+type Evolved Follower;
+trait Officer;
+rarity B;
+stats 3/3;
+
+text "";
+
+keyword Storm;
+
+// ------------------------------
+
+name Forge Weaponry;
+id BP01-049;
+class Sword;
+type Spell;
+trait Officer;
+rarity B;
+cost 2;
+
+text "[quick]
+Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.";
+
+keyword Quick;
+ability Spell name "Sequence" {
+    condition f(F);
+    effect Sequence("Give +1/+1", "Draw");
+}
+ability Spell name "Give +1/+1" {
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard F;
+    text "Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.";
+}
+ability Spell name "Draw" {
+    effect DrawCard(1) to Self;
+}
+
+// ------------------------------
+
+name Onslaught;
+id BP01-050;
+class Sword;
+type Spell;
+trait Officer;
+rarity B;
+cost 3;
+
+text "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.";
+
+ability Spell name "Sequence" {
+    condition p(#F);
+    effect Sequence("Deal Damage", "Knight");
+}
+ability Spell name "Deal Damage" {
+    effect DealDamage(5) to TargetOpponentCard F;
+    text "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.";
+}
+ability Spell name "Knight" {
+    effect SummonToken(Knight, ExArea, 1);
+}
+
+// ------------------------------
+
+name Unbridled Fury;
+id SD02-016;
+class Sword;
+type Spell;
+trait Officer;
+rarity B;
+cost 1;
+
+text "[quick]
+Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field.";
+
+keyword Quick;
+ability Spell name "Deal X Damage" {
+    condition p(#F);
+    effect DealDamage(f(F)) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field.";
+}
+
+// ------------------------------
+
+name Fighter;
+id BP01-173;
+class Neutral;
+type Follower;
+trait Mercenary;
+rarity B;
+cost 2;
+stats 2/3;
+
+// ------------------------------
+
+name Angelic Sword Maiden;
+id BP01-176;
+class Neutral;
+type Follower;
+trait Angel;
+rarity B;
+cost 5;
+stats 4/6;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Erika;
+id BP01-LD03;
+class Sword;
+type Leader;
+
+// ------------------------------
+
+name Knight;
+id BP01-T05;
+class Sword;
+type Follower / Token;
+trait Officer;
+cost 1;
+stats 1/1;
+
+// ------------------------------
+
+name Steelclad Knight;
+id BP01-T07;
+class Sword;
+type Follower / Token;
+trait Officer;
+cost 2;
+stats 2/2;

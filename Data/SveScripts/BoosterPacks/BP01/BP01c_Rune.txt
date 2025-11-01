@@ -1,0 +1,504 @@
+name Arch Summoner Erasmus;
+id BP01-051;
+class Rune;
+type Follower;
+trait Mage;
+rarity L;
+cost 7;
+stats 6/8;
+
+text "[fanfare] Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.
+      [act][engage], Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
+
+ability Fanfare {
+    cost (EarthRite);
+    text "Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
+    effect Sequence("Damage Follower", "Damage Leader");
+}
+ability Act {
+    condition p(F);
+    cost (EngageSelf), (EarthRite);
+    text "[engage], Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
+    effect Sequence("Damage Follower", "Damage Leader");
+}
+ability Spell name "Damage Follower" {
+    text "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
+    effect DealDamage(6) to TargetOpponentCard F;
+}
+ability Spell name "Damage Leader" {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Merlin;
+id BP01-052;
+class Rune;
+type Follower;
+trait Mage;
+rarity L;
+cost 3;
+stats 3/2;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Search your deck for a spell, reveal it, and add it to your hand.";
+
+evolve 2;
+ability Fanfare {
+    text "Search your deck for a spell, reveal it, and add it to your hand.";
+    effect Search(1, S, Hand);
+}
+
+// ------------------------------
+
+name Merlin (Evolved);
+id BP01-053;
+class Rune;
+type Evolved Follower;
+trait Mage;
+rarity L;
+stats 4/3;
+
+text "On Evolve: Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.";
+
+ability OnEvolve {
+    text "Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.";
+    effect PlaySpellFromCemeterySetCost(Sp(m(0,3)), 0);
+}
+
+// ------------------------------
+
+name Ancient Alchemist;
+id BP01-054;
+class Rune;
+type Follower;
+trait Alchemist;
+rarity G;
+cost 3;
+stats 2/5;
+
+text "[evolve][cost03]: Evolve this follower.
+      [fanfare] Earth Rite: Put 2 Guardform Golem tokens into your EX area.";
+
+evolve 3;
+ability Fanfare {
+    cost (EarthRite);
+    text "Earth Rite: Put 2 Guardform Golem tokens into your EX area.";
+    effect SummonToken(Guardform Golem, ExArea, 2);
+}
+
+// ------------------------------
+
+name Ancient Alchemist (Evolved);
+id BP01-055;
+class Rune;
+type Evolved Follower;
+trait Alchemist;
+rarity G;
+stats 3/6;
+
+text "While this card is on your field, your Golem followers cost 1 less to play.
+      Whenever a Golem follower is put onto your field, select an enemy leader or enemy follower on the field and deal it 3 damage.";
+
+ability Passive {
+    effect MinusCostOther(1, WhileOnField) to AllPlayerCards Ft(Golem);
+}
+ability OnOtherEnterField {
+    filter Ft(Golem);
+    text "Select an enemy leader or enemy follower on the field and deal it 3 damage.";
+    effect DealDamage(3) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Arcane Enlightenment;
+id BP01-056;
+class Rune;
+type Spell;
+trait Mage;
+rarity G;
+cost 4;
+
+text "[quick]
+      Put the top card of your deck into your EX area. Repeat until your EX area is full.
+      At the start of your next end phase, banish each card in your EX area.";
+
+keyword Quick;
+ability Spell name "Fill EX" {
+    effect TopDeckToEx(5-x());
+}
+ability StartEndPhase name Banish {
+    text "At the start of your next end phase, banish each card in your EX area.";
+    effect Banish() to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Dimension Shift;
+id BP01-057;
+class Rune;
+type Spell;
+trait Mage;
+rarity G;
+cost 12;
+
+text "When playing this card, banish 10 spells in your cemetery: This card costs 7 play points to play.
+      Take another turn after this one.";
+
+ability Spell name Extra Turn {
+    effect ExtraTurn();
+}
+ability ModifiedCost {
+    cost (BanishFromCemetery, 10, S), (PP, 7);
+    text "Banish 10 spells in your cemetery: This card costs 7 play points to play.";
+    effect AlternateCost();
+}
+
+// ------------------------------
+
+name Juno's Secret Laboratory;
+id BP01-058;
+class Rune;
+type Amulet;
+trait Alchemist;
+rarity G;
+cost 5;
+
+text "[fanfare] Summon a Guardform Golem or Strikeform Golem token.
+      [act][engage]: Summon a Magic Sediment token.
+      [act][engage], Earth Rite: Summon a Guardform Golem or Strikeform Golem token.";
+
+ability Fanfare {
+    text "Summon a Guardform Golem or Strikeform Golem token";
+    effect ChooseFromList("Guardform Golem", "Strikeform Golem");
+}
+ability Act name "Summon Magic Sediment" {
+    cost (EngageSelf);
+    text "[engage]: Summon a Magic Sediment token";
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+ability Act name "Summon Golem" {
+    cost (EngageSelf), (EarthRite);
+    text "[engage], Earth Rite: Summon a Guardform Golem or Strikeform Golem token";
+    effect ChooseFromList("Guardform Golem", "Strikeform Golem");
+}
+
+ability Spell name "Guardform Golem" {
+    text "Guardform Golem";
+    effect SummonToken(Guardform Golem, Field, 1);
+}
+ability Spell name "Strikeform Golem" {
+    text "Strikeform Golem";
+    effect SummonToken(Strikeform Golem, Field, 1);
+}
+
+// ------------------------------
+
+name Spectral Wizard;
+id BP01-059;
+class Rune;
+type Follower;
+trait Mage;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.";
+
+evolve 2;
+ability Fanfare {
+    text "Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.";
+    effect CheckTop(1, (Hand, S, m(0,1)), (TopDeckSameOrder));
+}
+
+// ------------------------------
+
+name Spectral Wizard (Evolved);
+id BP01-060;
+class Rune;
+type Evolved Follower;
+trait Mage;
+rarity S;
+stats 3/3;
+
+text "On Evolve, discard a spell: Select an enemy follower on the field and deal it 4 damage.";
+
+ability OnEvolve {
+    cost (Discard, 1, S);
+    text "Discard a spell: Select an enemy follower on the field and deal it 4 damage.";
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Flame Destroyer;
+id BP01-061;
+class Rune;
+type Follower;
+trait Arcanaform;
+rarity S;
+cost 9;
+stats 7/7;
+
+text "Spellchain (5): This card costs 3 less to play. SC (10): It costs 6 less instead. SC (15): It costs 9 less instead.
+      Rush.";
+
+keyword Rush;
+ability ModifiedCost {
+    condition s(5);
+    effect ReducedCost([3s(10)6]s(15)9);
+}
+
+// ------------------------------
+
+name Dragonbond Mage;
+id BP01-062;
+class Rune;
+type Follower;
+trait Mage;
+rarity S;
+cost 3;
+stats 3/4;
+
+text "Whenever you play a spell, place 1 spell counter on this card.
+      [act] Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.";
+
+ability OnPlaySpell {
+    text "Whenever you play a spell, place 1 spell counter on this card.";
+    effect GiveCounter(Spell, 1) to Self;
+}
+ability Act {
+    condition p(F);
+    cost (RemoveCounters, Spell, 3);
+    text "[act] Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.";
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Golem Protection;
+id BP01-063;
+class Rune;
+type Spell;
+trait Mage;
+rarity S;
+cost 4;
+
+text "Summon 2 Guardform Golem tokens.
+      Earth Rite: Give each Golem follower on your field [attack]+1/[defense]+1.";
+
+ability Spell {
+    effect Sequence(Tokens, Earth Rite);
+}
+ability Spell name Tokens {
+    effect SummonToken(Guardform Golem, Field, 2);
+}
+ability Spell name Earth Rite {
+    cost (EarthRite);
+    text "Earth Rite: Give each Golem follower on your field [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Golem);
+}
+
+// ------------------------------
+
+name Alchemical Lore;
+id BP01-064;
+class Rune;
+type Spell;
+trait Mage;
+rarity S;
+cost 5;
+
+text "Deal 4 damage to each enemy follower on the field.";
+
+ability Spell {
+    effect DealDamage(4) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Fate's Hand;
+id BP01-065;
+class Rune;
+type Spell;
+trait Mage;
+rarity S;
+cost 3;
+
+text "[quick]
+      Draw 2 cards. Spellchain (10): Recover 1 play point.";
+
+keyword Quick;
+ability Spell {
+    effect Sequence(Draw, Play Point);
+}
+ability Spell name Draw {
+    effect DrawCard(2);
+}
+ability Spell name Play Point {
+    condition s(10);
+    effect GiveStat(PP, 1) to Self;
+}
+
+// ------------------------------
+
+name Price of Magic;
+id BP01-066;
+class Rune;
+type Amulet;
+trait Earth Sigil;
+rarity S;
+cost 3;
+
+text "Stack.
+      [fanfare] Select an enemy follower with 4 defense or less on the field and banish it.";
+
+keyword Stack;
+ability Fanfare {
+    text "Select an enemy follower with 4 defense or less on the field and banish it.";
+    effect Banish() to TargetOpponentCard Fd(m(0,4));
+}
+
+// ------------------------------
+
+name Runic Guardian;
+id BP01-067;
+class Rune;
+type Follower;
+trait Alchemist;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "Ward.
+      [fanfare] Choose one of the following effects. (1) Earth Rite: Give this follower [attack]+1/[defense]+2. (2) Summon a Magic Sediment token.";
+
+keyword Ward;
+ability Fanfare {
+    text "Choose one of the following effects. (1) Earth Rite: Give this follower [attack]+1/[defense]+2. (2) Summon a Magic Sediment token.";
+    effect ChooseFromList(Earth Rite, Token);
+}
+
+ability Spell name Earth Rite {
+    cost (EarthRite);
+    text "Earth Rite: Give this follower [attack]+1/[defense]+2.";
+    effect Sequence(Attack, Defense);
+}
+ability Spell name Attack {
+    effect GiveStat(Atk, 1) to Self;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Self;
+}
+
+ability Spell name Token {
+    text "Summon a Magic Sediment token.";
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+
+// ------------------------------
+
+name Crafty Warlock;
+id BP01-068;
+class Rune;
+type Follower;
+trait Alchemist;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [lastwords] Summon a Magic Sediment token.";
+
+evolve 1;
+ability LastWords {
+    text "Summon a Magic Sediment token.";
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+
+// ------------------------------
+
+name Crafty Warlock (Evolved);
+id BP01-069;
+class Rune;
+type Evolved Follower;
+trait Alchemist;
+rarity B;
+stats 3/3;
+
+text "[lastwords] Summon a Magic Sediment token. Add 1 to a Stack on your field.";
+
+ability LastWords {
+    text "Summon a Magic Sediment token. Add 1 to a Stack on your field.";
+    effect Sequence(Token, Stack);
+}
+ability Spell name Token {
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+ability Spell name Stack {
+    text "Add 1 to a Stack on your field.";
+    effect GiveCounter(Stack, 1) to TargetPlayerCard Ar(Stack);
+}
+
+// ------------------------------
+
+name Alchemist's Workshop;
+id BP01-074;
+class Rune;
+type Amulet;
+trait Earth Sigil;
+rarity B;
+cost 2;
+
+text "Stack.
+      [fanfare] Summon a Strikeform Golem token.";
+
+keyword Stack;
+ability Fanfare {
+    text "Summon a Strikeform Golem token.";
+    effect SummonToken(Strikeform Golem, Field, 1);
+}
+
+// ------------------------------
+
+name Teachings of Creation;
+id BP01-075;
+class Rune;
+type Amulet;
+trait Earth Sigil;
+rarity B;
+cost 1;
+
+text "Stack.
+      [fanfare] Draw a card.";
+
+keyword Stack;
+ability Fanfare {
+    text "Draw a card.";
+    effect DrawCard(1) to Self;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Erasmus, Magical Sage;
+id BP01-LD06;
+class Rune;
+type Leader;
+
+// ------------------------------
+
+name Magic Sediment;
+id BP01-T10;
+class Rune;
+type Amulet / Token;
+trait Earth Sigil;
+cost 1;
+
+text "Stack. (Amulets with Stack are put onto the field with 1 Stack counter and have the following abilities.
+      When this card would leave the field, remove 1 Stack counter from it instead. When this card's Stack count reaches 0, destroy it.
+      [act][engage]: Select another amulet with Stack on your field and transfer all this card's Stack counters to that card.)";
+
+keyword Stack;

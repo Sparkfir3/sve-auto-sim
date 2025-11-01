@@ -1,0 +1,10 @@
+using UnityEngine;
+using Sirenix.OdinInspector;
+using System.Collections;
+
+#ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME# : MonoBehaviour
+    {
+        #NOTRIM#
+    }
+#ROOTNAMESPACEEND#

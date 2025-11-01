@@ -1,0 +1,17 @@
+using System;
+using UnityEngine;
+using CCGKit;
+
+#ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME# : SveEffect
+    {
+        // Field variables here
+
+        // ------------------------------
+
+        public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
+        {
+            #NOTRIM#
+        }
+    }
+#ROOTNAMESPACEEND#

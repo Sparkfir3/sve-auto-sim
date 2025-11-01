@@ -1,0 +1,339 @@
+name Fafnir;
+id SD04-001;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity L;
+cost 8;
+stats 7/8;
+
+text "[fanfare] Deal 5 damage to each enemy follower on the field.";
+
+ability Fanfare name "Fanfare" {
+    text "Deal 5 damage to each enemy follower on the field.";
+    effect DealDamage(5) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Dragon Oracle;
+id SD04-002;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity G;
+cost 2;
+
+text "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card.";
+
+ability Spell {
+    effect ChooseFromList("Increase PP", "Draw");
+    text "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card.";
+}
+ability Spell name "Increase PP" {
+    effect GiveStat(MaxPP, 1) to Leader;
+    text "Increase your maximum play points by 1";
+}
+ability Spell name "Draw" {
+    effect SummonToken(Strikeform Golem, ExArea, 1);
+    text "Draw a card";
+}
+
+// ------------------------------
+
+name Dragon Warrior;
+id SD04-003;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Dragon Warrior (Evolved);
+id SD04-004;
+class Dragon;
+type Evolved Follower;
+trait Wyrmkin;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Select an enemy follower on the field and deal it 3 damage.";
+
+ability OnEvolve name "On Evolve" {
+    effect DealDamage(3) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 3 damage.";
+}
+
+// ------------------------------
+
+name Dragonewt Princess;
+id SD04-005;
+class Dragon;
+type Follower;
+trait Dragonewt / Princess;
+rarity S;
+cost 2;
+stats 2/3;
+
+text "[fanfare] If Overflow is active for you, select an enemy follower on the field and deal it 4 damage. (Overflow becomes active if your maximum number of play points is at least 7.)";
+
+ability Fanfare {
+    condition o;
+    effect DealDamage(4) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 4 damage.";
+}
+
+// ------------------------------
+
+name Dragonguard;
+id SD04-006;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity S;
+cost 4;
+stats 4/5;
+
+text "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)
+      [fanfare] If Overflow is active for you, give this follower [attack]+2/[defense]+2.";
+
+keyword Ward;
+ability Fanfare {
+    condition o;
+    text "If Overflow is active for you, give this follower [attack]+2/[defense]+2.";
+    effect GiveStat(AtkDef, 2) to Self;
+}
+
+// ------------------------------
+
+name Fire Lizard;
+id BP01-094;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Select an enemy leader or enemy follower on the field and deal it 1 damage.";
+
+ability Fanfare {
+    effect DealDamage(1) to TargetOpponentCardOrLeader F;
+    text "Select an enemy leader or enemy follower on the field and deal it 1 damage.";
+}
+
+// ------------------------------
+
+name Dread Dragon;
+id BP01-097;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 7;
+stats 7/7;
+
+text "[fanfare] Select an enemy follower on the field and deal it 7 damage.";
+
+ability Fanfare {
+    effect DealDamage(7) to TargetOpponentCardOrLeader F;
+    text "Select an enemy follower on the field and deal it 7 damage.";
+}
+
+// ------------------------------
+
+name Roc;
+id SD04-009;
+class Dragon;
+type Follower;
+trait Beast;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost00]: Evolve this follower.
+      Strike: Give this follower [attack]+1.";
+
+evolve 0;
+ability Strike {
+    text "Give this follower [attack]+1.";
+    effect GiveStat(Atk, 1) to Self;
+}
+
+// ------------------------------
+
+name Roc (Evolved);
+id SD04-010;
+class Dragon;
+type Evolved Follower;
+trait Beast;
+rarity B;
+stats 3/3;
+
+text "Strike: Give this follower [attack]+1/[defense]+1.";
+
+ability Strike {
+    text "Give this follower [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Glint Dragon;
+id SD04-011;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 4;
+stats 5/3;
+
+text "[fanfare] Select an enemy follower on the field and deal it 3 damage.";
+
+ability Fanfare {
+    effect DealDamage(3) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 3 damage.";
+}
+
+// ------------------------------
+
+name Dragonrider;
+id SD04-012;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] If Overflow is active for you, put a Dragon token into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    condition o;
+    text "If Overflow is active for you, put a Dragon token into your EX area.";
+    effect SummonToken(Dragon, ExArea, 1);
+}
+
+// ------------------------------
+
+name Dragonrider (Evolved);
+id SD04-013;
+class Dragon;
+type Evolved Follower;
+trait Dragonheart;
+rarity B;
+stats 3/3;
+
+text "On Evolve: If Overflow is active for you, give this follower [attack]+2. (Overflow becomes active if your maximum number of play points is at least 7.)";
+
+ability OnEvolve {
+    condition o;
+    text "If Overflow is active for you, give this follower [attack]+2.";
+    effect GiveStat(Atk, 2) to Self;
+}
+
+// ------------------------------
+
+name Seabrand Dragon;
+id SD04-014;
+class Dragon;
+type Follower;
+trait Marine;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "[fanfare] If Overflow is active for you, give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)";
+
+ability Fanfare {
+    condition o;
+    text "If Overflow is active for you, give this follower Storm.";
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Blazing Breath;
+id BP01-098;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity B;
+cost 1;
+
+text "[quick]
+      Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect DealDamage(2o4) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.";
+}
+
+// ------------------------------
+
+name Dragon Wings;
+id BP01-099;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity B;
+cost 1;
+
+text "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)";
+
+ability Spell {
+    effect DealDamage(2o3) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Goliath;
+id BP01-174;
+class Neutral;
+type Follower;
+trait Gigant;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "[evolve][cost02]: Evolve this follower.";
+
+evolve 2;
+
+// ------------------------------
+
+name Goliath (Evolved);
+id BP01-175;
+class Neutral;
+type Evolved Follower;
+trait Gigant;
+rarity B;
+stats 5/6;
+
+// ------------------------------
+
+name Rowen;
+id BP01-LD07;
+class Dragon;
+type Leader;
+
+// ------------------------------
+
+name Dragon;
+id BP01-T11;
+class Dragon;
+type Follower / Token;
+trait Wyrmkin;
+cost 4;
+stats 5/5;

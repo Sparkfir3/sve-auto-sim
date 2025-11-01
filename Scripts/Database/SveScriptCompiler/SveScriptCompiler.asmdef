@@ -1,0 +1,17 @@
+{
+    "name": "SveScriptCompiler",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b8baeb1a1891eb8449da4a0c6141f10b",
+        "GUID:1949c553203327a4eb0a96e7dc554faa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,415 @@
+name Mythril Golem;
+id SD03-001;
+class Rune;
+type Follower;
+trait Golem;
+rarity L;
+cost 6;
+stats 5/6;
+
+text "[fanfare] Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader. (If you have at least 7 spells in your cemetery, perform Spellchain (7). Then, if you have at least 15 spells, perform SC (15).)";
+
+ability Fanfare {
+    text "Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.";
+    effect Sequence("Damage Followers", "Damage Leader");
+}
+ability Spell name "Damage Followers" {
+    effect DealDamage(3s(7)5) to AllOpponentCards F;
+}
+ability Spell name "Damage Leader" {
+    condition s(15);
+    effect DealDamage(5) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Rune Blade Summoner;
+id SD03-002;
+class Rune;
+type Follower;
+trait Mage;
+rarity G;
+cost 3;
+stats 1/1;
+
+text "[fanfare] Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm. (If you have at least 5 spells in your cemetery, perform Spellchain (5). Then, if you have at least 10 spells, perform SC (10).)";
+
+ability Fanfare {
+    text "Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm.";
+    effect Sequence("Gain Stat", "Gain Storm");
+}
+ability Spell name "Gain Stat" {
+    condition s(5);
+    effect GiveStat(AtkDef, 4) to Self;
+}
+ability Spell name "Gain Storm" {
+    condition s(10);
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Demonflame Mage;
+id SD03-003;
+class Rune;
+type Follower;
+trait Mage;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Demonflame Mage (Evolved);
+id SD03-004;
+class Rune;
+type Evolved Follower;
+trait Mage;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Deal 2 damage to each enemy follower on the field.";
+
+ability OnEvolve {
+    text "Deal 2 damage to each enemy follower on the field.";
+    effect DealDamage(2) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Insight;
+id SD03-005;
+class Rune;
+type spell;
+trait Mage;
+rarity S;
+cost 1;
+
+text "[quick]
+Draw a card.";
+
+keyword Quick;
+ability Spell name "Draw" {
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Fire Chain;
+id SD03-006;
+class Rune;
+type Spell;
+trait Mage;
+rarity S;
+cost 2;
+
+text "[quick]
+Select up to 2 enemy followers on the field and deal 3 damage divided between them.";
+
+keyword Quick;
+ability Spell {
+    effect DealDamageDivided(3) to Fm(1,2);
+    text "Select up to 2 enemy followers on the field and deal 3 damage divided between them.";
+}
+
+// ------------------------------
+
+name Lightning Shooter;
+id BP01-070;
+class Rune;
+type Follower;
+trait Mage;
+rarity B;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
+
+ability Fanfare {
+    text "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
+    effect Sequence("Damage Follower", "Damage Leader");
+}
+ability Spell name "Damage Follower" {
+    effect DealDamage(2s(5)4) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
+}
+ability Spell name "Damage Leader" {
+    condition s(10);
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Penguin Wizard;
+id SD03-008;
+class Rune;
+type Follower;
+trait Arcanaform;
+rarity B;
+cost 2;
+stats 1/4;
+
+text "[evolve][cost01]: Evolve this follower.
+[act][engage], discard a spell: Draw a card.";
+
+evolve 1;
+ability Activate {
+    cost (EngageSelf), (Discard, 1, S);
+    effect DrawCard(1);
+    text "[act][engage], discard a spell: Draw a card.";
+}
+
+// ------------------------------
+
+name Penguin Wizard (Evolved);
+id SD03-009;
+class Rune;
+type Evolved Follower;
+trait Arcanaform;
+rarity B;
+stats 2/5;
+
+text "On Evolve: Refresh this card.
+      [act][engage], discard a spell: Draw a card.";
+
+ability OnEvolve {
+    text "Refresh this card.";
+    effect ReserveCard() to Self;
+}
+ability Activate {
+    cost (EngageSelf), (Discard, 1, S);
+    effect DrawCard(1);
+    text "[act][engage], discard a spell: Draw a card.";
+}
+
+// ------------------------------
+
+name Sammy, Wizard's Apprentice;
+id SD03-010;
+class Rune;
+type Follower;
+trait Mage;
+rarity B;
+cost 1;
+stats 2/1;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Look at the top card of your deck. You may put it into your cemetery.";
+
+evolve 2;
+ability Fanfare {
+    effect CheckTop(1, (Cemetery, m(0,1)));
+    text "Look at the top card of your deck. You may put it into your cemetery.";
+}
+
+// ------------------------------
+
+name Sammy, Wizard's Apprentice (Evolved);
+id SD03-011;
+class Rune;
+type Evolved Follower;
+trait Mage;
+rarity B;
+stats 3/2;
+
+text "On Evolve: Each player draws a card.";
+
+ability OnEvolve {
+    text "Each player draws a card.";
+    effect DrawCard(1) to AllPlayers;
+}
+
+// ------------------------------
+
+name Wind Blast;
+id BP01-071;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 1;
+
+text "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.";
+
+ability Spell {
+    condition p(#F);
+    effect DealDamage(2s(10)4) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.";
+}
+
+// ------------------------------
+
+name Sorcery Cache;
+id BP01-072;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 2;
+
+text "[quick]
+      Look at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.";
+
+keyword Quick;
+ability Spell {
+    effect CheckTop(4, (Hand, S, m(0,1)), (Cemetery, S, m(0,1)), (BottomDeckAnyOrder));
+    text "Look at the top 4 cards of your deck. You may reveal a spell from among them and put it into your hand. You may put a spell from among them into your cemetery. Put the rest on the bottom of your deck in any order.";
+}
+
+// ------------------------------
+
+name Fiery Embrace;
+id BP01-073;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 4;
+
+text "[quick]
+      Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect Sequence("Destroy Follower", "Damage Leader");
+}
+ability Spell name "Destroy Follower" {
+    effect DestroyCard() to TargetOpponentCard F;
+    text "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.";
+}
+ability Spell name "Damage Leader" {
+    condition s(10);
+    effect DealDamage(3) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Magic Missile;
+id SD03-015;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 3;
+
+text "[quick]
+      Select an enemy follower on the field. Deal it 2 damage and draw a card.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect Sequence("Damage Follower", "Draw");
+}
+ability Spell name "Damage Follower" {
+    effect DealDamage(2) to TargetOpponentCard F;
+    text "Select an enemy follower on the field. Deal it 2 damage and draw a card.";
+}
+ability Spell name "Draw" {
+    effect DrawCard(1) to Self;
+}
+
+// ------------------------------
+
+name Conjure Golem;
+id SD03-016;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 1;
+
+text "[quick]
+      Put a Guardform Golem or Strikeform Golem token into your EX area.";
+
+keyword Quick;
+ability Spell {
+    effect ChooseFromList("Guardform Golem", "Strikeform Golem");
+    text "Put a Guardform Golem or Strikeform Golem token into your EX area.";
+}
+ability Spell name "Guardform Golem" {
+    effect SummonToken(Guardform Golem, ExArea, 1);
+    text "Guardform Golem";
+}
+ability Spell name "Strikeform Golem" {
+    effect SummonToken(Strikeform Golem, ExArea, 1);
+    text "Strikeform Golem";
+}
+
+// ------------------------------
+
+name Healing Angel;
+id BP01-177;
+class Neutral;
+type Follower;
+trait Angel;
+rarity B;
+cost 3;
+stats 2/4;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Give your leader [defense]+1.";
+
+evolve 1;
+ability Fanfare {
+    text "Give your leader [defense]+1.";
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Healing Angel (Evolved);
+id BP01-178;
+class Neutral;
+type Evolved Follower;
+trait Angel;
+rarity B;
+stats 3/5;
+
+text "On Evolve: Give your leader [defense]+2.";
+
+ability OnEvolve {
+    text "Give your leader [defense]+2.";
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Isabelle;
+id BP01-LD05;
+class Rune;
+type Leader;
+
+// ------------------------------
+
+name Strikeform Golem;
+id BP01-T08;
+class Rune;
+type Follower / Token;
+trait Golem;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)";
+
+keyword Rush;
+
+// ------------------------------
+
+name Guardform Golem;
+id BP01-T09;
+class Rune;
+type Follower / Token;
+trait Golem;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)";
+
+keyword Ward;

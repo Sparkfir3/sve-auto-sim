@@ -1,0 +1,397 @@
+name Aria, Fairy Princess;
+id SD01-001;
+class Forest;
+type Follower;
+trait Pixie / Princess;
+rarity L;
+cost 6;
+stats 5/5;
+
+text "Ward.
+[fanfare] Put up to 9 Fairy tokens onto your field or into your EX area.
+While this card is on your field, your other Pixie followers have Rush.";
+
+keywords Ward;
+ability Fanfare {
+    text "Put up to 9 Fairy tokens onto your field or into your EX area.";
+    effect SummonToken(Fairy, ChooseForEachFieldOrEx, 9);
+}
+ability Passive name "Give Rush" {
+    effect GiveKeyword(Rush, WhileOnField) to AllPlayerCards Ft(Pixie)X;
+}
+
+// ------------------------------
+
+name Titania's Sanctuary;
+id SD01-002;
+class Forest;
+type Amulet;
+trait Pixie / Princess;
+rarity G;
+cost 2;
+
+text "[fanfare] Give each Pixie token on your field [attack]+1/[defense]+1.
+While this card is on your field, your Pixie tokens have Assail. Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    text "Give each Pixie token on your field [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Kt(Pixie);
+}
+ability Passive name "Give Assail" {
+    effect GiveKeyword(Assail, WhileOnField) to AllPlayerCards Kt(Pixie);
+}
+ability OnOtherEnterField {
+    filter Kt(Pixie);
+    text "Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Rose Gardener;
+id SD01-003;
+class Forest;
+type Follower;
+trait Verdant;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Rose Gardener (Evolved);
+id SD01-004;
+class Forest;
+type Evolved Follower;
+trait Verdant;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card. (Tokens returned to a player's hand are removed from the game.)";
+
+ability OnEvolve name "On Evolve" {
+    text "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.";
+    effect Sequence("Return Enemy to Hand", "Combo 3 - Draw");
+}
+ability Spell name "Return Enemy to Hand" {
+    effect ReturnToHand() to TargetOpponentCard F;
+    text "Select an enemy follower on the field and return it to its owner's hand.";
+}
+ability Spell name "Combo 3 - Draw" {
+    effect DrawCard(0c(3)1) to Self;
+}
+
+// ------------------------------
+
+name Waltzing Fairy;
+id SD01-005;
+class Forest;
+type Follower;
+trait Pixie;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[fanfare][lastwords] Put a Fairy token into your EX area.";
+
+ability Fanfare {
+    text "Put a Fairy token into your EX area.";
+    effect SummonToken("Fairy", ExArea, 1);
+}
+ability LastWords name "Last Words" {
+    text "Put a Fairy token into your EX area.";
+    effect SummonToken("Fairy", ExArea, 1);
+}
+
+// ------------------------------
+
+name Fairy Caster;
+id SD01-006;
+class Forest;
+type Follower;
+trait Elf;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
+
+ability Fanfare {
+    text "Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
+    effect SummonToken("Fairy", FieldOverflowToEx, 3);
+}
+
+// ------------------------------
+
+name Elf Metallurgist;
+id BP01-017;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)";
+
+ability Fanfare {
+    effect DealDamage(1c(3)3) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.";
+}
+
+// ------------------------------
+
+name Okami;
+id BP01-021;
+class Forest;
+type Follower;
+trait Beast;
+rarity B;
+cost 4;
+stats 5/5;
+
+text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
+
+ability OnOtherEnterField name "Other Card Enter Field" {
+    filter F;
+    text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Treant;
+id SD01-009;
+class Forest;
+type Follower;
+trait Fae-Touched;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost02]: Evolve this follower.
+[fanfare] Combo (3): Change this card's [evolve] cost to 0. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)";
+
+evolve 2;
+ability Fanfare {
+    condition c(3);
+    text "Combo (3): Change this card's [evolve] cost to 0.";
+    effect SetStat(EvolveCost, 0) to Self;
+}
+
+// ------------------------------
+
+name Treant (Evolved);
+id SD01-010;
+class Forest;
+type Evolved Follower;
+trait Fae-Touched;
+rarity B;
+stats 5/5;
+
+// ------------------------------
+
+name Water Fairy;
+id SD01-011;
+class Forest;
+type Follower;
+trait Pixie;
+rarity B;
+cost 1;
+stats 1/1;
+
+text "[evolve][cost02]: Evolve this follower.
+[lastwords] Put a Fairy token into your EX area.";
+
+evolve 2;
+ability LastWords name "Last Words" {
+    text "Put a Fairy token into your EX area.";
+    effect SummonToken("Fairy", ExArea, 1);
+}
+
+// ------------------------------
+
+name Water Fairy (Evolved);
+id SD01-012;
+class Forest;
+type Evolved Follower;
+trait Pixie;
+rarity B;
+stats 2/2;
+
+text "On Evolve: Summon a Fairy token.
+[lastwords] Put a Fairy token into your EX area.";
+
+ability OnEvolve name "On Evolve" {
+    text "Summon a Fairy token.";
+    effect SummonToken("Fairy", Field, 1);
+}
+ability LastWords name "Last Words" {
+    text "Put a Fairy token into your EX area.";
+    effect SummonToken("Fairy", ExArea, 1);
+}
+
+// ------------------------------
+
+name Elf Wanderer;
+id SD01-013;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "Assail. (Followers with Assail can attack reserved followers.)
+This follower ignores Ward.";
+
+keywords Assail, IgnoreWard;
+
+// ------------------------------
+
+name Fairy Circle;
+id BP01-023;
+class Forest;
+type Spell;
+trait Pixie;
+rarity B;
+cost 1;
+
+text "Put 3 Fairy tokens into your EX area.";
+
+ability Spell name "Summon Fairy Tokens" {
+    effect SummonToken("Fairy", ExArea, 3);
+}
+
+// ------------------------------
+
+name Woodland Refuge;
+id BP01-025;
+class Forest;
+type Amulet;
+trait Fae-Touched;
+rarity B;
+cost 1;
+
+text "[fanfare] Select a Pixie follower on your field and give it [attack]+1.
+[act][cost01], [engage]: Return this card to its owner's hand.";
+
+ability Fanfare name "Fanfare" {
+    effect GiveStat(Atk, 1) to TargetPlayerCard Ft(Pixie);
+    text "Select a Pixie follower on your field and give it [attack]+1";
+}
+ability Act name "Return to Hand" {
+    costs (PP, 1), (EngageSelf);
+    effect ReturnToHand() to Self;
+    text "[cost01], [engage]: Return this card to its owner's hand.";
+}
+
+// ------------------------------
+
+name Sylvan Justice;
+id SD01-016;
+class Forest;
+type Spell;
+trait Elf;
+rarity B;
+cost 2;
+
+text "[quick]
+Select an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.";
+
+keyword Quick;
+ability Spell name "Quick" {
+    condition p(#F);
+    effect Sequence("Damage", "Token");
+}
+ability Spell name "Damage" {
+    effect DealDamage(3) to TargetOpponentCard F;
+    text "Select an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.";
+}
+ability Spell name "Token" {
+    effect SummonToken("Fairy", ExArea, 1);
+}
+
+// ------------------------------
+
+name Goblin;
+id BP01-171;
+class Neutral;
+type Follower;
+trait Goblinoid;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[evolve][cost04]: Evolve this follower.";
+
+evolve 4;
+
+// ------------------------------
+
+name Goblin (Evolved);
+id BP01-172;
+class Neutral;
+type Evolved Follower;
+trait Goblinoid;
+rarity B;
+stats 4/4;
+
+// ------------------------------
+
+name Angelic Snipe;
+id BP01-179;
+class Neutral;
+type Spell;
+trait Pixie;
+rarity B;
+cost 1;
+
+text "[quick]
+Select an enemy follower on the field and deal it 2 damage.";
+
+keyword Quick;
+ability Spell name "Deal Damage" {
+    condition p(#F);
+    effect DealDamage(2) to TargetOpponentCard F;
+    text "Select an enemy follower on the field and deal it 2 damage.";
+}
+
+// ------------------------------
+
+name Angelic Barrage;
+id BP01-180;
+class Neutral;
+type Spell;
+trait Pixie;
+rarity B;
+cost 1;
+
+text "[quick]
+Deal 1 damage to each enemy follower on the field.";
+
+keyword Quick;
+ability Spell name "Damage" {
+    effect DealDamage(1) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Arisa;
+id BP01-LD01;
+class Forest;
+type Leader;
+
+// ------------------------------
+
+name Fairy;
+id BP01-T03;
+class Forest;
+type Follower / Token;
+trait Pixie;
+cost 1;
+stats 1/1;

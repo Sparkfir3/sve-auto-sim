@@ -1,0 +1,359 @@
+name Skullfane;
+id SD06-001;
+class Haven;
+type Follower;
+trait Zealot / Eidolon;
+rarity L;
+cost 7;
+stats 6/6;
+
+text "[fanfare] Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.
+      Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.";
+
+ability Fanfare {
+    text "Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.";
+    effect CheckTop(4, (Field, A, m(0,1)), (Cemetery));
+}
+ability OnOtherLeaveField {
+    filter A;
+    text "Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.";
+    effect Sequence("Damage Leader", "Damage Followers");
+}
+ability Spell name "Damage Leader" {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability Spell name "Damage Followers" {
+    effect DealDamage(2) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Hare of Illusions;
+id SD06-002;
+class Haven;
+type Amulet;
+trait Faith;
+rarity G;
+cost 0;
+
+text "[act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and engage it.
+      [act][cost10], [engage], put this card into its owner's cemetery: Banish each follower on the field.";
+
+ability Activate name "Engage" {
+    condition p(#F);
+    cost (EngageSelf), (SendToCemetery, Self);
+    text "[engage], put this card into its owner's cemetery: Select an enemy follower on the field and engage it.";
+    effect EngageCard() to TargetOpponentCard F;
+}
+ability Activate name "Banish" {
+    cost (PP, 10), (EngageSelf), (SendToCemetery, Self);
+    text "[cost10], [engage], put this card into its owner's cemetery: Banish each follower on the field.";
+    effect Banish() to AllCards F;
+}
+
+// ------------------------------
+
+name Priest of the Cudgel;
+id SD06-003;
+class Haven;
+type Follower;
+trait Faith;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Priest of the Cudgel (Evolved);
+id SD06-004;
+class Haven;
+type Evolved Follower;
+trait Faith;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Select an enemy follower with 3 defense or less on the field and banish it.";
+
+ability OnEvolve {
+    text "Select an enemy follower with 3 defense or less on the field and banish it.";
+    effect Banish() to TargetOpponentCard Fd(m(0,3));
+}
+
+// ------------------------------
+
+name Acolyte's Light;
+id SD06-005;
+class Haven;
+type Spell;
+trait Faith;
+rarity S;
+cost 4;
+
+text "[quick]
+      Select an enemy follower on the field. Banish it and give your leader [defense]+2.";
+
+keyword Quick;
+ability Spell {
+    effect Sequence("Banish", "Defense");
+}
+ability Spell name Banish {
+    text "Select an enemy follower on the field. Banish it and give your leader [defense]+2.";
+    effect Banish() to TargetOpponentCard F;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Dual Flames;
+id SD06-006;
+class Haven;
+type Amulet;
+trait Faith / Beast;
+rarity S;
+cost 4;
+
+text "[fanfare] Summon a Holy Tiger token.
+      [act][cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
+
+ability Fanfare {
+    text "Summon a Holy Tiger token.";
+    effect SummonToken("Holy Tiger", Field, 1);
+}
+ability Act {
+    cost (PP, 2), (EngageSelf), (SendToCemetery, Self);
+    text "[cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
+    effect SummonToken("Holy Tiger", Field, 1);
+}
+
+// ------------------------------
+
+name Cruel Priestess;
+id BP01-142;
+class Haven;
+type Follower;
+trait Zealot;
+rarity B;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.";
+
+ability Fanfare {
+    text "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.";
+    effect CemeteryToField(1, Ap(m(0,5)));
+}
+
+// ------------------------------
+
+name Snake Priestess;
+id BP01-146;
+class Haven;
+type Follower;
+trait Zealot;
+rarity B;
+cost 1;
+stats 1/3;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Ardent Nun;
+id SD06-009;
+class Haven;
+type Follower;
+trait Faith;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      Ward.
+      During each opponent's turn, this follower deals 1 more damage.";
+
+evolve 1;
+keyword Ward;
+ability Passive {
+    effect GiveKeyword(Plus1Damage, OpponentTurn) to Self;
+}
+
+// ------------------------------
+
+name Ardent Nun (Evolved);
+id SD06-010;
+class Haven;
+type Evolved Follower;
+trait Faith;
+rarity B;
+stats 3/3;
+
+text "Ward.
+      During each opponent's turn, this follower deals 2 more damage.";
+
+keyword Ward;
+ability Passive {
+    effect GiveKeyword(Plus2Damage, OpponentTurn) to Self;
+}
+
+// ------------------------------
+
+name Guardian Nun;
+id SD06-011;
+class Haven;
+type Follower;
+trait Faith;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      Ward.
+      [fanfare] If there is an amulet on your field, give this follower [defense]+1.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    condition f(A);
+    text "If there is an amulet on your field, give this follower [defense]+1.";
+    effect GiveStat(Def, 1) to Self;
+}
+
+// ------------------------------
+
+name Guardian Nun (Evolved);
+id SD06-012;
+class Haven;
+type Evolved Follower;
+trait Faith;
+rarity B;
+stats 4/4;
+
+text "Ward.
+      On Evolve: Give your leader [defense]+2.";
+
+keyword Ward;
+ability OnEvolve {
+    text "Give your leader [defense]+2.";
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Hallowed Dogma;
+id BP01-148;
+class Haven;
+type Spell;
+trait Faith;
+rarity B;
+cost 1;
+
+text "[quick]
+      Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+keyword Quick;
+ability Spell {
+    text "Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+    effect CheckTop(5, (Hand, A, 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Death Sentence;
+id BP01-150;
+class Haven;
+type Amulet;
+trait Zealot;
+rarity B;
+cost 3;
+
+text "This card is put onto the field engaged.
+      [act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.";
+
+keyword PutOnFieldEngaged;
+ability Activate {
+    condition p(#F);
+    cost (EngageSelf), (SendToCemetery, Self);
+    text "[engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.";
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Pinion Prayer;
+id SD06-015;
+class Haven;
+type Amulet;
+trait Faith / Avian;
+rarity B;
+cost 1;
+
+text "[act][cost01], [engage], put this card into its owner's cemetery: Summon a Holy Falcon token.";
+
+ability Activate {
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
+    text "[cost01], [engage], put this card into its owner's cemetery: Summon a Holy Falcon token.";
+    effect SummonToken("Holy Falcon", Field, 1);
+}
+
+// ------------------------------
+
+name Beastly Vow;
+id SD06-016;
+class Haven;
+type Amulet;
+trait Faith / Beast;
+rarity B;
+cost 2;
+
+text "This card is put onto the field engaged.
+      [act][cost01], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
+
+keyword PutOnFieldEngaged;
+ability Activate {
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
+    text "[cost01], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
+    effect SummonToken("Holy Tiger", Field, 1);
+}
+
+// ------------------------------
+
+name Eris;
+id BP01-LD11;
+class Haven;
+type Leader;
+
+// ------------------------------
+
+name Holy Falcon;
+id BP01-T16;
+class Haven;
+type Follower / Token;
+trait Avian;
+cost 3;
+stats 2/2;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+
+name Holy Tiger;
+id BP01-T17;
+class Haven;
+type Follower / Token;
+trait Beast;
+cost 4;
+stats 4/4;
+
+text "Rush.";
+
+keyword Rush;
