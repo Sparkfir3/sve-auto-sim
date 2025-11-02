@@ -203,6 +203,7 @@ namespace SVESimulator
                 SVEProperties.StatBoostType.Attack => new [] { SVEProperties.CardStats.Attack },
                 SVEProperties.StatBoostType.Defense => new [] { SVEProperties.CardStats.Defense },
                 SVEProperties.StatBoostType.AttackDefense => new [] { SVEProperties.CardStats.Attack, SVEProperties.CardStats.Defense },
+                SVEProperties.StatBoostType.Cost => new [] { SVEProperties.CardStats.Cost },
                 SVEProperties.StatBoostType.EvolveCost => new [] { SVEProperties.CardStats.EvolveCost },
                 _ => null
             };

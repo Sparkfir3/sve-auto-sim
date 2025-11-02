@@ -343,6 +343,7 @@ namespace SVESimulator.SveScript
             { "Defense", "Defense" },
             { "AtkDef", "AttackDefense" },
             { "AttackDefense", "AttackDefense" },
+            { "Cost", "Cost" },
             { "EvolveCost", "EvolveCost" },
 
             { "MaxPlayPoint", "MaxPlayPoint"},
