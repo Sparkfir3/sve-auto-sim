@@ -304,6 +304,7 @@ namespace SVESimulator.SveScript
             { "Mill", new EffectParams("SVESimulator.SveMillDeckEffect",                  false, false, EffectParameterType.Amount) },
             { "TopDeckToEx", new EffectParams("SVESimulator.SveTopDeckToExEffect",        false, false, EffectParameterType.Amount) },
             { "TopDeckToExArea", new EffectParams("SVESimulator.SveTopDeckToExEffect",    false, false, EffectParameterType.Amount) },
+            { "TopDeckToExAndTarget", new EffectParams("SVESimulator.SveTopDeckToExAndTargetEffect", false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
 
             { "CheckTop", new EffectParams("SVESimulator.SveCheckTopDeckEffect",          false, false, EffectParameterType.CheckCardActions) },
             { "ChooseFromList", new EffectParams("SVESimulator.SveChooseEffectFromList",  false, false, EffectParameterType.ListOfEffects) },

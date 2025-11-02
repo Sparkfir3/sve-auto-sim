@@ -462,10 +462,10 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void TopDeckToExArea(CardObject card = null)
+        public CardObject TopDeckToExArea(CardObject card = null)
         {
             if(!localZoneController.exAreaZone.HasOpenSlot())
-                return;
+                return card;
 
             RuntimeCard runtimeCard = card ? card.RuntimeCard : null;
             if(runtimeCard == null)
@@ -474,6 +474,7 @@ namespace SVESimulator
                 card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
             }
             SendToExArea(card, SVEProperties.Zones.Deck);
+            return card;
         }
 
         public void SendToExArea(CardObject card, string originZone = null)
