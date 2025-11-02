@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
+using Sparkfire.Utility;
 using SVESimulator.UI;
 
 namespace SVESimulator
@@ -27,49 +28,56 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            SVEEffectPool.Instance.StartCoroutine(ResolveCoroutine());
-            IEnumerator ResolveCoroutine()
-            {
-                CardObject cardObject = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
-                Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
-                List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence });
-                foreach(string effectName in allEffects)
-                {
-                    if(string.IsNullOrWhiteSpace(effectName))
-                        continue;
-
-                    // Fetch ability
-                    Ability abilityToResolve = sveAbilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
-                    if(abilityToResolve == null)
-                    {
-                        Debug.LogWarning($"Attempted to resolve sequenced ability {effectName} from card {libraryCard.name} which doesn't exist");
-                        continue;
-                    }
-
-                    // Condition check
-                    SveTrigger trigger = (abilityToResolve as TriggeredAbility)?.trigger as SveTrigger;
-                    if(trigger != null && !string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
-                        continue;
-
-                    // Resolve with cost check
-                    bool effectDone = false;
-                    SveEffect effect = abilityToResolve.effect as SveEffect;
-                    Action resolveAction = () =>
-                    {
-                        effect?.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () => { effectDone = true; });
-                    };
-                    if(trigger?.Costs is { Count: > 0 })
-                        SelectPayCostOrDecline(player, cardObject, trigger, effect, effectName, resolveAction);
-                    else
-                        resolveAction.Invoke();
-                    yield return new WaitUntil(() => effectDone);
-                }
-
-                onComplete?.Invoke();
-            }
+            SVEEffectPool.Instance.StartCoroutine(ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete));
         }
 
-        private void SelectPayCostOrDecline(PlayerController player, CardObject card, SveTrigger trigger, SveEffect effect, string effectName, Action onComplete)
+        // ------------------------------
+
+        public static IEnumerator ResolveEffectsAsSequence(List<string> effectList, PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone,
+            Action onComplete, string additionalFilters = null)
+        {
+            player.ZoneController.AllZones[sourceCardZone].TryGetCard(sourceCardInstanceId, out CardObject cardObject);
+            Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
+            List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence });
+
+            foreach(string effectName in effectList)
+            {
+                if(effectName.IsNullOrWhiteSpace())
+                    continue;
+
+                // Fetch ability
+                Ability baseAbility = sveAbilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
+                if(baseAbility == null)
+                {
+                    Debug.LogWarning($"Attempted to resolve sequenced ability {effectName} from card {libraryCard.name}, but failed to find the ability");
+                    continue;
+                }
+
+                // Condition check
+                SveTrigger trigger = (baseAbility as TriggeredAbility)?.trigger as SveTrigger;
+                if(trigger != null && !string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
+                    continue;
+
+                // Resolve with cost check
+                bool effectDone = false;
+                SveEffect effectToPerform = !additionalFilters.IsNullOrWhiteSpace()
+                    ? baseAbility.effect as SveEffect
+                    : (baseAbility.effect as SveEffect).CopyWithAddFilters(additionalFilters);
+                Action resolveAction = () =>
+                {
+                    effectToPerform?.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () => { effectDone = true; });
+                };
+                if(trigger?.Costs is { Count: > 0 })
+                    SelectPayCostOrDecline(player, cardObject, trigger, effectToPerform, effectName, resolveAction);
+                else
+                    resolveAction.Invoke();
+                yield return new WaitUntil(() => effectDone);
+                yield return new WaitForEndOfFrame();
+            }
+            onComplete?.Invoke();
+        }
+
+        private static void SelectPayCostOrDecline(PlayerController player, CardObject card, SveTrigger trigger, SveEffect effect, string effectName, Action onComplete)
         {
             if(trigger.Costs == null || trigger.Costs.Count == 0)
             {
