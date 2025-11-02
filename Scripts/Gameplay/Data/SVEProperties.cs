@@ -145,6 +145,7 @@ namespace SVESimulator
             public const string IgnoreWard = "IgnoreWard";
             public const string PutOnFieldEngaged = "PutOnFieldEngaged";
             public const string CannotDealDamage = "CannotDealDamage";
+            public const string CannotAttack = "CannotAttack";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";

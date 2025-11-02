@@ -145,9 +145,10 @@ namespace SVESimulator
                 return;
             }
 
-            wardTargetExists = cardSlots.Values.Any(x => x.card &&
-                x.card.Engaged && x.card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward)
-                && !attacker.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.IgnoreWard));
+            wardTargetExists = !attacker.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.IgnoreWard)
+                && cardSlots.Values.Any(x => x.card && x.card.Engaged
+                    && x.card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward)
+                    && !x.card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Intimidate));
             foreach(CardSlot slot in cardSlots.Values)
             {
                 if(!slot.card)
@@ -158,7 +159,8 @@ namespace SVESimulator
                     if(wardTargetExists)
                         slot.card.IsValidDefender = slot.card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward) && slot.card.Engaged;
                     else
-                        slot.card.IsValidDefender = attacker.RuntimeCard.HasKeyword(SVEProperties.Keywords.Assail) || slot.card.Engaged;
+                        slot.card.IsValidDefender = (attacker.RuntimeCard.HasKeyword(SVEProperties.Keywords.Assail) || slot.card.Engaged)
+                            && !slot.card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Intimidate);
 
                     if(slot.card.IsValidDefender)
                         slot.card.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
