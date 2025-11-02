@@ -53,7 +53,10 @@ namespace SVESimulator.SveScript
 
             { "IgnoreWard",         new Keyword(1, 0) },
             { "PutOnFieldEngaged",  new Keyword(1, 1) },
+            { "CantDealDamage",   new Keyword(1, 2) },
             { "CannotDealDamage",   new Keyword(1, 2) },
+            { "CantAttack",       new Keyword(1, 3) },
+            { "CannotAttack",       new Keyword(1, 3) },
 
             { "Plus1Damage",        new Keyword(2, 0) },
             { "Plus2Damage",        new Keyword(2, 1) },
