@@ -106,8 +106,7 @@ namespace SVESimulator
         public void OnStartTurn()
         {
             NumberOfTurnsOnBoard++;
-            CanAttack = this.IsFollowerOrEvolvedFollower() && NumberOfTurnsOnBoard > 0;
-            CanAttackLeader = this.IsFollowerOrEvolvedFollower() && NumberOfTurnsOnBoard > 0;
+            CalculateCanAttackStatus();
         }
 
         public void OnMoveZone()
