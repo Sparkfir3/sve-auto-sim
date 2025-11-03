@@ -332,7 +332,7 @@ namespace SVESimulator
 
         public void ResolvePendingEffect(SVEPendingEffect pendingEffect, Action onComplete = null)
         {
-            localPlayer.ZoneController.AllZones[pendingEffect.sourceCardZone].TryGetCard(pendingEffect.sourceCardInstanceId, out CardObject cardObject);
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(pendingEffect.sourceCardInstanceId);
             if(!string.IsNullOrWhiteSpace(pendingEffect.condition) && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
             {
                 onComplete?.Invoke();

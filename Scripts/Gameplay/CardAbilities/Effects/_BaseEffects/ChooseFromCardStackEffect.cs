@@ -27,8 +27,7 @@ namespace SVESimulator
             // Init
             GetMinMax(player, out int minSelect, out int maxSelect);
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
-            player.ZoneController.AllZones[sourceCardZone].TryGetCard(sourceCardInstanceId, out CardObject cardObject);
-            string cardName = cardObject ? LibraryCardCache.GetCard(cardObject.RuntimeCard?.cardId ?? -1, GameManager.Instance.config).name : ""; // need some weird null checks for edge cases?
+            string cardName = LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId, GameManager.Instance.config)?.name ?? "";
 
             player.InputController.allowedInputs = PlayerInputController.InputTypes.None;
             InitializeSelectionArea(player, selectionArea);

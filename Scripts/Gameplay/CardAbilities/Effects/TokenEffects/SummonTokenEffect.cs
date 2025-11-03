@@ -29,7 +29,7 @@ namespace SVESimulator
             switch(createTokenOption)
             {
                 case SVEProperties.TokenCreationOption.ChooseForEachFieldOrEx: // Select zone
-                    CardObject sourceCard = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
+                    CardObject sourceCard = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                     string cardName = sourceCard ? LibraryCardCache.GetCard(sourceCard.RuntimeCard.cardId).name : null;
                     EffectTargetingUI.TargetZone.SetDescriptionText(text);
                     EffectTargetingUI.TargetZone.SetCountRemainingText(tokenCount);

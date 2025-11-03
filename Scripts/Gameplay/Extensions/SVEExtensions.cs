@@ -166,34 +166,6 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Card Zones
-
-        public static CardObject GetCardInZoneFromBothPlayers(this PlayerController player, int cardInstanceId, string zone) => player.GetCardInZoneFromBothPlayers(cardInstanceId, zone, out _);
-        public static CardObject GetCardInZoneFromBothPlayers(this PlayerController player, int cardInstanceId, string zone, out bool isOpponent)
-        {
-            isOpponent = false;
-            player.ZoneController.AllZones[zone].TryGetCard(cardInstanceId, out CardObject cardObject);
-            if(!cardObject)
-            {
-                player.OppZoneController.AllZones[zone].TryGetCard(cardInstanceId, out cardObject);
-                isOpponent = true;
-            }
-            Debug.Assert(cardObject, $"Failed to find card with instance ID {cardInstanceId} in zone {zone}");
-            return cardObject;
-        }
-
-        public static CardObject GetCardOnFieldOrEXArea(this PlayerCardZoneController zoneController, int cardInstanceId)
-        {
-            CardObject card = zoneController.fieldZone.GetAllPrimaryCards().FirstOrDefault(x => x.RuntimeCard.instanceId == cardInstanceId);
-            if(!card)
-                card = zoneController.exAreaZone.GetAllPrimaryCards().FirstOrDefault(x => x.RuntimeCard.instanceId == cardInstanceId);
-            return card;
-        }
-
-        #endregion
-
-        // ------------------------------
-
         #region Effect Parameters/Costs
 
         public static string[] AsNamedStatArray(this SVEProperties.StatBoostType boostType)
