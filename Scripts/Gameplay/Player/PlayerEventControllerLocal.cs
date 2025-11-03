@@ -390,7 +390,7 @@ namespace SVESimulator
             if(CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
 
-            bool isLocalPlayersCard = localZoneController.AllZones[sourceZone].ContainsCard(card) || localZoneController.selectionArea.ContainsCard(card);
+            bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone || localZoneController.selectionArea.ContainsCard(card);
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
             RuntimeCard runtimeCard = card.RuntimeCard;
 
@@ -812,7 +812,7 @@ namespace SVESimulator
             if(card.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
-                CardObject cardObject = (isLocalPlayersCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(card.instanceId);
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
                 SendToCemetery(cardObject, onlyMoveObject: true);
             }
 
@@ -834,7 +834,7 @@ namespace SVESimulator
             if(card.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
-                CardObject cardObject = (isLocalPlayersCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(card.instanceId);
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
                 SendToCemetery(cardObject, onlyMoveObject: true);
             }
 
@@ -860,7 +860,7 @@ namespace SVESimulator
             // keywords Rush and Storm can change attacker status, so must recalculate attack status
             if(isLocalPlayersCard && isActivePlayer)
             {
-                CardObject cardObject = playerController.GetCardInZoneFromBothPlayers(card.instanceId, SVEProperties.Zones.Field);
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
                 if(cardObject)
                     cardObject.CalculateCanAttackStatus();
             }
@@ -911,7 +911,7 @@ namespace SVESimulator
             // Handle unique Stack counter logic
             if(counterType == SVEProperties.Counters.Stack && targetAmount <= 0)
             {
-                CardObject cardObject = playerController.GetCardInZoneFromBothPlayers(card.instanceId, SVEProperties.Zones.Field);
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
                 Debug.Assert(cardObject);
                 if(cardObject)
                     DestroyCard(cardObject, handleStack: false);
@@ -965,7 +965,7 @@ namespace SVESimulator
                 {
                     if(!cardsToMove[i].startZone.Equals(SVEProperties.Zones.Field))
                         continue;
-                    CardObject cardObject = playerController.GetCardInZoneFromBothPlayers(cardsToMove[i].cardInstanceId, cardsToMove[i].startZone);
+                    CardObject cardObject = CardManager.Instance.GetCardByInstanceId(cardsToMove[i].cardInstanceId);
                     if(cardObject)
                     {
                         RuntimeKeyword counterAsKeyword = cardObject.RuntimeCard.keywords.FirstOrDefault(x => x.keywordId == (int)SVEProperties.Counters.Stack);
@@ -996,7 +996,7 @@ namespace SVESimulator
                 {
                     if(removeCounterData.keywordType == (int)SVEProperties.Counters.Stack && removeCounterData.keywordValue <= removeCounterData.amount)
                     {
-                        CardObject cardObject = playerController.GetCardInZoneFromBothPlayers(removeCounterData.cardInstanceId, removeCounterData.cardZone);
+                        CardObject cardObject = CardManager.Instance.GetCardByInstanceId(removeCounterData.cardInstanceId);
                         Debug.Assert(cardObject);
                         if(cardObject)
                             DestroyCard(cardObject, handleStack: false);

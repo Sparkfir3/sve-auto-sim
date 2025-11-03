@@ -113,7 +113,8 @@ namespace SVESimulator
         public void SendToCemetery(OpponentSendCardToCemeteryMessage msg)
         {
             PlayerCardZoneController targetZoneController = msg.isOpponentCard ? localZoneController : oppZoneController;
-            if(!targetZoneController.AllZones[msg.originZone].TryGetCard(msg.card.instanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.card.instanceId);
+            if(!card)
             {
                 if(msg.originZone.Equals(SVEProperties.Zones.Deck))
                 {
@@ -144,7 +145,8 @@ namespace SVESimulator
         public void BanishCard(OpponentBanishCardMessage msg)
         {
             PlayerCardZoneController targetZoneController = msg.isOpponentCard ? localZoneController : oppZoneController;
-            if(!targetZoneController.AllZones[msg.originZone].TryGetCard(msg.card.instanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.card.instanceId);
+            if(!card)
             {
                 if(msg.originZone.Equals(SVEProperties.Zones.Deck))
                 {
@@ -168,7 +170,8 @@ namespace SVESimulator
         public void ReturnCardToHand(OpponentReturnToHandMessage msg)
         {
             PlayerCardZoneController targetZoneController = msg.isOpponentCard ? localZoneController : oppZoneController;
-            if(!targetZoneController.AllZones[msg.originZone].TryGetCard(msg.card.instanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.card.instanceId);
+            if(!card)
             {
                 if(msg.originZone.Equals(SVEProperties.Zones.Deck))
                 {
@@ -196,7 +199,8 @@ namespace SVESimulator
                 return;
 
             PlayerCardZoneController targetZoneController = msg.isOpponentCard ? localZoneController : oppZoneController;
-            if(!targetZoneController.AllZones[msg.originZone].TryGetCard(msg.cardInstanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
+            if(!card)
             {
                 Debug.LogError($"Failed to find card in zone {msg.originZone} with id {msg.cardInstanceId} to send to bottom deck");
                 return;
@@ -212,7 +216,8 @@ namespace SVESimulator
                 return;
 
             PlayerCardZoneController targetZoneController = msg.isOpponentCard ? localZoneController : oppZoneController;
-            if(!targetZoneController.AllZones[msg.originZone].TryGetCard(msg.cardInstanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
+            if(!card)
             {
                 Debug.LogError($"Failed to find card in zone {msg.originZone} with id {msg.cardInstanceId} to send to top deck");
                 return;
@@ -225,7 +230,8 @@ namespace SVESimulator
         public void SendToExArea(OpponentSendToExAreaMessage msg)
         {
             PlayerCardZoneController targetZoneController = msg.isOpponentCard ? localZoneController : oppZoneController;
-            if(!targetZoneController.AllZones[msg.originZone].TryGetCard(msg.card.instanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.card.instanceId);
+            if(!card)
             {
                 if(msg.originZone.Equals(SVEProperties.Zones.Deck))
                 {
@@ -288,7 +294,8 @@ namespace SVESimulator
 
         public void PlaySpell(OpponentPlaySpellMessage msg)
         {
-            if(!oppZoneController.AllZones[msg.originZone].TryGetCard(msg.cardInstanceId, out CardObject spell))
+            CardObject spell = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
+            if(!spell)
             {
                 Debug.LogError($"Failed to find card in zone {msg.originZone} to cast spell with");
                 return;
@@ -392,7 +399,7 @@ namespace SVESimulator
 
         public void SetCardStat(OpponentSetCardStatMessage msg)
         {
-            CardObject card = (msg.isOpponentCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(msg.cardInstanceId);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to update stat");
@@ -405,7 +412,7 @@ namespace SVESimulator
 
         public void ApplyModifierToCard(OpponentCardStatModifierMessage msg)
         {
-            CardObject card = (msg.isOpponentCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(msg.cardInstanceId);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to update stat");
@@ -418,7 +425,7 @@ namespace SVESimulator
 
         public void ApplyKeywordToCard(OpponentApplyKeywordMessage msg)
         {
-            CardObject card = (msg.isOpponentCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(msg.cardInstanceId);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to " +
@@ -438,7 +445,8 @@ namespace SVESimulator
 
         public void PayCostForEffect(OpponentPayEffectCostMessage msg)
         {
-            if(!oppZoneController.AllZones[msg.originZone].TryGetCard(msg.cardInstanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
+            if(!card)
             {
                 Debug.LogError($"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to pay effect cost for");
                 return;
@@ -464,7 +472,7 @@ namespace SVESimulator
             }
             for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
             {
-                oppZoneController.AllZones[msg.cardsMoveToZoneData[i].startZone].TryGetCard(msg.cardsMoveToZoneData[i].cardInstanceId, out CardObject cardToMove);
+                CardObject cardToMove = CardManager.Instance.GetCardByInstanceId(msg.cardsMoveToZoneData[i].cardInstanceId);
                 StandardSendCardObjectToZone(cardToMove, oppZoneController, msg.cardsMoveToZoneData[i].endZone switch
                 {
                     SVEProperties.Zones.Cemetery => (x, onComplete) => oppZoneController.SendCardToCemetery(x, onComplete),
@@ -484,7 +492,8 @@ namespace SVESimulator
 
         public void TellPerformEffect(OpponentTellOpponentPerformEffectMessage msg)
         {
-            if(!oppZoneController.AllZones[msg.cardZone].TryGetCard(msg.cardInstanceId, out CardObject card))
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
+            if(!card)
             {
                 Debug.LogError($"Failed to find card in zone {msg.cardZone} with id {msg.cardInstanceId} to reference for performing effect {msg.effectName}");
                 return;

@@ -39,7 +39,7 @@ namespace SVESimulator
                     Debug.LogError($"More than one target ({targets.Count}) was selected was selected for effect MoveCounterEffect. All cards other than the first one will be ignored." +
                         $"\nKeyword ID {keywordType}-{keywordValue} with amount {amount} and target {target} {filter}");
 
-                CardObject sourceCard = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
+                CardObject sourceCard = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                 CardObject targetCard = targets[0];
                 SVEProperties.Counters counterType = (SVEProperties.Counters)keywordType;
                 int counterAmount = amount.IsNullOrWhiteSpace() ? sourceCard.RuntimeCard.CountOfCounter(counterType) : baseCounterAmount;
