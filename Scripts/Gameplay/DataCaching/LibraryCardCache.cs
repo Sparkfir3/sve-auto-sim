@@ -26,6 +26,14 @@ namespace SVESimulator
             return newCard;
         }
 
+        public static Card GetCardFromInstanceId(in int instanceId, in GameConfiguration config = null)
+        {
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(instanceId);
+            if(!cardObject || cardObject.RuntimeCard == null)
+                return null;
+            return GetCard(cardObject.RuntimeCard.instanceId, config);
+        }
+
         public static void CacheCard(Card card)
         {
             if(card == null)
