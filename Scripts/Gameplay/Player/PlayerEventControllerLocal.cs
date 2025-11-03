@@ -390,7 +390,7 @@ namespace SVESimulator
             if(CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
 
-            bool isLocalPlayersCard = localZoneController.AllZones[sourceZone].ContainsCard(card) || localZoneController.selectionArea.ContainsCard(card);
+            bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone || localZoneController.selectionArea.ContainsCard(card);
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
             RuntimeCard runtimeCard = card.RuntimeCard;
 

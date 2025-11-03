@@ -30,7 +30,7 @@ namespace SVESimulator
                 yield return new WaitForEndOfFrame();
                 Debug.Assert(SVEEffectPool.Instance.IsResolvingEffect);
 
-                player.ZoneController.AllZones[sourceCardZone].TryGetCard(sourceCardInstanceId, out CardObject cardObject);
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                 ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
                 {
                     int[] targetInstanceIds = target != SVEProperties.SVEEffectTarget.Self ? targets.Select(x => x.RuntimeCard.instanceId).ToArray() : null;
