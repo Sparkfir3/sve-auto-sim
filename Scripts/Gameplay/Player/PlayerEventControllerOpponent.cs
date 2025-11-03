@@ -392,7 +392,7 @@ namespace SVESimulator
 
         public void SetCardStat(OpponentSetCardStatMessage msg)
         {
-            CardObject card = (msg.isOpponentCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(msg.cardInstanceId);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to update stat");
@@ -405,7 +405,7 @@ namespace SVESimulator
 
         public void ApplyModifierToCard(OpponentCardStatModifierMessage msg)
         {
-            CardObject card = (msg.isOpponentCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(msg.cardInstanceId);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to update stat");
@@ -418,7 +418,7 @@ namespace SVESimulator
 
         public void ApplyKeywordToCard(OpponentApplyKeywordMessage msg)
         {
-            CardObject card = (msg.isOpponentCard ? localZoneController : oppZoneController).GetCardOnFieldOrEXArea(msg.cardInstanceId);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to " +

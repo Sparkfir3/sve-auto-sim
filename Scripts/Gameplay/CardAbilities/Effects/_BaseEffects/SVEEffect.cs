@@ -25,7 +25,7 @@ namespace SVESimulator
             switch(targetMode)
             {
                 case SVEProperties.SVEEffectTarget.Self:
-                    CardObject sourceCard = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
+                    CardObject sourceCard = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                     if(sourceCard)
                         targets.Add(sourceCard);
                     onTargetFound?.Invoke(targets);
@@ -99,7 +99,7 @@ namespace SVESimulator
 
             void SelectTargetCardsToResolve(List<string> validLocalZones, List<string> validOppZones, EffectTargetCardScreen.SelectMode mode = EffectTargetCardScreen.SelectMode.Single)
             {
-                CardObject sourceCard = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
+                CardObject sourceCard = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                 string cardName = sourceCard ? LibraryCardCache.GetCard(sourceCard.RuntimeCard.cardId).name : null;
                 EffectTargetingUI.TargetCard.SetText(cardName, text);
                 EffectTargetingUI.TargetCard.Open(player, sourceCardInstanceId, rawFilter, validLocalZones, validOppZones, mode);

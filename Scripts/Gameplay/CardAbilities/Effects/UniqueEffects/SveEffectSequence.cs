@@ -30,7 +30,7 @@ namespace SVESimulator
             SVEEffectPool.Instance.StartCoroutine(ResolveCoroutine());
             IEnumerator ResolveCoroutine()
             {
-                CardObject cardObject = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                 Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
                 List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence });
                 foreach(string effectName in allEffects)

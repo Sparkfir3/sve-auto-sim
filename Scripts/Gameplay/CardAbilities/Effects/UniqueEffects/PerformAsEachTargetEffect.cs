@@ -23,7 +23,7 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            CardObject cardObject = player.GetCardInZoneFromBothPlayers(sourceCardInstanceId, sourceCardZone);
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
             Ability abilityToResolve = libraryCard?.abilities?.FirstOrDefault(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence }
                 && x.name.Trim().Equals(effectName.Trim()));
