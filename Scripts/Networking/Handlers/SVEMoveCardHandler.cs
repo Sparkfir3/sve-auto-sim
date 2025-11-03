@@ -332,7 +332,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[msg.originZone].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to send to cemetery");
 
             OpponentSendCardToCemeteryMessage sendCardToCemeteryMessage = new()
             {
@@ -349,7 +349,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[msg.originZone].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to banish");
 
             OpponentBanishCardMessage banishCardMessage = new()
             {
@@ -378,7 +378,7 @@ namespace SVESimulator
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeZone sourceZone = player.namedZones[msg.originZone];
             RuntimeCard card = sourceZone.cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to return to hand");
 
             OpponentReturnToHandMessage returnCardMessage = new()
             {
@@ -395,7 +395,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[msg.originZone].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to send to bottom deck");
 
             OpponentSendToBottomDeckMessage bottomDeckMessage = new()
             {
@@ -412,7 +412,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[msg.originZone].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to send to top deck");
 
             OpponentSendToTopDeckMessage topDeckMessage = new()
             {
@@ -429,7 +429,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[msg.originZone].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to send to EX area");
 
             OpponentSendToExAreaMessage topDeckMessage = new()
             {
@@ -453,7 +453,7 @@ namespace SVESimulator
         {
             PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
             RuntimeCard card = player.namedZones[msg.originZone].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {msg.originZone} to play spell with");
 
             OpponentPlaySpellMessage playSpellMsg = new()
             {
@@ -470,7 +470,7 @@ namespace SVESimulator
         {
             PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
             RuntimeCard card = player.namedZones[SVEProperties.Zones.Resolution].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            Debug.Assert(card != null, $"Failed to find card with instance ID {msg.cardInstanceId} in zone {SVEProperties.Zones.Resolution} to finish spell");
 
             OpponentFinishSpellMessage finishSpellMsg = new()
             {
