@@ -21,8 +21,10 @@ namespace SVESimulator
 
         #region Variables
 
-        [TitleGroup("Runtime Data"), SerializeField, TableList, ReadOnly]
-        private List<PooledCard> cardPool;
+        [TitleGroup("Runtime Data"), ShowInInspector, TableList, ReadOnly]
+        private List<PooledCard> cardPool = new();
+        [ShowInInspector, ReadOnly]
+        private SerializedDictionary<int, CardObject> cardsByInstanceId = new();
 
         [TitleGroup("Settings"), SerializeField]
         private Vector3 defaultRotation = new Vector3(90f, 0f, 0f);
@@ -60,6 +62,7 @@ namespace SVESimulator
                 newCard.card.gameObject.SetActive(true);
             }
             SetCardTexture(newCard.card);
+            cardsByInstanceId.Add(runtimeCard.instanceId, newCard.card);
             return newCard.card;
         }
 
@@ -77,6 +80,7 @@ namespace SVESimulator
                 return false;
             }
 
+            cardsByInstanceId.Remove(card.RuntimeCard.instanceId);
             if(card.CurrentZone)
                 card.CurrentZone.RemoveCard(card);
             card.RuntimeCard = null;
@@ -84,6 +88,11 @@ namespace SVESimulator
             card.transform.parent = transform;
             pooledCard.active = false;
             return true;
+        }
+
+        public CardObject GetCardByInstanceId(int instanceId)
+        {
+            return cardsByInstanceId.GetValueOrDefault(instanceId, null);
         }
 
         // ------------------------------
