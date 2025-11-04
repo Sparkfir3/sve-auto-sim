@@ -153,7 +153,7 @@ namespace SVESimulator.SveScript
                 {
                     if(effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
                         argument = "1";
-                    else if(effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull)
+                    else if(effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull or EffectParameterType.FilterOptional)
                         Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                             $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
                             $"\nReceived: ({string.Join(", ", argsArray)})");
@@ -172,8 +172,10 @@ namespace SVESimulator.SveScript
                         effectData.Add(keyName, argument);
                         break;
                     case EffectParameterType.AmountDefaultNull:
-                        keyName = "amount";
-                        effectData.Add(keyName, argument);
+                        effectData.Add("amount", argument);
+                        break;
+                    case EffectParameterType.FilterOptional:
+                        effectData.Add("filter", argument);
                         break;
                     case EffectParameterType.Keyword:
                         Keyword keyword = GetKeyword(argument);
@@ -242,7 +244,7 @@ namespace SVESimulator.SveScript
         
         #region Effect Parameters
         
-        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Filter, PassiveDuration }
+        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Filter, FilterOptional, PassiveDuration }
         private readonly struct EffectParams
         {
             public readonly string ccgType;
@@ -288,6 +290,8 @@ namespace SVESimulator.SveScript
             { "Transform", new EffectParams("SVESimulator.SveTransformCardEffect",        EffectParameterType.TokenName) },
             { "OpponentPerformEffect", new EffectParams("SVESimulator.SveOpponentPerformEffect", EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.SvePerformAsEachTargetEffect", EffectParameterType.SingleEffect) },
+            { "PutExToFieldAndTarget", new EffectParams("SVESimulator.SvePutExToFieldAndTargetEffect", EffectParameterType.ListOfEffects) },
+            { "DestroyAndControllerPerformEffect", new EffectParams("SVESimulator.SveDestroyAndControllerPerformEffect", EffectParameterType.SingleEffect) },
 
             // Target or Filter
             { "DrawCard", new EffectParams("SVESimulator.SveDrawCardEffect",              true, false, EffectParameterType.Amount) },
@@ -300,6 +304,7 @@ namespace SVESimulator.SveScript
             { "CemeteryToField", new EffectParams("SVESimulator.SveCemeteryToFieldEffect",false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
             { "PlaySpellFromCemetery", new EffectParams("SVESimulator.SvePlaySpellFromCemeteryEffect",false, false, EffectParameterType.Filter) },
             { "PlaySpellFromCemeterySetCost", new EffectParams("SVESimulator.SvePlaySpellFromCemeterySetCostEffect",false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
+            { "Discard", new EffectParams("SVESimulator.SveDiscardEffect",                false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
 
             { "Mill", new EffectParams("SVESimulator.SveMillDeckEffect",                  false, false, EffectParameterType.Amount) },
             { "TopDeckToEx", new EffectParams("SVESimulator.SveTopDeckToExEffect",        false, false, EffectParameterType.Amount) },
