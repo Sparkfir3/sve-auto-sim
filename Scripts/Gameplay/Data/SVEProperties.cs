@@ -32,6 +32,8 @@ namespace SVESimulator
             TargetOpponentCardOrLeader,
 
             AllCards,
+            TargetCard,
+
             AllPlayers,
             AllLeaders
         }
