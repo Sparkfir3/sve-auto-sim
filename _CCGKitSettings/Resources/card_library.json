@@ -8240,6 +8240,200 @@
       },
       {
         "cardTypeId": 0,
+        "name": "Zirnitra",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonnewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "<sprite index=2> Put a Dragon token into your EX area.\n<sprite index=4><sprite index=8>, <sprite index=23>: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-078",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Dragon",
+              "createTokenOption": "ExArea",
+              "amount": "1",
+              "text": "Put a Dragon token into your EX area.",
+              "$type": "SVESimulator.SveSummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "condition": "x(n(Dragon))",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
+                "amount": "2",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "effectName1": "Play Dragon",
+              "effectName2": "Play Points",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "text": "<sprite index=8>, <sprite index=23>: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
+              "$type": "SVESimulator.SveEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Play Dragon",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "effectName1": "Kn(Dragon)",
+              "effectName2": "Give Rush",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "text": null,
+              "$type": "SVESimulator.SvePutExToFieldAndTargetEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Give Rush",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 2,
+              "text": null,
+              "$type": "SVESimulator.SveGiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Play Points",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "PlayPoint",
+              "amount": "2",
+              "text": null,
+              "$type": "SVESimulator.SveGiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201078
+      },
+      {
+        "cardTypeId": 0,
         "name": "Aiela, Dragon Knight",
         "costs": [],
         "properties": [
@@ -8340,7 +8534,7 @@
               "filter": null,
               "targetStats": "MaxPlayPoint",
               "amount": "1",
-              "text": null,
+              "text": "Increase your maximum play points by 1.",
               "$type": "SVESimulator.SveGiveStatBoostEffect"
             },
             "target": null,
@@ -8537,7 +8731,7 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "3",
-              "text": null,
+              "text": "If Overflow is active for you, give this follower <sprite index=0>+3/<sprite index=1>+3.",
               "$type": "SVESimulator.SveGiveStatBoostEffect"
             },
             "target": null,
@@ -8631,6 +8825,100 @@
         ],
         "abilities": [],
         "id": 201082
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Phoenix Roost",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Phoenix",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-083",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveStartMainPhaseTrigger"
+            },
+            "name": "Check Top",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "checkAction1": "Field",
+              "checkFilter1": "F",
+              "checkAmount1": "m(0,1)",
+              "checkAction2": "TopDeckSameOrder",
+              "checkFilter2": null,
+              "checkAmount2": null,
+              "checkAction3": "None",
+              "checkFilter3": null,
+              "checkAmount3": null,
+              "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
+              "$type": "SVESimulator.SveCheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveStartOpponentMainPhaseTrigger"
+            },
+            "name": "StartOpponentMainPhase",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "effectName": "Check Top",
+              "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
+              "$type": "SVESimulator.SveOpponentPerformEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201083
       },
       {
         "cardTypeId": 0,
@@ -8731,7 +9019,7 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
+              "text": "Put the top card of your deck into your EX area. It costs 2 less to play.",
               "$type": "SVESimulator.SveTopDeckToExAndTargetEffect"
             },
             "target": null,
@@ -8758,6 +9046,400 @@
           }
         ],
         "id": 201084
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Dragonnewt Scholar",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonnewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Intimidate.\nStrike: Draw a card, then discard a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-085",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 4
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Draw",
+              "effectName2": "Discard",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "text": "Draw a card, then discard a card.",
+              "$type": "SVESimulator.SveEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "text": null,
+              "$type": "SVESimulator.SveDrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": null,
+              "text": null,
+              "$type": "SVESimulator.SveDiscardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201085
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Shenlong",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\nWard.\n<sprite index=2> Draw 2 cards, then discard a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-086",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Draw",
+              "effectName2": "Discard",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "text": "Draw 2 cards, then discard a card.",
+              "$type": "SVESimulator.SveEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "2",
+              "text": null,
+              "$type": "SVESimulator.SveDrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": null,
+              "text": null,
+              "$type": "SVESimulator.SveDiscardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201086
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Shenlong (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\nOn Evolve: Give your leader <sprite index=1>+5.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-087",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "5",
+              "text": "Give your leader <sprite index=1>+5.",
+              "$type": "SVESimulator.SveGiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201087
       },
       {
         "cardTypeId": 0,
@@ -8902,7 +9584,7 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
-              "target": "AllCards",
+              "target": "AllOpponentCards",
               "filter": "F",
               "amount": "5",
               "text": null,
@@ -9015,6 +9697,117 @@
           }
         ],
         "id": 201090
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Wyrm Spire",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "While this card is on your field, your Dragon tokens have Rush.\n<sprite index=4><sprite index=23>: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-091",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "target": "AllPlayerCards",
+              "filter": "Kn(Dragon)",
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 2,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "condition": "f(F)+p(F)",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetCard",
+              "filter": "F",
+              "effectName": "Token",
+              "text": "<sprite index=23>: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
+              "$type": "SVESimulator.SveDestroyAndControllerPerformEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Dragon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "text": null,
+              "$type": "SVESimulator.SveSummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201091
       },
       {
         "cardTypeId": 0,
@@ -9188,7 +9981,7 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
+              "text": "If Overflow is active for you, draw a card.",
               "$type": "SVESimulator.SveDrawCardEffect"
             },
             "target": null,
@@ -9301,6 +10094,135 @@
           }
         ],
         "id": 201094
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Ace Dragoon",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonheart",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Rush.\n<sprite index=2> Select another follower on the field and give this follower <sprite index=0>+X. X equals the selected follower's attack.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP01-095",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 2
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "[f(FX)+p(F)]",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetCard",
+              "filter": "FX",
+              "effectName": "Give Attack",
+              "text": "Select another follower on the field and give this follower <sprite index=0>+X. X equals the selected follower's attack.",
+              "$type": "SVESimulator.SvePerformAsEachTargetEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Give Attack",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "A",
+              "text": null,
+              "$type": "SVESimulator.SveGiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 201095
       },
       {
         "cardTypeId": 0,
