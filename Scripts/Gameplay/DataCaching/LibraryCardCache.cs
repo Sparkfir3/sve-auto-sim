@@ -31,7 +31,7 @@ namespace SVESimulator
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(instanceId);
             if(!cardObject || cardObject.RuntimeCard == null)
                 return null;
-            return GetCard(cardObject.RuntimeCard.instanceId, config);
+            return GetCard(cardObject.RuntimeCard.cardId, config);
         }
 
         public static void CacheCard(Card card)
