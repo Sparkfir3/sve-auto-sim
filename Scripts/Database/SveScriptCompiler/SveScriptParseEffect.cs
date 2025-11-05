@@ -153,7 +153,7 @@ namespace SVESimulator.SveScript
                 {
                     if(effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
                         argument = "1";
-                    else if(effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull or EffectParameterType.FilterOptional)
+                    else if(effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.FilterOptional)
                         Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                             $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
                             $"\nReceived: ({string.Join(", ", argsArray)})");
