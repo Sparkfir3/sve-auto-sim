@@ -197,6 +197,7 @@ ability Spell name Draw {
     effect DrawCard(1);
 }
 ability Spell name Discard {
+    text "Discard a card.";
     effect Discard(1);
 }
 
@@ -225,6 +226,7 @@ ability Spell name Draw {
     effect DrawCard(2);
 }
 ability Spell name Discard {
+    text "Discard a card.";
     effect Discard(1);
 }
 

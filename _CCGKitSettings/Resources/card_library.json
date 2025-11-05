@@ -9184,7 +9184,7 @@
             "effect": {
               "amount": "1",
               "filter": null,
-              "text": null,
+              "text": "Discard a card.",
               "$type": "SVESimulator.SveDiscardEffect"
             },
             "target": null,
@@ -9330,7 +9330,7 @@
             "effect": {
               "amount": "1",
               "filter": null,
-              "text": null,
+              "text": "Discard a card.",
               "$type": "SVESimulator.SveDiscardEffect"
             },
             "target": null,
@@ -9584,7 +9584,7 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
-              "target": "AllOpponentCards",
+              "target": "AllCards",
               "filter": "F",
               "amount": "5",
               "text": null,
