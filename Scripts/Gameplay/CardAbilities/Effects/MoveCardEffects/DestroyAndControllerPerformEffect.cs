@@ -35,7 +35,7 @@ namespace SVESimulator
 
                 if(targets[0].RuntimeCard.ownerPlayer == player.GetPlayerInfo())
                 {
-                    Ability abilityToResolve = LibraryCardCache.GetCard(sourceCardInstanceId, GameManager.Instance.config).abilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
+                    Ability abilityToResolve = LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId, GameManager.Instance.config).abilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
                     if(abilityToResolve == null)
                     {
                         Debug.LogError($"Failed to find effect \"{effectName}\" from card with instance ID {sourceCardInstanceId}");
