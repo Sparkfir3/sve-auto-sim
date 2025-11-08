@@ -11,19 +11,9 @@ namespace SVESimulator.Database.Scraper
 {
     public class DatabaseImageDownloader : MonoBehaviour
     {
-
         #region Variables
 
-        [Serializable]
-        private class SetDownloadSettings
-        {
-            public string setCode;
-            public string prefix; // "LD" for leader, "T" for token, blank otherwise
-            public int digits = 3;
-            public int startIndex = 1;
-            public int endIndex = 100;
-            public string suffix = "EN";
-        }
+        private const string BASE_IMAGE_URL = "https://cdn.dingdongdb.me/images/{0}/{1}/{2}.avif";
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private int currentDownloadingCount;
@@ -34,8 +24,6 @@ namespace SVESimulator.Database.Scraper
 
         [TitleGroup("Settings"), SerializeField, TableList]
         private List<SetDownloadSettings> downloadSettings;
-        [SerializeField, LabelText("Base Image URL")]
-        private string baseImageURL = "https://cdn.ccgmaster.com/shadowverse-evolve/cards/";
         [SerializeField, LabelText("Card Back URL")]
         private string cardBackURL = "";
         [SerializeField, LabelText("Evolve Point URL")]
@@ -86,7 +74,7 @@ namespace SVESimulator.Database.Scraper
                 int i = settings.startIndex;
                 for(; i < settings.endIndex; i++)
                 {
-                    string fileName = $"{settings.setCode}-{settings.prefix}{i.ToString("D" + settings.digits)}.png";
+                    string fileName = $"{settings.setCode}-{settings.GetCardIdNumberWithLanguage(i)}.png";
                     if(!File.Exists(Path.Combine(folderPath, fileName)))
                         break;
                 }
@@ -96,11 +84,10 @@ namespace SVESimulator.Database.Scraper
                 runtimeDownloadSettings.Add(new SetDownloadSettings()
                 {
                     setCode = settings.setCode,
-                    prefix = settings.prefix,
-                    digits = settings.digits,
+                    cardType = settings.cardType,
                     startIndex = i,
                     endIndex = settings.endIndex,
-                    suffix = settings.suffix
+                    language = settings.language
                 });
             }
 
@@ -137,7 +124,7 @@ namespace SVESimulator.Database.Scraper
             {
                 for(int i = settings.startIndex; i <= settings.endIndex; i++)
                 {
-                    DownloadSetCard(pathInfo.ImagesPath, settings.setCode, string.Concat(settings.prefix, i.ToString("D" + settings.digits)), settings.suffix);
+                    DownloadSetCard(pathInfo.ImagesPath, settings.setCode, settings.GetCardIdNumberWithLanguage(i), settings.language);
                     yield return new WaitForSeconds(delayBetweenDownloads);
                     if(currentDownloadingCount >= maxConcurrentDownloads)
                         yield return new WaitUntil(() => currentDownloadingCount < maxConcurrentDownloads);
@@ -152,7 +139,7 @@ namespace SVESimulator.Database.Scraper
 
         #region Web Request & File Handling
 
-        private void DownloadSetCard(string folderPath, string setCode, string cardId, string urlSuffix)
+        private void DownloadSetCard(string folderPath, string setCode, string cardId, SetDownloadSettings.CardLanguage language)
         {
             string outputFolderPath = Path.Combine(folderPath, setCode);
             if(!Directory.Exists(outputFolderPath))
@@ -161,7 +148,7 @@ namespace SVESimulator.Database.Scraper
             if(File.Exists(outputFilePath))
                 return;
 
-            string downloadURL = string.Concat(baseImageURL, setCode, "-", cardId, urlSuffix);
+            string downloadURL = string.Format(BASE_IMAGE_URL, language == SetDownloadSettings.CardLanguage.EN ? "en" : "jp", setCode, $"{setCode}-{cardId}");
             StartCoroutine(DownloadImage(downloadURL, outputFilePath));
         }
 
