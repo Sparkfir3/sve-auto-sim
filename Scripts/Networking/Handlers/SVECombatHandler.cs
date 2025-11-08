@@ -65,8 +65,7 @@ namespace SVESimulator
 
         private void OnAttackFollower(NetworkConnection conn, LocalAttackFollowerMessage msg)
         {
-            // Only the current player can fight.
-            if (conn.connectionId != server.gameState.currentPlayer.connectionId)
+            if(conn.identity.netId != server.gameState.currentPlayer.connectionId)
             {
                 return;
             }
@@ -90,8 +89,7 @@ namespace SVESimulator
 
         private void OnAttackLeader(NetworkConnection conn, LocalAttackLeaderMessage msg)
         {
-            // Only the current player can fight.
-            if (conn.connectionId != server.gameState.currentPlayer.connectionId)
+            if(conn.identity.netId != server.gameState.currentPlayer.connectionId)
             {
                 return;
             }
