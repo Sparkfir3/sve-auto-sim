@@ -13,7 +13,7 @@ namespace SVESimulator.Database.Scraper
     {
         #region Variables
 
-        private const string BASE_IMAGE_URL = "https://cdn.dingdongdb.me/images/{0}/{1}/{2}.avif";
+        private const string BASE_IMAGE_URL = "https://cdn.dingdongdb.me/images/{0}/{1}/{2}.png";
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private int currentDownloadingCount;
