@@ -84,12 +84,12 @@ MonoBehaviour:
     endIndex: 180
     language: 1
   - setCode: BP01
-    cardType: 0
+    cardType: 2
     startIndex: 1
     endIndex: 12
     language: 1
   - setCode: BP01
-    cardType: 0
+    cardType: 1
     startIndex: 1
     endIndex: 17
     language: 1
