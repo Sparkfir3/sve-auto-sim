@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7381837116985757044}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1258480906431815217
 MonoBehaviour:
@@ -49,60 +49,50 @@ MonoBehaviour:
   targetDownloadCount: 0
   downloadSettings:
   - setCode: SD01
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 16
-    suffix: EN
+    language: 1
   - setCode: SD02
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 16
-    suffix: EN
+    language: 1
   - setCode: SD03
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 16
-    suffix: EN
+    language: 1
   - setCode: SD04
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 14
-    suffix: EN
+    language: 1
   - setCode: SD05
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 16
-    suffix: EN
+    language: 1
   - setCode: SD06
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 16
-    suffix: EN
+    language: 1
   - setCode: BP01
-    prefix: 
-    digits: 3
+    cardType: 0
     startIndex: 1
     endIndex: 180
-    suffix: EN
+    language: 1
   - setCode: BP01
-    prefix: LD
-    digits: 2
+    cardType: 2
     startIndex: 1
     endIndex: 12
-    suffix: EN
+    language: 1
   - setCode: BP01
-    prefix: T
-    digits: 2
+    cardType: 1
     startIndex: 1
     endIndex: 17
-    suffix: EN
-  baseImageURL: https://cdn.ccgmaster.com/shadowverse-evolve/cards/
+    language: 1
   cardBackURL: 
   evolvePointURL: https://tcgplayer-cdn.tcgplayer.com/product/509622_in_1000x1000.jpg
   maxConcurrentDownloads: 10

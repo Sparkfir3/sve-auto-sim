@@ -35,9 +35,9 @@ namespace SVESimulator
                 return texture;
             ValidatePathInfo();
 
-            string filePath = Path.Combine(Path.Combine(pathInfo.BuildFolderImagesPath, GetSubfolderFromID(cardId), cardId + pathInfo.DefaultFileExtension));
+            string filePath = Path.Combine(Path.Combine(pathInfo.BuildFolderImagesPath, GetSubfolderFromID(cardId), $"{cardId}EN{pathInfo.DefaultFileExtension}"));
             if(!File.Exists(filePath))
-                filePath = Path.Combine(pathInfo.ImagesPath, GetSubfolderFromID(cardId), cardId + pathInfo.DefaultFileExtension);
+                filePath = Path.Combine(pathInfo.ImagesPath, GetSubfolderFromID(cardId), $"{cardId}EN{pathInfo.DefaultFileExtension}");
             texture = LoadTextureFromFile(filePath);
             CacheCardTexture(cardId, texture);
             return texture;
