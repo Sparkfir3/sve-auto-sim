@@ -1,7 +1,7 @@
 ---
 title: Keywords & Counters
 parent: SVE Script
-nav_order: 2
+nav_order: 3
 ---
 # Keywords
 The following game keywords are supported:

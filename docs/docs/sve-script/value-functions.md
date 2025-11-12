@@ -1,7 +1,7 @@
 ---
 title: Value Functions
 parent: SVE Script
-nav_order: 3
+nav_order: 4
 ---
 # Value Functions
 Returns a value `n1`. If given `condition` is met, returns `n2` instead.

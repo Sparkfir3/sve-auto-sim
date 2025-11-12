@@ -1,6 +1,6 @@
 ---
 title: Effect List
-parent: SVE Script
+parent: Card Abilities
 nav_order: 1
 ---
 # Triggered Effects

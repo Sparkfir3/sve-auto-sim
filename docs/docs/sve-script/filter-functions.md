@@ -1,7 +1,7 @@
 ---
 title: Filter Functions
 parent: SVE Script
-nav_order: 4
+nav_order: 5
 ---
 # Filter Functions
 Filter functions are strings used to filter effect targets. A blank filter function matches all cards. Filter functions are case-sensitive
