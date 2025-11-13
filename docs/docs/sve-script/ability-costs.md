@@ -11,7 +11,7 @@ cost (cost1), (cost2), ...;
 After the `cost` keyword, any number of cost parameters can be defined, with each cost being wrapped in parentheses and separated by commas.
 Remember that all ability parameters must end with a semicolon.
 
-List of Costs:
+## List of Costs
 
 | Syntax                                                                                                 | Description                                                                                                                                          |
 | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |

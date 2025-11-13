@@ -28,6 +28,8 @@ The following are uSVE internal "keywords" used to handle certain passive effect
 | `Plus1Damage`       | This (follower) deals 1 more damage<br>(not the same as an attack stat buff) |
 | `Plus2Damage`       | This (follower) deals 2 more damage<br>(not the same as an attack stat buff) |
 
+------------------------------
+
 # Counters
 List of supported counter names:
 - Stack

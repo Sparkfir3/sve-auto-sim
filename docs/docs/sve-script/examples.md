@@ -37,6 +37,8 @@ ability Passive name "Give Rush" {
 }
 ```
 
+------------------------------
+
 ## [Titania's Sanctuary](https://en.shadowverse-evolve.com/cards/?cardno=SD01-002EN)
 Original Text:
 ```
@@ -70,6 +72,8 @@ ability OnOtherEnterField {
     effect GiveStat(AtkDef, 1) to TriggerCard;
 }
 ```
+
+------------------------------
 
 ## [Lightning Shooter](https://en.shadowverse-evolve.com/cards/?cardno=SD03-007EN)
 Original Text:

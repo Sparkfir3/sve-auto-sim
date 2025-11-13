@@ -4,8 +4,8 @@ parent: Card Abilities
 nav_order: 1
 ---
 # Triggered Effects
+
 ## Card Movement Effects
----
 Effects that handle moving a card from one zone to another:
 
 | Name                                 | Args                                     | Target | Filter | Description                                                                           |
@@ -31,7 +31,6 @@ Effects that handle moving a card from one zone to another:
 See also: [Check Top Deck](#check-top-deck) effect
 
 ## Stat Effects
----
 Effects that handle card stats, such as attack and defense. This includes a card's engaged/reserved (tapped/untapped) status.
 
 | Name                | Args                                     | Target | Filter | Description                                                       |
@@ -47,7 +46,6 @@ Effects that handle card stats, such as attack and defense. This includes a card
 ¹ Explicit number of targets as a min/max in the `filter` is required
 
 ## Keyword Effects
----
 Effects that handle card keywords
 
 | Name                   | Args      | Target | Filter | Description                               |
@@ -56,7 +54,6 @@ Effects that handle card keywords
 | `GiveKeywordEndOfTurn` | `keyword` | ✅     | ✅     | Gives X keyword to card until end of turn |
 
 ## Counter Effects
----
 Effects that handle counters
 
 | Name            | Args                | Target | Filter | Description                                                                                   |
@@ -68,7 +65,6 @@ Effects that handle counters
 ¹ Only supports target mode `TargetPlayerCard`, and any min/max target count in the filter will be ignored
 
 ## Token Effects
----
 Effects that handle creating tokens
 
 | Name                   | Args                                                 | Target | Filter | Description                                                                                           |
@@ -82,7 +78,6 @@ Effects that handle creating tokens
 - `TargetPlayerCard` has the player choose a target(s) only from the summoned tokens (on the field)
 
 ## Effect Execution
----
 Effects that handle unique effect execution, such as performing multiple effects in order or choosing from a list
 
 | Name                    | Args           | Target | Filter | Description                                                                                                 |
@@ -95,7 +90,6 @@ Effects that handle unique effect execution, such as performing multiple effects
 ¹ Detailed breakdown coming soon (tm)
 
 ## Other Effects
----
 
 | Name        | Args                           | Target | Filter | Description                                   |
 | ----------- | ------------------------------ | ------ | ------ | --------------------------------------------- |
@@ -142,9 +136,9 @@ effect CheckTop(1, (Cemetery, m(0,1)));
 effect CheckTop(4, (Hand, S, m(0,1)), (Cemetery, S, m(0,1)), (BottomDeckAnyOrder));
 ```
 
+------------------------------
 
 # Passive Effects
----
 Passive abilities (using the `Passive` trigger) have a separate list of effects from regular abilities:
 
 | Name             | Args                                | Has Target | Has Filter | Description                                                                          |
@@ -158,7 +152,6 @@ Passive effects only support the following targets modes:
 - `AllPlayerCards`
 
 ## Modified Cost Effects
----
 Modify cost abilities (using the `ModifiedCost` trigger) also have a separate list of effects, which handle non-standard card costs:
 
 | Name            | Args     | Has Target | Has Filter | Description                                                                                                                                                                                                          |
@@ -168,8 +161,11 @@ Modify cost abilities (using the `ModifiedCost` trigger) also have a separate li
 
 Modified costs only apply to cards played from hand or the EX area
 
+
+
+------------------------------
+
 # List of Effect Arguments
----
 
 | Name                 | Type                                 | Notes                                                                                                                                                    |
 | -------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |

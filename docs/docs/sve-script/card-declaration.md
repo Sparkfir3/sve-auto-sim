@@ -24,7 +24,7 @@ Note that all lines, except ability declarations, end in a semicolon (`;`). Any 
 
 A card declaration must start with the card name. A card declaration does not end until a new card is declared (new card name), or until the end of the file.
 
-# Text Formatting
+## Text Formatting
 In-line icons and symbols, such as for `Fanfare` and `Last Words`, should be formatted using text in brackets (case-sensitive). The list of available symbols is:
 
 | Symbol            | Tag                                                                           |
