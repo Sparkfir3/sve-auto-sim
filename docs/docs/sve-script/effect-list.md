@@ -3,32 +3,54 @@ title: Effect List
 parent: Card Abilities
 nav_order: 1
 ---
-# Triggered Effects
+# Triggered Effect List
 
 ## Card Movement Effects
-Effects that handle moving a card from one zone to another:
+Effects that handle moving a card from one zone to another
 
-| Name                                 | Args                                     | Target | Filter | Description                                                                           |
-| ------------------------------------ | ---------------------------------------- | ------ | ------ | ------------------------------------------------------------------------------------- |
-| `DrawCard`                           | `amount`                                 | ✅      | ❌      | Target player draws X cards                                                           |
-| `DrawThenDamage`                     | `amount` (to draw), `amount` (to damage) | ✅      | ✅      | Target a card, draw X cards, then deal damage Y to targeted card                      |
-| `ReturnToHand`                       |                                          | ✅      | ✅      | Returns target card to owner's hand                                                   |
-| `BottomDeck`                         |                                          | ✅      | ✅      | Returns target card to bottom of owner's deck                                         |
-| `TopDeck`                            |                                          | ✅      | ✅      | Returns target card to top of owner's deck                                            |
-| `TopOrBottomDeck`                    |                                          | ✅      | ✅      | Player chooses to put target card to the top or bottom of it's owner's deck           |
-| `DestroyCard`                        |                                          | ✅      | ✅      | Destroys target card (send to cemetery)                                               |
-| `Banish`                             |                                          | ✅      | ✅      | Banishes target card                                                                  |
-| `Search`                             | `amount`, `filter`, `searchAction`¹      | ❌      | ❌²     | Search X cards from deck, and send them to specified zone                             |
-| `Salvage`                            | `amount`, `filter`¹                      | ❌      | ❌²     | Add X cards from cemetery to hand                                                     |
-| `CemeteryToField`                    | `amount`, `filter`¹                      | ❌      | ❌²     | Place X cards from cemetery onto the field                                            |
-| `PlaySpellFrom`<br>`Cemetery`        | `filter`                                 | ❌      | ❌      | Play target spell from cemetery, using its cost                                       |
-| `PlaySpellFrom`<br>`CemeterySetCost` | `filter`, `amount`                       | ❌      | ❌      | Play target spell from cemetery, ignoring its cost and using the given amount instead |
-| `Mill`                               | `amount`                                 | ✅      | ❌      | Target player sends X cards from top deck to cemetery                                 |
+### Deck to Zone
+
+| Name                   | Args                                     | Target | Filter | Description                                                                           |
+| ---------------------- | ---------------------------------------- | ------ | ------ | ------------------------------------------------------------------------------------- |
+| `DrawCard`             | `amount`                                 | ✅      | ❌      | Target player draws X cards                                                           |
+| `DrawThenDamage`       | `amount` (to draw), `amount` (to damage) | ✅      | ✅      | Target a card, draw X cards, then deal damage Y to targeted card                      |
+| `TopDeckToEx`          | `amount`                                 | ❌      | ❌      | Send top card of player's deck to the EX area                                         |
+| `TopDeckToExAndTarget` | `amount`, `effectName[]`                 | ❌      | ❌      | Send top card of player's deck to the EX area and perform given effects as `Sequence` |
+| `Search`               | `amount`, `filter`, `searchAction`¹      | ❌      | ❌²     | Search X cards from deck, and send them to specified zone                             |
+| `Mill`                 | `amount`                                 | ✅      | ❌      | Target player sends X cards from top deck to cemetery                                 |
 
 ¹ The min/max target amount should be included in the `amount` and not the `filter`
 ² `filter` is still used, but as an effect arg instead of a target modifier, meaning it is included in the effect parentheses and not after the `to` keyword
 
-See also: [Check Top Deck](#check-top-deck) effect
+See also:
+- [Check Top Deck](#check-top-deck) effect
+
+### Field/EX Area to Zone
+
+| Name              | Args | Target | Filter | Description                                                                 |
+| ----------------- | ---- | ------ | ------ | --------------------------------------------------------------------------- |
+| `ReturnToHand`    |      | ✅      | ✅      | Returns target card to owner's hand                                         |
+| `TopDeck`         |      | ✅      | ✅      | Returns target card to top of owner's deck                                  |
+| `BottomDeck`      |      | ✅      | ✅      | Returns target card to bottom of owner's deck                               |
+| `TopOrBottomDeck` |      | ✅      | ✅      | Player chooses to put target card to the top or bottom of it's owner's deck |
+| `DestroyCard`     |      | ✅      | ✅      | Destroys target card (send to cemetery)                                     |
+| `Banish`          |      | ✅      | ✅      | Banishes target card                                                        |
+
+See also:
+- `DestroyAndControllerPerformEffect` under the [effect execution](#effect-execution) list
+
+### Other Zone Movement
+
+| Name                                 | Args                 | Target | Filter | Description                                                                           |
+| ------------------------------------ | -------------------- | ------ | ------ | ------------------------------------------------------------------------------------- |
+| `Discard`                            | `amount`, `filter`¹  | ❌      | ❌²     | Discard specified amount of cards from hand<br>Filter may be omitted                  |
+| `Salvage`                            | `amount`, `filter`¹  | ❌      | ❌²     | Add X cards from cemetery to hand                                                     |
+| `CemeteryToField`                    | `amount`, `filter`¹  | ❌      | ❌²     | Place X cards from cemetery onto the field                                            |
+| `PlaySpellFrom`<br>`Cemetery`        | `filter`             | ❌      | ❌²     | Play target spell from cemetery, using its cost                                       |
+| `PlaySpellFrom`<br>`CemeterySetCost` | `filter`, `amount`   | ❌      | ❌²     | Play target spell from cemetery, ignoring its cost and using the given amount instead |
+
+¹ The min/max target amount should be included in the `amount` and not the `filter`
+² `filter` is still used, but as an effect arg instead of a target modifier, meaning it is included in the effect parentheses and not after the `to` keyword
 
 ## Stat Effects
 Effects that handle card stats, such as attack and defense. This includes a card's engaged/reserved (tapped/untapped) status.
@@ -80,12 +102,13 @@ Effects that handle creating tokens
 ## Effect Execution
 Effects that handle unique effect execution, such as performing multiple effects in order or choosing from a list
 
-| Name                    | Args           | Target | Filter | Description                                                                                                 |
-| ----------------------- | -------------- | ------ | ------ | ----------------------------------------------------------------------------------------------------------- |
-| `Sequence`              | `effectName[]` | ❌      | ❌      | Performs all given effects in order, max 5                                                                  |
-| `ChooseFromList`        | `effectName[]` | ❌      | ❌      | Player chooses 1 effect from the given list, max 5                                                          |
-| `OpponentPerformEffect` | `effectName`   | ✅      | ✅      | Opponent performs the given effect¹                                                                         |
-| `PerformAsEachTarget`   | `effectName`   | ✅      | ✅      | Perform the given effect once for each target card, as if each card performed the effect with target `Self` |
+| Name                                | Args           | Target | Filter | Description                                                                                                 |
+| ----------------------------------- | -------------- | ------ | ------ | ----------------------------------------------------------------------------------------------------------- |
+| `DestroyAndControllerPerformEffect` | `effectName[]` | ✅      | ✅      | Destroy target card, and the controller of that card performs the given effects as `Sequence`               |
+| `Sequence`                          | `effectName[]` | ❌      | ❌      | Performs all given effects in order, max 5                                                                  |
+| `ChooseFromList`                    | `effectName[]` | ❌      | ❌      | Player chooses 1 effect from the given list, max 5                                                          |
+| `OpponentPerformEffect`             | `effectName`   | ✅      | ✅      | Opponent performs the given effect¹                                                                         |
+| `PerformAsEachTarget`               | `effectName`   | ✅      | ✅      | Perform the given effect once for each target card, as if each card performed the effect with target `Self` |
 
 ¹ Detailed breakdown coming soon (tm)
 
@@ -109,9 +132,9 @@ Card check actions are defined using one of 3 syntaxes, with each action enclose
 ```
 
 - `action` is the type of action to perform (see list below)
-- `amount` is the amount of cards selected to perform the effect on. Can be a raw `int`, [value function](#value-functions), or a min/max value (format: `m(<min>,<max>)`)
+- `amount` is the amount of cards selected to perform the effect on. Can be a raw `int`, [value function][Value Function], or a min/max value (format: `m(<min>,<max>)`)
    - If an amount is not required and not specified, the action targets all remaining cards
-- `filter` is the [filter function](#filter-functions) to use to determine valid action targets
+- `filter` is the [filter function][Filter Function] to use to determine valid action targets
 
 | Action               | Requires Amount | Description                                                                                                              |
 | -------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -138,7 +161,7 @@ effect CheckTop(4, (Hand, S, m(0,1)), (Cemetery, S, m(0,1)), (BottomDeckAnyOrder
 
 ------------------------------
 
-# Passive Effects
+# Passive Effect List
 Passive abilities (using the `Passive` trigger) have a separate list of effects from regular abilities:
 
 | Name             | Args                                | Has Target | Has Filter | Description                                                                          |
@@ -161,23 +184,25 @@ Modify cost abilities (using the `ModifiedCost` trigger) also have a separate li
 
 Modified costs only apply to cards played from hand or the EX area
 
-
-
 ------------------------------
 
 # List of Effect Arguments
 
-| Name                 | Type                                 | Notes                                                                                                                                                    |
-| -------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `amount`             | [Value Function](#value-functions)   |                                                                                                                                                          |
-| `keyword`            | [Keyword](#keywords)                 |                                                                                                                                                          |
-| `counter`            | Counter                              |                                                                                                                                                          |
-| `stat`               | Enum                                 | - `Attack` or `Atk`<br>- `Defense` or `Def`<br>- `AttackDefense` or `AtkDef`<br>- `EvolveCost`<br>- `MaxPlayPoints` or `MaxPP`<br>- `PlayPoints` or `PP` |
-| `filter`             | [Filter Function](#filter-functions) | Only applicable when used as an arg and *not* a target modifier (when inside parentheses, and not after the `to` keyword)                                |
-| `tokenName`          | String                               | Must surround in quotes if the name contains a comma                                                                                                     |
-| `tokenOption`        | Enum                                 | - `Field`<br>- `ExArea`<br>- `FieldOverflowToEx`<br>- `ChooseForEachFieldOrEx`                                                                           |
-| `searchAction`       | Enum                                 | - `Hand`<br>- `Cemetery`                                                                                                                                 |
-| `cardCheckActions[]` | List of Actions                      | See [Check Top Deck](#check-top-deck) section<br>Minimum of 1, maximum of 3                                                                              |
-| `effectName`         | String                               | The defined `name` of an ability on this card                                                                                                            |
-| `effectName[]`       | List of Strings                      | List of strings, each one being the defined `name` of an ability, separated by commas. Quotation marks optional.<br>Minimum of 1, maximum of 5           |
-| `passiveDuration`    | Enum                                 | - `WhileOnField`<br>- `OpponentTurn`                                                                                                                     |
+| Name                 | Type                               | Notes                                                                                                                                                    |
+| -------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `amount`             | [Value Function][Value Function]   |                                                                                                                                                          |
+| `keyword`            | [Keyword][Keywords]                |                                                                                                                                                          |
+| `counter`            | Counter                            |                                                                                                                                                          |
+| `stat`               | Enum                               | - `Attack` or `Atk`<br>- `Defense` or `Def`<br>- `AttackDefense` or `AtkDef`<br>- `EvolveCost`<br>- `MaxPlayPoints` or `MaxPP`<br>- `PlayPoints` or `PP` |
+| `filter`             | [Filter Function][Filter Function] | Only applicable when used as an arg and *not* a target modifier (when inside parentheses, and not after the `to` keyword)                                |
+| `tokenName`          | String                             | Must surround in quotes if the name contains a comma                                                                                                     |
+| `tokenOption`        | Enum                               | - `Field`<br>- `ExArea`<br>- `FieldOverflowToEx`<br>- `ChooseForEachFieldOrEx`                                                                           |
+| `searchAction`       | Enum                               | - `Hand`<br>- `Cemetery`                                                                                                                                 |
+| `cardCheckActions[]` | List of Actions                    | See [Check Top Deck](#check-top-deck) section<br>Minimum of 1, maximum of 3                                                                              |
+| `effectName`         | String                             | The defined `name` of an ability on this card                                                                                                            |
+| `effectName[]`       | List of Strings                    | List of strings, each one being the defined `name` of an ability, separated by commas. Quotation marks optional.<br>Minimum of 1, maximum of 5           |
+| `passiveDuration`    | Enum                               | - `WhileOnField`<br>- `OpponentTurn`                                                                                                                     |
+
+[Filter Function]: ./filter-functions.html
+[Keywords]: ./keywords-counters.html
+[Value Function]: ./value-functions.html

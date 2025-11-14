@@ -9,7 +9,7 @@ The following game keywords are supported:
 - Storm
 - Rush
 - Assail
-- Intimidate (not implemented)
+- Intimidate
 - Drain
 - Bane
 - Aura
@@ -24,6 +24,7 @@ The following are uSVE internal "keywords" used to handle certain passive effect
 | ------------------- | ---------------------------------------------------------------------------- |
 | `IgnoreWard`        | This card ignores ward                                                       |
 | `PutOnFieldEngaged` | This card is put onto the field engaged                                      |
+| `CannotAttack`      | This card cannot attack                                                      |
 | `CannotDealDamage`  | This card cannot deal damage                                                 |
 | `Plus1Damage`       | This (follower) deals 1 more damage<br>(not the same as an attack stat buff) |
 | `Plus2Damage`       | This (follower) deals 2 more damage<br>(not the same as an attack stat buff) |

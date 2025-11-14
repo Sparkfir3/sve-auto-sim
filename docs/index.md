@@ -12,4 +12,4 @@ Script files for cards are available in the [`SveScripts` folder][SVE Scripts Fo
 
 [Repo]: https://github.com/Sparkfir3/sve-auto-sim
 [SVE Scripts Folder]: https://github.com/Sparkfir3/sve-auto-sim/tree/main/Data/SveScripts
-[SVE Script Page]: ./docs/sve-script/sve-script-overview.html
+[SVE Script Page]: /docs/sve-script/sve-script-overview.html

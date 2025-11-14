@@ -17,8 +17,8 @@ nav_order: 1
 | `stats <atk>/<def>;`                                                  | Attack and Defense                                                                                                                      | ✅ (only Followers and Evolved Followers) |
 | `text "<text>";`                                                      | Card Text                                                                                                                               | ❌                                        |
 | `evolve <cost>;`                                                      | Evolve Cost                                                                                                                             | ❌                                        |
-| `keyword <keyword>;`<br>or<br>`keywords <keyword1>, <keyword2>, ...;` | [Keywords](#keywords)<br>`keyword` and `keywords` (with/without `s`) are freely interchangeable                                         | ❌                                        |
-| `ability <parameters> {`<br>`  <effect parameters>`<br>`}`            | [Ability Definition](#ability-definitions)                                                                                              | ❌                                        |
+| `keyword <keyword>;`<br>or<br>`keywords <keyword1>, <keyword2>, ...;` | [Keywords][Keywords]<br>`keyword` and `keywords` (with/without `s`) are freely interchangeable                                          | ❌                                        |
+| `ability <parameters> {`<br>`  <effect parameters>`<br>`}`            | [Ability Definition][Abilities]                                                                                                         | ❌                                        |
 
 Note that all lines, except ability declarations, end in a semicolon (`;`). Any invalid lines are ignored.
 
@@ -39,3 +39,6 @@ In-line icons and symbols, such as for `Fanfare` and `Last Words`, should be for
 | Class             | `[forestcraft]` `[swordcraft]` etc<br>OR `[forest]` `[sword]` `[neutral]` etc |
 | Engage/Rest       | `[engage]`                                                                    |
 | Quick             | `[quick]`                                                                     |
+
+[Abilities]: ./abilities.html
+[Keywords]: ./keywords-counters.html
