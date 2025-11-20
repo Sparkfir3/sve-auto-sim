@@ -24,6 +24,8 @@ namespace SVESimulator.Database
 
         [field: TitleGroup("Settings"), SerializeField]
         public string DatabaseVersion { get; private set; }
+        [SerializeField, LabelText("SVE Script Resources path")]
+        private string sveScriptResourcesPath = "SveScripts";
         [HorizontalGroup("Run"), LabelWidth(175f), SerializeField]
         private bool checkToRunDownloader = true;
         [HorizontalGroup("Run"), LabelWidth(175f), SerializeField]
@@ -37,8 +39,6 @@ namespace SVESimulator.Database
         private DatabaseImageDownloader imageDownloader;
         [SerializeField, InlineEditor]
         private FilePathInfo paths;
-        [SerializeField]
-        private List<TextAsset> internalSveScripts;
         [SerializeField]
         private TextAsset cardLibrary;
         [BoxGroup("UI"), SerializeField]
@@ -101,7 +101,9 @@ namespace SVESimulator.Database
         [TitleGroup("Buttons"), Button]
         private void GenerateLibrary()
         {
-            foreach(TextAsset script in internalSveScripts)
+            TextAsset[] sveScripts = Resources.LoadAll<TextAsset>(sveScriptResourcesPath);
+            Debug.Log($"Loaded {sveScripts.Length} SVE scripts");
+            foreach(TextAsset script in sveScripts)
             {
                 SveScriptCompiler.ParseSveScriptCardSet(script.text, paths.CardDataPath);
             }
