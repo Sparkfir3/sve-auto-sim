@@ -12,7 +12,7 @@ The image downloader should be updated before compiling new SVE script cards, ot
 	- Select the `DatabaseImageDownloader` child game object in the hierarchy
 	- In the inspector, update the `Download Settings` variable with the new card ID ranges to download
 
-\[TODO - add image of download settings here\]
+![Image Downloader Settings](./image-downloader-settings.png)
 
 - Launch and play the `MainMenu` scene
 - If the "Downloading Card Images" window appears and no errors appear in the Unity console, the new images are downloading properly
