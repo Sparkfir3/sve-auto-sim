@@ -906,8 +906,8 @@
             "name": "Move Card",
             "type": "Triggered",
             "effect": {
-              "target": "AllPlayerCards",
-              "filter": "F",
+              "target": "Self",
+              "filter": null,
               "text": "Each opponent puts each follower from their field on the top or bottom of its owner's deck.",
               "$type": "SVESimulator.SveSendToTopOrBottomDeckEffect"
             },

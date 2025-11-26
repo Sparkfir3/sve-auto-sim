@@ -36,15 +36,25 @@ namespace SVESimulator
 
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
             {
-                SVEEffectPool.Instance.StartCoroutine(ResolveCoroutine(targets));
-
+                switch(targets.Count)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        (abilityToResolve.effect as SveEffect)?.Resolve(player, triggeringCardInstanceId, triggeringCardZone,
+                            targets[0].RuntimeCard.instanceId, targets[0].CurrentZone.Runtime.name, onComplete);
+                        return;
+                    default:
+                        SVEEffectPool.Instance.StartCoroutine(ResolveCoroutine(targets));
+                        break;
+                }
             });
 
             // ---
 
             IEnumerator ResolveCoroutine(List<CardObject> targets)
             {
-                SveEffect effectToPerform = (abilityToResolve.effect as SveEffect).CopyWithOverrideTargetFilter(SVEProperties.SVEEffectTarget.Self, null);
+                SveEffect effectToPerform = abilityToResolve.effect as SveEffect;
                 List<CardObject> targetsRemaining = new(targets);
                 while(targetsRemaining.Count > 0)
                 {
