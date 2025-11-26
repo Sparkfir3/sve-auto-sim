@@ -199,23 +199,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DatabaseVersion>k__BackingField: alpha_sd06
+  sveScriptResourcesPath: SveScripts
   checkToRunDownloader: 1
   runInEditor: 1
   shouldGenerateLibrary: 0
   generateLibraryInBuild: 0
   imageDownloader: {fileID: 7670950712414427884}
   paths: {fileID: 11400000, guid: 1be49ed2c17c930479692049869b18e0, type: 2}
-  internalSveScripts:
-  - {fileID: 4900000, guid: b626e6669929fe848af69a3f648fcb8c, type: 3}
-  - {fileID: 4900000, guid: 1e63b345526d7b343b61cddae3026113, type: 3}
-  - {fileID: 4900000, guid: 22a8a1d8a198f804c8766350dade49db, type: 3}
-  - {fileID: 4900000, guid: f5ef86e3bd336f94f87be8da2f514d8e, type: 3}
-  - {fileID: 4900000, guid: 8780d51002cd61d42882f10707f3b8e4, type: 3}
-  - {fileID: 4900000, guid: 68c8410b2d0bdf74d80b35703a1bcc91, type: 3}
-  - {fileID: 4900000, guid: 308552a444f90d4488f4be54b37eeaf1, type: 3}
-  - {fileID: 4900000, guid: 4c4086edcef930041a033c621d48bf54, type: 3}
-  - {fileID: 4900000, guid: 08e23a5098276194d921915eecae098b, type: 3}
-  - {fileID: 4900000, guid: fcbec33bec2c905488a8bb4bccc3f23e, type: 3}
   cardLibrary: {fileID: 4900000, guid: fefad9391dc2282429bec99288bc0d2e, type: 3}
   loadingOverlay: {fileID: 7992651225575324366}
   loadingBar: {fileID: 3221152137238019798}
