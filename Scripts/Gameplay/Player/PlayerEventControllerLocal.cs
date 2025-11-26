@@ -282,7 +282,7 @@ namespace SVESimulator
             localZoneController.EvolveCard(baseCard, evolvedCard, slot);
             evolvedCard.NumberOfTurnsOnBoard = baseCard.NumberOfTurnsOnBoard;
             evolvedCard.CanAttack = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 0;
-            evolvedCard.CanAttackLeader = evolvedCard.CanAttack && evolvedCard.NumberOfTurnsOnBoard > 0;
+            evolvedCard.CanAttackLeader = evolvedCard.CanAttack && (evolvedCard.NumberOfTurnsOnBoard > 0 || evolvedCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm));
 
             baseCard.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.fieldZone.HighlightCardsCanAttack();
