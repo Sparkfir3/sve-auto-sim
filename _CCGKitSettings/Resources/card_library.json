@@ -8378,14 +8378,14 @@
             "name": "Play Dragon",
             "type": "Triggered",
             "effect": {
-              "target": "Self",
+              "target": "TargetPlayerCardEx",
               "filter": null,
               "effectName1": "Kn(Dragon)",
               "effectName2": "Give Rush",
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
+              "text": "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
               "$type": "SVESimulator.SvePutExToFieldAndTargetEffect"
             },
             "target": null,

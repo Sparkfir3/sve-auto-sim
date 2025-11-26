@@ -52,7 +52,8 @@ ability Act {
     effect Sequence(Play Dragon, Play Points);
 }
 ability Spell name Play Dragon {
-    effect PutExToFieldAndTarget(Kn(Dragon), Give Rush);
+    text "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
+    effect PutExToFieldAndTarget(Kn(Dragon), Give Rush) to TargetPlayerCardEx;
 }
 ability Spell name Give Rush {
     effect GiveKeyword(Rush) to AllPlayerCards;
