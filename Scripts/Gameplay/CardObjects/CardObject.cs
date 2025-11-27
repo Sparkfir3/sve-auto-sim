@@ -106,8 +106,7 @@ namespace SVESimulator
         public void OnStartTurn()
         {
             NumberOfTurnsOnBoard++;
-            CanAttack = this.IsFollowerOrEvolvedFollower() && NumberOfTurnsOnBoard > 0;
-            CanAttackLeader = this.IsFollowerOrEvolvedFollower() && NumberOfTurnsOnBoard > 0;
+            CalculateCanAttackStatus();
         }
 
         public void OnMoveZone()
@@ -265,7 +264,8 @@ namespace SVESimulator
 
         public void CalculateCanAttackStatus()
         {
-            if(!CurrentZone.IsLocalPlayerZone || !this.IsFollowerOrEvolvedFollower() || RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 1)
+            if(!CurrentZone.IsLocalPlayerZone || !this.IsFollowerOrEvolvedFollower() || RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 1
+               || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotAttack))
             {
                 CanAttack = false;
                 CanAttackLeader = false;
@@ -275,7 +275,7 @@ namespace SVESimulator
 
             CanAttack = RuntimeCard.IsCardType(SVEProperties.CardTypes.EvolvedFollower) || NumberOfTurnsOnBoard > 0 ||
                 RuntimeCard.HasKeyword(SVEProperties.Keywords.Rush) || RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm);
-            CanAttackLeader = RuntimeCard.IsCardType(SVEProperties.CardTypes.EvolvedFollower) || NumberOfTurnsOnBoard > 0 || // TODO - check if evolved cards can attack leader immediately
+            CanAttackLeader = NumberOfTurnsOnBoard > 0 ||
                 RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm);
             SetHighlightMode(CanAttack ? HighlightMode.ValidTarget : HighlightMode.None);
         }

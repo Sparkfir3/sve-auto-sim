@@ -87,6 +87,10 @@ namespace SVESimulator
                     SelectTargetCardsToResolve(null, new List<string>() { SVEProperties.Zones.Field, SVEProperties.Zones.Leader });
                     break;
 
+                case SVEProperties.SVEEffectTarget.TargetCard:
+                    SelectTargetCardsToResolve(new List<string>() { SVEProperties.Zones.Field }, new List<string>() { SVEProperties.Zones.Field });
+                    break;
+
                 // ------------------------------
 
                 default:

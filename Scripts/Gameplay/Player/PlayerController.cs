@@ -249,6 +249,14 @@ namespace SVESimulator
                 foreach(CardObject card in opponentPlayerZoneController.fieldZone.AllCards)
                     card.OnStartTurn();
             }
+
+            // Start of main phase
+            if(msg.isRecipientTheActivePlayer)
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartMainPhaseTrigger >(gameState, null, localPlayerZoneController.fieldZone.Runtime,
+                    playerInfo, _ => true, true);
+            else
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartOpponentMainPhaseTrigger>(gameState, null, localPlayerZoneController.fieldZone.Runtime,
+                    playerInfo, _ => true, true);
         }
 
         public override void OnEndTurn(EndTurnMessage msg)

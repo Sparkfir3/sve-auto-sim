@@ -32,6 +32,8 @@ namespace SVESimulator
             TargetOpponentCardOrLeader,
 
             AllCards,
+            TargetCard,
+
             AllPlayers,
             AllLeaders
         }
@@ -44,7 +46,7 @@ namespace SVESimulator
             ChooseForEachFieldOrEx = 3
         }
 
-        public enum StatBoostType { Attack, Defense, AttackDefense, EvolveCost, MaxPlayPoint, PlayPoint }
+        public enum StatBoostType { Attack, Defense, AttackDefense, Cost, EvolveCost, MaxPlayPoint, PlayPoint }
         public enum PassiveDuration  { WhileOnField, OpponentTurn, EndOfTurn }
 
         public static Quaternion CardFaceUpRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -145,6 +147,7 @@ namespace SVESimulator
             public const string IgnoreWard = "IgnoreWard";
             public const string PutOnFieldEngaged = "PutOnFieldEngaged";
             public const string CannotDealDamage = "CannotDealDamage";
+            public const string CannotAttack = "CannotAttack";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";

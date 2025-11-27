@@ -1,0 +1,434 @@
+name Dark Dragoon Forte;
+id BP01-076;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity L;
+cost 4;
+stats 5/1;
+
+text "[evolve][cost02]: Evolve this follower.
+      Storm.";
+
+evolve 2;
+keyword Storm;
+
+// ------------------------------
+
+name Dark Dragoon Forte (Evolved);
+id BP01-077;
+class Dragon;
+type Evolved Follower;
+trait Dragonheart;
+rarity L;
+stats 7/3;
+
+text "Storm. Aura.";
+
+keywords Storm, Aura;
+
+// ------------------------------
+
+name Zirnitra;
+id BP01-078;
+class Dragon;
+type Follower;
+trait Dragonnewt;
+rarity L;
+cost 3;
+stats 3/2;
+
+text "[fanfare] Put a Dragon token into your EX area.
+      [act][cost02], [engage]: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
+
+ability Fanfare {
+    text "Put a Dragon token into your EX area.";
+    effect SummonToken(Dragon, ExArea, 1);
+}
+ability Act {
+    condition x(n(Dragon));
+    cost (PP, 2), (EngageSelf);
+    text "[cost02], [engage]: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
+    effect Sequence(Play Dragon, Play Points);
+}
+ability Spell name Play Dragon {
+    text "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
+    effect PutExToFieldAndTarget(Kn(Dragon), Give Rush) to TargetPlayerCardEx;
+}
+ability Spell name Give Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+ability Spell name Play Points {
+    condition o;
+    effect GiveStat(PP, 2) to Self;
+}
+
+// ------------------------------
+
+name Aiela, Dragon Knight;
+id BP01-079;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity G;
+cost 3;
+stats 3/2;
+
+text "Assail.
+      [lastwords] Increase your maximum play points by 1.";
+
+keyword Assail;
+ability LastWords {
+    text "Increase your maximum play points by 1.";
+    effect GiveStat(MaxPP, 1) to Self;
+}
+
+// ------------------------------
+
+name Genesis Dragon;
+id BP01-080;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity G;
+cost 9;
+stats 10/12;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+
+name Shapeshifting Mage;
+id BP01-081;
+class Dragon;
+type Follower;
+trait Dragonnewt;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] If Overflow is active for you, give this follower [attack]+3/[defense]+3.";
+
+evolve 1;
+ability Fanfare {
+    condition o;
+    text "If Overflow is active for you, give this follower [attack]+3/[defense]+3.";
+    effect GiveStat(AtkDef, 3) to Self;
+}
+
+// ------------------------------
+
+name Shapeshifting Mage (Evolved);
+id BP01-082;
+class Dragon;
+type Evolved Follower;
+trait Dragonnewt;
+rarity G;
+stats 2/2;
+
+text "Assail. Bane.";
+
+keyword Assail, Bane;
+
+// ------------------------------
+
+name Phoenix Roost;
+id BP01-083;
+class Dragon;
+type Amulet;
+trait Phoenix;
+rarity G;
+cost 5;
+
+text "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.";
+
+ability StartMainPhase name Check Top {
+    text "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.";
+    effect CheckTop(1, (Field, F, m(0,1)), (TopDeckSameOrder));
+}
+ability StartOpponentMainPhase {
+    text "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.";
+    effect OpponentPerformEffect(Check Top);
+}
+
+// ------------------------------
+
+name Wyvern Cavalier;
+id BP01-084;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity S;
+cost 5;
+stats 5/5;
+
+text "[fanfare] Put the top card of your deck into your EX area. It costs 2 less to play.";
+
+ability Fanfare {
+    text "Put the top card of your deck into your EX area. It costs 2 less to play.";
+    effect TopDeckToExAndTarget(1, Minus Cost);
+}
+ability Spell name Minus Cost {
+    effect GiveStat(Cost, -2) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Dragonnewt Scholar;
+id BP01-085;
+class Dragon;
+type Follower;
+trait Dragonnewt;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "Intimidate.
+      Strike: Draw a card, then discard a card.";
+
+keyword Intimidate;
+ability Strike {
+    text "Draw a card, then discard a card.";
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}
+ability Spell name Discard {
+    text "Discard a card.";
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Shenlong;
+id BP01-086;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity S;
+cost 5;
+stats 4/5;
+
+text "[evolve][cost02]: Evolve this follower.
+      Ward.
+      [fanfare] Draw 2 cards, then discard a card.";
+
+evolve 2;
+keyword Ward;
+ability Fanfare {
+    text "Draw 2 cards, then discard a card.";
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect DrawCard(2);
+}
+ability Spell name Discard {
+    text "Discard a card.";
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Shenlong (Evolved);
+id BP01-087;
+class Dragon;
+type Evolved Follower;
+trait Wyrmkin;
+rarity S;
+stats 4/5;
+
+text "Ward.
+      On Evolve: Give your leader [defense]+5.";
+
+keyword Ward;
+ability OnEvolve {
+    text "Give your leader [defense]+5.";
+    effect GiveStat(Def, 5) to Leader;
+}
+
+// ------------------------------
+
+name Imprisoned Dragon;
+id BP01-088;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity S;
+cost 3;
+stats 4/4;
+
+text "Ward.
+      This follower can't attack enemies.";
+
+keywords Ward, CantAttack;
+
+// ------------------------------
+
+name Conflagration;
+id BP01-089;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity S;
+cost 5;
+
+text "Deal 5 damage to each follower on the field.";
+
+ability Spell {
+    effect DealDamage(5) to AllCards F;
+}
+
+// ------------------------------
+
+name Serpent Wrath;
+id BP01-090;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity S;
+cost 3;
+
+text "[quick]
+      Select an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.";
+
+keyword Quick;
+ability Spell {
+    condition p(F);
+    effect Sequence(Damage, Draw);
+}
+ability Spell name Damage {
+    text "Select an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.";
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Draw {
+    condition o;
+    effect DrawCard(1) to Self;
+}
+
+// ------------------------------
+
+name Wyrm Spire;
+id BP01-091;
+class Dragon;
+type Amulet;
+trait Dragonewt;
+rarity S;
+cost 6;
+
+text "While this card is on your field, your Dragon tokens have Rush.
+      [act][engage]: Select a follower on the field and destroy it. Its controller summons a Dragon token.";
+
+ability Passive {
+    effect GiveKeyword(Rush, WhileOnField) to AllPlayerCards Kn(Dragon);
+}
+ability Act {
+    condition f(F)+p(F);
+    cost (EngageSelf);
+    text "[engage]: Select a follower on the field and destroy it. Its controller summons a Dragon token.";
+    effect DestroyAndControllerPerformEffect(Token) to TargetCard F;
+}
+ability Spell name Token {
+    effect SummonToken(Dragon, Field, 1);
+}
+
+// ------------------------------
+
+name Ivory Dragon;
+id BP01-092;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 1;
+stats 1/1;
+
+text "[evolve][cost00]: Evolve this follower.";
+
+evolve 0;
+
+// ------------------------------
+
+name Ivory Dragon (Evolved);
+id BP01-093;
+class Dragon;
+type Evolved Follower;
+trait Wyrmkin;
+rarity B;
+stats 2/2;
+
+text "On Evolve: If Overflow is active for you, draw a card.";
+
+ability OnEvolve {
+    condition o;
+    text "If Overflow is active for you, draw a card.";
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Ace Dragoon;
+id BP01-095;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity B;
+cost 2;
+stats 0/2;
+
+text "Rush.
+      [fanfare] Select another follower on the field and give this follower [attack]+X. X equals the selected follower's attack.";
+
+keyword Rush;
+ability Fanfare {
+    condition [f(FX)+p(F)];
+    text "Select another follower on the field and give this follower [attack]+X. X equals the selected follower's attack.";
+    effect PerformAsEachTarget(Give Attack) to TargetCard FX;
+}
+ability Spell name Give Attack {
+    effect GiveStat(Atk, A) to TriggerCard;
+}
+
+// ------------------------------
+
+name Mist Dragon;
+id BP01-096;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "Intimidate.";
+
+keyword Intimidate;
+
+// ------------------------------
+
+name Dragon Emissary;
+id BP01-100;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity B;
+cost 1;
+
+text "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+ability Spell {
+    text "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+    effect CheckTop(5, (Hand, c(Dragon)p(m(5,99)), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Zirnitra, Zealous Wings;
+id BP01-LD08;
+class Dragon;
+type Leader;

@@ -45,38 +45,8 @@ namespace SVESimulator
             IEnumerator ResolveCoroutine()
             {
                 yield return EngageWardTokens(tokens, player);
-
-                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
-                Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
-                List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence });
-
-                foreach(string effectName in allEffects)
-                {
-                    if(effectName.IsNullOrWhiteSpace())
-                        continue;
-
-                    // Fetch ability
-                    Ability baseAbility = sveAbilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
-                    if(baseAbility == null)
-                    {
-                        Debug.LogWarning($"Attempted to resolve sequenced ability {effectName} from card {libraryCard.name}, but failed to find the ability");
-                        continue;
-                    }
-                    if(baseAbility is TriggeredAbility { trigger: SveTrigger trigger }
-                       && !string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
-                        continue;
-
-                    // Perform effect
-                    bool effectDone = false;
-                    SveEffect effectToPerform = (baseAbility.effect as SveEffect).CopyWithAddFilters($"i({string.Join(",", tokens.Select(x => x.RuntimeCard.instanceId))})");
-                    effectToPerform.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete: () =>
-                    {
-                        effectDone = true;
-                    });
-                    yield return new WaitUntil(() => effectDone);
-                    yield return new WaitForEndOfFrame();
-                }
-                onComplete?.Invoke();
+                yield return SveEffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+                    onComplete, additionalFilters: $"i({string.Join(",", tokens.Select(x => x.RuntimeCard.instanceId))})");
             }
         }
     }

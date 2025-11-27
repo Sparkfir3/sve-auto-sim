@@ -406,7 +406,7 @@ namespace SVESimulator
                 return;
             }
             sveEffectSolver.SetCardStat(card.RuntimeCard, msg.statId, msg.value);
-            if(msg.value == 0 && card.RuntimeCard.ownerPlayer == playerInfo && card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
+            if(msg.value == 0 && card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
                 playerController.LocalEvents.SendToCemetery(card, onlyMoveObject: true);
         }
 
@@ -419,7 +419,7 @@ namespace SVESimulator
                 return;
             }
             sveEffectSolver.ApplyCardStatModifier(card.RuntimeCard, msg.statId, msg.value, msg.adding, msg.duration);
-            if(card.RuntimeCard.ownerPlayer == playerInfo && card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
+            if(card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
                 playerController.LocalEvents.SendToCemetery(card, onlyMoveObject: true);
         }
 

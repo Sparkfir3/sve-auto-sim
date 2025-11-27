@@ -186,7 +186,7 @@ ability Spell name Iterate {
 }
 ability Spell name Move Card {
     text "Each opponent puts each follower from their field on the top or bottom of its owner's deck.";
-    effect TopOrBottomDeck() to AllPlayerCards F;
+    effect TopOrBottomDeck() to Self;
 }
 
 // ------------------------------

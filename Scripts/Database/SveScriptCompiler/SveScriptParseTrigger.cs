@@ -35,6 +35,8 @@ namespace SVESimulator.SveScript
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
 
             // Game Phases
+            { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },
+            { "StartOpponentMainPhase", new EffectTriggerInfo("SVESimulator.SveStartOpponentMainPhaseTrigger") },
             { "StartEndPhase", new EffectTriggerInfo("SVESimulator.SveStartEndPhaseTrigger") },
 
             // Other
