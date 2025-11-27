@@ -14,12 +14,10 @@ namespace SVESimulator
         private struct CardMovementData
         {
             public Coroutine coroutine;
-            public bool wasInteractable;
 
-            public CardMovementData(Coroutine coroutine, bool wasInteractable)
+            public CardMovementData(Coroutine coroutine)
             {
                 this.coroutine = coroutine;
-                this.wasInteractable = wasInteractable;
             }
         }
 
@@ -71,15 +69,14 @@ namespace SVESimulator
         public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, Action onComplete = null)
         {
             CancelCardMovement(card);
-            bool wasInteractable = card.Interactable;
-            card.Interactable = false;
+            card.IsAnimating = true;
 
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
             float distance = (startPos - targetPos).magnitude;
             moveTime = distance / cardMoveSpeed;
             float duration = moveTime;
-            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine()), wasInteractable));
+            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine())));
 
             IEnumerator MoveCardCoroutine()
             {
@@ -92,7 +89,7 @@ namespace SVESimulator
                     yield return null;
                 }
                 card.transform.SetPositionAndRotation(targetPos, targetRot);
-                card.Interactable = wasInteractable;
+                card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();
             }
@@ -104,15 +101,14 @@ namespace SVESimulator
         public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, Action onComplete = null)
         {
             CancelCardMovement(card);
-            bool wasInteractable = card.Interactable;
-            card.Interactable = false;
+            card.IsAnimating = true;
 
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
             float distance = (startPos - targetPos).magnitude;
             moveTime = distance / cardMoveSpeed;
             float duration = moveTime;
-            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine()), wasInteractable));
+            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine())));
 
             IEnumerator MoveCardCoroutine()
             {
@@ -125,7 +121,7 @@ namespace SVESimulator
                     yield return null;
                 }
                 card.transform.SetPositionAndRotation(card.transform.parent.TransformPoint(targetPos), targetRot);
-                card.Interactable = wasInteractable;
+                card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();
             }
@@ -145,12 +141,11 @@ namespace SVESimulator
         public void RotateCard(CardObject card, Quaternion targetRot, Action onComplete = null)
         {
             CancelCardMovement(card);
-            bool wasInteractable = card.Interactable;
-            card.Interactable = false;
+            card.IsAnimating = true;
 
             float duration = 0.2f; // TODO - properly find what this should be or make it a setting
             Quaternion startRot = card.transform.rotation;
-            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(RotateCardCoroutine()), wasInteractable));
+            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(RotateCardCoroutine())));
 
             IEnumerator RotateCardCoroutine()
             {
@@ -162,7 +157,7 @@ namespace SVESimulator
                     yield return null;
                 }
                 card.transform.rotation = targetRot;
-                card.Interactable = wasInteractable;
+                card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();
             }
@@ -250,7 +245,7 @@ namespace SVESimulator
             {
                 if(movementData.coroutine != null)
                     StopCoroutine(movementData.coroutine);
-                card.Interactable = movementData.wasInteractable;
+                card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
             }
         }

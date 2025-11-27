@@ -26,8 +26,10 @@ namespace SVESimulator
         public bool CanAttackLeader { get; set; }
         [field: SerializeField, ReadOnly]
         public bool IsValidDefender { get; set; }
-        [SerializeField]
+        [SerializeField, HorizontalGroup("Interactable"), LabelWidth(120)]
         private bool _interactable = true;
+        [SerializeField, HorizontalGroup("Interactable"), LabelWidth(120)]
+        private bool _isAnimating = true;
         [SerializeField, ReadOnly]
         private bool isTrackingEngagedStatus;
         [field: SerializeField, ReadOnly]
@@ -60,8 +62,13 @@ namespace SVESimulator
 
         public bool Interactable
         {
-            get => _interactable && CurrentZone.Interactable;
+            get => _interactable && !_isAnimating && CurrentZone.Interactable;
             set => _interactable = value;
+        }
+        public bool IsAnimating
+        {
+            get => _isAnimating;
+            set => _isAnimating = value;
         }
         public bool Engaged => RuntimeCard != null &&
             RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.baseValue > 0;
@@ -95,6 +102,7 @@ namespace SVESimulator
             SetHighlightMode(HighlightMode.None);
 
             _interactable = true;
+            _isAnimating = false;
             parentCard = null;
             NumberOfTurnsOnBoard = 0;
             CanAttack = false;
