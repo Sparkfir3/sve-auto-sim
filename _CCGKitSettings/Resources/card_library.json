@@ -11162,6 +11162,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
+              "target": "Self",
               "amount": "1",
               "filter": "Ap(m(0,5))",
               "text": "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
