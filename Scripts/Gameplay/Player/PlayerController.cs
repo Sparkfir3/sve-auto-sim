@@ -26,11 +26,14 @@ namespace SVESimulator
         public List<PlayedCardData> CardsPlayedThisTurn = new();
         [SyncVar]
         public List<PlayedAbilityData> AbilitiesUsedThisTurn = new();
+        [SyncVar, SerializeField]
+        private int damageTakenThisTurn;
 
         public int Combo => CardsPlayedThisTurn.Count;
         public int Spellchain => localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
         public bool Overflow => localMaxPlayPointStat != null && localMaxPlayPointStat.effectiveValue >= 7;
         public int Necrocharge => localPlayerZoneController.cemeteryZone.AllCards.Count;
+        public bool Sanguine => damageTakenThisTurn > 0;
 
         [Header("Runtime References"), SerializeField, ReadOnly]
         private PlayerCardZoneController localPlayerZoneController;
@@ -153,6 +156,12 @@ namespace SVESimulator
 
             localPlayerZoneController.InitializeZones(playerInfo);
             localPlayerZoneController.Player = this;
+            playerInfo.namedStats[SVEProperties.PlayerStats.Defense].onValueChanged += (oldValue, newValue) =>
+            {
+                int difference = newValue - oldValue;
+                if(difference < 0)
+                    damageTakenThisTurn += -difference;
+            };
             FieldManager.PlayerLeaderHealth.Initialize(playerInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
             opponentPlayerZoneController.InitializeZones(opponentInfo);
@@ -186,6 +195,7 @@ namespace SVESimulator
             AbilitiesUsedThisTurn.Clear();
             CurrentTurnNumber = 0;
             EvolvedThisTurn = false;
+            damageTakenThisTurn = 0;
             localPlayPointStat = playerInfo.namedStats[SVEProperties.PlayerStats.PlayPoints];
             localMaxPlayPointStat = playerInfo.namedStats[SVEProperties.PlayerStats.MaxPlayPoints];
             opponentPlayPointStat = opponentInfo.namedStats[SVEProperties.PlayerStats.PlayPoints];
@@ -220,6 +230,7 @@ namespace SVESimulator
             CardsPlayedThisTurn.Clear();
             AbilitiesUsedThisTurn.Clear();
             EvolvedThisTurn = false;
+            damageTakenThisTurn = 0;
             SVEEffectPool.Instance.UpdatePassiveDurationsStartOfTurn(this, msg.isRecipientTheActivePlayer);
 
             // Failsafe Calls

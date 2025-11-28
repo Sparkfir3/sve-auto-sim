@@ -50,6 +50,7 @@ namespace SVESimulator
             Spellchain,
             Overflow,
             Necrocharge,
+            Sanguine,
 
             // Zones
             CardCountOnField,
@@ -118,6 +119,7 @@ namespace SVESimulator
                 's' => FormulaType.Spellchain,
                 'o' => FormulaType.Overflow,
                 'n' => FormulaType.Necrocharge,
+                'g' => FormulaType.Sanguine,
                 '+' => FormulaType.Addition,
                 '-' => FormulaType.Subtraction,
                 '>' => FormulaType.GreaterThan,
@@ -152,6 +154,10 @@ namespace SVESimulator
 
                 case FormulaType.Overflow:
                     if(!player || !player.Overflow)
+                        return leftHandValue;
+                    break;
+                case FormulaType.Sanguine:
+                    if(!player || !player.Sanguine)
                         return leftHandValue;
                     break;
             }
