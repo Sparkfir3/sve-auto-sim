@@ -133,7 +133,7 @@ namespace SVESimulator
             // Trigger for cards in zone
             PlayerController player = localPlayer.GetPlayerInfo() == resolvingPlayer ? localPlayer : opponentPlayer;
             string sourceZone = sourceCard != null
-                ? player.ZoneController.AllZones.FirstOrDefault(x => x.Value.Runtime.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key
+                ? CardManager.Instance.GetCardByInstanceId(sourceCard.instanceId).CurrentZone.Runtime.name
                 : null;
             CardZone cardZone = player.ZoneController.AllZones[targetZone.name];
             foreach(CardObject card in (cardZone is CardPositionedZone positionedZone ? positionedZone.GetAllPrimaryCards() : cardZone.AllCards))

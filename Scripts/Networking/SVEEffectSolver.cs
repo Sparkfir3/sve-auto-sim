@@ -221,13 +221,22 @@ namespace SVESimulator
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
 
-            if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
-                SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
-                SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
-                    x => x.MatchesFilter(card), false);
+                if(player.netId.isLocalPlayer)
+                {
+                    SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                        x => x.MatchesFilter(card), false);
+                }
+                else
+                {
+                    PlayerInfo localPlayer = gameState.players.Find(x => x.netId.isLocalPlayer);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardLeaveFieldTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field], localPlayer,
+                        x => x.MatchesFilter(card), false);
+                }
             }
         }
 
