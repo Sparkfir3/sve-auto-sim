@@ -287,6 +287,7 @@ namespace SVESimulator.SveScript
             { "RemoveCounter", new EffectParams("SVESimulator.SveRemoveCounterEffect",    EffectParameterType.Keyword, EffectParameterType.AmountDefaultNull) },
             { "MoveCounter", new EffectParams("SVESimulator.SveMoveCountersEffect",       EffectParameterType.Keyword, EffectParameterType.AmountDefaultNull) },
 
+            { "Evolve", new EffectParams("SVESimulator.SveEvolveEffect")                  },
             { "Transform", new EffectParams("SVESimulator.SveTransformCardEffect",        EffectParameterType.TokenName) },
             { "OpponentPerformEffect", new EffectParams("SVESimulator.SveOpponentPerformEffect", EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.SvePerformAsEachTargetEffect", EffectParameterType.SingleEffect) },

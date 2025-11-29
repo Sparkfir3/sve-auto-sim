@@ -139,7 +139,7 @@ namespace SVESimulator
 
         #region Get Info
 
-        public bool CanEvolve()
+        public bool HasEvolveCost()
         {
             if(!RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.EvolveCost, out Stat stat) || stat.baseValue < 0)
                 return false;
