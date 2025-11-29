@@ -316,10 +316,11 @@ namespace SVESimulator
                 baseCard = NetworkingUtils.GetNetCard(baseCard),
                 evolvedCard = NetworkingUtils.GetNetCard(evolvedCard),
                 fieldSlotId = msg.fieldSlotId,
-                useEvolvePoint = msg.useEvolvePoint
+                useEvolvePoint = msg.useEvolvePoint,
+                useEvolveCost = msg.useEvolveCost
             };
             server.SafeSendToClient(server.gameState.currentOpponent, evolveCardMessage);
-            (server.effectSolver as SVEEffectSolver).EvolveCard(msg.playerNetId, baseCard, evolvedCard, msg.useEvolvePoint);
+            (server.effectSolver as SVEEffectSolver).EvolveCard(msg.playerNetId, baseCard, evolvedCard, msg.useEvolvePoint, msg.useEvolveCost);
         }
 
         #endregion

@@ -134,47 +134,49 @@ namespace SVESimulator
             }
         }
 
-        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint)
+        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint, bool useEvolveCost = true)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            if(player != null)
+            if(player == null)
+                return;
+
+            RuntimeZone evolve = player.namedZones[SVEProperties.Zones.EvolveDeck];
+            RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
+            evolve.RemoveCard(evolvedCard);
+            field.AddCard(evolvedCard);
+
+            // TODO - support for more than one attached card
+            if(evolvedCard.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+                attachedCardInfo.baseValue = baseCard.instanceId;
+            else
+                Debug.LogError($"Failed to get attached card instance ID value for card (instance id {evolvedCard.instanceId}");
+
+            // Pay cost
+            if(useEvolveCost)
             {
-                RuntimeZone evolve = player.namedZones[SVEProperties.Zones.EvolveDeck];
-                RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
-
-                evolve.RemoveCard(evolvedCard);
-                field.AddCard(evolvedCard);
-
-                // TODO - support for more than one attached card
-                if(evolvedCard.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
-                    attachedCardInfo.baseValue = baseCard.instanceId;
-                else
-                    Debug.LogError($"Failed to get attached card instance ID value for card (instance id {evolvedCard.instanceId}");
-
-                // Pay cost
                 if(!baseCard.namedStats.TryGetValue(SVEProperties.CardStats.EvolveCost, out Stat evolveCostStat))
                     Debug.LogError($"Failed to get evolve cost for card (instance id {baseCard.instanceId}");
-                int playPointCost = Mathf.Clamp((evolveCostStat?.effectiveValue ?? 0) - (useEvolvePoint ? 1 : 0), 0, int.MaxValue);
+                int playPointCost = Mathf.Max((evolveCostStat?.effectiveValue ?? 0) - (useEvolvePoint ? 1 : 0), 0);
 
                 player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+            }
 
-                // Handle engage status
-                if(baseCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0)
-                    EngageCard(evolvedCard);
+            // Handle engage status
+            if(baseCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0)
+                EngageCard(evolvedCard);
 
-                // Set face up
-                evolvedCard.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
+            // Set face up
+            evolvedCard.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
 
-                // Passive handling & effect triggers
-                if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
-                {
-                    SVEEffectPool.Instance.UnregisterPassiveAbilities(baseCard);
-                    SVEEffectPool.Instance.ApplyAllActivePassivesToCard(evolvedCard);
-                    SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, evolvedCard);
+            // Passive handling & effect triggers
+            if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+            {
+                SVEEffectPool.Instance.UnregisterPassiveAbilities(baseCard);
+                SVEEffectPool.Instance.ApplyAllActivePassivesToCard(evolvedCard);
+                SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, evolvedCard);
 
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, true);
-                }
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, true);
             }
         }
 

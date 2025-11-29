@@ -290,6 +290,7 @@ namespace SVESimulator
         public int evolvedCardInstanceId;
         public int fieldSlotId;
         public bool useEvolvePoint;
+        public bool useEvolveCost;
     }
 
     public struct OpponentEvolveCardMessage : NetworkMessage
@@ -299,6 +300,7 @@ namespace SVESimulator
         public NetCard evolvedCard;
         public int fieldSlotId;
         public bool useEvolvePoint;
+        public bool useEvolveCost;
     }
 
     #endregion
