@@ -303,6 +303,7 @@ namespace SVESimulator.SveScript
             { "Salvage", new EffectParams("SVESimulator.SveSalvageCardEffect",            false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
             { "Search", new EffectParams("SVESimulator.SveSearchDeckEffect",              false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
             { "CemeteryToField", new EffectParams("SVESimulator.SveCemeteryToFieldEffect",true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "CemeteryToFieldAndTarget", new EffectParams("SVESimulator.SveCemeteryToFieldAndTargetEffect",true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "PlaySpellFromCemetery", new EffectParams("SVESimulator.SvePlaySpellFromCemeteryEffect",false, false, EffectParameterType.Filter) },
             { "PlaySpellFromCemeterySetCost", new EffectParams("SVESimulator.SvePlaySpellFromCemeterySetCostEffect",false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "Discard", new EffectParams("SVESimulator.SveDiscardEffect",                false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
