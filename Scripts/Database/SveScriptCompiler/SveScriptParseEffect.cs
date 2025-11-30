@@ -306,6 +306,7 @@ namespace SVESimulator.SveScript
             { "PlaySpellFromCemetery", new EffectParams("SVESimulator.SvePlaySpellFromCemeteryEffect",false, false, EffectParameterType.Filter) },
             { "PlaySpellFromCemeterySetCost", new EffectParams("SVESimulator.SvePlaySpellFromCemeterySetCostEffect",false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "Discard", new EffectParams("SVESimulator.SveDiscardEffect",                false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "DiscardFromOpponentHand", new EffectParams("SVESimulator.SveDiscardFromOpponentHandEffect", false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
 
             { "Mill", new EffectParams("SVESimulator.SveMillDeckEffect",                  false, false, EffectParameterType.Amount) },
             { "TopDeckToEx", new EffectParams("SVESimulator.SveTopDeckToExEffect",        false, false, EffectParameterType.Amount) },
