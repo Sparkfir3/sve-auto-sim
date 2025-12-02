@@ -16,7 +16,7 @@ ability Fanfare {
     effect Sequence(Single, Double);
 }
 ability Spell name Single {
-    condition n(10)0;
+    condition 1n(10)0;
     text "Put a Mimi or Coco token into your EX area.";
     effect ChooseFromList(Mimi, Coco);
 }

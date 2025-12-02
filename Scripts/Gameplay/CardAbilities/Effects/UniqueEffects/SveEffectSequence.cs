@@ -38,7 +38,7 @@ namespace SVESimulator
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
-            List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence });
+            List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect });
 
             foreach(string effectName in effectList)
             {

@@ -10718,7 +10718,7 @@
           },
           {
             "trigger": {
-              "condition": "n(10)0",
+              "condition": "1n(10)0",
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
