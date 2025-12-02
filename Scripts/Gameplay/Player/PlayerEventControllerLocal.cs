@@ -952,6 +952,7 @@ namespace SVESimulator
             IEnumerator Resolve()
             {
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
+                string cardOriginZone = card.CurrentZone.Runtime.name;
                 List<MoveCardToZoneData> cardsToMove = new();
                 List<RemoveCounterData> countersToRemove = new();
                 foreach(Cost cost in costs)
@@ -982,14 +983,14 @@ namespace SVESimulator
                     }
                 }
 
-                // Pay cost on network
+                // Resolve paying cost
                 sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray());
 
                 LocalPayEffectCostMessage msg = new()
                 {
                     playerNetId = netIdentity,
                     cardInstanceId = card.RuntimeCard.instanceId,
-                    originZone = card.CurrentZone.Runtime.name,
+                    originZone = cardOriginZone,
                     abilityName = abilityName,
                     cardsMoveToZoneData = cardsToMove.ToArray(),
                     countersToRemove = countersToRemove.ToArray(),
