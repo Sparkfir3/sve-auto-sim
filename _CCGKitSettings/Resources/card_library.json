@@ -12307,9 +12307,9 @@
             "trigger": {
               "condition": null,
               "cost": null,
-              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+              "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Fanfare",
+            "name": "Spell",
             "type": "Triggered",
             "effect": {
               "tokenName": "Ghost",

@@ -325,7 +325,7 @@ cost 3;
 
 text "Summon 4 Ghost tokens.";
 
-ability Fanfare {
+ability Spell {
     text "Summon 4 Ghost tokens.";
     effect SummonToken(Ghost, Field, 4);
 }
