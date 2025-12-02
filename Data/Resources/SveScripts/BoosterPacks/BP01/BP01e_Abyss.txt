@@ -216,8 +216,8 @@ ability Spell name Draw {
 name Hell's Unleasher;
 id BP01-109;
 class Abyss;
-type Spell;
-trait Elf;
+type Follower;
+trait Demon;
 rarity S;
 cost 2;
 stats 2/2;

@@ -11693,7 +11693,7 @@
         "id": 201108
       },
       {
-        "cardTypeId": 2,
+        "cardTypeId": 0,
         "name": "Hell's Unleasher",
         "costs": [],
         "properties": [
@@ -11703,7 +11703,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Elf",
+            "value": "Demon",
             "name": "Trait",
             "$type": "CCGKit.StringProperty"
           },
@@ -11721,11 +11721,56 @@
         "stats": [
           {
             "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
             "statId": 4,
             "name": "Cost",
             "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
             "modifiers": []
           }
         ],
