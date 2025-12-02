@@ -11971,7 +11971,15 @@
             },
             "name": "OnEvolve",
             "type": "Triggered",
-            "effect": null,
+            "effect": {
+              "effectName1": "Damage",
+              "effectName2": "Discard",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "text": "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.",
+              "$type": "SVESimulator.SveEffectSequence"
+            },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },

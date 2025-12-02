@@ -258,7 +258,7 @@ stats 3/3;
 text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.";
 
 ability OnEvolve {
-    text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card."
+    text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.";
     effect Sequence(Damage, Discard);
 }
 ability Spell name Damage {
