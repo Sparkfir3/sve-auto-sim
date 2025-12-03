@@ -24,7 +24,7 @@ namespace SVESimulator
                     {
                         continue;
                     }
-                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, useEvolveCost: true);
+                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, useEvolveCost: false);
                 }
                 onComplete?.Invoke();
             });
