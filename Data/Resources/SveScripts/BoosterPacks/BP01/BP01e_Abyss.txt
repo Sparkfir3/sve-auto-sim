@@ -265,7 +265,7 @@ ability Spell name Damage {
     effect DealDamage(2) to Leader;
 }
 ability Spell name Discard {
-    text "Select a card in their hand. The opponent discards that card.";
+    text "Select a card in the opponent's hand. The opponent discards that card.";
     effect DiscardFromOpponentHand(1);
 }
 

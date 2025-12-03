@@ -12012,7 +12012,7 @@
             "effect": {
               "amount": "1",
               "filter": null,
-              "text": "Select a card in their hand. The opponent discards that card.",
+              "text": "Select a card in the opponent's hand. The opponent discards that card.",
               "$type": "SVESimulator.SveDiscardFromOpponentHandEffect"
             },
             "target": null,
