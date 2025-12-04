@@ -213,6 +213,10 @@ namespace SVESimulator
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
 
+            // Valid slot check
+            if(!localZoneController.fieldZone.IsSlotNumberValid(slot))
+                return false;
+
             // Cost check
             int playPointCost = 0;
             if(payCost)

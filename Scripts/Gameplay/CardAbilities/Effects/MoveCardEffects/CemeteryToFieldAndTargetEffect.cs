@@ -39,10 +39,22 @@ namespace SVESimulator
 
         protected override void ConfirmationAction(PlayerController player, List<CardObject> selectedCards, Action onComplete)
         {
-            foreach(CardObject card in selectedCards)
+            for(int i = 0; i < selectedCards.Count; i++)
             {
-                card.Interactable = player.isActivePlayer;
-                player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Cemetery);
+                if(!player.LocalEvents.PlayCardToField(selectedCards[i], SVEProperties.Zones.Cemetery, payCost: false))
+                {
+                    Debug.LogError($"CemeteryToField Effect - Failed to play target card with instance ID {selectedCards[i].RuntimeCard.instanceId}");
+                    selectedCards.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                selectedCards[i].Interactable = player.isActivePlayer;
+            }
+
+            if(selectedCards.Count == 0)
+            {
+                onComplete?.Invoke();
+                return;
             }
             SVEEffectPool.Instance.StartCoroutine(SveEffectSequence.ResolveEffectsAsSequence(allEffects, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
                 onComplete, additionalFilters: $"i({string.Join(",", selectedCards.Select(x => x.RuntimeCard.instanceId))})"));

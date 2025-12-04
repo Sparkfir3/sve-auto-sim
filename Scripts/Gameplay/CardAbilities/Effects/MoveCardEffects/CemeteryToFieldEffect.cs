@@ -14,6 +14,13 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            // Fail if field is full
+            if(player.ZoneController.fieldZone.OpenSlotCount() == 0)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
             // Unique logic for target mode TriggerCard
             if(target == SVEProperties.SVEEffectTarget.TriggerCard)
             {
@@ -39,8 +46,12 @@ namespace SVESimulator
         {
             foreach(CardObject card in selectedCards)
             {
+                if(!player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Cemetery, payCost: false))
+                {
+                    Debug.LogError($"CemeteryToField Effect - Failed to play target card with instance ID {card.RuntimeCard.instanceId}");
+                    continue;
+                }
                 card.Interactable = player.isActivePlayer;
-                player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Cemetery);
             }
             onComplete?.Invoke();
         }
