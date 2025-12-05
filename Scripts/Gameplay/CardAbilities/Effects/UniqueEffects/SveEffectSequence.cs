@@ -60,7 +60,7 @@ namespace SVESimulator
 
                 // Resolve with cost check
                 bool effectDone = false;
-                SveEffect effectToPerform = !additionalFilters.IsNullOrWhiteSpace()
+                SveEffect effectToPerform = additionalFilters.IsNullOrWhiteSpace()
                     ? baseAbility.effect as SveEffect
                     : (baseAbility.effect as SveEffect).CopyWithAddFilters(additionalFilters);
                 Action resolveAction = () =>
