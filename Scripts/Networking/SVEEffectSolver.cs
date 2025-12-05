@@ -421,14 +421,15 @@ namespace SVESimulator
             CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0)
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0, bool checkDefense = true)
         {
             Modifier modifier = new(value, duration);
             if(adding)
                 card.stats[statId].AddModifier(modifier);
             else
                 card.stats[statId].RemoveModifier(modifier);
-            CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
+            if(checkDefense)
+                CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
         public void ApplyKeywordToCard(RuntimeCard card, int type, int value, bool adding)
@@ -444,8 +445,9 @@ namespace SVESimulator
             int attackerDamage = GetCardDamageOutput(attackingCard);
             int defenderDamage = GetCardDamageOutput(defendingCard);
 
-            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true);
-            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true);
+            // Do not check for 0 defense here - instead check below during Bane handling
+            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false);
+            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, checkDefense: false);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
