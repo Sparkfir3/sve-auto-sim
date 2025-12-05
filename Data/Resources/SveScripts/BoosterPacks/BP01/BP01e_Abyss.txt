@@ -461,7 +461,7 @@ text "On Evolve, put a follower from your field into its owner's cemetery: Selec
 ability OnEvolve {
     cost (SendToCemetery, TargetPlayerCard, F);
     text "Put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.";
-    effect Destroy() to TargetPlayerCard F;
+    effect Destroy() to TargetOpponentCard F;
 }
 
 // ------------------------------

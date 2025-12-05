@@ -13253,7 +13253,7 @@
             "name": "OnEvolve",
             "type": "Triggered",
             "effect": {
-              "target": "TargetPlayerCard",
+              "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.",
               "$type": "SVESimulator.SveDestroyCardEffect"
