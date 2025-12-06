@@ -337,6 +337,23 @@ namespace SVESimulator.DeckBuilder
             OnUpdateDeck?.Invoke();
         }
 
+        public string DeckAsString()
+        {
+            string leaderClass = !DeckClass.IsNullOrWhiteSpace()
+                ? DeckClass
+                : CurrentLeader == null ? "Neutral" : CurrentLeader.GetStringProperty(SVEProperties.CardStats.Class);
+            string data = $"{leaderClass} v1\n\n" +
+
+            "# Leader\n" +
+            $"{(CurrentLeader != null ? $"1 {CurrentLeader.GetStringProperty(SVEProperties.CardStats.ID)}\n" : "")}\n" +
+            "# Main Deck\n" +
+            $"{string.Join("\n", CurrentMainDeck.Select(x => $"{x.Value} {x.Key.GetStringProperty(SVEProperties.CardStats.ID)}"))}\n\n" +
+            "# Evolve Deck\n" +
+            $"{string.Join("\n", CurrentEvolveDeck.Select(x => $"{x.Value} {x.Key.GetStringProperty(SVEProperties.CardStats.ID)}"))}";
+
+            return data;
+        }
+
         public string DeckAsBase62String()
         {
             string leaderClass = !DeckClass.IsNullOrWhiteSpace()
