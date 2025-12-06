@@ -8,7 +8,7 @@ namespace SVESimulator
         public static readonly ActivatedAbility InnateStackAbility = new()
         {
             name = "Innate Stack",
-            effect = new SveMoveCountersEffect
+            effect = new MoveCountersEffect
             {
                 text = "<sprite index=23>: Select another amulet with Stack on your field and transfer all this card's Stack counters to that card.",
                 keywordType = (int)SVEProperties.Counters.Stack,

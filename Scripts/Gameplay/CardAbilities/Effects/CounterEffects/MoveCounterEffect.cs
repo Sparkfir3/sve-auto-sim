@@ -5,7 +5,7 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveMoveCountersEffect : SveEffect
+    public class MoveCountersEffect : SveEffect
     {
         [KeywordTypeField("Type"), Order(3)]
         public int keywordType;

@@ -6,7 +6,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveCemeteryToFieldAndTargetEffect : SveCemeteryToFieldEffect
+    public class CemeteryToFieldAndTargetEffect : CemeteryToFieldEffect
     {
         [StringField("Effect 1", width = 200), Order(11)]
         public string effectName1;
@@ -56,7 +56,7 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            SVEEffectPool.Instance.StartCoroutine(SveEffectSequence.ResolveEffectsAsSequence(allEffects, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
+            SVEEffectPool.Instance.StartCoroutine(EffectSequence.ResolveEffectsAsSequence(allEffects, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
                 onComplete, additionalFilters: $"i({string.Join(",", selectedCards.Select(x => x.RuntimeCard.instanceId))})"));
         }
     }

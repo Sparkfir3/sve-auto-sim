@@ -3,7 +3,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveDealDamageEffect : SveEffect
+    public class DealDamageEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;

@@ -5,7 +5,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveCemeteryToFieldEffect : SveChooseFromCemeteryEffect
+    public class CemeteryToFieldEffect : ChooseFromCemeteryEffect
     {
         [EnumField("Target", width = 100), Order(3)]
         public SVEProperties.SVEEffectTarget target;

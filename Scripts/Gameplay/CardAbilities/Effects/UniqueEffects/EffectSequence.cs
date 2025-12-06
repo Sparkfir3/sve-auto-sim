@@ -9,7 +9,7 @@ using SVESimulator.UI;
 
 namespace SVESimulator
 {
-    public class SveEffectSequence : SveEffect
+    public class EffectSequence : SveEffect
     {
         [StringField("Effect 1", width = 200), Order(1)]
         public string effectName1;

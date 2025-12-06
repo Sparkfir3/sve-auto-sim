@@ -5,7 +5,7 @@ using StatBoostType = SVESimulator.SVEProperties.StatBoostType;
 
 namespace SVESimulator
 {
-    public class SveSetStatEffect : SveEffect
+    public class SetStatEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;

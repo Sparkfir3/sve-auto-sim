@@ -4,7 +4,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveTopDeckToExEffect : SveEffect
+    public class TopDeckToExEffect : SveEffect
     {
         [StringField("Amount", width = 100), Order(1)]
         public string amount = "1";

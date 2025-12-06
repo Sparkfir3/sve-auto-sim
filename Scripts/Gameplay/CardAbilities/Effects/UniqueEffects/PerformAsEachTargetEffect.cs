@@ -8,7 +8,7 @@ using SVESimulator.UI;
 
 namespace SVESimulator
 {
-    public class SvePerformAsEachTargetEffect : SveEffect
+    public class PerformAsEachTargetEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
@@ -25,7 +25,7 @@ namespace SVESimulator
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
-            Ability abilityToResolve = libraryCard?.abilities?.FirstOrDefault(x => x is TriggeredAbility { effect: SveEffect and not SveEffectSequence }
+            Ability abilityToResolve = libraryCard?.abilities?.FirstOrDefault(x => x is TriggeredAbility { effect: SveEffect and not EffectSequence }
                 && x.name.Trim().Equals(effectName.Trim()));
             if(abilityToResolve == null)
             {

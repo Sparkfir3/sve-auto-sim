@@ -5,7 +5,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveGiveKeywordEndOfTurnEffect : SveGiveKeywordEffect
+    public class GiveKeywordEndOfTurnEffect : GiveKeywordEffect
     {
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {

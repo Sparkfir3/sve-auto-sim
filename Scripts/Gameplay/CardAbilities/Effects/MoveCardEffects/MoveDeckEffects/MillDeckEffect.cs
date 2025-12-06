@@ -4,7 +4,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveMillDeckEffect : SveEffect
+    public class MillDeckEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;

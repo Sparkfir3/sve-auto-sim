@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SVESimulator
 {
-    public class SveTransformCardEffect : SveEffect
+    public class TransformCardEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;

@@ -9,7 +9,7 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveSummonTokenAndTargetEffect : SveSummonTokenEffect
+    public class SummonTokenAndTargetEffect : SummonTokenEffect
     {
         [StringField("Effect 1", width = 200), Order(11)]
         public string effectName1;
@@ -45,7 +45,7 @@ namespace SVESimulator
             IEnumerator ResolveCoroutine()
             {
                 yield return EngageWardTokens(tokens, player);
-                yield return SveEffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+                yield return EffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
                     onComplete, additionalFilters: $"i({string.Join(",", tokens.Select(x => x.RuntimeCard.instanceId))})");
             }
         }

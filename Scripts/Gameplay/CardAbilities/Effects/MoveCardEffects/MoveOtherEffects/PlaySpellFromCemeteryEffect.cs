@@ -5,7 +5,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SvePlaySpellFromCemeteryEffect : SveChooseFromCemeteryEffect
+    public class PlaySpellFromCemeteryEffect : ChooseFromCemeteryEffect
     {
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {

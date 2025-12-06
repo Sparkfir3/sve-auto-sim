@@ -6,7 +6,7 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveDiscardFromOpponentHandEffect : SveEffect
+    public class DiscardFromOpponentHandEffect : SveEffect
     {
         [StringField("Amount", width = 100), Order(1)]
         public string amount;

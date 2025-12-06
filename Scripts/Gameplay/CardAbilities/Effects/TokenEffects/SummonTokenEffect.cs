@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SVESimulator
 {
-    public class SveSummonTokenEffect : SveEffect
+    public class SummonTokenEffect : SveEffect
     {
         [StringField("Token Name", width = 200), Order(1)]
         public string tokenName;

@@ -7,7 +7,7 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveCheckTopDeckEffect : SveEffect
+    public class CheckTopDeckEffect : SveEffect
     {
         public enum CheckCardAction { None, Hand, Cemetery, Field, TopDeckAnyOrder, TopDeckSameOrder, BottomDeckAnyOrder }
         private struct CheckActionParameters

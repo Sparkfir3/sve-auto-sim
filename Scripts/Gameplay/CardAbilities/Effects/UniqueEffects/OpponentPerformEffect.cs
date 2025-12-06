@@ -7,7 +7,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveOpponentPerformEffect : SveEffect
+    public class OpponentPerformEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;

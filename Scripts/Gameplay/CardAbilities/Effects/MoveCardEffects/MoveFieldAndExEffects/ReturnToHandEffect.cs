@@ -3,7 +3,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveReturnToHandEffect : SveEffect
+    public class ReturnToHandEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;

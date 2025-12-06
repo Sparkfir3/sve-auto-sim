@@ -37,11 +37,11 @@ namespace SVESimulator
         [Button]
         public void Search()
         {
-            SveSearchDeckEffect searchEffect = new()
+            SearchDeckEffect searchEffect = new()
             {
                 amount = "1",
                 filter = null,
-                searchDeckAction = SveSearchDeckEffect.SearchDeckAction.Hand,
+                searchDeckAction = SearchDeckEffect.SearchDeckAction.Hand,
                 text = "[Debug Mode] Search for a card"
             };
             SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
