@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Sparkfire.Utility;
+using SVESimulator.SveScript;
 using UnityEngine;
 
 namespace SVESimulator.Database
@@ -44,7 +45,7 @@ namespace SVESimulator.Database
                     continue;
                 }
                 int amount = int.Parse(cardInfo[0]);
-                int ccgId = int.Parse(cardInfo[1]); // TODO - convert SVE ID to CCG Kit ID
+                int ccgId = CardIDConversion.CardIdToCCGKitId(cardInfo[1]);
                 cards.Add(new CardAmountPair(ccgId, amount));
             }
             return cards;
