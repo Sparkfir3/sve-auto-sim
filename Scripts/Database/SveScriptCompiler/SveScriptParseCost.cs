@@ -86,7 +86,7 @@ namespace SVESimulator.SveScript
                         newCost.Add("$type",         "SVESimulator.RemoveCountersCost");
                         break;
                     case "OncePerTurn":
-                        newCost.Add("$type", "SVESimulator.OncePerTurnCost");
+                        newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
                         break;
                     default:
                         Debug.LogError($"Invalid cost arg {args[0]} found in line: {text}");

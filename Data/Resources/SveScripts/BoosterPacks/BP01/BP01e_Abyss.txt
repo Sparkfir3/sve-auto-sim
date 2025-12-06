@@ -1,0 +1,508 @@
+name Cerberus;
+id BP01-101;
+class Abyss;
+type Follower;
+trait Demon;
+rarity L;
+cost 4;
+stats 3/3;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.";
+
+evolve 2;
+ability Fanfare {
+    text "Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.";
+    effect Sequence(Single, Double);
+}
+ability Spell name Single {
+    condition 1n(10)0;
+    text "Put a Mimi or Coco token into your EX area.";
+    effect ChooseFromList(Mimi, Coco);
+}
+ability Spell name Double {
+    condition n(10);
+    effect Sequence(Mimi, Coco);
+}
+
+ability Spell name Mimi {
+    text "Mimi";
+    effect SummonToken(Mimi, ExArea, 1);
+}
+ability Spell name Coco {
+    text "Coco";
+    effect SummonToken(Coco, ExArea, 1);
+}
+
+// ------------------------------
+
+name Cerberus (Evolved);
+id BP01-102;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity L;
+stats 5/5;
+
+text "On Evolve: Put a Mimi and Coco token into your EX area.";
+
+ability OnEvolve {
+    text "Put a Mimi and Coco token into your EX area.";
+    effect Sequence(Mimi, Coco);
+}
+ability Spell name Mimi {
+    text "Mimi";
+    effect SummonToken(Mimi, ExArea, 1);
+}
+ability Spell name Coco {
+    text "Coco";
+    effect SummonToken(Coco, ExArea, 1);
+}
+
+// ------------------------------
+
+name Lord Atomy;
+id BP01-103;
+class Abyss;
+type Follower;
+trait Departed;
+rarity L;
+cost 9;
+stats 6/6;
+
+text "When playing this card, put 4 reserved [abysscraft] cards from your field into their owners' cemeteries, or banish 4 [abysscraft] cards in your EX area: This card costs 9 less to play.";
+
+ability ModifiedCost {
+    cost (SendToCemetery, TargetPlayerCard, Rc(abyss)m(4,4));
+    text "Put 4 reserved [abysscraft] cards from your field into their owners' cemeteries.";
+    effect AlternateCost();
+}
+ability ModifiedCost {
+    cost (Banish, TargetPlayerCardEx, c(abyss)m(4,4));
+    text "Banish 4 [abysscraft] cards in your EX area.";
+    effect AlternateCost();
+}
+
+// ------------------------------
+
+name Medusa;
+id BP01-104;
+class Abyss;
+type Follower;
+trait Demon;
+rarity G;
+cost 6;
+stats 6/6;
+
+text "If Sanguine is active for you, this card costs 1 less to play.
+      Necrocharge (10): This card costs 1 less to play.
+      Bane.
+      [act][engage]: Select an enemy follower on the field and destroy it.";
+
+keyword Bane;
+ability ModifiedCost name Sanguine {
+    condition g;
+    effect ReducedCost(1);
+}
+ability ModifiedCost name Necrocharge {
+    condition n(10);
+    effect ReducedCost(1);
+}
+ability Act {
+    condition p(#F);
+    cost (EngageSelf);
+    text "[engage]: Select an enemy follower on the field and destroy it.";
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Righteous Devil;
+id BP01-105;
+class Abyss;
+type Follower;
+trait Demon;
+rarity G;
+cost 4;
+stats 2/4;
+
+text "[evolve] Give your leader [defense]-3: Evolve this follower.
+      Bane.";
+
+keyword Bane;
+ability Act {
+    cost (LeaderDef, 3);
+    text "[evolve] Give your leader [defense]-3: Evolve this follower.";
+    effect Evolve();
+}
+
+// ------------------------------
+
+name Righteous Devil (Evolved);
+id BP01-106;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity G;
+stats 3/5;
+
+text "Assail. Bane.
+      Whenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.";
+
+keyword Assail, Bane;
+ability OnOpponentCardLeaveField {
+    filter F;
+    text "Whenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.";
+    effect Sequence(Damage, Defense);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to OpponentLeader;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Mordecai the Duelist;
+id BP01-107;
+class Abyss;
+type Follower;
+trait Departed;
+rarity G;
+cost 5;
+stats 5/5;
+
+text "[lastwords] Give your leader [defense]-3: Put this follower onto its owner's field.";
+
+ability LastWords {
+    cost (LeaderDef, 3);
+    text "[lastwords] Give your leader [defense]-3: Put this follower onto its owner's field.";
+    effect CemeteryToField() to TriggerCard;
+}
+
+// ------------------------------
+
+name Dire Bond;
+id BP01-108;
+class Abyss;
+type Amulet;
+trait Demon;
+rarity G;
+cost 1;
+
+text "[fanfare] Deal 1 damage to your leader. Draw a card.
+      [act][cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.";
+
+ability Fanfare {
+    text "Deal 1 damage to your leader. Draw a card.";
+    effect Sequence(Damage, Draw);
+}
+ability Act {
+    cost (PP, 2), (EngageSelf), (SendToCemetery, Self);
+    text "[cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.";
+    effect Sequence(Damage, Draw);
+}
+
+ability Spell name Damage {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Hell's Unleasher;
+id BP01-109;
+class Abyss;
+type Follower;
+trait Demon;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[act][engage], put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.";
+
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    text "[engage], put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.";
+    effect Salvage(1, Fp(m(3,99)));
+}
+
+// ------------------------------
+
+name Crazed Executioner;
+id BP01-110;
+class Abyss;
+type Follower;
+trait Cutthroat;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Crazed Executioner (Evolved);
+id BP01-111;
+class Abyss;
+type Evolved Follower;
+trait Cutthroat;
+rarity S;
+stats 3/3;
+
+text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.";
+
+ability OnEvolve {
+    text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.";
+    effect Sequence(Damage, Discard);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to Leader;
+}
+ability Spell name Discard {
+    text "Select a card in the opponent's hand. The opponent discards that card.";
+    effect DiscardFromOpponentHand(1);
+}
+
+// ------------------------------
+
+name Dark Summoner;
+id BP01-112;
+class Abyss;
+type Follower;
+trait Demon;
+rarity S;
+cost 2;
+stats 3/2;
+
+text "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush.";
+
+ability Fanfare {
+    condition g;
+    text "If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush.";
+    effect Sequence(Stat, Rush);
+}
+ability Spell name Stat {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to Self;
+}
+
+// ------------------------------
+
+name Dark General;
+id BP01-113;
+class Abyss;
+type Follower;
+trait Demon;
+rarity S;
+cost 4;
+stats 5/5;
+
+text "[fanfare] If Sanguine is active for you, give this follower Storm.";
+
+ability Fanfare {
+    condition g;
+    text "If Sanguine is active for you, give this follower Storm.";
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Phantom Howl;
+id BP01-114;
+class Abyss;
+type Spell;
+trait Departed;
+rarity S;
+cost 3;
+
+text "Summon 4 Ghost tokens.";
+
+ability Spell {
+    text "Summon 4 Ghost tokens.";
+    effect SummonToken(Ghost, Field, 4);
+}
+
+// ------------------------------
+
+name Death's Breath;
+id BP01-115;
+class Abyss;
+type Spell;
+trait Departed;
+rarity S;
+cost 6;
+
+text "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.";
+
+ability Spell {
+    text "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.";
+    effect CemeteryToFieldAndTarget(1, Fp(m(0,8)), Ward);
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Soul Conversion;
+id BP01-116;
+class Abyss;
+type Spell;
+trait Departed;
+rarity S;
+cost 1;
+
+text "[quick]
+      Select a follower on your field. Destroy it and draw 2 cards.";
+
+keyword Quick;
+ability Spell {
+    condition f(F);
+    effect Sequence(Destroy, Draw);
+}
+ability Spell name Destroy {
+    text "Select a follower on your field. Destroy it and draw 2 cards.";
+    effect Destroy() to TargetPlayerCard F;
+}
+ability Spell name Draw {
+    effect DrawCard(2);
+}
+
+// ------------------------------
+
+name Skeleton Fighter;
+id BP01-117;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    condition g;
+    text "If Sanguine is active for you, give this follower [attack]+1/[defense]+1.";
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Ambling Wraith;
+id BP01-118;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 1;
+stats 2/1;
+
+text "[fanfare] Deal 1 damage to each leader.";
+
+ability Fanfare {
+    text "Deal 1 damage to each leader.";
+    effect DealDamage(1) to AllLeaders;
+}
+
+// ------------------------------
+
+name Rabbit Necromancer;
+id BP01-121;
+class Abyss;
+type Follower;
+trait Necromancer;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[lastwords] Deal 2 damage to each leader.";
+
+ability LastWords {
+    text "Deal 2 damage to each leader.";
+    effect DealDamage(2) to AllLeaders;
+}
+
+// ------------------------------
+
+name Wardrobe Raider;
+id BP01-122;
+class Abyss;
+type Follower;
+trait Demon;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost00]: Evolve this follower.";
+
+evolve 0;
+
+// ------------------------------
+
+name Wardrobe Raider (Evolved);
+id BP01-123;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity B;
+stats 3/3;
+
+text "On Evolve, put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.";
+
+ability OnEvolve {
+    cost (SendToCemetery, TargetPlayerCard, F);
+    text "Put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.";
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Urias;
+id BP01-LD10;
+class Abyss;
+type Leader;
+
+// ------------------------------
+
+name Mimi;
+id BP01-T12;
+class Abyss;
+type Spell / Token;
+trait Demon;
+cost 0;
+
+text "Select an enemy follower on the field and deal it 2 damage.";
+
+ability Spell {
+    condition p(#F);
+    text "Select an enemy follower on the field and deal it 2 damage.";
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Coco;
+id BP01-T13;
+class Abyss;
+type Spell / Token;
+trait Demon;
+cost 0;
+
+text "Select a follower on your field and give it [attack]+2.";
+
+ability Spell {
+    condition f(F);
+    text "Select a follower on your field and give it [attack]+2.";
+    effect GiveStat(Atk, 2) to TargetPlayerCard F;
+}

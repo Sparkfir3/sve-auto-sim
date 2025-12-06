@@ -134,47 +134,49 @@ namespace SVESimulator
             }
         }
 
-        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint)
+        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint, bool useEvolveCost = true)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            if(player != null)
+            if(player == null)
+                return;
+
+            RuntimeZone evolve = player.namedZones[SVEProperties.Zones.EvolveDeck];
+            RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
+            evolve.RemoveCard(evolvedCard);
+            field.AddCard(evolvedCard);
+
+            // TODO - support for more than one attached card
+            if(evolvedCard.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+                attachedCardInfo.baseValue = baseCard.instanceId;
+            else
+                Debug.LogError($"Failed to get attached card instance ID value for card (instance id {evolvedCard.instanceId}");
+
+            // Pay cost
+            if(useEvolveCost)
             {
-                RuntimeZone evolve = player.namedZones[SVEProperties.Zones.EvolveDeck];
-                RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
-
-                evolve.RemoveCard(evolvedCard);
-                field.AddCard(evolvedCard);
-
-                // TODO - support for more than one attached card
-                if(evolvedCard.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
-                    attachedCardInfo.baseValue = baseCard.instanceId;
-                else
-                    Debug.LogError($"Failed to get attached card instance ID value for card (instance id {evolvedCard.instanceId}");
-
-                // Pay cost
                 if(!baseCard.namedStats.TryGetValue(SVEProperties.CardStats.EvolveCost, out Stat evolveCostStat))
                     Debug.LogError($"Failed to get evolve cost for card (instance id {baseCard.instanceId}");
-                int playPointCost = Mathf.Clamp((evolveCostStat?.effectiveValue ?? 0) - (useEvolvePoint ? 1 : 0), 0, int.MaxValue);
+                int playPointCost = Mathf.Max((evolveCostStat?.effectiveValue ?? 0) - (useEvolvePoint ? 1 : 0), 0);
 
                 player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+            }
 
-                // Handle engage status
-                if(baseCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0)
-                    EngageCard(evolvedCard);
+            // Handle engage status
+            if(baseCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0)
+                EngageCard(evolvedCard);
 
-                // Set face up
-                evolvedCard.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
+            // Set face up
+            evolvedCard.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
 
-                // Passive handling & effect triggers
-                if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
-                {
-                    SVEEffectPool.Instance.UnregisterPassiveAbilities(baseCard);
-                    SVEEffectPool.Instance.ApplyAllActivePassivesToCard(evolvedCard);
-                    SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, evolvedCard);
+            // Passive handling & effect triggers
+            if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+            {
+                SVEEffectPool.Instance.UnregisterPassiveAbilities(baseCard);
+                SVEEffectPool.Instance.ApplyAllActivePassivesToCard(evolvedCard);
+                SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, evolvedCard);
 
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, true);
-                }
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, true);
             }
         }
 
@@ -221,13 +223,22 @@ namespace SVESimulator
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
 
-            if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
-                SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
-                SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
-                    x => x.MatchesFilter(card), false);
+                if(player.netId.isLocalPlayer)
+                {
+                    SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                        x => x.MatchesFilter(card), false);
+                }
+                else
+                {
+                    PlayerInfo localPlayer = gameState.players.Find(x => x.netId.isLocalPlayer);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardLeaveFieldTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field], localPlayer,
+                        x => x.MatchesFilter(card), false);
+                }
             }
         }
 
@@ -366,7 +377,7 @@ namespace SVESimulator
                 if(targetZone == player.namedZones[SVEProperties.Zones.Field])
                 {
                     SVEEffectPool.Instance.ApplyAllActivePassivesToCard(card);
-                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, targetZone, player,
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, SVEProperties.Zones.Field, targetZone, player,
                         x => x.MatchesFilter(card), false);
                 }
                 SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
@@ -410,14 +421,15 @@ namespace SVESimulator
             CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0)
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0, bool checkDefense = true)
         {
             Modifier modifier = new(value, duration);
             if(adding)
                 card.stats[statId].AddModifier(modifier);
             else
                 card.stats[statId].RemoveModifier(modifier);
-            CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
+            if(checkDefense)
+                CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
         public void ApplyKeywordToCard(RuntimeCard card, int type, int value, bool adding)
@@ -433,8 +445,9 @@ namespace SVESimulator
             int attackerDamage = GetCardDamageOutput(attackingCard);
             int defenderDamage = GetCardDamageOutput(defendingCard);
 
-            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true);
-            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true);
+            // Do not check for 0 defense here - instead check below during Bane handling
+            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false);
+            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, checkDefense: false);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))

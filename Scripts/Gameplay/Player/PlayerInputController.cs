@@ -368,7 +368,7 @@ namespace SVESimulator
             if(!card.CurrentZone.IsLocalPlayerZone || !allowedInputs.HasFlag(InputTypes.ActivateAbilities)) // TODO - quick abilities
                 return false;
             List<ActivatedAbility> activatedAbilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility && x.effect is SveEffect).Select(x => x as ActivatedAbility).ToList();
-            if(card.CanEvolve() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
+            if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
             {
                 GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities);
                 return true;

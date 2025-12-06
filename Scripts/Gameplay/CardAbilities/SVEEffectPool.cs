@@ -128,19 +128,26 @@ namespace SVESimulator
                 CmdExecuteConfirmationTiming();
         }
 
-        public void TriggerPendingEffectsForOtherCardsInZone<T>(GameState gameState, RuntimeCard sourceCard, RuntimeZone targetZone, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming) where T : SveTrigger
+        public void TriggerPendingEffectsForOtherCardsInZone<T>(GameState gameState, RuntimeCard sourceCard, RuntimeZone targetZone,
+            PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming) where T : SveTrigger
+        {
+            string sourceZoneName = sourceCard != null
+                ? CardManager.Instance.GetCardByInstanceId(sourceCard.instanceId).CurrentZone.Runtime.name
+                : null;
+            TriggerPendingEffectsForOtherCardsInZone(gameState, sourceCard, sourceZoneName, targetZone, resolvingPlayer, predicate, executeConfirmationTiming);
+        }
+
+        public void TriggerPendingEffectsForOtherCardsInZone<T>(GameState gameState, RuntimeCard sourceCard, string sourceZoneName, RuntimeZone targetZone,
+            PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming) where T : SveTrigger
         {
             // Trigger for cards in zone
             PlayerController player = localPlayer.GetPlayerInfo() == resolvingPlayer ? localPlayer : opponentPlayer;
-            string sourceZone = sourceCard != null
-                ? player.ZoneController.AllZones.FirstOrDefault(x => x.Value.Runtime.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key
-                : null;
             CardZone cardZone = player.ZoneController.AllZones[targetZone.name];
             foreach(CardObject card in (cardZone is CardPositionedZone positionedZone ? positionedZone.GetAllPrimaryCards() : cardZone.AllCards))
             {
                 if(sourceCard != null && card.RuntimeCard.instanceId == sourceCard.instanceId)
                     continue;
-                TriggerPendingEffects(gameState, card.RuntimeCard, resolvingPlayer, predicate, false, sourceCard, sourceZone);
+                TriggerPendingEffects(gameState, card.RuntimeCard, resolvingPlayer, predicate, false, sourceCard, sourceZoneName);
             }
 
             // Trigger floating effects

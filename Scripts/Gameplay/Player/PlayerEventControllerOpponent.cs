@@ -104,10 +104,10 @@ namespace SVESimulator
                 InitRuntimeCard(ref runtimeCard, msg.evolvedCard);
                 evolvedCard = CardManager.Instance.RequestCard(runtimeCard);
             }
-            
+
             // Evolve
             oppZoneController.EvolveCard(baseCard, evolvedCard, msg.fieldSlotId);
-            sveEffectSolver.EvolveCard(msg.playerNetId, baseCard.RuntimeCard, evolvedCard.RuntimeCard, msg.useEvolvePoint);
+            sveEffectSolver.EvolveCard(msg.playerNetId, baseCard.RuntimeCard, evolvedCard.RuntimeCard, msg.useEvolvePoint, msg.useEvolveCost);
         }
 
         public void SendToCemetery(OpponentSendCardToCemeteryMessage msg)

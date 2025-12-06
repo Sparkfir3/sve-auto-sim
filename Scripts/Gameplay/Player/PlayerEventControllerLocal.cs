@@ -213,6 +213,10 @@ namespace SVESimulator
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
 
+            // Valid slot check
+            if(!localZoneController.fieldZone.IsSlotNumberValid(slot))
+                return false;
+
             // Cost check
             int playPointCost = 0;
             if(payCost)
@@ -259,14 +263,17 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true)
         {
             // Condition checks
             if(!isActivePlayer || playerController.EvolvedThisTurn)
                 return false;
-            int evolveCost = baseCard.GetEvolveCost();
-            if(evolveCost < 0 || !CanPayEvolveCost(evolveCost, useEvolvePoint))
-                return false;
+            if(useEvolveCost)
+            {
+                int evolveCost = baseCard.GetEvolveCost();
+                if(evolveCost < 0 || !CanPayEvolveCost(evolveCost, useEvolvePoint))
+                    return false;
+            }
             int slot = localZoneController.fieldZone.GetSlotNumber(baseCard);
             if(slot <= -1)
             {
@@ -278,7 +285,7 @@ namespace SVESimulator
                 return false;
 
             // Evolve logic
-            sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint);
+            sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint, useEvolveCost);
             localZoneController.EvolveCard(baseCard, evolvedCard, slot);
             evolvedCard.NumberOfTurnsOnBoard = baseCard.NumberOfTurnsOnBoard;
             evolvedCard.CanAttack = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 0;
@@ -295,7 +302,8 @@ namespace SVESimulator
                 baseCardInstanceId = baseCard.RuntimeCard.instanceId,
                 evolvedCardInstanceId = evolvedCard.RuntimeCard.instanceId,
                 fieldSlotId = slot,
-                useEvolvePoint = useEvolvePoint
+                useEvolvePoint = useEvolvePoint,
+                useEvolveCost = useEvolveCost
             };
             NetworkClient.Send(msg);
 
@@ -948,6 +956,7 @@ namespace SVESimulator
             IEnumerator Resolve()
             {
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
+                string cardOriginZone = card.CurrentZone.Runtime.name;
                 List<MoveCardToZoneData> cardsToMove = new();
                 List<RemoveCounterData> countersToRemove = new();
                 foreach(Cost cost in costs)
@@ -978,14 +987,14 @@ namespace SVESimulator
                     }
                 }
 
-                // Pay cost on network
+                // Resolve paying cost
                 sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray());
 
                 LocalPayEffectCostMessage msg = new()
                 {
                     playerNetId = netIdentity,
                     cardInstanceId = card.RuntimeCard.instanceId,
-                    originZone = card.CurrentZone.Runtime.name,
+                    originZone = cardOriginZone,
                     abilityName = abilityName,
                     cardsMoveToZoneData = cardsToMove.ToArray(),
                     countersToRemove = countersToRemove.ToArray(),

@@ -27,6 +27,7 @@ namespace SVESimulator.SveScript
             { "OnLeaveField", new EffectTriggerInfo("SVESimulator.SveOnCardLeaveFieldTrigger") },
             { "OnOtherEnterField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
+            { "OnOpponentCardLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardLeaveFieldTrigger", TriggerParameterType.Filter) },
 
             // Card/Player Actions
             { "OnEvolve", new EffectTriggerInfo("SVESimulator.SveOnEvolveTrigger") },

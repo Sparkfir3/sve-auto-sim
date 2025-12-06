@@ -211,8 +211,11 @@ namespace SVESimulator
             if(!card)
                 return;
 
+            CardZone startZone = card.CurrentZone;
             MoveCardZone(card, card.CurrentZone, cemeteryZone);
             MoveCardTransform(card, cemeteryZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, onComplete: onComplete);
+            if(startZone is PlayerHandZone)
+                RearrangeHand();
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
