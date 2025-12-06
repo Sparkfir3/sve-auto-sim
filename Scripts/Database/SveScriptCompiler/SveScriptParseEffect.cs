@@ -183,7 +183,7 @@ namespace SVESimulator.SveScript
                         effectData.Add("keywordValue", keyword.valueId);
                         break;
                     case EffectParameterType.StatType:
-                        effectData.Add("targetStats", StatTypeDictionary[argument]);
+                        effectData.Add("targetStats", StatTypeDictionary.GetValueOrDefault(argument, ""));
                         break;
                     case EffectParameterType.PassiveDuration:
                         effectData.Add("duration", argument);
@@ -263,86 +263,88 @@ namespace SVESimulator.SveScript
         
         private static Dictionary<string, EffectParams> StandardEffectInfoDictionary = new()
         {
-            // Generic
-            { "DealDamage", new EffectParams("SVESimulator.SveDealDamageEffect",          EffectParameterType.Amount) },
-            { "DrawThenDamage", new EffectParams("SVESimulator.SveDrawThenDamageEffect",  EffectParameterType.Amount, EffectParameterType.Amount2) },
-            { "GiveKeyword", new EffectParams("SVESimulator.SveGiveKeywordEffect",        EffectParameterType.Keyword) },
-            { "GiveKeywordEndOfTurn", new EffectParams("SVESimulator.SveGiveKeywordEndOfTurnEffect", EffectParameterType.Keyword) },
-            { "GiveStat", new EffectParams("SVESimulator.SveGiveStatBoostEffect",         EffectParameterType.StatType, EffectParameterType.Amount) },
-            { "ReturnToHand", new EffectParams("SVESimulator.SveReturnToHandEffect")      },
-            { "BottomDeck", new EffectParams("SVESimulator.SveSendToBottomDeckEffect")    },
-            { "TopDeck", new EffectParams("SVESimulator.SveSendToTopDeckEffect")          },
-            { "TopOrBottomDeck", new EffectParams("SVESimulator.SveSendToTopOrBottomDeckEffect") },
-            { "SetStat", new EffectParams("SVESimulator.SveSetStatEffect",                EffectParameterType.StatType, EffectParameterType.Amount) },
+            // Movement - Deck to Zone
+            { "DrawCard", new EffectParams("SVESimulator.DrawCardEffect",                               true, false, EffectParameterType.Amount) },
+            { "DrawThenDamage", new EffectParams("SVESimulator.DrawThenDamageEffect",                   EffectParameterType.Amount, EffectParameterType.Amount2) },
+            { "TopDeckToEx", new EffectParams("SVESimulator.TopDeckToExEffect",                         false, false, EffectParameterType.Amount) },
+            { "TopDeckToExArea", new EffectParams("SVESimulator.TopDeckToExEffect",                     false, false, EffectParameterType.Amount) },
+            { "TopDeckToExAndTarget", new EffectParams("SVESimulator.TopDeckToExAndTargetEffect",       false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            { "Search", new EffectParams("SVESimulator.SearchDeckEffect",                               false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
+            { "Mill", new EffectParams("SVESimulator.MillDeckEffect",                                   false, false, EffectParameterType.Amount) },
 
-            { "Destroy", new EffectParams("SVESimulator.SveDestroyCardEffect")            },
-            { "DestroyCard", new EffectParams("SVESimulator.SveDestroyCardEffect")        },
-            { "Banish", new EffectParams("SVESimulator.SveBanishCardEffect")              },
-            { "BanishCard", new EffectParams("SVESimulator.SveBanishCardEffect")          },
+            // Movement - Field/EX to Zone
+            { "ReturnToHand", new EffectParams("SVESimulator.ReturnToHandEffect")                       },
+            { "TopDeck", new EffectParams("SVESimulator.SendToTopDeckEffect")                           },
+            { "BottomDeck", new EffectParams("SVESimulator.SendToBottomDeckEffect")                     },
+            { "TopOrBottomDeck", new EffectParams("SVESimulator.SendToTopOrBottomDeckEffect")           },
+            { "Destroy", new EffectParams("SVESimulator.DestroyCardEffect")                             },
+            { "DestroyCard", new EffectParams("SVESimulator.DestroyCardEffect")                         },
+            { "Banish", new EffectParams("SVESimulator.BanishCardEffect")                               },
+            { "BanishCard", new EffectParams("SVESimulator.BanishCardEffect")                           },
+            { "PutExToFieldAndTarget", new EffectParams("SVESimulator.PutExToFieldAndTargetEffect",     EffectParameterType.ListOfEffects) },
 
-            { "EngageCard", new EffectParams("SVESimulator.SveEngageCardEffect")          },
-            { "ReserveCard", new EffectParams("SVESimulator.SveReserveCardEffect")        },
+            // Movement - Other
+            { "Discard", new EffectParams("SVESimulator.DiscardEffect",                                             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "DiscardFromOpponentHand", new EffectParams("SVESimulator.DiscardFromOpponentHandEffect",             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "Salvage", new EffectParams("SVESimulator.SalvageCardEffect",                                         false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
+            { "CemeteryToField", new EffectParams("SVESimulator.CemeteryToFieldEffect",                             true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "CemeteryToFieldAndTarget", new EffectParams("SVESimulator.CemeteryToFieldAndTargetEffect",           true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
+            { "PlaySpellFromCemetery", new EffectParams("SVESimulator.PlaySpellFromCemeteryEffect",                 false, false, EffectParameterType.Filter) },
+            { "PlaySpellFromCemeterySetCost", new EffectParams("SVESimulator.PlaySpellFromCemeterySetCostEffect",   false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
 
-            { "GiveCounter", new EffectParams("SVESimulator.SveGiveCounterEffect",        EffectParameterType.Keyword, EffectParameterType.Amount) },
-            { "RemoveCounter", new EffectParams("SVESimulator.SveRemoveCounterEffect",    EffectParameterType.Keyword, EffectParameterType.AmountDefaultNull) },
-            { "MoveCounter", new EffectParams("SVESimulator.SveMoveCountersEffect",       EffectParameterType.Keyword, EffectParameterType.AmountDefaultNull) },
+            // ------------------------------
 
-            { "Evolve", new EffectParams("SVESimulator.SveEvolveEffect")                  },
-            { "Transform", new EffectParams("SVESimulator.SveTransformCardEffect",        EffectParameterType.TokenName) },
-            { "OpponentPerformEffect", new EffectParams("SVESimulator.SveOpponentPerformEffect", EffectParameterType.SingleEffect) },
-            { "PerformAsEachTarget", new EffectParams("SVESimulator.SvePerformAsEachTargetEffect", EffectParameterType.SingleEffect) },
-            { "PutExToFieldAndTarget", new EffectParams("SVESimulator.SvePutExToFieldAndTargetEffect", EffectParameterType.ListOfEffects) },
-            { "DestroyAndControllerPerformEffect", new EffectParams("SVESimulator.SveDestroyAndControllerPerformEffect", EffectParameterType.SingleEffect) },
+            // Stat Effects
+            { "DealDamage", new EffectParams("SVESimulator.DealDamageEffect",                           EffectParameterType.Amount) },
+            { "DealDamageDivided", new EffectParams("SVESimulator.DealDamageDividedEffect",             false, true, EffectParameterType.Amount) },
+            { "GiveStat", new EffectParams("SVESimulator.GiveStatBoostEffect",                          EffectParameterType.StatType, EffectParameterType.Amount) },
+            { "SetStat", new EffectParams("SVESimulator.SetStatEffect",                                 EffectParameterType.StatType, EffectParameterType.Amount) },
+            { "EngageCard", new EffectParams("SVESimulator.EngageCardEffect")                           },
+            { "ReserveCard", new EffectParams("SVESimulator.ReserveCardEffect")                         },
 
-            // Target or Filter
-            { "DrawCard", new EffectParams("SVESimulator.SveDrawCardEffect",              true, false, EffectParameterType.Amount) },
-            { "DealDamageDivided", new EffectParams("SVESimulator.SveDealDamageDividedEffect",
-                false, true, EffectParameterType.Amount) },
-            
-            // No Target, No Filter
-            { "Salvage", new EffectParams("SVESimulator.SveSalvageCardEffect",            false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
-            { "Search", new EffectParams("SVESimulator.SveSearchDeckEffect",              false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
-            { "CemeteryToField", new EffectParams("SVESimulator.SveCemeteryToFieldEffect",true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
-            { "CemeteryToFieldAndTarget", new EffectParams("SVESimulator.SveCemeteryToFieldAndTargetEffect",true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
-            { "PlaySpellFromCemetery", new EffectParams("SVESimulator.SvePlaySpellFromCemeteryEffect",false, false, EffectParameterType.Filter) },
-            { "PlaySpellFromCemeterySetCost", new EffectParams("SVESimulator.SvePlaySpellFromCemeterySetCostEffect",false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
-            { "Discard", new EffectParams("SVESimulator.SveDiscardEffect",                false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
-            { "DiscardFromOpponentHand", new EffectParams("SVESimulator.SveDiscardFromOpponentHandEffect", false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            // Keyword Effects
+            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                         EffectParameterType.Keyword) },
+            { "GiveKeywordEndOfTurn", new EffectParams("SVESimulator.GiveKeywordEndOfTurnEffect",       EffectParameterType.Keyword) },
 
-            { "Mill", new EffectParams("SVESimulator.SveMillDeckEffect",                  false, false, EffectParameterType.Amount) },
-            { "TopDeckToEx", new EffectParams("SVESimulator.SveTopDeckToExEffect",        false, false, EffectParameterType.Amount) },
-            { "TopDeckToExArea", new EffectParams("SVESimulator.SveTopDeckToExEffect",    false, false, EffectParameterType.Amount) },
-            { "TopDeckToExAndTarget", new EffectParams("SVESimulator.SveTopDeckToExAndTargetEffect", false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            // Counter Effects
+            { "GiveCounter", new EffectParams("SVESimulator.GiveCounterEffect",                         EffectParameterType.Keyword, EffectParameterType.Amount) },
+            { "RemoveCounter", new EffectParams("SVESimulator.RemoveCounterEffect",                     EffectParameterType.Keyword, EffectParameterType.AmountDefaultNull) },
+            { "MoveCounter", new EffectParams("SVESimulator.MoveCountersEffect",                        EffectParameterType.Keyword, EffectParameterType.AmountDefaultNull) },
 
-            { "CheckTop", new EffectParams("SVESimulator.SveCheckTopDeckEffect",          false, false, EffectParameterType.CheckCardActions) },
-            { "ChooseFromList", new EffectParams("SVESimulator.SveChooseEffectFromList",  false, false, EffectParameterType.ListOfEffects) },
-            { "Sequence", new EffectParams("SVESimulator.SveEffectSequence",              false, false, EffectParameterType.ListOfEffects) },
-            { "SummonToken", new EffectParams("SVESimulator.SveSummonTokenEffect",
-                false, false, EffectParameterType.TokenName, EffectParameterType.CreateTokenOption, EffectParameterType.Amount) },
-            { "SummonTokenAndTarget", new EffectParams("SVESimulator.SveSummonTokenAndTargetEffect",
-                false, false, EffectParameterType.TokenName, EffectParameterType.CreateTokenOption, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            // ------------------------------
 
-            { "ExtraTurn", new EffectParams("SVESimulator.SveExtraTurnEffect",            false, false) },
+            // Token Effects
+            { "SummonToken", new EffectParams("SVESimulator.SummonTokenEffect",                         false, false, EffectParameterType.TokenName, EffectParameterType.CreateTokenOption, EffectParameterType.Amount) },
+            { "SummonTokenAndTarget", new EffectParams("SVESimulator.SummonTokenAndTargetEffect",       false, false, EffectParameterType.TokenName, EffectParameterType.CreateTokenOption, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            { "Transform", new EffectParams("SVESimulator.TransformCardEffect",                         EffectParameterType.TokenName) },
 
-            { "ReducedCost", new EffectParams("SVESimulator.SveReducedCostEffect",        false, false, EffectParameterType.Amount) },
-            { "AlternateCost", new EffectParams("SVESimulator.SveAlternateCostEffect",    false, false) },
+            // Effect Execution
+            { "DestroyAndControllerPerformEffect", new EffectParams("SVESimulator.DestroyAndControllerPerformEffect",   EffectParameterType.SingleEffect) },
+            { "Sequence", new EffectParams("SVESimulator.EffectSequence",                                               false, false, EffectParameterType.ListOfEffects) },
+            { "ChooseFromList", new EffectParams("SVESimulator.ChooseEffectFromList",                                   false, false, EffectParameterType.ListOfEffects) },
+            { "OpponentPerformEffect", new EffectParams("SVESimulator.OpponentPerformEffect",                           EffectParameterType.SingleEffect) },
+            { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
+
+            // Other Effects
+            { "CheckTop", new EffectParams("SVESimulator.CheckTopDeckEffect",                           false, false, EffectParameterType.CheckCardActions) },
+            { "ExtraTurn", new EffectParams("SVESimulator.ExtraTurnEffect",                             false, false) },
+            { "Evolve", new EffectParams("SVESimulator.EvolveEffect")                                   },
+
+            // ------------------------------
+
+            // Passive - Modified Cost
+            { "ReducedCost", new EffectParams("SVESimulator.ReducedCostEffect",                         false, false, EffectParameterType.Amount) },
+            { "AlternateCost", new EffectParams("SVESimulator.AlternateCostEffect",                     false, false) },
         };
         
         private static Dictionary<string, EffectParams> PassiveEffectInfoDictionary = new()
         {
-            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordPassive",           false, true,
-                EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
-            { "GiveStat", new EffectParams("SVESimulator.GiveStatBoostPassive",            false, true,
-                EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
-            { "MinusCostOther", new EffectParams("SVESimulator.MinusCostOtherPassive",     false, true,
-                EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
+            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordPassive",                        false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
+            { "GiveStat", new EffectParams("SVESimulator.GiveStatBoostPassive",                         false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
+            { "MinusCostOther", new EffectParams("SVESimulator.MinusCostOtherPassive",                  false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
         };
-        
-        #endregion
 
-        // ------------------------------
-
-        #region Effect Specific Data
+        // -----
 
         private static Dictionary<string, string> StatTypeDictionary = new()
         {

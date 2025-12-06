@@ -32,39 +32,7 @@ namespace SVESimulator.SveScript
                 JObject newCost = new();
                 switch(args[0].Trim())
                 {
-                    case "PP":
-                        string pointCost = string.Join("", args[1..]).Trim();
-                        newCost.Add("amount", pointCost);
-                        newCost.Add("$type", "SVESimulator.PlayPointCost");
-                        break;
-                    case "EngageSelf":
-                        newCost.Add("$type", "SVESimulator.EngageSelfCost");
-                        break;
-                    case "Discard":
-                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
-                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
-                        newCost.Add("$type", "SVESimulator.DiscardCardCost");
-                        break;
-                    case "BanishFromCemetery":
-                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
-                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
-                        newCost.Add("$type", "SVESimulator.BanishFromCemeteryCost");
-                        break;
-                    case "LeaderDefense":
-                    case "LeaderDef":
-                        string defCost = string.Join("", args[1..]).Trim();
-                        newCost.Add("amount", defCost);
-                        newCost.Add("$type", "SVESimulator.LeaderDefenseCost");
-                        break;
-                    case "SendToCemetery":
-                    case "ReturnToHand":
-                    case "Banish":
-                        if(args.Length < 2)
-                            throw new ArgumentException();
-                        newCost.Add("target", args[1].Trim());
-                        newCost.Add("filter", args.Length > 2 ? args[2] : "");
-                        newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
-                        break;
+                    // Counter Costs
                     case "RemoveCounters":
                         if(args.Length < 2)
                             throw new ArgumentException();
@@ -85,9 +53,49 @@ namespace SVESimulator.SveScript
                         newCost.Add("filter",        "A");
                         newCost.Add("$type",         "SVESimulator.RemoveCountersCost");
                         break;
+
+                    // Stat Costs
+                    case "EngageSelf":
+                        newCost.Add("$type", "SVESimulator.EngageSelfCost");
+                        break;
+                    case "LeaderDefense":
+                    case "LeaderDef":
+                        string defCost = string.Join("", args[1..]).Trim();
+                        newCost.Add("amount", defCost);
+                        newCost.Add("$type", "SVESimulator.LeaderDefenseCost");
+                        break;
+                    case "PP":
+                        string pointCost = string.Join("", args[1..]).Trim();
+                        newCost.Add("amount", pointCost);
+                        newCost.Add("$type", "SVESimulator.PlayPointCost");
+                        break;
+
+                    // Move Card Costs
+                    case "BanishFromCemetery":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
+                        newCost.Add("$type", "SVESimulator.BanishFromCemeteryCost");
+                        break;
+                    case "Discard":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
+                        newCost.Add("$type", "SVESimulator.DiscardCardCost");
+                        break;
+                    case "SendToCemetery":
+                    case "ReturnToHand":
+                    case "Banish":
+                        if(args.Length < 2)
+                            throw new ArgumentException();
+                        newCost.Add("target", args[1].Trim());
+                        newCost.Add("filter", args.Length > 2 ? args[2] : "");
+                        newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
+                        break;
+
+                    // Other Costs
                     case "OncePerTurn":
                         newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
                         break;
+
                     default:
                         Debug.LogError($"Invalid cost arg {args[0]} found in line: {text}");
                         break;
