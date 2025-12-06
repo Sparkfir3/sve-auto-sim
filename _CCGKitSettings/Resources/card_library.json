@@ -11285,9 +11285,6 @@
             "zoneId": 0,
             "costs": [
               {
-                "$type": "SVESimulator.HasEvolveTargetCost"
-              },
-              {
                 "amount": "3",
                 "$type": "SVESimulator.LeaderDefenseCost"
               }

@@ -131,7 +131,7 @@ text "[evolve] Give your leader [defense]-3: Evolve this follower.
 
 keyword Bane;
 ability Act {
-    cost (HasEvolveTarget), (LeaderDef, 3);
+    cost (LeaderDef, 3);
     text "[evolve] Give your leader [defense]-3: Evolve this follower.";
     effect Evolve();
 }

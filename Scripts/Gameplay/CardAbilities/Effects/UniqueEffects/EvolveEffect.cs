@@ -29,5 +29,10 @@ namespace SVESimulator
                 onComplete?.Invoke();
             });
         }
+
+        public bool CanEvolve(PlayerController player, RuntimeCard card)
+        {
+            return player && !player.EvolvedThisTurn && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card);
+        }
     }
 }
