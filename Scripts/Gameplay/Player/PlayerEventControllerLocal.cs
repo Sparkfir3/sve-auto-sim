@@ -1060,7 +1060,7 @@ namespace SVESimulator
             foreach(TriggeredAbility ability in alternateCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
-                SveAlternateCostEffect effect = ability.effect as SveAlternateCostEffect;
+                AlternateCostEffect effect = ability.effect as AlternateCostEffect;
                 Debug.Assert(trigger != null && effect != null);
 
                 MultipleChoiceWindow.MultipleChoiceEntryData entry = effect.AsMultipleChoiceEntry(() =>

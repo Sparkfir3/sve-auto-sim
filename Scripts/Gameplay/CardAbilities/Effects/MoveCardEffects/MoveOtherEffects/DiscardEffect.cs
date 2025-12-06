@@ -6,44 +6,38 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveDiscardFromOpponentHandEffect : SveEffect
+    public class DiscardEffect : SveEffect
     {
         [StringField("Amount", width = 100), Order(1)]
         public string amount;
+
+        [StringField("Target Filter", width = 100), Order(2)]
+        public string filter;
 
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            if(player.OppZoneController.handZone.AllCards.Count == 0)
-            {
-                onComplete?.Invoke();
-                return;
-            }
             SVEEffectPool.Instance.StartCoroutine(ResolveCoroutine());
-
             IEnumerator ResolveCoroutine()
             {
                 bool waiting = true;
                 int minDiscard, maxDiscard;
-                int handSize = player.OppZoneController.handZone.AllCards.Count;
                 if(amount.IsNullOrWhiteSpace())
                     minDiscard = maxDiscard = 1;
                 else
                     SVEFormulaParser.ParseValueAsMinMax(amount, player, out minDiscard, out maxDiscard);
-                minDiscard = Mathf.Min(minDiscard, handSize);
+                minDiscard = Mathf.Min(minDiscard, player.ZoneController.handZone.AllCards.Count);
                 CardSelectionArea selectionArea = player.ZoneController.selectionArea;
 
-                selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromOppHand, handSize, handSize);
-                selectionArea.SetFilter(null);
-                selectionArea.AddAllCardsInOpponentsHand();
+                selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, minDiscard, maxDiscard);
+                selectionArea.SetFilter(filter);
                 selectionArea.SetConfirmAction(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).name,
                     "Discard",
                     text,
                     minDiscard, maxDiscard,
                     targets =>
                     {
-                        selectionArea.Disable(); // disable here returns cards to opponent's hand before sending to cemetery, required for race condition with card's zone's owner player
                         foreach(CardObject target in targets)
                         {
                             player.LocalEvents.SendToCemetery(target, SVEProperties.Zones.Hand);
@@ -52,6 +46,8 @@ namespace SVESimulator
                     });
 
                 yield return new WaitUntil(() => !waiting);
+                selectionArea.Disable();
+                yield return null;
                 onComplete?.Invoke();
             }
         }

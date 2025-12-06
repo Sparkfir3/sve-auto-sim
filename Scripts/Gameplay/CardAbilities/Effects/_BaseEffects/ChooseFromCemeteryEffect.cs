@@ -7,7 +7,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public abstract class SveChooseFromCemeteryEffect : SveChooseFromCardStackEffect
+    public abstract class ChooseFromCemeteryEffect : ChooseFromCardStackEffect
     {
         protected override void InitializeSelectionArea(PlayerController player, CardSelectionArea selectionArea)
         {

@@ -4,7 +4,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveDealDamageDividedEffect : SveEffect
+    public class DealDamageDividedEffect : SveEffect
     {
         [StringField("Target Filter", width = 100), Order(1)]
         public string filter;

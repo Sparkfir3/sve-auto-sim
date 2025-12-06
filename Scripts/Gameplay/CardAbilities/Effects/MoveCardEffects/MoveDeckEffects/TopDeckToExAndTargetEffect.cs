@@ -8,7 +8,7 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveTopDeckToExAndTargetEffect : SveTopDeckToExEffect
+    public class TopDeckToExAndTargetEffect : TopDeckToExEffect
     {
         [StringField("Effect 1", width = 200), Order(11)]
         public string effectName1;
@@ -37,7 +37,7 @@ namespace SVESimulator
                 return;
             }
 
-            SVEEffectPool.Instance.StartCoroutine(SveEffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+            SVEEffectPool.Instance.StartCoroutine(EffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
                 onComplete, additionalFilters: $"i({string.Join(",", cards.Select(x => x.RuntimeCard.instanceId))})"));
         }
     }

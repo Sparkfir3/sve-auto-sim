@@ -65,7 +65,7 @@ namespace SVESimulator
                 button.gameObject.SetActive(true);
                 button.Text = (ability.effect as SveEffect)?.text;
                 button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
-                    && (ability.effect is SveEvolveEffect evolveEffect ? evolveEffect.CanEvolve(player, card.RuntimeCard) : true);
+                    && (ability.effect is EvolveEffect evolveEffect ? evolveEffect.CanEvolve(player, card.RuntimeCard) : true);
                 button.OnClickEffect.AddListener(() =>
                 {
                     player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>

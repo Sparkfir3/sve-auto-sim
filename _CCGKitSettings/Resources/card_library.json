@@ -99,7 +99,7 @@
               "filter": "Ft(Pixie)m(0,5)",
               "tokenName": "Thorn Burst",
               "text": "Select any number of Pixie followers in your EX area and transform them into Thorn Burst tokens.",
-              "$type": "SVESimulator.SveTransformCardEffect"
+              "$type": "SVESimulator.TransformCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -119,7 +119,7 @@
               "targetStats": "PlayPoint",
               "amount": "x(Kn(\"Thorn Burst\"))",
               "text": "<sprite index=23>: Recover X play points. X equals the number of Thorn Burst tokens in your EX area.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -230,7 +230,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Return another card on your field to its owner's hand: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -332,7 +332,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Return another card on your field to its owner's hand: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -443,7 +443,7 @@
               "targetStats": "Attack",
               "amount": "C-1",
               "text": "Give this follower <sprite index=0>+X. X equals the number of cards you've played this turn, excluding this card.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -541,7 +541,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Choose one of the following effects. (1) Give this follower Storm. (2) Select an enemy follower on the field and deal it X damage. X equals this follower's attack.",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -560,7 +560,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": "Give this follower Storm.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -578,7 +578,7 @@
               "filter": "F",
               "amount": "A",
               "text": "Select an enemy follower on the field and deal it X damage. X equals this follower's attack.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -683,7 +683,7 @@
               "filter": "F",
               "amount": "4",
               "text": "Select an enemy follower on the field and deal it 4 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -710,7 +710,7 @@
               "filter": "F",
               "amount": "4",
               "text": "Select an enemy follower on the field and deal it 4 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -776,7 +776,7 @@
               "amount": "1",
               "amount2": "H",
               "text": "Select an enemy leader or enemy follower on the field. Draw a card and then deal X damage to the selected enemy. X equals the number of cards in your hand.",
-              "$type": "SVESimulator.SveDrawThenDamageEffect"
+              "$type": "SVESimulator.DrawThenDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -838,7 +838,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -856,7 +856,7 @@
               "filter": "F",
               "effectName": "Move Card",
               "text": "Select an enemy follower on the field. Its controller puts it on the top or bottom of its owner's deck.",
-              "$type": "SVESimulator.SveOpponentPerformEffect"
+              "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -874,7 +874,7 @@
               "filter": null,
               "effectName": "Iterate",
               "text": null,
-              "$type": "SVESimulator.SveOpponentPerformEffect"
+              "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -892,7 +892,7 @@
               "filter": "F",
               "effectName": "Move Card",
               "text": "Each opponent puts each follower from their field on the top or bottom of its owner's deck.",
-              "$type": "SVESimulator.SvePerformAsEachTargetEffect"
+              "$type": "SVESimulator.PerformAsEachTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -909,7 +909,7 @@
               "target": "Self",
               "filter": null,
               "text": "Each opponent puts each follower from their field on the top or bottom of its owner's deck.",
-              "$type": "SVESimulator.SveSendToTopOrBottomDeckEffect"
+              "$type": "SVESimulator.SendToTopOrBottomDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1091,7 +1091,7 @@
               "createTokenOption": "ExArea",
               "amount": "2",
               "text": "Put 2 Fairy Wisp tokens into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1197,7 +1197,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Give <sprite index=0>+1/<sprite index=1>+1 to each other Pixie follower on your field and in your EX area.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1302,7 +1302,7 @@
               "filter": "F",
               "amount": "1",
               "text": "Select an enemy follower on the field and deal it 1 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1320,7 +1320,7 @@
               "filter": "F",
               "amount": "1",
               "text": "Select an enemy follower on the field and deal it 1 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1433,7 +1433,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Banish a Pixie follower in your EX area: Give your leader <sprite index=1>+3 and draw a card. This ability can be activated once per turn.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -1452,7 +1452,7 @@
               "targetStats": "Defense",
               "amount": "3",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1469,7 +1469,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1581,7 +1581,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Combo (3): Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1598,7 +1598,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1616,7 +1616,7 @@
               "filter": null,
               "effectName": "Token",
               "text": null,
-              "$type": "SVESimulator.SveOpponentPerformEffect"
+              "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1634,7 +1634,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1696,7 +1696,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1713,7 +1713,7 @@
               "target": "TargetPlayerCard",
               "filter": null,
               "text": "Select a card on your field. Return it to its owner's hand and draw a card.",
-              "$type": "SVESimulator.SveReturnToHandEffect"
+              "$type": "SVESimulator.ReturnToHandEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1730,7 +1730,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1810,7 +1810,7 @@
               "targetStats": "Defense",
               "amount": "1",
               "text": "<sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Give your leader <sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -1827,7 +1827,7 @@
               "target": "Self",
               "amount": "1",
               "text": "When this card leaves the field, draw a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -1932,7 +1932,7 @@
               "filter": "F",
               "amount": "1c(3)3",
               "text": "Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2038,7 +2038,7 @@
               "filter": "F",
               "amount": "1",
               "text": "Select an enemy follower on the field and deal it 1 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2135,7 +2135,7 @@
               "filter": "Fm(0,2)",
               "amount": "1",
               "text": "Select up to 2 enemy followers on the field and deal them 1 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2242,7 +2242,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Summon a Fairy token. Put a Fairy token into your EX area.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2260,7 +2260,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2278,7 +2278,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2385,7 +2385,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2491,7 +2491,7 @@
               "filter": "1",
               "amount": "1",
               "text": "Select an enemy leader or enemy follower on the field and deal it 1 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2551,7 +2551,7 @@
               "createTokenOption": "ExArea",
               "amount": "3",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2617,7 +2617,7 @@
               "keywordType": 1,
               "keywordValue": 2,
               "text": "Select an enemy follower on the field. It cannot deal damage this turn.",
-              "$type": "SVESimulator.SveGiveKeywordEndOfTurnEffect"
+              "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2687,7 +2687,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": "Select a Pixie follower on your field and give it <sprite index=0>+1",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2709,7 +2709,7 @@
               "target": "Self",
               "filter": null,
               "text": "<sprite index=7>, <sprite index=23>: Return this card to its owner's hand.",
-              "$type": "SVESimulator.SveReturnToHandEffect"
+              "$type": "SVESimulator.ReturnToHandEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -2814,7 +2814,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon an Otohime's Bodyguard token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -2910,7 +2910,7 @@
               "createTokenOption": "FieldOverflowToEx",
               "amount": "3",
               "text": "Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3030,7 +3030,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Select an enemy leader. If there are at least 3 cards on their field, give this follower <sprite index=0>+2/<sprite index=1>+2 and Aura.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3049,7 +3049,7 @@
               "targetStats": "AttackDefense",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3068,7 +3068,7 @@
               "keywordType": 0,
               "keywordValue": 7,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3172,7 +3172,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field and engage it.",
-              "$type": "SVESimulator.SveEngageCardEffect"
+              "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3267,7 +3267,7 @@
               "target": "TargetOpponentCard",
               "filter": "FN",
               "text": "Select an engaged enemy follower and destroy it.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3382,7 +3382,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
-              "$type": "SVESimulator.SveSummonTokenAndTargetEffect"
+              "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3401,7 +3401,7 @@
               "keywordType": 0,
               "keywordValue": 0,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3418,7 +3418,7 @@
               "target": "TargetPlayerCard",
               "filter": "m(0,2)",
               "text": "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
-              "$type": "SVESimulator.SveEngageCardEffect"
+              "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3480,7 +3480,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3498,7 +3498,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3516,7 +3516,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3534,7 +3534,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3604,7 +3604,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Give each <sprite index=18> follower on your field <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3624,7 +3624,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Whenever a <sprite index=18> follower is put onto your field, give it <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3806,7 +3806,7 @@
               "filter": "F#e",
               "searchDeckAction": "Hand",
               "text": "Search your deck for a follower with <sprite index=5>, reveal it, and add it to your hand.",
-              "$type": "SVESimulator.SveSearchDeckEffect"
+              "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -3911,7 +3911,7 @@
               "filter": "c(sword)F",
               "searchDeckAction": "Hand",
               "text": "Search your deck for a <sprite index=18> follower, reveal it, and add it to your hand.",
-              "$type": "SVESimulator.SveSearchDeckEffect"
+              "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4017,7 +4017,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Give each other follower on your field <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4121,7 +4121,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field and engage it.",
-              "$type": "SVESimulator.SveEngageCardEffect"
+              "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4143,7 +4143,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "<sprite index=23>: Select an enemy follower on the field and engage it.",
-              "$type": "SVESimulator.SveEngageCardEffect"
+              "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -4255,7 +4255,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4360,7 +4360,7 @@
               "filter": "t(Ninja)",
               "searchDeckAction": "Hand",
               "text": "Search your deck for a Ninja card, reveal it, and add it to your hand.",
-              "$type": "SVESimulator.SveSearchDeckEffect"
+              "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4439,7 +4439,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "<sprite index=7>, <sprite index=23>: Summon a Knight token and give it Storm.",
-              "$type": "SVESimulator.SveSummonTokenAndTargetEffect"
+              "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -4458,7 +4458,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4484,7 +4484,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "<sprite index=8>, <sprite index=23>: Select an enemy follower on the field and engage it.",
-              "$type": "SVESimulator.SveEngageCardEffect"
+              "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -4506,7 +4506,7 @@
               "target": "Self",
               "amount": "1",
               "text": "<sprite index=9>, <sprite index=23>: Draw a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -4699,7 +4699,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4797,7 +4797,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4903,7 +4903,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": "Select another follower on your field and give it <sprite index=0>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -4922,7 +4922,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": "Select a follower on your field and give it <sprite index=0>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5119,7 +5119,7 @@
               "keywordType": 0,
               "keywordValue": 3,
               "text": "Select another follower on your field and give it Assail.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5277,7 +5277,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5296,7 +5296,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Select a follower on your field. Give it <sprite index=0>+1/<sprite index=1>+1 and draw a card.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5313,7 +5313,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5375,7 +5375,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5393,7 +5393,7 @@
               "filter": "F",
               "amount": "5",
               "text": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5411,7 +5411,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5518,7 +5518,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5551,7 +5551,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "<sprite index=23>, Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -5569,7 +5569,7 @@
               "filter": "F",
               "amount": "6",
               "text": "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5587,7 +5587,7 @@
               "filter": null,
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5692,7 +5692,7 @@
               "filter": "S",
               "searchDeckAction": "Hand",
               "text": "Search your deck for a spell, reveal it, and add it to your hand.",
-              "$type": "SVESimulator.SveSearchDeckEffect"
+              "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5787,7 +5787,7 @@
               "filter": "Sp(m(0,3))",
               "amount2": "0",
               "text": "Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.",
-              "$type": "SVESimulator.SvePlaySpellFromCemeterySetCostEffect"
+              "$type": "SVESimulator.PlaySpellFromCemeterySetCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -5892,7 +5892,7 @@
               "createTokenOption": "ExArea",
               "amount": "2",
               "text": "Earth Rite: Put 2 Guardform Golem tokens into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6007,7 +6007,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy leader or enemy follower on the field and deal it 3 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6070,7 +6070,7 @@
             "effect": {
               "amount": "5-x()",
               "text": null,
-              "$type": "SVESimulator.SveTopDeckToExEffect"
+              "$type": "SVESimulator.TopDeckToExEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6087,7 +6087,7 @@
               "target": "AllPlayerCardsEx",
               "filter": null,
               "text": "At the start of your next end phase, banish each card in your EX area.",
-              "$type": "SVESimulator.SveBanishCardEffect"
+              "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6144,7 +6144,7 @@
             "type": "Triggered",
             "effect": {
               "text": null,
-              "$type": "SVESimulator.SveExtraTurnEffect"
+              "$type": "SVESimulator.ExtraTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6159,7 +6159,7 @@
             "type": "Triggered",
             "effect": {
               "text": "Banish 10 spells in your cemetery: This card costs 7 play points to play.",
-              "$type": "SVESimulator.SveAlternateCostEffect"
+              "$type": "SVESimulator.AlternateCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6230,7 +6230,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Summon a Guardform Golem or Strikeform Golem token",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6249,7 +6249,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "<sprite index=23>: Summon a Magic Sediment token",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -6278,7 +6278,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "<sprite index=23>, Earth Rite: Summon a Guardform Golem or Strikeform Golem token",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -6296,7 +6296,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Guardform Golem",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6314,7 +6314,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Strikeform Golem",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6426,7 +6426,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6522,7 +6522,7 @@
               "filter": "F",
               "amount": "4",
               "text": "Discard a spell: Select an enemy follower on the field and deal it 4 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6630,7 +6630,7 @@
             "effect": {
               "amount": "[3s(10)6]s(15)9",
               "text": null,
-              "$type": "SVESimulator.SveReducedCostEffect"
+              "$type": "SVESimulator.ReducedCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6737,7 +6737,7 @@
               "keywordValue": 1,
               "amount": "1",
               "text": "Whenever you play a spell, place 1 spell counter on this card.",
-              "$type": "SVESimulator.SveGiveCounterEffect"
+              "$type": "SVESimulator.GiveCounterEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6765,7 +6765,7 @@
               "filter": "F",
               "amount": "5",
               "text": "<sprite index=4> Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -6827,7 +6827,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6845,7 +6845,7 @@
               "createTokenOption": "Field",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6864,7 +6864,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Earth Rite: Give each Golem follower on your field <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6924,7 +6924,7 @@
               "filter": "F",
               "amount": "4",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -6991,7 +6991,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7008,7 +7008,7 @@
               "target": "Self",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7027,7 +7027,7 @@
               "targetStats": "PlayPoint",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7100,7 +7100,7 @@
               "target": "TargetOpponentCard",
               "filter": "Fd(m(0,4))",
               "text": "Select an enemy follower with 4 defense or less on the field and banish it.",
-              "$type": "SVESimulator.SveBanishCardEffect"
+              "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7212,7 +7212,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Choose one of the following effects. (1) Earth Rite: Give this follower <sprite index=0>+1/<sprite index=1>+2. (2) Summon a Magic Sediment token.",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7232,7 +7232,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Earth Rite: Give this follower <sprite index=0>+1/<sprite index=1>+2.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7251,7 +7251,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7270,7 +7270,7 @@
               "targetStats": "Defense",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7288,7 +7288,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Magic Sediment token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7393,7 +7393,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Magic Sediment token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7491,7 +7491,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Summon a Magic Sediment token. Add 1 to a Stack on your field.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7509,7 +7509,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7529,7 +7529,7 @@
               "keywordValue": 1,
               "amount": "1",
               "text": "Add 1 to a Stack on your field.",
-              "$type": "SVESimulator.SveGiveCounterEffect"
+              "$type": "SVESimulator.GiveCounterEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7636,7 +7636,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7654,7 +7654,7 @@
               "filter": "F",
               "amount": "2s(5)4",
               "text": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7672,7 +7672,7 @@
               "filter": null,
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7732,7 +7732,7 @@
               "filter": "F",
               "amount": "2s(10)4",
               "text": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7804,7 +7804,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top 4 cards of your deck. You may reveal a spell from among them and put it into your hand. You may put a spell from among them into your cemetery. Put the rest on the bottom of your deck in any order.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7871,7 +7871,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7888,7 +7888,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7906,7 +7906,7 @@
               "filter": null,
               "amount": "3",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -7980,7 +7980,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Strikeform Golem token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8053,7 +8053,7 @@
               "target": "Self",
               "amount": "1",
               "text": "Draw a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8335,7 +8335,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Put a Dragon token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8364,7 +8364,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "<sprite index=8>, <sprite index=23>: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -8386,7 +8386,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
-              "$type": "SVESimulator.SvePutExToFieldAndTargetEffect"
+              "$type": "SVESimulator.PutExToFieldAndTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8405,7 +8405,7 @@
               "keywordType": 0,
               "keywordValue": 2,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8424,7 +8424,7 @@
               "targetStats": "PlayPoint",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8535,7 +8535,7 @@
               "targetStats": "MaxPlayPoint",
               "amount": "1",
               "text": "Increase your maximum play points by 1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8732,7 +8732,7 @@
               "targetStats": "AttackDefense",
               "amount": "3",
               "text": "If Overflow is active for you, give this follower <sprite index=0>+3/<sprite index=1>+3.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8894,7 +8894,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -8912,7 +8912,7 @@
               "filter": null,
               "effectName": "Check Top",
               "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
-              "$type": "SVESimulator.SveOpponentPerformEffect"
+              "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9020,7 +9020,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Put the top card of your deck into your EX area. It costs 2 less to play.",
-              "$type": "SVESimulator.SveTopDeckToExAndTargetEffect"
+              "$type": "SVESimulator.TopDeckToExAndTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9039,7 +9039,7 @@
               "targetStats": "Cost",
               "amount": "-2",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9151,7 +9151,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Draw a card, then discard a card.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9168,7 +9168,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9185,7 +9185,7 @@
               "amount": "1",
               "filter": null,
               "text": "Discard a card.",
-              "$type": "SVESimulator.SveDiscardEffect"
+              "$type": "SVESimulator.DiscardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9297,7 +9297,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Draw 2 cards, then discard a card.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9314,7 +9314,7 @@
               "target": "Self",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9331,7 +9331,7 @@
               "amount": "1",
               "filter": null,
               "text": "Discard a card.",
-              "$type": "SVESimulator.SveDiscardEffect"
+              "$type": "SVESimulator.DiscardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9433,7 +9433,7 @@
               "targetStats": "Defense",
               "amount": "5",
               "text": "Give your leader <sprite index=1>+5.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9588,7 +9588,7 @@
               "filter": "F",
               "amount": "5",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9655,7 +9655,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9673,7 +9673,7 @@
               "filter": "F",
               "amount": "5",
               "text": "Select an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9690,7 +9690,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9783,7 +9783,7 @@
               "filter": "F",
               "effectName": "Token",
               "text": "<sprite index=23>: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
-              "$type": "SVESimulator.SveDestroyAndControllerPerformEffect"
+              "$type": "SVESimulator.DestroyAndControllerPerformEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -9801,7 +9801,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -9982,7 +9982,7 @@
               "target": "Self",
               "amount": "1",
               "text": "If Overflow is active for you, draw a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10087,7 +10087,7 @@
               "filter": "F",
               "amount": "1",
               "text": "Select an enemy leader or enemy follower on the field and deal it 1 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10197,7 +10197,7 @@
               "filter": "FX",
               "effectName": "Give Attack",
               "text": "Select another follower on the field and give this follower <sprite index=0>+X. X equals the selected follower's attack.",
-              "$type": "SVESimulator.SvePerformAsEachTargetEffect"
+              "$type": "SVESimulator.PerformAsEachTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10216,7 +10216,7 @@
               "targetStats": "Attack",
               "amount": "A",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10412,7 +10412,7 @@
               "filter": "F",
               "amount": "7",
               "text": "Select an enemy follower on the field and deal it 7 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10477,7 +10477,7 @@
               "filter": "F",
               "amount": "2o4",
               "text": "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10537,7 +10537,7 @@
               "filter": "F",
               "amount": "2o3",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10604,7 +10604,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top 5 cards of your deck. You may reveal a <sprite index=20> card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10711,7 +10711,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10731,7 +10731,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Put a Mimi or Coco token into your EX area.",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10751,7 +10751,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10769,7 +10769,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Mimi",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10787,7 +10787,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Coco",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10885,7 +10885,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Put a Mimi and Coco token into your EX area.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10903,7 +10903,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Mimi",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -10921,7 +10921,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Coco",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11023,7 +11023,7 @@
             "type": "Triggered",
             "effect": {
               "text": "Put 4 reserved <sprite index=21> cards from your field into their owners' cemeteries.",
-              "$type": "SVESimulator.SveAlternateCostEffect"
+              "$type": "SVESimulator.AlternateCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11038,7 +11038,7 @@
             "type": "Triggered",
             "effect": {
               "text": "Banish 4 <sprite index=21> cards in your EX area.",
-              "$type": "SVESimulator.SveAlternateCostEffect"
+              "$type": "SVESimulator.AlternateCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11146,7 +11146,7 @@
             "effect": {
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveReducedCostEffect"
+              "$type": "SVESimulator.ReducedCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11162,7 +11162,7 @@
             "effect": {
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveReducedCostEffect"
+              "$type": "SVESimulator.ReducedCostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11184,7 +11184,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "<sprite index=23>: Select an enemy follower on the field and destroy it.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -11295,7 +11295,7 @@
               "target": "Self",
               "filter": null,
               "text": "<sprite index=5> Give your leader <sprite index=1>-3: Evolve this follower.",
-              "$type": "SVESimulator.SveEvolveEffect"
+              "$type": "SVESimulator.EvolveEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -11403,7 +11403,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Whenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader <sprite index=1>+1.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11421,7 +11421,7 @@
               "filter": null,
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11440,7 +11440,7 @@
               "targetStats": "Defense",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11545,7 +11545,7 @@
               "amount": "1",
               "filter": null,
               "text": "<sprite index=3> Give your leader <sprite index=1>-3: Put this follower onto its owner's field.",
-              "$type": "SVESimulator.SveCemeteryToFieldEffect"
+              "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11616,7 +11616,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Deal 1 damage to your leader. Draw a card.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11646,7 +11646,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "<sprite index=8>, <sprite index=23>, put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -11664,7 +11664,7 @@
               "filter": null,
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11681,7 +11681,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11791,7 +11791,7 @@
               "amount": "1",
               "filter": "Fp(m(3,99))",
               "text": "<sprite index=23>, put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.",
-              "$type": "SVESimulator.SveSalvageCardEffect"
+              "$type": "SVESimulator.SalvageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -11975,7 +11975,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -11993,7 +11993,7 @@
               "filter": null,
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12010,7 +12010,7 @@
               "amount": "1",
               "filter": null,
               "text": "Select a card in the opponent's hand. The opponent discards that card.",
-              "$type": "SVESimulator.SveDiscardFromOpponentHandEffect"
+              "$type": "SVESimulator.DiscardFromOpponentHandEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12117,7 +12117,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "If Sanguine is active for you, give this follower <sprite index=0>+1/<sprite index=1>+1 and Rush.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12136,7 +12136,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12155,7 +12155,7 @@
               "keywordType": 0,
               "keywordValue": 2,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12261,7 +12261,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": "If Sanguine is active for you, give this follower Storm.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12321,7 +12321,7 @@
               "createTokenOption": "Field",
               "amount": "4",
               "text": "Summon 4 Ghost tokens.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12386,7 +12386,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.",
-              "$type": "SVESimulator.SveCemeteryToFieldAndTargetEffect"
+              "$type": "SVESimulator.CemeteryToFieldAndTargetEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12405,7 +12405,7 @@
               "keywordType": 0,
               "keywordValue": 0,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12472,7 +12472,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12489,7 +12489,7 @@
               "target": "TargetPlayerCard",
               "filter": "F",
               "text": "Select a follower on your field. Destroy it and draw 2 cards.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12506,7 +12506,7 @@
               "target": "Self",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12612,7 +12612,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "If Sanguine is active for you, give this follower <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12717,7 +12717,7 @@
               "filter": null,
               "amount": "1",
               "text": "Deal 1 damage to each leader.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12829,7 +12829,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Give your leader <sprite index=1>-2: Give this follower Rush. Put the top card of your deck into your cemetery.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12848,7 +12848,7 @@
               "keywordType": 0,
               "keywordValue": 2,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12864,7 +12864,7 @@
             "effect": {
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveMillDeckEffect"
+              "$type": "SVESimulator.MillDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -12967,7 +12967,7 @@
             "effect": {
               "amount": "2",
               "text": "Put the top 2 cards of your deck into your cemetery.",
-              "$type": "SVESimulator.SveMillDeckEffect"
+              "$type": "SVESimulator.MillDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13072,7 +13072,7 @@
               "filter": null,
               "amount": "2",
               "text": "Deal 2 damage to each leader.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13253,7 +13253,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13357,7 +13357,7 @@
               "amount": "m(0,2)",
               "filter": "F",
               "text": "Select up to 2 followers in your cemetery and add them to your hand.",
-              "$type": "SVESimulator.SveSalvageCardEffect"
+              "$type": "SVESimulator.SalvageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13424,7 +13424,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13442,7 +13442,7 @@
               "filter": null,
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13460,7 +13460,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy leader or enemy follower on the field and deal it 3 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13565,7 +13565,7 @@
               "amount": "1",
               "filter": "Ap(m(0,5))",
               "text": "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
-              "$type": "SVESimulator.SveCemeteryToFieldEffect"
+              "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13728,7 +13728,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -13811,7 +13811,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "<sprite index=23>, put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -14420,7 +14420,7 @@
               "targetStats": "Defense",
               "amount": "1",
               "text": "Give your leader <sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -14517,7 +14517,7 @@
               "targetStats": "Defense",
               "amount": "2",
               "text": "Give your leader <sprite index=1>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -14582,7 +14582,7 @@
               "filter": "F",
               "amount": "2",
               "text": "Select an enemy follower on the field and deal it 2 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -14647,7 +14647,7 @@
               "filter": "F",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -14940,7 +14940,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -14958,7 +14958,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy leader or enemy follower on the field. Deal it 3 damage and draw a card.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -14975,7 +14975,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -15884,7 +15884,7 @@
               "filter": "F",
               "amount": "2",
               "text": "Select an enemy follower on the field and deal it 2 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -15945,7 +15945,7 @@
               "targetStats": "Attack",
               "amount": "2",
               "text": "Select a follower on your field and give it <sprite index=0>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16054,7 +16054,7 @@
               "target": "Self",
               "filter": null,
               "text": "At the start of your end phase, banish this card.",
-              "$type": "SVESimulator.SveBanishCardEffect"
+              "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16437,7 +16437,7 @@
               "createTokenOption": "ChooseForEachFieldOrEx",
               "amount": "9",
               "text": "Put up to 9 Fairy tokens onto your field or into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16526,7 +16526,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Give each Pixie token on your field <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16565,7 +16565,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Whenever a Pixie token is put onto your field, give it <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16749,7 +16749,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16766,7 +16766,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field and return it to its owner's hand.",
-              "$type": "SVESimulator.SveReturnToHandEffect"
+              "$type": "SVESimulator.ReturnToHandEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16783,7 +16783,7 @@
               "target": "Self",
               "amount": "0c(3)1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16888,7 +16888,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Put a Fairy token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -16906,7 +16906,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Put a Fairy token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17011,7 +17011,7 @@
               "createTokenOption": "FieldOverflowToEx",
               "amount": "3",
               "text": "Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17117,7 +17117,7 @@
               "targetStats": "EvolveCost",
               "amount": "0",
               "text": "Combo (3): Change this card's <sprite index=5> cost to 0.",
-              "$type": "SVESimulator.SveSetStatEffect"
+              "$type": "SVESimulator.SetStatEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17299,7 +17299,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Put a Fairy token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17395,7 +17395,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Fairy token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17413,7 +17413,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Put a Fairy token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17575,7 +17575,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17593,7 +17593,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17611,7 +17611,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17723,7 +17723,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17740,7 +17740,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field and destroy it.",
-              "$type": "SVESimulator.SveDestroyCardEffect"
+              "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -17759,7 +17759,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": "Give this follower Storm.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18029,7 +18029,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Summon a Steelclad Knight and Knight token.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18047,7 +18047,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18065,7 +18065,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18173,7 +18173,7 @@
               "keywordType": 0,
               "keywordValue": 6,
               "text": "<sprite index=4><sprite index=7>: Give this follower Bane.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -18284,7 +18284,7 @@
               "targetStats": "Attack",
               "amount": "2",
               "text": "Select another follower on your field and give it <sprite index=0>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18390,7 +18390,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Select another follower on your field and give it <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18495,7 +18495,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Knight token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18815,7 +18815,7 @@
               "filter": "F",
               "amount": "f(F)",
               "text": "Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18927,7 +18927,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18945,7 +18945,7 @@
               "filter": "F",
               "amount": "3s(7)5",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -18963,7 +18963,7 @@
               "filter": null,
               "amount": "5",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19070,7 +19070,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Spellchain (5): Give this follower <sprite index=0>+4/<sprite index=1>+4. SC (10): Give this follower Storm.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19089,7 +19089,7 @@
               "targetStats": "AttackDefense",
               "amount": "4",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19108,7 +19108,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19290,7 +19290,7 @@
               "filter": "F",
               "amount": "2",
               "text": "Deal 2 damage to each enemy follower on the field.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19354,7 +19354,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19418,7 +19418,7 @@
               "filter": "Fm(1,2)",
               "amount": "3",
               "text": "Select up to 2 enemy followers on the field and deal 3 damage divided between them.",
-              "$type": "SVESimulator.SveDealDamageDividedEffect"
+              "$type": "SVESimulator.DealDamageDividedEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19528,7 +19528,7 @@
               "target": "Self",
               "amount": "1",
               "text": "<sprite index=4><sprite index=23>, discard a spell: Draw a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -19623,7 +19623,7 @@
               "target": "Self",
               "filter": null,
               "text": "Refresh this card.",
-              "$type": "SVESimulator.SveReserveCardEffect"
+              "$type": "SVESimulator.ReserveCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19646,7 +19646,7 @@
               "target": "Self",
               "amount": "1",
               "text": "<sprite index=4><sprite index=23>, discard a spell: Draw a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -19758,7 +19758,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top card of your deck. You may put it into your cemetery.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19853,7 +19853,7 @@
               "target": "AllPlayers",
               "amount": "1",
               "text": "Each player draws a card.",
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19920,7 +19920,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19938,7 +19938,7 @@
               "filter": "F",
               "amount": "2",
               "text": "Select an enemy follower on the field. Deal it 2 damage and draw a card.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -19955,7 +19955,7 @@
               "target": "Self",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveDrawCardEffect"
+              "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20022,7 +20022,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Put a Guardform Golem or Strikeform Golem token into your EX area.",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20040,7 +20040,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Guardform Golem",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20058,7 +20058,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Strikeform Golem",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20168,7 +20168,7 @@
               "filter": "F",
               "amount": "5",
               "text": "Deal 5 damage to each enemy follower on the field.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20230,7 +20230,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card.",
-              "$type": "SVESimulator.SveChooseEffectFromList"
+              "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20249,7 +20249,7 @@
               "targetStats": "MaxPlayPoint",
               "amount": "1",
               "text": "Increase your maximum play points by 1",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20267,7 +20267,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Draw a card",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20449,7 +20449,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy follower on the field and deal it 3 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20554,7 +20554,7 @@
               "filter": "F",
               "amount": "4",
               "text": "Select an enemy follower on the field and deal it 4 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20665,7 +20665,7 @@
               "targetStats": "AttackDefense",
               "amount": "2",
               "text": "If Overflow is active for you, give this follower <sprite index=0>+2/<sprite index=1>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20771,7 +20771,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": "Give this follower <sprite index=0>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20868,7 +20868,7 @@
               "targetStats": "AttackDefense",
               "amount": "1",
               "text": "Give this follower <sprite index=0>+1/<sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -20973,7 +20973,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy follower on the field and deal it 3 damage.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21078,7 +21078,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "If Overflow is active for you, put a Dragon token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21175,7 +21175,7 @@
               "targetStats": "Attack",
               "amount": "2",
               "text": "If Overflow is active for you, give this follower <sprite index=0>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21281,7 +21281,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": "If Overflow is active for you, give this follower Storm.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21391,7 +21391,7 @@
               "createTokenOption": "Field",
               "amount": "2",
               "text": "Summon 2 Forest Bat tokens.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21414,7 +21414,7 @@
               "createTokenOption": "Field",
               "amount": "2",
               "text": "<sprite index=4><sprite index=23>, leader <sprite index=1>-1: Summon 2 Forest Bat tokens.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -21435,7 +21435,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Whenever a Forest Bat token is put onto your field, give it <sprite index=0>+1 and Ward.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21454,7 +21454,7 @@
               "targetStats": "Attack",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21473,7 +21473,7 @@
               "keywordType": 0,
               "keywordValue": 0,
               "text": null,
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21584,7 +21584,7 @@
               "targetStats": "Attack",
               "amount": "2",
               "text": "Necrocharge (10): Give this follower <sprite index=0>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21604,7 +21604,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Select an enemy follower on the field. Deal it 4 damage and give your leader <sprite index=1>+4.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21622,7 +21622,7 @@
               "filter": "F",
               "amount": "4",
               "text": "Select an enemy follower on the field. Deal it 4 damage and give your leader <sprite index=1>+4.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21641,7 +21641,7 @@
               "targetStats": "Defense",
               "amount": "4",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21823,7 +21823,7 @@
               "createTokenOption": "Field",
               "amount": "3",
               "text": "Summon 3 Ghost tokens.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -21928,7 +21928,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Forest Bat token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22009,7 +22009,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22027,7 +22027,7 @@
               "createTokenOption": "Field",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22045,7 +22045,7 @@
               "filter": "F",
               "amount": "f(Kn(\"Forest Bat\"))",
               "text": "Select an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22151,7 +22151,7 @@
               "keywordType": 0,
               "keywordValue": 1,
               "text": "Necrocharge (10): Give this follower Storm.",
-              "$type": "SVESimulator.SveGiveKeywordEffect"
+              "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22247,7 +22247,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Ghost token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22352,7 +22352,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": "Put a Forest Bat token into your EX area.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22449,7 +22449,7 @@
               "targetStats": "Defense",
               "amount": "2",
               "text": "Give your leader <sprite index=1>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22516,7 +22516,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22534,7 +22534,7 @@
               "filter": "F",
               "amount": "3",
               "text": "Select an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.",
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22550,7 +22550,7 @@
             "effect": {
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveMillDeckEffect"
+              "$type": "SVESimulator.MillDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22612,7 +22612,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22630,7 +22630,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22648,7 +22648,7 @@
               "createTokenOption": "ExArea",
               "amount": "1",
               "text": null,
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22765,7 +22765,7 @@
               "checkFilter3": null,
               "checkAmount3": null,
               "text": "Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.",
-              "$type": "SVESimulator.SveCheckTopDeckEffect"
+              "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22786,7 +22786,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": "Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.",
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22804,7 +22804,7 @@
               "filter": null,
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22822,7 +22822,7 @@
               "filter": "F",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveDealDamageEffect"
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -22900,7 +22900,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "<sprite index=23>, put this card into its owner's cemetery: Select an enemy follower on the field and engage it.",
-              "$type": "SVESimulator.SveEngageCardEffect"
+              "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -22927,7 +22927,7 @@
               "target": "AllCards",
               "filter": "F",
               "text": "<sprite index=16>, <sprite index=23>, put this card into its owner's cemetery: Banish each follower on the field.",
-              "$type": "SVESimulator.SveBanishCardEffect"
+              "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -23108,7 +23108,7 @@
               "target": "TargetOpponentCard",
               "filter": "Fd(m(0,3))",
               "text": "Select an enemy follower with 3 defense or less on the field and banish it.",
-              "$type": "SVESimulator.SveBanishCardEffect"
+              "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23175,7 +23175,7 @@
               "effectName4": null,
               "effectName5": null,
               "text": null,
-              "$type": "SVESimulator.SveEffectSequence"
+              "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23192,7 +23192,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "text": "Select an enemy follower on the field. Banish it and give your leader <sprite index=1>+2.",
-              "$type": "SVESimulator.SveBanishCardEffect"
+              "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23211,7 +23211,7 @@
               "targetStats": "Defense",
               "amount": "2",
               "text": null,
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23280,7 +23280,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "Summon a Holy Tiger token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23308,7 +23308,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "<sprite index=8>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Tiger token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -23632,7 +23632,7 @@
               "targetStats": "Defense",
               "amount": "1",
               "text": "If there is an amulet on your field, give this follower <sprite index=1>+1.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23734,7 +23734,7 @@
               "targetStats": "Defense",
               "amount": "2",
               "text": "Give your leader <sprite index=1>+2.",
-              "$type": "SVESimulator.SveGiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -23813,7 +23813,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "<sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Falcon token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
@@ -23897,7 +23897,7 @@
               "createTokenOption": "Field",
               "amount": "1",
               "text": "<sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Tiger token.",
-              "$type": "SVESimulator.SveSummonTokenEffect"
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"

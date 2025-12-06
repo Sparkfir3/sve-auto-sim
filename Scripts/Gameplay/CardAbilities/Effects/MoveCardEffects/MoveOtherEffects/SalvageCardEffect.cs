@@ -6,7 +6,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveSalvageCardEffect : SveChooseFromCemeteryEffect
+    public class SalvageCardEffect : ChooseFromCemeteryEffect
     {
         protected override void ConfirmationAction(PlayerController player, List<CardObject> selectedCards, Action onComplete)
         {

@@ -89,12 +89,12 @@ namespace SVESimulator
             int reduction = 0;
 
             // Reduced cost from abilities on card
-            List<TriggeredAbility> reducedCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is SveReducedCostEffect)
+            List<TriggeredAbility> reducedCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is ReducedCostEffect)
                 .Select(x => x as TriggeredAbility).ToList();
             foreach(TriggeredAbility ability in reducedCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
-                SveReducedCostEffect effect = ability.effect as SveReducedCostEffect;
+                ReducedCostEffect effect = ability.effect as ReducedCostEffect;
                 if(trigger == null || effect == null || (!trigger.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, card)))
                     continue;
                 reduction += effect.ReduceCostAmount(player, card);
@@ -108,7 +108,7 @@ namespace SVESimulator
 
         public static bool HasAvailableAlternateCost(this RuntimeCard card, PlayerController player, out List<TriggeredAbility> alternateCostAbilities)
         {
-            List<TriggeredAbility> allAlternateCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is SveAlternateCostEffect)
+            List<TriggeredAbility> allAlternateCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is AlternateCostEffect)
                 .Select(x => x as TriggeredAbility).ToList();
             if(allAlternateCostAbilities.Count == 0)
             {
@@ -120,7 +120,7 @@ namespace SVESimulator
             foreach(TriggeredAbility ability in allAlternateCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
-                SveAlternateCostEffect effect = ability.effect as SveAlternateCostEffect;
+                AlternateCostEffect effect = ability.effect as AlternateCostEffect;
                 if(trigger == null || effect == null || (!trigger.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, card)))
                     continue;
                 alternateCostAbilities.Add(ability);

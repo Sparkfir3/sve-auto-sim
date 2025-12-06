@@ -7,7 +7,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public abstract class SveChooseFromCardStackEffect : SveEffect
+    public abstract class ChooseFromCardStackEffect : SveEffect
     {
         [StringField("Target Filter", width = 100), Order(1)]
         public string filter;

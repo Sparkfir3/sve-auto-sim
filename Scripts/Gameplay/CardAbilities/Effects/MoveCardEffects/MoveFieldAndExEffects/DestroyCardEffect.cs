@@ -1,9 +1,10 @@
 using System;
+using UnityEngine;
 using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveReturnToHandEffect : SveEffect
+    public class DestroyCardEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
@@ -19,7 +20,7 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    player.LocalEvents.ReturnToHand(card, SVEProperties.Zones.Field);
+                    player.LocalEvents.DestroyCard(card);
                 }
                 onComplete?.Invoke();
             });

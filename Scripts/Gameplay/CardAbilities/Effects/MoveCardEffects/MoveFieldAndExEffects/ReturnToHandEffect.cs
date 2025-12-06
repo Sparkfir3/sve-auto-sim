@@ -1,10 +1,9 @@
 using System;
-using UnityEngine;
 using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveBanishCardEffect : SveEffect
+    public class ReturnToHandEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
@@ -20,7 +19,7 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    player.LocalEvents.BanishCard(card);
+                    player.LocalEvents.ReturnToHand(card, SVEProperties.Zones.Field);
                 }
                 onComplete?.Invoke();
             });

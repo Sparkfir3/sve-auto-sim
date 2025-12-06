@@ -6,7 +6,7 @@ using Sparkfire.Utility;
 
 namespace SVESimulator
 {
-    public class SveSearchDeckEffect : SveChooseFromCardStackEffect
+    public class SearchDeckEffect : ChooseFromCardStackEffect
     {
         public enum SearchDeckAction { Hand, Cemetery }
 

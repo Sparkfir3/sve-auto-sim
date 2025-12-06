@@ -8,7 +8,7 @@ using SVESimulator.UI;
 
 namespace SVESimulator
 {
-    public class SveChooseEffectFromList : SveEffect
+    public class ChooseEffectFromList : SveEffect
     {
         [StringField("Effect 1", width = 200), Order(1)]
         public string effectName1;

@@ -4,7 +4,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SveDestroyCardEffect : SveEffect
+    public class BanishCardEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
@@ -20,7 +20,7 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    player.LocalEvents.DestroyCard(card);
+                    player.LocalEvents.BanishCard(card);
                 }
                 onComplete?.Invoke();
             });

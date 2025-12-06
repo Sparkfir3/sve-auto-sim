@@ -5,7 +5,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SvePlaySpellFromCemeterySetCostEffect : SvePlaySpellFromCemeteryEffect
+    public class PlaySpellFromCemeterySetCostEffect : PlaySpellFromCemeteryEffect
     {
         [StringField("Play Point Cost", width = 100), Order(3)]
         public string amount2;

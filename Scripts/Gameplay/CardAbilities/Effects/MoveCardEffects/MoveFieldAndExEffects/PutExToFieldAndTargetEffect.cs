@@ -6,7 +6,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class SvePutExToFieldAndTargetEffect : SveEffect
+    public class PutExToFieldAndTargetEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.TargetPlayerCardEx;
@@ -52,7 +52,7 @@ namespace SVESimulator
                 {
                     player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.ExArea, payCost: false);
                 }
-                SVEEffectPool.Instance.StartCoroutine(SveEffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+                SVEEffectPool.Instance.StartCoroutine(EffectSequence.ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
                     onComplete, additionalFilters: $"i({string.Join(",", targets.Select(x => x.RuntimeCard.instanceId))})"));
             });
         }

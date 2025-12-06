@@ -6,7 +6,7 @@ using SVESimulator.UI;
 
 namespace SVESimulator
 {
-    public class SveSendToTopOrBottomDeckEffect : SveEffect
+    public class SendToTopOrBottomDeckEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
