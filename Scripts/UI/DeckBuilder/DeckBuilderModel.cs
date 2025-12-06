@@ -211,6 +211,39 @@ namespace SVESimulator.DeckBuilder
 
         #region Deck
 
+        public void ImportDeck(string data)
+        {
+            CurrentLeader = null;
+            CurrentMainDeck.Clear();
+            CurrentEvolveDeck.Clear();
+
+            List<DeckSaveLoadUtils.CardAmountPair> cardAsArray = DeckSaveLoadUtils.LoadDeck(data, out string deckClass);
+            DeckClass = deckClass;
+            foreach(DeckSaveLoadUtils.CardAmountPair cardAmount in cardAsArray)
+            {
+                Card card = gameConfig.cards.FirstOrDefault(x => x.id == cardAmount.id);
+                if(card == null)
+                {
+                    Debug.LogError($"Failed to find card in database with ID {cardAmount.id} (desired amount: {cardAmount.amount})");
+                    continue;
+                }
+
+                switch(card.cardTypeId)
+                {
+                    case 5: // Leader
+                        CurrentLeader = card;
+                        break;
+                    case 1: // Evolved
+                    case 3:
+                        CurrentEvolveDeck.Add(card, cardAmount.amount);
+                        break;
+                    default: // Main Deck
+                        CurrentMainDeck.Add(card, cardAmount.amount);
+                        break;
+                }
+            }
+        }
+
         [TitleGroup("Buttons"), Button, HideInEditorMode]
         public void ImportDeckFromBase62String(string input)
         {
