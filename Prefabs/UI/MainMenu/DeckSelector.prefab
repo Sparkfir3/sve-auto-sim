@@ -1363,6 +1363,21 @@ MonoBehaviour:
   - name: Forestcraft SD
     data: {fileID: 4900000, guid: fa0297f6ea1496e4692fd5e8d8480bf0, type: 3}
     deckClass: Forestcraft
+  - name: Swordcraft SD
+    data: {fileID: 4900000, guid: 27e2f81bf96e00747b4ad79c3c12d93f, type: 3}
+    deckClass: Swordcraft
+  - name: Runecraft SD
+    data: {fileID: 4900000, guid: ae55dc8888442414d883db4b98577449, type: 3}
+    deckClass: Runecraft
+  - name: Dragoncraft SD
+    data: {fileID: 4900000, guid: a4f876a6f3c27db4f86f8415e5b7657a, type: 3}
+    deckClass: Dragoncraft
+  - name: Abysscraft SD
+    data: {fileID: 4900000, guid: 7b90a5fc2eda11948b930975577a7fc6, type: 3}
+    deckClass: Abysscraft
+  - name: Havencraft SD
+    data: {fileID: 4900000, guid: 82201e0dbbb5aaa4a86ee8f41bcf3275, type: 3}
+    deckClass: Havencraft
   <LoadedDecks>k__BackingField: []
   deckEntries:
   - {fileID: 4760998293433255459}
@@ -1381,7 +1396,7 @@ MonoBehaviour:
     serializedPairs:
     - key: Forestcraft
       value: {fileID: 1190853135, guid: 2b549563585079845b83503c64361c7e, type: 3}
-    - key: Spellcraft
+    - key: Swordcraft
       value: {fileID: -673724013, guid: 2b549563585079845b83503c64361c7e, type: 3}
     - key: Runecraft
       value: {fileID: 976744579, guid: 2b549563585079845b83503c64361c7e, type: 3}
