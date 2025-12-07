@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Sparkfire.Utility;
 using SVESimulator.SveScript;
 using UnityEngine;
@@ -49,6 +50,26 @@ namespace SVESimulator.Database
                 cards.Add(new CardAmountPair(ccgId, amount));
             }
             return cards;
+        }
+
+        public static string LoadAsRuntimeJson(string name, string data)
+        {
+            List<CardAmountPair> cards = LoadDeck(data, out _);
+            JObject deck = new() { { "name", name } };
+
+            JArray cardList = new();
+            foreach(CardAmountPair amountInfo in cards)
+            {
+                JObject cardCount = new()
+                {
+                    { "id", amountInfo.id },
+                    { "amount", amountInfo.amount }
+                };
+                cardList.Add(cardCount);
+            }
+            deck.Add("cards", cardList);
+
+            return deck.ToString();
         }
     }
 }

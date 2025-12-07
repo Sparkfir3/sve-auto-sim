@@ -72,7 +72,7 @@ namespace SVESimulator.DeckBuilder
         {
             if(!DeckDataToLoad.IsNullOrWhiteSpace())
             {
-                model.ImportDeckFromBase62String(DeckDataToLoad);
+                model.ImportDeck(DeckDataToLoad);
             }
             DeckDataToLoad = null;
             DeckNameToLoad = null;
