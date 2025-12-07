@@ -73,6 +73,12 @@ namespace SVESimulator.SveScript
                             throw new Exception();
                         cardInfo.cardID = text[(pointer + scriptKeyword.Length)..nextIndex].Trim();
                         break;
+                    case "id-en":
+                        nextIndex = text.IndexOf(';', pointer);
+                        if(nextIndex <= pointer)
+                            throw new Exception();
+                        cardInfo.cardID_EN = text[(pointer + scriptKeyword.Length)..nextIndex].Trim();
+                        break;
 
                     // ------------------------------
 

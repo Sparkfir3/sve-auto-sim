@@ -31,6 +31,11 @@
                 "value": null,
                 "name": "ID",
                 "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
             }
         ],
         "stats": [
@@ -126,6 +131,11 @@
                 "value": null,
                 "name": "ID",
                 "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
             }
         ],
         "stats": [
@@ -212,6 +222,11 @@
                 "value": null,
                 "name": "ID",
                 "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
             }
         ],
         "stats": [
@@ -267,6 +282,11 @@
                 "value": null,
                 "name": "ID",
                 "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
             }
         ],
         "stats": [
@@ -317,6 +337,11 @@
                 "value": null,
                 "name": "ID",
                 "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
             }
         ],
         "stats": [
@@ -360,6 +385,11 @@
             {
                 "value": null,
                 "name": "ID",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
                 "$type": "CCGKit.StringProperty"
             }
         ],
