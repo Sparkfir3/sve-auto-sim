@@ -391,13 +391,18 @@ namespace SVESimulator
 
         #region Card Stats/Combat
 
-        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card)
+        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card, bool isAttackingLeader)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             EngageCard(card);
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, card, player, _ => true, true);
+                if(isAttackingLeader)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackLeaderTrigger>(gameState, card, player, _ => true, true);
+                else
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, card, player, _ => true, true);
+
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
             }

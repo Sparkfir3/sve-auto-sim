@@ -32,6 +32,8 @@ namespace SVESimulator.SveScript
             // Card/Player Actions
             { "OnEvolve", new EffectTriggerInfo("SVESimulator.SveOnEvolveTrigger") },
             { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger") },
+            { "FollowerStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackFollowerTrigger") },
+            { "LeaderStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackLeaderTrigger") },
             { "OnOtherAttack", new EffectTriggerInfo("SVESimulator.SveOnOtherCardAttackTrigger", TriggerParameterType.Filter) },
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
 
