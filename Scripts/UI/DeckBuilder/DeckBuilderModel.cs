@@ -211,6 +211,7 @@ namespace SVESimulator.DeckBuilder
 
         #region Deck
 
+        [TitleGroup("Buttons"), Button, HideInEditorMode]
         public void ImportDeck(string data)
         {
             CurrentLeader = null;
@@ -242,41 +243,6 @@ namespace SVESimulator.DeckBuilder
                         break;
                 }
             }
-        }
-
-        [TitleGroup("Buttons"), Button, HideInEditorMode]
-        public void ImportDeckFromBase62String(string input)
-        {
-            CurrentLeader = null;
-            CurrentMainDeck.Clear();
-            CurrentEvolveDeck.Clear();
-
-            List<Base62DeckUtils.CardAmountPair> cardAsArray = Base62DeckUtils.Base62StringToDeck(input, out string deckClass);
-            DeckClass = deckClass;
-            foreach(Base62DeckUtils.CardAmountPair cardAmount in cardAsArray)
-            {
-                Card card = gameConfig.cards.FirstOrDefault(x => x.id == cardAmount.id);
-                if(card == null)
-                {
-                    Debug.LogError($"Failed to find card in database with ID {cardAmount.id} (desired amount: {cardAmount.amount})");
-                    continue;
-                }
-
-                switch(card.cardTypeId)
-                {
-                    case 5: // Leader
-                        CurrentLeader = card;
-                        break;
-                    case 1: // Evolved
-                    case 3:
-                        CurrentEvolveDeck.Add(card, cardAmount.amount);
-                        break;
-                    default: // Main Deck
-                        CurrentMainDeck.Add(card, cardAmount.amount);
-                        break;
-                }
-            }
-            OnUpdateDeck?.Invoke();
         }
 
         public void AddCard(Card card)
@@ -352,19 +318,6 @@ namespace SVESimulator.DeckBuilder
             $"{string.Join("\n", CurrentEvolveDeck.Select(x => $"{x.Value} {x.Key.GetStringProperty(SVEProperties.CardStats.ID)}"))}";
 
             return data;
-        }
-
-        public string DeckAsBase62String()
-        {
-            string leaderClass = !DeckClass.IsNullOrWhiteSpace()
-                ? DeckClass
-                : CurrentLeader == null ? "Neutral" : CurrentLeader.GetStringProperty(SVEProperties.CardStats.Class);
-            string metaData = $"{leaderClass.ToLower()[0]}0";
-
-            string leader = CurrentLeader != null ? Base62DeckUtils.CardIdToBase62String(1, CurrentLeader.id) : "";
-            string mainDeck = string.Join("", CurrentMainDeck.Select(x => Base62DeckUtils.CardIdToBase62String(x.Value, x.Key.id)));
-            string evolveDeck = string.Join("", CurrentEvolveDeck.Select(x => Base62DeckUtils.CardIdToBase62String(x.Value, x.Key.id)));
-            return metaData + leader + mainDeck + evolveDeck;
         }
 
         public int GetCardAmount(Card card)
