@@ -72,7 +72,7 @@ namespace SVESimulator.DeckBuilder
         {
             if(!DeckDataToLoad.IsNullOrWhiteSpace())
             {
-                model.ImportDeckFromBase62String(DeckDataToLoad);
+                model.ImportDeck(DeckDataToLoad);
             }
             DeckDataToLoad = null;
             DeckNameToLoad = null;
@@ -136,7 +136,7 @@ namespace SVESimulator.DeckBuilder
 
             using(StreamWriter writer = new(filePath))
             {
-                string deckCode = model.DeckAsBase62String();
+                string deckCode = model.DeckAsString();
                 writer.Write(deckCode);
             }
             model.IsDirty = false;

@@ -17,18 +17,6 @@ namespace SVESimulator.SveScript
             { "BP01", "Booster Set #1 \\\"Advent of Genesis\\\"" },
         };
 
-        public static readonly Dictionary<string, int> SpecialCardTypeToID = new()
-        {
-            { "-T", 8 },
-            { "-LD", 9 }
-        };
-
-        public static readonly Dictionary<string, int> SetTypeToID = new()
-        {
-            { "SD", 1 },
-            { "BP", 2 }
-        };
-
         // ------------------------------
 
         public static readonly Dictionary<string, int> CardTypeIDs = new()

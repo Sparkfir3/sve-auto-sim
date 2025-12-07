@@ -77,7 +77,7 @@ namespace SVESimulator.SveScript
 				cardInfo.properties.Add(new CardPropertyString(cardInfo.text, "Text"));
 			}
 			cardInfo.properties.Add(new CardPropertyString(cardInfo.cardID, "ID"));
-			cardInfo.ccgID = CardIdToCCGKitId(cardInfo.cardID);
+			cardInfo.ccgID = CardIDConversion.CardIdToCCGKitId(cardInfo.cardID);
 
 			if(cardInfo.ccgCardTypeId == CardTypeIDs["evolved follower"] && !cardInfo.name.EndsWith("(Evolved)"))
 				cardInfo.name += " (Evolved)";
@@ -102,29 +102,6 @@ namespace SVESimulator.SveScript
 				cardInfo.stats.Add(new CardStat(-1,                  5, "Attached Instance IDs", -1, 999999));
 			if(cardInfo.ccgCardTypeId == 1) // evolved follower
 				cardInfo.stats.Add(new CardStat(0,                   6, "Face Up",     0, 1));
-		}
-
-		public static int CardIdToCCGKitId(in string cardId)
-		{
-			try
-			{
-				string ccgKitId = cardId;
-				foreach(KeyValuePair<string, int> kvPair in SpecialCardTypeToID) // Reformat leaders and tokens
-				{
-					ccgKitId = ccgKitId.Replace(kvPair.Key, kvPair.Value.ToString());
-				}
-				ccgKitId = ccgKitId.Replace("-", "");
-				foreach(KeyValuePair<string, int> kvPair in SetTypeToID)
-				{
-					ccgKitId = ccgKitId.Replace(kvPair.Key, kvPair.Value.ToString());
-				}
-				return Int32.Parse(ccgKitId);
-			}
-			catch
-			{
-				Debug.LogError($"Invalid Card ID Provided: {cardId}");
-				return 0;
-			}
 		}
 
 		#endregion

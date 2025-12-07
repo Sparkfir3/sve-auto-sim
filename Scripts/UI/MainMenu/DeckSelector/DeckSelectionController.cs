@@ -23,14 +23,24 @@ namespace SVESimulator
         {
             public string name;
             public string data;
+            public string deckClass;
             public DateTime editTime;
 
-            public DeckInfo(string name, string data, DateTime editTime = default)
+            public DeckInfo(string name, string data, string deckClass, DateTime editTime = default)
             {
                 this.name = name;
                 this.data = data;
+                this.deckClass = deckClass;
                 this.editTime = editTime;
             }
+        }
+
+        [Serializable]
+        public class StarterDeck
+        {
+            public string name;
+            public TextAsset data;
+            public string deckClass;
         }
 
         // ------------------------------
@@ -42,8 +52,9 @@ namespace SVESimulator
         [field: SerializeField, DisableInEditorMode]
         public string CurrentDeckData { get; private set; }
 
-        [field: Title("Decks"), SerializeField, TableList]
-        public List<DeckInfo> StarterDecks { get; private set; }
+        [Title("Decks"), SerializeField, TableList]
+        private List<StarterDeck> starterDecks;
+        public List<DeckInfo> LoadedStarterDecks { get; private set; } = new();
         [field: SerializeField, DisableInEditorMode, TableList]
         public List<DeckInfo> LoadedDecks { get; private set; }
 
@@ -95,6 +106,7 @@ namespace SVESimulator
             UpdateCurrentDeckText();
 
             // Init
+            LoadStarterDecks();
             LoadDecksListFromFiles();
             if(LoadedDecks.Count > 0)
                 OpenLoadedDecksTab();
@@ -106,7 +118,7 @@ namespace SVESimulator
         {
             starterDecksTabBackground.SetActive(true);
             customDecksTabBackground.SetActive(false);
-            SetListOfDecks(StarterDecks, true);
+            SetListOfDecks(LoadedStarterDecks, true);
         }
 
         public void OpenLoadedDecksTab()
@@ -119,7 +131,7 @@ namespace SVESimulator
         public void LoadCurrentDeck()
         {
             Debug.Log($"Loading deck: {CurrentDeckName}");
-            GameManager.Instance.defaultDeck = JsonUtility.FromJson<Deck>(DeckDataToJson(CurrentDeckName, CurrentDeckData));
+            GameManager.Instance.defaultDeck = JsonUtility.FromJson<Deck>(DeckSaveLoadUtils.LoadAsRuntimeJson(CurrentDeckName, CurrentDeckData));
         }
 
         public void LoadDeckBuilder() => LoadDeckBuilder(null, null);
@@ -136,6 +148,13 @@ namespace SVESimulator
 
         #region Data/UI Handling
 
+        private void LoadStarterDecks()
+        {
+            LoadedStarterDecks.Clear();
+            foreach(StarterDeck sd in starterDecks)
+                LoadedStarterDecks.Add(new DeckInfo(sd.name, sd.data.text, sd.deckClass));
+        }
+
         private void LoadDecksListFromFiles()
         {
             LoadedDecks.Clear();
@@ -149,10 +168,11 @@ namespace SVESimulator
             {
                 string deckName = fileName.Replace("/", "\\").Split("\\")[^1].Replace(".txt", "");
                 string deckData = File.ReadAllText(fileName);
+                string deckClass = deckData[..deckData.IndexOf(" ", StringComparison.Ordinal)];
                 DateTime editTime = File.GetLastWriteTime(fileName);
-                LoadedDecks.Add(new DeckInfo(deckName, deckData, editTime));
+                LoadedDecks.Add(new DeckInfo(deckName, deckData, deckClass, editTime));
             }
-            LoadedDecks = LoadedDecks.OrderBy(x => x.editTime).ToList();
+            LoadedDecks = LoadedDecks.OrderByDescending(x => x.editTime).ToList();
         }
 
         private void SetListOfDecks(List<DeckInfo> deckInfo, bool isStarterDeck)
@@ -163,7 +183,7 @@ namespace SVESimulator
             foreach(DeckInfo info in deckInfo)
             {
                 DeckSelectionEntry entry = GetNextAvailableEntry();
-                entry.SetInfo(info.name, info.data, classIcons.GetValueOrDefault(info.data[0].ToString(), defaultClassIcon), isStarterDeck);
+                entry.SetInfo(info.name, info.data, classIcons.GetValueOrDefault(info.deckClass, defaultClassIcon), isStarterDeck);
                 entry.gameObject.SetActive(true);
                 i++;
             }
@@ -207,24 +227,6 @@ namespace SVESimulator
         private void UpdateCurrentDeckText()
         {
             currentDeckText.text = !CurrentDeckName.IsNullOrWhiteSpace() ? CurrentDeckName : "None";
-        }
-
-        private string DeckDataToJson(string deckName, string deckData)
-        {
-            List<Base62DeckUtils.CardAmountPair> cardCountAsList = Base62DeckUtils.Base62StringToDeck(deckData);
-            JObject deck = new();
-            deck.Add("name", deckName);
-            JArray cardList = new();
-            foreach(Base62DeckUtils.CardAmountPair amountInfo in cardCountAsList)
-            {
-                JObject cardCount = new();
-                cardCount.Add("id", amountInfo.id);
-                cardCount.Add("amount", amountInfo.amount);
-                cardList.Add(cardCount);
-            }
-            deck.Add("cards", cardList);
-
-            return deck.ToString();
         }
 
         #endregion
