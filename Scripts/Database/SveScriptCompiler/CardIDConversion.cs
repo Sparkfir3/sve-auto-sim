@@ -1,44 +1,60 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SVESimulator.SveScript
 {
     public static class CardIDConversion
     {
+        /*
+         * Card ID Format:
+         * AAL-BBB-T-XXX
+         *      AA  = Set type
+         *      L   = Language (1 = EN, 0 = JP)
+         *      BBB = Set number
+         *      T   = Card type (1 = regular, 2 = leader, 3 = token)
+         *      XXX = Card number
+         */
+
         public static int CardIdToCCGKitId(in string cardId)
         {
             try
             {
-                string ccgKitId = cardId;
-                foreach(KeyValuePair<string, int> kvPair in SpecialCardTypeToID) // Reformat leaders and tokens
+                string[] idSegments = cardId.Trim().Split('-');
+
+                string setTypeRaw = SetTypeToID.First(x => idSegments[0].Contains(x.Key)).Key;
+                int setTypeId = SetTypeToID[setTypeRaw];
+                int setNumber = int.Parse(idSegments[0].Replace(setTypeRaw, ""));
+
+                int language = idSegments[1].EndsWith("EN") ? 1 : 0;
+                idSegments[1] = idSegments[1].Replace("EN", "");
+                int cardType = 1;
+                if(idSegments[1].StartsWith("LD")) // Leader
                 {
-                    ccgKitId = ccgKitId.Replace(kvPair.Key, kvPair.Value.ToString());
+                    cardType = 2;
+                    idSegments[1] = idSegments[1].Replace("LD", "");
                 }
-                ccgKitId = ccgKitId.Replace("-", "");
-                foreach(KeyValuePair<string, int> kvPair in SetTypeToID)
+                else if(idSegments[1].StartsWith("T")) // Token
                 {
-                    ccgKitId = ccgKitId.Replace(kvPair.Key, kvPair.Value.ToString());
+                    cardType = 3;
+                    idSegments[1] = idSegments[1].Replace("T", "");
                 }
-                return int.Parse(ccgKitId);
+                int cardNumber = int.Parse(idSegments[1]);
+
+                return int.Parse($"{setTypeId}{language}{setNumber:D3}{cardType}{cardNumber:D3}");
             }
-            catch
+            catch(Exception e)
             {
-                Debug.LogError($"Invalid Card ID Provided: {cardId}");
+                Debug.LogError($"Invalid Card ID Provided: {cardId}\n{e}");
                 return 0;
             }
         }
 
-        private static readonly Dictionary<string, int> SpecialCardTypeToID = new()
-        {
-            { "-T", 8 },
-            { "-LD", 9 }
-        };
-
         private static readonly Dictionary<string, int> SetTypeToID = new()
         {
-            { "SD", 1 },
-            { "BP", 2 }
+            { "BP", 1 },
+            { "SD", 2 }
         };
     }
 }
