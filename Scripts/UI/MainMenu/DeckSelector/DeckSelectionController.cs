@@ -172,7 +172,7 @@ namespace SVESimulator
                 DateTime editTime = File.GetLastWriteTime(fileName);
                 LoadedDecks.Add(new DeckInfo(deckName, deckData, deckClass, editTime));
             }
-            LoadedDecks = LoadedDecks.OrderBy(x => x.editTime).ToList();
+            LoadedDecks = LoadedDecks.OrderByDescending(x => x.editTime).ToList();
         }
 
         private void SetListOfDecks(List<DeckInfo> deckInfo, bool isStarterDeck)
