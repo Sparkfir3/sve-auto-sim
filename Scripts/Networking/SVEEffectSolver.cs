@@ -508,7 +508,9 @@ namespace SVESimulator
             if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
                 return 0;
 
-            int damage = attacker.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
+            int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
+                ? attacker.namedStats[SVEProperties.CardStats.Defense].effectiveValue
+                : attacker.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
             if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
                 damage += 1;
             if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
