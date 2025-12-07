@@ -51,13 +51,22 @@
         "id": 1
     },
     {
-        "name": "PlusDamage",
+        "name": "DamageMods",
         "values": [
             {
                 "value": "Plus1Damage"
             },
             {
                 "value": "Plus2Damage"
+            },
+            {
+                "value": "Plus3Damage"
+            },
+            {
+                "value": "Plus4Damage"
+            },
+            {
+                "value": "DamageReduction1"
             }
         ],
         "id": 2

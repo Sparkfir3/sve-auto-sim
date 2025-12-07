@@ -447,8 +447,8 @@ namespace SVESimulator
 
         public void FightFollower(NetworkIdentity playerNetId, RuntimeCard attackingCard, RuntimeCard defendingCard)
         {
-            int attackerDamage = GetCardDamageOutput(attackingCard);
-            int defenderDamage = GetCardDamageOutput(defendingCard);
+            int attackerDamage = GetCardDamageOutput(attackingCard, defendingCard);
+            int defenderDamage = GetCardDamageOutput(defendingCard, attackingCard);
 
             // Do not check for 0 defense here - instead check below during Bane handling
             ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false);
@@ -503,16 +503,24 @@ namespace SVESimulator
             SendToCemetery(playerNetId, card, SVEProperties.Zones.Field);
         }
 
-        private int GetCardDamageOutput(RuntimeCard card)
+        private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
-            if(card.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
                 return 0;
 
-            int damage = card.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
-            if(card.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
+            int damage = attacker.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
                 damage += 1;
-            if(card.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
                 damage += 2;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus3Damage))
+                damage += 3;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus4Damage))
+                damage += 4;
+
+            if(defender != null && defender.HasKeyword(SVEProperties.PassiveAbilities.DamageReduction1))
+                damage = Mathf.Max(damage - 1, 0);
+
             return damage;
         }
 
