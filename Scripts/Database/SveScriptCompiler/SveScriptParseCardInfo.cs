@@ -53,11 +53,11 @@ namespace SVESimulator.SveScript
 		    if(cardInfo.text.StartsWith('\"') && cardInfo.text.EndsWith('\"'))
 			    cardInfo.text = cardInfo.text[1..^1];
 
-		    foreach(var formattingInfo in TextFormatting)
-		    {
-			    (string key, string value) = (formattingInfo.Key, formattingInfo.Value);
-			    cardInfo.text = cardInfo.text.Replace(key, value);
-		    }
+		    // foreach(var formattingInfo in TextFormatting)
+		    // {
+			   //  (string key, string value) = (formattingInfo.Key, formattingInfo.Value);
+			   //  cardInfo.text = cardInfo.text.Replace(key, value);
+		    // }
 	    }
 
 	    #endregion
