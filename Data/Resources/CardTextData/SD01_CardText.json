@@ -1,0 +1,226 @@
+[
+  {
+    "id": "SD01-001EN",
+    "name": "Aria, Fairy Princess",
+    "cardText": "Ward.\n[fanfare] Put up to 9 Fairy tokens onto your field or into your EX area.\nWhile this card is on your field, your other Pixie followers have Rush.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put up to 9 Fairy tokens onto your field or into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "SD01-002EN",
+    "name": "Titania's Sanctuary",
+    "cardText": "[fanfare] Give each Pixie token on your field [attack]+1/[defense]+1.\nWhile this card is on your field, your Pixie tokens have Assail. Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give each Pixie token on your field [attack]+1/[defense]+1."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "body": "Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "SD01-003EN",
+    "name": "Rose Gardener",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "SD01-004EN",
+    "name": "Rose Gardener (Evolved)",
+    "cardText": "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve",
+        "body": "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card."
+      },
+      {
+        "key": "Return Enemy to Hand",
+        "body": "Select an enemy follower on the field and return it to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "SD01-005EN",
+    "name": "Waltzing Fairy",
+    "cardText": "[fanfare][lastwords] Put a Fairy token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Fairy token into your EX area."
+      },
+      {
+        "key": "Last Words",
+        "trigger": "[lastwords]",
+        "body": "Put a Fairy token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "SD01-006EN",
+    "name": "Fairy Caster",
+    "cardText": "[fanfare] Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP01-017EN",
+    "name": "Elf Metallurgist",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP01-021EN",
+    "name": "Okami",
+    "cardText": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Other Card Enter Field",
+        "body": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "SD01-009EN",
+    "name": "Treant",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Combo (3): Change this card's [evolve] cost to 0.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Combo (3): Change this card's [evolve] cost to 0."
+      }
+    ]
+  },
+  {
+    "id": "SD01-010EN",
+    "name": "Treant (Evolved)"
+  },
+  {
+    "id": "SD01-011EN",
+    "name": "Water Fairy",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[lastwords] Put a Fairy token into your EX area.",
+    "effectText": [
+      {
+        "key": "Last Words",
+        "trigger": "[lastwords]",
+        "body": "Put a Fairy token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "SD01-012EN",
+    "name": "Water Fairy (Evolved)",
+    "cardText": "On Evolve: Summon a Fairy token.\n[lastwords] Put a Fairy token into your EX area.",
+    "effectText": [
+      {
+        "key": "On Evolve",
+        "trigger": "On Evolve",
+        "body": "Summon a Fairy token."
+      },
+      {
+        "key": "Last Words",
+        "trigger": "[lastwords]",
+        "body": "Put a Fairy token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "SD01-013EN",
+    "name": "Elf Wanderer",
+    "cardText": "Assail.\nThis follower ignores Ward."
+  },
+  {
+    "id": "BP01-023EN",
+    "name": "Fairy Circle",
+    "cardText": "Put 3 Fairy tokens into your EX area.",
+    "effectText": [
+      {
+        "key": "Summon Fairy Tokens",
+        "body": "Put 3 Fairy tokens into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "SD01-025EN",
+    "name": "Woodland Refuge",
+    "cardText": "[fanfare] Select a Pixie follower on your field and give it [attack]+1.\n[act][cost01], [engage]: Return this card to its owner's hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a Pixie follower on your field and give it [attack]+1."
+      },
+      {
+        "key": "Return to Hand",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage]",
+        "body": "Return this card to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "SD01-016EN",
+    "name": "Sylvan Justice",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP01-171EN",
+    "name": "Goblin",
+    "cardText": "[evolve][cost04]: Evolve this follower."
+  },
+  {
+    "id": "BP01-172EN",
+    "name": "Goblin (Evolved)"
+  },
+  {
+    "id": "BP01-179EN",
+    "name": "Angelic Snipe",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "Deal Damage",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP01-180EN",
+    "name": "Angelic Barrage",
+    "cardText": "[quick]\nDeal 1 damage to each enemy follower on the field."
+  },
+  {
+    "id": "BP01-LD01EN",
+    "name": "Arisa"
+  },
+  {
+    "id": "BP01-T03EN",
+    "name": "Fairy"
+  }
+]
