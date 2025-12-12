@@ -1,0 +1,365 @@
+[
+  {
+    "id": "SD05-001EN",
+    "name": "Queen Vampire",
+    "cardText": "[fanfare] Summon 2 Forest Bat tokens.\n[act][engage], give your leader [defense]-1: Summon 2 Forest Bat tokens.\nWhenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Activate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "GiveStat",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "GiveKeyword",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-002EN",
+    "name": "Alucard",
+    "cardText": "Storm.\n[fanfare] Necrocharge (10): Give this follower [attack]+2.\nStrike: Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Strike",
+        "text": "",
+        "trigger": "Strike",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Deal Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Leader Defense",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-003EN",
+    "name": "Playful Necromancer",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "SD05-004EN",
+    "name": "Playful Necromancer (Evolved)",
+    "cardText": "On Evolve: Summon 3 Ghost tokens.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-005EN",
+    "name": "Midnight Vampire",
+    "cardText": "[fanfare] Summon a Forest Bat token.\nWhile this card is on your field, your Forest Bat tokens have Drain. (When a follower with Drain attacks and deals damage, its leader gains defense equal to the damage dealt.)",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Passive",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-006EN",
+    "name": "Night Horde",
+    "cardText": "Summon 2 Forest Bat tokens.\nSelect an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Summon",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-119EN",
+    "name": "Spectre",
+    "cardText": "Bane.\n[fanfare] Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Rush",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Mill",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-120EN",
+    "name": "Spartoi Sergeant",
+    "cardText": "[fanfare] Put the top 2 cards of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-124EN",
+    "name": "Undead King",
+    "cardText": "[fanfare] Select up to 2 followers in your cemetery and add them to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-010EN",
+    "name": "Lesser Mummy",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Necrocharge (10): Give this follower Storm. (If your cemetery contains at least 10 cards, perform Necrocharge (10).)",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-011EN",
+    "name": "Lesser Mummy (Evolved)",
+    "cardText": "Strike: Summon a Ghost token.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "text": "",
+        "trigger": "Strike",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-012EN",
+    "name": "Lilith",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Put a Forest Bat token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-013EN",
+    "name": "Lilith (Evolved)",
+    "cardText": "Strike: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "text": "",
+        "trigger": "Strike",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-125EN",
+    "name": "Razory Claw",
+    "cardText": "[quick]\nDeal 2 damage to your leader.\nSelect an enemy leader or enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Self Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Opponent Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-015EN",
+    "name": "Undying Resentment",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Mill",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD05-016EN",
+    "name": "Summon Bloodkin",
+    "cardText": "Summon a Forest Bat token.\nPut a Forest Bat token into your EX area.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Summon Field",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Summon EX",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD09EN",
+    "name": "Luna"
+  },
+  {
+    "id": "BP01-T14EN",
+    "name": "Ghost",
+    "cardText": "Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)\nAt the start of your end phase, banish this card.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-T15EN",
+    "name": "Forest Bat"
+  }
+]

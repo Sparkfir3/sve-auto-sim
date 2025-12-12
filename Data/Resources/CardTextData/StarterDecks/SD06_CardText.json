@@ -1,0 +1,271 @@
+[
+  {
+    "id": "SD06-001EN",
+    "name": "Skullfane",
+    "cardText": "[fanfare] Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.\nWhenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "OnOtherLeaveField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Leader",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Followers",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-002EN",
+    "name": "Hare of Illusions",
+    "cardText": "[act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and engage it.\n[act][cost10], [engage], put this card into its owner's cemetery: Banish each follower on the field.",
+    "effectText": [
+      {
+        "key": "Engage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Banish",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-003EN",
+    "name": "Priest of the Cudgel",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "SD06-004EN",
+    "name": "Priest of the Cudgel (Evolved)",
+    "cardText": "On Evolve: Select an enemy follower with 3 defense or less on the field and banish it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-005EN",
+    "name": "Acolyte's Light",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Banish it and give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Banish",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Defense",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-006EN",
+    "name": "Dual Flames",
+    "cardText": "[fanfare] Summon a Holy Tiger token.\n[act][cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-142EN",
+    "name": "Cruel Priestess",
+    "cardText": "[fanfare] Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-146EN",
+    "name": "Snake Priestess",
+    "cardText": "Ward."
+  },
+  {
+    "id": "SD06-009EN",
+    "name": "Ardent Nun",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\nDuring each opponent's turn, this follower deals 1 more damage.",
+    "effectText": [
+      {
+        "key": "Passive",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-010EN",
+    "name": "Ardent Nun (Evolved)",
+    "cardText": "Ward.\nDuring each opponent's turn, this follower deals 2 more damage.",
+    "effectText": [
+      {
+        "key": "Passive",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-011EN",
+    "name": "Guardian Nun",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\n[fanfare] If there is an amulet on your field, give this follower [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-012EN",
+    "name": "Guardian Nun (Evolved)",
+    "cardText": "Ward.\nOn Evolve: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-148EN",
+    "name": "Hallowed Dogma",
+    "cardText": "[quick]\nLook at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-150EN",
+    "name": "Death Sentence",
+    "cardText": "This card is put onto the field engaged.\n[act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Activate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-015EN",
+    "name": "Pinion Prayer",
+    "cardText": "[act][cost01], [engage], put this card into its owner's cemetery: Summon a Holy Falcon token.",
+    "effectText": [
+      {
+        "key": "Activate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD06-016EN",
+    "name": "Beastly Vow",
+    "cardText": "This card is put onto the field engaged.\n[act][cost01], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.",
+    "effectText": [
+      {
+        "key": "Activate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD11EN",
+    "name": "Eris"
+  },
+  {
+    "id": "BP01-T16EN",
+    "name": "Holy Falcon",
+    "cardText": "Storm."
+  },
+  {
+    "id": "BP01-T17EN",
+    "name": "Holy Tiger",
+    "cardText": "Rush."
+  }
+]

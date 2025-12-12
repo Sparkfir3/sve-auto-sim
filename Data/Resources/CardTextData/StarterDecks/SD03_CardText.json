@@ -1,0 +1,350 @@
+[
+  {
+    "id": "SD03-001EN",
+    "name": "Mythril Golem",
+    "cardText": "[fanfare] Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader. (If you have at least 7 spells in your cemetery, perform Spellchain (7). Then, if you have at least 15 spells, perform SC (15).)",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Followers",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Leader",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-002EN",
+    "name": "Rune Blade Summoner",
+    "cardText": "[fanfare] Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm. (If you have at least 5 spells in your cemetery, perform Spellchain (5). Then, if you have at least 10 spells, perform SC (10).)",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Gain Stat",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Gain Storm",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-003EN",
+    "name": "Demonflame Mage",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "SD03-004EN",
+    "name": "Demonflame Mage (Evolved)",
+    "cardText": "On Evolve: Deal 2 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-005EN",
+    "name": "Insight",
+    "cardText": "[quick]\nDraw a card.",
+    "effectText": [
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-006EN",
+    "name": "Fire Chain",
+    "cardText": "[quick]\nSelect up to 2 enemy followers on the field and deal 3 damage divided between them.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-070EN",
+    "name": "Lightning Shooter",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Follower",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Leader",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-008EN",
+    "name": "Penguin Wizard",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[act][engage], discard a spell: Draw a card.",
+    "effectText": [
+      {
+        "key": "Activate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-009EN",
+    "name": "Penguin Wizard (Evolved)",
+    "cardText": "On Evolve: Refresh this card.\n[act][engage], discard a spell: Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Activate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-010EN",
+    "name": "Sammy, Wizard's Apprentice",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Look at the top card of your deck. You may put it into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-011EN",
+    "name": "Sammy, Wizard's Apprentice (Evolved)",
+    "cardText": "On Evolve: Each player draws a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-071EN",
+    "name": "Wind Blast",
+    "cardText": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-072EN",
+    "name": "Sorcery Cache",
+    "cardText": "[quick]\nLook at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-073EN",
+    "name": "Fiery Embrace",
+    "cardText": "[quick]\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Destroy Follower",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Leader",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-015EN",
+    "name": "Magic Missile",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 2 damage and draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage Follower",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "SD03-016EN",
+    "name": "Conjure Golem",
+    "cardText": "[quick]\nPut a Guardform Golem or Strikeform Golem token into your EX area.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Guardform Golem",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Strikeform Golem",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-177EN",
+    "name": "Healing Angel",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-178EN",
+    "name": "Healing Angel (Evolved)",
+    "cardText": "On Evolve: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD05EN",
+    "name": "Isabelle"
+  },
+  {
+    "id": "BP01-T08EN",
+    "name": "Strikeform Golem",
+    "cardText": "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)"
+  },
+  {
+    "id": "BP01-T09EN",
+    "name": "Guardform Golem",
+    "cardText": "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)"
+  }
+]

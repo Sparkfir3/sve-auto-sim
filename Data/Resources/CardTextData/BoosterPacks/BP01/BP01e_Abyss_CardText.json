@@ -1,0 +1,457 @@
+[
+  {
+    "id": "BP01-101EN",
+    "name": "Cerberus",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Single",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Double",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Mimi",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Coco",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-102EN",
+    "name": "Cerberus (Evolved)",
+    "cardText": "On Evolve: Put a Mimi and Coco token into your EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Mimi",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Coco",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-103EN",
+    "name": "Lord Atomy",
+    "cardText": "When playing this card, put 4 reserved [abysscraft] cards from your field into their owners' cemeteries, or banish 4 [abysscraft] cards in your EX area: This card costs 9 less to play.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "ModifiedCost",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-104EN",
+    "name": "Medusa",
+    "cardText": "If Sanguine is active for you, this card costs 1 less to play.\nNecrocharge (10): This card costs 1 less to play.\nBane.\n[act][engage]: Select an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Sanguine",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Necrocharge",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-105EN",
+    "name": "Righteous Devil",
+    "cardText": "[evolve] Give your leader [defense]-3: Evolve this follower.\nBane.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-106EN",
+    "name": "Righteous Devil (Evolved)",
+    "cardText": "Assail. Bane.\nWhenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnOpponentCardLeaveField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Defense",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-107EN",
+    "name": "Mordecai the Duelist",
+    "cardText": "[lastwords] Give your leader [defense]-3: Put this follower onto its owner's field.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-108EN",
+    "name": "Dire Bond",
+    "cardText": "[fanfare] Deal 1 damage to your leader. Draw a card.\n[act][cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-109EN",
+    "name": "Hell's Unleasher",
+    "cardText": "[act][engage], put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-110EN",
+    "name": "Crazed Executioner",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP01-111EN",
+    "name": "Crazed Executioner (Evolved)",
+    "cardText": "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Discard",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-112EN",
+    "name": "Dark Summoner",
+    "cardText": "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Stat",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Rush",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-113EN",
+    "name": "Dark General",
+    "cardText": "[fanfare] If Sanguine is active for you, give this follower Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-114EN",
+    "name": "Phantom Howl",
+    "cardText": "Summon 4 Ghost tokens.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-115EN",
+    "name": "Death's Breath",
+    "cardText": "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Ward",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-116EN",
+    "name": "Soul Conversion",
+    "cardText": "[quick]\nSelect a follower on your field. Destroy it and draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Destroy",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-117EN",
+    "name": "Skeleton Fighter",
+    "cardText": "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-118EN",
+    "name": "Ambling Wraith",
+    "cardText": "[fanfare] Deal 1 damage to each leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-121EN",
+    "name": "Rabbit Necromancer",
+    "cardText": "[lastwords] Deal 2 damage to each leader.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-122EN",
+    "name": "Wardrobe Raider",
+    "cardText": "[evolve][cost00]: Evolve this follower."
+  },
+  {
+    "id": "BP01-123EN",
+    "name": "Wardrobe Raider (Evolved)",
+    "cardText": "On Evolve, put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD10EN",
+    "name": "Urias"
+  },
+  {
+    "id": "BP01-T12EN",
+    "name": "Mimi",
+    "cardText": "Select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-T13EN",
+    "name": "Coco",
+    "cardText": "Select a follower on your field and give it [attack]+2.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  }
+]

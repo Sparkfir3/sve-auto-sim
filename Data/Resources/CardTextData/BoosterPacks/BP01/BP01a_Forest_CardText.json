@@ -1,0 +1,456 @@
+[
+  {
+    "id": "BP01-001EN",
+    "name": "Rose Queen",
+    "cardText": "[fanfare] Select any number of Pixie followers in your EX area and transform them into Thorn Burst tokens.\n[act][engage]: Recover X play points. X equals the number of Thorn Burst tokens in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-002EN",
+    "name": "Ancient Elf",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\n[fanfare] Return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-003EN",
+    "name": "Ancient Elf (Evolved)",
+    "cardText": "Ward.\nOn Evolve, return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-004EN",
+    "name": "Rhinoceroach",
+    "cardText": "[evolve][cost00]: Evolve this follower.\nRush.\n[fanfare] Give this follower [attack]+X. X equals the number of cards you've played this turn, excluding this card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-005EN",
+    "name": "Rhinoceroach (Evolved)",
+    "cardText": "On Evolve: Choose one of the following effects. (1) Give this follower Storm. (2) Select an enemy follower on the field and deal it X damage. X equals this follower's attack.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Storm",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-006EN",
+    "name": "Robin Hood",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 4 damage.\n[act][cost01], [engage]: Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-007EN",
+    "name": "Silver Bolt",
+    "cardText": "[quick]\nSelect an enemy leader or enemy follower on the field. Draw a card and then deal X damage to the selected enemy. X equals the number of cards in your hand.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-008EN",
+    "name": "Homecoming",
+    "cardText": "Select an enemy follower on the field. Its controller puts it on the top or bottom of its owner's deck. Combo (5): Each opponent puts each follower from their field on the top or bottom of its owner's deck instead. (The controllers determine the placement. Tokens put into a player's deck are removed from the game.)",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Single",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "All",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Iterate",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Move Card",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-009EN",
+    "name": "Elven Princess Mage",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP01-010EN",
+    "name": "Elven Princess Mage (Evolved)",
+    "cardText": "On Evolve: Put 2 Fairy Wisp tokens into your EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-011EN",
+    "name": "Blessed Fairy Dancer",
+    "cardText": "[fanfare] Give [attack]+1/[defense]+1 to each other Pixie follower on your field and in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-012EN",
+    "name": "Elf Child May",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 1 damage.\nWhen this card is returned to hand from your field, select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "OnReturnToHandFromField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-013EN",
+    "name": "Fairy Beast",
+    "cardText": "[act] Banish a Pixie follower in your EX area: Give your leader [defense]+3 and draw a card. This ability can be activated once per turn.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Defense",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-014EN",
+    "name": "Noble Fairy",
+    "cardText": "Ward.\n[fanfare] Combo (3): Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Destroy",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Opponent Summon",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Token",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-015EN",
+    "name": "Nature's Guidance",
+    "cardText": "Select a card on your field. Return it to its owner's hand and draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Return to Hand",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-016EN",
+    "name": "Harvest Festival",
+    "cardText": "[act][cost01], [engage], put this card into its owner's cemetery: Give your leader [defense]+1.\nWhen this card leaves the field, draw a card.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "OnLeaveField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-018EN",
+    "name": "Archer",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWhenever another follower is put onto your field, select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-019EN",
+    "name": "Archer (Evolved)",
+    "cardText": "Whenever another follower is put onto your field, select up to 2 enemy followers on the field and deal them 1 damage.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-020EN",
+    "name": "Fairy Whisperer",
+    "cardText": "[fanfare] Summon a Fairy token. Put a Fairy token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Field",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "EX",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-022EN",
+    "name": "Mana Elk",
+    "cardText": "Whenever one of your Pixie followers attacks, select an enemy leader or enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "OnOtherAttack",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-024EN",
+    "name": "Woodland Curse",
+    "cardText": "[quick]\nSelect an enemy follower on the field. It cannot deal damage this turn.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD02EN",
+    "name": "Aria, Dancing Fairy"
+  },
+  {
+    "id": "BP01-T01EN",
+    "name": "Thorn Burst",
+    "cardText": "Select an enemy leader or enemy follower on the field. Deal it 3 damage and draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-T02EN",
+    "name": "Fairy Wisp"
+  }
+]

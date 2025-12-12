@@ -1,0 +1,342 @@
+[
+  {
+    "id": "BP01-076EN",
+    "name": "Dark Dragoon Forte",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nStorm."
+  },
+  {
+    "id": "BP01-077EN",
+    "name": "Dark Dragoon Forte (Evolved)",
+    "cardText": "Storm. Aura."
+  },
+  {
+    "id": "BP01-078EN",
+    "name": "Zirnitra",
+    "cardText": "[fanfare] Put a Dragon token into your EX area.\n[act][cost02], [engage]: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Play Dragon",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Give Rush",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Play Points",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-079EN",
+    "name": "Aiela, Dragon Knight",
+    "cardText": "Assail.\n[lastwords] Increase your maximum play points by 1.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-080EN",
+    "name": "Genesis Dragon",
+    "cardText": "Storm."
+  },
+  {
+    "id": "BP01-081EN",
+    "name": "Shapeshifting Mage",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] If Overflow is active for you, give this follower [attack]+3/[defense]+3.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-082EN",
+    "name": "Shapeshifting Mage (Evolved)",
+    "cardText": "Assail. Bane."
+  },
+  {
+    "id": "BP01-083EN",
+    "name": "Phoenix Roost",
+    "cardText": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
+    "effectText": [
+      {
+        "key": "Check Top",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "StartOpponentMainPhase",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-084EN",
+    "name": "Wyvern Cavalier",
+    "cardText": "[fanfare] Put the top card of your deck into your EX area. It costs 2 less to play.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Minus Cost",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-085EN",
+    "name": "Dragonnewt Scholar",
+    "cardText": "Intimidate.\nStrike: Draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "text": "",
+        "trigger": "Strike",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Discard",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-086EN",
+    "name": "Shenlong",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nWard.\n[fanfare] Draw 2 cards, then discard a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Discard",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-087EN",
+    "name": "Shenlong (Evolved)",
+    "cardText": "Ward.\nOn Evolve: Give your leader [defense]+5.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-088EN",
+    "name": "Imprisoned Dragon",
+    "cardText": "Ward.\nThis follower can't attack enemies."
+  },
+  {
+    "id": "BP01-089EN",
+    "name": "Conflagration",
+    "cardText": "Deal 5 damage to each follower on the field.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-090EN",
+    "name": "Serpent Wrath",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-091EN",
+    "name": "Wyrm Spire",
+    "cardText": "While this card is on your field, your Dragon tokens have Rush.\n[act][engage]: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
+    "effectText": [
+      {
+        "key": "Passive",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Token",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-092EN",
+    "name": "Ivory Dragon",
+    "cardText": "[evolve][cost00]: Evolve this follower."
+  },
+  {
+    "id": "BP01-093EN",
+    "name": "Ivory Dragon (Evolved)",
+    "cardText": "On Evolve: If Overflow is active for you, draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-095EN",
+    "name": "Ace Dragoon",
+    "cardText": "Rush.\n[fanfare] Select another follower on the field and give this follower [attack]+X. X equals the selected follower's attack.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Give Attack",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-096EN",
+    "name": "Mist Dragon",
+    "cardText": "Intimidate."
+  },
+  {
+    "id": "BP01-100EN",
+    "name": "Dragon Emissary",
+    "cardText": "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD08EN",
+    "name": "Zirnitra, Zealous Wings"
+  }
+]
