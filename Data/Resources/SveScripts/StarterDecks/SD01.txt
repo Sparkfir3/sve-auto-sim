@@ -71,9 +71,9 @@ trait Verdant;
 rarity S;
 stats 4/4;
 
-text "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card. (Tokens returned to a player's hand are removed from the game.)";
+text "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.";
 
-ability OnEvolve name "On Evolve" {
+ability OnEvolve {
     text "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.";
     effect Sequence("Return Enemy to Hand", "Combo 3 - Draw");
 }
@@ -102,7 +102,7 @@ ability Fanfare {
     text "Put a Fairy token into your EX area.";
     effect SummonToken("Fairy", ExArea, 1);
 }
-ability LastWords name "Last Words" {
+ability LastWords {
     text "Put a Fairy token into your EX area.";
     effect SummonToken("Fairy", ExArea, 1);
 }
@@ -136,7 +136,7 @@ rarity B;
 cost 2;
 stats 3/2;
 
-text "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)";
+text "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.";
 
 ability Fanfare {
     effect DealDamage(1c(3)3) to TargetOpponentCard F;
@@ -156,7 +156,7 @@ stats 5/5;
 
 text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
 
-ability OnOtherEnterField name "Other Card Enter Field" {
+ability OnOtherEnterField {
     filter F;
     text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to Self;
@@ -174,7 +174,7 @@ cost 3;
 stats 3/3;
 
 text "[evolve][cost02]: Evolve this follower.
-[fanfare] Combo (3): Change this card's [evolve] cost to 0. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)";
+[fanfare] Combo (3): Change this card's [evolve] cost to 0.";
 
 evolve 2;
 ability Fanfare {
@@ -208,7 +208,7 @@ text "[evolve][cost02]: Evolve this follower.
 [lastwords] Put a Fairy token into your EX area.";
 
 evolve 2;
-ability LastWords name "Last Words" {
+ability LastWords {
     text "Put a Fairy token into your EX area.";
     effect SummonToken("Fairy", ExArea, 1);
 }
@@ -226,11 +226,11 @@ stats 2/2;
 text "On Evolve: Summon a Fairy token.
 [lastwords] Put a Fairy token into your EX area.";
 
-ability OnEvolve name "On Evolve" {
+ability OnEvolve {
     text "Summon a Fairy token.";
     effect SummonToken("Fairy", Field, 1);
 }
-ability LastWords name "Last Words" {
+ability LastWords {
     text "Put a Fairy token into your EX area.";
     effect SummonToken("Fairy", ExArea, 1);
 }
@@ -246,7 +246,7 @@ rarity B;
 cost 2;
 stats 2/3;
 
-text "Assail. (Followers with Assail can attack reserved followers.)
+text "Assail.
 This follower ignores Ward.";
 
 keywords Assail, IgnoreWard;
@@ -375,7 +375,7 @@ text "[quick]
 Deal 1 damage to each enemy follower on the field.";
 
 keyword Quick;
-ability Spell name "Damage" {
+ability Spell {
     effect DealDamage(1) to AllOpponentCards F;
 }
 
