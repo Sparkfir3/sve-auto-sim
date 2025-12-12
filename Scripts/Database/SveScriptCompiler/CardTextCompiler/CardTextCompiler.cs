@@ -52,7 +52,7 @@ namespace SVESimulator.CardTextData
                 {
                     id = id,
                     name = name,
-                    cardText = cardText
+                    cardText = !cardText.IsNullOrWhiteSpace() ? cardText : oldData?.cardText
                 };
 
                 // Read effect list
