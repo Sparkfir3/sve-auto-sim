@@ -39,8 +39,7 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "trigger": "On Evolve",
-        "body": "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card."
+        "body": "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card."
       },
       {
         "key": "Return Enemy to Hand",
@@ -96,7 +95,8 @@
     "effectText": [
       {
         "key": "Other Card Enter Field",
-        "body": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1."
+        "text": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.",
+        "body": "Give this follower [attack]+1/[defense]+1."
       }
     ]
   },
@@ -135,7 +135,7 @@
     "effectText": [
       {
         "key": "On Evolve",
-        "trigger": "On Evolve",
+        "trigger": "On Evolve:",
         "body": "Summon a Fairy token."
       },
       {

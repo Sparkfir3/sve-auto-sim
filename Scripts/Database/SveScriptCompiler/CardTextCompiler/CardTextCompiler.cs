@@ -29,8 +29,8 @@ namespace SVESimulator.CardTextData
             }
 
             SveScriptCompiler.ParseSveScriptCardSet(baseScript.text, Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO).CardDataPath, out List<string> outputFilePaths);
-            List<CardTextData> oldTextData = JsonConvert.DeserializeObject<List<CardTextData>>(outputFile.text);
-            List<CardTextData> newTextData = new();
+            List<TextData> oldTextData = JsonConvert.DeserializeObject<List<TextData>>(outputFile.text);
+            List<TextData> newTextData = new();
 
             // Parse text files
             foreach(string file in outputFilePaths)
@@ -47,8 +47,8 @@ namespace SVESimulator.CardTextData
                     continue;
 
                 id += "EN";
-                CardTextData oldData = oldTextData.FirstOrDefault(x => x.id.Equals(id));
-                CardTextData newData = new()
+                TextData oldData = oldTextData.FirstOrDefault(x => x.id.Equals(id));
+                TextData newData = new()
                 {
                     id = id,
                     name = name,
@@ -62,15 +62,17 @@ namespace SVESimulator.CardTextData
                 {
                     string key = token["name"]?.ToString();
                     EffectText oldEffect = oldData?.effectText?.FirstOrDefault(x => x.key.Equals(key));
-                    // if(oldData != null && oldEffect == null) // if effect exists but text was removed in existing file, do not re-add it
-                    //     continue;
+                    if(oldData != null && oldEffect == null) // if card data already exists but the effect was removed, do not re-add it
+                        continue;
 
                     EffectText newEffect = new()
                     {
                         key = key,
+                        name = oldEffect?.name,
+                        text = oldEffect != null ? oldEffect.text : "",
                         trigger = oldEffect != null ? oldEffect.trigger : GetDefaultTriggerText(key),
                         cost = oldEffect != null ? oldEffect.cost : "",
-                        body = oldEffect?.body ?? ""
+                        body = oldEffect?.body ?? (oldEffect?.text == null ? "" : null)
                     };
                     effectList.Add(newEffect);
                 }
@@ -107,7 +109,7 @@ namespace SVESimulator.CardTextData
                 "FollowerStrike" => "Follower Strike",
                 "LeaderStrike" => "Leader Strike",
                 "Act" => "[act]",
-                _ => null
+                _ => ""
             };
         }
     }
