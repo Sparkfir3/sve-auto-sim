@@ -47,7 +47,7 @@ namespace SVESimulator.CardTextData
                     continue;
 
                 id += "EN";
-                TextData oldData = oldTextData.FirstOrDefault(x => x.id.Equals(id));
+                TextData oldData = oldTextData?.FirstOrDefault(x => x.id.Equals(id));
                 TextData newData = new()
                 {
                     id = id,
