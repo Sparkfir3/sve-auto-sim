@@ -58,7 +58,7 @@
         "body": "Put a Fairy token into your EX area."
       },
       {
-        "key": "Last Words",
+        "key": "LastWords",
         "trigger": "[lastwords]",
         "body": "Put a Fairy token into your EX area."
       }
@@ -94,7 +94,7 @@
     "cardText": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.",
     "effectText": [
       {
-        "key": "Other Card Enter Field",
+        "key": "OnOtherEnterField",
         "text": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.",
         "body": "Give this follower [attack]+1/[defense]+1."
       }
@@ -122,7 +122,7 @@
     "cardText": "[evolve][cost02]: Evolve this follower.\n[lastwords] Put a Fairy token into your EX area.",
     "effectText": [
       {
-        "key": "Last Words",
+        "key": "LastWords",
         "trigger": "[lastwords]",
         "body": "Put a Fairy token into your EX area."
       }
@@ -134,12 +134,12 @@
     "cardText": "On Evolve: Summon a Fairy token.\n[lastwords] Put a Fairy token into your EX area.",
     "effectText": [
       {
-        "key": "On Evolve",
+        "key": "OnEvolve",
         "trigger": "On Evolve:",
         "body": "Summon a Fairy token."
       },
       {
-        "key": "Last Words",
+        "key": "LastWords",
         "trigger": "[lastwords]",
         "body": "Put a Fairy token into your EX area."
       }
@@ -162,7 +162,7 @@
     ]
   },
   {
-    "id": "SD01-025EN",
+    "id": "BP01-025EN",
     "name": "Woodland Refuge",
     "cardText": "[fanfare] Select a Pixie follower on your field and give it [attack]+1.\n[act][cost01], [engage]: Return this card to its owner's hand.",
     "effectText": [
