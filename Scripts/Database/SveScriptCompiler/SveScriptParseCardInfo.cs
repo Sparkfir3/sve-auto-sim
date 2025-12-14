@@ -49,15 +49,9 @@ namespace SVESimulator.SveScript
 
 	    public static void ParseAndSaveCardText(in string text, ref CardInfo cardInfo)
 	    {
-		    cardInfo.text = string.Join("\n", text.Split("\n").Select(x => x.Trim())).Trim();
+		    cardInfo.text = string.Join("\n", text.Split("\n").Select(x => x.Trim()));
 		    if(cardInfo.text.StartsWith('\"') && cardInfo.text.EndsWith('\"'))
 			    cardInfo.text = cardInfo.text[1..^1];
-
-		    // foreach(var formattingInfo in TextFormatting)
-		    // {
-			   //  (string key, string value) = (formattingInfo.Key, formattingInfo.Value);
-			   //  cardInfo.text = cardInfo.text.Replace(key, value);
-		    // }
 	    }
 
 	    #endregion

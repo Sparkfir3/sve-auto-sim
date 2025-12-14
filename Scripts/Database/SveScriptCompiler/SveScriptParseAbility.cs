@@ -172,11 +172,6 @@ namespace SVESimulator.SveScript
             {
                 if(ability is not PassiveAbility)
                 {
-                    foreach(var formattingInfo in TextFormatting)
-                    {
-                        (string key, string value) = (formattingInfo.Key, formattingInfo.Value);
-                        effectText = effectText.Replace(key, value);
-                    }
                     ability.effect.Add("text", !string.IsNullOrWhiteSpace(effectText) ? effectText : null);
                 }
                 ability.effect.Add("$type", effectCcgType);

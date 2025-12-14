@@ -138,6 +138,7 @@ namespace SVESimulator
                     foreach(EffectText effect in data.effects.Values)
                     {
                         effect.text = FormatCardText(effect.text);
+                        effect.trigger = FormatCardText(effect.trigger);
                         effect.cost = FormatCardText(effect.cost);
                         effect.body = FormatCardText(effect.body);
                     }
@@ -150,7 +151,7 @@ namespace SVESimulator
         {
             if(text.IsNullOrWhiteSpace())
                 return defaultValue;
-            return text; // TODO
+            return TextFormatting.FormatCardText(text);
         }
 
         #endregion
