@@ -91,7 +91,11 @@ namespace SVESimulator
         {
             if(!cards.TryGetValue(cardId, out CardData cardData) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
                 return null;
-            return textData?.text ?? $"{textData?.trigger}{textData?.cost} {textData.body}".TrimStart();
+            if(textData == null)
+                return "";
+            return textData.text ?? (textData.cost.IsNullOrWhiteSpace()
+                ? $"{textData.trigger} {textData.body}".TrimStart()
+                : $"{textData.trigger}{textData.cost}: {textData.body}".TrimStart());
         }
 
         public static string GetEffectTextCost(in int cardId, in string effectName)
