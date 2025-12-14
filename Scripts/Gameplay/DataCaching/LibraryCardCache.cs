@@ -132,7 +132,7 @@ namespace SVESimulator
                 data.displayId = textData.id;
                 data.name = textData.name;
                 data.text = FormatCardText(textData.cardText, "");
-                data.effects = textData.effectText.ToDictionary(x => x.key);
+                data.effects = textData.effectText?.ToDictionary(x => x.key);
                 if(data.effects != null)
                 {
                     foreach(EffectText effect in data.effects.Values)
