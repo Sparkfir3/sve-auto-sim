@@ -14,7 +14,25 @@ namespace SVESimulator.SveScript
             { "SD04", "Starter Deck #4 \\\"Wrath of the Greatwyrm\\\"" },
             { "SD05", "Starter Deck #5 \\\"Waltz of the Undying Night\\\"" },
             { "SD06", "Starter Deck #6 \\\"Maculate Ablution\\\"" },
+
             { "BP01", "Booster Set #1 \\\"Advent of Genesis\\\"" },
+            { "BP02", "Booster Set #2 \\\"Reign of Bahamut\\\"" },
+            { "BP03", "Booster Set #3 \\\"Flame of Laevateinn\\\"" },
+            { "BP04", "Booster Set #4 \\\"Cosmic Mythos\\\"" },
+            { "BP05", "Booster Set #5 \\\"Omens Eternal\\\"" },
+            { "BP06", "Booster Set #6 \\\"Paragons of the Colosseum\\\"" },
+            { "BP07", "Booster Set #7 \\\"Verdant Steel\\\"" },
+            { "BP08", "Booster Set #8 \\\"Alterchaotica\\\"" },
+            { "BP09", "Booster Set #9 \\\"Duet of Dawn and Dusk\\\"" },
+            { "BP10", "Booster Set #10 \\\"Gods of the Arcana\\\"" },
+
+            { "CSD01", "Crossover Starter Deck \\\"Ready, Set, Umamusume!\\\"" },
+            { "CP01", "Crossover Set \\\"Umamusume: Pretty Derby\\\"" },
+
+            { "CSD02a", "Crossover Starter Deck \\\"Cute\\\"" },
+            { "CSD02b", "Crossover Starter Deck \\\"Cool\\\"" },
+            { "CSD02c", "Crossover Starter Deck \\\"Passion\\\"" },
+            { "CP02", "Crossover Set \\\"THE IDOLM@STER CINDERELLA GIRLS\\\"" },
         };
 
         // ------------------------------
