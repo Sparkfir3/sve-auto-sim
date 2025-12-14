@@ -106,6 +106,8 @@ namespace SVESimulator
                     bool isCardLocalPlayer = resolvingPlayer == localPlayer.GetPlayerInfo(); // should always be true but safety check never hurts
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
+
+                    sveEffect.text = LibraryCardCache.GetEffectText(libraryCard.id, triggeredAbility.name);
                     SVEPendingEffect effect = new()
                     {
                         triggeringCardInstanceId = (triggeringCard ?? sourceCard).instanceId,

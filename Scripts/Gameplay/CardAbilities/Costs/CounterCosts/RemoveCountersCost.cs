@@ -48,10 +48,10 @@ namespace SVESimulator
             }
         }
 
-        public IEnumerator PayCost(PlayerController player, CardObject card, SveEffect effect, List<RemoveCounterData> countersToRemove)
+        public IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<RemoveCounterData> countersToRemove)
         {
             bool waiting = true;
-            TargetCardForCostEffect getTargetsEffect = CostTargetingEffect(effect?.text);
+            TargetCardForCostEffect getTargetsEffect = CostTargetingEffect(LibraryCardCache.GetEffectTextCost(card.LibraryCard.id, abilityName));
 
             getTargetsEffect.GetTargets(player, card.RuntimeCard.instanceId, card.CurrentZone.Runtime.name, targets =>
             {
@@ -78,7 +78,7 @@ namespace SVESimulator
             //     : $"Remove{(removeAmount.HasValue ? $" {removeAmount.Value}" : "")} {(SVEProperties.Counters)keywordType} Counters";
             return new TargetCardForCostEffect()
             {
-                text = text.IsNullOrWhiteSpace() ? "" : $"Pay Cost for: {text}",
+                text = text ?? "",
                 target = target,
                 filter = filter + $"r({GameManager.Instance.config.keywords[keywordType].name ?? ""},{amount})"
             };
