@@ -12,12 +12,10 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    text "Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.";
     effect Sequence(Single, Double);
 }
 ability Spell name Single {
     condition 1n(10)0;
-    text "Put a Mimi or Coco token into your EX area.";
     effect ChooseFromList(Mimi, Coco);
 }
 ability Spell name Double {
@@ -26,11 +24,9 @@ ability Spell name Double {
 }
 
 ability Spell name Mimi {
-    text "Mimi";
     effect SummonToken(Mimi, ExArea, 1);
 }
 ability Spell name Coco {
-    text "Coco";
     effect SummonToken(Coco, ExArea, 1);
 }
 
@@ -47,15 +43,12 @@ stats 5/5;
 text "On Evolve: Put a Mimi and Coco token into your EX area.";
 
 ability OnEvolve {
-    text "Put a Mimi and Coco token into your EX area.";
     effect Sequence(Mimi, Coco);
 }
 ability Spell name Mimi {
-    text "Mimi";
     effect SummonToken(Mimi, ExArea, 1);
 }
 ability Spell name Coco {
-    text "Coco";
     effect SummonToken(Coco, ExArea, 1);
 }
 
@@ -74,12 +67,10 @@ text "When playing this card, put 4 reserved [abysscraft] cards from your field 
 
 ability ModifiedCost {
     cost (SendToCemetery, TargetPlayerCard, Rc(abyss)m(4,4));
-    text "Put 4 reserved [abysscraft] cards from your field into their owners' cemeteries.";
     effect AlternateCost();
 }
 ability ModifiedCost {
     cost (Banish, TargetPlayerCardEx, c(abyss)m(4,4));
-    text "Banish 4 [abysscraft] cards in your EX area.";
     effect AlternateCost();
 }
 
@@ -111,7 +102,6 @@ ability ModifiedCost name Necrocharge {
 ability Act {
     condition p(#F);
     cost (EngageSelf);
-    text "[engage]: Select an enemy follower on the field and destroy it.";
     effect Destroy() to TargetOpponentCard F;
 }
 
@@ -132,7 +122,6 @@ text "[evolve] Give your leader [defense]-3: Evolve this follower.
 keyword Bane;
 ability Act {
     cost (LeaderDef, 3);
-    text "[evolve] Give your leader [defense]-3: Evolve this follower.";
     effect Evolve();
 }
 
@@ -152,7 +141,6 @@ text "Assail. Bane.
 keyword Assail, Bane;
 ability OnOpponentCardLeaveField {
     filter F;
-    text "Whenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.";
     effect Sequence(Damage, Defense);
 }
 ability Spell name Damage {
@@ -177,7 +165,6 @@ text "[lastwords] Give your leader [defense]-3: Put this follower onto its owner
 
 ability LastWords {
     cost (LeaderDef, 3);
-    text "[lastwords] Give your leader [defense]-3: Put this follower onto its owner's field.";
     effect CemeteryToField() to TriggerCard;
 }
 
@@ -195,12 +182,10 @@ text "[fanfare] Deal 1 damage to your leader. Draw a card.
       [act][cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.";
 
 ability Fanfare {
-    text "Deal 1 damage to your leader. Draw a card.";
     effect Sequence(Damage, Draw);
 }
 ability Act {
     cost (PP, 2), (EngageSelf), (SendToCemetery, Self);
-    text "[cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.";
     effect Sequence(Damage, Draw);
 }
 
@@ -226,7 +211,6 @@ text "[act][engage], put this card into its owner's cemetery: Select a follower 
 
 ability Act {
     cost (EngageSelf), (SendToCemetery, Self);
-    text "[engage], put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.";
     effect Salvage(1, Fp(m(3,99)));
 }
 
@@ -258,14 +242,12 @@ stats 3/3;
 text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.";
 
 ability OnEvolve {
-    text "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.";
     effect Sequence(Damage, Discard);
 }
 ability Spell name Damage {
     effect DealDamage(2) to Leader;
 }
 ability Spell name Discard {
-    text "Select a card in the opponent's hand. The opponent discards that card.";
     effect DiscardFromOpponentHand(1);
 }
 
@@ -284,7 +266,6 @@ text "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[de
 
 ability Fanfare {
     condition g;
-    text "If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush.";
     effect Sequence(Stat, Rush);
 }
 ability Spell name Stat {
@@ -309,7 +290,6 @@ text "[fanfare] If Sanguine is active for you, give this follower Storm.";
 
 ability Fanfare {
     condition g;
-    text "If Sanguine is active for you, give this follower Storm.";
     effect GiveKeyword(Storm) to Self;
 }
 
@@ -326,7 +306,6 @@ cost 3;
 text "Summon 4 Ghost tokens.";
 
 ability Spell {
-    text "Summon 4 Ghost tokens.";
     effect SummonToken(Ghost, Field, 4);
 }
 
@@ -343,7 +322,6 @@ cost 6;
 text "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.";
 
 ability Spell {
-    text "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.";
     effect CemeteryToFieldAndTarget(1, Fp(m(0,8)), Ward);
 }
 ability Spell name Ward {
@@ -369,7 +347,6 @@ ability Spell {
     effect Sequence(Destroy, Draw);
 }
 ability Spell name Destroy {
-    text "Select a follower on your field. Destroy it and draw 2 cards.";
     effect Destroy() to TargetPlayerCard F;
 }
 ability Spell name Draw {
@@ -391,7 +368,6 @@ text "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[de
 
 ability Fanfare {
     condition g;
-    text "If Sanguine is active for you, give this follower [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to Self;
 }
 
@@ -409,7 +385,6 @@ stats 2/1;
 text "[fanfare] Deal 1 damage to each leader.";
 
 ability Fanfare {
-    text "Deal 1 damage to each leader.";
     effect DealDamage(1) to AllLeaders;
 }
 
@@ -427,7 +402,6 @@ stats 3/3;
 text "[lastwords] Deal 2 damage to each leader.";
 
 ability LastWords {
-    text "Deal 2 damage to each leader.";
     effect DealDamage(2) to AllLeaders;
 }
 
@@ -460,7 +434,6 @@ text "On Evolve, put a follower from your field into its owner's cemetery: Selec
 
 ability OnEvolve {
     cost (SendToCemetery, TargetPlayerCard, F);
-    text "Put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.";
     effect Destroy() to TargetOpponentCard F;
 }
 
@@ -486,7 +459,6 @@ text "Select an enemy follower on the field and deal it 2 damage.";
 
 ability Spell {
     condition p(#F);
-    text "Select an enemy follower on the field and deal it 2 damage.";
     effect DealDamage(2) to TargetOpponentCard F;
 }
 
@@ -503,6 +475,5 @@ text "Select a follower on your field and give it [attack]+2.";
 
 ability Spell {
     condition f(F);
-    text "Select a follower on your field and give it [attack]+2.";
     effect GiveStat(Atk, 2) to TargetPlayerCard F;
 }

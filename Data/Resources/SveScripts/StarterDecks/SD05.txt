@@ -12,17 +12,14 @@ text "[fanfare] Summon 2 Forest Bat tokens.
       Whenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward.";
 
 ability Fanfare {
-    text "Summon 2 Forest Bat tokens.";
     effect SummonToken("Forest Bat", Field, 2);
 }
 ability Activate {
     cost (EngageSelf), (LeaderDefense, 1);
     effect SummonToken("Forest Bat", Field, 2);
-    text "[act][engage], leader [defense]-1: Summon 2 Forest Bat tokens.";
 }
 ability OnOtherEnterField {
     filter Kn(Forest Bat);
-    text "Whenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward.";
     effect Sequence(GiveStat, GiveKeyword);
 }
 ability Spell name "GiveStat" {
@@ -50,16 +47,13 @@ text "Storm.
 keyword Storm;
 ability Fanfare {
     condition n(10);
-    text "Necrocharge (10): Give this follower [attack]+2.";
     effect GiveStat(Atk, 2) to Self;
 }
 ability Strike {
-    text "Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.";
     effect Sequence("Deal Damage", "Leader Defense");
 }
 ability Spell name "Deal Damage" {
     effect DealDamage(4) to TargetOpponentCard F;
-    text "Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.";
 }
 ability Spell name "Leader Defense" {
     effect GiveStat(Def, 4) to Leader;
@@ -93,7 +87,6 @@ stats 4/4;
 text "On Evolve: Summon 3 Ghost tokens.";
 
 ability OnEvolve {
-    text "Summon 3 Ghost tokens.";
     effect SummonToken("Ghost", Field, 3);
 }
 
@@ -109,10 +102,9 @@ cost 3;
 stats 2/4;
 
 text "[fanfare] Summon a Forest Bat token.
-      While this card is on your field, your Forest Bat tokens have Drain. (When a follower with Drain attacks and deals damage, its leader gains defense equal to the damage dealt.)";
+      While this card is on your field, your Forest Bat tokens have Drain.";
 
 ability Fanfare {
-    text "Summon a Forest Bat token.";
     effect SummonToken("Forest Bat", Field, 1);
 }
 ability Passive {
@@ -140,7 +132,6 @@ ability Spell name "Summon" {
     effect SummonToken("Forest Bat", Field, 2);
 }
 ability Spell name "Damage" {
-    text "Select an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.";
     effect DealDamage(f(Kn("Forest Bat"))) to TargetOpponentCard F;
 }
 
@@ -161,7 +152,6 @@ text "Bane.
 keyword Bane;
 ability Fanfare {
     cost (LeaderDefense, 2);
-    text "Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.";
     effect Sequence("Rush", "Mill");
 }
 ability Spell name "Rush" {
@@ -185,7 +175,6 @@ stats 2/3;
 text "[fanfare] Put the top 2 cards of your deck into your cemetery.";
 
 ability Fanfare {
-    text "Put the top 2 cards of your deck into your cemetery.";
     effect Mill(2);
 }
 
@@ -203,7 +192,6 @@ stats 6/6;
 text "[fanfare] Select up to 2 followers in your cemetery and add them to your hand.";
 
 ability Fanfare {
-    text "Select up to 2 followers in your cemetery and add them to your hand.";
     effect Salvage(m(0,2), F);
 }
 
@@ -219,12 +207,11 @@ cost 2;
 stats 2/2;
 
 text "[evolve][cost01]: Evolve this follower.
-      [fanfare] Necrocharge (10): Give this follower Storm. (If your cemetery contains at least 10 cards, perform Necrocharge (10).)";
+      [fanfare] Necrocharge (10): Give this follower Storm.";
 
 evolve 1;
 ability Fanfare {
     condition n(10);
-    text "Necrocharge (10): Give this follower Storm.";
     effect GiveKeyword(Storm) to Self;
 }
 
@@ -241,7 +228,6 @@ stats 3/3;
 text "Strike: Summon a Ghost token.";
 
 ability Strike {
-    text "Summon a Ghost token.";
     effect SummonToken("Ghost", Field, 1);
 }
 
@@ -261,7 +247,6 @@ text "[evolve][cost01]: Evolve this follower.
 
 evolve 1;
 ability Fanfare {
-    text "Put a Forest Bat token into your EX area.";
     effect SummonToken("Forest Bat", ExArea, 1);
 }
 
@@ -278,7 +263,6 @@ stats 3/3;
 text "Strike: Give your leader [defense]+2.";
 
 ability Strike {
-    text "Give your leader [defense]+2.";
     effect GiveStat(Def, 2) to Leader;
 }
 
@@ -304,7 +288,6 @@ ability Spell name "Self Damage" {
     effect DealDamage(2) to Leader;
 }
 ability Spell name "Opponent Damage" {
-    text "Select an enemy leader or enemy follower on the field and deal it 3 damage.";
     effect DealDamage(3) to TargetOpponentCardOrLeader F;
 }
 
@@ -327,7 +310,6 @@ ability Spell {
     effect Sequence("Damage", "Mill");
 }
 ability Spell name "Damage" {
-    text "Select an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.";
     effect DealDamage(3) to TargetOpponentCard F;
 }
 ability Spell name "Mill" {
@@ -374,12 +356,11 @@ trait Departed;
 cost 1;
 stats 1/1;
 
-text "Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)
+text "Storm.
       At the start of your end phase, banish this card.";
 
 keyword Storm;
 ability StartEndPhase {
-    text "At the start of your end phase, banish this card.";
     effect Banish() to Self;
 }
 
