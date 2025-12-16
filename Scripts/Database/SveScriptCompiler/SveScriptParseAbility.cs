@@ -110,7 +110,6 @@ namespace SVESimulator.SveScript
 
         private static void ParseAbilityArgs(in string[] args, Ability ability, in string triggerType)
         {
-            string effectText = "";
             string effectCcgType = "";
             JObject triggerData = ability is TriggeredAbility ? new JObject() : null;
 
@@ -140,9 +139,6 @@ namespace SVESimulator.SveScript
                             ? ParseAbilityEffect(args[i][6..].Trim(), out effectCcgType) // 6 = length of "effect"
                             : ParsePassiveAbilityEffect(args[i][6..].Trim(), out effectCcgType, triggerData);
                         break;
-                    case "text":
-                        effectText = ParseAbilityText(args[i][4..].Trim()); // 4 = length of "text"
-                        break;
                     case "condition":
                         if(ability is ActivatedAbility activatedAbilityCond)
                         {
@@ -170,10 +166,6 @@ namespace SVESimulator.SveScript
 
             if(ability.effect != null)
             {
-                if(ability is not PassiveAbility)
-                {
-                    ability.effect.Add("text", !string.IsNullOrWhiteSpace(effectText) ? effectText : null);
-                }
                 ability.effect.Add("$type", effectCcgType);
             }
             if(ability is TriggeredAbility triggeredAbility)
@@ -185,17 +177,6 @@ namespace SVESimulator.SveScript
                 triggerData.Add("$type", EffectTriggerDictionary[triggerType].ccgType);
                 triggeredAbility.trigger = triggerData;
             }
-        }
-
-        private static string ParseAbilityText(string text)
-        {
-            text = text.Trim();
-            if(text.StartsWith('\"'))
-            {
-                int endIndex = text.Length - (text.EndsWith('\"') ? 1 : 0);
-                return text[1..endIndex].Replace("\n", "").Trim();
-            }
-            return text.Replace("\n", "").Trim();
         }
 
         #endregion
