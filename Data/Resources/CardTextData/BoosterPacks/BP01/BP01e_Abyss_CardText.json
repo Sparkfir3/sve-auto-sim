@@ -2,6 +2,7 @@
   {
     "id": "BP01-101EN",
     "name": "Cerberus",
+    "trait": "Demon",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.",
     "effectText": [
       {
@@ -27,6 +28,7 @@
   {
     "id": "BP01-102EN",
     "name": "Cerberus (Evolved)",
+    "trait": "Demon",
     "cardText": "On Evolve: Put a Mimi and Coco token into your EX area.",
     "effectText": [
       {
@@ -47,15 +49,16 @@
   {
     "id": "BP01-103EN",
     "name": "Lord Atomy",
+    "trait": "Departed",
     "cardText": "When playing this card, put 4 reserved [abysscraft] cards from your field into their owners' cemeteries, or banish 4 [abysscraft] cards in your EX area: This card costs 9 less to play.",
     "effectText": [
       {
-        "key": "ModifiedCost",
+        "key": "Cemetery",
         "cost": "Put 4 reserved [abysscraft] cards from your field into their owners' cemeteries",
         "body": "This card costs 9 less to play."
       },
       {
-        "key": "ModifiedCost",
+        "key": "Banish",
         "cost": "Banish 4 [abysscraft] cards in your EX area",
         "body": "This card costs 9 less to play."
       }
@@ -64,6 +67,7 @@
   {
     "id": "BP01-104EN",
     "name": "Medusa",
+    "trait": "Demon",
     "cardText": "If Sanguine is active for you, this card costs 1 less to play.\nNecrocharge (10): This card costs 1 less to play.\nBane.\n[act][engage]: Select an enemy follower on the field and destroy it.",
     "effectText": [
       {
@@ -77,6 +81,7 @@
   {
     "id": "BP01-105EN",
     "name": "Righteous Devil",
+    "trait": "Demon",
     "cardText": "[evolve] Give your leader [defense]-3: Evolve this follower.\nBane.",
     "effectText": [
       {
@@ -90,6 +95,7 @@
   {
     "id": "BP01-106EN",
     "name": "Righteous Devil (Evolved)",
+    "trait": "Demon",
     "cardText": "Assail. Bane.\nWhenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.",
     "effectText": [
       {
@@ -103,6 +109,7 @@
   {
     "id": "BP01-107EN",
     "name": "Mordecai the Duelist",
+    "trait": "Departed",
     "cardText": "[lastwords] Give your leader [defense]-3: Put this follower onto its owner's field.",
     "effectText": [
       {
@@ -116,6 +123,7 @@
   {
     "id": "BP01-108EN",
     "name": "Dire Bond",
+    "trait": "Demon",
     "cardText": "[fanfare] Deal 1 damage to your leader. Draw a card.\n[act][cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.",
     "effectText": [
       {
@@ -134,6 +142,7 @@
   {
     "id": "BP01-109EN",
     "name": "Hell's Unleasher",
+    "trait": "Demon",
     "cardText": "[act][engage], put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.",
     "effectText": [
       {
@@ -147,11 +156,13 @@
   {
     "id": "BP01-110EN",
     "name": "Crazed Executioner",
+    "trait": "Cutthroat",
     "cardText": "[evolve][cost01]: Evolve this follower."
   },
   {
     "id": "BP01-111EN",
     "name": "Crazed Executioner (Evolved)",
+    "trait": "Cutthroat",
     "cardText": "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.",
     "effectText": [
       {
@@ -168,6 +179,7 @@
   {
     "id": "BP01-112EN",
     "name": "Dark Summoner",
+    "trait": "Demon",
     "cardText": "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush.",
     "effectText": [
       {
@@ -180,6 +192,7 @@
   {
     "id": "BP01-113EN",
     "name": "Dark General",
+    "trait": "Demon",
     "cardText": "[fanfare] If Sanguine is active for you, give this follower Storm.",
     "effectText": [
       {
@@ -192,11 +205,13 @@
   {
     "id": "BP01-114EN",
     "name": "Phantom Howl",
+    "trait": "Departed",
     "cardText": "Summon 4 Ghost tokens."
   },
   {
     "id": "BP01-115EN",
     "name": "Death's Breath",
+    "trait": "Departed",
     "cardText": "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.",
     "effectText": [
       {
@@ -208,6 +223,7 @@
   {
     "id": "BP01-116EN",
     "name": "Soul Conversion",
+    "trait": "Departed",
     "cardText": "[quick]\nSelect a follower on your field. Destroy it and draw 2 cards.",
     "effectText": [
       {
@@ -219,6 +235,7 @@
   {
     "id": "BP01-117EN",
     "name": "Skeleton Fighter",
+    "trait": "Departed",
     "cardText": "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -231,6 +248,7 @@
   {
     "id": "BP01-118EN",
     "name": "Ambling Wraith",
+    "trait": "Departed",
     "cardText": "[fanfare] Deal 1 damage to each leader.",
     "effectText": [
       {
@@ -243,6 +261,7 @@
   {
     "id": "BP01-121EN",
     "name": "Rabbit Necromancer",
+    "trait": "Necromancer",
     "cardText": "[lastwords] Deal 2 damage to each leader.",
     "effectText": [
       {
@@ -255,11 +274,13 @@
   {
     "id": "BP01-122EN",
     "name": "Wardrobe Raider",
+    "trait": "Demon",
     "cardText": "[evolve][cost00]: Evolve this follower."
   },
   {
     "id": "BP01-123EN",
     "name": "Wardrobe Raider (Evolved)",
+    "trait": "Demon",
     "cardText": "On Evolve, put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.",
     "effectText": [
       {
@@ -278,6 +299,7 @@
   {
     "id": "BP01-T12EN",
     "name": "Mimi",
+    "trait": "Demon / Token",
     "cardText": "Select an enemy follower on the field and deal it 2 damage.",
     "effectText": [
       {
@@ -289,6 +311,7 @@
   {
     "id": "BP01-T13EN",
     "name": "Coco",
+    "trait": "Demon / Token",
     "cardText": "Select a follower on your field and give it [attack]+2.",
     "effectText": [
       {

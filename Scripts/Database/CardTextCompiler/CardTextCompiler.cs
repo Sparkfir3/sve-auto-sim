@@ -42,6 +42,7 @@ namespace SVESimulator.CardTextData
                     continue;
                 string id = properties.FirstOrDefault(x => x.Value<string>("name").Equals("ID"))?["value"]?.ToString();
                 string name = cardData["name"]?.ToString();
+                string trait = properties.FirstOrDefault(x => x.Value<string>("name").Equals("Trait"))?["value"]?.ToString();
                 string cardText = properties.FirstOrDefault(x => x.Value<string>("name").Equals("Text"))?["value"]?.ToString();
                 if(id.IsNullOrWhiteSpace() || name.IsNullOrWhiteSpace())
                     continue;
@@ -52,6 +53,7 @@ namespace SVESimulator.CardTextData
                 {
                     id = id,
                     name = name,
+                    trait = trait,
                     cardText = !cardText.IsNullOrWhiteSpace() ? cardText : oldData?.cardText
                 };
 

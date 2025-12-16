@@ -2,6 +2,7 @@
   {
     "id": "SD01-001EN",
     "name": "Aria, Fairy Princess",
+    "trait": "Pixie / Princess",
     "cardText": "Ward.\n[fanfare] Put up to 9 Fairy tokens onto your field or into your EX area.\nWhile this card is on your field, your other Pixie followers have Rush.",
     "effectText": [
       {
@@ -14,6 +15,7 @@
   {
     "id": "SD01-002EN",
     "name": "Titania's Sanctuary",
+    "trait": "Pixie / Princess",
     "cardText": "[fanfare] Give each Pixie token on your field [attack]+1/[defense]+1.\nWhile this card is on your field, your Pixie tokens have Assail. Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -30,11 +32,13 @@
   {
     "id": "SD01-003EN",
     "name": "Rose Gardener",
+    "trait": "Verdant",
     "cardText": "[evolve][cost01]: Evolve this follower."
   },
   {
     "id": "SD01-004EN",
     "name": "Rose Gardener (Evolved)",
+    "trait": "Verdant",
     "cardText": "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.",
     "effectText": [
       {
@@ -50,6 +54,7 @@
   {
     "id": "SD01-005EN",
     "name": "Waltzing Fairy",
+    "trait": "Pixie",
     "cardText": "[fanfare][lastwords] Put a Fairy token into your EX area.",
     "effectText": [
       {
@@ -67,6 +72,7 @@
   {
     "id": "SD01-006EN",
     "name": "Fairy Caster",
+    "trait": "Elf",
     "cardText": "[fanfare] Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
     "effectText": [
       {
@@ -79,6 +85,7 @@
   {
     "id": "BP01-017EN",
     "name": "Elf Metallurgist",
+    "trait": "Elf",
     "cardText": "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.",
     "effectText": [
       {
@@ -91,6 +98,7 @@
   {
     "id": "BP01-021EN",
     "name": "Okami",
+    "trait": "Beast",
     "cardText": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -103,6 +111,7 @@
   {
     "id": "SD01-009EN",
     "name": "Treant",
+    "trait": "Fae-Touched",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Combo (3): Change this card's [evolve] cost to 0.",
     "effectText": [
       {
@@ -114,11 +123,13 @@
   },
   {
     "id": "SD01-010EN",
-    "name": "Treant (Evolved)"
+    "name": "Treant (Evolved)",
+    "trait": "Fae-Touched"
   },
   {
     "id": "SD01-011EN",
     "name": "Water Fairy",
+    "trait": "Pixie",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[lastwords] Put a Fairy token into your EX area.",
     "effectText": [
       {
@@ -131,6 +142,7 @@
   {
     "id": "SD01-012EN",
     "name": "Water Fairy (Evolved)",
+    "trait": "Pixie",
     "cardText": "On Evolve: Summon a Fairy token.\n[lastwords] Put a Fairy token into your EX area.",
     "effectText": [
       {
@@ -148,11 +160,13 @@
   {
     "id": "SD01-013EN",
     "name": "Elf Wanderer",
+    "trait": "Elf",
     "cardText": "Assail.\nThis follower ignores Ward."
   },
   {
     "id": "BP01-023EN",
     "name": "Fairy Circle",
+    "trait": "Pixie",
     "cardText": "Put 3 Fairy tokens into your EX area.",
     "effectText": [
       {
@@ -164,6 +178,7 @@
   {
     "id": "BP01-025EN",
     "name": "Woodland Refuge",
+    "trait": "Fae-Touched",
     "cardText": "[fanfare] Select a Pixie follower on your field and give it [attack]+1.\n[act][cost01], [engage]: Return this card to its owner's hand.",
     "effectText": [
       {
@@ -182,6 +197,7 @@
   {
     "id": "SD01-016EN",
     "name": "Sylvan Justice",
+    "trait": "Elf",
     "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.",
     "effectText": [
       {
@@ -193,15 +209,18 @@
   {
     "id": "BP01-171EN",
     "name": "Goblin",
+    "trait": "Goblinoid",
     "cardText": "[evolve][cost04]: Evolve this follower."
   },
   {
     "id": "BP01-172EN",
-    "name": "Goblin (Evolved)"
+    "name": "Goblin (Evolved)",
+    "trait": "Goblinoid"
   },
   {
     "id": "BP01-179EN",
     "name": "Angelic Snipe",
+    "trait": "Pixie",
     "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage.",
     "effectText": [
       {
@@ -213,6 +232,7 @@
   {
     "id": "BP01-180EN",
     "name": "Angelic Barrage",
+    "trait": "Pixie",
     "cardText": "[quick]\nDeal 1 damage to each enemy follower on the field."
   },
   {
@@ -221,6 +241,7 @@
   },
   {
     "id": "BP01-T03EN",
-    "name": "Fairy"
+    "name": "Fairy",
+    "trait": "Pixie / Token"
   }
 ]

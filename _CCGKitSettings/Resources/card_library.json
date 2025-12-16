@@ -10848,7 +10848,7 @@
               "condition": null,
               "$type": "SVESimulator.ModifiedCostTrigger"
             },
-            "name": "ModifiedCost",
+            "name": "Cemetery",
             "type": "Triggered",
             "effect": {
               "$type": "SVESimulator.AlternateCostEffect"
@@ -10862,7 +10862,7 @@
               "condition": null,
               "$type": "SVESimulator.ModifiedCostTrigger"
             },
-            "name": "ModifiedCost",
+            "name": "Banish",
             "type": "Triggered",
             "effect": {
               "$type": "SVESimulator.AlternateCostEffect"

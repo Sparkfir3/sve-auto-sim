@@ -7,6 +7,8 @@ namespace SVESimulator.CardTextData
         public string id;
         public string name;
         [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
+        public string trait;
+        [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
         public string cardText;
         [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
         public EffectText[] effectText;

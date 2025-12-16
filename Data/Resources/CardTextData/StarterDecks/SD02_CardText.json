@@ -2,7 +2,8 @@
   {
     "id": "SD02-001EN",
     "name": "Tsubaki",
-    "cardText": "[fanfare] Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)",
+    "trait": "Assassin / Ninja",
+    "cardText": "[fanfare] Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.",
     "effectText": [
       {
         "key": "Fanfare",
@@ -21,16 +22,19 @@
   },
   {
     "id": "SD02-002EN",
-    "name": "Latham, Vanguard Captain"
+    "name": "Latham, Vanguard Captain",
+    "trait": "Commander"
   },
   {
     "id": "SD02-003EN",
     "name": "Floral Fencer",
+    "trait": "Officer",
     "cardText": "[evolve][cost01]: Evolve this follower."
   },
   {
     "id": "SD02-004EN",
     "name": "Floral Fencer (Evolved)",
+    "trait": "Officer",
     "cardText": "On Evolve: Summon a Steelclad Knight and Knight token.",
     "effectText": [
       {
@@ -43,7 +47,8 @@
   {
     "id": "SD02-005EN",
     "name": "Moonlight Assassin",
-    "cardText": "[act][cost01]: Give this follower Bane. (Followers attacking or attacked by a follower with Bane are destroyed after damage is exchanged.)",
+    "trait": "Assassin",
+    "cardText": "[act][cost01]: Give this follower Bane.",
     "effectText": [
       {
         "key": "Act",
@@ -56,7 +61,8 @@
   {
     "id": "SD02-006EN",
     "name": "White General",
-    "cardText": "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)\nStrike: Select another follower on your field and give it [attack]+2.",
+    "trait": "Commander",
+    "cardText": "Rush.\nStrike: Select another follower on your field and give it [attack]+2.",
     "effectText": [
       {
         "key": "Strike",
@@ -67,16 +73,19 @@
   },
   {
     "id": "BP01-042EN",
-    "name": "Ninja Trainee"
+    "name": "Ninja Trainee",
+    "trait": "Officer / Ninja"
   },
   {
     "id": "BP01-046EN",
     "name": "Veteran Lancer",
-    "cardText": "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)"
+    "trait": "Officer",
+    "cardText": "Ward."
   },
   {
     "id": "SD02-009EN",
     "name": "Fencer",
+    "trait": "Commander / Noble",
     "cardText": "[fanfare] Select another follower on your field and give it [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -89,6 +98,7 @@
   {
     "id": "SD02-010EN",
     "name": "Oathless Knight",
+    "trait": "Officer",
     "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Summon a Knight token.",
     "effectText": [
       {
@@ -101,20 +111,25 @@
   {
     "id": "SD02-011EN",
     "name": "Oathless Knight (Evolved)",
-    "cardText": "Assail. (Followers with Assail can attack reserved followers.)"
+    "trait": "Officer",
+    "cardText": "Assail."
   },
   {
     "id": "SD02-012EN",
     "name": "Quickblader",
-    "cardText": "[evolve][cost03]: Evolve this follower.\nStorm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)"
+    "trait": "Officer",
+    "cardText": "[evolve][cost03]: Evolve this follower.\nStorm."
   },
   {
     "id": "SD02-013EN",
-    "name": "Quickblader (Evolved)"
+    "name": "Quickblader (Evolved)",
+    "trait": "Officer",
+    "cardText": "Storm."
   },
   {
     "id": "BP01-049EN",
     "name": "Forge Weaponry",
+    "trait": "Officer",
     "cardText": "[quick]\nSelect a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.",
     "effectText": [
       {
@@ -126,6 +141,7 @@
   {
     "id": "BP01-050EN",
     "name": "Onslaught",
+    "trait": "Officer",
     "cardText": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.",
     "effectText": [
       {
@@ -137,6 +153,7 @@
   {
     "id": "SD02-016EN",
     "name": "Unbridled Fury",
+    "trait": "Officer",
     "cardText": "[quick]\nSelect an enemy follower on the field and deal it X damage. X equals the number of followers on your field.",
     "effectText": [
       {
@@ -147,11 +164,13 @@
   },
   {
     "id": "BP01-173EN",
-    "name": "Fighter"
+    "name": "Fighter",
+    "trait": "Mercenary"
   },
   {
     "id": "BP01-176EN",
     "name": "Angelic Sword Maiden",
+    "trait": "Angel",
     "cardText": "Ward."
   },
   {
@@ -160,10 +179,12 @@
   },
   {
     "id": "BP01-T05EN",
-    "name": "Knight"
+    "name": "Knight",
+    "trait": "Officer / Token"
   },
   {
     "id": "BP01-T07EN",
-    "name": "Steelclad Knight"
+    "name": "Steelclad Knight",
+    "trait": "Officer / Token"
   }
 ]

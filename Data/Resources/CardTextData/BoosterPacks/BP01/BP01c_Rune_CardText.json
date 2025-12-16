@@ -2,6 +2,7 @@
   {
     "id": "BP01-051EN",
     "name": "Arch Summoner Erasmus",
+    "trait": "Mage",
     "cardText": "[fanfare] Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.\n[act][engage], Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
     "effectText": [
       {
@@ -25,6 +26,7 @@
   {
     "id": "BP01-052EN",
     "name": "Merlin",
+    "trait": "Mage",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Search your deck for a spell, reveal it, and add it to your hand.",
     "effectText": [
       {
@@ -37,6 +39,7 @@
   {
     "id": "BP01-053EN",
     "name": "Merlin (Evolved)",
+    "trait": "Mage",
     "cardText": "On Evolve: Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.",
     "effectText": [
       {
@@ -49,6 +52,7 @@
   {
     "id": "BP01-054EN",
     "name": "Ancient Alchemist",
+    "trait": "Alchemist",
     "cardText": "[evolve][cost03]: Evolve this follower.\n[fanfare] Earth Rite: Put 2 Guardform Golem tokens into your EX area.",
     "effectText": [
       {
@@ -62,6 +66,7 @@
   {
     "id": "BP01-055EN",
     "name": "Ancient Alchemist (Evolved)",
+    "trait": "Alchemist",
     "cardText": "While this card is on your field, your Golem followers cost 1 less to play.\nWhenever a Golem follower is put onto your field, select an enemy leader or enemy follower on the field and deal it 3 damage.",
     "effectText": [
       {
@@ -75,6 +80,7 @@
   {
     "id": "BP01-056EN",
     "name": "Arcane Enlightenment",
+    "trait": "Mage",
     "cardText": "[quick]\nPut the top card of your deck into your EX area. Repeat until your EX area is full.\nAt the start of your next end phase, banish each card in your EX area.",
     "effectText": [
       {
@@ -95,6 +101,7 @@
   {
     "id": "BP01-057EN",
     "name": "Dimension Shift",
+    "trait": "Mage",
     "cardText": "When playing this card, banish 10 spells in your cemetery: This card costs 7 play points to play.\nTake another turn after this one.",
     "effectText": [
       {
@@ -108,6 +115,7 @@
   {
     "id": "BP01-058EN",
     "name": "Juno's Secret Laboratory",
+    "trait": "Alchemist",
     "cardText": "[fanfare] Summon a Guardform Golem or Strikeform Golem token.\n[act][engage]: Summon a Magic Sediment token.\n[act][engage], Earth Rite: Summon a Guardform Golem or Strikeform Golem token.",
     "effectText": [
       {
@@ -140,6 +148,7 @@
   {
     "id": "BP01-059EN",
     "name": "Spectral Wizard",
+    "trait": "Mage",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.",
     "effectText": [
       {
@@ -152,6 +161,7 @@
   {
     "id": "BP01-060EN",
     "name": "Spectral Wizard (Evolved)",
+    "trait": "Mage",
     "cardText": "On Evolve, discard a spell: Select an enemy follower on the field and deal it 4 damage.",
     "effectText": [
       {
@@ -166,11 +176,13 @@
   {
     "id": "BP01-061EN",
     "name": "Flame Destroyer",
+    "trait": "Arcanaform",
     "cardText": "Spellchain (5): This card costs 3 less to play. SC (10): It costs 6 less instead. SC (15): It costs 9 less instead.\nRush."
   },
   {
     "id": "BP01-062EN",
     "name": "Dragonbond Mage",
+    "trait": "Mage",
     "cardText": "Whenever you play a spell, place 1 spell counter on this card.\n[act] Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.",
     "effectText": [
       {
@@ -190,6 +202,7 @@
   {
     "id": "BP01-063EN",
     "name": "Golem Protection",
+    "trait": "Mage",
     "cardText": "Summon 2 Guardform Golem tokens.\nEarth Rite: Give each Golem follower on your field [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -202,16 +215,19 @@
   {
     "id": "BP01-064EN",
     "name": "Alchemical Lore",
+    "trait": "Mage",
     "cardText": "Deal 4 damage to each enemy follower on the field."
   },
   {
     "id": "BP01-065EN",
     "name": "Fate's Hand",
+    "trait": "Mage",
     "cardText": "[quick]\nDraw 2 cards. Spellchain (10): Recover 1 play point."
   },
   {
     "id": "BP01-066EN",
     "name": "Price of Magic",
+    "trait": "Earth Sigil",
     "cardText": "Stack.\n[fanfare] Select an enemy follower with 4 defense or less on the field and banish it.",
     "effectText": [
       {
@@ -224,6 +240,7 @@
   {
     "id": "BP01-067EN",
     "name": "Runic Guardian",
+    "trait": "Alchemist",
     "cardText": "Ward.\n[fanfare] Choose one of the following effects. (1) Earth Rite: Give this follower [attack]+1/[defense]+2. (2) Summon a Magic Sediment token.",
     "effectText": [
       {
@@ -245,6 +262,7 @@
   {
     "id": "BP01-068EN",
     "name": "Crafty Warlock",
+    "trait": "Alchemist",
     "cardText": "[evolve][cost01]: Evolve this follower.\n[lastwords] Summon a Magic Sediment token.",
     "effectText": [
       {
@@ -257,6 +275,7 @@
   {
     "id": "BP01-069EN",
     "name": "Crafty Warlock (Evolved)",
+    "trait": "Alchemist",
     "cardText": "[lastwords] Summon a Magic Sediment token. Add 1 to a Stack on your field.",
     "effectText": [
       {
@@ -273,6 +292,7 @@
   {
     "id": "BP01-074EN",
     "name": "Alchemist's Workshop",
+    "trait": "Earth Sigil",
     "cardText": "Stack.\n[fanfare] Summon a Strikeform Golem token.",
     "effectText": [
       {
@@ -285,6 +305,7 @@
   {
     "id": "BP01-075EN",
     "name": "Teachings of Creation",
+    "trait": "Earth Sigil",
     "cardText": "Stack.\n[fanfare] Draw a card.",
     "effectText": [
       {
@@ -301,6 +322,7 @@
   {
     "id": "BP01-T10EN",
     "name": "Magic Sediment",
+    "trait": "Earth Sigil / Token",
     "cardText": "Stack. (Amulets with Stack are put onto the field with 1 Stack counter and have the following abilities.\nWhen this card would leave the field, remove 1 Stack counter from it instead. When this card's Stack count reaches 0, destroy it.\n[act][engage]: Select another amulet with Stack on your field and transfer all this card's Stack counters to that card.)"
   }
 ]

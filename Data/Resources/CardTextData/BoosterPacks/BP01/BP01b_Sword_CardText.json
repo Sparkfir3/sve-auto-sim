@@ -2,6 +2,7 @@
   {
     "id": "BP01-026EN",
     "name": "Sea Queen Otohime",
+    "trait": "Commander / Princess",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Summon an Otohime's Bodyguard token.",
     "effectText": [
       {
@@ -14,6 +15,7 @@
   {
     "id": "BP01-027EN",
     "name": "Sea Queen Otohime (Evolved)",
+    "trait": "Commander / Princess",
     "cardText": "On Evolve: Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
     "effectText": [
       {
@@ -26,6 +28,7 @@
   {
     "id": "BP01-028EN",
     "name": "Aurelia, Regal Saber",
+    "trait": "Commander / Princess",
     "cardText": "Rush. Assail. Ward.\n[fanfare] Select an enemy leader. If there are at least 3 cards on their field, give this follower [attack]+2/[defense]+2 and Aura.",
     "effectText": [
       {
@@ -38,6 +41,7 @@
   {
     "id": "BP01-029EN",
     "name": "Shadowed Assassin",
+    "trait": "Assassin",
     "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Select an enemy follower on the field and engage it.",
     "effectText": [
       {
@@ -50,6 +54,7 @@
   {
     "id": "BP01-030EN",
     "name": "Shadowed Assassin (Evolved)",
+    "trait": "Assassin",
     "cardText": "On Evolve: Select an engaged enemy follower and destroy it.",
     "effectText": [
       {
@@ -62,6 +67,7 @@
   {
     "id": "BP01-031EN",
     "name": "Frontguard General",
+    "trait": "Commander",
     "cardText": "Ward.\n[lastwords] Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
     "effectText": [
       {
@@ -85,6 +91,7 @@
   {
     "id": "BP01-032EN",
     "name": "Alwida's Command",
+    "trait": "Thief",
     "cardText": "Summon a Viking, Steelclad Knight, and Knight token.",
     "effectText": [
       {
@@ -96,6 +103,7 @@
   {
     "id": "BP01-033EN",
     "name": "Royal Banner",
+    "trait": "Commander",
     "cardText": "[fanfare] Give each [swordcraft] follower on your field [attack]+1/[defense]+1.\nWhenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -115,11 +123,13 @@
   {
     "id": "BP01-034EN",
     "name": "Maid Leader",
+    "trait": "Officer / Maid",
     "cardText": "[evolve][cost02]: Evolve this follower."
   },
   {
     "id": "BP01-035EN",
     "name": "Maid Leader (Evolved)",
+    "trait": "Officer / Maid",
     "cardText": "On Evolve: Search your deck for a follower with [evolve], reveal it, and add it to your hand.",
     "effectText": [
       {
@@ -132,6 +142,7 @@
   {
     "id": "BP01-036EN",
     "name": "Gemstaff Commander",
+    "trait": "Commander",
     "cardText": "[fanfare] Search your deck for a [swordcraft] follower, reveal it, and add it to your hand.",
     "effectText": [
       {
@@ -144,6 +155,7 @@
   {
     "id": "BP01-037EN",
     "name": "Sage Commander",
+    "trait": "Commander",
     "cardText": "[fanfare] Give each other follower on your field [attack]+1/[defense]+1.",
     "effectText": [
       {
@@ -156,6 +168,7 @@
   {
     "id": "BP01-038EN",
     "name": "Swordsman",
+    "trait": "Officer",
     "cardText": "[fanfare] Select an enemy follower on the field and engage it.\n[act][engage]: Select an enemy follower on the field and engage it.",
     "effectText": [
       {
@@ -174,6 +187,7 @@
   {
     "id": "BP01-039EN",
     "name": "Pompous Princess",
+    "trait": "Commander / Princess",
     "cardText": "[fanfare] Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.",
     "effectText": [
       {
@@ -186,6 +200,7 @@
   {
     "id": "BP01-040EN",
     "name": "Ninja Master",
+    "trait": "Officer / Ninja",
     "cardText": "[fanfare] Search your deck for a Ninja card, reveal it, and add it to your hand.",
     "effectText": [
       {
@@ -198,6 +213,7 @@
   {
     "id": "BP01-041EN",
     "name": "Arthurian Light",
+    "trait": "Commander",
     "cardText": "[act][cost01], [engage]: Summon a Knight token and give it Storm.\n[act][cost02], [engage]: Select an enemy follower on the field and engage it.\n[act][cost03], [engage]: Draw a card.",
     "effectText": [
       {
@@ -224,6 +240,7 @@
   {
     "id": "BP01-043EN",
     "name": "Fervid Solider",
+    "trait": "Officer",
     "cardText": "[evolve][cost02]: Evolve this follower.\nWhenever another follower is put onto your field, give this follower [attack]+1.",
     "effectText": [
       {
@@ -237,6 +254,7 @@
   {
     "id": "BP01-044EN",
     "name": "Fervid Solider (Evolved)",
+    "trait": "Officer",
     "cardText": "Whenever another follower is put onto your field, give this follower [attack]+1.",
     "effectText": [
       {
@@ -250,6 +268,7 @@
   {
     "id": "BP01-045EN",
     "name": "Luminous Knight",
+    "trait": "Commander",
     "cardText": "[fanfare] Select another follower on your field and give it [attack]+1.\n[lastwords] Select a follower on your field and give it [attack]+1.",
     "effectText": [
       {
@@ -267,6 +286,7 @@
   {
     "id": "BP01-047EN",
     "name": "Navy Lieutenant",
+    "trait": "Commander",
     "cardText": "[fanfare] Select another follower on your field and give it Assail.",
     "effectText": [
       {
@@ -279,6 +299,7 @@
   {
     "id": "BP01-048EN",
     "name": "Novice Trooper",
+    "trait": "Officer",
     "cardText": "Storm."
   },
   {
@@ -288,11 +309,13 @@
   {
     "id": "BP01-T04EN",
     "name": "Otohime's Bodyguard",
+    "trait": "Officer / Token",
     "cardText": "Ward."
   },
   {
     "id": "BP01-T06EN",
     "name": "Viking",
+    "trait": "Thief / Token",
     "cardText": "Storm."
   }
 ]

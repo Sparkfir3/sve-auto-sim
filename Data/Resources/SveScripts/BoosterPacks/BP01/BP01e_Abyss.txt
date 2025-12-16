@@ -65,11 +65,11 @@ stats 6/6;
 
 text "When playing this card, put 4 reserved [abysscraft] cards from your field into their owners' cemeteries, or banish 4 [abysscraft] cards in your EX area: This card costs 9 less to play.";
 
-ability ModifiedCost {
+ability ModifiedCost name Cemetery {
     cost (SendToCemetery, TargetPlayerCard, Rc(abyss)m(4,4));
     effect AlternateCost();
 }
-ability ModifiedCost {
+ability ModifiedCost name Banish {
     cost (Banish, TargetPlayerCardEx, c(abyss)m(4,4));
     effect AlternateCost();
 }
