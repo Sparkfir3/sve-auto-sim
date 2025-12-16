@@ -6,38 +6,18 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon 2 Forest Bat tokens."
       },
       {
         "key": "Activate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[engage], give your leader [defense]-1",
+        "body": "Summon 2 Forest Bat tokens."
       },
       {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "GiveStat",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "GiveKeyword",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Whenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward."
       }
     ]
   },
@@ -48,31 +28,13 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Necrocharge (10): Give this follower [attack]+2."
       },
       {
         "key": "Strike",
-        "text": "",
-        "trigger": "Strike",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Deal Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Leader Defense",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "Strike:",
+        "body": "Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4."
       }
     ]
   },
@@ -88,10 +50,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Summon 3 Ghost tokens."
       }
     ]
   },
@@ -102,17 +62,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Forest Bat token."
       }
     ]
   },
@@ -122,25 +73,8 @@
     "cardText": "Summon 2 Forest Bat tokens.\nSelect an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Summon",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field."
       }
     ]
   },
@@ -151,24 +85,9 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Rush",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Mill",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Give your leader [defense]-2",
+        "body": "Give this follower Rush. Put the top card of your deck into your cemetery."
       }
     ]
   },
@@ -179,10 +98,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Put the top 2 cards of your deck into your cemetery."
       }
     ]
   },
@@ -193,10 +110,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select up to 2 followers in your cemetery and add them to your hand."
       }
     ]
   },
@@ -207,10 +122,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Necrocharge (10): Give this follower Storm."
       }
     ]
   },
@@ -221,10 +134,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
         "trigger": "Strike",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Ghost token."
       }
     ]
   },
@@ -235,10 +146,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Put a Forest Bat token into your EX area."
       }
     ]
   },
@@ -249,10 +158,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
-        "trigger": "Strike",
-        "cost": "",
-        "body": ""
+        "trigger": "Strike:",
+        "body": "Give your leader [defense]+2."
       }
     ]
   },
@@ -262,25 +169,8 @@
     "cardText": "[quick]\nDeal 2 damage to your leader.\nSelect an enemy leader or enemy follower on the field and deal it 3 damage.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Self Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Opponent Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
       }
     ]
   },
@@ -290,55 +180,15 @@
     "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Mill",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery."
       }
     ]
   },
   {
     "id": "SD05-016EN",
     "name": "Summon Bloodkin",
-    "cardText": "Summon a Forest Bat token.\nPut a Forest Bat token into your EX area.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Summon Field",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Summon EX",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Summon a Forest Bat token.\nPut a Forest Bat token into your EX area."
   },
   {
     "id": "BP01-LD09EN",
@@ -351,10 +201,9 @@
     "effectText": [
       {
         "key": "StartEndPhase",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "At the start of your end phase, banish this card.",
+        "trigger": "At the start of your end phase",
+        "body": "Banish this card."
       }
     ]
   },

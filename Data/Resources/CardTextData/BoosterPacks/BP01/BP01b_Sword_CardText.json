@@ -6,10 +6,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon an Otohime's Bodyguard token."
       }
     ]
   },
@@ -20,10 +18,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area."
       }
     ]
   },
@@ -34,24 +30,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Stats",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Aura",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy leader. If there are at least 3 cards on their field, give this follower [attack]+2/[defense]+2 and Aura."
       }
     ]
   },
@@ -62,10 +42,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and engage it."
       }
     ]
   },
@@ -76,10 +54,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Select an engaged enemy follower and destroy it."
       }
     ]
   },
@@ -90,10 +66,8 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "body": "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them."
       },
       {
         "key": "Ward",
@@ -104,10 +78,7 @@
       },
       {
         "key": "Engage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Engage any number of summoned Steelclad Knight tokens."
       }
     ]
   },
@@ -118,31 +89,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Viking",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Steelclad Knight",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Knight",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Viking, Steelclad Knight, and Knight token."
       }
     ]
   },
@@ -153,17 +100,15 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Give each [swordcraft] follower on your field [attack]+1/[defense]+1."
       },
       {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
+        "text": "Whenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.",
+        "trigger": "Whenever a [swordcraft] follower is put onto your field",
         "cost": "",
-        "body": ""
+        "body": "Give it [attack]+1/[defense]+1."
       }
     ]
   },
@@ -179,10 +124,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Search your deck for a follower with [evolve], reveal it, and add it to your hand."
       }
     ]
   },
@@ -193,10 +136,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Search your deck for a [swordcraft] follower, reveal it, and add it to your hand."
       }
     ]
   },
@@ -207,10 +148,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Give each other follower on your field [attack]+1/[defense]+1."
       }
     ]
   },
@@ -221,17 +160,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and engage it."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field and engage it."
       }
     ]
   },
@@ -242,10 +178,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order."
       }
     ]
   },
@@ -256,10 +190,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Search your deck for a Ninja card, reveal it, and add it to your hand."
       }
     ]
   },
@@ -270,31 +202,22 @@
     "effectText": [
       {
         "key": "Knight",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Storm",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[cost01], [engage]",
+        "body": "Summon a Knight token and give it Storm."
       },
       {
         "key": "Engage",
         "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[cost02], [engage]",
+        "body": "Select an enemy follower on the field and engage it."
       },
       {
         "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[cost03], [engage]",
+        "body": "Draw a card."
       }
     ]
   },
@@ -305,10 +228,9 @@
     "effectText": [
       {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever another follower is put onto your field, give this follower [attack]+1.",
+        "trigger": "Whenever another follower is put onto your field",
+        "body": "Give this follower [attack]+1."
       }
     ]
   },
@@ -319,10 +241,9 @@
     "effectText": [
       {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever another follower is put onto your field, give this follower [attack]+1.",
+        "trigger": "Whenever another follower is put onto your field",
+        "body": "Give this follower [attack]+1."
       }
     ]
   },
@@ -333,17 +254,13 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select another follower on your field and give it [attack]+1."
       },
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "body": "Select a follower on your field and give it [attack]+1."
       }
     ]
   },
@@ -354,10 +271,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select another follower on your field and give it Assail."
       }
     ]
   },

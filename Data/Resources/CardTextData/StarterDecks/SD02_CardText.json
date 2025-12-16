@@ -6,24 +6,16 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm."
       },
       {
         "key": "Destroy Enemy",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and destroy it."
       },
       {
         "key": "Give Storm",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Give this follower Storm."
       }
     ]
   },
@@ -43,24 +35,8 @@
     "effectText": [
       {
         "key": "On Evolve",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Steelclad Knight",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Knight",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Summon a Steelclad Knight and Knight token."
       }
     ]
   },
@@ -71,10 +47,9 @@
     "effectText": [
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[cost01]",
+        "body": "Give this follower Bane."
       }
     ]
   },
@@ -85,10 +60,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
-        "trigger": "Strike",
-        "cost": "",
-        "body": ""
+        "trigger": "Strike:",
+        "body": "Select another follower on your field and give it [attack]+2."
       }
     ]
   },
@@ -108,10 +81,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select another follower on your field and give it [attack]+1/[defense]+1."
       }
     ]
   },
@@ -122,10 +93,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Knight token."
       }
     ]
   },
@@ -149,25 +118,8 @@
     "cardText": "[quick]\nSelect a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.",
     "effectText": [
       {
-        "key": "Sequence",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Give +1/+1",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card."
       }
     ]
   },
@@ -177,25 +129,8 @@
     "cardText": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.",
     "effectText": [
       {
-        "key": "Sequence",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Deal Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Knight",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area."
       }
     ]
   },
@@ -206,10 +141,7 @@
     "effectText": [
       {
         "key": "Deal X Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field."
       }
     ]
   },

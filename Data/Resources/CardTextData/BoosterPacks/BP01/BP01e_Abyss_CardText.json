@@ -6,38 +6,21 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead."
       },
       {
         "key": "Single",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Double",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[fanfare]",
+        "body": "Put a Mimi or Coco token into your EX area."
       },
       {
         "key": "Mimi",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Mimi"
       },
       {
         "key": "Coco",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Coco"
       }
     ]
   },
@@ -48,24 +31,16 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Put a Mimi and Coco token into your EX area."
       },
       {
         "key": "Mimi",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Mimi"
       },
       {
         "key": "Coco",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Coco"
       }
     ]
   },
@@ -76,17 +51,13 @@
     "effectText": [
       {
         "key": "ModifiedCost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Put 4 reserved [abysscraft] cards from your field into their owners' cemeteries",
+        "body": "This card costs 9 less to play."
       },
       {
         "key": "ModifiedCost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Banish 4 [abysscraft] cards in your EX area",
+        "body": "This card costs 9 less to play."
       }
     ]
   },
@@ -96,25 +67,10 @@
     "cardText": "If Sanguine is active for you, this card costs 1 less to play.\nNecrocharge (10): This card costs 1 less to play.\nBane.\n[act][engage]: Select an enemy follower on the field and destroy it.",
     "effectText": [
       {
-        "key": "Sanguine",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Necrocharge",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field and destroy it."
       }
     ]
   },
@@ -125,10 +81,9 @@
     "effectText": [
       {
         "key": "Act",
-        "text": "",
-        "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "text": "[evolve] Give your leader [defense]-3: Evolve this follower.",
+        "cost": "Give your leader [defense]-3",
+        "body": "Evolve this follower."
       }
     ]
   },
@@ -139,24 +94,9 @@
     "effectText": [
       {
         "key": "OnOpponentCardLeaveField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Defense",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.",
+        "trigger": "Whenever an enemy follower is destroyed",
+        "body": "Deal 1 damage to your opponent's leader and give your leader [defense]+1."
       }
     ]
   },
@@ -167,10 +107,9 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "cost": "Give your leader [defense]-3",
+        "body": "Put this follower onto its owner's field."
       }
     ]
   },
@@ -181,31 +120,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Deal 1 damage to your leader. Draw a card."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "[cost02], [engage], put this card into its owner's cemetery",
+        "body": "Deal 1 damage to your leader. Draw a card."
       }
     ]
   },
@@ -216,10 +138,9 @@
     "effectText": [
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Select a follower that costs at least 3 play points in your cemetery and add it to your hand."
       }
     ]
   },
@@ -235,24 +156,12 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card."
       },
       {
         "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select a card your opponent's hand. The opponent discards that card."
       }
     ]
   },
@@ -263,24 +172,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Stat",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Rush",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush."
       }
     ]
   },
@@ -291,26 +184,15 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Sanguine is active for you, give this follower Storm."
       }
     ]
   },
   {
     "id": "BP01-114EN",
     "name": "Phantom Howl",
-    "cardText": "Summon 4 Ghost tokens.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Summon 4 Ghost tokens."
   },
   {
     "id": "BP01-115EN",
@@ -319,17 +201,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Ward",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward."
       }
     ]
   },
@@ -339,25 +211,8 @@
     "cardText": "[quick]\nSelect a follower on your field. Destroy it and draw 2 cards.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Destroy",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select a follower on your field. Destroy it and draw 2 cards."
       }
     ]
   },
@@ -368,10 +223,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Sanguine is active for you, give this follower [attack]+1/[defense]+1."
       }
     ]
   },
@@ -382,10 +235,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Deal 1 damage to each leader."
       }
     ]
   },
@@ -396,10 +247,8 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "body": "Deal 2 damage to each leader."
       }
     ]
   },
@@ -415,10 +264,10 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "text": "On Evolve, put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.",
+        "trigger": "On Evolve:",
+        "cost": "Put a follower from your field into its owner's cemetery",
+        "body": "Select an enemy follower on the field and destroy it."
       }
     ]
   },
@@ -433,10 +282,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 2 damage."
       }
     ]
   },
@@ -447,10 +293,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select a follower on your field and give it [attack]+2."
       }
     ]
   }

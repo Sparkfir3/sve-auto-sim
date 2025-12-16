@@ -6,24 +6,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Followers",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Leader",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader."
       }
     ]
   },
@@ -34,24 +18,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Gain Stat",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Gain Storm",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm."
       }
     ]
   },
@@ -67,26 +35,15 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Deal 2 damage to each enemy follower on the field."
       }
     ]
   },
   {
     "id": "SD03-005EN",
     "name": "Insight",
-    "cardText": "[quick]\nDraw a card.",
-    "effectText": [
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "[quick]\nDraw a card."
   },
   {
     "id": "SD03-006EN",
@@ -95,10 +52,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select up to 2 enemy followers on the field and deal 3 damage divided between them."
       }
     ]
   },
@@ -109,24 +63,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Follower",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Leader",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader."
       }
     ]
   },
@@ -137,10 +75,10 @@
     "effectText": [
       {
         "key": "Activate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "[act][engage], discard a spell: Draw a card.",
+        "trigger": "[act]",
+        "cost": "Discard a spell",
+        "body": "Draw a card."
       }
     ]
   },
@@ -151,17 +89,15 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Refresh this card."
       },
       {
         "key": "Activate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "[act][engage], discard a spell: Draw a card.",
+        "trigger": "[act]",
+        "cost": "Discard a spell",
+        "body": "Draw a card."
       }
     ]
   },
@@ -172,10 +108,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top card of your deck. You may put it into your cemetery."
       }
     ]
   },
@@ -186,10 +120,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Each player draws a card."
       }
     ]
   },
@@ -200,10 +132,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead."
       }
     ]
   },
@@ -214,10 +143,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order."
       }
     ]
   },
@@ -227,25 +153,8 @@
     "cardText": "[quick]\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Destroy Follower",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Leader",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader."
       }
     ]
   },
@@ -255,25 +164,8 @@
     "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 2 damage and draw a card.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Damage Follower",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal it 2 damage and draw a card."
       }
     ]
   },
@@ -287,21 +179,7 @@
         "text": "",
         "trigger": "",
         "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Guardform Golem",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Strikeform Golem",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Put a Guardform Golem or Strikeform Golem token into your EX area."
       }
     ]
   },
@@ -312,10 +190,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Give your leader [defense]+1."
       }
     ]
   },
@@ -326,10 +202,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Give your leader [defense]+2."
       }
     ]
   },

@@ -16,38 +16,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Put a Dragon token into your EX area."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Play Dragon",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Give Rush",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Play Points",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "[cost02], [engage]",
+        "body": "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points."
       }
     ]
   },
@@ -58,10 +34,8 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "body": "Increase your maximum play points by 1."
       }
     ]
   },
@@ -77,10 +51,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Overflow is active for you, give this follower [attack]+3/[defense]+3."
       }
     ]
   },
@@ -96,17 +68,15 @@
     "effectText": [
       {
         "key": "Check Top",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
+        "trigger": "At the start of each player's main phase",
+        "body": "Look at the top card of your deck. If it's a follower, you may put it onto your field."
       },
       {
         "key": "StartOpponentMainPhase",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
+        "trigger": "At the start of each player's main phase",
+        "body": "Look at the top card of your deck. If it's a follower, you may put it onto your field."
       }
     ]
   },
@@ -117,17 +87,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Minus Cost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Put the top card of your deck into your EX area. It costs 2 less to play."
       }
     ]
   },
@@ -138,24 +99,12 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
-        "trigger": "Strike",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "Strike:",
+        "body": "Draw a card, then discard a card."
       },
       {
         "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Discard a card."
       }
     ]
   },
@@ -166,24 +115,12 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Draw 2 cards, then discard a card."
       },
       {
         "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Discard a card."
       }
     ]
   },
@@ -194,10 +131,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Give your leader [defense]+5."
       }
     ]
   },
@@ -209,16 +144,7 @@
   {
     "id": "BP01-089EN",
     "name": "Conflagration",
-    "cardText": "Deal 5 damage to each follower on the field.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Deal 5 damage to each follower on the field."
   },
   {
     "id": "BP01-090EN",
@@ -226,25 +152,8 @@
     "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card."
       }
     ]
   },
@@ -254,25 +163,11 @@
     "cardText": "While this card is on your field, your Dragon tokens have Rush.\n[act][engage]: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
     "effectText": [
       {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Act",
         "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Token",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "[engage]",
+        "body": "Select a follower on the field and destroy it. Its controller summons a Dragon token."
       }
     ]
   },
@@ -288,10 +183,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "If Overflow is active for you, draw a card."
       }
     ]
   },
@@ -302,17 +195,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Give Attack",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select another follower on the field and give this follower [attack]+X. X equals the selected follower's attack."
       }
     ]
   },
@@ -328,10 +212,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
       }
     ]
   },

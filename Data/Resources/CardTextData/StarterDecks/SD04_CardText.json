@@ -6,10 +6,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Deal 5 damage to each enemy follower on the field."
       }
     ]
   },
@@ -20,24 +18,15 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card."
       },
       {
         "key": "Increase PP",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Increase your maximum play points by 1."
       },
       {
         "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Draw a card."
       }
     ]
   },
@@ -53,10 +42,8 @@
     "effectText": [
       {
         "key": "On Evolve",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
       }
     ]
   },
@@ -67,10 +54,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Overflow is active for you, select an enemy follower on the field and deal it 4 damage."
       }
     ]
   },
@@ -81,10 +66,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Overflow is active for you, give this follower [attack]+2/[defense]+2."
       }
     ]
   },
@@ -95,10 +78,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage."
       }
     ]
   },
@@ -109,10 +90,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 7 damage."
       }
     ]
   },
@@ -123,10 +102,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
-        "trigger": "Strike",
-        "cost": "",
-        "body": ""
+        "trigger": "Strike:",
+        "body": "Give this follower [attack]+1."
       }
     ]
   },
@@ -137,10 +114,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
-        "trigger": "Strike",
-        "cost": "",
-        "body": ""
+        "trigger": "Strike:",
+        "body": "Give this follower [attack]+1/[defense]+1."
       }
     ]
   },
@@ -151,10 +126,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 3 damage."
       }
     ]
   },
@@ -165,10 +138,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Overflow is active for you, put a Dragon token into your EX area."
       }
     ]
   },
@@ -179,10 +150,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "If Overflow is active for you, give this follower [attack]+2."
       }
     ]
   },
@@ -193,10 +162,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If Overflow is active for you, give this follower Storm."
       }
     ]
   },
@@ -207,26 +174,14 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead."
       }
     ]
   },
   {
     "id": "BP01-099EN",
     "name": "Dragon Wings",
-    "cardText": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)"
   },
   {
     "id": "BP01-174EN",

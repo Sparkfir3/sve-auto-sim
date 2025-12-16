@@ -6,17 +6,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select any number of Pixie followers in your EX area and transform them into Thorn Burst tokens."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[engage]",
+        "body": "Recover X play points. X equals the number of Thorn Burst tokens in your EX area."
       }
     ]
   },
@@ -27,10 +24,9 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "cost": "Return another card on your field to its owner's hand",
+        "body": "Give this follower [attack]+1/[defense]+1."
       }
     ]
   },
@@ -41,10 +37,9 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "text": "On Evolve, return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.",
+        "cost": "Return another card on your field to its owner's hand",
+        "body": "Give this follower [attack]+1/[defense]+1."
       }
     ]
   },
@@ -55,10 +50,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Give this follower [attack]+X. X equals the number of cards you've played this turn, excluding this card."
       }
     ]
   },
@@ -69,24 +62,16 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Choose one of the following effects. (1) Give this follower Storm. (2) Select an enemy follower on the field and deal it X damage. X equals this follower's attack."
       },
       {
         "key": "Storm",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Give this follower Storm."
       },
       {
         "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it X damage. X equals this follower's attack."
       }
     ]
   },
@@ -97,17 +82,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 4 damage."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[cost01], [engage]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
       }
     ]
   },
@@ -118,10 +100,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy leader or enemy follower on the field. Draw a card and then deal X damage to the selected enemy. X equals the number of cards in your hand."
       }
     ]
   },
@@ -131,39 +110,16 @@
     "cardText": "Select an enemy follower on the field. Its controller puts it on the top or bottom of its owner's deck. Combo (5): Each opponent puts each follower from their field on the top or bottom of its owner's deck instead. (The controllers determine the placement. Tokens put into a player's deck are removed from the game.)",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Single",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "All",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Its controller puts it on the top or bottom of its owner's deck."
       },
       {
         "key": "Iterate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Each opponent puts each follower from their field on the top or bottom of its owner's deck."
       },
       {
         "key": "Move Card",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Each opponent puts each follower from their field on the top or bottom of its owner's deck."
       }
     ]
   },
@@ -179,10 +135,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Put 2 Fairy Wisp tokens into your EX area."
       }
     ]
   },
@@ -193,10 +147,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Give [attack]+1/[defense]+1 to each other Pixie follower on your field and in your EX area."
       }
     ]
   },
@@ -207,17 +159,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 1 damage."
       },
       {
         "key": "OnReturnToHandFromField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "When this card is returned to hand from your field, select an enemy follower on the field and deal it 1 damage.",
+        "trigger": "When this card is returned to hand from your field",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
       }
     ]
   },
@@ -228,24 +177,9 @@
     "effectText": [
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Defense",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Banish a Pixie follower in your EX area",
+        "body": "Give your leader [defense]+3 and draw a card. This ability can be activated once per turn."
       }
     ]
   },
@@ -256,31 +190,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Destroy",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Opponent Summon",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Token",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Combo (3): Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field."
       }
     ]
   },
@@ -290,25 +201,8 @@
     "cardText": "Select a card on your field. Return it to its owner's hand and draw a card.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Return to Hand",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select a card on your field. Return it to its owner's hand and draw a card."
       }
     ]
   },
@@ -321,15 +215,14 @@
         "key": "Act",
         "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[cost01], [engage], put this card into its owner's cemetery",
+        "body": "Give your leader [defense]+1."
       },
       {
         "key": "OnLeaveField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "When this card leaves the field, draw a card.",
+        "trigger": "When this card leaves the field",
+        "body": "Draw a card"
       }
     ]
   },
@@ -340,10 +233,9 @@
     "effectText": [
       {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever another follower is put onto your field, select an enemy follower on the field and deal it 1 damage.",
+        "trigger": "Whenever another follower is put onto your field",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
       }
     ]
   },
@@ -354,10 +246,9 @@
     "effectText": [
       {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever another follower is put onto your field, select up to 2 enemy followers on the field and deal them 1 damage.",
+        "trigger": "Whenever another follower is put onto your field",
+        "body": "Select up to 2 enemy followers on the field and deal them 1 damage."
       }
     ]
   },
@@ -368,24 +259,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Field",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "EX",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Fairy token. Put a Fairy token into your EX area."
       }
     ]
   },
@@ -396,10 +271,9 @@
     "effectText": [
       {
         "key": "OnOtherAttack",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever one of your Pixie followers attacks, select an enemy leader or enemy follower on the field and deal it 1 damage.",
+        "trigger": "Whenever one of your Pixie followers attacks",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage."
       }
     ]
   },
@@ -410,10 +284,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. It cannot deal damage this turn."
       }
     ]
   },
@@ -427,25 +298,8 @@
     "cardText": "Select an enemy leader or enemy follower on the field. Deal it 3 damage and draw a card.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy leader or enemy follower on the field. Deal it 3 damage and draw a card."
       }
     ]
   },

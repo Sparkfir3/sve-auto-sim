@@ -6,31 +6,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery."
       },
       {
         "key": "OnOtherLeaveField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Leader",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Followers",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.",
+        "trigger": "Whenever an amulet you control leaves the field",
+        "body": "Deal 2 damage to each enemy leader and enemy follower on the field."
       }
     ]
   },
@@ -42,16 +25,16 @@
       {
         "key": "Engage",
         "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Select an enemy follower on the field and engage it."
       },
       {
         "key": "Banish",
         "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[cost10], [engage], put this card into its owner's cemetery",
+        "body": "Banish each follower on the field."
       }
     ]
   },
@@ -67,10 +50,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower with 3 defense or less on the field and banish it."
       }
     ]
   },
@@ -80,25 +61,8 @@
     "cardText": "[quick]\nSelect an enemy follower on the field. Banish it and give your leader [defense]+2.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Banish",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Defense",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Banish it and give your leader [defense]+2."
       }
     ]
   },
@@ -109,17 +73,14 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Holy Tiger token."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[cost02], [engage], put this card into its owner's cemetery",
+        "body": "Summon a Holy Tiger token."
       }
     ]
   },
@@ -130,10 +91,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field."
       }
     ]
   },
@@ -145,30 +104,12 @@
   {
     "id": "SD06-009EN",
     "name": "Ardent Nun",
-    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\nDuring each opponent's turn, this follower deals 1 more damage.",
-    "effectText": [
-      {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\nDuring each opponent's turn, this follower deals 1 more damage."
   },
   {
     "id": "SD06-010EN",
     "name": "Ardent Nun (Evolved)",
-    "cardText": "Ward.\nDuring each opponent's turn, this follower deals 2 more damage.",
-    "effectText": [
-      {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Ward.\nDuring each opponent's turn, this follower deals 2 more damage."
   },
   {
     "id": "SD06-011EN",
@@ -177,10 +118,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "If there is an amulet on your field, give this follower [defense]+1."
       }
     ]
   },
@@ -191,10 +130,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Give your leader [defense]+2."
       }
     ]
   },
@@ -205,10 +142,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
       }
     ]
   },
@@ -219,10 +153,9 @@
     "effectText": [
       {
         "key": "Activate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Select an enemy follower on the field and destroy it."
       }
     ]
   },
@@ -233,10 +166,9 @@
     "effectText": [
       {
         "key": "Activate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], put this card into its owner's cemetery",
+        "body": "Summon a Holy Falcon token."
       }
     ]
   },
@@ -247,10 +179,9 @@
     "effectText": [
       {
         "key": "Activate",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], put this card into its owner's cemetery",
+        "body": "Summon a Holy Tiger token."
       }
     ]
   },

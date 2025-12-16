@@ -6,31 +6,19 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "cost": "Earth Rite",
+        "body": "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[engage], Earth Rite",
+        "body": "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader."
       },
       {
         "key": "Damage Follower",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage Leader",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader."
       }
     ]
   },
@@ -41,10 +29,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Search your deck for a spell, reveal it, and add it to your hand."
       }
     ]
   },
@@ -55,10 +41,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points."
       }
     ]
   },
@@ -69,10 +53,9 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "cost": "Earth Rite",
+        "body": "Put 2 Guardform Golem tokens into your EX area."
       }
     ]
   },
@@ -82,18 +65,10 @@
     "cardText": "While this card is on your field, your Golem followers cost 1 less to play.\nWhenever a Golem follower is put onto your field, select an enemy leader or enemy follower on the field and deal it 3 damage.",
     "effectText": [
       {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "OnOtherEnterField",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever a Golem follower is put onto your field, select an enemy leader or enemy follower on the field and deal it 3 damage.",
+        "trigger": "Whenever a Golem follower is put onto your field",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
       }
     ]
   },
@@ -111,10 +86,9 @@
       },
       {
         "key": "Banish",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "At the start of your next end phase, banish each card in your EX area.",
+        "trigger": "At the start of your next end phase",
+        "body": "Banish each card in your EX area."
       }
     ]
   },
@@ -124,18 +98,10 @@
     "cardText": "When playing this card, banish 10 spells in your cemetery: This card costs 7 play points to play.\nTake another turn after this one.",
     "effectText": [
       {
-        "key": "Extra Turn",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "ModifiedCost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Banish 10 spells in your cemetery: This card costs 7 play points to play.",
+        "cost": "Banish 10 spells in your cemetery",
+        "body": "This card costs 7 play points to play."
       }
     ]
   },
@@ -146,38 +112,28 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Guardform Golem or Strikeform Golem token."
       },
       {
         "key": "Summon Magic Sediment",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Summon a Magic Sediment token."
       },
       {
         "key": "Summon Golem",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[act]",
+        "cost": "[engage], Earth Rite",
+        "body": "Summon a Guardform Golem or Strikeform Golem token."
       },
       {
         "key": "Guardform Golem",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Guardform Golem"
       },
       {
         "key": "Strikeform Golem",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Strikeform Golem"
       }
     ]
   },
@@ -188,10 +144,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand."
       }
     ]
   },
@@ -202,26 +156,17 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
-        "trigger": "On Evolve",
-        "cost": "",
-        "body": ""
+        "text": "On Evolve, discard a spell: Select an enemy follower on the field and deal it 4 damage.",
+        "trigger": "On Evolve:",
+        "cost": "Discard a spell",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
       }
     ]
   },
   {
     "id": "BP01-061EN",
     "name": "Flame Destroyer",
-    "cardText": "Spellchain (5): This card costs 3 less to play. SC (10): It costs 6 less instead. SC (15): It costs 9 less instead.\nRush.",
-    "effectText": [
-      {
-        "key": "ModifiedCost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Spellchain (5): This card costs 3 less to play. SC (10): It costs 6 less instead. SC (15): It costs 9 less instead.\nRush."
   },
   {
     "id": "BP01-062EN",
@@ -230,17 +175,15 @@
     "effectText": [
       {
         "key": "OnPlaySpell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "text": "Whenever you play a spell, place 1 spell counter on this card.",
+        "trigger": "Whenever you play a spell",
+        "body": "Place 1 spell counter on this card."
       },
       {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "Remove 3 spell counters from this card",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
       }
     ]
   },
@@ -250,69 +193,21 @@
     "cardText": "Summon 2 Guardform Golem tokens.\nEarth Rite: Give each Golem follower on your field [attack]+1/[defense]+1.",
     "effectText": [
       {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Tokens",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Earth Rite",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Earth Rite",
+        "body": "Give each Golem follower on your field [attack]+1/[defense]+1."
       }
     ]
   },
   {
     "id": "BP01-064EN",
     "name": "Alchemical Lore",
-    "cardText": "Deal 4 damage to each enemy follower on the field.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Deal 4 damage to each enemy follower on the field."
   },
   {
     "id": "BP01-065EN",
     "name": "Fate's Hand",
-    "cardText": "[quick]\nDraw 2 cards. Spellchain (10): Recover 1 play point.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Play Point",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "[quick]\nDraw 2 cards. Spellchain (10): Recover 1 play point."
   },
   {
     "id": "BP01-066EN",
@@ -321,10 +216,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower with 4 defense or less on the field and banish it."
       }
     ]
   },
@@ -335,38 +228,17 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Choose one of the following effects. (1) Earth Rite: Give this follower [attack]+1/[defense]+2. (2) Summon a Magic Sediment token."
       },
       {
         "key": "Earth Rite",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Attack",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Defense",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Earth Rite",
+        "body": "Give this follower [attack]+1/[defense]+2."
       },
       {
         "key": "Token",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Magic Sediment token."
       }
     ]
   },
@@ -377,10 +249,8 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "body": "Summon a Magic Sediment token."
       }
     ]
   },
@@ -391,24 +261,12 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Token",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[lastwords]",
+        "body": "Summon a Magic Sediment token. Add 1 to a Stack on your field."
       },
       {
         "key": "Stack",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Add 1 to a Stack on your field."
       }
     ]
   },
@@ -419,10 +277,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Strikeform Golem token."
       }
     ]
   },
@@ -433,10 +289,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Draw a card."
       }
     ]
   },
