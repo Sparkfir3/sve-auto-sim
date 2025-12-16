@@ -103,12 +103,13 @@ namespace SVESimulator.CardTextData
             return key switch
             {
                 "Fanfare" => "[fanfare]",
-                "Last Words" => "[lastwords]",
-                "OnEvolve" => "On Evolve",
-                "Strike" => "Strike",
-                "FollowerStrike" => "Follower Strike",
-                "LeaderStrike" => "Leader Strike",
+                "LastWords" => "[lastwords]",
+                "OnEvolve" => "On Evolve:",
+                "Strike" => "Strike:",
+                "FollowerStrike" => "Follower Strike:",
+                "LeaderStrike" => "Leader Strike:",
                 "Act" => "[act]",
+                "Activate" => "[act]",
                 _ => ""
             };
         }
