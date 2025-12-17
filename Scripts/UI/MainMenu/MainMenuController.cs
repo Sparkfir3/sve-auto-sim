@@ -35,6 +35,7 @@ namespace SVESimulator.UI
         {
             if(!TryLoadSelectedDeck())
                 return;
+            LibraryCardCache.ClearCache();
             StopAllCoroutines();
             StartCoroutine(StartHostCoroutine());
             IEnumerator StartHostCoroutine()
@@ -53,6 +54,7 @@ namespace SVESimulator.UI
         {
             if(!TryLoadSelectedDeck())
                 return;
+            LibraryCardCache.ClearCache();
             StopAllCoroutines();
             StartCoroutine(StartHostCoroutine());
             IEnumerator StartHostCoroutine()
@@ -77,6 +79,7 @@ namespace SVESimulator.UI
         {
             if(!TryLoadSelectedDeck())
                 return;
+            LibraryCardCache.ClearCache();
             SVEGameNetworkManager.SteamLobby.HostLobby(steamRoomCodeInputField.text);
         }
 
@@ -84,6 +87,7 @@ namespace SVESimulator.UI
         {
             if(!TryLoadSelectedDeck())
                 return;
+            LibraryCardCache.ClearCache();
             SVEGameNetworkManager.SteamLobby.GetLobby(steamRoomCodeInputField.text, lobbyID =>
             {
                 SteamMatchmaking.JoinLobby(lobbyID);

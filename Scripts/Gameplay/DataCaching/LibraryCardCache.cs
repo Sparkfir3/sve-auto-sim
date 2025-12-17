@@ -28,6 +28,8 @@ namespace SVESimulator
         private static TextAsset[] textDataList = null;
         private static Dictionary<int, CardData> cards = new(); // [CardID, Data]
 
+        public static int CacheSize => cards.Count;
+
         #endregion
 
         // ------------------------------
