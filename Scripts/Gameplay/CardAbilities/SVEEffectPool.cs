@@ -107,7 +107,6 @@ namespace SVESimulator
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
 
-                    sveEffect.text = LibraryCardCache.GetEffectText(libraryCard.id, triggeredAbility.name);
                     SVEPendingEffect effect = new()
                     {
                         triggeringCardInstanceId = (triggeringCard ?? sourceCard).instanceId,
@@ -117,7 +116,7 @@ namespace SVESimulator
                         resolvingPlayerId = resolvingPlayer.netId.netId,
                         effect = sveEffect,
                         costs = trigger.Costs,
-                        cardName = libraryCard.name,
+                        cardId = libraryCard.id,
                         abilityName = triggeredAbility.name,
                         condition = trigger.condition,
                         triggerState = triggerState
@@ -579,7 +578,7 @@ namespace SVESimulator
         public uint resolvingPlayerId;
         public SveEffect effect;
         public List<Cost> costs;
-        public string cardName;
+        public int cardId;
         public string abilityName;
         public string condition;
         public SVEEffectPool.EffectTriggerState triggerState;
@@ -588,7 +587,7 @@ namespace SVESimulator
         {
             return new MultipleChoiceWindow.MultipleChoiceEntryData()
             {
-                text = $"{cardName}{(effect.text.IsNullOrWhiteSpace() ? "" : $" - {effect.text}")}",
+                text = $"{LibraryCardCache.GetName(cardId)}{(effect.text.IsNullOrWhiteSpace() ? "" : $" - {effect.text}")}",
                 onSelect = onSelect
             };
         }

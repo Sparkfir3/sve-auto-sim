@@ -152,6 +152,10 @@ namespace SVESimulator
                         effect.body = FormatCardText(effect.body);
                     }
                 }
+                else
+                {
+                    data.effects = new Dictionary<string, EffectText>();
+                }
                 return;
             }
         }
