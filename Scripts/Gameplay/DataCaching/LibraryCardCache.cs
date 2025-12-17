@@ -19,6 +19,7 @@ namespace SVESimulator
             public string displayId;
             public string name;
             public string text;
+            public string trait;
             public Dictionary<string, EffectText> effects = new();
         }
 
@@ -79,6 +80,7 @@ namespace SVESimulator
         public static string GetName(in int cardId) => cards.GetValueOrDefault(cardId, null)?.name;
         public static string GetDisplayId(in int cardId) => cards.GetValueOrDefault(cardId, null)?.displayId;
         public static string GetCardText(in int cardId) => cards.GetValueOrDefault(cardId, null)?.text;
+        public static string GetCardTrait(in int cardId) => cards.GetValueOrDefault(cardId, null)?.trait;
 
         public static string GetEffectName(in int cardId, in string effectName)
         {
@@ -136,6 +138,7 @@ namespace SVESimulator
                 data.displayId = textData.id;
                 data.name = textData.name;
                 data.text = FormatCardText(textData.cardText, "");
+                data.trait = textData.trait;
                 data.effects = textData.effectText?.ToDictionary(x => x.key);
                 if(data.effects != null)
                 {
