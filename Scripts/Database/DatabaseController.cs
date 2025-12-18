@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SVESimulator.CardTextData;
 using SVESimulator.Database.Scraper;
 using SVESimulator.SveScript;
 using SVESimulator.UI;
@@ -117,6 +118,12 @@ namespace SVESimulator.Database
         private void SaveDatabaseVersion()
         {
             File.WriteAllText(paths.DatabaseVersionFilePath, DatabaseVersion);
+        }
+
+        [TitleGroup("Buttons"), Button, LabelText("Generate Text JSON")]
+        private void GenerateTextJson(TextAsset baseScript, TextAsset outputFile)
+        {
+            CardTextCompiler.CompileTextJson(baseScript, outputFile);
         }
 
         #endregion

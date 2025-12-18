@@ -7,10 +7,9 @@ rarity L;
 cost 6;
 stats 5/6;
 
-text "[fanfare] Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader. (If you have at least 7 spells in your cemetery, perform Spellchain (7). Then, if you have at least 15 spells, perform SC (15).)";
+text "[fanfare] Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.";
 
 ability Fanfare {
-    text "Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.";
     effect Sequence("Damage Followers", "Damage Leader");
 }
 ability Spell name "Damage Followers" {
@@ -32,10 +31,9 @@ rarity G;
 cost 3;
 stats 1/1;
 
-text "[fanfare] Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm. (If you have at least 5 spells in your cemetery, perform Spellchain (5). Then, if you have at least 10 spells, perform SC (10).)";
+text "[fanfare] Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm.";
 
 ability Fanfare {
-    text "Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm.";
     effect Sequence("Gain Stat", "Gain Storm");
 }
 ability Spell name "Gain Stat" {
@@ -75,7 +73,6 @@ stats 4/4;
 text "On Evolve: Deal 2 damage to each enemy follower on the field.";
 
 ability OnEvolve {
-    text "Deal 2 damage to each enemy follower on the field.";
     effect DealDamage(2) to AllOpponentCards F;
 }
 
@@ -113,7 +110,6 @@ Select up to 2 enemy followers on the field and deal 3 damage divided between th
 keyword Quick;
 ability Spell {
     effect DealDamageDivided(3) to Fm(1,2);
-    text "Select up to 2 enemy followers on the field and deal 3 damage divided between them.";
 }
 
 // ------------------------------
@@ -130,12 +126,10 @@ stats 3/3;
 text "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
 
 ability Fanfare {
-    text "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
     effect Sequence("Damage Follower", "Damage Leader");
 }
 ability Spell name "Damage Follower" {
     effect DealDamage(2s(5)4) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
 }
 ability Spell name "Damage Leader" {
     condition s(10);
@@ -160,7 +154,6 @@ evolve 1;
 ability Activate {
     cost (EngageSelf), (Discard, 1, S);
     effect DrawCard(1);
-    text "[act][engage], discard a spell: Draw a card.";
 }
 
 // ------------------------------
@@ -177,13 +170,11 @@ text "On Evolve: Refresh this card.
       [act][engage], discard a spell: Draw a card.";
 
 ability OnEvolve {
-    text "Refresh this card.";
     effect ReserveCard() to Self;
 }
 ability Activate {
     cost (EngageSelf), (Discard, 1, S);
     effect DrawCard(1);
-    text "[act][engage], discard a spell: Draw a card.";
 }
 
 // ------------------------------
@@ -203,7 +194,6 @@ text "[evolve][cost02]: Evolve this follower.
 evolve 2;
 ability Fanfare {
     effect CheckTop(1, (Cemetery, m(0,1)));
-    text "Look at the top card of your deck. You may put it into your cemetery.";
 }
 
 // ------------------------------
@@ -219,7 +209,6 @@ stats 3/2;
 text "On Evolve: Each player draws a card.";
 
 ability OnEvolve {
-    text "Each player draws a card.";
     effect DrawCard(1) to AllPlayers;
 }
 
@@ -238,7 +227,6 @@ text "Select an enemy follower on the field and deal it 2 damage. Spellchain (10
 ability Spell {
     condition p(#F);
     effect DealDamage(2s(10)4) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.";
 }
 
 // ------------------------------
@@ -257,7 +245,6 @@ text "[quick]
 keyword Quick;
 ability Spell {
     effect CheckTop(4, (Hand, S, m(0,1)), (Cemetery, S, m(0,1)), (BottomDeckAnyOrder));
-    text "Look at the top 4 cards of your deck. You may reveal a spell from among them and put it into your hand. You may put a spell from among them into your cemetery. Put the rest on the bottom of your deck in any order.";
 }
 
 // ------------------------------
@@ -280,7 +267,6 @@ ability Spell {
 }
 ability Spell name "Destroy Follower" {
     effect DestroyCard() to TargetOpponentCard F;
-    text "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.";
 }
 ability Spell name "Damage Leader" {
     condition s(10);
@@ -307,7 +293,6 @@ ability Spell {
 }
 ability Spell name "Damage Follower" {
     effect DealDamage(2) to TargetOpponentCard F;
-    text "Select an enemy follower on the field. Deal it 2 damage and draw a card.";
 }
 ability Spell name "Draw" {
     effect DrawCard(1) to Self;
@@ -329,15 +314,12 @@ text "[quick]
 keyword Quick;
 ability Spell {
     effect ChooseFromList("Guardform Golem", "Strikeform Golem");
-    text "Put a Guardform Golem or Strikeform Golem token into your EX area.";
 }
 ability Spell name "Guardform Golem" {
     effect SummonToken(Guardform Golem, ExArea, 1);
-    text "Guardform Golem";
 }
 ability Spell name "Strikeform Golem" {
     effect SummonToken(Strikeform Golem, ExArea, 1);
-    text "Strikeform Golem";
 }
 
 // ------------------------------
@@ -356,7 +338,6 @@ text "[evolve][cost01]: Evolve this follower.
 
 evolve 1;
 ability Fanfare {
-    text "Give your leader [defense]+1.";
     effect GiveStat(Def, 1) to Leader;
 }
 
@@ -373,7 +354,6 @@ stats 3/5;
 text "On Evolve: Give your leader [defense]+2.";
 
 ability OnEvolve {
-    text "Give your leader [defense]+2.";
     effect GiveStat(Def, 2) to Leader;
 }
 
@@ -395,7 +375,7 @@ rarity B;
 cost 2;
 stats 3/2;
 
-text "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)";
+text "Rush.";
 
 keyword Rush;
 
@@ -410,6 +390,6 @@ rarity B;
 cost 2;
 stats 2/3;
 
-text "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)";
+text "Ward.";
 
 keyword Ward;

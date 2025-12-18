@@ -13,7 +13,6 @@ While this card is on your field, your other Pixie followers have Rush.";
 
 keywords Ward;
 ability Fanfare {
-    text "Put up to 9 Fairy tokens onto your field or into your EX area.";
     effect SummonToken(Fairy, ChooseForEachFieldOrEx, 9);
 }
 ability Passive name "Give Rush" {
@@ -34,7 +33,6 @@ text "[fanfare] Give each Pixie token on your field [attack]+1/[defense]+1.
 While this card is on your field, your Pixie tokens have Assail. Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.";
 
 ability Fanfare {
-    text "Give each Pixie token on your field [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to AllPlayerCards Kt(Pixie);
 }
 ability Passive name "Give Assail" {
@@ -42,7 +40,6 @@ ability Passive name "Give Assail" {
 }
 ability OnOtherEnterField {
     filter Kt(Pixie);
-    text "Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to TriggerCard;
 }
 
@@ -71,15 +68,13 @@ trait Verdant;
 rarity S;
 stats 4/4;
 
-text "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card. (Tokens returned to a player's hand are removed from the game.)";
+text "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.";
 
-ability OnEvolve name "On Evolve" {
-    text "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.";
+ability OnEvolve {
     effect Sequence("Return Enemy to Hand", "Combo 3 - Draw");
 }
 ability Spell name "Return Enemy to Hand" {
     effect ReturnToHand() to TargetOpponentCard F;
-    text "Select an enemy follower on the field and return it to its owner's hand.";
 }
 ability Spell name "Combo 3 - Draw" {
     effect DrawCard(0c(3)1) to Self;
@@ -99,11 +94,9 @@ stats 3/3;
 text "[fanfare][lastwords] Put a Fairy token into your EX area.";
 
 ability Fanfare {
-    text "Put a Fairy token into your EX area.";
     effect SummonToken("Fairy", ExArea, 1);
 }
-ability LastWords name "Last Words" {
-    text "Put a Fairy token into your EX area.";
+ability LastWords {
     effect SummonToken("Fairy", ExArea, 1);
 }
 
@@ -121,7 +114,6 @@ stats 3/3;
 text "[fanfare] Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
 
 ability Fanfare {
-    text "Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
     effect SummonToken("Fairy", FieldOverflowToEx, 3);
 }
 
@@ -136,11 +128,10 @@ rarity B;
 cost 2;
 stats 3/2;
 
-text "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)";
+text "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.";
 
 ability Fanfare {
     effect DealDamage(1c(3)3) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.";
 }
 
 // ------------------------------
@@ -156,9 +147,8 @@ stats 5/5;
 
 text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
 
-ability OnOtherEnterField name "Other Card Enter Field" {
+ability OnOtherEnterField {
     filter F;
-    text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to Self;
 }
 
@@ -174,12 +164,11 @@ cost 3;
 stats 3/3;
 
 text "[evolve][cost02]: Evolve this follower.
-[fanfare] Combo (3): Change this card's [evolve] cost to 0. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)";
+[fanfare] Combo (3): Change this card's [evolve] cost to 0.";
 
 evolve 2;
 ability Fanfare {
     condition c(3);
-    text "Combo (3): Change this card's [evolve] cost to 0.";
     effect SetStat(EvolveCost, 0) to Self;
 }
 
@@ -208,8 +197,7 @@ text "[evolve][cost02]: Evolve this follower.
 [lastwords] Put a Fairy token into your EX area.";
 
 evolve 2;
-ability LastWords name "Last Words" {
-    text "Put a Fairy token into your EX area.";
+ability LastWords {
     effect SummonToken("Fairy", ExArea, 1);
 }
 
@@ -226,12 +214,10 @@ stats 2/2;
 text "On Evolve: Summon a Fairy token.
 [lastwords] Put a Fairy token into your EX area.";
 
-ability OnEvolve name "On Evolve" {
-    text "Summon a Fairy token.";
+ability OnEvolve {
     effect SummonToken("Fairy", Field, 1);
 }
-ability LastWords name "Last Words" {
-    text "Put a Fairy token into your EX area.";
+ability LastWords {
     effect SummonToken("Fairy", ExArea, 1);
 }
 
@@ -246,7 +232,7 @@ rarity B;
 cost 2;
 stats 2/3;
 
-text "Assail. (Followers with Assail can attack reserved followers.)
+text "Assail.
 This follower ignores Ward.";
 
 keywords Assail, IgnoreWard;
@@ -282,12 +268,10 @@ text "[fanfare] Select a Pixie follower on your field and give it [attack]+1.
 
 ability Fanfare name "Fanfare" {
     effect GiveStat(Atk, 1) to TargetPlayerCard Ft(Pixie);
-    text "Select a Pixie follower on your field and give it [attack]+1";
 }
 ability Act name "Return to Hand" {
     costs (PP, 1), (EngageSelf);
     effect ReturnToHand() to Self;
-    text "[cost01], [engage]: Return this card to its owner's hand.";
 }
 
 // ------------------------------
@@ -310,7 +294,6 @@ ability Spell name "Quick" {
 }
 ability Spell name "Damage" {
     effect DealDamage(3) to TargetOpponentCard F;
-    text "Select an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.";
 }
 ability Spell name "Token" {
     effect SummonToken("Fairy", ExArea, 1);
@@ -358,7 +341,6 @@ keyword Quick;
 ability Spell name "Deal Damage" {
     condition p(#F);
     effect DealDamage(2) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 2 damage.";
 }
 
 // ------------------------------
@@ -375,7 +357,7 @@ text "[quick]
 Deal 1 damage to each enemy follower on the field.";
 
 keyword Quick;
-ability Spell name "Damage" {
+ability Spell {
     effect DealDamage(1) to AllOpponentCards F;
 }
 

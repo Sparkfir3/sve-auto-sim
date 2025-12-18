@@ -315,6 +315,12 @@ namespace SVESimulator
             LibraryCard = GameManager.Instance.config.GetCard(card.cardId);
             LibraryCardCache.CacheCard(LibraryCard);
             statsDisplay.SetCard(card);
+
+            foreach(Ability ability in LibraryCard.abilities)
+            {
+                if(ability.effect is SveEffect sveEffect)
+                    sveEffect.text ??= LibraryCardCache.GetEffectText(LibraryCard.id, ability.name);
+            }
         }
 
         private void ResetRuntimeCard(RuntimeCard card)

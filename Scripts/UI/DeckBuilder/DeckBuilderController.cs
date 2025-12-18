@@ -59,6 +59,7 @@ namespace SVESimulator.DeckBuilder
             
             saveMenu.OnSaveDeck += SaveDeck;
             model.OnUpdateFilters += HandleFiltersUpdated;
+            cardList.OnListUpdated += ManageLibraryCache;
 
             if(sortModes.Count == 0)
                 sortModes.Add(0);
@@ -70,6 +71,7 @@ namespace SVESimulator.DeckBuilder
 
         private void Start()
         {
+            LibraryCardCache.ClearCache();
             if(!DeckDataToLoad.IsNullOrWhiteSpace())
             {
                 model.ImportDeck(DeckDataToLoad);
@@ -103,7 +105,7 @@ namespace SVESimulator.DeckBuilder
 
         // ------------------------------
 
-        #region Filter Updating
+        #region Filter/Data Updating
 
         private void HandleFiltersUpdated()
         {
@@ -115,6 +117,12 @@ namespace SVESimulator.DeckBuilder
             model.SortMode = sortModes[index];
             model.UpdateFilteredCardList();
             filterUpdateTimer = 0f;
+        }
+
+        private void ManageLibraryCache()
+        {
+            if(LibraryCardCache.CacheSize > 100)
+                LibraryCardCache.ClearCache();
         }
 
         #endregion

@@ -18,7 +18,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select any number of Pixie followers in your EX area and transform them into Thorn Burst tokens.\n<sprite index=4><sprite index=23>: Recover X play points. X equals the number of Thorn Burst tokens in your EX area.",
+            "value": "[fanfare] Select any number of Pixie followers in your EX area and transform them into Thorn Burst tokens.\n[act][engage]: Recover X play points. X equals the number of Thorn Burst tokens in your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -98,7 +98,6 @@
               "target": "TargetPlayerCardEx",
               "filter": "Ft(Pixie)m(0,5)",
               "tokenName": "Thorn Burst",
-              "text": "Select any number of Pixie followers in your EX area and transform them into Thorn Burst tokens.",
               "$type": "SVESimulator.TransformCardEffect"
             },
             "target": null,
@@ -118,7 +117,6 @@
               "filter": null,
               "targetStats": "PlayPoint",
               "amount": "x(Kn(\"Thorn Burst\"))",
-              "text": "<sprite index=23>: Recover X play points. X equals the number of Thorn Burst tokens in your EX area.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -143,7 +141,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\nWard.\n<sprite index=2> Return another card on your field to its owner's hand: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "[evolve][cost01]: Evolve this follower.\nWard.\n[fanfare] Return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -229,7 +227,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Return another card on your field to its owner's hand: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -254,7 +251,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\nOn Evolve, return another card on your field to its owner's hand: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "Ward.\nOn Evolve, return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -331,7 +328,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Return another card on your field to its owner's hand: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -356,7 +352,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=6>: Evolve this follower.\nRush.\n<sprite index=2> Give this follower <sprite index=0>+X. X equals the number of cards you've played this turn, excluding this card.",
+            "value": "[evolve][cost00]: Evolve this follower.\nRush.\n[fanfare] Give this follower [attack]+X. X equals the number of cards you've played this turn, excluding this card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -442,7 +438,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "C-1",
-              "text": "Give this follower <sprite index=0>+X. X equals the number of cards you've played this turn, excluding this card.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -540,7 +535,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Choose one of the following effects. (1) Give this follower Storm. (2) Select an enemy follower on the field and deal it X damage. X equals this follower's attack.",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -559,7 +553,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": "Give this follower Storm.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -577,7 +570,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "A",
-              "text": "Select an enemy follower on the field and deal it X damage. X equals this follower's attack.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -602,7 +594,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and deal it 4 damage.\n<sprite index=4><sprite index=7>, <sprite index=23>: Select an enemy follower on the field and deal it 4 damage.",
+            "value": "[fanfare] Select an enemy follower on the field and deal it 4 damage.\n[act][cost01], [engage]: Select an enemy follower on the field and deal it 4 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -682,7 +674,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "4",
-              "text": "Select an enemy follower on the field and deal it 4 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -709,7 +700,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "4",
-              "text": "Select an enemy follower on the field and deal it 4 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -734,7 +724,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy leader or enemy follower on the field. Draw a card and then deal X damage to the selected enemy. X equals the number of cards in your hand.",
+            "value": "[quick]\nSelect an enemy leader or enemy follower on the field. Draw a card and then deal X damage to the selected enemy. X equals the number of cards in your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -775,7 +765,6 @@
               "filter": "F",
               "amount": "1",
               "amount2": "H",
-              "text": "Select an enemy leader or enemy follower on the field. Draw a card and then deal X damage to the selected enemy. X equals the number of cards in your hand.",
               "$type": "SVESimulator.DrawThenDamageEffect"
             },
             "target": null,
@@ -837,7 +826,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -855,7 +843,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "effectName": "Move Card",
-              "text": "Select an enemy follower on the field. Its controller puts it on the top or bottom of its owner's deck.",
               "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
@@ -873,7 +860,6 @@
               "target": "Self",
               "filter": null,
               "effectName": "Iterate",
-              "text": null,
               "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
@@ -891,7 +877,6 @@
               "target": "AllPlayerCards",
               "filter": "F",
               "effectName": "Move Card",
-              "text": "Each opponent puts each follower from their field on the top or bottom of its owner's deck.",
               "$type": "SVESimulator.PerformAsEachTargetEffect"
             },
             "target": null,
@@ -908,7 +893,6 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "text": "Each opponent puts each follower from their field on the top or bottom of its owner's deck.",
               "$type": "SVESimulator.SendToTopOrBottomDeckEffect"
             },
             "target": null,
@@ -933,7 +917,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1090,7 +1074,6 @@
               "tokenName": "Fairy Wisp",
               "createTokenOption": "ExArea",
               "amount": "2",
-              "text": "Put 2 Fairy Wisp tokens into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -1115,7 +1098,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Give <sprite index=0>+1/<sprite index=1>+1 to each other Pixie follower on your field and in your EX area.",
+            "value": "[fanfare] Give [attack]+1/[defense]+1 to each other Pixie follower on your field and in your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1196,7 +1179,6 @@
               "filter": "Ft(Pixie)X",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Give <sprite index=0>+1/<sprite index=1>+1 to each other Pixie follower on your field and in your EX area.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -1221,7 +1203,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and deal it 1 damage.\nWhen this card is returned to hand from your field, select an enemy follower on the field and deal it 1 damage.",
+            "value": "[fanfare] Select an enemy follower on the field and deal it 1 damage.\nWhen this card is returned to hand from your field, select an enemy follower on the field and deal it 1 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1301,7 +1283,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "1",
-              "text": "Select an enemy follower on the field and deal it 1 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -1319,7 +1300,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "1",
-              "text": "Select an enemy follower on the field and deal it 1 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -1344,7 +1324,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4> Banish a Pixie follower in your EX area: Give your leader <sprite index=1>+3 and draw a card. This ability can be activated once per turn.",
+            "value": "[act] Banish a Pixie follower in your EX area: Give your leader [defense]+3 and draw a card. This ability can be activated once per turn.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1432,7 +1412,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Banish a Pixie follower in your EX area: Give your leader <sprite index=1>+3 and draw a card. This ability can be activated once per turn.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -1451,7 +1430,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "3",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -1468,7 +1446,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -1493,7 +1470,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\n<sprite index=2> Combo (3): Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
+            "value": "Ward.\n[fanfare] Combo (3): Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1580,7 +1557,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Combo (3): Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -1597,7 +1573,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field. Destroy it and summon a Fairy token on that follower's field.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -1615,7 +1590,6 @@
               "target": "Self",
               "filter": null,
               "effectName": "Token",
-              "text": null,
               "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
@@ -1633,7 +1607,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -1695,7 +1668,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -1712,7 +1684,6 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": null,
-              "text": "Select a card on your field. Return it to its owner's hand and draw a card.",
               "$type": "SVESimulator.ReturnToHandEffect"
             },
             "target": null,
@@ -1729,7 +1700,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -1754,7 +1724,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4><sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Give your leader <sprite index=1>+1.\nWhen this card leaves the field, draw a card.",
+            "value": "[act][cost01], [engage], put this card into its owner's cemetery: Give your leader [defense]+1.\nWhen this card leaves the field, draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1809,7 +1779,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "1",
-              "text": "<sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Give your leader <sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -1826,7 +1795,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": "When this card leaves the field, draw a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -1851,7 +1819,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)",
+            "value": "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -1931,7 +1899,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "1c(3)3",
-              "text": "Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -1956,7 +1923,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\nWhenever another follower is put onto your field, select an enemy follower on the field and deal it 1 damage.",
+            "value": "[evolve][cost01]: Evolve this follower.\nWhenever another follower is put onto your field, select an enemy follower on the field and deal it 1 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -2037,7 +2004,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "1",
-              "text": "Select an enemy follower on the field and deal it 1 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -2134,7 +2100,6 @@
               "target": "TargetOpponentCard",
               "filter": "Fm(0,2)",
               "amount": "1",
-              "text": "Select up to 2 enemy followers on the field and deal them 1 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -2159,7 +2124,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Summon a Fairy token. Put a Fairy token into your EX area.",
+            "value": "[fanfare] Summon a Fairy token. Put a Fairy token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -2241,7 +2206,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Summon a Fairy token. Put a Fairy token into your EX area.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -2259,7 +2223,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -2277,7 +2240,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -2302,7 +2264,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -2377,14 +2339,13 @@
               "cost": null,
               "$type": "SVESimulator.SveOnOtherCardEnterFieldTrigger"
             },
-            "name": "Other Card Enter Field",
+            "name": "OnOtherEnterField",
             "type": "Triggered",
             "effect": {
               "target": "Self",
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -2490,7 +2451,6 @@
               "target": "TargetOpponentCardOrLeader",
               "filter": "1",
               "amount": "1",
-              "text": "Select an enemy leader or enemy follower on the field and deal it 1 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -2550,7 +2510,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "3",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -2575,7 +2534,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field. It cannot deal damage this turn.",
+            "value": "[quick]\nSelect an enemy follower on the field. It cannot deal damage this turn.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -2616,7 +2575,6 @@
               "filter": "F",
               "keywordType": 1,
               "keywordValue": 2,
-              "text": "Select an enemy follower on the field. It cannot deal damage this turn.",
               "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
             "target": null,
@@ -2641,7 +2599,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select a Pixie follower on your field and give it <sprite index=0>+1.\n<sprite index=4><sprite index=7>, <sprite index=23>: Return this card to its owner's hand.",
+            "value": "[fanfare] Select a Pixie follower on your field and give it [attack]+1.\n[act][cost01], [engage]: Return this card to its owner's hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -2686,7 +2644,6 @@
               "filter": "Ft(Pixie)",
               "targetStats": "Attack",
               "amount": "1",
-              "text": "Select a Pixie follower on your field and give it <sprite index=0>+1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -2708,7 +2665,6 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "text": "<sprite index=7>, <sprite index=23>: Return this card to its owner's hand.",
               "$type": "SVESimulator.ReturnToHandEffect"
             },
             "target": null,
@@ -2733,7 +2689,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Summon an Otohime's Bodyguard token.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Summon an Otohime's Bodyguard token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -2813,7 +2769,6 @@
               "tokenName": "Otohime's Bodyguard",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon an Otohime's Bodyguard token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -2909,7 +2864,6 @@
               "tokenName": "Otohime's Bodyguard",
               "createTokenOption": "FieldOverflowToEx",
               "amount": "3",
-              "text": "Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -2934,7 +2888,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Rush. Assail. Ward.\n<sprite index=2> Select an enemy leader. If there are at least 3 cards on their field, give this follower <sprite index=0>+2/<sprite index=1>+2 and Aura.",
+            "value": "Rush. Assail. Ward.\n[fanfare] Select an enemy leader. If there are at least 3 cards on their field, give this follower [attack]+2/[defense]+2 and Aura.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3029,7 +2983,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Select an enemy leader. If there are at least 3 cards on their field, give this follower <sprite index=0>+2/<sprite index=1>+2 and Aura.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -3048,7 +3001,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -3067,7 +3019,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 7,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -3092,7 +3043,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Select an enemy follower on the field and engage it.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Select an enemy follower on the field and engage it.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3171,7 +3122,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field and engage it.",
               "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
@@ -3266,7 +3216,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "FN",
-              "text": "Select an engaged enemy follower and destroy it.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -3291,7 +3240,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\n<sprite index=3> Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
+            "value": "Ward.\n[lastwords] Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3381,7 +3330,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
               "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
@@ -3400,7 +3348,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 0,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -3417,7 +3364,6 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "m(0,2)",
-              "text": "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.",
               "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
@@ -3479,7 +3425,6 @@
               "effectName3": "Knight",
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -3497,7 +3442,6 @@
               "tokenName": "Viking",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -3515,7 +3459,6 @@
               "tokenName": "Steelclad Knight",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -3533,7 +3476,6 @@
               "tokenName": "Knight",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -3558,7 +3500,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Give each <sprite index=18> follower on your field <sprite index=0>+1/<sprite index=1>+1.\nWhenever a <sprite index=18> follower is put onto your field, give it <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "[fanfare] Give each [swordcraft] follower on your field [attack]+1/[defense]+1.\nWhenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3603,7 +3545,6 @@
               "filter": "c(Sword)F",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Give each <sprite index=18> follower on your field <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -3623,7 +3564,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Whenever a <sprite index=18> follower is put onto your field, give it <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -3648,7 +3588,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.",
+            "value": "[evolve][cost02]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3734,7 +3674,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "On Evolve: Search your deck for a follower with <sprite index=5>, reveal it, and add it to your hand.",
+            "value": "On Evolve: Search your deck for a follower with [evolve], reveal it, and add it to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3805,7 +3745,6 @@
               "amount": "1",
               "filter": "F#e",
               "searchDeckAction": "Hand",
-              "text": "Search your deck for a follower with <sprite index=5>, reveal it, and add it to your hand.",
               "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
@@ -3830,7 +3769,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Search your deck for a <sprite index=18> follower, reveal it, and add it to your hand.",
+            "value": "[fanfare] Search your deck for a [swordcraft] follower, reveal it, and add it to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -3910,7 +3849,6 @@
               "amount": "1",
               "filter": "c(sword)F",
               "searchDeckAction": "Hand",
-              "text": "Search your deck for a <sprite index=18> follower, reveal it, and add it to your hand.",
               "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
@@ -3935,7 +3873,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Give each other follower on your field <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "[fanfare] Give each other follower on your field [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4016,7 +3954,6 @@
               "filter": "FX",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Give each other follower on your field <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -4041,7 +3978,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and engage it.\n<sprite index=4><sprite index=23>: Select an enemy follower on the field and engage it.",
+            "value": "[fanfare] Select an enemy follower on the field and engage it.\n[act][engage]: Select an enemy follower on the field and engage it.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4120,7 +4057,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field and engage it.",
               "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
@@ -4142,7 +4078,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "<sprite index=23>: Select an enemy follower on the field and engage it.",
               "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
@@ -4167,7 +4102,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.",
+            "value": "[fanfare] Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4254,7 +4189,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -4279,7 +4213,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Search your deck for a Ninja card, reveal it, and add it to your hand.",
+            "value": "[fanfare] Search your deck for a Ninja card, reveal it, and add it to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4359,7 +4293,6 @@
               "amount": "1",
               "filter": "t(Ninja)",
               "searchDeckAction": "Hand",
-              "text": "Search your deck for a Ninja card, reveal it, and add it to your hand.",
               "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
@@ -4384,7 +4317,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4><sprite index=7>, <sprite index=23>: Summon a Knight token and give it Storm.\n<sprite index=4><sprite index=8>, <sprite index=23>: Select an enemy follower on the field and engage it.\n<sprite index=4><sprite index=9>, <sprite index=23>: Draw a card.",
+            "value": "[act][cost01], [engage]: Summon a Knight token and give it Storm.\n[act][cost02], [engage]: Select an enemy follower on the field and engage it.\n[act][cost03], [engage]: Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4438,7 +4371,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "<sprite index=7>, <sprite index=23>: Summon a Knight token and give it Storm.",
               "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
@@ -4457,7 +4389,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -4483,7 +4414,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "<sprite index=8>, <sprite index=23>: Select an enemy follower on the field and engage it.",
               "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
@@ -4505,7 +4435,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": "<sprite index=9>, <sprite index=23>: Draw a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -4616,7 +4545,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\nWhenever another follower is put onto your field, give this follower <sprite index=0>+1.",
+            "value": "[evolve][cost02]: Evolve this follower.\nWhenever another follower is put onto your field, give this follower [attack]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4698,7 +4627,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "1",
-              "text": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -4723,7 +4651,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1.",
+            "value": "Whenever another follower is put onto your field, give this follower [attack]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4796,7 +4724,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "1",
-              "text": "Whenever another follower is put onto your field, give this follower <sprite index=0>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -4821,7 +4748,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select another follower on your field and give it <sprite index=0>+1.\n<sprite index=3> Select a follower on your field and give it <sprite index=0>+1.",
+            "value": "[fanfare] Select another follower on your field and give it [attack]+1.\n[lastwords] Select a follower on your field and give it [attack]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -4902,7 +4829,6 @@
               "filter": "FX",
               "targetStats": "Attack",
               "amount": "1",
-              "text": "Select another follower on your field and give it <sprite index=0>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -4921,7 +4847,6 @@
               "filter": "F",
               "targetStats": "Attack",
               "amount": "1",
-              "text": "Select a follower on your field and give it <sprite index=0>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -4946,7 +4871,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)",
+            "value": "Ward.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -5037,7 +4962,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select another follower on your field and give it Assail.",
+            "value": "[fanfare] Select another follower on your field and give it Assail.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -5118,7 +5043,6 @@
               "filter": "FX",
               "keywordType": 0,
               "keywordValue": 3,
-              "text": "Select another follower on your field and give it Assail.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -5234,7 +5158,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect a follower on your field. Give it <sprite index=0>+1/<sprite index=1>+1 and draw a card.",
+            "value": "[quick]\nSelect a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -5276,7 +5200,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5295,7 +5218,6 @@
               "filter": "F",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Select a follower on your field. Give it <sprite index=0>+1/<sprite index=1>+1 and draw a card.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -5312,7 +5234,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -5374,7 +5295,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5392,7 +5312,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "5",
-              "text": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -5410,7 +5329,6 @@
               "tokenName": "Knight",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -5435,7 +5353,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.\n<sprite index=4><sprite index=23>, Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
+            "value": "[fanfare] Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.\n[act][engage], Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -5517,7 +5435,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5550,7 +5467,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "<sprite index=23>, Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5568,7 +5484,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "6",
-              "text": "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -5586,7 +5501,6 @@
               "target": "OpponentLeader",
               "filter": null,
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -5611,7 +5525,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Search your deck for a spell, reveal it, and add it to your hand.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Search your deck for a spell, reveal it, and add it to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -5691,7 +5605,6 @@
               "amount": "1",
               "filter": "S",
               "searchDeckAction": "Hand",
-              "text": "Search your deck for a spell, reveal it, and add it to your hand.",
               "$type": "SVESimulator.SearchDeckEffect"
             },
             "target": null,
@@ -5786,7 +5699,6 @@
             "effect": {
               "filter": "Sp(m(0,3))",
               "amount2": "0",
-              "text": "Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.",
               "$type": "SVESimulator.PlaySpellFromCemeterySetCostEffect"
             },
             "target": null,
@@ -5811,7 +5723,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=9>: Evolve this follower.\n<sprite index=2> Earth Rite: Put 2 Guardform Golem tokens into your EX area.",
+            "value": "[evolve][cost03]: Evolve this follower.\n[fanfare] Earth Rite: Put 2 Guardform Golem tokens into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -5891,7 +5803,6 @@
               "tokenName": "Guardform Golem",
               "createTokenOption": "ExArea",
               "amount": "2",
-              "text": "Earth Rite: Put 2 Guardform Golem tokens into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -6006,7 +5917,6 @@
               "target": "TargetOpponentCardOrLeader",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy leader or enemy follower on the field and deal it 3 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -6031,7 +5941,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nPut the top card of your deck into your EX area. Repeat until your EX area is full.\nAt the start of your next end phase, banish each card in your EX area.",
+            "value": "[quick]\nPut the top card of your deck into your EX area. Repeat until your EX area is full.\nAt the start of your next end phase, banish each card in your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -6069,7 +5979,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "5-x()",
-              "text": null,
               "$type": "SVESimulator.TopDeckToExEffect"
             },
             "target": null,
@@ -6086,7 +5995,6 @@
             "effect": {
               "target": "AllPlayerCardsEx",
               "filter": null,
-              "text": "At the start of your next end phase, banish each card in your EX area.",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
@@ -6143,7 +6051,6 @@
             "name": "Extra Turn",
             "type": "Triggered",
             "effect": {
-              "text": null,
               "$type": "SVESimulator.ExtraTurnEffect"
             },
             "target": null,
@@ -6158,7 +6065,6 @@
             "name": "ModifiedCost",
             "type": "Triggered",
             "effect": {
-              "text": "Banish 10 spells in your cemetery: This card costs 7 play points to play.",
               "$type": "SVESimulator.AlternateCostEffect"
             },
             "target": null,
@@ -6183,7 +6089,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Summon a Guardform Golem or Strikeform Golem token.\n<sprite index=4><sprite index=23>: Summon a Magic Sediment token.\n<sprite index=4><sprite index=23>, Earth Rite: Summon a Guardform Golem or Strikeform Golem token.",
+            "value": "[fanfare] Summon a Guardform Golem or Strikeform Golem token.\n[act][engage]: Summon a Magic Sediment token.\n[act][engage], Earth Rite: Summon a Guardform Golem or Strikeform Golem token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -6229,7 +6135,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Summon a Guardform Golem or Strikeform Golem token",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -6248,7 +6153,6 @@
               "tokenName": "Magic Sediment",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "<sprite index=23>: Summon a Magic Sediment token",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -6277,7 +6181,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "<sprite index=23>, Earth Rite: Summon a Guardform Golem or Strikeform Golem token",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -6295,7 +6198,6 @@
               "tokenName": "Guardform Golem",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Guardform Golem",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -6313,7 +6215,6 @@
               "tokenName": "Strikeform Golem",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Strikeform Golem",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -6338,7 +6239,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -6425,7 +6326,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -6521,7 +6421,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "4",
-              "text": "Discard a spell: Select an enemy follower on the field and deal it 4 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -6629,7 +6528,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "[3s(10)6]s(15)9",
-              "text": null,
               "$type": "SVESimulator.ReducedCostEffect"
             },
             "target": null,
@@ -6654,7 +6552,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Whenever you play a spell, place 1 spell counter on this card.\n<sprite index=4> Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.",
+            "value": "Whenever you play a spell, place 1 spell counter on this card.\n[act] Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -6736,7 +6634,6 @@
               "keywordType": 4,
               "keywordValue": 1,
               "amount": "1",
-              "text": "Whenever you play a spell, place 1 spell counter on this card.",
               "$type": "SVESimulator.GiveCounterEffect"
             },
             "target": null,
@@ -6764,7 +6661,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "5",
-              "text": "<sprite index=4> Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -6789,7 +6685,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Summon 2 Guardform Golem tokens.\nEarth Rite: Give each Golem follower on your field <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "Summon 2 Guardform Golem tokens.\nEarth Rite: Give each Golem follower on your field [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -6826,7 +6722,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -6844,7 +6739,6 @@
               "tokenName": "Guardform Golem",
               "createTokenOption": "Field",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -6863,7 +6757,6 @@
               "filter": "Ft(Golem)",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Earth Rite: Give each Golem follower on your field <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -6923,7 +6816,6 @@
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "4",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -6948,7 +6840,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nDraw 2 cards. Spellchain (10): Recover 1 play point.",
+            "value": "[quick]\nDraw 2 cards. Spellchain (10): Recover 1 play point.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -6990,7 +6882,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7007,7 +6898,6 @@
             "effect": {
               "target": "Self",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -7026,7 +6916,6 @@
               "filter": null,
               "targetStats": "PlayPoint",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -7051,7 +6940,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Stack.\n<sprite index=2> Select an enemy follower with 4 defense or less on the field and banish it.",
+            "value": "Stack.\n[fanfare] Select an enemy follower with 4 defense or less on the field and banish it.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7099,7 +6988,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "Fd(m(0,4))",
-              "text": "Select an enemy follower with 4 defense or less on the field and banish it.",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
@@ -7124,7 +7012,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\n<sprite index=2> Choose one of the following effects. (1) Earth Rite: Give this follower <sprite index=0>+1/<sprite index=1>+2. (2) Summon a Magic Sediment token.",
+            "value": "Ward.\n[fanfare] Choose one of the following effects. (1) Earth Rite: Give this follower [attack]+1/[defense]+2. (2) Summon a Magic Sediment token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7211,7 +7099,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Choose one of the following effects. (1) Earth Rite: Give this follower <sprite index=0>+1/<sprite index=1>+2. (2) Summon a Magic Sediment token.",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -7231,7 +7118,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Earth Rite: Give this follower <sprite index=0>+1/<sprite index=1>+2.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7250,7 +7136,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -7269,7 +7154,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -7287,7 +7171,6 @@
               "tokenName": "Magic Sediment",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Magic Sediment token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -7312,7 +7195,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=3> Summon a Magic Sediment token.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[lastwords] Summon a Magic Sediment token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7392,7 +7275,6 @@
               "tokenName": "Magic Sediment",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Magic Sediment token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -7417,7 +7299,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=3> Summon a Magic Sediment token. Add 1 to a Stack on your field.",
+            "value": "[lastwords] Summon a Magic Sediment token. Add 1 to a Stack on your field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7490,7 +7372,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Summon a Magic Sediment token. Add 1 to a Stack on your field.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7508,7 +7389,6 @@
               "tokenName": "Magic Sediment",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -7528,7 +7408,6 @@
               "keywordType": 3,
               "keywordValue": 1,
               "amount": "1",
-              "text": "Add 1 to a Stack on your field.",
               "$type": "SVESimulator.GiveCounterEffect"
             },
             "target": null,
@@ -7553,7 +7432,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
+            "value": "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7635,7 +7514,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7653,7 +7531,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "2s(5)4",
-              "text": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -7671,7 +7548,6 @@
               "target": "OpponentLeader",
               "filter": null,
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -7731,7 +7607,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "2s(10)4",
-              "text": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -7756,7 +7631,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nLook at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.",
+            "value": "[quick]\nLook at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7803,7 +7678,6 @@
               "checkAction3": "BottomDeckAnyOrder",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top 4 cards of your deck. You may reveal a spell from among them and put it into your hand. You may put a spell from among them into your cemetery. Put the rest on the bottom of your deck in any order.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -7828,7 +7702,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
+            "value": "[quick]\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7870,7 +7744,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7887,7 +7760,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -7905,7 +7777,6 @@
               "target": "OpponentLeader",
               "filter": null,
               "amount": "3",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -7930,7 +7801,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Stack.\n<sprite index=2> Summon a Strikeform Golem token.",
+            "value": "Stack.\n[fanfare] Summon a Strikeform Golem token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -7979,7 +7850,6 @@
               "tokenName": "Strikeform Golem",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Strikeform Golem token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -8004,7 +7874,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Stack.\n<sprite index=2> Draw a card.",
+            "value": "Stack.\n[fanfare] Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -8052,7 +7922,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": "Draw a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -8077,7 +7946,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\nStorm.",
+            "value": "[evolve][cost02]: Evolve this follower.\nStorm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -8254,7 +8123,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Put a Dragon token into your EX area.\n<sprite index=4><sprite index=8>, <sprite index=23>: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
+            "value": "[fanfare] Put a Dragon token into your EX area.\n[act][cost02], [engage]: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -8334,7 +8203,6 @@
               "tokenName": "Dragon",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Put a Dragon token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -8363,7 +8231,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "<sprite index=8>, <sprite index=23>: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -8385,7 +8252,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.",
               "$type": "SVESimulator.PutExToFieldAndTargetEffect"
             },
             "target": null,
@@ -8404,7 +8270,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 2,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -8423,7 +8288,6 @@
               "filter": null,
               "targetStats": "PlayPoint",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -8448,7 +8312,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Assail.\n<sprite index=3> Increase your maximum play points by 1.",
+            "value": "Assail.\n[lastwords] Increase your maximum play points by 1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -8534,7 +8398,6 @@
               "filter": null,
               "targetStats": "MaxPlayPoint",
               "amount": "1",
-              "text": "Increase your maximum play points by 1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -8650,7 +8513,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=2> If Overflow is active for you, give this follower <sprite index=0>+3/<sprite index=1>+3.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] If Overflow is active for you, give this follower [attack]+3/[defense]+3.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -8731,7 +8594,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "3",
-              "text": "If Overflow is active for you, give this follower <sprite index=0>+3/<sprite index=1>+3.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -8893,7 +8755,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -8911,7 +8772,6 @@
               "target": "Self",
               "filter": null,
               "effectName": "Check Top",
-              "text": "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.",
               "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
@@ -8936,7 +8796,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Put the top card of your deck into your EX area. It costs 2 less to play.",
+            "value": "[fanfare] Put the top card of your deck into your EX area. It costs 2 less to play.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -9019,7 +8879,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Put the top card of your deck into your EX area. It costs 2 less to play.",
               "$type": "SVESimulator.TopDeckToExAndTargetEffect"
             },
             "target": null,
@@ -9038,7 +8897,6 @@
               "filter": null,
               "targetStats": "Cost",
               "amount": "-2",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -9150,7 +9008,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Draw a card, then discard a card.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -9167,7 +9024,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -9184,7 +9040,6 @@
             "effect": {
               "amount": "1",
               "filter": null,
-              "text": "Discard a card.",
               "$type": "SVESimulator.DiscardEffect"
             },
             "target": null,
@@ -9209,7 +9064,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\nWard.\n<sprite index=2> Draw 2 cards, then discard a card.",
+            "value": "[evolve][cost02]: Evolve this follower.\nWard.\n[fanfare] Draw 2 cards, then discard a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -9296,7 +9151,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Draw 2 cards, then discard a card.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -9313,7 +9167,6 @@
             "effect": {
               "target": "Self",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -9330,7 +9183,6 @@
             "effect": {
               "amount": "1",
               "filter": null,
-              "text": "Discard a card.",
               "$type": "SVESimulator.DiscardEffect"
             },
             "target": null,
@@ -9355,7 +9207,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\nOn Evolve: Give your leader <sprite index=1>+5.",
+            "value": "Ward.\nOn Evolve: Give your leader [defense]+5.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -9432,7 +9284,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "5",
-              "text": "Give your leader <sprite index=1>+5.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -9587,7 +9438,6 @@
               "target": "AllCards",
               "filter": "F",
               "amount": "5",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -9612,7 +9462,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.",
+            "value": "[quick]\nSelect an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -9654,7 +9504,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -9672,7 +9521,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "5",
-              "text": "Select an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -9689,7 +9537,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -9714,7 +9561,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "While this card is on your field, your Dragon tokens have Rush.\n<sprite index=4><sprite index=23>: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
+            "value": "While this card is on your field, your Dragon tokens have Rush.\n[act][engage]: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -9782,7 +9629,6 @@
               "target": "TargetCard",
               "filter": "F",
               "effectName": "Token",
-              "text": "<sprite index=23>: Select a follower on the field and destroy it. Its controller summons a Dragon token.",
               "$type": "SVESimulator.DestroyAndControllerPerformEffect"
             },
             "target": null,
@@ -9800,7 +9646,6 @@
               "tokenName": "Dragon",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -9825,7 +9670,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=6>: Evolve this follower.",
+            "value": "[evolve][cost00]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -9981,7 +9826,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": "If Overflow is active for you, draw a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -10006,7 +9850,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy leader or enemy follower on the field and deal it 1 damage.",
+            "value": "[fanfare] Select an enemy leader or enemy follower on the field and deal it 1 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10086,7 +9930,6 @@
               "target": "TargetOpponentCardOrLeader",
               "filter": "F",
               "amount": "1",
-              "text": "Select an enemy leader or enemy follower on the field and deal it 1 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -10111,7 +9954,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Rush.\n<sprite index=2> Select another follower on the field and give this follower <sprite index=0>+X. X equals the selected follower's attack.",
+            "value": "Rush.\n[fanfare] Select another follower on the field and give this follower [attack]+X. X equals the selected follower's attack.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10196,7 +10039,6 @@
               "target": "TargetCard",
               "filter": "FX",
               "effectName": "Give Attack",
-              "text": "Select another follower on the field and give this follower <sprite index=0>+X. X equals the selected follower's attack.",
               "$type": "SVESimulator.PerformAsEachTargetEffect"
             },
             "target": null,
@@ -10215,7 +10057,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "A",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -10331,7 +10172,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and deal it 7 damage.",
+            "value": "[fanfare] Select an enemy follower on the field and deal it 7 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10411,7 +10252,6 @@
               "target": "TargetOpponentCardOrLeader",
               "filter": "F",
               "amount": "7",
-              "text": "Select an enemy follower on the field and deal it 7 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -10436,7 +10276,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)",
+            "value": "[quick]\nSelect an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10476,7 +10316,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "2o4",
-              "text": "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -10501,7 +10340,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)",
+            "value": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10536,7 +10375,6 @@
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "2o3",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -10561,7 +10399,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Look at the top 5 cards of your deck. You may reveal a <sprite index=20> card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+            "value": "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10603,7 +10441,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top 5 cards of your deck. You may reveal a <sprite index=20> card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -10628,7 +10465,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -10710,7 +10547,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Put a Mimi or Coco token into your EX area. Necrocharge (10): Put both into your EX area instead.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -10730,7 +10566,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Put a Mimi or Coco token into your EX area.",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -10750,7 +10585,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -10768,7 +10602,6 @@
               "tokenName": "Mimi",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Mimi",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -10786,7 +10619,6 @@
               "tokenName": "Coco",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Coco",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -10884,7 +10716,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Put a Mimi and Coco token into your EX area.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -10902,7 +10733,6 @@
               "tokenName": "Mimi",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Mimi",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -10920,7 +10750,6 @@
               "tokenName": "Coco",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Coco",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -10945,7 +10774,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "When playing this card, put 4 reserved <sprite index=21> cards from your field into their owners' cemeteries, or banish 4 <sprite index=21> cards in your EX area: This card costs 9 less to play.",
+            "value": "When playing this card, put 4 reserved [abysscraft] cards from your field into their owners' cemeteries, or banish 4 [abysscraft] cards in your EX area: This card costs 9 less to play.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11019,10 +10848,9 @@
               "condition": null,
               "$type": "SVESimulator.ModifiedCostTrigger"
             },
-            "name": "ModifiedCost",
+            "name": "Cemetery",
             "type": "Triggered",
             "effect": {
-              "text": "Put 4 reserved <sprite index=21> cards from your field into their owners' cemeteries.",
               "$type": "SVESimulator.AlternateCostEffect"
             },
             "target": null,
@@ -11034,10 +10862,9 @@
               "condition": null,
               "$type": "SVESimulator.ModifiedCostTrigger"
             },
-            "name": "ModifiedCost",
+            "name": "Banish",
             "type": "Triggered",
             "effect": {
-              "text": "Banish 4 <sprite index=21> cards in your EX area.",
               "$type": "SVESimulator.AlternateCostEffect"
             },
             "target": null,
@@ -11062,7 +10889,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "If Sanguine is active for you, this card costs 1 less to play.\nNecrocharge (10): This card costs 1 less to play.\nBane.\n<sprite index=4><sprite index=23>: Select an enemy follower on the field and destroy it.",
+            "value": "If Sanguine is active for you, this card costs 1 less to play.\nNecrocharge (10): This card costs 1 less to play.\nBane.\n[act][engage]: Select an enemy follower on the field and destroy it.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11145,7 +10972,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.ReducedCostEffect"
             },
             "target": null,
@@ -11161,7 +10987,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.ReducedCostEffect"
             },
             "target": null,
@@ -11183,7 +11008,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "<sprite index=23>: Select an enemy follower on the field and destroy it.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -11208,7 +11032,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5> Give your leader <sprite index=1>-3: Evolve this follower.\nBane.",
+            "value": "[evolve] Give your leader [defense]-3: Evolve this follower.\nBane.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11294,7 +11118,6 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "text": "<sprite index=5> Give your leader <sprite index=1>-3: Evolve this follower.",
               "$type": "SVESimulator.EvolveEffect"
             },
             "target": null,
@@ -11319,7 +11142,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Assail. Bane.\nWhenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader <sprite index=1>+1.",
+            "value": "Assail. Bane.\nWhenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader [defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11402,7 +11225,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Whenever an enemy follower is destroyed, deal 1 damage to its leader and give your leader <sprite index=1>+1.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11420,7 +11242,6 @@
               "target": "OpponentLeader",
               "filter": null,
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -11439,7 +11260,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -11464,7 +11284,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=3> Give your leader <sprite index=1>-3: Put this follower onto its owner's field.",
+            "value": "[lastwords] Give your leader [defense]-3: Put this follower onto its owner's field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11544,7 +11364,6 @@
               "target": "TriggerCard",
               "amount": "1",
               "filter": null,
-              "text": "<sprite index=3> Give your leader <sprite index=1>-3: Put this follower onto its owner's field.",
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,
@@ -11569,7 +11388,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Deal 1 damage to your leader. Draw a card.\n<sprite index=4><sprite index=8>, <sprite index=23>, put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.",
+            "value": "[fanfare] Deal 1 damage to your leader. Draw a card.\n[act][cost02], [engage], put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11615,7 +11434,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Deal 1 damage to your leader. Draw a card.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11645,7 +11463,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "<sprite index=8>, <sprite index=23>, put this card into its owner's cemetery: Deal 1 damage to your leader. Draw a card.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11663,7 +11480,6 @@
               "target": "Leader",
               "filter": null,
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -11680,7 +11496,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -11705,7 +11520,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4><sprite index=23>, put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.",
+            "value": "[act][engage], put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11790,7 +11605,6 @@
             "effect": {
               "amount": "1",
               "filter": "Fp(m(3,99))",
-              "text": "<sprite index=23>, put this card into its owner's cemetery: Select a follower that costs at least 3 play points in your cemetery and add it to your hand.",
               "$type": "SVESimulator.SalvageCardEffect"
             },
             "target": null,
@@ -11815,7 +11629,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -11974,7 +11788,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "On Evolve: Deal 2 damage to your leader. Select an opponent. They reveal their hand. Select a card in their hand. The opponent discards that card.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11992,7 +11805,6 @@
               "target": "Leader",
               "filter": null,
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -12009,7 +11821,6 @@
             "effect": {
               "amount": "1",
               "filter": null,
-              "text": "Select a card in the opponent's hand. The opponent discards that card.",
               "$type": "SVESimulator.DiscardFromOpponentHandEffect"
             },
             "target": null,
@@ -12034,7 +11845,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> If Sanguine is active for you, give this follower <sprite index=0>+1/<sprite index=1>+1 and Rush.",
+            "value": "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1 and Rush.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12116,7 +11927,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "If Sanguine is active for you, give this follower <sprite index=0>+1/<sprite index=1>+1 and Rush.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -12135,7 +11945,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -12154,7 +11963,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 2,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -12179,7 +11987,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> If Sanguine is active for you, give this follower Storm.",
+            "value": "[fanfare] If Sanguine is active for you, give this follower Storm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12260,7 +12068,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": "If Sanguine is active for you, give this follower Storm.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -12320,7 +12127,6 @@
               "tokenName": "Ghost",
               "createTokenOption": "Field",
               "amount": "4",
-              "text": "Summon 4 Ghost tokens.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -12385,7 +12191,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Select a follower that costs 8 play points or less in your cemetery. Put it onto your field and give it Ward.",
               "$type": "SVESimulator.CemeteryToFieldAndTargetEffect"
             },
             "target": null,
@@ -12404,7 +12209,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 0,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -12429,7 +12233,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect a follower on your field. Destroy it and draw 2 cards.",
+            "value": "[quick]\nSelect a follower on your field. Destroy it and draw 2 cards.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12471,7 +12275,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -12488,7 +12291,6 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "F",
-              "text": "Select a follower on your field. Destroy it and draw 2 cards.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -12505,7 +12307,6 @@
             "effect": {
               "target": "Self",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -12530,7 +12331,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> If Sanguine is active for you, give this follower <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "[fanfare] If Sanguine is active for you, give this follower [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12611,7 +12412,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "If Sanguine is active for you, give this follower <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -12636,7 +12436,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Deal 1 damage to each leader.",
+            "value": "[fanfare] Deal 1 damage to each leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12716,7 +12516,6 @@
               "target": "AllLeaders",
               "filter": null,
               "amount": "1",
-              "text": "Deal 1 damage to each leader.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -12741,7 +12540,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Bane.\n<sprite index=2> Give your leader <sprite index=1>-2: Give this follower Rush. Put the top card of your deck into your cemetery.",
+            "value": "Bane.\n[fanfare] Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12828,7 +12627,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Give your leader <sprite index=1>-2: Give this follower Rush. Put the top card of your deck into your cemetery.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -12847,7 +12645,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 2,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -12863,7 +12660,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.MillDeckEffect"
             },
             "target": null,
@@ -12888,7 +12684,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Put the top 2 cards of your deck into your cemetery.",
+            "value": "[fanfare] Put the top 2 cards of your deck into your cemetery.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -12966,7 +12762,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "2",
-              "text": "Put the top 2 cards of your deck into your cemetery.",
               "$type": "SVESimulator.MillDeckEffect"
             },
             "target": null,
@@ -12991,7 +12786,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=3> Deal 2 damage to each leader.",
+            "value": "[lastwords] Deal 2 damage to each leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13071,7 +12866,6 @@
               "target": "AllLeaders",
               "filter": null,
               "amount": "2",
-              "text": "Deal 2 damage to each leader.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -13096,7 +12890,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=6>: Evolve this follower.",
+            "value": "[evolve][cost00]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13252,7 +13046,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Put a follower from your field into its owner's cemetery: Select an enemy follower on the field and destroy it.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -13277,7 +13070,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select up to 2 followers in your cemetery and add them to your hand.",
+            "value": "[fanfare] Select up to 2 followers in your cemetery and add them to your hand.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13356,7 +13149,6 @@
             "effect": {
               "amount": "m(0,2)",
               "filter": "F",
-              "text": "Select up to 2 followers in your cemetery and add them to your hand.",
               "$type": "SVESimulator.SalvageCardEffect"
             },
             "target": null,
@@ -13381,7 +13173,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nDeal 2 damage to your leader.\nSelect an enemy leader or enemy follower on the field and deal it 3 damage.",
+            "value": "[quick]\nDeal 2 damage to your leader.\nSelect an enemy leader or enemy follower on the field and deal it 3 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13423,7 +13215,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -13441,7 +13232,6 @@
               "target": "Leader",
               "filter": null,
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -13459,7 +13249,6 @@
               "target": "TargetOpponentCardOrLeader",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy leader or enemy follower on the field and deal it 3 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -13484,7 +13273,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
+            "value": "[fanfare] Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13564,7 +13353,6 @@
               "target": "Self",
               "amount": "1",
               "filter": "Ap(m(0,5))",
-              "text": "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,
@@ -13680,7 +13468,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nLook at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+            "value": "[quick]\nLook at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13727,7 +13515,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -13752,7 +13539,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "This card is put onto the field engaged.\n<sprite index=4><sprite index=23>, put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.",
+            "value": "This card is put onto the field engaged.\n[act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -13810,7 +13597,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "<sprite index=23>, put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -13835,7 +13621,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=10>: Evolve this follower.",
+            "value": "[evolve][cost04]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -14084,7 +13870,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.",
+            "value": "[evolve][cost02]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -14338,7 +14124,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=2> Give your leader <sprite index=1>+1.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] Give your leader [defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -14419,7 +14205,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "1",
-              "text": "Give your leader <sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -14444,7 +14229,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "On Evolve: Give your leader <sprite index=1>+2.",
+            "value": "On Evolve: Give your leader [defense]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -14516,7 +14301,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "2",
-              "text": "Give your leader <sprite index=1>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -14541,7 +14325,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field and deal it 2 damage.",
+            "value": "[quick]\nSelect an enemy follower on the field and deal it 2 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -14581,7 +14365,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "2",
-              "text": "Select an enemy follower on the field and deal it 2 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -14606,7 +14389,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nDeal 1 damage to each enemy follower on the field.",
+            "value": "[quick]\nDeal 1 damage to each enemy follower on the field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -14640,13 +14423,12 @@
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Damage",
+            "name": "Spell",
             "type": "Triggered",
             "effect": {
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -14939,7 +14721,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -14957,7 +14738,6 @@
               "target": "TargetOpponentCardOrLeader",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy leader or enemy follower on the field. Deal it 3 damage and draw a card.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -14974,7 +14754,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -15525,7 +15304,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)",
+            "value": "Rush.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -15616,7 +15395,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)",
+            "value": "Ward.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -15707,7 +15486,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Stack. (Amulets with Stack are put onto the field with 1 Stack counter and have the following abilities.\nWhen this card would leave the field, remove 1 Stack counter from it instead. When this card's Stack count reaches 0, destroy it.\n<sprite index=4><sprite index=23>: Select another amulet with Stack on your field and transfer all this card's Stack counters to that card.)",
+            "value": "Stack. (Amulets with Stack are put onto the field with 1 Stack counter and have the following abilities.\nWhen this card would leave the field, remove 1 Stack counter from it instead. When this card's Stack count reaches 0, destroy it.\n[act][engage]: Select another amulet with Stack on your field and transfer all this card's Stack counters to that card.)",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -15883,7 +15662,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "2",
-              "text": "Select an enemy follower on the field and deal it 2 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -15908,7 +15686,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Select a follower on your field and give it <sprite index=0>+2.",
+            "value": "Select a follower on your field and give it [attack]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -15944,7 +15722,6 @@
               "filter": "F",
               "targetStats": "Attack",
               "amount": "2",
-              "text": "Select a follower on your field and give it <sprite index=0>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -15969,7 +15746,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)\nAt the start of your end phase, banish this card.",
+            "value": "Storm.\nAt the start of your end phase, banish this card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -16053,7 +15830,6 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "text": "At the start of your end phase, banish this card.",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
@@ -16351,7 +16127,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\n<sprite index=2> Put up to 9 Fairy tokens onto your field or into your EX area.\nWhile this card is on your field, your other Pixie followers have Rush.",
+            "value": "Ward.\n[fanfare] Put up to 9 Fairy tokens onto your field or into your EX area.\nWhile this card is on your field, your other Pixie followers have Rush.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -16436,7 +16212,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "ChooseForEachFieldOrEx",
               "amount": "9",
-              "text": "Put up to 9 Fairy tokens onto your field or into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -16480,7 +16255,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Give each Pixie token on your field <sprite index=0>+1/<sprite index=1>+1.\nWhile this card is on your field, your Pixie tokens have Assail. Whenever a Pixie token is put onto your field, give it <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "[fanfare] Give each Pixie token on your field [attack]+1/[defense]+1.\nWhile this card is on your field, your Pixie tokens have Assail. Whenever a Pixie token is put onto your field, give it [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -16525,7 +16300,6 @@
               "filter": "Kt(Pixie)",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Give each Pixie token on your field <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -16564,7 +16338,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Whenever a Pixie token is put onto your field, give it <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -16589,7 +16362,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -16675,7 +16448,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card. (Tokens returned to a player's hand are removed from the game.)",
+            "value": "On Evolve: Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -16740,7 +16513,7 @@
               "cost": null,
               "$type": "SVESimulator.SveOnEvolveTrigger"
             },
-            "name": "On Evolve",
+            "name": "OnEvolve",
             "type": "Triggered",
             "effect": {
               "effectName1": "Return Enemy to Hand",
@@ -16748,7 +16521,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Select an enemy follower on the field and return it to its owner's hand. Combo (3): Draw a card.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -16765,7 +16537,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field and return it to its owner's hand.",
               "$type": "SVESimulator.ReturnToHandEffect"
             },
             "target": null,
@@ -16782,7 +16553,6 @@
             "effect": {
               "target": "Self",
               "amount": "0c(3)1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -16807,7 +16577,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2><sprite index=3> Put a Fairy token into your EX area.",
+            "value": "[fanfare][lastwords] Put a Fairy token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -16887,7 +16657,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Put a Fairy token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -16899,13 +16668,12 @@
               "cost": null,
               "$type": "SVESimulator.SveLastWordsTrigger"
             },
-            "name": "Last Words",
+            "name": "LastWords",
             "type": "Triggered",
             "effect": {
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Put a Fairy token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -16930,7 +16698,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
+            "value": "[fanfare] Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17010,7 +16778,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "FieldOverflowToEx",
               "amount": "3",
-              "text": "Summon 3 Fairy tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -17035,7 +16802,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Combo (3): Change this card's <sprite index=5> cost to 0. (If you've played at least 3 cards this turn, including this one, perform Combo (3).)",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Combo (3): Change this card's [evolve] cost to 0.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17116,7 +16883,6 @@
               "filter": null,
               "targetStats": "EvolveCost",
               "amount": "0",
-              "text": "Combo (3): Change this card's <sprite index=5> cost to 0.",
               "$type": "SVESimulator.SetStatEffect"
             },
             "target": null,
@@ -17218,7 +16984,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=3> Put a Fairy token into your EX area.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[lastwords] Put a Fairy token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17292,13 +17058,12 @@
               "cost": null,
               "$type": "SVESimulator.SveLastWordsTrigger"
             },
-            "name": "Last Words",
+            "name": "LastWords",
             "type": "Triggered",
             "effect": {
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Put a Fairy token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -17323,7 +17088,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "On Evolve: Summon a Fairy token.\n<sprite index=3> Put a Fairy token into your EX area.",
+            "value": "On Evolve: Summon a Fairy token.\n[lastwords] Put a Fairy token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17388,13 +17153,12 @@
               "cost": null,
               "$type": "SVESimulator.SveOnEvolveTrigger"
             },
-            "name": "On Evolve",
+            "name": "OnEvolve",
             "type": "Triggered",
             "effect": {
               "tokenName": "Fairy",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Fairy token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -17406,13 +17170,12 @@
               "cost": null,
               "$type": "SVESimulator.SveLastWordsTrigger"
             },
-            "name": "Last Words",
+            "name": "LastWords",
             "type": "Triggered",
             "effect": {
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Put a Fairy token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -17437,7 +17200,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Assail. (Followers with Assail can attack reserved followers.)\nThis follower ignores Ward.",
+            "value": "Assail.\nThis follower ignores Ward.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17532,7 +17295,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.",
+            "value": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17574,7 +17337,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -17592,7 +17354,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy follower on the field. Deal it 3 damage and put a Fairy token into your EX area.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -17610,7 +17371,6 @@
               "tokenName": "Fairy",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -17640,7 +17400,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)",
+            "value": "[fanfare] Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -17722,7 +17482,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -17739,7 +17498,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field and destroy it.",
               "$type": "SVESimulator.DestroyCardEffect"
             },
             "target": null,
@@ -17758,7 +17516,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": "Give this follower Storm.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -17869,7 +17626,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18028,7 +17785,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Summon a Steelclad Knight and Knight token.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -18046,7 +17802,6 @@
               "tokenName": "Steelclad Knight",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -18064,7 +17819,6 @@
               "tokenName": "Knight",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -18089,7 +17843,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4><sprite index=7>: Give this follower Bane. (Followers attacking or attacked by a follower with Bane are destroyed after damage is exchanged.)",
+            "value": "[act][cost01]: Give this follower Bane.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18172,7 +17926,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 6,
-              "text": "<sprite index=4><sprite index=7>: Give this follower Bane.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -18197,7 +17950,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)\nStrike: Select another follower on your field and give it <sprite index=0>+2.",
+            "value": "Rush.\nStrike: Select another follower on your field and give it [attack]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18283,7 +18036,6 @@
               "filter": "FX",
               "targetStats": "Attack",
               "amount": "2",
-              "text": "Select another follower on your field and give it <sprite index=0>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -18308,7 +18060,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select another follower on your field and give it <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "[fanfare] Select another follower on your field and give it [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18389,7 +18141,6 @@
               "filter": "FX",
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Select another follower on your field and give it <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -18414,7 +18165,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=2> Summon a Knight token.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] Summon a Knight token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18494,7 +18245,6 @@
               "tokenName": "Knight",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Knight token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -18519,7 +18269,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Assail. (Followers with Assail can attack reserved followers.)",
+            "value": "Assail.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18601,7 +18351,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=9>: Evolve this follower.\nStorm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)",
+            "value": "[evolve][cost03]: Evolve this follower.\nStorm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18692,7 +18442,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "",
+            "value": "Storm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18774,7 +18524,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field and deal it X damage. X equals the number of followers on your field.",
+            "value": "[quick]\nSelect an enemy follower on the field and deal it X damage. X equals the number of followers on your field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18814,7 +18564,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "f(F)",
-              "text": "Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -18844,7 +18593,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader. (If you have at least 7 spells in your cemetery, perform Spellchain (7). Then, if you have at least 15 spells, perform SC (15).)",
+            "value": "[fanfare] Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -18926,7 +18675,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -18944,7 +18692,6 @@
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "3s(7)5",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -18962,7 +18709,6 @@
               "target": "OpponentLeader",
               "filter": null,
               "amount": "5",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -18987,7 +18733,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Spellchain (5): Give this follower <sprite index=0>+4/<sprite index=1>+4. SC (10): Give this follower Storm. (If you have at least 5 spells in your cemetery, perform Spellchain (5). Then, if you have at least 10 spells, perform SC (10).)",
+            "value": "[fanfare] Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19069,7 +18815,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Spellchain (5): Give this follower <sprite index=0>+4/<sprite index=1>+4. SC (10): Give this follower Storm.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -19088,7 +18833,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "4",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -19107,7 +18851,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -19132,7 +18875,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19289,7 +19032,6 @@
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "2",
-              "text": "Deal 2 damage to each enemy follower on the field.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -19314,7 +19056,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nDraw a card.",
+            "value": "[quick]\nDraw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19353,7 +19095,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -19378,7 +19119,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect up to 2 enemy followers on the field and deal 3 damage divided between them.",
+            "value": "[quick]\nSelect up to 2 enemy followers on the field and deal 3 damage divided between them.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19417,7 +19158,6 @@
             "effect": {
               "filter": "Fm(1,2)",
               "amount": "3",
-              "text": "Select up to 2 enemy followers on the field and deal 3 damage divided between them.",
               "$type": "SVESimulator.DealDamageDividedEffect"
             },
             "target": null,
@@ -19442,7 +19182,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=4><sprite index=23>, discard a spell: Draw a card.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[act][engage], discard a spell: Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19527,7 +19267,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": "<sprite index=4><sprite index=23>, discard a spell: Draw a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -19552,7 +19291,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "On Evolve: Refresh this card.\n<sprite index=4><sprite index=23>, discard a spell: Draw a card.",
+            "value": "On Evolve: Refresh this card.\n[act][engage], discard a spell: Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19622,7 +19361,6 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "text": "Refresh this card.",
               "$type": "SVESimulator.ReserveCardEffect"
             },
             "target": null,
@@ -19645,7 +19383,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": "<sprite index=4><sprite index=23>, discard a spell: Draw a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -19670,7 +19407,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=8>: Evolve this follower.\n<sprite index=2> Look at the top card of your deck. You may put it into your cemetery.",
+            "value": "[evolve][cost02]: Evolve this follower.\n[fanfare] Look at the top card of your deck. You may put it into your cemetery.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19757,7 +19494,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top card of your deck. You may put it into your cemetery.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -19852,7 +19588,6 @@
             "effect": {
               "target": "AllPlayers",
               "amount": "1",
-              "text": "Each player draws a card.",
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -19877,7 +19612,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field. Deal it 2 damage and draw a card.",
+            "value": "[quick]\nSelect an enemy follower on the field. Deal it 2 damage and draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -19919,7 +19654,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -19937,7 +19671,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "2",
-              "text": "Select an enemy follower on the field. Deal it 2 damage and draw a card.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -19954,7 +19687,6 @@
             "effect": {
               "target": "Self",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.DrawCardEffect"
             },
             "target": null,
@@ -19979,7 +19711,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nPut a Guardform Golem or Strikeform Golem token into your EX area.",
+            "value": "[quick]\nPut a Guardform Golem or Strikeform Golem token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20021,7 +19753,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Put a Guardform Golem or Strikeform Golem token into your EX area.",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -20039,7 +19770,6 @@
               "tokenName": "Guardform Golem",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Guardform Golem",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -20057,7 +19787,6 @@
               "tokenName": "Strikeform Golem",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Strikeform Golem",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -20087,7 +19816,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Deal 5 damage to each enemy follower on the field.",
+            "value": "[fanfare] Deal 5 damage to each enemy follower on the field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20167,7 +19896,6 @@
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "5",
-              "text": "Deal 5 damage to each enemy follower on the field.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -20229,7 +19957,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card.",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -20248,7 +19975,6 @@
               "filter": null,
               "targetStats": "MaxPlayPoint",
               "amount": "1",
-              "text": "Increase your maximum play points by 1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -20266,7 +19992,6 @@
               "tokenName": "Strikeform Golem",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Draw a card",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -20291,7 +20016,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20448,7 +20173,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy follower on the field and deal it 3 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -20473,7 +20197,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> If Overflow is active for you, select an enemy follower on the field and deal it 4 damage. (Overflow becomes active if your maximum number of play points is at least 7.)",
+            "value": "[fanfare] If Overflow is active for you, select an enemy follower on the field and deal it 4 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20553,7 +20277,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "4",
-              "text": "Select an enemy follower on the field and deal it 4 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -20578,7 +20301,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)\n<sprite index=2> If Overflow is active for you, give this follower <sprite index=0>+2/<sprite index=1>+2.",
+            "value": "Ward.\n[fanfare] If Overflow is active for you, give this follower [attack]+2/[defense]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20664,7 +20387,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "2",
-              "text": "If Overflow is active for you, give this follower <sprite index=0>+2/<sprite index=1>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -20689,7 +20411,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=6>: Evolve this follower.\nStrike: Give this follower <sprite index=0>+1.",
+            "value": "[evolve][cost00]: Evolve this follower.\nStrike: Give this follower [attack]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20770,7 +20492,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "1",
-              "text": "Give this follower <sprite index=0>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -20795,7 +20516,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Strike: Give this follower <sprite index=0>+1/<sprite index=1>+1.",
+            "value": "Strike: Give this follower [attack]+1/[defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20867,7 +20588,6 @@
               "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
-              "text": "Give this follower <sprite index=0>+1/<sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -20892,7 +20612,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Select an enemy follower on the field and deal it 3 damage.",
+            "value": "[fanfare] Select an enemy follower on the field and deal it 3 damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -20972,7 +20692,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy follower on the field and deal it 3 damage.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -20997,7 +20716,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=2> If Overflow is active for you, put a Dragon token into your EX area.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] If Overflow is active for you, put a Dragon token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21077,7 +20796,6 @@
               "tokenName": "Dragon",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "If Overflow is active for you, put a Dragon token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -21102,7 +20820,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "On Evolve: If Overflow is active for you, give this follower <sprite index=0>+2. (Overflow becomes active if your maximum number of play points is at least 7.)",
+            "value": "On Evolve: If Overflow is active for you, give this follower [attack]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21174,7 +20892,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "2",
-              "text": "If Overflow is active for you, give this follower <sprite index=0>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -21199,7 +20916,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> If Overflow is active for you, give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)",
+            "value": "[fanfare] If Overflow is active for you, give this follower Storm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21280,7 +20997,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": "If Overflow is active for you, give this follower Storm.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -21310,7 +21026,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Summon 2 Forest Bat tokens.\n<sprite index=4><sprite index=23>, give your leader <sprite index=1>-1: Summon 2 Forest Bat tokens.\nWhenever a Forest Bat token is put onto your field, give it <sprite index=0>+1 and Ward.",
+            "value": "[fanfare] Summon 2 Forest Bat tokens.\n[act][engage], give your leader [defense]-1: Summon 2 Forest Bat tokens.\nWhenever a Forest Bat token is put onto your field, give it [attack]+1 and Ward.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21390,7 +21106,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "Field",
               "amount": "2",
-              "text": "Summon 2 Forest Bat tokens.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -21413,7 +21128,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "Field",
               "amount": "2",
-              "text": "<sprite index=4><sprite index=23>, leader <sprite index=1>-1: Summon 2 Forest Bat tokens.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -21434,7 +21148,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Whenever a Forest Bat token is put onto your field, give it <sprite index=0>+1 and Ward.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -21453,7 +21166,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -21472,7 +21184,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 0,
-              "text": null,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -21497,7 +21208,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Storm.\n<sprite index=2> Necrocharge (10): Give this follower <sprite index=0>+2.\nStrike: Select an enemy follower on the field. Deal it 4 damage and give your leader <sprite index=1>+4.",
+            "value": "Storm.\n[fanfare] Necrocharge (10): Give this follower [attack]+2.\nStrike: Select an enemy follower on the field. Deal it 4 damage and give your leader [defense]+4.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21583,7 +21294,6 @@
               "filter": null,
               "targetStats": "Attack",
               "amount": "2",
-              "text": "Necrocharge (10): Give this follower <sprite index=0>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -21603,7 +21313,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Select an enemy follower on the field. Deal it 4 damage and give your leader <sprite index=1>+4.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -21621,7 +21330,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "4",
-              "text": "Select an enemy follower on the field. Deal it 4 damage and give your leader <sprite index=1>+4.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -21640,7 +21348,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "4",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -21665,7 +21372,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21822,7 +21529,6 @@
               "tokenName": "Ghost",
               "createTokenOption": "Field",
               "amount": "3",
-              "text": "Summon 3 Ghost tokens.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -21847,7 +21553,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Summon a Forest Bat token.\nWhile this card is on your field, your Forest Bat tokens have Drain. (When a follower with Drain attacks and deals damage, its leader gains defense equal to the damage dealt.)",
+            "value": "[fanfare] Summon a Forest Bat token.\nWhile this card is on your field, your Forest Bat tokens have Drain.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -21927,7 +21633,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Forest Bat token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -22008,7 +21713,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -22026,7 +21730,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "Field",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -22044,7 +21747,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "f(Kn(\"Forest Bat\"))",
-              "text": "Select an enemy follower on the field and deal it X damage. X equals the number of Forest Bat tokens on your field.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -22069,7 +21771,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=2> Necrocharge (10): Give this follower Storm. (If your cemetery contains at least 10 cards, perform Necrocharge (10).)",
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] Necrocharge (10): Give this follower Storm.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -22150,7 +21852,6 @@
               "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
-              "text": "Necrocharge (10): Give this follower Storm.",
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "target": null,
@@ -22246,7 +21947,6 @@
               "tokenName": "Ghost",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Ghost token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -22271,7 +21971,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\n<sprite index=2> Put a Forest Bat token into your EX area.",
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] Put a Forest Bat token into your EX area.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -22351,7 +22051,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": "Put a Forest Bat token into your EX area.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -22376,7 +22075,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Strike: Give your leader <sprite index=1>+2.",
+            "value": "Strike: Give your leader [defense]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -22448,7 +22147,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "2",
-              "text": "Give your leader <sprite index=1>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -22473,7 +22171,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.",
+            "value": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -22515,7 +22213,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -22533,7 +22230,6 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "amount": "3",
-              "text": "Select an enemy follower on the field. Deal it 3 damage and put the top card of your deck into your cemetery.",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -22549,7 +22245,6 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.MillDeckEffect"
             },
             "target": null,
@@ -22611,7 +22306,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -22629,7 +22323,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -22647,7 +22340,6 @@
               "tokenName": "Forest Bat",
               "createTokenOption": "ExArea",
               "amount": "1",
-              "text": null,
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -22677,7 +22369,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.\nWhenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.",
+            "value": "[fanfare] Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.\nWhenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -22764,7 +22456,6 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "text": "Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
             "target": null,
@@ -22785,7 +22476,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": "Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -22803,7 +22493,6 @@
               "target": "OpponentLeader",
               "filter": null,
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -22821,7 +22510,6 @@
               "target": "AllOpponentCards",
               "filter": "F",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -22846,7 +22534,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4><sprite index=23>, put this card into its owner's cemetery: Select an enemy follower on the field and engage it.\n<sprite index=4><sprite index=16>, <sprite index=23>, put this card into its owner's cemetery: Banish each follower on the field.",
+            "value": "[act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and engage it.\n[act][cost10], [engage], put this card into its owner's cemetery: Banish each follower on the field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -22899,7 +22587,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "<sprite index=23>, put this card into its owner's cemetery: Select an enemy follower on the field and engage it.",
               "$type": "SVESimulator.EngageCardEffect"
             },
             "target": null,
@@ -22926,7 +22613,6 @@
             "effect": {
               "target": "AllCards",
               "filter": "F",
-              "text": "<sprite index=16>, <sprite index=23>, put this card into its owner's cemetery: Banish each follower on the field.",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
@@ -22951,7 +22637,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.",
+            "value": "[evolve][cost01]: Evolve this follower.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23107,7 +22793,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "Fd(m(0,3))",
-              "text": "Select an enemy follower with 3 defense or less on the field and banish it.",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
@@ -23132,7 +22817,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=24>\nSelect an enemy follower on the field. Banish it and give your leader <sprite index=1>+2.",
+            "value": "[quick]\nSelect an enemy follower on the field. Banish it and give your leader [defense]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23174,7 +22859,6 @@
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "text": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -23191,7 +22875,6 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "text": "Select an enemy follower on the field. Banish it and give your leader <sprite index=1>+2.",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,
@@ -23210,7 +22893,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "2",
-              "text": null,
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -23235,7 +22917,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=2> Summon a Holy Tiger token.\n<sprite index=4><sprite index=8>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Tiger token.",
+            "value": "[fanfare] Summon a Holy Tiger token.\n[act][cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23279,7 +22961,6 @@
               "tokenName": "Holy Tiger",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "Summon a Holy Tiger token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -23307,7 +22988,6 @@
               "tokenName": "Holy Tiger",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "<sprite index=8>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Tiger token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -23332,7 +23012,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\nWard.\nDuring each opponent's turn, this follower deals 1 more damage.",
+            "value": "[evolve][cost01]: Evolve this follower.\nWard.\nDuring each opponent's turn, this follower deals 1 more damage.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23545,7 +23225,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=5><sprite index=7>: Evolve this follower.\nWard.\n<sprite index=2> If there is an amulet on your field, give this follower <sprite index=1>+1.",
+            "value": "[evolve][cost01]: Evolve this follower.\nWard.\n[fanfare] If there is an amulet on your field, give this follower [defense]+1.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23631,7 +23311,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "1",
-              "text": "If there is an amulet on your field, give this follower <sprite index=1>+1.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -23656,7 +23335,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\nOn Evolve: Give your leader <sprite index=1>+2.",
+            "value": "Ward.\nOn Evolve: Give your leader [defense]+2.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23733,7 +23412,6 @@
               "filter": null,
               "targetStats": "Defense",
               "amount": "2",
-              "text": "Give your leader <sprite index=1>+2.",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -23758,7 +23436,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "<sprite index=4><sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Falcon token.",
+            "value": "[act][cost01], [engage], put this card into its owner's cemetery: Summon a Holy Falcon token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23812,7 +23490,6 @@
               "tokenName": "Holy Falcon",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "<sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Falcon token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
@@ -23837,7 +23514,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "This card is put onto the field engaged.\n<sprite index=4><sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Tiger token.",
+            "value": "This card is put onto the field engaged.\n[act][cost01], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -23896,7 +23573,6 @@
               "tokenName": "Holy Tiger",
               "createTokenOption": "Field",
               "amount": "1",
-              "text": "<sprite index=7>, <sprite index=23>, put this card into its owner's cemetery: Summon a Holy Tiger token.",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,

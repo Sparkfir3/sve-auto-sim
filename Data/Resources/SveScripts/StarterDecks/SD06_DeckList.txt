@@ -11,12 +11,10 @@ text "[fanfare] Look at the top 4 cards of your deck. You may reveal an amulet f
       Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.";
 
 ability Fanfare {
-    text "Look at the top 4 cards of your deck. You may reveal an amulet from among them and put it onto your field. Put the remaining cards into your cemetery.";
     effect CheckTop(4, (Field, A, m(0,1)), (Cemetery));
 }
 ability OnOtherLeaveField {
     filter A;
-    text "Whenever an amulet you control leaves the field, deal 2 damage to each enemy leader and enemy follower on the field.";
     effect Sequence("Damage Leader", "Damage Followers");
 }
 ability Spell name "Damage Leader" {
@@ -42,12 +40,10 @@ text "[act][engage], put this card into its owner's cemetery: Select an enemy fo
 ability Activate name "Engage" {
     condition p(#F);
     cost (EngageSelf), (SendToCemetery, Self);
-    text "[engage], put this card into its owner's cemetery: Select an enemy follower on the field and engage it.";
     effect EngageCard() to TargetOpponentCard F;
 }
 ability Activate name "Banish" {
     cost (PP, 10), (EngageSelf), (SendToCemetery, Self);
-    text "[cost10], [engage], put this card into its owner's cemetery: Banish each follower on the field.";
     effect Banish() to AllCards F;
 }
 
@@ -79,7 +75,6 @@ stats 4/4;
 text "On Evolve: Select an enemy follower with 3 defense or less on the field and banish it.";
 
 ability OnEvolve {
-    text "Select an enemy follower with 3 defense or less on the field and banish it.";
     effect Banish() to TargetOpponentCard Fd(m(0,3));
 }
 
@@ -101,7 +96,6 @@ ability Spell {
     effect Sequence("Banish", "Defense");
 }
 ability Spell name Banish {
-    text "Select an enemy follower on the field. Banish it and give your leader [defense]+2.";
     effect Banish() to TargetOpponentCard F;
 }
 ability Spell name Defense {
@@ -122,12 +116,10 @@ text "[fanfare] Summon a Holy Tiger token.
       [act][cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
 
 ability Fanfare {
-    text "Summon a Holy Tiger token.";
     effect SummonToken("Holy Tiger", Field, 1);
 }
 ability Act {
     cost (PP, 2), (EngageSelf), (SendToCemetery, Self);
-    text "[cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
     effect SummonToken("Holy Tiger", Field, 1);
 }
 
@@ -145,7 +137,6 @@ stats 3/3;
 text "[fanfare] Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.";
 
 ability Fanfare {
-    text "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.";
     effect CemeteryToField(1, Ap(m(0,5)));
 }
 
@@ -222,7 +213,6 @@ evolve 1;
 keyword Ward;
 ability Fanfare {
     condition f(A);
-    text "If there is an amulet on your field, give this follower [defense]+1.";
     effect GiveStat(Def, 1) to Self;
 }
 
@@ -241,7 +231,6 @@ text "Ward.
 
 keyword Ward;
 ability OnEvolve {
-    text "Give your leader [defense]+2.";
     effect GiveStat(Def, 2) to Leader;
 }
 
@@ -260,7 +249,6 @@ text "[quick]
 
 keyword Quick;
 ability Spell {
-    text "Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
     effect CheckTop(5, (Hand, A, 1), (BottomDeckAnyOrder));
 }
 
@@ -281,7 +269,6 @@ keyword PutOnFieldEngaged;
 ability Activate {
     condition p(#F);
     cost (EngageSelf), (SendToCemetery, Self);
-    text "[engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.";
     effect Destroy() to TargetOpponentCard F;
 }
 
@@ -299,7 +286,6 @@ text "[act][cost01], [engage], put this card into its owner's cemetery: Summon a
 
 ability Activate {
     cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
-    text "[cost01], [engage], put this card into its owner's cemetery: Summon a Holy Falcon token.";
     effect SummonToken("Holy Falcon", Field, 1);
 }
 
@@ -319,7 +305,6 @@ text "This card is put onto the field engaged.
 keyword PutOnFieldEngaged;
 ability Activate {
     cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
-    text "[cost01], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
     effect SummonToken("Holy Tiger", Field, 1);
 }
 

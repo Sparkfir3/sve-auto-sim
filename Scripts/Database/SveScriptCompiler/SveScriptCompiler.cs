@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -20,8 +21,10 @@ namespace SVESimulator.SveScript
             ParseSveScriptCardSet(File.ReadAllText(fileName), outputPath);
         }
 
-        public static void ParseSveScriptCardSet(in string text, in string outputPath)
+        public static void ParseSveScriptCardSet(in string text, in string outputPath) => ParseSveScriptCardSet(text, outputPath, out _);
+        public static void ParseSveScriptCardSet(in string text, in string outputPath, out List<string> outputFilePaths)
         {
+            outputFilePaths = new List<string>();
             if(string.IsNullOrWhiteSpace(outputPath))
                 return;
 
@@ -34,6 +37,7 @@ namespace SVESimulator.SveScript
                 string folderName = cardID.Split("-")?[0];
                 string fullFolderPath = !string.IsNullOrWhiteSpace(folderName) ? Path.Combine(outputPath, folderName) : outputPath;
                 string outputFile = Path.Combine(fullFolderPath, $"{cardID}.json");
+                outputFilePaths.Add(outputFile);
 
                 if(!Directory.Exists(fullFolderPath))
                     Directory.CreateDirectory(fullFolderPath);
