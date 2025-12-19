@@ -55,9 +55,11 @@ namespace SVESimulator.UI
             string id = libraryCard.GetStringProperty(SVEProperties.CardStats.ID);
             if(currentCardId.Equals(id))
                 return;
+            LibraryCardCache.CacheCard(libraryCard);
+            currentCardId = id;
 
             SetImage(CardTextureManager.GetCardTexture(id));
-            SetNameAndIDText(libraryCard.name, id);
+            SetNameAndIDText(LibraryCardCache.GetName(libraryCard.id), LibraryCardCache.GetDisplayId(libraryCard.id));
 
             if(libraryCard.cardTypeId == leaderTypeId)
             {
@@ -65,8 +67,8 @@ namespace SVESimulator.UI
                 SetTraitText("");
                 return;
             }
-            SetMainText(libraryCard.GetStringProperty(SVEProperties.CardStats.Text));
-            SetTraitText(libraryCard.GetStringProperty(SVEProperties.CardStats.Trait));
+            SetMainText(LibraryCardCache.GetCardText(libraryCard.id));
+            SetTraitText(LibraryCardCache.GetCardTrait(libraryCard.id));
         }
 
         public void Hide()

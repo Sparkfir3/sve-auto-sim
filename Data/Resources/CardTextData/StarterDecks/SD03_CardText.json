@@ -1,0 +1,244 @@
+[
+  {
+    "id": "SD03-001EN",
+    "name": "Mythril Golem",
+    "trait": "Golem",
+    "cardText": "[fanfare] Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 3 damage to each enemy follower on the field. Spellchain (7): Deal 5 damage instead. SC (15): Deal 5 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "SD03-002EN",
+    "name": "Rune Blade Summoner",
+    "trait": "Mage",
+    "cardText": "[fanfare] Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Spellchain (5): Give this follower [attack]+4/[defense]+4. SC (10): Give this follower Storm."
+      }
+    ]
+  },
+  {
+    "id": "SD03-003EN",
+    "name": "Demonflame Mage",
+    "trait": "Mage",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "SD03-004EN",
+    "name": "Demonflame Mage (Evolved)",
+    "trait": "Mage",
+    "cardText": "On Evolve: Deal 2 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Deal 2 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "SD03-005EN",
+    "name": "Insight",
+    "trait": "Mage",
+    "cardText": "[quick]\nDraw a card."
+  },
+  {
+    "id": "SD03-006EN",
+    "name": "Fire Chain",
+    "trait": "Mage",
+    "cardText": "[quick]\nSelect up to 2 enemy followers on the field and deal 3 damage divided between them.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 2 enemy followers on the field and deal 3 damage divided between them."
+      }
+    ]
+  },
+  {
+    "id": "BP01-070EN",
+    "name": "Lightning Shooter",
+    "trait": "Mage",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader."
+      }
+    ]
+  },
+  {
+    "id": "SD03-008EN",
+    "name": "Penguin Wizard",
+    "trait": "Arcanaform",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[act][engage], discard a spell: Draw a card.",
+    "effectText": [
+      {
+        "key": "Activate",
+        "text": "[act][engage], discard a spell: Draw a card.",
+        "trigger": "[act]",
+        "cost": "Discard a spell",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "SD03-009EN",
+    "name": "Penguin Wizard (Evolved)",
+    "trait": "Arcanaform",
+    "cardText": "On Evolve: Refresh this card.\n[act][engage], discard a spell: Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Refresh this card."
+      },
+      {
+        "key": "Activate",
+        "text": "[act][engage], discard a spell: Draw a card.",
+        "trigger": "[act]",
+        "cost": "Discard a spell",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "SD03-010EN",
+    "name": "Sammy, Wizard's Apprentice",
+    "trait": "Mage",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Look at the top card of your deck. You may put it into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top card of your deck. You may put it into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "SD03-011EN",
+    "name": "Sammy, Wizard's Apprentice (Evolved)",
+    "trait": "Mage",
+    "cardText": "On Evolve: Each player draws a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Each player draws a card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-071EN",
+    "name": "Wind Blast",
+    "trait": "Mage",
+    "cardText": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP01-072EN",
+    "name": "Sorcery Cache",
+    "trait": "Mage",
+    "cardText": "[quick]\nLook at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Look at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP01-073EN",
+    "name": "Fiery Embrace",
+    "trait": "Mage",
+    "cardText": "[quick]\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
+    "effectText": [
+      {
+        "key": "Destroy Follower",
+        "body": "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader."
+      }
+    ]
+  },
+  {
+    "id": "SD03-015EN",
+    "name": "Magic Missile",
+    "trait": "Mage",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 2 damage and draw a card.",
+    "effectText": [
+      {
+        "key": "Damage Follower",
+        "body": "Select an enemy follower on the field. Deal it 2 damage and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "SD03-016EN",
+    "name": "Conjure Golem",
+    "trait": "Mage",
+    "cardText": "[quick]\nPut a Guardform Golem or Strikeform Golem token into your EX area.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": "Put a Guardform Golem or Strikeform Golem token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP01-177EN",
+    "name": "Healing Angel",
+    "trait": "Angel",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP01-178EN",
+    "name": "Healing Angel (Evolved)",
+    "trait": "Angel",
+    "cardText": "On Evolve: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD05EN",
+    "name": "Isabelle"
+  },
+  {
+    "id": "BP01-T08EN",
+    "name": "Strikeform Golem",
+    "trait": "Golem / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP01-T09EN",
+    "name": "Guardform Golem",
+    "trait": "Golem / Token",
+    "cardText": "Ward."
+  }
+]

@@ -28,7 +28,7 @@ namespace SVESimulator
             return player.GetPlayerInfo().namedZones[SVEProperties.Zones.Cemetery].cards.Count(x => filters.MatchesCard(x)) >= value;
         }
 
-        public override IEnumerator PayCost(PlayerController player, CardObject card, SveEffect effect, List<MoveCardToZoneData> cardsToMove)
+        public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
             bool waiting = true;
             int banishAmount = SVEFormulaParser.ParseValue(amount);
@@ -40,7 +40,7 @@ namespace SVESimulator
             selectionArea.AddCemetery();
             selectionArea.SetConfirmAction(LibraryCardCache.GetCard(card.RuntimeCard.cardId).name,
                 "Banish",
-                effect?.text,
+                LibraryCardCache.GetEffectTextCost(card.LibraryCard.id, abilityName),
                 banishAmount, banishAmount,
                 cards =>
                 {

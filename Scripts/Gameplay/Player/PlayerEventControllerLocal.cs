@@ -966,9 +966,9 @@ namespace SVESimulator
                         continue;
 
                     if(sveCost is RemoveCountersCost removeCounterCost)
-                        yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, effect, countersToRemove));
+                        yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, abilityName, countersToRemove));
                     else
-                        yield return StartCoroutine(sveCost.PayCost(playerController, card, effect, cardsToMove));
+                        yield return StartCoroutine(sveCost.PayCost(playerController, card, abilityName, cardsToMove));
                 }
 
                 // Cards with Stack - implicit convert "move card" into "remove stack counter"

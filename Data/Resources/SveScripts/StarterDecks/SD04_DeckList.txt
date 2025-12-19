@@ -10,7 +10,6 @@ stats 7/8;
 text "[fanfare] Deal 5 damage to each enemy follower on the field.";
 
 ability Fanfare name "Fanfare" {
-    text "Deal 5 damage to each enemy follower on the field.";
     effect DealDamage(5) to AllOpponentCards F;
 }
 
@@ -28,15 +27,12 @@ text "Choose one of the following effects. (1) Increase your maximum play points
 
 ability Spell {
     effect ChooseFromList("Increase PP", "Draw");
-    text "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card.";
 }
 ability Spell name "Increase PP" {
     effect GiveStat(MaxPP, 1) to Leader;
-    text "Increase your maximum play points by 1";
 }
 ability Spell name "Draw" {
     effect SummonToken(Strikeform Golem, ExArea, 1);
-    text "Draw a card";
 }
 
 // ------------------------------
@@ -68,7 +64,6 @@ text "On Evolve: Select an enemy follower on the field and deal it 3 damage.";
 
 ability OnEvolve name "On Evolve" {
     effect DealDamage(3) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 3 damage.";
 }
 
 // ------------------------------
@@ -82,12 +77,11 @@ rarity S;
 cost 2;
 stats 2/3;
 
-text "[fanfare] If Overflow is active for you, select an enemy follower on the field and deal it 4 damage. (Overflow becomes active if your maximum number of play points is at least 7.)";
+text "[fanfare] If Overflow is active for you, select an enemy follower on the field and deal it 4 damage.";
 
 ability Fanfare {
     condition o;
     effect DealDamage(4) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 4 damage.";
 }
 
 // ------------------------------
@@ -101,13 +95,12 @@ rarity S;
 cost 4;
 stats 4/5;
 
-text "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)
+text "Ward.
       [fanfare] If Overflow is active for you, give this follower [attack]+2/[defense]+2.";
 
 keyword Ward;
 ability Fanfare {
     condition o;
-    text "If Overflow is active for you, give this follower [attack]+2/[defense]+2.";
     effect GiveStat(AtkDef, 2) to Self;
 }
 
@@ -126,7 +119,6 @@ text "[fanfare] Select an enemy leader or enemy follower on the field and deal i
 
 ability Fanfare {
     effect DealDamage(1) to TargetOpponentCardOrLeader F;
-    text "Select an enemy leader or enemy follower on the field and deal it 1 damage.";
 }
 
 // ------------------------------
@@ -144,7 +136,6 @@ text "[fanfare] Select an enemy follower on the field and deal it 7 damage.";
 
 ability Fanfare {
     effect DealDamage(7) to TargetOpponentCardOrLeader F;
-    text "Select an enemy follower on the field and deal it 7 damage.";
 }
 
 // ------------------------------
@@ -163,7 +154,6 @@ text "[evolve][cost00]: Evolve this follower.
 
 evolve 0;
 ability Strike {
-    text "Give this follower [attack]+1.";
     effect GiveStat(Atk, 1) to Self;
 }
 
@@ -180,7 +170,6 @@ stats 3/3;
 text "Strike: Give this follower [attack]+1/[defense]+1.";
 
 ability Strike {
-    text "Give this follower [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to Self;
 }
 
@@ -199,7 +188,6 @@ text "[fanfare] Select an enemy follower on the field and deal it 3 damage.";
 
 ability Fanfare {
     effect DealDamage(3) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 3 damage.";
 }
 
 // ------------------------------
@@ -219,7 +207,6 @@ text "[evolve][cost01]: Evolve this follower.
 evolve 1;
 ability Fanfare {
     condition o;
-    text "If Overflow is active for you, put a Dragon token into your EX area.";
     effect SummonToken(Dragon, ExArea, 1);
 }
 
@@ -233,11 +220,10 @@ trait Dragonheart;
 rarity B;
 stats 3/3;
 
-text "On Evolve: If Overflow is active for you, give this follower [attack]+2. (Overflow becomes active if your maximum number of play points is at least 7.)";
+text "On Evolve: If Overflow is active for you, give this follower [attack]+2.";
 
 ability OnEvolve {
     condition o;
-    text "If Overflow is active for you, give this follower [attack]+2.";
     effect GiveStat(Atk, 2) to Self;
 }
 
@@ -252,11 +238,10 @@ rarity B;
 cost 4;
 stats 4/4;
 
-text "[fanfare] If Overflow is active for you, give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)";
+text "[fanfare] If Overflow is active for you, give this follower Storm.";
 
 ability Fanfare {
     condition o;
-    text "If Overflow is active for you, give this follower Storm.";
     effect GiveKeyword(Storm) to Self;
 }
 
@@ -271,13 +256,12 @@ rarity B;
 cost 1;
 
 text "[quick]
-      Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)";
+      Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.";
 
 keyword Quick;
 ability Spell {
     condition p(#F);
     effect DealDamage(2o4) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.";
 }
 
 // ------------------------------
@@ -290,7 +274,7 @@ trait Wyrmkin;
 rarity B;
 cost 1;
 
-text "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead. (Overflow becomes active if your maximum number of play points is at least 7.)";
+text "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead.";
 
 ability Spell {
     effect DealDamage(2o3) to AllOpponentCards F;

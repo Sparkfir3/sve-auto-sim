@@ -28,7 +28,7 @@ namespace SVESimulator
             return player.GetPlayerInfo().namedZones[SVEProperties.Zones.Hand].cards.Count(x => filters.MatchesCard(x)) >= value;
         }
 
-        public override IEnumerator PayCost(PlayerController player, CardObject card, SveEffect effect, List<MoveCardToZoneData> cardsToMove)
+        public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
             bool waiting = true;
             int discardAmount = SVEFormulaParser.ParseValue(amount);
@@ -38,7 +38,7 @@ namespace SVESimulator
             selectionArea.SetFilter(filter);
             selectionArea.SetConfirmAction(LibraryCardCache.GetCard(card.RuntimeCard.cardId).name,
                 "Discard",
-                effect?.text,
+                LibraryCardCache.GetEffectTextCost(card.LibraryCard.id, abilityName),
                 discardAmount, discardAmount,
                 cards =>
                 {

@@ -54,10 +54,10 @@ namespace SVESimulator
             }
         }
 
-        public override IEnumerator PayCost(PlayerController player, CardObject card, SveEffect effect, List<MoveCardToZoneData> cardsToMove)
+        public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
             bool waiting = true;
-            TargetCardForCostEffect getTargetsEffect = CostTargetingEffect(effect?.text);
+            TargetCardForCostEffect getTargetsEffect = CostTargetingEffect(LibraryCardCache.GetEffectTextCost(card.LibraryCard.id, abilityName));
             List<CardObject> targetCards = null;
 
             getTargetsEffect.GetTargets(player, card.RuntimeCard.instanceId, card.CurrentZone.Runtime.name, targets =>
@@ -73,11 +73,11 @@ namespace SVESimulator
             yield return null;
         }
 
-        protected virtual TargetCardForCostEffect CostTargetingEffect(string text = null)
+        protected TargetCardForCostEffect CostTargetingEffect(string text = null)
         {
             return new TargetCardForCostEffect()
             {
-                text = text.IsNullOrWhiteSpace() ? "" : $"Pay Cost for: {text}",
+                text = text ?? "",
                 target = target,
                 filter = filter
             };

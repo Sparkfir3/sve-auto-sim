@@ -63,7 +63,7 @@ namespace SVESimulator
                 ActivatedAbility ability = abilities[i]; // need to detach reference from var i for the button event
 
                 button.gameObject.SetActive(true);
-                button.Text = (ability.effect as SveEffect)?.text;
+                button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
                     && (ability.effect is EvolveEffect evolveEffect ? evolveEffect.CanEvolve(player, card.RuntimeCard) : true);
                 button.OnClickEffect.AddListener(() =>

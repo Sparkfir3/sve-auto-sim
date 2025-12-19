@@ -9,7 +9,6 @@ namespace SVESimulator
 {
     public abstract class SveEffect : Effect
     {
-        [StringField("Text", width = 400), Order(0)]
         public string text;
 
         // ------------------------------

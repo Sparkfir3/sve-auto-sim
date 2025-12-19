@@ -7,19 +7,16 @@ rarity L;
 cost 6;
 stats 5/4;
 
-text "[fanfare] Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)";
+text "[fanfare] Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.";
 
 ability Fanfare {
     effect ChooseFromList("Destroy Enemy", "Give Storm");
-    text "Choose one of the following effects. (1) Select an enemy follower on the field and destroy it. (2) Give this follower Storm.";
 }
 ability Spell name "Destroy Enemy" {
     effect DestroyCard() to TargetOpponentCard F;
-    text "Select an enemy follower on the field and destroy it.";
 }
 ability Spell name "Give Storm" {
     effect GiveKeyword(Storm) to Self;
-    text "Give this follower Storm.";
 }
 
 // ------------------------------
@@ -61,7 +58,6 @@ stats 4/4;
 text "On Evolve: Summon a Steelclad Knight and Knight token.";
 
 ability OnEvolve name "On Evolve" {
-    text "Summon a Steelclad Knight and Knight token.";
     effect Sequence("Steelclad Knight", "Knight");
 }
 ability Spell name "Steelclad Knight" {
@@ -82,12 +78,11 @@ rarity S;
 cost 2;
 stats 3/2;
 
-text "[act][cost01]: Give this follower Bane. (Followers attacking or attacked by a follower with Bane are destroyed after damage is exchanged.)";
+text "[act][cost01]: Give this follower Bane.";
 
 ability Act name "Act" {
     cost (PP, 1);
     effect GiveKeyword(Bane) to Self;
-    text "[act][cost01]: Give this follower Bane.";
 }
 
 // ------------------------------
@@ -101,13 +96,12 @@ rarity S;
 cost 4;
 stats 5/3;
 
-text "Rush. (Followers with Rush can attack enemy followers on the turn they're put onto your field.)
+text "Rush.
 Strike: Select another follower on your field and give it [attack]+2.";
 
 keywords Rush;
 ability Strike {
     effect GiveStat(Atk, 2) to TargetPlayerCard FX;
-    text "Select another follower on your field and give it [attack]+2.";
 }
 
 // ------------------------------
@@ -132,7 +126,7 @@ rarity B;
 cost 2;
 stats 2/3;
 
-text "Ward. (This follower can be engaged when it's put onto your field or during your end phase. When followers with Ward are engaged, your opponent can only attack them.)";
+text "Ward.";
 
 keywords Ward;
 
@@ -151,7 +145,6 @@ text "[fanfare] Select another follower on your field and give it [attack]+1/[de
 
 ability Fanfare name "Fanfare" {
     effect GiveStat(AtkDef, 1) to TargetPlayerCard FX;
-    text "Select another follower on your field and give it [attack]+1/[defense]+1.";
 }
 
 // ------------------------------
@@ -170,7 +163,6 @@ text "[evolve][cost01]: Evolve this follower.
 
 evolve 1;
 ability Fanfare name "Fanfare" {
-    text "Summon a Knight token.";
     effect SummonToken(Knight, Field, 1);
 }
 
@@ -184,7 +176,7 @@ trait Officer;
 rarity B;
 stats 3/1;
 
-text "Assail. (Followers with Assail can attack reserved followers.)";
+text "Assail.";
 
 keyword Assail;
 
@@ -200,7 +192,7 @@ cost 1;
 stats 1/1;
 
 text "[evolve][cost03]: Evolve this follower.
-Storm. (Followers with Storm can attack enemy followers and leaders on the turn they're put onto your field.)";
+Storm.";
 
 evolve 3;
 keyword Storm;
@@ -215,7 +207,7 @@ trait Officer;
 rarity B;
 stats 3/3;
 
-text "";
+text "Storm.";
 
 keyword Storm;
 
@@ -239,7 +231,6 @@ ability Spell name "Sequence" {
 }
 ability Spell name "Give +1/+1" {
     effect GiveStat(AtkDef, 1) to TargetPlayerCard F;
-    text "Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.";
 }
 ability Spell name "Draw" {
     effect DrawCard(1) to Self;
@@ -263,7 +254,6 @@ ability Spell name "Sequence" {
 }
 ability Spell name "Deal Damage" {
     effect DealDamage(5) to TargetOpponentCard F;
-    text "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.";
 }
 ability Spell name "Knight" {
     effect SummonToken(Knight, ExArea, 1);
@@ -286,7 +276,6 @@ keyword Quick;
 ability Spell name "Deal X Damage" {
     condition p(#F);
     effect DealDamage(f(F)) to TargetOpponentCard F;
-    text "Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field.";
 }
 
 // ------------------------------
