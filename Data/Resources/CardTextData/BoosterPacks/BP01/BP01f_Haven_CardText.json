@@ -1,0 +1,240 @@
+[
+  {
+    "id": "BP01-126EN",
+    "name": "Moon Al-mi'raj",
+    "trait": "Beast",
+    "cardText": "Storm.\nFollower Strike: Give this follower [attack]+2.\nAt the start of your end phase, give this follower [defense]+2.",
+    "effectText": [
+      {
+        "key": "FollowerStrike",
+        "trigger": "Follower Strike:",
+        "body": "Give this follower [attack]+2."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give this follower [defense]+2.",
+        "trigger": "At the start of your end phase",
+        "body": "Give this follower [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-127EN",
+    "name": "Jeanne d'Arc",
+    "trait": "Luminary",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Deal 2 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 2 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP01-128EN",
+    "name": "Jeanne d'Arc (Evolved)",
+    "trait": "Luminary",
+    "cardText": "On Evolve: Deal 2 damage to each enemy follower on the field. Give each other follower on your field [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Deal 2 damage to each enemy follower on the field. Give each other follower on your field [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-129EN",
+    "name": "Arch Priestess Laelia",
+    "trait": "Faith",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWhile this card is on your field, your followers deal damage equal to their defense."
+  },
+  {
+    "id": "BP01-130EN",
+    "name": "Arch Priestess Laelia (Evolved)",
+    "trait": "Faith",
+    "cardText": "While this card is on your field, your followers deal damage equal to their defense.\nAt the start of your end phase, give this follower [defense]+2.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give this follower [defense]+2.",
+        "trigger": "At the start of your end phase",
+        "body": "Give this follower [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-131EN",
+    "name": "Themis's Decree",
+    "trait": "Faith",
+    "cardText": "Destroy each follower on the field."
+  },
+  {
+    "id": "BP01-132EN",
+    "name": "Chorus of Prayer",
+    "trait": "Faith",
+    "cardText": "Select up to 3 amulets that cost 5 play points or less in your cemetery and put them onto your field.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 3 amulets that cost 5 play points or less in your cemetery and put them onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP01-133EN",
+    "name": "Sacred Plea",
+    "trait": "Faith",
+    "cardText": "[act][engage], put this card into its owner's cemetery: Draw a card.\n[act][cost02], [engage], put this card into its owner's cemetery: Draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Draw",
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Draw a card."
+      },
+      {
+        "key": "Draw 2",
+        "trigger": "[act]",
+        "cost": "[cost02][engage], put this card into its owner's cemetery",
+        "body": "Draw 2 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP01-134EN",
+    "name": "Temple Defender",
+    "trait": "Faith",
+    "cardText": "Ward.\nReduce damage dealt to this follower by 1."
+  },
+  {
+    "id": "BP01-135EN",
+    "name": "Prism Priestess",
+    "trait": "Faith",
+    "cardText": "[evolve][cost02]: Evolve this follower."
+  },
+  {
+    "id": "BP01-136EN",
+    "name": "Prism Priestess (Evolved)",
+    "trait": "Faith",
+    "cardText": "On Evolve: Search your deck for an amulet, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Search your deck for an amulet, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP01-137EN",
+    "name": "Cleric Lancer",
+    "trait": "Faith",
+    "cardText": "Ward.\nDuring each opponent's turn, this follower deals 4 more damage."
+  },
+  {
+    "id": "BP01-138EN",
+    "name": "Shrine Knight Maiden",
+    "trait": "Faith",
+    "cardText": "Ward. Aura."
+  },
+  {
+    "id": "BP01-139EN",
+    "name": "Blackened Scripture",
+    "trait": "Zealot",
+    "cardText": "[quick]\nSelect an enemy follower with 3 defense or less on the field and banish it.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower with 3 defense or less on the field and banish it."
+      }
+    ]
+  },
+  {
+    "id": "BP01-140EN",
+    "name": "Dark Offering",
+    "trait": "Zealot",
+    "cardText": "[quick]\nSelect a card on your field. Destroy it, give your leader [defense]+3, and draw a card.",
+    "effectText": [
+      {
+        "key": "Destroy",
+        "body": "Select a card on your field. Destroy it, give your leader [defense]+3, and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-141EN",
+    "name": "Holy Sentinel",
+    "trait": "Faith / Beast",
+    "cardText": "Once on each of your turns, when another amulet you control leaves the field, summon a Holy Tiger token and give it Ward.",
+    "effectText": [
+      {
+        "key": "OnOtherLeaveField",
+        "text": "Once on each of your turns, when another amulet you control leaves the field, summon a Holy Tiger token and give it Ward.",
+        "body": "Summon a Holy Tiger token and give it Ward."
+      }
+    ]
+  },
+  {
+    "id": "BP01-143EN",
+    "name": "Sister Initiate",
+    "trait": "Faith",
+    "cardText": "[fanfare] If there is an amulet on your field, give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is an amulet on your field, give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-144EN",
+    "name": "Mainyu",
+    "trait": "Zealot",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nAura."
+  },
+  {
+    "id": "BP01-145EN",
+    "name": "Mainyu (Evolved)",
+    "trait": "Zealot",
+    "cardText": "Aura."
+  },
+  {
+    "id": "BP01-147EN",
+    "name": "Curate",
+    "trait": "Faith",
+    "cardText": "[fanfare] Give your leader [defense]+5. Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+5. Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-149EN",
+    "name": "Guardian Sun",
+    "trait": "Faith",
+    "cardText": "[fanfare] Select a follower on your field and give it Ward.\n[act][cost02], [engage], put this card into its owner's cemetery: Select a follower with Ward on your field and give it [attack]+2/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a follower on your field and give it Ward."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02], [engage], put this card into its owner's cemetery",
+        "body": "Select a follower with Ward on your field and give it [attack]+2/[defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD12EN",
+    "name": "Ramina, Crescent Beast"
+  }
+]
