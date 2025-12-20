@@ -13950,7 +13950,7 @@
             "effect": {
               "target": "Self",
               "amount": "m(0,3)",
-              "filter": "Ap(0,5)",
+              "filter": "Ap(m(0,5))",
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,
@@ -14586,7 +14586,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "p(Fd(0,3))",
+              "condition": "p(Fd(m(0,3)))",
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -14594,7 +14594,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TargetOpponentCard",
-              "filter": "Fd(0,3)",
+              "filter": "Fd(m(0,3))",
               "$type": "SVESimulator.BanishCardEffect"
             },
             "target": null,

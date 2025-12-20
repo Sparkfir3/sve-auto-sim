@@ -128,7 +128,7 @@ cost 7;
 text "Select up to 3 amulets that cost 5 play points or less in your cemetery and put them onto your field.";
 
 ability Spell {
-    effect CemeteryToField(m(0,3), Ap(0,5));
+    effect CemeteryToField(m(0,3), Ap(m(0,5)));
 }
 
 // ------------------------------
@@ -249,8 +249,8 @@ text "[quick]
 
 keyword Quick;
 ability Spell {
-    condition p(Fd(0,3));
-    effect Banish() to TargetOpponentCard Fd(0,3);
+    condition p(Fd(m(0,3)));
+    effect Banish() to TargetOpponentCard Fd(m(0,3));
 }
 
 // ------------------------------
