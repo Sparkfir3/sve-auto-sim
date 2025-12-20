@@ -343,6 +343,7 @@ namespace SVESimulator
                 if(card.IsToken())
                 {
                     // Do nothing - destroy card
+                    continue;
                 }
                 if(card.IsEvolvedType())
                 {
@@ -355,6 +356,8 @@ namespace SVESimulator
                     else
                         endZone.AddCard(cardToMove);
                 }
+                if(startZone.name.Equals(SVEProperties.Zones.Field) && cardToMove.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat))
+                    engagedStat.baseValue = 0;
             }
         }
 
