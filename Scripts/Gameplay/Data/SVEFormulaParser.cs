@@ -52,10 +52,6 @@ namespace SVESimulator
             Necrocharge,
             Sanguine,
 
-            // Zones
-            CardCountOnField,
-            CardCountOnOpponentField,
-
             // Card Properties
             Trait,
             Keyword,
@@ -76,6 +72,7 @@ namespace SVESimulator
             LessThan,
             BooleanOr,
             BooleanAnd,
+            Conditional,
 
             // Other
             InstanceID,
@@ -126,6 +123,7 @@ namespace SVESimulator
                 '<' => FormulaType.LessThan,
                 '|' => FormulaType.BooleanOr,
                 '&' => FormulaType.BooleanAnd,
+                '?' => FormulaType.Conditional,
                 _ => FormulaType.None
             };
             switch(formulaType)
@@ -159,6 +157,14 @@ namespace SVESimulator
                 case FormulaType.Sanguine:
                     if(!player || !player.Sanguine)
                         return leftHandValue;
+                    break;
+
+                case FormulaType.Conditional:
+                    nextIndex++; // Move past open parentheses
+                    int conditionalCheck = ParseValue(formula[nextIndex..].TextInsideParentheses(out _, out int conditionalCloseIndex), player, card);
+                    if(conditionalCheck <= 0)
+                        return leftHandValue;
+                    nextIndex += conditionalCloseIndex + 1; // Move past parentheses content + close parentheses
                     break;
             }
             while(nextIndex < formula.Length && formula[nextIndex] == ' ')
@@ -239,6 +245,9 @@ namespace SVESimulator
                 case 'H': // Cards in hand
                     value = player ? player.ZoneController.handZone.Runtime.numCards : 0;
                     break;
+                case 'L': // Leader defense
+                    value = player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.Defense].effectiveValue : 0;
+                    break;
                 case 'A': // Attack
                     value = card != null ? card.namedStats[SVEProperties.CardStats.Attack].effectiveValue : 0;
                     Debug.Assert(card != null, $"Attempted to parse card's Attack for value formula {formula}, but no card was provided");
@@ -260,6 +269,12 @@ namespace SVESimulator
                     endIndex += indexDelta + 1; // Move past close parentheses
                     value = player ? player.ZoneController.exAreaZone.GetAllPrimaryCards().Count(x => filterEX.MatchesCard(x.RuntimeCard)) : 0;
                     break;
+                case 'y': // Count in cemetery matching filter
+                    Dictionary<CardFilterSetting, string> filterCemetery = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
+                    endIndex += indexDelta + 1; // Move past close parentheses
+                    value = player ? player.ZoneController.cemeteryZone.AllCards.Count(x => filterCemetery.MatchesCard(x.RuntimeCard)) : 0;
+                    break;
+
                 case 'p': // Count on opponent's field matching filter
                     Dictionary<CardFilterSetting, string> filterP = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
