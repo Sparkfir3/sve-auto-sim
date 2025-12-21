@@ -66,6 +66,10 @@ namespace SVESimulator
 
     public class SveOnAttackTrigger : SveTrigger { }
 
+    public class SveOnAttackFollowerTrigger : SveTrigger { }
+
+    public class SveOnAttackLeaderTrigger : SveTrigger { }
+
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
     public class SveOnPlaySpellTrigger : SveTrigger { }

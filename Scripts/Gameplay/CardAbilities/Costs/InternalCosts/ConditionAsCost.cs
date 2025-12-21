@@ -8,6 +8,8 @@ namespace SVESimulator
     // Used to store condition of act abilities and calculate if it can be used during the "can pay cost" check
     public class ConditionAsCost : SveCost
     {
+        public override bool IsInternalCost => true;
+
         [StringField("Condition", width = 100), Order(1)]
         public string condition;
 

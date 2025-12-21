@@ -60,7 +60,7 @@ namespace SVESimulator
                 cardInstanceId = msg.cardInstanceId
             };
             server.SafeSendToClient(server.gameState.currentOpponent, oppAtkMsg);
-            (server.effectSolver as SVEEffectSolver).DeclareAttack(player.netId, card);
+            (server.effectSolver as SVEEffectSolver).DeclareAttack(player.netId, card, msg.isAttackingLeader);
         }
 
         private void OnAttackFollower(NetworkConnection conn, LocalAttackFollowerMessage msg)

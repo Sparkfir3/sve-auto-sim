@@ -148,9 +148,14 @@ namespace SVESimulator
             public const string PutOnFieldEngaged = "PutOnFieldEngaged";
             public const string CannotDealDamage = "CannotDealDamage";
             public const string CannotAttack = "CannotAttack";
+            public const string UseDefAsAtk = "UseDefAsAtk";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";
+            public const string Plus3Damage = "Plus3Damage";
+            public const string Plus4Damage = "Plus4Damage";
+
+            public const string DamageReduction1 = "DamageReduction1";
         }
     }
 }

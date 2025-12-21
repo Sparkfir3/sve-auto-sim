@@ -14,13 +14,6 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            // Fail if field is full
-            if(player.ZoneController.fieldZone.OpenSlotCount() == 0)
-            {
-                onComplete?.Invoke();
-                return;
-            }
-
             // Unique logic for target mode TriggerCard
             if(target == SVEProperties.SVEEffectTarget.TriggerCard)
             {
@@ -54,6 +47,13 @@ namespace SVESimulator
                 card.Interactable = player.isActivePlayer;
             }
             onComplete?.Invoke();
+        }
+
+        protected override void GetMinMax(PlayerController player, out int min, out int max)
+        {
+            base.GetMinMax(player, out min, out max);
+            max = Mathf.Min(max, player.ZoneController.fieldZone.OpenSlotCount());
+            min = Mathf.Min(min, max);
         }
     }
 }

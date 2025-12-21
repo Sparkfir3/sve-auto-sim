@@ -703,13 +703,14 @@ namespace SVESimulator
         
         #region Combat
 
-        private void DeclareAttack(CardObject attackingCard)
+        private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
         {
-            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard);
+            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, isAttackingLeader);
             LocalDeclareAttackMessage msg = new()
             {
                 playerNetId = netIdentity,
-                cardInstanceId = attackingCard.RuntimeCard.instanceId
+                cardInstanceId = attackingCard.RuntimeCard.instanceId,
+                isAttackingLeader = isAttackingLeader
             };
             NetworkClient.Send(msg);
         }
@@ -719,7 +720,7 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null || defendingCard == null)
                 return;
 
-            DeclareAttack(attackingCard);
+            DeclareAttack(attackingCard, isAttackingLeader: false);
             SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
@@ -755,7 +756,7 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null)
                 return;
 
-            DeclareAttack(attackingCard);
+            DeclareAttack(attackingCard, isAttackingLeader: true);
             SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.LeaderCardObject);

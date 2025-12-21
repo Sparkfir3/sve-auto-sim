@@ -7,6 +7,8 @@ namespace SVESimulator
 {
     public class OncePerTurnCost : SveCost
     {
+        public override bool IsInternalCost => true;
+
         public override string GetReadableString(GameConfiguration config)
         {
             return "Once Per Turn";

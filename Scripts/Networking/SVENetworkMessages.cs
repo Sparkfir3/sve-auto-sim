@@ -243,6 +243,7 @@ namespace SVESimulator
     {
         public NetworkIdentity playerNetId;
         public int cardInstanceId;
+        public bool isAttackingLeader;
     }
 
     public struct OpponentDeclareAttackMessage : NetworkMessage

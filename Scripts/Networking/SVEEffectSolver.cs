@@ -343,6 +343,7 @@ namespace SVESimulator
                 if(card.IsToken())
                 {
                     // Do nothing - destroy card
+                    continue;
                 }
                 if(card.IsEvolvedType())
                 {
@@ -355,6 +356,8 @@ namespace SVESimulator
                     else
                         endZone.AddCard(cardToMove);
                 }
+                if(startZone.name.Equals(SVEProperties.Zones.Field) && cardToMove.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat))
+                    engagedStat.baseValue = 0;
             }
         }
 
@@ -391,13 +394,18 @@ namespace SVESimulator
 
         #region Card Stats/Combat
 
-        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card)
+        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card, bool isAttackingLeader)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             EngageCard(card);
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, card, player, _ => true, true);
+                if(isAttackingLeader)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackLeaderTrigger>(gameState, card, player, _ => true, true);
+                else
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, card, player, _ => true, true);
+
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
             }
@@ -442,8 +450,8 @@ namespace SVESimulator
 
         public void FightFollower(NetworkIdentity playerNetId, RuntimeCard attackingCard, RuntimeCard defendingCard)
         {
-            int attackerDamage = GetCardDamageOutput(attackingCard);
-            int defenderDamage = GetCardDamageOutput(defendingCard);
+            int attackerDamage = GetCardDamageOutput(attackingCard, defendingCard);
+            int defenderDamage = GetCardDamageOutput(defendingCard, attackingCard);
 
             // Do not check for 0 defense here - instead check below during Bane handling
             ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false);
@@ -498,16 +506,26 @@ namespace SVESimulator
             SendToCemetery(playerNetId, card, SVEProperties.Zones.Field);
         }
 
-        private int GetCardDamageOutput(RuntimeCard card)
+        private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
-            if(card.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
                 return 0;
 
-            int damage = card.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
-            if(card.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
+            int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
+                ? attacker.namedStats[SVEProperties.CardStats.Defense].effectiveValue
+                : attacker.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
                 damage += 1;
-            if(card.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
                 damage += 2;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus3Damage))
+                damage += 3;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus4Damage))
+                damage += 4;
+
+            if(defender != null && defender.HasKeyword(SVEProperties.PassiveAbilities.DamageReduction1))
+                damage = Mathf.Max(damage - 1, 0);
+
             return damage;
         }
 

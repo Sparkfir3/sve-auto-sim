@@ -351,13 +351,21 @@ namespace SVESimulator
             if(pendingEffect.costs == null || pendingEffect.costs.Count == 0)
             {
                 Resolve();
-                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, 0, pendingEffect.abilityName));
             }
             else
             {
                 Debug.Assert(cardObject, $"Failed to find card with instance ID {pendingEffect.sourceCardInstanceId} in zone {pendingEffect.sourceCardZone} for ability {pendingEffect.abilityName}");
                 bool canPayCost = localPlayer.LocalEvents.CanPayCosts(cardObject.RuntimeCard, pendingEffect.costs, pendingEffect.abilityName);
 
+                // Skip prompt if all costs are internal
+                if(pendingEffect.costs.All(x => x is SveCost { IsInternalCost: true }))
+                {
+                    if(canPayCost)
+                        ResolveWithCost();
+                    return;
+                }
+
+                // Prompt player to pay for cost or decline
                 List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
                 {
                     new MultipleChoiceWindow.MultipleChoiceEntryData
@@ -366,8 +374,7 @@ namespace SVESimulator
                         onSelect = () =>
                         {
                             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(localPlayer.GetOpponentInfo().netId);
-                            localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
-                            localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, 0, pendingEffect.abilityName));
+                            ResolveWithCost();
                         }
                     },
                     new MultipleChoiceWindow.MultipleChoiceEntryData
@@ -388,12 +395,18 @@ namespace SVESimulator
 
             void Resolve()
             {
+                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
                 {
                     IsResolvingEffect = false;
                     onComplete?.Invoke();
                 });
+            }
+            void ResolveWithCost()
+            {
+                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
             }
         }
 
