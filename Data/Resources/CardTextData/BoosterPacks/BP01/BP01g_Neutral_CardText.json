@@ -1,0 +1,254 @@
+[
+  {
+    "id": "BP01-151EN",
+    "name": "Gabriel",
+    "trait": "Angel",
+    "cardText": "Ward.\n[fanfare] Select another follower on your field. Give it [attack]+4/[defense]+3 and Assail.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select another follower on your field. Give it [attack]+4/[defense]+3 and Assail."
+      }
+    ]
+  },
+  {
+    "id": "BP01-152EN",
+    "name": "Lucifer",
+    "trait": "Angel / Fallen Angel",
+    "cardText": "[evolve][cost00]: Evolve this follower.\nWard.\nAt the start of your end phase, give your leader [defense]+4.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give your leader [defense]+4.",
+        "trigger": "At the start of your end phase",
+        "body": "Give your leader [defense]+4."
+      }
+    ]
+  },
+  {
+    "id": "BP01-153EN",
+    "name": "Lucifer (Evolved)",
+    "trait": "Angel / Fallen Angel",
+    "cardText": "Bane.\nAt the start of your end phase, deal 4 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, deal 4 damage to each enemy leader.",
+        "trigger": "At the start of your end phase",
+        "body": "Deal 4 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP01-154EN",
+    "name": "Flame and Glass",
+    "trait": "Archfiend",
+    "cardText": "Storm.\nStrike: Deal 3 damage to each enemy follower on the field. If there is a Harnessed Flame and Harnessed Glass in your cemetery, deal 7 damage instead.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Deal 3 damage to each enemy follower on the field. If there is a Harnessed Flame and Harnessed Glass in your cemetery, deal 7 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP01-155EN",
+    "name": "Urd",
+    "trait": "Deity",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Select an enemy follower on the field and put it into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and put it into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP01-156EN",
+    "name": "Urd (Evolved)",
+    "trait": "Deity",
+    "cardText": "On Evolve: Select a card in an opponent's EX area and banish it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a card in an opponent's EX area and banish it."
+      }
+    ]
+  },
+  {
+    "id": "BP01-157EN",
+    "name": "Wind God",
+    "trait": "Deity",
+    "cardText": "[fanfare] Select a follower on your field and give it [attack]+1.\nAt the start of your end phase, give each follower on your field [attack]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a follower on your field and give it [attack]+1."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give each follower on your field [attack]+1.",
+        "trigger": "At the start of your end phase",
+        "body": "Give each follower on your field [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP01-158EN",
+    "name": "Gilgamesh",
+    "trait": "Deity",
+    "cardText": "Storm."
+  },
+  {
+    "id": "BP01-159EN",
+    "name": "Bellringer Angel",
+    "trait": "Angel",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nWard.\n[lastwords] Draw a card.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-160EN",
+    "name": "Bellringer Angel (Evolved)",
+    "trait": "Angel",
+    "cardText": "Ward.\nOn Evolve: Select an enemy follower on the field and deal it 2 damage.\n[lastwords] Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-161EN",
+    "name": "Altered Fate",
+    "trait": "Deity",
+    "cardText": "Each player returns their hand to their deck, shuffles it, and draws X cards. X equals the number of cards they returned to their deck. You draw 1 more card."
+  },
+  {
+    "id": "BP01-162EN",
+    "name": "Path to Purgatory",
+    "trait": "Archfiend",
+    "cardText": "[fanfare] Draw 3 cards. Deal 3 damage to your leader.\nAt the start of your end phase, if your leader's [defense] is 6 or less, [engage], put this card into its owner's cemetery: Deal 6 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw 3 cards. Deal 3 damage to your leader."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if your leader's [defense] is 6 or less, [engage], put this card into its owner's cemetery: Deal 6 damage to each enemy follower on the field.",
+        "trigger": "At the start of your end phase, if your leader's [defense] is 6 or less",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Deal 6 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP01-163EN",
+    "name": "Lizardman",
+    "trait": "Mercenary",
+    "cardText": "Assail."
+  },
+  {
+    "id": "BP01-164EN",
+    "name": "Goblinmount Demon",
+    "trait": "Goblinoid",
+    "cardText": "[evolve][cost00]: Evolve this follower.\nWard.\n[fanfare] Deal 2 damage to each other follower on your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 2 damage to each other follower on your field."
+      }
+    ]
+  },
+  {
+    "id": "BP01-165EN",
+    "name": "Goblinmount Demon (Evolved)",
+    "trait": "Goblinoid",
+    "cardText": "Ward."
+  },
+  {
+    "id": "BP01-166EN",
+    "name": "Harnessed Flame",
+    "trait": "Fiend",
+    "cardText": "[act][cost01], put this card and a Harnessed Glass from your field into their owners' cemeteries: Search your deck for a Flame and Glass and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], put this card and a Harnessed Glass from your field into their owners' cemeteries",
+        "body": "Search your deck for a Flame and Glass and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP01-167EN",
+    "name": "Harnessed Glass",
+    "trait": "Fiend",
+    "cardText": "[fanfare] Draw a card. Put a card from your hand on the bottom of your deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card. Put a card from your hand on the bottom of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP01-168EN",
+    "name": "Demonic Strike",
+    "trait": "Fiend",
+    "cardText": "Select an enemy leader or enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP01-169EN",
+    "name": "Execution",
+    "trait": "Fiend",
+    "cardText": "[quick]\nSelect an enemy card on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy card on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP01-170EN",
+    "name": "Trail of Light",
+    "trait": "Lightborne",
+    "cardText": "When this card is discarded, draw a card.\n----------\nDraw a card.",
+    "effectText": [
+      {
+        "key": "OnDiscard",
+        "text": "When this card is discarded, draw a card.",
+        "trigger": "When this card is discarded",
+        "body": "Draw a card."
+      }
+    ]
+  }
+]

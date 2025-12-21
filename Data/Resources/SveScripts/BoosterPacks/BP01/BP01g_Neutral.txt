@@ -1,0 +1,397 @@
+name Gabriel;
+id BP01-151;
+class Neutral;
+type Follower;
+trait Angel;
+rarity L;
+cost 6;
+stats 4/3;
+
+text "Ward.
+      [fanfare] Select another follower on your field. Give it [attack]+4/[defense]+3 and Assail.";
+
+keyword Ward;
+ability Fanfare {
+    effect TargetForSequence(Atk, Def, Assail) to TargetPlayerCard F;
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 4);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 3);
+}
+ability Spell name Assail {
+    effect GiveKeyword(Assail);
+}
+
+// ------------------------------
+
+name Lucifer;
+id BP01-152;
+class Neutral;
+type Follower;
+trait Angel / Fallen Angel;
+rarity L;
+cost 7;
+stats 6/7;
+
+text "[evolve][cost00]: Evolve this follower.
+      Ward.
+      At the start of your end phase, give your leader [defense]+4.";
+
+evolve 0;
+keyword Ward;
+ability StartEndPhase {
+    effect GiveStat(Def, 4) to Leader;
+}
+
+// ------------------------------
+
+name Lucifer (Evolved);
+id BP01-153;
+class Neutral;
+type Evolved Follower;
+trait Angel / Fallen Angel;
+rarity L;
+stats 8/7;
+
+text "Bane.
+      At the start of your end phase, deal 4 damage to each enemy leader.";
+
+keyword Bane;
+ability StartEndPhase {
+    effect DealDamage(4) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Flame and Glass;
+id BP01-154;
+class Neutral;
+type Follower;
+trait Archfiend;
+rarity L;
+cost 10;
+stats 7/7;
+
+text "Storm.
+      Strike: Deal 3 damage to each enemy follower on the field. If there is a Harnessed Flame and Harnessed Glass in your cemetery, deal 7 damage instead.";
+
+keyword Storm;
+ability Strike {
+    effect DealDamage(3 ?(y(n(Harnessed Flame)) & y(n(Harnessed Glass))) 7) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Urd;
+id BP01-155;
+class Neutral;
+type Follower;
+trait Deity;
+rarity G;
+cost 4;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Select an enemy follower on the field and put it into its owner's EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect SendToExArea() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Urd (Evolved);
+id BP01-156;
+class Neutral;
+type Evolved Follower;
+trait Deity;
+rarity G;
+stats 3/3;
+
+text "On Evolve: Select a card in an opponent's EX area and banish it.";
+
+ability OnEvolve {
+    effect Banish() to TargetOpponentCardEx;
+}
+
+// ------------------------------
+
+name Wind God;
+id BP01-157;
+class Neutral;
+type Follower;
+trait Deity;
+rarity G;
+cost 4;
+stats 1/5;
+
+text "[fanfare] Select a follower on your field and give it [attack]+1.
+      At the start of your end phase, give each follower on your field [attack]+1.";
+
+ability Fanfare {
+    effect GiveStat(Atk, 1) to TargetPlayerCard F;
+}
+ability StartEndPhase {
+    effect GiveStat(Atk, 1) to AllPlayerCards F;
+}
+
+// ------------------------------
+
+name Gilgamesh;
+id BP01-158;
+class Neutral;
+type Follower;
+trait Deity;
+rarity G;
+cost 7;
+stats 6/6;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+
+name Bellringer Angel;
+id BP01-159;
+class Neutral;
+type Follower;
+trait Angel;
+rarity G;
+cost 1;
+stats 0/2;
+
+text "[evolve][cost02]: Evolve this follower.
+      Ward.
+      [lastwords] Draw a card.";
+
+evolve 2;
+keyword Ward;
+ability LastWords {
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Bellringer Angel (Evolved);
+id BP01-160;
+class Neutral;
+type Evolved Follower;
+trait Angel;
+rarity G;
+stats 0/2;
+
+text "Ward.
+      On Evolve: Select an enemy follower on the field and deal it 2 damage.
+      [lastwords] Draw a card.";
+
+keyword Ward;
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Altered Fate;
+id BP01-161;
+class Neutral;
+type Spell;
+trait Deity;
+rarity G;
+cost 2;
+
+text "Each player returns their hand to their deck, shuffles it, and draws X cards. X equals the number of cards they returned to their deck. You draw 1 more card.";
+
+ability Spell {
+    effect Sequence(Redraw, OpponentRedraw, DrawMore);
+}
+ability Spell name Redraw {
+    effect RedrawHand(H);
+}
+ability Spell name OpponentRedraw {
+    effect OpponentPerformEffect(Redraw);
+}
+ability Spell name DrawMore {
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Path to Purgatory;
+id BP01-162;
+class Neutral;
+type Amulet;
+trait Archfiend;
+rarity G;
+cost 3;
+
+text "[fanfare] Draw 3 cards. Deal 3 damage to your leader.
+      At the start of your end phase, if your leader's [defense] is 6 or less, [engage], put this card into its owner's cemetery: Deal 6 damage to each enemy follower on the field.";
+
+ability Fanfare {
+    effect Sequence(Draw, Damage);
+}
+ability Spell name Draw {
+    effect DrawCard(3);
+}
+ability Spell name Damage {
+    effect DealDamage(3) to Leader;
+}
+ability StartEndPhase {
+    condition L < 7;
+    cost (EngageSelf), (SendToCemetery, Self);
+    effect DealDamage(6) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Lizardman;
+id BP01-163;
+class Neutral;
+type Follower;
+trait Mercenary;
+rarity S;
+cost 3;
+stats 4/3;
+
+text "Assail.";
+
+keyword Assail;
+
+// ------------------------------
+
+name Goblinmount Demon;
+id BP01-164;
+class Neutral;
+type Follower;
+trait Goblinoid;
+rarity S;
+cost 5;
+stats 6/6;
+
+text "[evolve][cost00]: Evolve this follower.
+      Ward.
+      [fanfare] Deal 2 damage to each other follower on your field.";
+
+evolve 0;
+keyword Ward;
+ability Fanfare {
+    effect DealDamage(2) to AllPlayerCards FX;
+}
+
+// ------------------------------
+
+name Goblinmount Demon (Evolved);
+id BP01-165;
+class Neutral;
+type Follower;
+trait Goblinoid;
+rarity S;
+stats 7/7;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Harnessed Flame;
+id BP01-166;
+class Neutral;
+type Follower;
+trait Fiend;
+rarity S;
+cost 3;
+stats 3/2;
+
+text "[act][cost01], put this card and a Harnessed Glass from your field into their owners' cemeteries: Search your deck for a Flame and Glass and put it onto your field.";
+
+ability Act {
+    cost (SendToCemetery, Self), (SendToCemetery, TargetPlayerCard, n(Harnessed Glass));
+    effect Search(1, n(Flame and Glass), Field);
+}
+
+// ------------------------------
+
+name Harnessed Glass;
+id BP01-167;
+class Neutral;
+type Follower;
+trait Fiend;
+rarity S;
+cost 3;
+stats 2/3;
+
+text "[fanfare] Draw a card. Put a card from your hand on the bottom of your deck.";
+
+ability Fanfare {
+    effect Sequence(Draw, Bottom Deck);
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}
+ability Spell name Bottom Deck {
+    effect DiscardToBottomDeck(1);
+}
+
+// ------------------------------
+
+name Demonic Strike;
+id BP01-168;
+class Neutral;
+type Spell;
+trait Fiend;
+rarity S;
+cost 3;
+
+text "Select an enemy leader or enemy follower on the field and deal it 3 damage.";
+
+ability Spell {
+    effect DealDamage(3) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Execution;
+id BP01-169;
+class Neutral;
+type Spell;
+trait Fiend;
+rarity S;
+cost 4;
+
+text "[quick]
+      Select an enemy card on the field and destroy it.";
+
+keyword Quick;
+ability Spell {
+    condition p();
+    effect Destroy() to TargetOpponentCard;
+}
+
+// ------------------------------
+
+name Trail of Light;
+id BP01-170;
+class Neutral;
+type Spell;
+trait Lightborne;
+rarity S;
+cost 2;
+
+text "When this card is discarded, draw a card.
+      ----------
+      Draw a card.";
+
+ability Spell {
+    effect DrawCard(1);
+}
+ability OnDiscard {
+    effect DrawCard(1);
+}
