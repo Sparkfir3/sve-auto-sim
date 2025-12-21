@@ -313,7 +313,7 @@ stats 3/2;
 text "[act][cost01], put this card and a Harnessed Glass from your field into their owners' cemeteries: Search your deck for a Flame and Glass and put it onto your field.";
 
 ability Act {
-    cost (SendToCemetery, Self), (SendToCemetery, TargetPlayerCard, n(Harnessed Glass));
+    cost (PP, 1), (SendToCemetery, TargetPlayerCard, n(Harnessed Glass)), (SendToCemetery, Self);
     effect Search(1, n(Flame and Glass), Field);
 }
 

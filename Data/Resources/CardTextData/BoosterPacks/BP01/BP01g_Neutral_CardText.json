@@ -210,6 +210,10 @@
         "key": "Fanfare",
         "trigger": "[fanfare]",
         "body": "Draw a card. Put a card from your hand on the bottom of your deck."
+      },
+      {
+        "key": "Bottom Deck",
+        "body": "Put a card from your hand on the bottom of your deck."
       }
     ]
   },

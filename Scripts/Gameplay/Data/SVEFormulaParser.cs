@@ -160,7 +160,6 @@ namespace SVESimulator
                     break;
 
                 case FormulaType.Conditional:
-                    nextIndex++; // Move past open parentheses
                     int conditionalCheck = ParseValue(formula[nextIndex..].TextInsideParentheses(out _, out int conditionalCloseIndex), player, card);
                     if(conditionalCheck <= 0)
                         return leftHandValue;

@@ -17400,13 +17400,17 @@
             "zoneId": 0,
             "costs": [
               {
-                "target": "Self",
-                "filter": "",
-                "$type": "SVESimulator.SendToCemeteryCost"
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
               },
               {
                 "target": "TargetPlayerCard",
                 "filter": "n(Harnessed Glass)",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
                 "$type": "SVESimulator.SendToCemeteryCost"
               }
             ],

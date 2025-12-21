@@ -7,6 +7,8 @@ namespace SVESimulator
 {
     public class DiscardToBottomDeckEffect : DiscardEffect
     {
+        protected override string ActionText => "Send to Bottom Deck";
+
         protected override void ConfirmationAction(PlayerController player, List<CardObject> selectedCards, Action onComplete)
         {
             foreach(CardObject target in selectedCards)

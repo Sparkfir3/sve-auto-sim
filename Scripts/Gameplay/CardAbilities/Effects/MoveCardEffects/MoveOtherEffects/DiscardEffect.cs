@@ -34,7 +34,7 @@ namespace SVESimulator
                 selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, minDiscard, maxDiscard);
                 selectionArea.SetFilter(filter);
                 selectionArea.SetConfirmAction(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).name,
-                    "Discard",
+                    ActionText,
                     text,
                     minDiscard, maxDiscard,
                     targets => ConfirmationAction(player, targets, () => waiting = false));
@@ -45,6 +45,8 @@ namespace SVESimulator
                 onComplete?.Invoke();
             }
         }
+
+        protected virtual string ActionText => "Discard";
 
         protected virtual void ConfirmationAction(PlayerController player, List<CardObject> selectedCards, Action onComplete)
         {
