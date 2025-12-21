@@ -6,6 +6,8 @@ namespace SVESimulator
 {
     public abstract class SveCost : Cost
     {
+        public virtual bool IsInternalCost => false;
+
         public abstract bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName);
 
         // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
