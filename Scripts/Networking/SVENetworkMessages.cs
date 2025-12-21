@@ -59,6 +59,22 @@ namespace SVESimulator
 
     // ------------------------------
 
+    #region Zone Controls
+
+    public struct LocalShuffleDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+    }
+
+    public struct OpponentShuffleDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+    }
+
+    #endregion
+
+    // ------------------------------
+
     #region Draw Cards & Deck Movement
 
     public struct LocalDrawCardMessage : NetworkMessage

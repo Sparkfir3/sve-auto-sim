@@ -5,6 +5,7 @@ using CCGKit;
 using Mirror;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Random = System.Random;
 
 namespace SVESimulator
 {
@@ -60,6 +61,27 @@ namespace SVESimulator
                 return;
 
             player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue = Mathf.Clamp(value, 0, player.namedStats[SVEProperties.PlayerStats.MaxPlayPoints].baseValue);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Controls
+
+        public void ShuffleDeck(NetworkIdentity playerNetId)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+
+            // Reference: CCG Kit ListShuffle.cs
+            int n = player.namedZones[SVEProperties.Zones.Deck].cards.Count;
+            while(n > 1)
+            {
+                int k = rng.Next(0, n) % n;
+                n--;
+                (player.namedZones[SVEProperties.Zones.Deck].cards[k], player.namedZones[SVEProperties.Zones.Deck].cards[n])
+                    = (player.namedZones[SVEProperties.Zones.Deck].cards[n], player.namedZones[SVEProperties.Zones.Deck].cards[k]);
+            }
         }
 
         #endregion
