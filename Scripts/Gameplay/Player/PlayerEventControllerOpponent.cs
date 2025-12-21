@@ -39,6 +39,17 @@ namespace SVESimulator
         }
         
         #endregion
+
+        // ------------------------------
+
+        #region Zone Controls
+
+        public void ShuffleDeck(OpponentShuffleDeckMessage msg)
+        {
+            sveEffectSolver.ShuffleDeck(msg.playerNetId);
+        }
+
+        #endregion
         
         // ------------------------------
         

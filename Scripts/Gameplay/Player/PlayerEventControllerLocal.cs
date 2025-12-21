@@ -108,7 +108,23 @@ namespace SVESimulator
         #endregion
         
         // ------------------------------
-        
+
+        #region Zone Controls
+
+        public void ShuffleDeck()
+        {
+            sveEffectSolver.ShuffleDeck(netIdentity);
+            LocalShuffleDeckMessage msg = new()
+            {
+                playerNetId = netIdentity
+            };
+            NetworkClient.Send(msg);
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Card Movement
 
         public void InitializeDeckAndLeader()

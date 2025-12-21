@@ -23,6 +23,9 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<SetCurrentPlayPointsMessage>(OnOpponentUpdateCurrentPlayPoints);
             NetworkClient.RegisterHandler<OpponentInitDeckAndLeaderMessage>(OnOpponentInitDeckAndLeader);
 
+            // Zone Controls
+            NetworkClient.RegisterHandler<OpponentShuffleDeckMessage>(OnOpponentShuffleDeck);
+
             // Deck movement
             NetworkClient.RegisterHandler<OpponentDrawCardMessage>(OnOpponentDrawCard);
             NetworkClient.RegisterHandler<OpponentTellOppDrawCardMessage>(OnOpponentTellOppDrawCard);
@@ -76,6 +79,9 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<SetMaxPlayPointsMessage>();
             NetworkClient.UnregisterHandler<SetCurrentPlayPointsMessage>();
             NetworkClient.UnregisterHandler<OpponentInitDeckAndLeaderMessage>();
+
+            // Zone Controls
+            NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
 
             // Deck movement
             NetworkClient.UnregisterHandler<OpponentDrawCardMessage>();
@@ -186,6 +192,21 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.InitializeDeckAndLeader(msg);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Controls
+
+        private void OnOpponentShuffleDeck(OpponentShuffleDeckMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.ShuffleDeck(msg);
         }
 
         #endregion

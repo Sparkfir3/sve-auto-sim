@@ -21,6 +21,9 @@ namespace SVESimulator
             NetworkServer.RegisterHandler<SetCurrentPlayPointsMessage>(SetCurrentPlayPoints);
             NetworkServer.RegisterHandler<LocalInitDeckAndLeaderMessage>(OnInitDeckAndLeader);
 
+            // Zone Controls
+            NetworkServer.RegisterHandler<LocalShuffleDeckMessage>(OnShuffleDeck);
+
             // Deck movement
             NetworkServer.RegisterHandler<LocalDrawCardMessage>(OnDrawCard);
             NetworkServer.RegisterHandler<LocalTellOppDrawCardMessage>(OnTellOpponentDrawCard);
@@ -58,6 +61,9 @@ namespace SVESimulator
             NetworkServer.UnregisterHandler<SetMaxPlayPointsMessage>();
             NetworkServer.UnregisterHandler<SetCurrentPlayPointsMessage>();
             NetworkServer.UnregisterHandler<LocalInitDeckAndLeaderMessage>();
+
+            // Zone Controls
+            NetworkServer.UnregisterHandler<LocalShuffleDeckMessage>();
 
             // Deck movement
             NetworkServer.UnregisterHandler<LocalDrawCardMessage>();
@@ -174,6 +180,23 @@ namespace SVESimulator
                 (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, card, SVEProperties.Zones.Deck, SVEProperties.Zones.EvolveDeck);
             }
             (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, leaderCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Controls
+
+
+        private void OnShuffleDeck(NetworkConnection conn, LocalShuffleDeckMessage msg)
+        {
+            OpponentShuffleDeckMessage shuffleMsg = new()
+            {
+                playerNetId = msg.playerNetId
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, shuffleMsg);
+            (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId);
         }
 
         #endregion
