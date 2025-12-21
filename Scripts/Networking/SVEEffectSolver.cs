@@ -262,6 +262,10 @@ namespace SVESimulator
                         x => x.MatchesFilter(card), false);
                 }
             }
+            else if(cardZone.Equals(SVEProperties.Zones.Hand) && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+            }
         }
 
         public void BanishCard(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
