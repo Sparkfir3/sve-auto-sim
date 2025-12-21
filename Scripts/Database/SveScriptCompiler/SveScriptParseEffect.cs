@@ -281,6 +281,8 @@ namespace SVESimulator.SveScript
             { "DestroyCard", new EffectParams("SVESimulator.DestroyCardEffect")                         },
             { "Banish", new EffectParams("SVESimulator.BanishCardEffect")                               },
             { "BanishCard", new EffectParams("SVESimulator.BanishCardEffect")                           },
+            { "SendToEx", new EffectParams("SVESimulator.SendToExAreaEffect")                           },
+            { "SendToExArea", new EffectParams("SVESimulator.SendToExAreaEffect")                       },
             { "PutExToFieldAndTarget", new EffectParams("SVESimulator.PutExToFieldAndTargetEffect",     EffectParameterType.ListOfEffects) },
 
             // Movement - Other
