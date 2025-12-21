@@ -53,7 +53,7 @@ namespace SVESimulator
 
         protected override void OnCompleteInternal(PlayerController player)
         {
-            // TODO - shuffle deck
+            player.LocalEvents.ShuffleDeck();
         }
     }
 }
