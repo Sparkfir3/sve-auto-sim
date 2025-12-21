@@ -366,12 +366,12 @@ namespace SVESimulator
             foreach(RuntimeCard cardToMove in cardsToMove)
             {
                 startZone.RemoveCard(cardToMove);
-                if(card.IsToken())
+                if(cardToMove.IsToken())
                 {
                     // Do nothing - destroy card
                     continue;
                 }
-                if(card.IsEvolvedType())
+                if(cardToMove.IsEvolvedType())
                 {
                     player.namedZones[SVEProperties.Zones.EvolveDeck].AddCard(cardToMove);
                 }
