@@ -12,16 +12,17 @@ text "Ward.
 
 keyword Ward;
 ability Fanfare {
-    effect TargetForSequence(Atk, Def, Assail) to TargetPlayerCard F;
+    condition f(FX);
+    effect TargetForSequence(Atk, Def, Assail) to TargetPlayerCard FX;
 }
 ability Spell name Atk {
-    effect GiveStat(Atk, 4);
+    effect GiveStat(Atk, 4) to AllPlayerCards;
 }
 ability Spell name Def {
-    effect GiveStat(Def, 3);
+    effect GiveStat(Def, 3) to AllPlayerCards;
 }
 ability Spell name Assail {
-    effect GiveKeyword(Assail);
+    effect GiveKeyword(Assail) to AllPlayerCards;
 }
 
 // ------------------------------

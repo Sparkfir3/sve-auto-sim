@@ -15769,7 +15769,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
+              "condition": "f(FX)",
               "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
@@ -15777,7 +15777,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TargetPlayerCard",
-              "filter": "F",
+              "filter": "FX",
               "effectName1": "Atk",
               "effectName2": "Def",
               "effectName3": "Assail",
@@ -15797,7 +15797,7 @@
             "name": "Atk",
             "type": "Triggered",
             "effect": {
-              "target": "Self",
+              "target": "AllPlayerCards",
               "filter": null,
               "targetStats": "Attack",
               "amount": "4",
@@ -15815,7 +15815,7 @@
             "name": "Def",
             "type": "Triggered",
             "effect": {
-              "target": "Self",
+              "target": "AllPlayerCards",
               "filter": null,
               "targetStats": "Defense",
               "amount": "3",
@@ -15833,7 +15833,7 @@
             "name": "Assail",
             "type": "Triggered",
             "effect": {
-              "target": "Self",
+              "target": "AllPlayerCards",
               "filter": null,
               "keywordType": 0,
               "keywordValue": 3,
