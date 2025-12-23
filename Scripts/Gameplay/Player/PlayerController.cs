@@ -244,11 +244,12 @@ namespace SVESimulator
 
                 CurrentTurnNumber++;
                 LocalEvents.IncrementMaxPlayPoints(updateCurrentPoints: true);
+                ReserveAllCardsOnField();
                 foreach(CardObject card in localPlayerZoneController.fieldZone.AllCards)
                     card.OnStartTurn();
-                ReserveAllCardsOnField();
                 localPlayerZoneController.fieldZone.HighlightCardsCanAttack();
                 localPlayerZoneController.fieldZone.SetAllCardsInteractable(true);
+                localPlayerZoneController.exAreaZone.SetAllCardsInteractable(true);
                 localPlayerZoneController.handZone.SetAllCardsInteractable(true);
                 if(CurrentTurnNumber > 1 || !playerInfo.isGoingFirst)
                     LocalEvents.DrawCard();

@@ -31,6 +31,10 @@ namespace SVESimulator
 
         [Title("Data"), ShowInInspector, ReadOnly, LabelText("Runtime Card Engaged")]
         private bool runtimeEngaged => card && card.Engaged;
+        [ShowInInspector, ReadOnly, LabelText("Attached Card Instance IDs")]
+        private string runtimeAttachedCards => card && card.RuntimeCard != null
+            ? card.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedStat) ? attachedStat.effectiveValue.ToString() : ""
+            : "";
         [ShowInInspector, TableList, ReadOnly]
         private List<SerializableRuntimeKeyword> keywords => card && card.RuntimeCard != null
             ? card.RuntimeCard.keywords?.Select(x => new SerializableRuntimeKeyword(x.keywordId, x.valueId))?.ToList()

@@ -262,6 +262,10 @@ namespace SVESimulator
                         x => x.MatchesFilter(card), false);
                 }
             }
+            else if(cardZone.Equals(SVEProperties.Zones.Hand) && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+            }
         }
 
         public void BanishCard(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
@@ -362,12 +366,12 @@ namespace SVESimulator
             foreach(RuntimeCard cardToMove in cardsToMove)
             {
                 startZone.RemoveCard(cardToMove);
-                if(card.IsToken())
+                if(cardToMove.IsToken())
                 {
                     // Do nothing - destroy card
                     continue;
                 }
-                if(card.IsEvolvedType())
+                if(cardToMove.IsEvolvedType())
                 {
                     player.namedZones[SVEProperties.Zones.EvolveDeck].AddCard(cardToMove);
                 }

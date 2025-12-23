@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using CCGKit;
 using Sparkfire.Utility;
@@ -33,23 +34,27 @@ namespace SVESimulator
                 selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, minDiscard, maxDiscard);
                 selectionArea.SetFilter(filter);
                 selectionArea.SetConfirmAction(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).name,
-                    "Discard",
+                    ActionText,
                     text,
                     minDiscard, maxDiscard,
-                    targets =>
-                    {
-                        foreach(CardObject target in targets)
-                        {
-                            player.LocalEvents.SendToCemetery(target, SVEProperties.Zones.Hand);
-                        }
-                        waiting = false;
-                    });
+                    targets => ConfirmationAction(player, targets, () => waiting = false));
 
                 yield return new WaitUntil(() => !waiting);
                 selectionArea.Disable();
                 yield return null;
                 onComplete?.Invoke();
             }
+        }
+
+        protected virtual string ActionText => "Discard";
+
+        protected virtual void ConfirmationAction(PlayerController player, List<CardObject> selectedCards, Action onComplete)
+        {
+            foreach(CardObject target in selectedCards)
+            {
+                player.LocalEvents.SendToCemetery(target, SVEProperties.Zones.Hand);
+            }
+            onComplete?.Invoke();
         }
     }
 }

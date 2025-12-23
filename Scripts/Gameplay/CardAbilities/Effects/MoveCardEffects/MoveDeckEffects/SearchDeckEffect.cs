@@ -8,7 +8,7 @@ namespace SVESimulator
 {
     public class SearchDeckEffect : ChooseFromCardStackEffect
     {
-        public enum SearchDeckAction { Hand, Cemetery }
+        public enum SearchDeckAction { Hand, Cemetery, Field }
 
         [StringField("Action", width = 100), Order(10)]
         public SearchDeckAction searchDeckAction;
@@ -42,6 +42,10 @@ namespace SVESimulator
                     case SearchDeckAction.Cemetery:
                         card.Interactable = false;
                         player.LocalEvents.SendToCemetery(card, SVEProperties.Zones.Deck);
+                        break;
+                    case SearchDeckAction.Field:
+                        card.Interactable = player.isActivePlayer;
+                        player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
                         break;
                     default:
                         Debug.LogError($"Search deck action {searchDeckAction} is not implemented.");
