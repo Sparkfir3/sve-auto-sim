@@ -303,8 +303,8 @@ namespace SVESimulator
 
             if(!zoneA.SwapCardsInSlots(cardA, cardB))
                 return false;
-            MoveCardTransform(cardA, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardA)), cardA.transform.rotation);
-            MoveCardTransform(cardB, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardB)), cardB.transform.rotation);
+            MoveCardTransform(cardA, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardA)), cardA.transform.rotation, targetScale: null);
+            MoveCardTransform(cardB, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardB)), cardB.transform.rotation, targetScale: null);
             return true;
         }
 
@@ -352,7 +352,7 @@ namespace SVESimulator
             card.OnMoveZone();
         }
 
-        private void MoveCardTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation,
+        private void MoveCardTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, float? targetScale = 1f,
             bool rotateIfOpponent = true, bool instant = false, bool disableOnComplete = false, Action onComplete = null)
         {
             if(rotateIfOpponent && !IsLocalPlayer)
@@ -360,10 +360,12 @@ namespace SVESimulator
             if(instant)
             {
                 card.transform.SetPositionAndRotation(targetPosition, targetRotation);
+                if(targetScale.HasValue)
+                    card.transform.localScale = Vector3.one * targetScale.Value;
                 onComplete?.Invoke();
                 return;
             }
-            CardManager.Animator.MoveCardToPosition(card, targetPosition, targetRotation, () =>
+            CardManager.Animator.MoveCardToPosition(card, targetPosition, targetRotation, targetScale, onComplete: () =>
             {
                 if(disableOnComplete && card)
                     CardManager.Instance.ReleaseCard(card);
@@ -371,7 +373,7 @@ namespace SVESimulator
             });
         }
 
-        private void MoveCardLocalTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation,
+        private void MoveCardLocalTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, float? targetScale = 1f,
             bool rotateIfOpponent = true, bool instant = false, Action onComplete = null)
         {
             if(rotateIfOpponent && !IsLocalPlayer)
@@ -379,10 +381,12 @@ namespace SVESimulator
             if(instant)
             {
                 card.transform.SetPositionAndRotation(targetPosition, targetRotation);
+                if(targetScale.HasValue)
+                    card.transform.localScale = Vector3.one * targetScale.Value;
                 onComplete?.Invoke();
                 return;
             }
-            CardManager.Animator.MoveCardToLocalPosition(card, targetPosition, targetRotation, () =>
+            CardManager.Animator.MoveCardToLocalPosition(card, targetPosition, targetRotation, targetScale, onComplete: () =>
             {
                 onComplete?.Invoke();
             });
