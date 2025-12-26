@@ -36,11 +36,13 @@ namespace SVESimulator
         private SerializedDictionary<SVEFormulaParser.CardFilterSetting, string> debug_SerializedFilter = new();
 #endif
 
-        [TitleGroup("Settings"), SerializeField]
+        [BoxGroup("Settings/Slot Spacing"), SerializeField]
+        private float slotScale = 1f;
+        [BoxGroup("Settings/Slot Spacing"), SerializeField]
         private Vector2 slotSpacing = new Vector2(7f, 14f);
-        [TitleGroup("Settings"), SerializeField]
+        [BoxGroup("Settings/Slot Spacing"), SerializeField]
         private int maxRowLength = 10;
-        [TitleGroup("Settings"), SerializeField]
+        [BoxGroup("Settings/Slot Spacing"), SerializeField]
         private SerializedDictionary<int, float> startHeightByRowCount;
         [TitleGroup("Settings"), SerializeField]
         private float repositionTime = 0.5f;
@@ -56,6 +58,7 @@ namespace SVESimulator
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
 
         public int ValidTargetsCount => AllCards.Count(x => currentFilter.MatchesCard(x));
+        public float SlotScale => slotScale;
 
         #endregion
 
@@ -356,6 +359,7 @@ namespace SVESimulator
         private void CreateNewSlot()
         {
             TargetableSlot target = Instantiate(slotPrefab, transform);
+            target.transform.localScale = Vector3.one * slotScale;
             CardSlot newSlot = new()
             {
                 transform = target.transform,
@@ -370,7 +374,7 @@ namespace SVESimulator
             int slotCount = cardSlots.Count(x => x.Value.target.isActiveAndEnabled);
             float leftPosition = slotCount % 2 == 1
                 ? -slotSpacing.x * Math.Min(slotCount / 2, maxRowLength / 2)
-                : -slotSpacing.x * Math.Min(slotCount / 2, maxRowLength / 2) - 0.5f;
+                : -slotSpacing.x * (Math.Min(slotCount / 2, maxRowLength / 2) - 0.5f);
             float topPosition = startHeightByRowCount.GetValueOrDefault((int)(slotCount / maxRowLength) + 1, 0f);
 
             for(int i = 0; i < slotCount; i++)
