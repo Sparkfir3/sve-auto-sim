@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace SVESimulator
+namespace SVESimulator.UI
 {
     public class EffectTargetCardScreen : MonoBehaviour
     {
@@ -18,6 +18,8 @@ namespace SVESimulator
 
         [TitleGroup("Runtime Data"), ShowInInspector, ReadOnly]
         private SelectMode currentMode;
+        [ShowInInspector, ReadOnly]
+        private ButtonDisplayPosition currentDisplayPosition;
         [ShowInInspector, ReadOnly]
         private List<CardObject> availableTargets = new();
         [ShowInInspector, ReadOnly]
@@ -30,6 +32,8 @@ namespace SVESimulator
         private List<EffectTargetingMultiSelectInfo> unusedMultiSelectBoxes = new();
 
         [TitleGroup("Object References"), SerializeField]
+        private RectTransform textContainer;
+        [SerializeField]
         private TextMeshProUGUI resolvingTextBox;
         [SerializeField]
         private TextMeshProUGUI effectDescriptionTextBox;
@@ -46,6 +50,8 @@ namespace SVESimulator
         private string templateResolving = "Resolving {0}";
         [SerializeField]
         private string templateCountRemaining = "{0} Remaining";
+        [SerializeField]
+        private SerializedDictionary<ButtonDisplayPosition, ButtonPositionData> displayPositions = new();
 
         // ---
 
@@ -66,11 +72,12 @@ namespace SVESimulator
 
         #region Initialize
 
-        public void Initialize()
+        public void Initialize(ButtonDisplayPosition position = ButtonDisplayPosition.Center)
         {
             mainInputController = FindObjectOfType<PlayerInputController>();
             cam = Camera.main;
             confirmButton.onClick.AddListener(ConfirmSelection);
+            SetDisplayPosition(position);
         }
 
         #endregion
@@ -79,9 +86,9 @@ namespace SVESimulator
 
         #region Open/Close
 
-        public void Open(PlayerController player, string filterFormula, List<string> validLocalZones, List<string> validOppZones, SelectMode mode = SelectMode.Single)
-            => Open(player, -1, filterFormula, validLocalZones, validOppZones, mode);
-        public void Open(PlayerController player, int sourceCardInstanceId, string filterFormula, List<string> validLocalZones, List<string> validOppZones, SelectMode mode = SelectMode.Single)
+        public void Open(PlayerController player, string filterFormula, List<string> validLocalZones, List<string> validOppZones, SelectMode mode = SelectMode.Single, ButtonDisplayPosition position = ButtonDisplayPosition.Center)
+            => Open(player, -1, filterFormula, validLocalZones, validOppZones, mode, position);
+        public void Open(PlayerController player, int sourceCardInstanceId, string filterFormula, List<string> validLocalZones, List<string> validOppZones, SelectMode mode = SelectMode.Single, ButtonDisplayPosition position = ButtonDisplayPosition.Center)
         {
             // Init
             this.player = player;
@@ -94,6 +101,8 @@ namespace SVESimulator
             availableTargets.Clear();
             currentSelectedCards.Clear();
             currentZones.Clear();
+            if(currentDisplayPosition != position)
+                SetDisplayPosition(position);
 
             // Calculate zones
             if(validLocalZones != null)
@@ -177,6 +186,22 @@ namespace SVESimulator
         {
             resolvingTextBox.text = string.Format(templateResolving, !cardName.IsNullOrWhiteSpace() ? $"- {cardName}" : "").Trim();
             effectDescriptionTextBox.text = text ?? "";
+        }
+
+        private void SetDisplayPosition(ButtonDisplayPosition position)
+        {
+            currentDisplayPosition = position;
+            ButtonPositionData positionData = displayPositions[position];
+            RectTransform buttonTransform = confirmButton.GetComponent<RectTransform>();
+
+            textContainer.anchorMin = positionData.textAnchor;
+            textContainer.anchorMax = positionData.textAnchor;
+            textContainer.pivot = positionData.textPivot;
+            textContainer.anchoredPosition = new Vector3(0f, positionData.textPosition, 0f);
+            buttonTransform.anchorMin = positionData.buttonAnchor;
+            buttonTransform.anchorMax = positionData.buttonAnchor;
+            buttonTransform.pivot = positionData.buttonPivot;
+            buttonTransform.anchoredPosition = new Vector3(0f, positionData.buttonPosition, 0f);
         }
 
         #endregion

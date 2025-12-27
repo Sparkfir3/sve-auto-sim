@@ -241,7 +241,8 @@ namespace SVESimulator
                 zoneController.MoveCardToSelectionArea(card, false);
         }
 
-        public void SetConfirmAction(string cardName, string actionText, string effectText, int minSelectionCount, int maxSelectionCount, Action<List<CardObject>> action, bool showTargetingToOpponent = true)
+        public void SetConfirmAction(string cardName, string actionText, string effectText, int minSelectionCount, int maxSelectionCount, Action<List<CardObject>> action,
+            bool showTargetingToOpponent = true, ButtonDisplayPosition displayPosition = ButtonDisplayPosition.Top)
         {
             GameUIManager.MultipleChoice.Close();
             minSelectCount = minSelectionCount;
@@ -272,7 +273,8 @@ namespace SVESimulator
             }
 
             GameUIManager.MultipleChoice.Open(zoneController.Player, cardName, entries, effectText,
-                showBackgroundTint: false, showTargetingToOpponent: showTargetingToOpponent, disablePlayerInputs: false);
+                showBackgroundTint: false, showTargetingToOpponent: showTargetingToOpponent, disablePlayerInputs: false,
+                position: displayPosition);
             UpdateActionButton();
         }
 

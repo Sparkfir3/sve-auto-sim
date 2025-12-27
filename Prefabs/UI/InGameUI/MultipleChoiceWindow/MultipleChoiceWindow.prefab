@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6658029969660196699}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -166,7 +165,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6658029969660196699}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -302,7 +300,6 @@ RectTransform:
   m_Children:
   - {fileID: 732276797615554234}
   m_Father: {fileID: 4373415351481364239}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -381,7 +378,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6658029969660196699}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -539,7 +535,6 @@ RectTransform:
   - {fileID: 4425198112192161862}
   - {fileID: 2116291632672855771}
   m_Father: {fileID: 4373415351481364239}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -617,7 +612,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4373415351481364239}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -695,7 +689,6 @@ RectTransform:
   - {fileID: 2942690425565000330}
   - {fileID: 6658029969660196699}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -716,11 +709,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultHeaderString: Choose an effect
   templateResolving: Resolving {0}
+  displayPositions:
+    serializedPairs:
+    - key: 0
+      value:
+        textPosition: -175
+        textAnchor: {x: 0.5, y: 1}
+        textPivot: {x: 0.5, y: 1}
+        buttonPosition: 0
+        buttonAnchor: {x: 0.5, y: 0.5}
+        buttonPivot: {x: 0.5, y: 0.5}
+    - key: 1
+      value:
+        textPosition: -85
+        textAnchor: {x: 0.5, y: 1}
+        textPivot: {x: 0.5, y: 1}
+        buttonPosition: -210
+        buttonAnchor: {x: 0.5, y: 1}
+        buttonPivot: {x: 0.5, y: 1}
   buttonContainer: {fileID: 2942690425565000330}
   buttons: []
   testButtons:
   - {fileID: 7249103227039545284}
   buttonPrefab: {fileID: 3285349072364707161, guid: d0296fb6314a4474888114f1e329606c, type: 3}
+  textContainer: {fileID: 6658029969660196699}
   resolvingTextBox: {fileID: 6859296691553119658}
   effectTextbox: {fileID: 467265794964059154}
   backgroundTint: {fileID: 6103551583214174478}
