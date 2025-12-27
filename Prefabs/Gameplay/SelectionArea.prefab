@@ -30,13 +30,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1423252818243418840}
+  - {fileID: 281181231696228010}
   - {fileID: 935772805998134454}
   - {fileID: 5108888035762031725}
   - {fileID: 5886629691773590606}
   - {fileID: 3485748930626332150}
   - {fileID: 492113484832796750}
-  - {fileID: 1423252818243418840}
-  - {fileID: 281181231696228010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3916620072359834133
@@ -99,18 +99,7 @@ MonoBehaviour:
   slotScale: 1.5
   slotSpacing: {x: 9, y: 12.5}
   maxRowLength: 8
-  startHeightByRowCount:
-    serializedPairs:
-    - key: 1
-      value: 0
-    - key: 2
-      value: 4.25
-    - key: 3
-      value: 8.5
-    - key: 4
-      value: 9
-    - key: 5
-      value: 9
+  startHeight: 11.5
   repositionTime: 0.5
   slotPrefab: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
   zoneController: {fileID: 0}
@@ -128,7 +117,7 @@ GameObject:
   - component: {fileID: 6466195511315978477}
   - component: {fileID: 8640239608490409103}
   m_Layer: 5
-  m_Name: SelectionAreaBackgroundCanvas
+  m_Name: SA_WorldCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -641,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: eb5cb609c1ace4c45982623f6c8caef8, type: 2}
     - target: {fileID: 8133597360156777187, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_Name
-      value: GeneralSelectionArea
+      value: SA_SlotCollider
       objectReference: {fileID: 0}
     - target: {fileID: 8419752053646159930, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -653,11 +642,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalScale.x
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalPosition.x
@@ -669,7 +658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalRotation.w

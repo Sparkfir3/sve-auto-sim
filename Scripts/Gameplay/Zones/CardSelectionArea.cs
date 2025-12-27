@@ -43,7 +43,7 @@ namespace SVESimulator
         [BoxGroup("Settings/Slot Spacing"), SerializeField]
         private int maxRowLength = 10;
         [BoxGroup("Settings/Slot Spacing"), SerializeField]
-        private SerializedDictionary<int, float> startHeightByRowCount;
+        private float startHeight = 10f;
         [TitleGroup("Settings"), SerializeField]
         private float repositionTime = 0.5f;
 
@@ -377,12 +377,11 @@ namespace SVESimulator
             float leftPosition = slotCount % 2 == 1
                 ? -slotSpacing.x * Math.Min(slotCount / 2, maxRowLength / 2)
                 : -slotSpacing.x * (Math.Min(slotCount / 2, maxRowLength / 2) - 0.5f);
-            float topPosition = startHeightByRowCount.GetValueOrDefault((int)(slotCount / maxRowLength) + 1, 0f);
 
             for(int i = 0; i < slotCount; i++)
             {
                 TargetableSlot slot = cardSlots[i].target;
-                Vector3 targetPosition = new Vector3(leftPosition + (slotSpacing.x * (i % maxRowLength)), 0f, topPosition + (-slotSpacing.y * (int)(i / maxRowLength)));
+                Vector3 targetPosition = new Vector3(leftPosition + (slotSpacing.x * (i % maxRowLength)), 0f, startHeight + (-slotSpacing.y * (int)(i / maxRowLength)));
                 if(instant)
                     slot.transform.localPosition = targetPosition;
                 else
