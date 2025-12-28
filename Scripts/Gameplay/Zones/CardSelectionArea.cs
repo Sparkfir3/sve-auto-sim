@@ -399,9 +399,10 @@ namespace SVESimulator
         private void RepositionSlots(bool instant)
         {
             int slotCount = cardSlots.Count(x => x.Value.target.isActiveAndEnabled);
-            float leftPosition = slotCount % 2 == 1
-                ? -slotSpacing.x * Math.Min(slotCount / 2, maxRowLength / 2)
-                : -slotSpacing.x * (Math.Min(slotCount / 2, maxRowLength / 2) - 0.5f);
+            int rowSize = Mathf.Min(slotCount, maxRowLength);
+            float leftPosition = rowSize % 2 == 1
+                ? -slotSpacing.x * Math.Min(rowSize / 2, maxRowLength / 2)
+                : -slotSpacing.x * (Math.Min(rowSize / 2, maxRowLength / 2) - 0.5f);
 
             for(int i = 0; i < slotCount; i++)
             {
