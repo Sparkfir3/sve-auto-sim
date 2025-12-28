@@ -8,7 +8,7 @@ using CCGKit;
 using DG.Tweening;
 using Sparkfire.Utility;
 using SVESimulator.UI;
-
+using UnityEngine.UI;
 using MultipleChoiceEntryData = SVESimulator.UI.MultipleChoiceWindow.MultipleChoiceEntryData;
 
 namespace SVESimulator
@@ -44,6 +44,10 @@ namespace SVESimulator
         private int maxRowLength = 10;
         [BoxGroup("Settings/Slot Spacing"), SerializeField]
         private float startHeight = 10f;
+        [BoxGroup("Settings/Scrolling"), SerializeField]
+        private float scrollAreaHeightPerRow = 15f;
+        [BoxGroup("Settings/Scrolling"), SerializeField]
+        private float scrollAreaMargin = 5f;
         [TitleGroup("Settings"), SerializeField]
         private float repositionTime = 0.5f;
 
@@ -57,9 +61,14 @@ namespace SVESimulator
         private Transform slotContainer;
         [SerializeField]
         private Transform cardContainer;
+        [BoxGroup("Scroll Rect"), SerializeField]
+        private ScrollRect scrollRect;
+        [BoxGroup("Scroll Rect"), SerializeField]
+        private RectTransform scrollContent;
 
         private Camera cam;
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
+        private Vector3 contentPositionDiff;
 
         public int ValidTargetsCount => AllCards.Count(x => currentFilter.MatchesCard(x));
         public float SlotScale => slotScale;
@@ -70,6 +79,12 @@ namespace SVESimulator
 
         #region Enable/Disable
 
+        public override void Initialize(RuntimeZone zone, PlayerCardZoneController controller)
+        {
+            base.Initialize(zone, controller);
+            contentPositionDiff = scrollContent.transform.position - slotContainer.transform.position;
+        }
+
         public void Enable(SelectionMode mode, int minSlotCount = 1, int maxSlotCount = 5)
         {
             SwitchMode(mode);
@@ -79,6 +94,8 @@ namespace SVESimulator
             zoneController.fieldZone.RemoveAllCardHighlights();
             slotContainer.localPosition = Vector3.zero;
             cardContainer.localPosition = Vector3.zero;
+            scrollContent.anchoredPosition = Vector2.zero;
+            scrollRect.onValueChanged.AddListener(ScrollSelectionArea);
 
             int i;
             for(i = 0; i < minSlotCount; i++)
@@ -123,6 +140,7 @@ namespace SVESimulator
 
             DeselectAllCards();
             SetFilter("");
+            scrollRect.onValueChanged.RemoveListener(ScrollSelectionArea);
             Player.InputController.allowedInputs = Player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             zoneController.fieldZone.HighlightCardsCanAttack();
             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(zoneController.Player.GetOpponentInfo().netId);
@@ -394,6 +412,15 @@ namespace SVESimulator
                 else
                     slot.transform.DOLocalMove(targetPosition, repositionTime, true);
             }
+
+            scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x,
+                (scrollAreaHeightPerRow * Mathf.Ceil((float)slotCount / maxRowLength)) + (scrollAreaMargin * 2f));
+        }
+
+        private void ScrollSelectionArea(Vector2 value)
+        {
+            slotContainer.position = scrollContent.position - contentPositionDiff;
+            cardContainer.position = scrollContent.position - contentPositionDiff;
         }
 
         private void ToggleCardSelection(CardObject card)
