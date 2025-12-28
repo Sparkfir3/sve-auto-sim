@@ -53,6 +53,10 @@ namespace SVESimulator
         private PlayerCardZoneController zoneController;
         [SerializeField]
         private PlayerInputSettings inputSettings;
+        [SerializeField]
+        private Transform slotContainer;
+        [SerializeField]
+        private Transform cardContainer;
 
         private Camera cam;
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
@@ -73,6 +77,8 @@ namespace SVESimulator
             this.maxSlotCount = maxSlotCount;
             gameObject.SetActive(true);
             zoneController.fieldZone.RemoveAllCardHighlights();
+            slotContainer.localPosition = Vector3.zero;
+            cardContainer.localPosition = Vector3.zero;
 
             int i;
             for(i = 0; i < minSlotCount; i++)
@@ -312,6 +318,7 @@ namespace SVESimulator
         public override void AddCard(CardObject card)
         {
             base.AddCard(card);
+            card.transform.parent = cardContainer;
             if(currentMode == SelectionMode.PlaceCardsFromHand)
             {
                 currentSelectedCards.Add(card);
@@ -360,7 +367,7 @@ namespace SVESimulator
 
         private void CreateNewSlot()
         {
-            TargetableSlot target = Instantiate(slotPrefab, transform);
+            TargetableSlot target = Instantiate(slotPrefab, slotContainer);
             target.transform.localScale = Vector3.one * slotScale;
             CardSlot newSlot = new()
             {
