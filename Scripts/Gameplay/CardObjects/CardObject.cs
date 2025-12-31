@@ -12,9 +12,6 @@ namespace SVESimulator
         #region Variables
 
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        private static readonly int Stencil = Shader.PropertyToID("_Stencil");
-
-        public const int DefaultStencilLayer = 1;
         public enum HighlightMode { None, Hover, ValidTarget, Selected }
 
         // ---
@@ -103,7 +100,6 @@ namespace SVESimulator
             SetStatOverlayActive(false);
             SetCostOverlayActive(false);
             SetHighlightMode(HighlightMode.None);
-            SetStencilLayer(DefaultStencilLayer);
 
             _interactable = true;
             _isAnimating = false;
@@ -224,12 +220,6 @@ namespace SVESimulator
         public void SetCardBack(Texture texture)
         {
             cardBack.material.SetTexture(MainTex, texture);
-        }
-
-        public void SetStencilLayer(int layer)
-        {
-            cardFront.material.SetFloat(Stencil, layer);
-            cardBack.material.SetFloat(Stencil, layer);
         }
 
         public void SetStatOverlayActive(bool active)

@@ -342,8 +342,6 @@ namespace SVESimulator
                 currentSelectedCards.Add(card);
                 UpdateActionButton();
             }
-            if(maxSlotCount > maxRowLength * 2)
-                card.SetStencilLayer(CardObject.DefaultStencilLayer + 1);
         }
 
         public override void RemoveCard(CardObject card)
@@ -354,8 +352,6 @@ namespace SVESimulator
                 currentSelectedCards.Remove(card);
                 UpdateActionButton();
             }
-            if(maxSlotCount > maxRowLength * 2)
-                card.SetStencilLayer(CardObject.DefaultStencilLayer);
         }
 
         public override void MoveCardToSlot(CardObject card, int slot, TargetableSlot.InteractionType newInteractionType)
