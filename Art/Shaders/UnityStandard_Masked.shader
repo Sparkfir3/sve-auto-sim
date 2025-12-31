@@ -4,6 +4,8 @@ Shader "Custom/Standard (Masked)"
 {
     Properties
     {
+        [IntegerRange] _Stencil("Stencil ID", Range(0, 255)) = 1
+
         _Color("Color", Color) = (1,1,1,1)
         _MainTex("Albedo", 2D) = "white" {}
 
@@ -58,7 +60,7 @@ Shader "Custom/Standard (Masked)"
 
         Stencil
         {
-            Ref 1
+            Ref [_Stencil]
             Comp NotEqual
         }
 
@@ -355,5 +357,5 @@ Shader "Custom/Standard (Masked)"
 
 
     FallBack "VertexLit"
-    CustomEditor "StandardShaderGUI"
+    // CustomEditor "StandardShaderGUI"
 }
