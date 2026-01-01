@@ -12,7 +12,7 @@ namespace SVESimulator
         protected override void InitializeSelectionArea(PlayerController player, CardSelectionArea selectionArea)
         {
             int cardCount = player.ZoneController.cemeteryZone.AllCards.Count;
-            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromCemetery, cardCount, cardCount);
+            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromCemetery, cardCount, cardCount, slotBackgroundsActive: false);
             selectionArea.SetFilter(filter);
             selectionArea.AddCemetery();
         }

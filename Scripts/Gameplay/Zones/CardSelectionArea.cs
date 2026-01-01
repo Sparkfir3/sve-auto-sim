@@ -61,10 +61,12 @@ namespace SVESimulator
         private Transform slotContainer;
         [SerializeField]
         private Transform cardContainer;
-        [BoxGroup("Scroll Rect"), SerializeField]
+        [BoxGroup("Scroll View"), SerializeField]
         private ScrollRect scrollRect;
-        [BoxGroup("Scroll Rect"), SerializeField]
+        [BoxGroup("Scroll View"), SerializeField]
         private RectTransform scrollContent;
+        [BoxGroup("Scroll View"), SerializeField]
+        private CanvasGroup scrollViewTint;
 
         private Camera cam;
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
@@ -85,7 +87,7 @@ namespace SVESimulator
             contentPositionDiff = scrollContent.transform.position - slotContainer.transform.position;
         }
 
-        public void Enable(SelectionMode mode, int minSlotCount = 1, int maxSlotCount = 5)
+        public void Enable(SelectionMode mode, int minSlotCount = 1, int maxSlotCount = 5, bool slotBackgroundsActive = true)
         {
             SwitchMode(mode);
             this.minSlotCount = minSlotCount;
@@ -96,6 +98,7 @@ namespace SVESimulator
             cardContainer.localPosition = Vector3.zero;
             scrollContent.anchoredPosition = Vector2.zero;
             scrollRect.onValueChanged.AddListener(ScrollSelectionArea);
+            scrollViewTint.alpha = 0f;
 
             int i;
             for(i = 0; i < minSlotCount; i++)
@@ -110,6 +113,7 @@ namespace SVESimulator
                 cardSlots[i].target.gameObject.SetActive(false);
             }
             RepositionSlots(true);
+            SetSlotBackgroundsActive(slotBackgroundsActive);
         }
 
         [Button]
@@ -256,6 +260,7 @@ namespace SVESimulator
                 cardObject.CurrentZone = zoneController.deckZone;
                 zoneController.MoveCardToSelectionArea(cardObject, false);
             }
+            scrollViewTint.alpha = 1f;
         }
 
         public void AddCemetery()
@@ -263,6 +268,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = new(zoneController.cemeteryZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 zoneController.MoveCardToSelectionArea(card, false);
+            scrollViewTint.alpha = 1f;
         }
 
         public void SetConfirmAction(string cardName, string actionText, string effectText, int minSelectionCount, int maxSelectionCount, Action<List<CardObject>> action,
@@ -416,6 +422,15 @@ namespace SVESimulator
 
             scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x,
                 (scrollAreaHeightPerRow * Mathf.Ceil((float)slotCount / maxRowLength)) + (scrollAreaMargin * 2f));
+        }
+
+        private void SetSlotBackgroundsActive(bool active)
+        {
+            foreach(CardSlot slot in cardSlots.Values)
+            {
+                if(slot.target.isActiveAndEnabled)
+                    slot.target.SetBackgroundActive(active);
+            }
         }
 
         private void ScrollSelectionArea(Vector2 value)

@@ -24,7 +24,7 @@ namespace SVESimulator
         protected override void InitializeSelectionArea(PlayerController player, CardSelectionArea selectionArea)
         {
             int cardCount = player.ZoneController.deckZone.Runtime.cards.Count;
-            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, cardCount, cardCount);
+            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, cardCount, cardCount, slotBackgroundsActive: false);
             selectionArea.SetFilter(filter);
             selectionArea.AddAllCardsInDeck();
         }
