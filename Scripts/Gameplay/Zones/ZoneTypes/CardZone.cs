@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
@@ -36,6 +37,8 @@ namespace SVESimulator
         public PlayerCardZoneController ZoneController { get; protected set; }
         public PlayerController Player => ZoneController.Player;
 
+        public event Action OnInitialize;
+
         // ------------------------------
 
         public virtual Quaternion CardRotation => IsLocalPlayerZone ? SVEProperties.CardFaceUpRotation
@@ -47,6 +50,7 @@ namespace SVESimulator
         {
             runtimeZone = zone;
             ZoneController = controller;
+            OnInitialize?.Invoke();
         }
 
         public virtual void AddCard(CardObject card)
