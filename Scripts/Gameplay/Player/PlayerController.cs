@@ -28,11 +28,18 @@ namespace SVESimulator
         public List<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         [SyncVar, SerializeField]
         private int damageTakenThisTurn;
+        [SyncVar(hook = nameof(SyncHook_OnDeckCountChanged))]
+        public int CardsInDeck;
+        [SyncVar(hook = nameof(SyncHook_OnCemeteryCountChanged))]
+        public int CardsInCemetery;
+        [SyncVar]
+        public int Spellchain;
+        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckCountChanged))]
+        public int CardsInEvolveDeck;
 
         public int Combo => CardsPlayedThisTurn.Count;
-        public int Spellchain => localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
         public bool Overflow => localMaxPlayPointStat != null && localMaxPlayPointStat.effectiveValue >= 7;
-        public int Necrocharge => localPlayerZoneController.cemeteryZone.AllCards.Count;
+        public int Necrocharge => CardsInCemetery;
         public bool Sanguine => damageTakenThisTurn > 0;
 
         [Header("Runtime References"), SerializeField, ReadOnly]
@@ -58,7 +65,10 @@ namespace SVESimulator
         protected Stat localMaxPlayPointStat;
         protected Stat opponentPlayPointStat;
 
-        public Action onEndGameEvent;
+        public event Action<int> OnCardsInDeckChanged;
+        public event Action<int> OnCardsInCemeteryChanged;
+        public event Action<int> OnCardsInEvolveDeckChanged;
+        public event Action onEndGameEvent;
 
         #endregion
 
@@ -154,8 +164,7 @@ namespace SVESimulator
         {
             base.OnStartLocalPlayer();
 
-            localPlayerZoneController.InitializeZones(playerInfo);
-            localPlayerZoneController.Player = this;
+            localPlayerZoneController.InitializeZones(this, playerInfo, !netIdentity.isClientOnly);
             playerInfo.namedStats[SVEProperties.PlayerStats.Defense].onValueChanged += (oldValue, newValue) =>
             {
                 int difference = newValue - oldValue;
@@ -163,9 +172,6 @@ namespace SVESimulator
                     damageTakenThisTurn += -difference;
             };
             FieldManager.PlayerLeaderHealth.Initialize(playerInfo.namedStats[SVEProperties.PlayerStats.Defense]);
-
-            opponentPlayerZoneController.InitializeZones(opponentInfo);
-            FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
             if(isLocalPlayer && !inputController)
                 inputController = FindObjectOfType<PlayerInputController>();
@@ -190,6 +196,10 @@ namespace SVESimulator
             // Custom logic
             SVEEffectPool.Instance.LocalInitialize();
             SVEQuickTimingController.Instance.LocalInitialize();
+
+            PlayerController[] controllers = FindObjectsOfType<PlayerController>();
+            opponentPlayerZoneController.InitializeZones(controllers.FirstOrDefault(x => !x.isLocalPlayer), opponentInfo, !opponentInfo.netId.isClientOnly);
+            FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
             CardsPlayedThisTurn.Clear();
             AbilitiesUsedThisTurn.Clear();
@@ -445,6 +455,20 @@ namespace SVESimulator
                     LocalEvents.EngageCard(card.RuntimeCard);
                 onComplete?.Invoke();
             });
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Card Counts
+
+        public void SyncHook_OnDeckCountChanged(int oldCount, int newCount) => OnCardsInDeckChanged?.Invoke(newCount);
+        public void SyncHook_OnEvolveDeckCountChanged(int oldCount, int newCount) => OnCardsInEvolveDeckChanged?.Invoke(newCount);
+        public void SyncHook_OnCemeteryCountChanged(int oldCount, int newCount)
+        {
+            Spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+            OnCardsInCemeteryChanged?.Invoke(newCount);
         }
 
         #endregion

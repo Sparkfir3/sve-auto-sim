@@ -21,7 +21,7 @@ namespace SVESimulator
 
         protected virtual void Initialize()
         {
-            zone.Runtime.onZoneChanged += UpdateCardCount;
+            zone.Player.OnCardsInDeckChanged += UpdateCardCount;
         }
 
 #if UNITY_EDITOR
@@ -36,7 +36,7 @@ namespace SVESimulator
 
         protected virtual void UpdateCardCount(int count)
         {
-            textCardCount.text = zone.Runtime.numCards.ToString();
+            textCardCount.text = count.ToString();
         }
     }
 }

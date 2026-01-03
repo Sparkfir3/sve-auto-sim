@@ -73,8 +73,9 @@ namespace SVESimulator
             selectionArea.gameObject.SetActive(false);
         }
 
-        public void InitializeZones(PlayerInfo playerInfo)
+        public void InitializeZones(PlayerController player, PlayerInfo playerInfo, bool isHost)
         {
+            Player = player;
             handZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Hand], this);
             deckZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Deck], this);
             fieldZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Field], this);
@@ -85,6 +86,18 @@ namespace SVESimulator
             leaderZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Leader], this);
             resolutionZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Resolution], this);
             selectionArea.Initialize(null, this);
+
+            if(!IsLocalPlayer)
+                return;
+            playerInfo.namedZones[SVEProperties.Zones.Deck].onZoneChanged += x => Player.CardsInDeck = x;
+            playerInfo.namedZones[SVEProperties.Zones.Cemetery].onZoneChanged += x => Player.CardsInCemetery = x;
+            playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x => Player.CardsInEvolveDeck = x;
+            if(!isHost) // Client player's Mirror SyncVar hooks are not getting called their instance (idk why man), so we manually call the hook functions for that user
+            {
+                playerInfo.namedZones[SVEProperties.Zones.Deck].onZoneChanged += x => Player.SyncHook_OnDeckCountChanged(x, x);
+                playerInfo.namedZones[SVEProperties.Zones.Cemetery].onZoneChanged += x => Player.SyncHook_OnCemeteryCountChanged(x, x);
+                playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x => Player.SyncHook_OnEvolveDeckCountChanged(x, x);
+            }
         }
 
         public List<RuntimeCard> InitializeEvolveDeck()
