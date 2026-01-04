@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -5,23 +6,20 @@ using TMPro;
 
 namespace SVESimulator
 {
-    public class ZoneInfoDisplay : MonoBehaviour
+    public abstract class ZoneInfoDisplayBase : MonoBehaviour
     {
         [SerializeField]
-        private CardZone zone;
+        protected CardZone zone;
         [SerializeField]
-        private TextMeshProUGUI textCardCount;
+        protected TextMeshProUGUI textCardCount;
+
+        protected PlayerController player;
 
         // ------------------------------
 
         protected void Awake()
         {
             zone.OnInitialize += Initialize;
-        }
-
-        protected virtual void Initialize()
-        {
-            zone.Player.OnCardsInDeckChanged += UpdateCardCount;
         }
 
 #if UNITY_EDITOR
@@ -33,6 +31,11 @@ namespace SVESimulator
 #endif
 
         // ------------------------------
+
+        protected virtual void Initialize()
+        {
+            player = zone.Player;
+        }
 
         protected virtual void UpdateCardCount(int count)
         {
