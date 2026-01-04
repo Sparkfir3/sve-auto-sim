@@ -89,15 +89,9 @@ namespace SVESimulator
 
             if(!IsLocalPlayer)
                 return;
-            playerInfo.namedZones[SVEProperties.Zones.Deck].onZoneChanged += x => Player.CardsInDeck = x;
-            playerInfo.namedZones[SVEProperties.Zones.Cemetery].onZoneChanged += x => Player.CardsInCemetery = x;
-            playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x => Player.CardsInEvolveDeck = x;
-            if(!isHost) // Client player's Mirror SyncVar hooks are not getting called their instance (idk why man), so we manually call the hook functions for that user
-            {
-                playerInfo.namedZones[SVEProperties.Zones.Deck].onZoneChanged += x => Player.SyncHook_OnDeckCountChanged(x, x);
-                playerInfo.namedZones[SVEProperties.Zones.Cemetery].onZoneChanged += x => Player.SyncHook_OnCemeteryCountChanged(x, x);
-                playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x => Player.SyncHook_OnEvolveDeckCountChanged(x, x);
-            }
+            playerInfo.namedZones[SVEProperties.Zones.Deck].onZoneChanged += x => Player.SetDeckCount(x);
+            playerInfo.namedZones[SVEProperties.Zones.Cemetery].onZoneChanged += x => Player.SetCemeteryCount(x);
+            playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x => Player.SetEvolveDeckCount(x);
         }
 
         public List<RuntimeCard> InitializeEvolveDeck()

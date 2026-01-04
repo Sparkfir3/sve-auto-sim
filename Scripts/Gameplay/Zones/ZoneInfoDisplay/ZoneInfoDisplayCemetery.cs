@@ -16,12 +16,12 @@ namespace SVESimulator
         {
             base.Initialize();
             zone.Player.OnCardsInCemeteryChanged += UpdateCardCount;
+            zone.Player.OnSpellchainChanged += UpdateSpellchain;
         }
 
-        protected override void UpdateCardCount(int count)
+        protected void UpdateSpellchain(int spellchain)
         {
-            base.UpdateCardCount(count);
-            textSpellchain.text = player.Spellchain.ToString();
+            textSpellchain.text = spellchain.ToString();
         }
     }
 }

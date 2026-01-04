@@ -75,6 +75,10 @@ MonoBehaviour:
   CardsPlayedThisTurn: []
   AbilitiesUsedThisTurn: []
   damageTakenThisTurn: 0
+  cardsInDeck: 0
+  cardsInCemetery: 0
+  spellchain: 0
+  cardsInEvolveDeck: 0
   localPlayerZoneController: {fileID: 0}
   opponentPlayerZoneController: {fileID: 0}
   <LocalEvents>k__BackingField: {fileID: 984349466775513389}

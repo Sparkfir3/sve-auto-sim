@@ -28,18 +28,19 @@ namespace SVESimulator
         public List<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         [SyncVar, SerializeField]
         private int damageTakenThisTurn;
-        [SyncVar(hook = nameof(SyncHook_OnDeckCountChanged))]
-        public int CardsInDeck;
-        [SyncVar(hook = nameof(SyncHook_OnCemeteryCountChanged))]
-        public int CardsInCemetery;
-        [SyncVar]
-        public int Spellchain;
-        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckCountChanged))]
-        public int CardsInEvolveDeck;
+        [SyncVar(hook = nameof(SyncHook_OnDeckCountChanged)), SerializeField]
+        private int cardsInDeck;
+        [SyncVar(hook = nameof(SyncHook_OnCemeteryCountChanged)), SerializeField]
+        private int cardsInCemetery;
+        [SyncVar(hook = nameof(SyncHook_OnSpellchainChanged)), SerializeField]
+        private int spellchain;
+        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckCountChanged)), SerializeField]
+        private int cardsInEvolveDeck;
 
         public int Combo => CardsPlayedThisTurn.Count;
+        public int Spellchain => spellchain;
         public bool Overflow => localMaxPlayPointStat != null && localMaxPlayPointStat.effectiveValue >= 7;
-        public int Necrocharge => CardsInCemetery;
+        public int Necrocharge => cardsInCemetery;
         public bool Sanguine => damageTakenThisTurn > 0;
 
         [Header("Runtime References"), SerializeField, ReadOnly]
@@ -67,6 +68,7 @@ namespace SVESimulator
 
         public event Action<int> OnCardsInDeckChanged;
         public event Action<int> OnCardsInCemeteryChanged;
+        public event Action<int> OnSpellchainChanged;
         public event Action<int> OnCardsInEvolveDeckChanged;
         public event Action onEndGameEvent;
 
@@ -461,15 +463,64 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Zone Card Counts
+        #region Zone Card Counts Network Syncing
 
-        public void SyncHook_OnDeckCountChanged(int oldCount, int newCount) => OnCardsInDeckChanged?.Invoke(newCount);
-        public void SyncHook_OnEvolveDeckCountChanged(int oldCount, int newCount) => OnCardsInEvolveDeckChanged?.Invoke(newCount);
-        public void SyncHook_OnCemeteryCountChanged(int oldCount, int newCount)
+        public void SetDeckCount(int count)
         {
-            Spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+            if(isServer)
+                cardsInDeck = count;
+            else
+            {
+                int oldCount = cardsInDeck;
+                cardsInDeck = count;
+                SyncHook_OnDeckCountChanged(oldCount, count); // idk why SyncVar isn't syncing from Server->Client but this manual client-side set fixes/gets around it so fuck it ig
+            }
+        }
+
+        private void SyncHook_OnDeckCountChanged(int oldCount, int newCount) { OnCardsInDeckChanged?.Invoke(newCount); }
+
+        // -----
+
+        public void SetCemeteryCount(int count)
+        {
+            if(isServer)
+                cardsInCemetery = count;
+            else
+            {
+                int oldCount = cardsInCemetery;
+                cardsInCemetery = count;
+                SyncHook_OnCemeteryCountChanged(oldCount, count); // See complaint in: SetDeckCount()
+            }
+        }
+
+        private void SyncHook_OnCemeteryCountChanged(int oldCount, int newCount)
+        {
+            if(isOwned)
+            {
+                spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+                if(!isServer)
+                    SyncHook_OnSpellchainChanged(spellchain, spellchain); // See complaint in: SetDeckCount()
+            }
             OnCardsInCemeteryChanged?.Invoke(newCount);
         }
+
+        private void SyncHook_OnSpellchainChanged(int oldCount, int newCount) { OnSpellchainChanged?.Invoke(newCount); }
+
+        // -----
+
+        public void SetEvolveDeckCount(int count)
+        {
+            if(isServer)
+                cardsInEvolveDeck = count;
+            else
+            {
+                int oldCount = cardsInEvolveDeck;
+                cardsInEvolveDeck = count;
+                SyncHook_OnEvolveDeckCountChanged(oldCount, count); // See complaint in: SetDeckCount()
+            }
+        }
+
+        private void SyncHook_OnEvolveDeckCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckChanged?.Invoke(newCount); }
 
         #endregion
 
