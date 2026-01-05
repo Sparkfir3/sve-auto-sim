@@ -22,10 +22,6 @@ namespace SVESimulator
         public int CurrentTurnNumber;
         [SyncVar]
         public bool EvolvedThisTurn;
-        [SyncVar]
-        public List<PlayedCardData> CardsPlayedThisTurn = new();
-        [SyncVar]
-        public List<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         [SyncVar, SerializeField]
         private int damageTakenThisTurn;
         [SyncVar(hook = nameof(SyncHook_OnDeckCountChanged)), SerializeField]
@@ -36,6 +32,9 @@ namespace SVESimulator
         private int spellchain;
         [SyncVar(hook = nameof(SyncHook_OnEvolveDeckCountChanged)), SerializeField]
         private int cardsInEvolveDeck;
+
+        public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
+        public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
 
         public int Combo => CardsPlayedThisTurn.Count;
         public int Spellchain => spellchain;
