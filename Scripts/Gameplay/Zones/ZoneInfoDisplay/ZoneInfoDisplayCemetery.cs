@@ -9,6 +9,8 @@ namespace SVESimulator
     {
         [SerializeField]
         protected TextMeshProUGUI textSpellchain;
+        [SerializeField]
+        protected string spellchainFormatString = "SC {0}";
 
         // ------------------------------
 
@@ -17,11 +19,12 @@ namespace SVESimulator
             base.Initialize();
             zone.Player.OnCardsInCemeteryChanged += UpdateCardCount;
             zone.Player.OnSpellchainChanged += UpdateSpellchain;
+            UpdateSpellchain(0);
         }
 
         protected void UpdateSpellchain(int spellchain)
         {
-            textSpellchain.text = spellchain.ToString();
+            textSpellchain.text = string.Format(spellchainFormatString, spellchain);
         }
     }
 }

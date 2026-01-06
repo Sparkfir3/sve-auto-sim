@@ -10,6 +10,8 @@ namespace SVESimulator
         [SerializeField]
         protected TextMeshProUGUI textCombo;
         [SerializeField]
+        protected string comboFormatString = "Combo {0}";
+        [SerializeField]
         protected TextMeshProUGUI textOverflow;
         [SerializeField]
         protected TextMeshProUGUI textSanguine;
@@ -38,24 +40,27 @@ namespace SVESimulator
         {
             base.Initialize();
             player.OnCardsInDeckChanged += UpdateCardCount;
+            UpdateCombo();
+            UpdateOverflow();
+            UpdateSanguine();
         }
 
         private void UpdateCombo()
         {
             combo = player.Combo;
-            textCombo.text = combo.ToString();
+            textCombo.text = string.Format(comboFormatString, combo);
         }
 
         private void UpdateOverflow()
         {
             overflow = player.Overflow;
-            textOverflow.text = overflow.ToString();
+            textOverflow.gameObject.SetActive(overflow);
         }
 
         private void UpdateSanguine()
         {
             sanguine = player.Sanguine;
-            textSanguine.text = sanguine.ToString();
+            textSanguine.gameObject.SetActive(sanguine);
         }
     }
 }
