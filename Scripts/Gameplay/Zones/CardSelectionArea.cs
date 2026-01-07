@@ -17,7 +17,7 @@ namespace SVESimulator
     {
         #region Variables
 
-        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea }
+        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea, ViewCardsCemetery, ViewCardsEvolveDeck }
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private SelectionMode currentMode;
@@ -133,8 +133,13 @@ namespace SVESimulator
                         zoneController.SendCardToTopDeck(card);
                     break;
                 case SelectionMode.SelectCardsFromCemetery:
+                case SelectionMode.ViewCardsCemetery:
                     foreach(CardObject card in cardsToMove)
                         zoneController.SendCardToCemetery(card);
+                    break;
+                case SelectionMode.ViewCardsEvolveDeck:
+                    foreach(CardObject card in cardsToMove)
+                        Player.OppZoneController.SendCardToEvolveDeck(card);
                     break;
                 case SelectionMode.SelectCardsFromOppHand:
                     foreach(CardObject card in cardsToMove)
@@ -172,6 +177,8 @@ namespace SVESimulator
                 case SelectionMode.SelectCardsFromDeck:
                 case SelectionMode.SelectCardsFromCemetery:
                 case SelectionMode.SelectCardsFromOppHand:
+                case SelectionMode.ViewCardsCemetery:
+                case SelectionMode.ViewCardsEvolveDeck:
                     Interactable = false;
                     InteractionType = ZoneInteractionType.None;
                     endInteractionType = TargetableSlot.InteractionType.None;
