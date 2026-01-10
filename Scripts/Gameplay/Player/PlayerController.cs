@@ -30,8 +30,10 @@ namespace SVESimulator
         private int cardsInCemetery;
         [SyncVar(hook = nameof(SyncHook_OnSpellchainChanged)), SerializeField]
         private int spellchain;
-        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckCountChanged)), SerializeField]
-        private int cardsInEvolveDeck;
+        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckFaceDownCountChanged)), SerializeField]
+        private int cardsInEvolveDeckFaceDown;
+        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckFaceUpCountChanged)), SerializeField]
+        private int cardsInEvolveDeckFaceUp;
 
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
@@ -68,7 +70,8 @@ namespace SVESimulator
         public event Action<int> OnCardsInDeckChanged;
         public event Action<int> OnCardsInCemeteryChanged;
         public event Action<int> OnSpellchainChanged;
-        public event Action<int> OnCardsInEvolveDeckChanged;
+        public event Action<int> OnCardsInEvolveDeckFaceDownChanged;
+        public event Action<int> OnCardsInEvolveDeckFaceUpChanged;
         public event Action onEndGameEvent;
 
         #endregion
@@ -507,19 +510,34 @@ namespace SVESimulator
 
         // -----
 
-        public void SetEvolveDeckCount(int count)
+        public void SetEvolveDeckCount(int faceDownCount, int faceUpCount)
         {
             if(isServer)
-                cardsInEvolveDeck = count;
+            {
+                if(cardsInEvolveDeckFaceDown != faceDownCount)
+                    cardsInEvolveDeckFaceDown = faceDownCount;
+                if(cardsInEvolveDeckFaceUp != faceUpCount)
+                    cardsInEvolveDeckFaceUp = faceUpCount;
+            }
             else
             {
-                int oldCount = cardsInEvolveDeck;
-                cardsInEvolveDeck = count;
-                SyncHook_OnEvolveDeckCountChanged(oldCount, count); // See complaint in: SetDeckCount()
+                if(cardsInEvolveDeckFaceDown != faceDownCount)
+                {
+                    int oldCountFaceDown = cardsInEvolveDeckFaceDown;
+                    cardsInEvolveDeckFaceDown = faceDownCount;
+                    SyncHook_OnEvolveDeckFaceDownCountChanged(oldCountFaceDown, faceDownCount);
+                }
+                if(cardsInEvolveDeckFaceUp != faceUpCount)
+                {
+                    int oldCountFaceUp = cardsInEvolveDeckFaceUp;
+                    cardsInEvolveDeckFaceUp = faceUpCount;
+                    SyncHook_OnEvolveDeckFaceUpCountChanged(oldCountFaceUp, faceUpCount);
+                }
             }
         }
 
-        private void SyncHook_OnEvolveDeckCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckChanged?.Invoke(newCount); }
+        private void SyncHook_OnEvolveDeckFaceDownCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckFaceDownChanged?.Invoke(newCount); }
+        private void SyncHook_OnEvolveDeckFaceUpCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckFaceUpChanged?.Invoke(newCount); }
 
         #endregion
 

@@ -72,13 +72,12 @@ MonoBehaviour:
   isHuman: 0
   CurrentTurnNumber: 0
   EvolvedThisTurn: 0
-  CardsPlayedThisTurn: []
-  AbilitiesUsedThisTurn: []
   damageTakenThisTurn: 0
   cardsInDeck: 0
   cardsInCemetery: 0
   spellchain: 0
-  cardsInEvolveDeck: 0
+  cardsInEvolveDeckFaceDown: 0
+  cardsInEvolveDeckFaceUp: 0
   localPlayerZoneController: {fileID: 0}
   opponentPlayerZoneController: {fileID: 0}
   <LocalEvents>k__BackingField: {fileID: 984349466775513389}
