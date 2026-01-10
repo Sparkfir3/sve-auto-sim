@@ -237,7 +237,7 @@ namespace SVESimulator
                         {
                             if(currentTargetSlot.ParentZone is not CardSelectionArea)
                             {
-                                Debug.LogError($"Unsupported action: attempted to MoveCard from into zone {currentTargetSlot.ParentZone}, which is not supported!");
+                                Debug.LogError($"Unsupported action: attempted to MoveCard into zone {currentTargetSlot.ParentZone}, which is not supported!");
                                 break;
                             }
                             if(currentSelectedCard.CurrentZone is CardSelectionArea)
@@ -464,9 +464,10 @@ namespace SVESimulator
                     if(currentTargetSlot)
                         currentTargetSlot.OnHoverEnd();
                     currentTargetSlot = slot;
-                    currentTargetSlot.OnHoverBegin();
+                    if(currentTargetSlot)
+                        currentTargetSlot.OnHoverBegin();
                 }
-                else if(!slot && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.TryGetComponent(out ViewZoneCollider viewZoneCollider))
+                else if(!slot && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.TryGetComponent(out ViewZoneController viewZoneCollider))
                 {
                     viewZoneCollider.ViewZone();
                 }

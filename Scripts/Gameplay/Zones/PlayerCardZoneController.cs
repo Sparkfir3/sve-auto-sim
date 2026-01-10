@@ -36,7 +36,8 @@ namespace SVESimulator
         [FoldoutGroup("Zones")]
         public CardStack resolutionZone;
 
-        public CardSelectionArea selectionArea;
+        public CardSelectionArea selectionArea; // for selecting effect targets from a zone other than field/EX
+        public ZoneViewingArea zoneViewingArea; // for viewing cards in a zone (ex. cemetery) outside of performing effects
         public EvolvePointDisplay evolvePointDisplay;
 
         [TitleGroup("Runtime References"), ShowInInspector, ReadOnly]
@@ -71,6 +72,7 @@ namespace SVESimulator
         private void Awake()
         {
             selectionArea.gameObject.SetActive(false);
+            zoneViewingArea.gameObject.SetActive(false);
         }
 
         public void InitializeZones(PlayerController player, PlayerInfo playerInfo, bool isHost)
@@ -86,12 +88,17 @@ namespace SVESimulator
             leaderZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Leader], this);
             resolutionZone.Initialize(playerInfo.namedZones[SVEProperties.Zones.Resolution], this);
             selectionArea.Initialize(null, this);
+            zoneViewingArea.Initialize(null, this);
 
             if(!IsLocalPlayer)
                 return;
             playerInfo.namedZones[SVEProperties.Zones.Deck].onZoneChanged += x => Player.SetDeckCount(x);
             playerInfo.namedZones[SVEProperties.Zones.Cemetery].onZoneChanged += x => Player.SetCemeteryCount(x);
-            playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x => Player.SetEvolveDeckCount(x);
+            playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged += x =>
+            {
+                int faceDownCount = playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].cards.Count(y => y.namedStats[SVEProperties.CardStats.FaceUp].baseValue == 0);
+                Player.SetEvolveDeckCount(faceDownCount, x - faceDownCount);
+            };
         }
 
         public List<RuntimeCard> InitializeEvolveDeck()
@@ -299,6 +306,26 @@ namespace SVESimulator
             MoveCardZone(card, card.CurrentZone, selectionArea);
             MoveCardTransform(card, selectionArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
             selectionArea.MoveCardToSlot(card, slotNumber, selectionArea.endInteractionType);
+            if(rearrangeHand)
+                RearrangeHand();
+        }
+
+        public void MoveCardToZoneViewingArea(CardObject card, bool rearrangeHand = true)
+        {
+            int slot = zoneViewingArea.GetFirstOpenSlotId();
+            if(slot == -1)
+                slot = 0;
+            MoveCardToZoneViewingArea(card, slot, rearrangeHand);
+        }
+
+        public void MoveCardToZoneViewingArea(CardObject card, int slotNumber, bool rearrangeHand = true)
+        {
+            if(!card)
+                return;
+
+            MoveCardZone(card, card.CurrentZone, zoneViewingArea);
+            MoveCardTransform(card, zoneViewingArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, zoneViewingArea.SlotScale);
+            zoneViewingArea.MoveCardToSlot(card, slotNumber, zoneViewingArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
         }
