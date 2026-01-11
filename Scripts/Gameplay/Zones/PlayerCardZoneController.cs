@@ -250,8 +250,12 @@ namespace SVESimulator
             if(!card)
                 return;
 
+            bool isFaceUp = card.RuntimeCard.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue > 0;
             MoveCardZone(card, card.CurrentZone, evolveDeckZone);
-            MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
+            if(isFaceUp)
+                MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
+            else
+                MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(),  SVEProperties.CardFaceDownRotation, disableOnComplete: true);
             card.SetStatOverlayActive(false);
         }
 

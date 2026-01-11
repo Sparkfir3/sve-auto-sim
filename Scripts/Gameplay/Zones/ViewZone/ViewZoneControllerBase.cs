@@ -20,7 +20,7 @@ namespace SVESimulator
         [Button, HideInEditorMode]
         public void ViewZone()
         {
-            if(!zone || zone.AllCards.Count == 0 && FieldManager.PlayerZones.zoneViewingArea.IsActive)
+            if(!zone || !CanViewZone() || FieldManager.PlayerZones.zoneViewingArea.IsActive)
                 return;
 
             if(FieldManager.PlayerZones.selectionArea.IsActive)
@@ -28,7 +28,7 @@ namespace SVESimulator
                 isOverlayingSelectionArea = true;
                 FieldManager.PlayerZones.selectionArea.transform.position += Vector3.down * 10f;
             }
-            FieldManager.PlayerZones.zoneViewingArea.Enable(selectionMode, zone.AllCards.Count, zone.AllCards.Count, slotBackgroundsActive: false);
+            FieldManager.PlayerZones.zoneViewingArea.Enable(selectionMode, GetSlotCount(), GetSlotCount(), slotBackgroundsActive: false);
             AddCards();
             GameUIManager.ViewingZone.Open(GetDisplayText(), Close);
         }
@@ -45,6 +45,16 @@ namespace SVESimulator
         }
 
         // ------------------------------
+
+        protected virtual bool CanViewZone()
+        {
+            return zone.AllCards.Count > 0;
+        }
+
+        protected virtual int GetSlotCount()
+        {
+            return zone.AllCards.Count;
+        }
 
         protected abstract string GetDisplayText();
         protected abstract void AddCards();

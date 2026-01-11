@@ -19,7 +19,7 @@ namespace SVESimulator
         #region Variables
 
         public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea,
-            ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck }
+            ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck, ViewCardsOppEvolveDeck }
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private SelectionMode currentMode;
@@ -128,6 +128,7 @@ namespace SVESimulator
                 card.SetHighlightMode(CardObject.HighlightMode.None);
             switch(currentMode)
             {
+                // Local player zones modes
                 case SelectionMode.PlaceCardsFromHand:
                     foreach(CardObject card in cardsToMove)
                         zoneController.AddCardToHand(card);
@@ -146,6 +147,7 @@ namespace SVESimulator
                         zoneController.SendCardToEvolveDeck(card);
                     break;
 
+                // Opponent zone modes
                 case SelectionMode.SelectCardsFromOppHand:
                     foreach(CardObject card in cardsToMove)
                         Player.OppZoneController.AddCardToHand(card);
@@ -154,7 +156,10 @@ namespace SVESimulator
                     foreach(CardObject card in cardsToMove)
                         Player.OppZoneController.SendCardToCemetery(card);
                     break;
-
+                case SelectionMode.ViewCardsOppEvolveDeck:
+                    foreach(CardObject card in cardsToMove)
+                        Player.OppZoneController.SendCardToEvolveDeck(card);
+                    break;
             }
 
             DeselectAllCards();
@@ -329,6 +334,25 @@ namespace SVESimulator
             scrollViewTint.alpha = 1f;
         }
 
+        public void AddEvolveDeck()
+        {
+            Debug.Assert(minSlotCount >= zoneController.evolveDeckZone.Runtime.cards.Count);
+            List<RuntimeCard> cardsInZone = zoneController.evolveDeckZone.Runtime.cards.OrderByDescending(x => x.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue)
+                .ThenBy(x => x.cardId).ToList();
+            foreach(RuntimeCard runtimeCard in cardsInZone)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
+                if(!cardObject)
+                {
+                    cardObject = CardManager.Instance.RequestCard(runtimeCard);
+                    cardObject.transform.SetPositionAndRotation(zoneController.evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation);
+                    cardObject.CurrentZone = zoneController.evolveDeckZone;
+                }
+                MoveCardToSelectionArea(cardObject);
+            }
+            scrollViewTint.alpha = 1f;
+        }
+
         #endregion
 
         #region Add Cards (Opponent)
@@ -343,6 +367,14 @@ namespace SVESimulator
         public void AddOpponentCemetery()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.cemeteryZone.AllCards);
+            foreach(CardObject card in cardsToMove)
+                MoveCardToSelectionArea(card);
+            scrollViewTint.alpha = 1f;
+        }
+
+        public void AddOpponentEvolveDeck()
+        {
+            List<CardObject> cardsToMove = new(Player.OppZoneController.evolveDeckZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
             scrollViewTint.alpha = 1f;
