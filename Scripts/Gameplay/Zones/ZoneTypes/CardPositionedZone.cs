@@ -125,6 +125,8 @@ namespace SVESimulator
 
             int slotA = GetSlotNumber(cardA);
             int slotB = GetSlotNumber(cardB);
+            if(slotA == slotB)
+                return false;
             cardSlots[slotA].card = cardB;
             cardSlots[slotB].card = cardA;
             return true;
