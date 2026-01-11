@@ -96,8 +96,11 @@ namespace SVESimulator
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
             if(allowedInputs == InputTypes.None)
             {
-                if(!isInteracting) // this is needed to update the current hovered card info display
-                    FindSelectedCard(mousePosition);
+                if(!isInteracting)
+                {
+                    FindSelectedCard(mousePosition); // update the current hovered card info display
+                    FindTargetSlot(mousePosition); // handle input for viewing zones
+                }
                 return;
             }
 
