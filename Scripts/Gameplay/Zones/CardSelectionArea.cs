@@ -19,7 +19,7 @@ namespace SVESimulator
         #region Variables
 
         public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea,
-            ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck, ViewCardsOppEvolveDeck }
+            ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck, ViewCardsOppEvolveDeck, ViewCardsBanished, ViewCardsOppBanished }
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private SelectionMode currentMode;
@@ -146,6 +146,10 @@ namespace SVESimulator
                     foreach(CardObject card in cardsToMove)
                         zoneController.SendCardToEvolveDeck(card);
                     break;
+                case SelectionMode.ViewCardsBanished:
+                    foreach(CardObject card in cardsToMove)
+                        zoneController.SendCardToBanishedZone(card);
+                    break;
 
                 // Opponent zone modes
                 case SelectionMode.SelectCardsFromOppHand:
@@ -159,6 +163,10 @@ namespace SVESimulator
                 case SelectionMode.ViewCardsOppEvolveDeck:
                     foreach(CardObject card in cardsToMove)
                         Player.OppZoneController.SendCardToEvolveDeck(card);
+                    break;
+                case SelectionMode.ViewCardsOppBanished:
+                    foreach(CardObject card in cardsToMove)
+                        Player.OppZoneController.SendCardToBanishedZone(card);
                     break;
             }
 
@@ -198,7 +206,11 @@ namespace SVESimulator
                 case SelectionMode.SelectCardsFromCemetery:
                 case SelectionMode.SelectCardsFromOppHand:
                 case SelectionMode.ViewCardsCemetery:
+                case SelectionMode.ViewCardsOppCemetery:
                 case SelectionMode.ViewCardsEvolveDeck:
+                case SelectionMode.ViewCardsOppEvolveDeck:
+                case SelectionMode.ViewCardsBanished:
+                case SelectionMode.ViewCardsOppBanished:
                     Interactable = false;
                     InteractionType = ZoneInteractionType.None;
                     endInteractionType = TargetableSlot.InteractionType.None;
@@ -353,6 +365,14 @@ namespace SVESimulator
             scrollViewTint.alpha = 1f;
         }
 
+        public void AddBanished()
+        {
+            List<CardObject> cardsToMove = new(zoneController.banishedZone.AllCards);
+            foreach(CardObject card in cardsToMove)
+                MoveCardToSelectionArea(card);
+            scrollViewTint.alpha = 1f;
+        }
+
         #endregion
 
         #region Add Cards (Opponent)
@@ -375,6 +395,14 @@ namespace SVESimulator
         public void AddOpponentEvolveDeck()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.evolveDeckZone.AllCards);
+            foreach(CardObject card in cardsToMove)
+                MoveCardToSelectionArea(card);
+            scrollViewTint.alpha = 1f;
+        }
+
+        public void AddOpponentBanished()
+        {
+            List<CardObject> cardsToMove = new(Player.OppZoneController.banishedZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
             scrollViewTint.alpha = 1f;

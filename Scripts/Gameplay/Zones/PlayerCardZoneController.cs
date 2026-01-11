@@ -99,6 +99,7 @@ namespace SVESimulator
                 int faceDownCount = playerInfo.namedZones[SVEProperties.Zones.EvolveDeck].cards.Count(y => y.namedStats[SVEProperties.CardStats.FaceUp].baseValue == 0);
                 Player.SetEvolveDeckCount(faceDownCount, x - faceDownCount);
             };
+            playerInfo.namedZones[SVEProperties.Zones.Banished].onZoneChanged += x => Player.SetBanishedZoneCount(x);
         }
 
         public List<RuntimeCard> InitializeEvolveDeck()

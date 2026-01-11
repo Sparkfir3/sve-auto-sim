@@ -34,6 +34,8 @@ namespace SVESimulator
         private int cardsInEvolveDeckFaceDown;
         [SyncVar(hook = nameof(SyncHook_OnEvolveDeckFaceUpCountChanged)), SerializeField]
         private int cardsInEvolveDeckFaceUp;
+        [SyncVar(hook = nameof(SyncHook_OnBanishedZoneCountChanged)), SerializeField]
+        private int cardsInBanishedZone;
 
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
@@ -72,6 +74,7 @@ namespace SVESimulator
         public event Action<int> OnSpellchainChanged;
         public event Action<int> OnCardsInEvolveDeckFaceDownChanged;
         public event Action<int> OnCardsInEvolveDeckFaceUpChanged;
+        public event Action<int> OnCardsInBanishedZoneChanged;
         public event Action onEndGameEvent;
 
         #endregion
@@ -538,6 +541,22 @@ namespace SVESimulator
 
         private void SyncHook_OnEvolveDeckFaceDownCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckFaceDownChanged?.Invoke(newCount); }
         private void SyncHook_OnEvolveDeckFaceUpCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckFaceUpChanged?.Invoke(newCount); }
+
+        // -----
+
+        public void SetBanishedZoneCount(int count)
+        {
+            if(isServer)
+                cardsInBanishedZone = count;
+            else
+            {
+                int oldCount = cardsInBanishedZone;
+                cardsInBanishedZone = count;
+                SyncHook_OnBanishedZoneCountChanged(oldCount, count); // See complaint in: SetDeckCount()
+            }
+        }
+
+        private void SyncHook_OnBanishedZoneCountChanged(int oldCount, int newCount) { OnCardsInBanishedZoneChanged?.Invoke(newCount); }
 
         #endregion
 

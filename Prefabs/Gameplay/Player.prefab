@@ -78,6 +78,7 @@ MonoBehaviour:
   spellchain: 0
   cardsInEvolveDeckFaceDown: 0
   cardsInEvolveDeckFaceUp: 0
+  cardsInBanishedZone: 0
   localPlayerZoneController: {fileID: 0}
   opponentPlayerZoneController: {fileID: 0}
   <LocalEvents>k__BackingField: {fileID: 984349466775513389}
