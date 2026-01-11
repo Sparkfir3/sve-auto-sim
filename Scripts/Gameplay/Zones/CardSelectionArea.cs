@@ -18,7 +18,8 @@ namespace SVESimulator
     {
         #region Variables
 
-        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea, ViewCardsCemetery, ViewCardsEvolveDeck }
+        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea,
+            ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck }
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private SelectionMode currentMode;
@@ -142,12 +143,18 @@ namespace SVESimulator
                     break;
                 case SelectionMode.ViewCardsEvolveDeck:
                     foreach(CardObject card in cardsToMove)
-                        Player.OppZoneController.SendCardToEvolveDeck(card);
+                        zoneController.SendCardToEvolveDeck(card);
                     break;
+
                 case SelectionMode.SelectCardsFromOppHand:
                     foreach(CardObject card in cardsToMove)
                         Player.OppZoneController.AddCardToHand(card);
                     break;
+                case SelectionMode.ViewCardsOppCemetery:
+                    foreach(CardObject card in cardsToMove)
+                        Player.OppZoneController.SendCardToCemetery(card);
+                    break;
+
             }
 
             DeselectAllCards();
@@ -279,13 +286,6 @@ namespace SVESimulator
                 MoveCardToSelectionArea(card);
         }
 
-        public void AddAllCardsInOpponentsHand()
-        {
-            List<CardObject> cardsToMove = new(Player.OppZoneController.handZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
-        }
-
         public void AddCardFromTopDeck()
         {
             int currentCount = FilledSlotCount();
@@ -324,6 +324,25 @@ namespace SVESimulator
         public void AddCemetery()
         {
             List<CardObject> cardsToMove = new(zoneController.cemeteryZone.AllCards);
+            foreach(CardObject card in cardsToMove)
+                MoveCardToSelectionArea(card);
+            scrollViewTint.alpha = 1f;
+        }
+
+        #endregion
+
+        #region Add Cards (Opponent)
+
+        public void AddAllCardsInOpponentsHand()
+        {
+            List<CardObject> cardsToMove = new(Player.OppZoneController.handZone.AllCards);
+            foreach(CardObject card in cardsToMove)
+                MoveCardToSelectionArea(card);
+        }
+
+        public void AddOpponentCemetery()
+        {
+            List<CardObject> cardsToMove = new(Player.OppZoneController.cemeteryZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
             scrollViewTint.alpha = 1f;

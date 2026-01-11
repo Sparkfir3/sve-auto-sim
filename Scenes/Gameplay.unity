@@ -1376,6 +1376,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 952597553}
     m_Modifications:
+    - target: {fileID: 814138755811722218, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
+      propertyPath: selectionMode
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 966078473005134708, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
       propertyPath: <CurrentInteractionType>k__BackingField
       value: 0
