@@ -16,6 +16,8 @@ namespace SVESimulator
                 return;
             }
             Player.InputController.allowedInputs = Player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
+            if(IsLocalPlayerZone)
+                ZoneController.fieldZone.HighlightCardsCanAttack();
         }
 
         protected override void MoveCardToSelectionArea(CardObject card, bool rearrangeHand = false)

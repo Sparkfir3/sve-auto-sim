@@ -2088,6 +2088,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8894489681189892019, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
+      propertyPath: <Interactable>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9172372702017213854, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -2758,6 +2762,10 @@ PrefabInstance:
     - target: {fileID: 2466442400296359500, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2784164069652570235, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
+      propertyPath: <IsLocalPlayerZone>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2876715368815157390, guid: d07e97358adf19b43af1f69f1e7f0827, type: 3}
       propertyPath: m_AnchorMax.y
