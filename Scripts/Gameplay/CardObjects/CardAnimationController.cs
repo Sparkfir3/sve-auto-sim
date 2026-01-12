@@ -64,15 +64,16 @@ namespace SVESimulator
         #region Movement
 
         public void MoveCardToPosition(CardObject card, Vector3 targetPos, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out _);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, Action onComplete = null) => MoveCardToPosition(card, targetPos, targetRot, out _, onComplete);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, Action onComplete = null)
+        public void MoveCardToPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete: onComplete);
+        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null) => MoveCardToPosition(card, targetPos, targetRot, out _, scale, onComplete);
+        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
 
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
+            float startScale = card.transform.localScale.x;
             float distance = (startPos - targetPos).magnitude;
             moveTime = distance / cardMoveSpeed;
             float duration = moveTime;
@@ -86,9 +87,13 @@ namespace SVESimulator
                     Vector3 newPosition = Vector3.Lerp(startPos, targetPos, t);
                     Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
+                    if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                        card.transform.localScale = Vector3.one * Mathf.Lerp(startScale, scale.Value, t);
                     yield return null;
                 }
                 card.transform.SetPositionAndRotation(targetPos, targetRot);
+                if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                    card.transform.localScale = Vector3.one * scale.Value;
                 card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();
@@ -96,15 +101,16 @@ namespace SVESimulator
         }
 
         public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out _);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, targetRot, out _, onComplete);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, Action onComplete = null)
+        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete: onComplete);
+        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, targetRot, out _, scale, onComplete);
+        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
 
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
+            float startScale = card.transform.localScale.x;
             float distance = (startPos - targetPos).magnitude;
             moveTime = distance / cardMoveSpeed;
             float duration = moveTime;
@@ -118,9 +124,13 @@ namespace SVESimulator
                     Vector3 newPosition = Vector3.Lerp(startPos, card.transform.parent.TransformPoint(targetPos), t);
                     Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
+                    if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                        card.transform.localScale = Vector3.one * Mathf.Lerp(startScale, scale.Value, t);
                     yield return null;
                 }
                 card.transform.SetPositionAndRotation(card.transform.parent.TransformPoint(targetPos), targetRot);
+                if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                    card.transform.localScale = Vector3.one * scale.Value;
                 card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();

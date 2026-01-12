@@ -86,6 +86,7 @@ namespace SVESimulator
             card.RuntimeCard = null;
             card.gameObject.SetActive(false);
             card.transform.parent = transform;
+            card.transform.localScale = Vector3.one;
             pooledCard.active = false;
             return true;
         }

@@ -39,7 +39,7 @@ namespace SVESimulator
         {
             SearchDeckEffect searchEffect = new()
             {
-                amount = "1",
+                amount = "m(1,10)",
                 filter = null,
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.Hand,
                 text = "[Debug Mode] Search for a card"

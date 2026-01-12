@@ -96,8 +96,11 @@ namespace SVESimulator
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
             if(allowedInputs == InputTypes.None)
             {
-                if(!isInteracting) // this is needed to update the current hovered card info display
-                    FindSelectedCard(mousePosition);
+                if(!isInteracting)
+                {
+                    FindSelectedCard(mousePosition); // update the current hovered card info display
+                    FindTargetSlot(mousePosition); // handle input for viewing zones
+                }
                 return;
             }
 
@@ -237,7 +240,7 @@ namespace SVESimulator
                         {
                             if(currentTargetSlot.ParentZone is not CardSelectionArea)
                             {
-                                Debug.LogError($"Unsupported action: attempted to MoveCard from into zone {currentTargetSlot.ParentZone}, which is not supported!");
+                                Debug.LogError($"Unsupported action: attempted to MoveCard into zone {currentTargetSlot.ParentZone}, which is not supported!");
                                 break;
                             }
                             if(currentSelectedCard.CurrentZone is CardSelectionArea)
@@ -464,15 +467,15 @@ namespace SVESimulator
                     if(currentTargetSlot)
                         currentTargetSlot.OnHoverEnd();
                     currentTargetSlot = slot;
-                    currentTargetSlot.OnHoverBegin();
+                    if(currentTargetSlot)
+                        currentTargetSlot.OnHoverBegin();
+                }
+                else if(!slot && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.TryGetComponent(out ViewZoneControllerBase viewZoneCollider))
+                {
+                    viewZoneCollider.ViewZone();
                 }
             }
             else
-            {
-                RemoveCurrentTarget();
-            }
-
-            void RemoveCurrentTarget()
             {
                 if(currentTargetSlot)
                     currentTargetSlot.OnHoverEnd();

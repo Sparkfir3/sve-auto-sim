@@ -14,6 +14,8 @@ namespace SVESimulator
         public int SlotNumber { get; private set; } = -1;
         [field: SerializeField, LabelText("Interaction Type")]
         public InteractionType CurrentInteractionType { get; set; }
+        [SerializeField]
+        public GameObject background;
 
         [ShowInInspector, ReadOnly]
         public CardObject Card => (ParentZone is CardPositionedZone zone) ? zone.GetCard(SlotNumber) : null;
@@ -38,7 +40,12 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Hover
+        #region Other
+
+        public void SetBackgroundActive(bool active)
+        {
+            background.SetActive(active);
+        }
 
         public void OnHoverBegin()
         {

@@ -35,7 +35,7 @@ namespace SVESimulator
             int cemeteryCount = player.ZoneController.cemeteryZone.AllCards.Count;
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
 
-            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromCemetery, cemeteryCount, cemeteryCount);
+            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromCemetery, cemeteryCount, cemeteryCount, slotBackgroundsActive: false);
             selectionArea.SetFilter(filter);
             selectionArea.AddCemetery();
             selectionArea.SetConfirmAction(LibraryCardCache.GetCard(card.RuntimeCard.cardId).name,
