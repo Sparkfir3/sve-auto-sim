@@ -437,10 +437,15 @@ namespace SVESimulator
                 SelectWardCardsToEngage(() =>
                 {
                     inputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    localPlayerZoneController.fieldZone.RemoveAllCardHighlights();
+
                     SVEQuickTimingController.Instance.CallQuickTimingEndOfTurn(() =>
                     {
                         localPlayerZoneController.fieldZone.RemoveAllCardHighlights();
-                        StartCoroutine(StopTurnOnDelay(0.1f));
+                        DiscardForHandSize(() =>
+                        {
+                            StartCoroutine(StopTurnOnDelay(0.1f));
+                        });
                     });
                 });
             }
@@ -462,6 +467,49 @@ namespace SVESimulator
                     LocalEvents.EngageCard(card.RuntimeCard);
                 onComplete?.Invoke();
             });
+        }
+
+        public void DiscardForHandSize(Action onComplete = null)
+        {
+            if(ZoneController.handZone.AllCards.Count <= SVEProperties.MaxHandSize)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+            StartCoroutine(HandSizeCoroutine());
+            IEnumerator HandSizeCoroutine()
+            {
+                do
+                {
+                    // Discard
+                    bool waiting = true;
+                    int handSize = ZoneController.handZone.AllCards.Count;
+                    ZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, handSize - SVEProperties.MaxHandSize, handSize - SVEProperties.MaxHandSize);
+                    ZoneController.selectionArea.SetFilter(null);
+                    ZoneController.selectionArea.SetConfirmAction(null,
+                        "Discard",
+                        "Discard for Hand Size",
+                        1, handSize - SVEProperties.MaxHandSize,
+                        targets =>
+                        {
+                            foreach(CardObject target in targets)
+                                LocalEvents.SendToCemetery(target, SVEProperties.Zones.Hand);
+                            waiting = false;
+                        });
+                    yield return new WaitUntil(() => !waiting);
+                    ZoneController.selectionArea.Disable();
+                    yield return new WaitForSeconds(0.1f);
+
+                    // Confirmation Timing
+                    waiting = true;
+                    SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () => { waiting = false; };
+                    SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                    yield return new WaitUntil(() => !waiting);
+                    yield return new WaitForSeconds(0.1f);
+
+                } while(ZoneController.handZone.AllCards.Count > SVEProperties.MaxHandSize);
+                onComplete?.Invoke();
+            }
         }
 
         #endregion
