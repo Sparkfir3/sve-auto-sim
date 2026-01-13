@@ -426,7 +426,7 @@ namespace SVESimulator
                 ZoneController.fieldZone.RemoveAllCardHighlights();
 
                 bool waiting = true;
-                SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+                SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
                 {
                     waiting = false;
                 };
