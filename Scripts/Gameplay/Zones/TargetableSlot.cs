@@ -24,15 +24,23 @@ namespace SVESimulator
 
         #region Unity Messages
 
+        private void Start()
+        {
+            if(!ParentZone)
+            {
+                ParentZone = GetComponentInParent<CardZone>();
+                if(ParentZone && ParentZone is CardPositionedZone zone)
+                    SlotNumber = zone.GetSlotNumber(this);
+            }
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
             if(!ParentZone)
                 ParentZone = GetComponentInParent<CardZone>();
             if(!Application.isPlaying && ParentZone is CardPositionedZone zone)
-            {
                 SlotNumber = zone.GetSlotNumber(this);
-            }
         }
 #endif
 
