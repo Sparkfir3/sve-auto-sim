@@ -102,6 +102,7 @@ MonoBehaviour:
   repositionTime: 0.5
   slotPrefab: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
   zoneController: {fileID: 0}
+  targetSlot: {fileID: 1597463825446397101}
   inputSettings: {fileID: 11400000, guid: 37c93085c40ac0b409906f4c4da29c6f, type: 2}
   slotContainer: {fileID: 6727725998767330018}
   cardContainer: {fileID: 7816462115935441230}
@@ -1617,7 +1618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1629,7 +1630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 6.6
       objectReference: {fileID: 0}
     - target: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1667,6 +1668,11 @@ PrefabInstance:
 --- !u!4 &1423252818243418840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8433953147609613462, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
+  m_PrefabInstance: {fileID: 7407017680705158734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1597463825446397101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8133597360156777187, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
   m_PrefabInstance: {fileID: 7407017680705158734}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8349459478511121624

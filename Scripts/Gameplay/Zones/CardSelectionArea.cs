@@ -58,6 +58,8 @@ namespace SVESimulator
         [SerializeField]
         private PlayerCardZoneController zoneController;
         [SerializeField]
+        private GameObject targetSlot;
+        [SerializeField]
         private PlayerInputSettings inputSettings;
         [SerializeField]
         private Transform slotContainer;
@@ -207,6 +209,7 @@ namespace SVESimulator
                     InteractionType = ZoneInteractionType.MoveCard;
                     endInteractionType = TargetableSlot.InteractionType.MoveCard;
                     Player.InputController.allowedInputs = PlayerInputController.InputTypes.MoveCards;
+                    targetSlot.SetActive(true);
                     SetCardsInteractable(true);
                     break;
                 case SelectionMode.SelectCardsFromDeck:
@@ -222,6 +225,7 @@ namespace SVESimulator
                     InteractionType = ZoneInteractionType.None;
                     endInteractionType = TargetableSlot.InteractionType.None;
                     Player.InputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    targetSlot.SetActive(false);
                     SetCardsInteractable(false);
                     break;
             }

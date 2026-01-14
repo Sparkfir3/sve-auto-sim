@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 781429014461374554, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: m_Name
-      value: ZoneViewingArea Variant
+      value: ZoneViewingArea
       objectReference: {fileID: 0}
     - target: {fileID: 2336581044280863553, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: m_RootOrder
@@ -59,7 +59,7 @@ PrefabInstance:
     - target: {fileID: 2992981253271815691, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6823047712640543782}
     - target: {fileID: 3916620072359834133, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: endInteractionType
       value: -1
@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 4530300760613967400, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6823047712640543782}
     - target: {fileID: 5683957468962997549, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -87,15 +87,15 @@ PrefabInstance:
     - target: {fileID: 6859123112753196944, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6823047712640543782}
     - target: {fileID: 7175314367716527824, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6823047712640543782}
     - target: {fileID: 7618692632564087336, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6823047712640543782}
     - target: {fileID: 7704237902778671477, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: m_Size
       value: 0.9333331
@@ -107,7 +107,7 @@ PrefabInstance:
     - target: {fileID: 8984460168272392382, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6823047712640543782}
     m_RemovedComponents:
     - {fileID: 3916620072359834133, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
     m_RemovedGameObjects: []
@@ -207,6 +207,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e6161369de2fe40a99979ea4fe2b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6995951572743064937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1597463825446397101, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
+  m_PrefabInstance: {fileID: 8592243571089435076}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7164331076492227861 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1463979008998186193, guid: ff1f8c20185b73e48852ac8b9ca9a4d6, type: 3}
@@ -299,6 +304,7 @@ MonoBehaviour:
   repositionTime: 0.5
   slotPrefab: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
   zoneController: {fileID: 0}
+  targetSlot: {fileID: 6995951572743064937}
   inputSettings: {fileID: 11400000, guid: 37c93085c40ac0b409906f4c4da29c6f, type: 2}
   slotContainer: {fileID: 3053553966853176102}
   cardContainer: {fileID: 1964817248389052554}
