@@ -126,6 +126,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = GetAllPrimaryCards();
             foreach(CardObject card in cardsToMove)
                 card.SetHighlightMode(CardObject.HighlightMode.None);
+            zoneController.handZone.SetTargetSlotActive(false);
             switch(currentMode)
             {
                 // Local player zones modes
@@ -192,15 +193,21 @@ namespace SVESimulator
 
         public void SwitchMode(SelectionMode newMode)
         {
+            if(currentMode == SelectionMode.PlaceCardsFromHand)
+                zoneController.handZone.SetTargetSlotActive(true);
+
             currentMode = newMode;
             switch(currentMode)
             {
                 case SelectionMode.PlaceCardsFromHand:
+                    zoneController.handZone.SetTargetSlotActive(true);
+                    goto case SelectionMode.MoveSelectionArea;
+                case SelectionMode.MoveSelectionArea:
                     Interactable = true;
                     InteractionType = ZoneInteractionType.MoveCard;
                     endInteractionType = TargetableSlot.InteractionType.MoveCard;
                     Player.InputController.allowedInputs = PlayerInputController.InputTypes.MoveCards;
-                    SetCardsInteractable(false);
+                    SetCardsInteractable(true);
                     break;
                 case SelectionMode.SelectCardsFromDeck:
                 case SelectionMode.SelectCardsFromCemetery:
@@ -216,13 +223,6 @@ namespace SVESimulator
                     endInteractionType = TargetableSlot.InteractionType.None;
                     Player.InputController.allowedInputs = PlayerInputController.InputTypes.None;
                     SetCardsInteractable(false);
-                    break;
-                case SelectionMode.MoveSelectionArea:
-                    Interactable = true;
-                    InteractionType = ZoneInteractionType.MoveCard;
-                    endInteractionType = TargetableSlot.InteractionType.MoveCard;
-                    Player.InputController.allowedInputs = PlayerInputController.InputTypes.MoveCards;
-                    SetCardsInteractable(true);
                     break;
             }
             foreach(CardSlot slot in cardSlots.Values)

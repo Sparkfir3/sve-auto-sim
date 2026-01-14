@@ -238,6 +238,11 @@ namespace SVESimulator
                             break;
                         if(currentSelectedCard.CurrentZone.InteractionType == CardZone.ZoneInteractionType.MoveCard)
                         {
+                            if(currentTargetSlot.ParentZone is PlayerHandZone)
+                            {
+                                Player.ZoneController.AddCardToHand(currentSelectedCard);
+                                return;
+                            }
                             if(currentTargetSlot.ParentZone is not CardSelectionArea)
                             {
                                 Debug.LogError($"Unsupported action: attempted to MoveCard into zone {currentTargetSlot.ParentZone}, which is not supported!");
