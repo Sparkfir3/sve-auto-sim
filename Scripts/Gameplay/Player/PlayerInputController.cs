@@ -475,7 +475,8 @@ namespace SVESimulator
                     if(currentTargetSlot)
                         currentTargetSlot.OnHoverBegin();
                 }
-                else if(!slot && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.TryGetComponent(out ViewZoneControllerBase viewZoneCollider))
+                else if(!slot && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.TryGetComponent(out ViewZoneControllerBase viewZoneCollider)
+                    && (!currentHoveredCard || currentHoveredCard.CurrentZone == viewZoneCollider.Zone))
                 {
                     viewZoneCollider.ViewZone();
                 }

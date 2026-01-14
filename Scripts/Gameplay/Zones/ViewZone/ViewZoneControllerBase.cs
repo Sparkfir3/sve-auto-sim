@@ -7,12 +7,12 @@ namespace SVESimulator
 {
     public abstract class ViewZoneControllerBase : MonoBehaviour
     {
-        [SerializeField]
-        protected CardZone zone;
+        [field: SerializeField]
+        public CardZone Zone { get; private set; }
         [SerializeField]
         protected CardSelectionArea.SelectionMode selectionMode;
 
-        protected bool IsLocalPlayerZone => zone && zone.IsLocalPlayerZone;
+        protected bool IsLocalPlayerZone => Zone && Zone.IsLocalPlayerZone;
         protected bool isOverlayingSelectionArea;
 
         // ------------------------------
@@ -20,7 +20,7 @@ namespace SVESimulator
         [Button, HideInEditorMode]
         public void ViewZone()
         {
-            if(!zone || !CanViewZone() || FieldManager.PlayerZones.zoneViewingArea.IsActive)
+            if(!Zone || !CanViewZone() || FieldManager.PlayerZones.zoneViewingArea.IsActive)
                 return;
 
             if(FieldManager.PlayerZones.selectionArea.IsActive)
@@ -48,12 +48,12 @@ namespace SVESimulator
 
         protected virtual bool CanViewZone()
         {
-            return zone.AllCards.Count > 0;
+            return Zone.AllCards.Count > 0;
         }
 
         protected virtual int GetSlotCount()
         {
-            return zone.AllCards.Count;
+            return Zone.AllCards.Count;
         }
 
         protected abstract string GetDisplayText();
@@ -63,15 +63,15 @@ namespace SVESimulator
 
         protected void Awake()
         {
-            if(!zone)
+            if(!Zone)
                 gameObject.SetActive(false);
         }
 
 #if UNITY_EDITOR
         protected void OnValidate()
         {
-            if(!zone)
-                zone = GetComponentInParent<CardZone>();
+            if(!Zone)
+                Zone = GetComponentInParent<CardZone>();
         }
 #endif
     }

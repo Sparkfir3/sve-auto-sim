@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b943d68c190b741826699eb7e731cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zone: {fileID: 8366426542885187926}
+  <Zone>k__BackingField: {fileID: 8366426542885187926}
   selectionMode: 7
 --- !u!65 &8849692141077050471
 BoxCollider:
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69fcea1e4111dd4389cb81fb28d27fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zone: {fileID: 2036495082342231076}
+  <Zone>k__BackingField: {fileID: 2036495082342231076}
   selectionMode: 9
 --- !u!65 &526712782468776387
 BoxCollider:
@@ -950,7 +950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f411cfcc0b102514cbe387e83d41e34b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zone: {fileID: 1712322041871164066}
+  <Zone>k__BackingField: {fileID: 1712322041871164066}
   selectionMode: 5
 --- !u!65 &8855345769600068969
 BoxCollider:
