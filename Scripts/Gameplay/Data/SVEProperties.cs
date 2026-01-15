@@ -58,6 +58,7 @@ namespace SVESimulator
         public static Quaternion CardEngagedRotation = Quaternion.Euler(0f, 90f, 0f);
 
         public const int StartingHandSize = 4;
+        public const int MaxHandSize = 7;
         public const int MaxPlayPointsAmount = 10;
         public const float CardThickness = 0.01f;
 

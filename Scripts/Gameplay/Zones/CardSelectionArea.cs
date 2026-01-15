@@ -58,6 +58,8 @@ namespace SVESimulator
         [SerializeField]
         private PlayerCardZoneController zoneController;
         [SerializeField]
+        private GameObject targetSlot;
+        [SerializeField]
         private PlayerInputSettings inputSettings;
         [SerializeField]
         private Transform slotContainer;
@@ -69,6 +71,8 @@ namespace SVESimulator
         private RectTransform scrollContent;
         [BoxGroup("Scroll View"), SerializeField]
         private CanvasGroup scrollViewTint;
+        [BoxGroup("Scroll View"), SerializeField]
+        private GameObject scrollViewRaycastBlocker;
 
         private Camera cam;
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
@@ -102,7 +106,7 @@ namespace SVESimulator
             cardContainer.localPosition = Vector3.zero;
             scrollContent.anchoredPosition = Vector2.zero;
             scrollRect.onValueChanged.AddListener(ScrollSelectionArea);
-            scrollViewTint.alpha = 0f;
+            SetScrollViewTintActive(false);
 
             int i;
             for(i = 0; i < minSlotCount; i++)
@@ -126,6 +130,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = GetAllPrimaryCards();
             foreach(CardObject card in cardsToMove)
                 card.SetHighlightMode(CardObject.HighlightMode.None);
+            zoneController.handZone.SetTargetSlotActive(false);
             switch(currentMode)
             {
                 // Local player zones modes
@@ -192,15 +197,22 @@ namespace SVESimulator
 
         public void SwitchMode(SelectionMode newMode)
         {
+            if(currentMode == SelectionMode.PlaceCardsFromHand)
+                zoneController.handZone.SetTargetSlotActive(true);
+
             currentMode = newMode;
             switch(currentMode)
             {
                 case SelectionMode.PlaceCardsFromHand:
+                    zoneController.handZone.SetTargetSlotActive(true);
+                    goto case SelectionMode.MoveSelectionArea;
+                case SelectionMode.MoveSelectionArea:
                     Interactable = true;
                     InteractionType = ZoneInteractionType.MoveCard;
                     endInteractionType = TargetableSlot.InteractionType.MoveCard;
                     Player.InputController.allowedInputs = PlayerInputController.InputTypes.MoveCards;
-                    SetCardsInteractable(false);
+                    targetSlot.SetActive(true);
+                    SetCardsInteractable(true);
                     break;
                 case SelectionMode.SelectCardsFromDeck:
                 case SelectionMode.SelectCardsFromCemetery:
@@ -215,14 +227,8 @@ namespace SVESimulator
                     InteractionType = ZoneInteractionType.None;
                     endInteractionType = TargetableSlot.InteractionType.None;
                     Player.InputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    targetSlot.SetActive(false);
                     SetCardsInteractable(false);
-                    break;
-                case SelectionMode.MoveSelectionArea:
-                    Interactable = true;
-                    InteractionType = ZoneInteractionType.MoveCard;
-                    endInteractionType = TargetableSlot.InteractionType.MoveCard;
-                    Player.InputController.allowedInputs = PlayerInputController.InputTypes.MoveCards;
-                    SetCardsInteractable(true);
                     break;
             }
             foreach(CardSlot slot in cardSlots.Values)
@@ -335,7 +341,7 @@ namespace SVESimulator
                 cardObject.CurrentZone = zoneController.deckZone;
                 MoveCardToSelectionArea(cardObject);
             }
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         public void AddCemetery()
@@ -343,7 +349,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = new(zoneController.cemeteryZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         public void AddEvolveDeck()
@@ -362,7 +368,7 @@ namespace SVESimulator
                 }
                 MoveCardToSelectionArea(cardObject);
             }
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         public void AddBanished()
@@ -370,7 +376,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = new(zoneController.banishedZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         #endregion
@@ -389,7 +395,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = new(Player.OppZoneController.cemeteryZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         public void AddOpponentEvolveDeck()
@@ -397,7 +403,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = new(Player.OppZoneController.evolveDeckZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         public void AddOpponentBanished()
@@ -405,7 +411,7 @@ namespace SVESimulator
             List<CardObject> cardsToMove = new(Player.OppZoneController.banishedZone.AllCards);
             foreach(CardObject card in cardsToMove)
                 MoveCardToSelectionArea(card);
-            scrollViewTint.alpha = 1f;
+            SetScrollViewTintActive(true);
         }
 
         #endregion
@@ -424,7 +430,8 @@ namespace SVESimulator
             if(currentMode is not SelectionMode.SelectCardsFromDeck and not SelectionMode.SelectCardsFromCemetery and not SelectionMode.SelectCardsFromOppHand)
                 return;
 
-            if(Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit, inputSettings.RaycastDistance, inputSettings.CardRaycastLayers.value))
+            if(Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
+                   inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer))
             {
                 if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card) && currentFilter.MatchesCard(card))
                 {
@@ -498,6 +505,13 @@ namespace SVESimulator
         protected virtual void MoveCardToSelectionArea(CardObject card, bool rearrangeHand = false)
         {
             zoneController.MoveCardToSelectionArea(card, rearrangeHand);
+        }
+        
+        private void SetScrollViewTintActive(bool active)
+        {
+            scrollViewTint.alpha = active ? 1f : 0f;
+            if(scrollViewRaycastBlocker)
+                scrollViewRaycastBlocker.SetActive(active);
         }
 
         private void CreateNewSlot()

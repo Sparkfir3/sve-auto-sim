@@ -14,5 +14,7 @@ namespace SVESimulator
         public LayerMask TargetSlotRaycastLayers { get; private set; } = ~0;
         [field: SerializeField]
         public LayerMask FieldRaycastLayers { get; private set; } = ~0;
+        [field: SerializeField, LabelText("UI Raycast Layer")]
+        public LayerMask UIRaycastLayer { get; private set; } = 16;
     }
 }

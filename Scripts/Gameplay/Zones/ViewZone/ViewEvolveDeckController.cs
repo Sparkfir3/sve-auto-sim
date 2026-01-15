@@ -8,12 +8,12 @@ namespace SVESimulator
     {
         protected override bool CanViewZone()
         {
-            return IsLocalPlayerZone ? zone.Runtime.numCards > 0 : zone.AllCards.Count > 0;
+            return IsLocalPlayerZone ? Zone.Runtime.numCards > 0 : Zone.AllCards.Count > 0;
         }
 
         protected override int GetSlotCount()
         {
-            return IsLocalPlayerZone ? zone.Runtime.numCards : zone.AllCards.Count;
+            return IsLocalPlayerZone ? Zone.Runtime.numCards : Zone.AllCards.Count;
         }
 
         protected override string GetDisplayText()

@@ -737,7 +737,7 @@ namespace SVESimulator
                 return;
 
             DeclareAttack(attackingCard, isAttackingLeader: false);
-            SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+            SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
                 SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, defendingCard, () =>
@@ -773,7 +773,7 @@ namespace SVESimulator
                 return;
 
             DeclareAttack(attackingCard, isAttackingLeader: true);
-            SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+            SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.LeaderCardObject);
                 SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, oppZoneController.LeaderCardObject, () =>

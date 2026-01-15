@@ -41,9 +41,9 @@ namespace SVESimulator
         [field: SerializeField, SyncVar]
         public bool IsResolvingEffect { get; private set; }
 
-        public event Action OnConfirmationTimingStart;
+        public event Action OnNextConfirmationTimingStart;
         public event Action OnConfirmationTimingStartConstant;
-        public event Action OnConfirmationTimingEnd;
+        public event Action OnNextConfirmationTimingEnd;
         public event Action OnConfirmationTimingEndConstant;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
@@ -435,15 +435,15 @@ namespace SVESimulator
         {
             if(oldState == ConfirmationTimingState.Idle && newState == ConfirmationTimingState.ResolvingTurnPlayer)
             {
-                OnConfirmationTimingStart?.Invoke();
+                OnNextConfirmationTimingStart?.Invoke();
                 OnConfirmationTimingStartConstant?.Invoke();
-                OnConfirmationTimingStart = null;
+                OnNextConfirmationTimingStart = null;
             }
             else if(oldState == ConfirmationTimingState.FinishedNonTurnPlayer && newState == ConfirmationTimingState.Idle)
             {
-                OnConfirmationTimingEnd?.Invoke();
+                OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
-                OnConfirmationTimingEnd = null;
+                OnNextConfirmationTimingEnd = null;
                 localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
                 {
@@ -466,7 +466,7 @@ namespace SVESimulator
 
             // Apply during next confirmation timing to wait for other effects to resolve
             //   (i.e. don't apply the passive before we finish playing the card to the field)
-            OnConfirmationTimingStart += () =>
+            OnNextConfirmationTimingStart += () =>
             {
                 if(!localPlayer.ZoneController.fieldZone.ContainsCard(card) && !opponentPlayer.ZoneController.fieldZone.ContainsCard(card))
                     return;
