@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using Sparkfire.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +47,13 @@ namespace SVESimulator
         private GameObject costContainer;
         [SerializeField]
         private TextMeshProUGUI costText;
+
+        [Title("Keywords"), SerializeField]
+        private Transform keywordIconsContainer;
+        [SerializeField, AssetsOnly]
+        private Image keywordIconPrefab;
+        [ShowInInspector, HideInEditorMode]
+        private SerializedDictionary<int, GameObject> currentKeywordIcons = new();
 
         [Title("Counters Display"), SerializeField, DisableInEditorMode]
         private List<CounterDisplay> counterLines;
@@ -99,7 +108,7 @@ namespace SVESimulator
                 costContainer.SetActive(false);
             }
 
-            // Counters
+            // Keywords & Counters
             runtimeCard = card;
             runtimeCard.onKeywordAdded += OnKeywordAdded;
             runtimeCard.onKeywordRemoved += OnKeywordRemoved;
@@ -133,13 +142,16 @@ namespace SVESimulator
                 costStat = null;
             }
 
-            // Counters
+            // Keywords & Counters
             if(runtimeCard != null)
             {
                 runtimeCard.onKeywordAdded -= OnKeywordAdded;
                 runtimeCard.onKeywordRemoved -= OnKeywordRemoved;
                 runtimeCard = null;
             }
+            foreach(GameObject icon in currentKeywordIcons.Select(x => x.Value))
+                Destroy(icon);
+            currentKeywordIcons.Clear();
             foreach(TextMeshProUGUI textbox in counterLines.Select(x => x.textbox))
                 Destroy(textbox.gameObject);
             counterLines.Clear();
@@ -184,6 +196,23 @@ namespace SVESimulator
 
         private void OnKeywordAdded(RuntimeKeyword keyword)
         {
+            // Standard keyword
+            if(keyword.keywordId == 0)
+            {
+                if(currentKeywordIcons.TryGetValue(keyword.valueId, out GameObject keywordIcon))
+                {
+                    keywordIcon.SetActive(true);
+                }
+                else if(CardManager.Instance.TryGetKeywordIconByValue(keyword.valueId, out Sprite icon))
+                {
+                    Image newImage = Instantiate(keywordIconPrefab, keywordIconsContainer);
+                    newImage.sprite = icon;
+                    currentKeywordIcons.Add(keyword.valueId, newImage.gameObject);
+                }
+                return;
+            }
+
+            // Counters
             if(keyword.keywordId < (int)SVEProperties.Counters.Stack)
                 return;
             CounterDisplay display = counterLines.FirstOrDefault(x => x.keywordId == keyword.keywordId);
@@ -193,11 +222,23 @@ namespace SVESimulator
                 counterLines.Add(display);
             }
             display.count = runtimeCard.CountOfCounter((SVEProperties.Counters)keyword.keywordId);
-            display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "");
+            display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "").Trim();
         }
 
         private void OnKeywordRemoved(RuntimeKeyword keyword)
         {
+            // Standard keyword
+            if(keyword.keywordId == 0)
+            {
+                if(currentKeywordIcons.TryGetValue(keyword.valueId, out GameObject keywordIcon))
+                {
+                    Destroy(keywordIcon);
+                    currentKeywordIcons.Remove(keyword.valueId);
+                }
+                return;
+            }
+
+            // Counters
             if(keyword.keywordId < (int)SVEProperties.Counters.Stack)
                 return;
             CounterDisplay display = counterLines.FirstOrDefault(x => x.keywordId == keyword.keywordId);
@@ -206,7 +247,7 @@ namespace SVESimulator
             display.count = runtimeCard.CountOfCounter((SVEProperties.Counters)keyword.keywordId);
             if(display.count > 0)
             {
-                display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "");
+                display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "").Trim();
             }
             else
             {
