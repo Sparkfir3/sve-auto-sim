@@ -21188,8 +21188,8 @@
             "effect": {
               "amount": "2",
               "checkAction1": "Hand",
-              "checkFilter1": null,
-              "checkAmount1": "Ft(Crystalian,Pixie)",
+              "checkFilter1": "Ft(Crystalian,Pixie)",
+              "checkAmount1": "m(0,1)",
               "checkAction2": "BottomDeckAnyOrder",
               "checkFilter2": null,
               "checkAmount2": null,

@@ -31,13 +31,11 @@ namespace SVESimulator
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("Enter");
             GameUIManager.MouseTooltip.Enable(tooltipText);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("Exit");
             GameUIManager.MouseTooltip.Disable();
         }
     }

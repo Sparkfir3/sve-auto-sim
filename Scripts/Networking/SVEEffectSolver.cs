@@ -199,7 +199,7 @@ namespace SVESimulator
                 SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, evolvedCard);
 
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, false);
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherEvolveTrigger>(gameState, evolvedCard, field, player,
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherEvolveTrigger>(gameState, evolvedCard, SVEProperties.Zones.Field, field, player,
                     x => x.MatchesFilter(evolvedCard), true);
             }
         }

@@ -152,7 +152,7 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    effect CheckTop(2, (Hand, Ft(Crystalian,Pixie)), (BottomDeckAnyOrder));
+    effect CheckTop(2, (Hand, Ft(Crystalian,Pixie), m(0,1)), (BottomDeckAnyOrder));
 }
 
 // ------------------------------
