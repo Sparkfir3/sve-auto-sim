@@ -460,7 +460,7 @@ namespace SVESimulator
         public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0, bool checkDefense = true, bool isCombatDamage = false)
         {
             int modAmount = value;
-            if(statId == 2 && adding) // Defense
+            if(statId == 1 && adding) // Defense
             {
                 if(!isCombatDamage && card.HasKeyword(SVEProperties.PassiveAbilities.DamageReductionAbilities1))
                 {
