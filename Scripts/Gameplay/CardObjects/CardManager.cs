@@ -31,6 +31,8 @@ namespace SVESimulator
 
         [TitleGroup("Object References"), SerializeField, Required]
         private CardAnimationController cardAnimator;
+        [SerializeField]
+        private SerializedDictionary<int, KeywordIcon.KeywordIconData> keywordIcons;
 
         [TitleGroup("Prefabs"), SerializeField, AssetsOnly]
         private CardObject cardPrefab;
@@ -94,6 +96,11 @@ namespace SVESimulator
         public CardObject GetCardByInstanceId(int instanceId)
         {
             return cardsByInstanceId.GetValueOrDefault(instanceId, null);
+        }
+
+        public bool TryGetKeywordIconData(int keywordValue, out KeywordIcon.KeywordIconData data)
+        {
+            return keywordIcons.TryGetValue(keywordValue, out data);
         }
 
         // ------------------------------
