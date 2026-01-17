@@ -1,0 +1,240 @@
+[
+  {
+    "id": "BP02-001EN",
+    "name": "Crystalia Tia",
+    "trait": "Crystalian / Princess",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Combo (3): Summon a Crystalia Eve token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Combo (3): Summon a Crystalia Eve token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-002EN",
+    "name": "Crystalia Tia (Evolved)",
+    "trait": "Crystalian / Princess",
+    "cardText": "On Evolve: Select a Crystalia Eve token on your field. Give it [attack]+1/[defense]+1 and Rush.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a Crystalia Eve token on your field. Give it [attack]+1/[defense]+1 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "BP02-003EN",
+    "name": "White Wolf of Eldwood",
+    "trait": "Fae-Touched / Beast",
+    "cardText": "Storm.\n[lastwords] Look at the top 4 cards of your deck. You may put a [forestcraft] follower from among them onto your field. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Look at the top 4 cards of your deck. You may put a [forestcraft] follower from among them onto your field. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP02-004EN",
+    "name": "Elf Girl Liza",
+    "trait": "Elf",
+    "cardText": "While this card is on your field, your followers take 1 less damage from enemy abilities."
+  },
+  {
+    "id": "BP02-005EN",
+    "name": "Elf Knight Cynthia",
+    "trait": "Elf",
+    "cardText": "Rush.\nStrike, banish a card in your EX area: Select an enemy leader or enemy follower on the field. Deal it 2 damage and summon 2 Fairy tokens.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "text": "Strike, banish a card in your EX area: Select an enemy leader or enemy follower on the field. Deal it 2 damage and summon 2 Fairy tokens.",
+        "trigger": "Strike:",
+        "cost": "Banish a card in your EX area",
+        "body": "Select an enemy leader or enemy follower on the field. Deal it 2 damage and summon 2 Fairy tokens."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy leader or enemy follower on the field. Deal it 2 damage and summon 2 Fairy tokens."
+      }
+    ]
+  },
+  {
+    "id": "BP02-006EN",
+    "name": "Grand Archer Selwyn",
+    "trait": "Hunter",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Combo (4): Select an enemy follower on the field and deal it 5 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Combo (4): Select an enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-007EN",
+    "name": "Grand Archer Selwyn (Evolved)",
+    "trait": "Hunter",
+    "cardText": "On Evolve: Select an enemy card that costs 3 play points or less on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy card that costs 3 play points or less on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP02-008EN",
+    "name": "Crystalia Lily",
+    "trait": "Crystalian",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Look at the top 2 cards of your deck. You may reveal a Crystalian or Pixie follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 2 cards of your deck. You may reveal a Crystalian or Pixie follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP02-009EN",
+    "name": "Crystalia Lily (Evolved)",
+    "trait": "Crystalian",
+    "cardText": "On Evolve: Select an enemy follower on the field and put it on the bottom of its owner's deck.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and put it on the bottom of its owner's deck."
+      }
+    ]
+  },
+  {
+    "id": "BP02-010EN",
+    "name": "Baalt, King of the Elves",
+    "trait": "Elf",
+    "cardText": "[fanfare] Choose one of the following. (1) Select a Pixie follower on your field and give it [attack]+2/[defense]+2. (2) Search your deck for a Pixie follower, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose one of the following."
+      },
+      {
+        "key": "AtkDef",
+        "body": "Select a Pixie follower on your field and give it [attack]+2/[defense]+2."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a Pixie follower, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-011EN",
+    "name": "Elven Archery",
+    "trait": "Elf",
+    "cardText": "Select up to 2 enemy followers on the field and deal them 1 damage. Combo (3): Deal 2 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 2 enemy followers on the field and deal them 1 damage. Combo (3): Deal 2 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP02-012EN",
+    "name": "Dwarf Perfumer",
+    "trait": "Fae-Touched",
+    "cardText": "Whenever one of your followers evolves, select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever one of your followers evolves, select an enemy follower on the field and deal it 2 damage.",
+        "trigger": "Whenever one of your followers evolves,",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-013EN",
+    "name": "Elf Healer",
+    "trait": "Elf",
+    "cardText": "[fanfare] Give your leader [defense]+3.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+3."
+      }
+    ]
+  },
+  {
+    "id": "BP02-014EN",
+    "name": "Forest Gigas",
+    "trait": "Fae-Touched / Gigant",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\n[fanfare] Give this follower [attack]+X. X equals the number of cards in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give this follower [attack]+X. X equals the number of cards in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP02-015EN",
+    "name": "Forest Gigas (Evolved)",
+    "trait": "Fae-Touched / Gigant",
+    "cardText": "Ward.\nOn Evolve: Select an enemy follower on the field and deal it X damage. X equals this follower's attack.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals this follower's attack."
+      }
+    ]
+  },
+  {
+    "id": "BP02-016EN",
+    "name": "Elf Bard",
+    "trait": "Elf",
+    "cardText": "Whenever one of your followers evolves, put a Fairy Wisp token into your EX area.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever one of your followers evolves, put a Fairy Wisp token into your EX area.",
+        "trigger": "Whenever one of your followers evolves,",
+        "body": "Put a Fairy Wisp token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP02-017EN",
+    "name": "Rose Deer",
+    "trait": "Fae-Touched / Verdant",
+    "cardText": "Rush.\n[fanfare] Put a Thorn Burst token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Thorn Burst token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP02-LD01EN",
+    "name": "Michelle, Purehearted Mindreader"
+  },
+  {
+    "id": "BP02-T01EN",
+    "name": "Crystalia Eve",
+    "trait": "Crystalian / Token"
+  }
+]
