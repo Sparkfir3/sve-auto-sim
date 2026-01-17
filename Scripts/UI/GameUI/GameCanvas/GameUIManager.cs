@@ -29,8 +29,10 @@ namespace SVESimulator.UI
         [SerializeField]
         private EffectTargetingUI effectTargetingUI;
 
-        [Title("Secondary Menus"), SerializeField]
+        [Title("Other"), SerializeField]
         private ViewingZoneWindow viewingZoneWindow;
+        [SerializeField]
+        private MouseTooltip mouseTooltip;
 
         [Title("Networking Objects"), SerializeField]
         private NetworkedUICalls networkedCalls;
@@ -50,10 +52,10 @@ namespace SVESimulator.UI
         public static MultipleChoiceWindow MultipleChoice => Instance.multipleChoiceWindow;
         public static EffectTargetingUI EffectTargeting => Instance.effectTargetingUI;
 
-        // Secondary menus
-        public static ViewingZoneWindow ViewingZone => Instance.viewingZoneWindow;
-
         // Other
+        public static ViewingZoneWindow ViewingZone => Instance.viewingZoneWindow;
+        public static MouseTooltip MouseTooltip => Instance.mouseTooltip;
+
         public static NetworkedUICalls NetworkedCalls
         {
             get
@@ -87,6 +89,9 @@ namespace SVESimulator.UI
             effectTargetingUI.Initialize();
             effectTargetingUI.gameObject.SetActive(true);
             viewingZoneWindow.gameObject.SetActive(false);
+
+            // Other
+            mouseTooltip.Disable();
         }
 
         public void SetPrimaryMenusVisible(bool visible)
