@@ -22,6 +22,8 @@ namespace SVESimulator
 
         public override void RemovePassive(RuntimeCard card, PlayerController player)
         {
+            if(!player.GetPlayerInfo().namedZones[SVEProperties.Zones.Field].cards.Contains(card))
+                return;
             player.LocalEvents.ApplyKeywordToCard(card, keywordType, keywordValue, false);
         }
     }

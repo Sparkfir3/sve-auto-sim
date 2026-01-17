@@ -26,6 +26,8 @@ namespace SVESimulator
 
         public override void RemovePassive(RuntimeCard card, PlayerController player)
         {
+            if(!player.GetPlayerInfo().namedZones[SVEProperties.Zones.Field].cards.Contains(card))
+                return;
             int boostAmount = SVEFormulaParser.ParseValue(amount, player);
             foreach(string stat in targetStats.AsNamedStatArray())
             {
