@@ -54,9 +54,8 @@ namespace SVESimulator
                     SveTrigger trigger = (abilityToResolve as TriggeredAbility)?.trigger as SveTrigger;
                     if(trigger != null)
                     {
-                        if(!string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
-                            enabled = false;
-                        if(player.LocalEvents.CanPayCosts(cardObject.RuntimeCard, trigger.Costs, effectName))
+                        if((!string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
+                            || !player.LocalEvents.CanPayCosts(cardObject.RuntimeCard, trigger.Costs, effectName))
                             enabled = false;
                     }
 
@@ -75,7 +74,7 @@ namespace SVESimulator
                                 });
                             });
                         },
-                        disabled = enabled
+                        disabled = !enabled
                     };
                     choices.Add(entry);
                 }
