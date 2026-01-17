@@ -68,6 +68,8 @@ namespace SVESimulator
 
     public class SveOnEvolveTrigger : SveTrigger { }
 
+    public class SveOnOtherEvolveTrigger : SveTriggerWithFilter { }
+
     public class SveOnAttackTrigger : SveTrigger { }
 
     public class SveOnAttackFollowerTrigger : SveTrigger { }

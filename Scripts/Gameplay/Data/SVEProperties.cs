@@ -160,6 +160,7 @@ namespace SVESimulator
             public const string Plus4Damage = "Plus4Damage";
 
             public const string DamageReduction1 = "DamageReduction1";
+            public const string DamageReductionAbilities1 = "DamageReductionAbilities1";
         }
     }
 }
