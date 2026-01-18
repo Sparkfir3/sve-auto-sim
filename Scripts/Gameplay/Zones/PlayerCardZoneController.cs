@@ -313,7 +313,7 @@ namespace SVESimulator
                 return;
 
             MoveCardZone(card, card.CurrentZone, selectionArea);
-            MoveCardTransform(card, selectionArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
+            MoveCardLocalTransform(card, selectionArea.GetSlotLocalPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
             selectionArea.MoveCardToSlot(card, slotNumber, selectionArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
