@@ -147,7 +147,7 @@ namespace SVESimulator
                     SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, card);
 
                     SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
-                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, field, player,
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
 
                     if(executeConfirmationTiming)
@@ -198,7 +198,9 @@ namespace SVESimulator
                 SVEEffectPool.Instance.ApplyAllActivePassivesToCard(evolvedCard);
                 SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, evolvedCard);
 
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, true);
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, false);
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherEvolveTrigger>(gameState, evolvedCard, SVEProperties.Zones.Field, field, player,
+                    x => x.MatchesFilter(evolvedCard), true);
             }
         }
 
@@ -455,9 +457,18 @@ namespace SVESimulator
             CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0, bool checkDefense = true)
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0, bool checkDefense = true, bool isCombatDamage = false)
         {
-            Modifier modifier = new(value, duration);
+            int modAmount = value;
+            if(statId == 1 && adding) // Defense
+            {
+                if(!isCombatDamage && card.HasKeyword(SVEProperties.PassiveAbilities.DamageReductionAbilities1))
+                {
+                    modAmount += 1;
+                }
+            }
+
+            Modifier modifier = new(modAmount, duration);
             if(adding)
                 card.stats[statId].AddModifier(modifier);
             else
@@ -480,8 +491,8 @@ namespace SVESimulator
             int defenderDamage = GetCardDamageOutput(defendingCard, attackingCard);
 
             // Do not check for 0 defense here - instead check below during Bane handling
-            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false);
-            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, checkDefense: false);
+            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, checkDefense: false, isCombatDamage: true);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
