@@ -395,7 +395,7 @@ namespace SVESimulator
 
             void Resolve()
             {
-                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
                 {
@@ -405,7 +405,7 @@ namespace SVESimulator
             }
             void ResolveWithCost()
             {
-                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
             }
         }

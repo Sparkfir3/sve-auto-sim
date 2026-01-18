@@ -70,7 +70,7 @@ namespace SVESimulator
                 {
                     player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
                     {
-                        player.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
+                        player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                         SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
                         {
                             SVEEffectPool.Instance.CmdExecuteConfirmationTiming();

@@ -16,7 +16,7 @@ namespace SVESimulator
 
         public override bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName)
         {
-            return !player.AbilitiesUsedThisTurn.Any(x => x.instanceId == card.instanceId && x.cardId == card.cardId && x.abilityName.Equals(abilityName));
+            return !player.AdditionalStats.AbilitiesUsedThisTurn.Any(x => x.instanceId == card.instanceId && x.cardId == card.cardId && x.abilityName.Equals(abilityName));
         }
     }
 }
