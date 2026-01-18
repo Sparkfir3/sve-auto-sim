@@ -22,6 +22,7 @@ namespace SVESimulator
             public CardObject card;
 
             public Vector3 position => transform.position;
+            public Vector3 localPosition => transform.localPosition;
         }
 
         // ---
@@ -222,6 +223,7 @@ namespace SVESimulator
 
         public Vector3 GetSlotPosition(TargetableSlot slot) => GetSlotPosition(slot.SlotNumber);
         public Vector3 GetSlotPosition(int slotNumber) => cardSlots[slotNumber].position;
+        public Vector3 GetSlotLocalPosition(int slotNumber) => cardSlots[slotNumber].localPosition;
 
         public CardObject GetCard(int slotNumber) => (slotNumber >= 0 && slotNumber < cardSlots.Count) ? cardSlots[slotNumber].card : null;
         public List<CardObject> GetAllPrimaryCards() => cardSlots.Where(x => x.Value.card != null).Select(x => x.Value.card).ToList();

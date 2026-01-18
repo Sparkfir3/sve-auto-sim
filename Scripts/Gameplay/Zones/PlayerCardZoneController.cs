@@ -135,7 +135,11 @@ namespace SVESimulator
 
         public CardObject CreateNewCardObjectTopDeck(RuntimeCard runtimeCard)
         {
-            CardObject card = CardManager.Instance.RequestCard(runtimeCard);
+            CardObject card = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
+            if(card)
+                return card;
+
+            card = CardManager.Instance.RequestCard(runtimeCard);
             card.transform.SetPositionAndRotation(deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation * (IsLocalPlayer ? Quaternion.identity : SVEProperties.OpponentCardRotation));
             card.CurrentZone = deckZone;
             return card;
@@ -309,7 +313,7 @@ namespace SVESimulator
                 return;
 
             MoveCardZone(card, card.CurrentZone, selectionArea);
-            MoveCardTransform(card, selectionArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
+            MoveCardLocalTransform(card, selectionArea.GetSlotLocalPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
             selectionArea.MoveCardToSlot(card, slotNumber, selectionArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
