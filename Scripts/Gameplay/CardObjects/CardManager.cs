@@ -52,7 +52,10 @@ namespace SVESimulator
         /// <param name="setActive">Whether to set the card active or not</param>
         public CardObject RequestCard(RuntimeCard runtimeCard, bool setActive = true)
         {
-            // TODO - if card is active in pool, return that instead of making a new one
+            CardObject existingCard = GetCardByInstanceId(runtimeCard.instanceId);
+            if(existingCard)
+                return existingCard;
+
             if(!TryGetFirstAvailableCard(out PooledCard newCard))
             {
                 newCard = SpawnNewCard();
