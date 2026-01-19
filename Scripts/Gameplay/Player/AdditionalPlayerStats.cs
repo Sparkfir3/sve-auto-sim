@@ -7,6 +7,7 @@ namespace SVESimulator
     {
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
+        public readonly SyncList<PlayedCardData> CardsDestroyedThisTurn = new();
 
         // ------------------------------
 
@@ -14,6 +15,7 @@ namespace SVESimulator
         {
             CardsPlayedThisTurn.Clear();
             AbilitiesUsedThisTurn.Clear();
+            CardsDestroyedThisTurn.Clear();
         }
     }
 }

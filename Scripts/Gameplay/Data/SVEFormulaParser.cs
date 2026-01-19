@@ -264,6 +264,10 @@ namespace SVESimulator
                 case 'L': // Leader defense
                     value = player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.Defense].effectiveValue : 0;
                     break;
+                case '#': // Misc player stats
+                    value = GetMiscPlayerStats(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), player);
+                    endIndex += indexDelta + 1; // Move past close parentheses
+                    break;
 
                 // Card stats
                 case 'A': // Attack
@@ -309,6 +313,32 @@ namespace SVESimulator
             Debug.Assert(!usedPlayerReference || player, $"Attempted to parse formula {formula}, but no player reference was provided");
 
             return value * (negative ? -1 : 1);
+        }
+
+        private static int GetMiscPlayerStats(in string formula, in PlayerController player = null)
+        {
+            if(!player || formula.IsNullOrWhiteSpace())
+                return 0;
+            string[] args = formula.Split(',');
+            if(args.Length == 0)
+                return 0;
+
+            args[0] = args[0].Trim().ToLower();
+            Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
+            switch(args[0])
+            {
+                case "destroyed":
+                    return filter == null || filter.Count == 0
+                        ? player.AdditionalStats.CardsDestroyedThisTurn.Count
+                        : player.AdditionalStats.CardsDestroyedThisTurn.Count(x =>
+                        {
+                            CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
+                            Debug.Assert(card);
+                            return card && filter.MatchesCard(card);
+                        });
+                default:
+                    return 0;
+            }
         }
 
         #endregion

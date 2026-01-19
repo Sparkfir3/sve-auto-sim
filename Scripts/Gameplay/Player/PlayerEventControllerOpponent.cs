@@ -140,6 +140,8 @@ namespace SVESimulator
             }
 
             sveEffectSolver.SendToCemetery((msg.isOpponentCard ? playerInfo : opponentInfo).netId, card.RuntimeCard, msg.originZone);
+            if(msg.isOpponentCard && msg.originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToCemetery(x, onComplete));
         }
 
