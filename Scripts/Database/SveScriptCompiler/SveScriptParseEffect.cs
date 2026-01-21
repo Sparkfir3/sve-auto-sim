@@ -305,6 +305,7 @@ namespace SVESimulator.SveScript
             { "SetStat", new EffectParams("SVESimulator.SetStatEffect",                                 EffectParameterType.StatType, EffectParameterType.Amount) },
             { "EngageCard", new EffectParams("SVESimulator.EngageCardEffect")                           },
             { "ReserveCard", new EffectParams("SVESimulator.ReserveCardEffect")                         },
+            { "Refresh", new EffectParams("SVESimulator.ReserveCardEffect")                             },
 
             // Keyword Effects
             { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                         EffectParameterType.Keyword) },
