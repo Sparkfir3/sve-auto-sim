@@ -80,6 +80,8 @@ namespace SVESimulator
 
     public class SveOnPlaySpellTrigger : SveTrigger { }
 
+    public class SveOnDealCombatDamageTrigger : SveTrigger { }
+
     #endregion
 
     // ------------------------------

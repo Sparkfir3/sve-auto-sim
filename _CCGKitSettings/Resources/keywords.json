@@ -49,6 +49,9 @@
             },
             {
                 "value": "UseDefAsAtk"
+            },
+            {
+                "value": "DoesNotTakeCombatDamage"
             }
         ],
         "id": 1

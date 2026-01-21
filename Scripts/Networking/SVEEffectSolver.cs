@@ -512,7 +512,13 @@ namespace SVESimulator
 
             // Confirmation timing
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+            {
+                if(attackingCard.ownerPlayer.netId == playerNetId && attackerDamage > 0)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnDealCombatDamageTrigger>(gameState, attackingCard, attackingCard.ownerPlayer, _ => true, executeConfirmationTiming: false);
+                else if(defendingCard.ownerPlayer.netId == playerNetId && defenderDamage > 0)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnDealCombatDamageTrigger>(gameState, defendingCard, defendingCard.ownerPlayer, _ => true, executeConfirmationTiming: false);
                 SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+            }
         }
 
         public void FightLeader(NetworkIdentity playerNetId, RuntimeCard attackingCard, PlayerInfo defendingPlayer)
@@ -545,7 +551,7 @@ namespace SVESimulator
 
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage) || (defender != null && defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage)))
                 return 0;
 
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
