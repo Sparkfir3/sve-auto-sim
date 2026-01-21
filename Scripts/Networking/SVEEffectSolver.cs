@@ -242,7 +242,7 @@ namespace SVESimulator
             }
         }
 
-        public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
+        public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone, bool isDestroy = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
@@ -500,13 +500,13 @@ namespace SVESimulator
 
             // Check defender destruction
             if(defendingCard.HasKeyword(SVEProperties.Keywords.Bane))
-                SendToCemetery(attackingCard.ownerPlayer.netId, attackingCard, SVEProperties.Zones.Field);
+                SendToCemetery(attackingCard.ownerPlayer.netId, attackingCard, SVEProperties.Zones.Field, isDestroy: true);
             else
                 CheckZeroDefenseFollower(attackingCard.ownerPlayer.netId, attackingCard);
 
             // Check attacker destruction
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Bane))
-                SendToCemetery(defendingCard.ownerPlayer.netId, defendingCard, SVEProperties.Zones.Field);
+                SendToCemetery(defendingCard.ownerPlayer.netId, defendingCard, SVEProperties.Zones.Field, isDestroy: true);
             else
                 CheckZeroDefenseFollower(defendingCard.ownerPlayer.netId, defendingCard);
 
@@ -540,7 +540,7 @@ namespace SVESimulator
             if(!card.IsFollowerOrEvolvedFollower() || !player.namedZones[SVEProperties.Zones.Field].cards.Contains(card) || card.namedStats[SVEProperties.CardStats.Defense].effectiveValue > 0)
                 return;
 
-            SendToCemetery(playerNetId, card, SVEProperties.Zones.Field);
+            SendToCemetery(playerNetId, card, SVEProperties.Zones.Field, isDestroy: true);
         }
 
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)

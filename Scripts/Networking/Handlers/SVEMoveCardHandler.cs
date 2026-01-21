@@ -363,10 +363,11 @@ namespace SVESimulator
                 playerNetId = msg.playerNetId,
                 card = NetworkingUtils.GetNetCard(card),
                 isOpponentCard = msg.isOpponentCard,
-                originZone = msg.originZone
+                originZone = msg.originZone,
+                isDestroy = msg.isDestroy
             };
             server.SafeSendToClient(server.gameState.currentOpponent, sendCardToCemeteryMessage);
-            (server.effectSolver as SVEEffectSolver).SendToCemetery(player.netId, card, msg.originZone);
+            (server.effectSolver as SVEEffectSolver).SendToCemetery(player.netId, card, msg.originZone, msg.isDestroy);
         }
 
         private void OnBanishCard(NetworkConnection conn, LocalBanishCardMessage msg)
