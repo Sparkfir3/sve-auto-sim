@@ -1,0 +1,246 @@
+[
+  {
+    "id": "BP02-018EN",
+    "name": "Albert, Levin Saber",
+    "trait": "Commander / Levin",
+    "cardText": "[evolve][cost03]: Evolve this follower.\nStorm."
+  },
+  {
+    "id": "BP02-019EN",
+    "name": "Albert, Levin Saber (Evolved)",
+    "trait": "Commander / Levin",
+    "cardText": "Storm.\nOn Evolve: For the rest of this turn, this follower doesn't take combat damage.\nStrike: Refresh this follower. Perform this ability only once per turn.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "For the rest of this turn, this follower doesn't take combat damage."
+      },
+      {
+        "key": "Strike",
+        "text": "Strike: Refresh this follower. Perform this ability only once per turn.",
+        "trigger": "Strike:",
+        "body": "Refresh this follower."
+      }
+    ]
+  },
+  {
+    "id": "BP02-020EN",
+    "name": "Alexander",
+    "trait": "Commander",
+    "cardText": "Rush. Assail.\nDuring your turn, whenever this follower deals combat damage, refresh it.",
+    "effectText": [
+      {
+        "key": "OnDealCombatDamage",
+        "text": "During your turn, whenever this follower deals combat damage, refresh it.",
+        "trigger": "During your turn, whenever this follower deals combat damage,",
+        "body": "Refresh this follower."
+      }
+    ]
+  },
+  {
+    "id": "BP02-021EN",
+    "name": "Amelia, Silver Paladin",
+    "trait": "Commander",
+    "cardText": "[fanfare] Choose one of the following. (1) Select a follower that costs 3 play points or less in your hand and put it onto your field. (2) Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose one of the following."
+      },
+      {
+        "key": "Field",
+        "body": "Select a follower that costs 3 play points or less in your hand and put it onto your field."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-022EN",
+    "name": "Leonidas",
+    "trait": "Commander",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP02-023EN",
+    "name": "Leonidas (Evolved)",
+    "trait": "Commander",
+    "cardText": "On Evolve: Select an enemy follower on the field. Deal 5 damage to it and this follower.\n[lastwords] Summon a Leonidas's Resolve token.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field. Deal 5 damage to it and this follower."
+      },
+      {
+        "key": "DamageEnemy",
+        "body": "Select an enemy follower on the field. Deal 5 damage to it and this follower."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Summon a Leonidas's Resolve token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-024EN",
+    "name": "White Paladin",
+    "trait": "Commander",
+    "cardText": "Ward.\n[act][cost02], [engage]: Summon 2 Shield Guardian tokens.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02], [engage]",
+        "body": "Summon 2 Shield Guardian tokens."
+      }
+    ]
+  },
+  {
+    "id": "BP02-025EN",
+    "name": "Jeno, Levin Vanguard",
+    "trait": "Officer / Levin",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP02-026EN",
+    "name": "Jeno, Levin Vanguard (Evolved)",
+    "trait": "Officer / Levin",
+    "cardText": "Assail.\nOn Evolve: Look at the top 4 cards of your deck. From among them, you may reveal a Levin follower with a different name from this card and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Look at the top 4 cards of your deck. From among them, you may reveal a Levin follower with a different name from this card and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP02-027EN",
+    "name": "Yurius, Levin Duke",
+    "trait": "Noble / Levin",
+    "cardText": "[q][act][engage]: Select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[q][act]",
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-028EN",
+    "name": "Whole-Souled Swing",
+    "trait": "Officer",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and put a Knight token into your EX area.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 3 damage and put a Knight token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP02-029EN",
+    "name": "Swift Infiltrator",
+    "trait": "Officer",
+    "cardText": "Whenever one of your followers evolves, give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever one of your followers evolves, give this follower [attack]+1/[defense]+1.",
+        "trigger": "Whenever one of your followers evolves,",
+        "body": "Give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP02-030EN",
+    "name": "Samurai",
+    "trait": "Officer",
+    "cardText": "[act][cost03]: Give this follower Storm and Bane.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost03]",
+        "body": "Give this follower Storm and Bane."
+      }
+    ]
+  },
+  {
+    "id": "BP02-031EN",
+    "name": "Avant Blader",
+    "trait": "Commander",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP02-032EN",
+    "name": "Avant Blader (Evolved)",
+    "trait": "Commander",
+    "cardText": "On Evolve: Search your deck for up to 2 Officer followers, reveal them, and add them to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Search your deck for up to 2 Officer followers, reveal them, and add them to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-033EN",
+    "name": "Flame Soldier",
+    "trait": "Officer / Heroic",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 1 damage. If any of your followers have been destroyed this turn, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 1 damage. If any of your followers have been destroyed this turn, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP02-034EN",
+    "name": "Gunner Maid Seria",
+    "trait": "Officer / Maid",
+    "cardText": "[fanfare] Search your deck for a Princess follower, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Princess follower, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-LD02EN",
+    "name": "Prim, Adventuring Princess"
+  },
+  {
+    "id": "BP02-T02EN",
+    "name": "Shield Guardian",
+    "trait": "Officer / Token",
+    "cardText": "Ward."
+  },
+  {
+    "id": "BP02-T03EN",
+    "name": "Leonidas's Resolve",
+    "trait": "Commander / Token",
+    "cardText": "Whenever a [swordcraft] follower is put onto your field, give it [attack]+3/[defense]+3 and Rush.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a [swordcraft] follower is put onto your field, give it [attack]+3/[defense]+3 and Rush.",
+        "trigger": "Whenever a [swordcraft] follower is put onto your field",
+        "body": "Give it [attack]+3/[defense]+3 and Rush."
+      }
+    ]
+  }
+]
