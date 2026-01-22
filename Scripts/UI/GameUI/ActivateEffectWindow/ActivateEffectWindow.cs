@@ -51,7 +51,7 @@ namespace SVESimulator
 
         #region Open/Close Controls
 
-        public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities)
+        public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities, bool onlyQuicks = false)
         {
             // Effects
             int i = 0;
@@ -66,6 +66,8 @@ namespace SVESimulator
                 button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
                     && (ability.effect is EvolveEffect evolveEffect ? evolveEffect.CanEvolve(player, card.RuntimeCard) : true);
+                if(onlyQuicks)
+                    button.Interactable &= ability.IsQuickAbility();
                 button.OnClickEffect.AddListener(() =>
                 {
                     player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
@@ -81,7 +83,7 @@ namespace SVESimulator
             }
 
             // Evolve without evolve point
-            int evolveCost = card.GetEvolveCost();
+            int evolveCost = onlyQuicks ? -1 : card.GetEvolveCost();
             if(evolveCost >= 0)
             {
                 MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();

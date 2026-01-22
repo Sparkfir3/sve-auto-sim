@@ -182,6 +182,11 @@ namespace SVESimulator
             };
         }
 
+        public static bool IsQuickAbility(this ActivatedAbility ability)
+        {
+            return ability.costs.Any(x => x is QuickEffectAsCost);
+        }
+
         public static List<Cost> ToCostList(this string input)
         {
             if(input.IsNullOrWhiteSpace())
