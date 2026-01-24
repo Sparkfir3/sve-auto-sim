@@ -30,7 +30,7 @@ namespace SVESimulator
         [Header("Settings"), SerializeField]
         private float quickDuration = 15f;
 
-        public bool IsActive => quickTimingState == QuickTimingState.Inactive;
+        public bool IsActive => quickTimingState != QuickTimingState.Inactive;
 
         #endregion
 

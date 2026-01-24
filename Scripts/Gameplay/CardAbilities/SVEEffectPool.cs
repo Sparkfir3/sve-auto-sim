@@ -449,6 +449,9 @@ namespace SVESimulator
                 {
                     localPlayer.ZoneController.handZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
                     localPlayer.ZoneController.fieldZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
+                    if(localPlayer.isActivePlayer)
+                        foreach(CardObject card in localPlayer.ZoneController.fieldZone.GetAllPrimaryCards())
+                            card.CalculateCanAttackStatus();
                 }
             }
         }
