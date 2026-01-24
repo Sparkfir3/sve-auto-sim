@@ -190,7 +190,7 @@ stats 0/4;
 text "[q][act][engage]: Select an enemy follower on the field and deal it 1 damage.";
 
 ability Act {
-    cost (Quick);
+    cost (Quick), (EngageSelf);
     condition p(#F);
     effect DealDamage(1) to TargetOpponentCard F;
 }

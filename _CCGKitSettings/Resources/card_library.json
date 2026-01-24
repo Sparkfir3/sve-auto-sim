@@ -23221,6 +23221,9 @@
                 "$type": "SVESimulator.QuickEffectAsCost"
               },
               {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
                 "condition": "p(#F)",
                 "$type": "SVESimulator.ConditionAsCost"
               }
