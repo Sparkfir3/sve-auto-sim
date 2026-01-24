@@ -165,7 +165,7 @@ namespace SVESimulator
                 localPlayer.ZoneController.handZone.HighlightValidQuicks();
                 localPlayer.ZoneController.fieldZone.SetValidQuicksInteractable();
                 localPlayer.ZoneController.fieldZone.HighlightInteractableCards();
-                localInputController.allowedInputs = PlayerInputController.InputTypes.PlayCards | PlayerInputController.InputTypes.ActivateAbilities | PlayerInputController.InputTypes.OnlyQuicks;
+                localInputController.allowedInputs = PlayerInputController.InputTypes.QuickTiming;
 
                 // Run timer
                 int currentPlayedCardCount = localPlayer.Combo;

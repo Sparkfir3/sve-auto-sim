@@ -199,8 +199,15 @@ namespace SVESimulator
         public void SetValidQuicksInteractable()
         {
             foreach(CardObject card in GetAllPrimaryCards())
+            {
                 card.Interactable = card.LibraryCard.abilities.Any(x => x is ActivatedAbility act && act.costs.Any(y => y is QuickEffectAsCost)
                     && Player.LocalEvents.CanPayCosts(card.RuntimeCard, act.costs, x.name));
+                if(card.Interactable && !Player.isActivePlayer)
+                {
+                    card.CanAttack = false;
+                    card.CanAttackLeader = false;
+                }
+            }
         }
 
         #endregion

@@ -24,7 +24,8 @@ namespace SVESimulator
             ActivateAbilities = 4,
             MoveCards = 8,
             OnlyQuicks = 16,
-            All = ~OnlyQuicks
+            All = ~OnlyQuicks,
+            QuickTiming = PlayCards | ActivateAbilities | OnlyQuicks
         }
 
         [TitleGroup("Runtime Data"), SerializeField]

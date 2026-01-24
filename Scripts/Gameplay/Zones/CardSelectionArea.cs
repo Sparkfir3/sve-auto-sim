@@ -102,6 +102,7 @@ namespace SVESimulator
             this.maxSlotCount = maxSlotCount;
             gameObject.SetActive(true);
             zoneController.fieldZone.RemoveAllCardHighlights();
+            zoneController.handZone.RemoveAllCardHighlights();
             slotContainer.localPosition = Vector3.zero;
             cardContainer.localPosition = Vector3.zero;
             scrollContent.anchoredPosition = Vector2.zero;
