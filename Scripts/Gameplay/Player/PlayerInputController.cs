@@ -240,6 +240,8 @@ namespace SVESimulator
                         {
                             if(currentTargetSlot.ParentZone is PlayerHandZone)
                             {
+                                if(currentSelectedCard.CurrentZone is PlayerHandZone)
+                                    break;
                                 Player.ZoneController.AddCardToHand(currentSelectedCard);
                                 return;
                             }
