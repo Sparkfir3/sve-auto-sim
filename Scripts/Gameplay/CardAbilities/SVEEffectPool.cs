@@ -362,6 +362,8 @@ namespace SVESimulator
                 {
                     if(canPayCost)
                         ResolveWithCost();
+                    else
+                        onComplete?.Invoke();
                     return;
                 }
 
