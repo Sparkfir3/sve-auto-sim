@@ -196,6 +196,13 @@ namespace SVESimulator
                 card.Interactable = filterDict.MatchesCard(card);
         }
 
+        public void SetValidQuicksInteractable()
+        {
+            foreach(CardObject card in GetAllPrimaryCards())
+                card.Interactable = card.LibraryCard.abilities.Any(x => x is ActivatedAbility act && act.costs.Any(y => y is QuickEffectAsCost)
+                    && Player.LocalEvents.CanPayCosts(card.RuntimeCard, act.costs, x.name));
+        }
+
         #endregion
 
         // ------------------------------
@@ -247,6 +254,12 @@ namespace SVESimulator
                 return;
             foreach(CardObject card in cards)
                 card.SetHighlightMode(card.CanAttack ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
+        }
+
+        public void HighlightInteractableCards()
+        {
+            foreach(CardObject card in cards)
+                card.SetHighlightMode(card.Interactable ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
         }
 
         #endregion

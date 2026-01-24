@@ -55,7 +55,7 @@ namespace SVESimulator
         {
             // Effects
             int i = 0;
-            if(card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
+            if(!onlyQuicks && card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
                 abilities.Add(CounterUtilities.InnateStackAbility);
             for(; i < abilities.Count; i++)
             {
@@ -65,7 +65,7 @@ namespace SVESimulator
                 button.gameObject.SetActive(true);
                 button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
-                    && (ability.effect is EvolveEffect evolveEffect ? evolveEffect.CanEvolve(player, card.RuntimeCard) : true);
+                    && (ability.effect is not EvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
                 if(onlyQuicks)
                     button.Interactable &= ability.IsQuickAbility();
                 button.OnClickEffect.AddListener(() =>

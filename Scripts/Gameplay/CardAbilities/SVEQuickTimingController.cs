@@ -162,14 +162,16 @@ namespace SVESimulator
                 GameUIManager.QuickTiming.SetSubtitle(isCombat ? "Combat" : "End Phase");
                 localPlayer.ZoneController.handZone.SetValidQuicksInteractable();
                 localPlayer.ZoneController.handZone.HighlightValidQuicks();
-                localInputController.allowedInputs = PlayerInputController.InputTypes.PlayCards | PlayerInputController.InputTypes.Quick;
+                localPlayer.ZoneController.fieldZone.SetValidQuicksInteractable();
+                localPlayer.ZoneController.fieldZone.HighlightInteractableCards();
+                localInputController.allowedInputs = PlayerInputController.InputTypes.PlayCards | PlayerInputController.InputTypes.ActivateAbilities | PlayerInputController.InputTypes.OnlyQuicks;
 
                 // Run timer
                 int currentPlayedCardCount = localPlayer.Combo;
+                int currentAbilityUsedCount = localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count;
                 for(float i = 0f; i <= quickDuration; i += Time.deltaTime)
                 {
-                    // TODO - quick abilities
-                    if(GameUIManager.QuickTiming.WasCanceled || localPlayer.Combo > currentPlayedCardCount)
+                    if(GameUIManager.QuickTiming.WasCanceled || localPlayer.Combo > currentPlayedCardCount || localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count > currentAbilityUsedCount)
                         break;
                     GameUIManager.QuickTiming.SetTimer(1f - (i / quickDuration));
                     yield return null;
@@ -181,19 +183,19 @@ namespace SVESimulator
                 localInputController.allowedInputs = PlayerInputController.InputTypes.None;
                 GameUIManager.QuickTiming.CloseAll();
 
-                // Loop if we played a card
-                if(localPlayer.Combo > currentPlayedCardCount)
+                // Loop if we played a card or used an ability
+                if(localPlayer.Combo > currentPlayedCardCount || localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count > currentAbilityUsedCount)
                 {
-                    yield return new WaitForSeconds(0.25f); // test delay
+                    yield return new WaitForSeconds(0.25f);
                     yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect);
-                    yield return new WaitForSeconds(0.25f); // test delay
+                    yield return new WaitForSeconds(0.25f);
                     if(isCombat)
                         CardManager.Animator.SetTargetingLineActive(true);
                     goto startQuickTiming;
                 }
 
                 // End
-                yield return new WaitForSeconds(0.1f); // test delay
+                yield return new WaitForSeconds(0.1f);
                 CmdSetQuickTimingState(QuickTimingState.Complete);
             }
         }

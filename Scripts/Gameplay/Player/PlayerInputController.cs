@@ -23,8 +23,8 @@ namespace SVESimulator
             Attack = 2,
             ActivateAbilities = 4,
             MoveCards = 8,
-            Quick = 16,
-            All = -1
+            OnlyQuicks = 16,
+            All = ~OnlyQuicks
         }
 
         [TitleGroup("Runtime Data"), SerializeField]
@@ -375,12 +375,16 @@ namespace SVESimulator
 
         private bool TryOpenActivateEffectWindow(CardObject card)
         {
-            if(!card.CurrentZone.IsLocalPlayerZone || !allowedInputs.HasFlag(InputTypes.ActivateAbilities)) // TODO - quick abilities
+            if(!card.CurrentZone.IsLocalPlayerZone || !allowedInputs.HasFlag(InputTypes.ActivateAbilities))
                 return false;
+            bool onlyQuicks = allowedInputs.HasFlag(InputTypes.OnlyQuicks);
             List<ActivatedAbility> activatedAbilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility && x.effect is SveEffect).Select(x => x as ActivatedAbility).ToList();
+
+            if(onlyQuicks && !activatedAbilities.Any(x => x.costs.Any(y => y is QuickEffectAsCost)))
+                return false;
             if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
             {
-                GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities);
+                GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, onlyQuicks: onlyQuicks);
                 return true;
             }
             return false;
