@@ -215,6 +215,8 @@ namespace SVESimulator
         {
             localPlayer.ZoneController.handZone.SetAllCardsInteractable(false);
             localPlayer.ZoneController.handZone.RemoveAllCardHighlights();
+            localPlayer.ZoneController.fieldZone.RemoveAllCardHighlights();
+            localPlayer.InputController.allowedInputs = PlayerInputController.InputTypes.None;
             GameUIManager.QuickTiming.OpenWaitingOnQuickUI();
         }
 

@@ -270,7 +270,7 @@ namespace SVESimulator
             }
         }
 
-        public void CalculateCanAttackStatus()
+        public void CalculateCanAttackStatus(bool updateHighlightMode = true)
         {
             if(!CurrentZone.IsLocalPlayerZone || !this.IsFollowerOrEvolvedFollower() || RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 1
                || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotAttack))
@@ -285,7 +285,8 @@ namespace SVESimulator
                 RuntimeCard.HasKeyword(SVEProperties.Keywords.Rush) || RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm);
             CanAttackLeader = NumberOfTurnsOnBoard > 0 ||
                 RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm);
-            SetHighlightMode(CanAttack ? HighlightMode.ValidTarget : HighlightMode.None);
+            if(updateHighlightMode)
+                SetHighlightMode(CanAttack ? HighlightMode.ValidTarget : HighlightMode.None);
         }
 
         #endregion
