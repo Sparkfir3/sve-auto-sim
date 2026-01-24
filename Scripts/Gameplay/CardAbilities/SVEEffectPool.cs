@@ -47,6 +47,7 @@ namespace SVESimulator
         public event Action OnConfirmationTimingEndConstant;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
+        public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
 
         private Dictionary<System.Type, EffectTriggerState> TriggerStateTypeMap = new()
         {
@@ -446,9 +447,9 @@ namespace SVESimulator
                 OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
                 OnNextConfirmationTimingEnd = null;
-                localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
                 {
+                    localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                     localPlayer.ZoneController.handZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
                     localPlayer.ZoneController.fieldZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
                     if(localPlayer.isActivePlayer)

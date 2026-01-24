@@ -158,6 +158,7 @@ namespace SVESimulator
             {
                 // Init/open UI
                 startQuickTiming:
+                yield return new WaitUntil(() => !SVEEffectPool.Instance.IsActive);
                 GameUIManager.QuickTiming.OpenPerformQuickUI();
                 GameUIManager.QuickTiming.SetSubtitle(isCombat ? "Combat" : "End Phase");
                 localPlayer.ZoneController.handZone.SetValidQuicksInteractable();
