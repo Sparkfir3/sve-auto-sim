@@ -51,6 +51,7 @@ namespace SVESimulator
             Overflow,
             Necrocharge,
             Sanguine,
+            IsTurnPlayer,
 
             // Card Properties
             Trait,
@@ -117,6 +118,7 @@ namespace SVESimulator
                 'o' => FormulaType.Overflow,
                 'n' => FormulaType.Necrocharge,
                 'g' => FormulaType.Sanguine,
+                't' => FormulaType.IsTurnPlayer,
                 '+' => FormulaType.Addition,
                 '-' => FormulaType.Subtraction,
                 '>' => FormulaType.GreaterThan,
@@ -156,6 +158,10 @@ namespace SVESimulator
                     break;
                 case FormulaType.Sanguine:
                     if(!player || !player.Sanguine)
+                        return leftHandValue;
+                    break;
+                case FormulaType.IsTurnPlayer:
+                    if(!player || !player.isActivePlayer)
                         return leftHandValue;
                     break;
 
@@ -236,17 +242,34 @@ namespace SVESimulator
 
             // Dynamic game value
             bool usedPlayerReference = true;
+            int indexDelta = 0;
             switch(formula[endIndex++])
             {
+                // Player stats/info
                 case 'C': // Combo
                     value = player ? player.Combo : 0;
                     break;
                 case 'H': // Cards in hand
-                    value = player ? player.ZoneController.handZone.Runtime.numCards : 0;
+                    if(formula[endIndex] == '(')
+                    {
+                        Dictionary<CardFilterSetting, string> filterH = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
+                        endIndex += indexDelta + 1; // Move past close parentheses
+                        value = player ? player.ZoneController.handZone.Runtime.cards.Count(x => filterH.MatchesCard(x)) : 0;
+                    }
+                    else
+                    {
+                        value = player ? player.ZoneController.handZone.Runtime.numCards : 0;
+                    }
                     break;
                 case 'L': // Leader defense
                     value = player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.Defense].effectiveValue : 0;
                     break;
+                case '#': // Misc player stats
+                    value = GetMiscPlayerStats(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), player);
+                    endIndex += indexDelta + 1; // Move past close parentheses
+                    break;
+
+                // Card stats
                 case 'A': // Attack
                     value = card != null ? card.namedStats[SVEProperties.CardStats.Attack].effectiveValue : 0;
                     Debug.Assert(card != null, $"Attempted to parse card's Attack for value formula {formula}, but no card was provided");
@@ -258,8 +281,9 @@ namespace SVESimulator
                     usedPlayerReference = false;
                     break;
 
+                // Player zone counts
                 case 'f': // Count on field matching filter
-                    Dictionary<CardFilterSetting, string> filterF = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out int indexDelta), card);
+                    Dictionary<CardFilterSetting, string> filterF = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
                     value = player ? player.ZoneController.fieldZone.GetAllPrimaryCards().Count(x => filterF.MatchesCard(x.RuntimeCard)) : 0;
                     break;
@@ -274,6 +298,7 @@ namespace SVESimulator
                     value = player ? player.ZoneController.cemeteryZone.AllCards.Count(x => filterCemetery.MatchesCard(x.RuntimeCard)) : 0;
                     break;
 
+                // Opponent zone counts
                 case 'p': // Count on opponent's field matching filter
                     Dictionary<CardFilterSetting, string> filterP = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
@@ -288,6 +313,32 @@ namespace SVESimulator
             Debug.Assert(!usedPlayerReference || player, $"Attempted to parse formula {formula}, but no player reference was provided");
 
             return value * (negative ? -1 : 1);
+        }
+
+        private static int GetMiscPlayerStats(in string formula, in PlayerController player = null)
+        {
+            if(!player || formula.IsNullOrWhiteSpace())
+                return 0;
+            string[] args = formula.Split(',');
+            if(args.Length == 0)
+                return 0;
+
+            args[0] = args[0].Trim().ToLower();
+            Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
+            switch(args[0])
+            {
+                case "destroyed":
+                    return filter == null || filter.Count == 0
+                        ? player.AdditionalStats.CardsDestroyedThisTurn.Count
+                        : player.AdditionalStats.CardsDestroyedThisTurn.Count(x =>
+                        {
+                            CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
+                            Debug.Assert(card);
+                            return card && filter.MatchesCard(card);
+                        });
+                default:
+                    return 0;
+            }
         }
 
         #endregion

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8806427802553945102}
   - component: {fileID: 8478122686412345955}
   - component: {fileID: 6013512393916079819}
+  - component: {fileID: 3077512009105232781}
   - component: {fileID: 984349466775513389}
   - component: {fileID: 1911479673578094123}
   m_Layer: 0
@@ -83,6 +84,7 @@ MonoBehaviour:
   opponentPlayerZoneController: {fileID: 0}
   <LocalEvents>k__BackingField: {fileID: 984349466775513389}
   <OpponentEvents>k__BackingField: {fileID: 1911479673578094123}
+  <AdditionalStats>k__BackingField: {fileID: 3077512009105232781}
   inputController: {fileID: 0}
 --- !u!114 &6013512393916079819
 MonoBehaviour:
@@ -97,6 +99,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8478122686412345955}
+--- !u!114 &3077512009105232781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822967676911451592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0bd6cc69af1d047838185fdedb0659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &984349466775513389
 MonoBehaviour:
   m_ObjectHideFlags: 0

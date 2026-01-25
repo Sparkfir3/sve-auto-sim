@@ -145,6 +145,7 @@ namespace SVESimulator
         public int cardInstanceId;
         public bool isOpponentCard;
         public string originZone;
+        public bool isDestroy;
     }
 
     public struct OpponentSendCardToCemeteryMessage : NetworkMessage
@@ -153,6 +154,7 @@ namespace SVESimulator
         public NetCard card;
         public bool isOpponentCard;
         public string originZone;
+        public bool isDestroy;
     }
 
     public struct LocalBanishCardMessage : NetworkMessage

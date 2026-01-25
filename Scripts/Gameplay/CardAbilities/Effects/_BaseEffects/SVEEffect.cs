@@ -72,11 +72,9 @@ namespace SVESimulator
                     return;
                 case SVEProperties.SVEEffectTarget.TriggerCard:
                     filter = SVEFormulaParser.ParseCardFilterFormula(rawFilter, sourceCardInstanceId);
-                    if(player.ZoneController.AllZones.TryGetValue(triggeringCardZone, out CardZone triggerZone) && triggerZone.TryGetCard(triggeringCardInstanceId, out CardObject triggerCard))
-                    {
-                        if(filter.MatchesCard(triggerCard))
-                            targets.Add(triggerCard);
-                    }
+                    CardObject triggerCard = CardManager.Instance.GetCardByInstanceId(triggeringCardInstanceId);
+                    if(filter.MatchesCard(triggerCard))
+                        targets.Add(triggerCard);
                     onTargetFound?.Invoke(targets);
                     return;
 

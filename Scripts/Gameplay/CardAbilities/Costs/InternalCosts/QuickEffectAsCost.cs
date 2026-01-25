@@ -1,22 +1,23 @@
-using System;
-using System.Linq;
-using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using CCGKit;
 
 namespace SVESimulator
 {
-    public class OncePerTurnCost : SveCost
+    public class QuickEffectAsCost : SveCost
     {
         public override bool IsInternalCost => true;
 
+        // ------------------------------
+
         public override string GetReadableString(GameConfiguration config)
         {
-            return "Once Per Turn";
+            return "Is Quick Effect";
         }
 
         public override bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName)
         {
-            return !player.AdditionalStats.AbilitiesUsedThisTurn.Any(x => x.instanceId == card.instanceId && x.cardId == card.cardId && x.abilityName.Equals(abilityName));
+            return true;
         }
     }
 }

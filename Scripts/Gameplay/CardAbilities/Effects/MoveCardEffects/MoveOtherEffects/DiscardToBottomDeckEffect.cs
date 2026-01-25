@@ -5,7 +5,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class DiscardToBottomDeckEffect : DiscardEffect
+    public class DiscardToBottomDeckEffect : ChooseFromHandEffect
     {
         protected override string ActionText => "Send to Bottom Deck";
 

@@ -47,6 +47,7 @@ namespace SVESimulator
         public event Action OnConfirmationTimingEndConstant;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
+        public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
 
         private Dictionary<System.Type, EffectTriggerState> TriggerStateTypeMap = new()
         {
@@ -362,6 +363,8 @@ namespace SVESimulator
                 {
                     if(canPayCost)
                         ResolveWithCost();
+                    else
+                        onComplete?.Invoke();
                     return;
                 }
 
@@ -395,7 +398,7 @@ namespace SVESimulator
 
             void Resolve()
             {
-                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
                 {
@@ -405,7 +408,7 @@ namespace SVESimulator
             }
             void ResolveWithCost()
             {
-                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
             }
         }
@@ -444,11 +447,14 @@ namespace SVESimulator
                 OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
                 OnNextConfirmationTimingEnd = null;
-                localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
                 {
+                    localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                     localPlayer.ZoneController.handZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
                     localPlayer.ZoneController.fieldZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
+                    if(localPlayer.isActivePlayer)
+                        foreach(CardObject card in localPlayer.ZoneController.fieldZone.GetAllPrimaryCards())
+                            card.CalculateCanAttackStatus(updateHighlightMode: false);
                 }
             }
         }

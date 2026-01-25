@@ -37,10 +37,7 @@ namespace SVESimulator
         [SyncVar(hook = nameof(SyncHook_OnBanishedZoneCountChanged)), SerializeField]
         private int cardsInBanishedZone;
 
-        public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
-        public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
-
-        public int Combo => CardsPlayedThisTurn.Count;
+        public int Combo => AdditionalStats.CardsPlayedThisTurn.Count;
         public int Spellchain => spellchain;
         public bool Overflow => localMaxPlayPointStat != null && localMaxPlayPointStat.effectiveValue >= 7;
         public int Necrocharge => cardsInCemetery;
@@ -55,6 +52,8 @@ namespace SVESimulator
         public PlayerEventControllerLocal LocalEvents { get; private set; }
         [field: SerializeField]
         public PlayerEventControllerOpponent OpponentEvents { get; private set; }
+        [field: SerializeField]
+        public AdditionalPlayerStats AdditionalStats { get; private set; }
         [SerializeField]
         private PlayerInputController inputController;
 
@@ -208,8 +207,7 @@ namespace SVESimulator
             opponentPlayerZoneController.InitializeZones(controllers.FirstOrDefault(x => !x.isLocalPlayer), opponentInfo, !opponentInfo.netId.isClientOnly);
             FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
-            CardsPlayedThisTurn.Clear();
-            AbilitiesUsedThisTurn.Clear();
+            AdditionalStats.Reset();
             CurrentTurnNumber = 0;
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
@@ -244,8 +242,7 @@ namespace SVESimulator
             GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
-            CardsPlayedThisTurn.Clear();
-            AbilitiesUsedThisTurn.Clear();
+            AdditionalStats.Reset();
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
             SVEEffectPool.Instance.UpdatePassiveDurationsStartOfTurn(this, msg.isRecipientTheActivePlayer);

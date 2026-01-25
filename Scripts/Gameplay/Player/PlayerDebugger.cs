@@ -20,10 +20,12 @@ namespace SVESimulator
         [ShowInInspector, ReadOnly]
         private int necrocharge => player.ZoneController && player.ZoneController.cemeteryZone ? player.Necrocharge : 0;
 
-        [Title("Data"), ShowInInspector, TableList, ReadOnly]
-        private List<PlayedCardData> cardsPlayedThisTurn => player.CardsPlayedThisTurn.ToList();
+        [Title("Additional Stats"), ShowInInspector, TableList, ReadOnly]
+        private List<PlayedCardData> cardsPlayedThisTurn => player.AdditionalStats.CardsPlayedThisTurn.ToList();
         [ShowInInspector, TableList, ReadOnly]
-        private List<PlayedAbilityData> abilitiesUsedThisTurn => player.AbilitiesUsedThisTurn.ToList();
+        private List<PlayedAbilityData> abilitiesUsedThisTurn => player.AdditionalStats.AbilitiesUsedThisTurn.ToList();
+        [ShowInInspector, TableList, ReadOnly]
+        private List<PlayedCardData> cardsDestroyedThisTurn => player.AdditionalStats.CardsDestroyedThisTurn.ToList();
 
         // ------------------------------
 

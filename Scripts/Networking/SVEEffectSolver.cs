@@ -242,7 +242,7 @@ namespace SVESimulator
             }
         }
 
-        public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
+        public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone, bool isDestroy = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
@@ -500,19 +500,25 @@ namespace SVESimulator
 
             // Check defender destruction
             if(defendingCard.HasKeyword(SVEProperties.Keywords.Bane))
-                SendToCemetery(attackingCard.ownerPlayer.netId, attackingCard, SVEProperties.Zones.Field);
+                SendToCemetery(attackingCard.ownerPlayer.netId, attackingCard, SVEProperties.Zones.Field, isDestroy: true);
             else
                 CheckZeroDefenseFollower(attackingCard.ownerPlayer.netId, attackingCard);
 
             // Check attacker destruction
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Bane))
-                SendToCemetery(defendingCard.ownerPlayer.netId, defendingCard, SVEProperties.Zones.Field);
+                SendToCemetery(defendingCard.ownerPlayer.netId, defendingCard, SVEProperties.Zones.Field, isDestroy: true);
             else
                 CheckZeroDefenseFollower(defendingCard.ownerPlayer.netId, defendingCard);
 
             // Confirmation timing
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+            {
+                if(attackingCard.ownerPlayer.netId == playerNetId && attackerDamage > 0)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnDealCombatDamageTrigger>(gameState, attackingCard, attackingCard.ownerPlayer, _ => true, executeConfirmationTiming: false);
+                else if(defendingCard.ownerPlayer.netId == playerNetId && defenderDamage > 0)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnDealCombatDamageTrigger>(gameState, defendingCard, defendingCard.ownerPlayer, _ => true, executeConfirmationTiming: false);
                 SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+            }
         }
 
         public void FightLeader(NetworkIdentity playerNetId, RuntimeCard attackingCard, PlayerInfo defendingPlayer)
@@ -540,12 +546,12 @@ namespace SVESimulator
             if(!card.IsFollowerOrEvolvedFollower() || !player.namedZones[SVEProperties.Zones.Field].cards.Contains(card) || card.namedStats[SVEProperties.CardStats.Defense].effectiveValue > 0)
                 return;
 
-            SendToCemetery(playerNetId, card, SVEProperties.Zones.Field);
+            SendToCemetery(playerNetId, card, SVEProperties.Zones.Field, isDestroy: true);
         }
 
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage) || (defender != null && defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage)))
                 return 0;
 
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
