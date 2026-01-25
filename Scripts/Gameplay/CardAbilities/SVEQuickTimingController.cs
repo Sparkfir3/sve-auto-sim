@@ -221,6 +221,17 @@ namespace SVESimulator
             localPlayer.ZoneController.fieldZone.RemoveAllCardHighlights();
             localPlayer.InputController.allowedInputs = PlayerInputController.InputTypes.None;
             GameUIManager.QuickTiming.OpenWaitingOnQuickUI();
+            StartCoroutine(UITimer());
+            IEnumerator UITimer()
+            {
+                for(float i = 0f; i <= quickDuration; i += Time.deltaTime)
+                {
+                    if(!GameUIManager.QuickTiming.gameObject.activeInHierarchy)
+                        yield break;
+                    GameUIManager.QuickTiming.SetTimer(1f - (i / quickDuration));
+                    yield return null;
+                }
+            }
         }
 
         [TargetRpc]
@@ -232,22 +243,6 @@ namespace SVESimulator
                 localInputController.allowedInputs = PlayerInputController.InputTypes.All;
                 localPlayer.ZoneController.fieldZone.HighlightCardsCanAttack();
                 localPlayer.ZoneController.handZone.SetAllCardsInteractable(true);
-            }
-        }
-
-        [TargetRpc]
-        private void TargetStartTimerUI(NetworkConnectionToClient networkConnection)
-        {
-            StartCoroutine(UITimer());
-            IEnumerator UITimer()
-            {
-                for(float i = 0f; i <= quickDuration; i += Time.deltaTime)
-                {
-                    if(!GameUIManager.QuickTiming.gameObject.activeInHierarchy)
-                        yield break;
-                    GameUIManager.QuickTiming.SetTimer(1f - (i / quickDuration));
-                    yield return null;
-                }
             }
         }
 
