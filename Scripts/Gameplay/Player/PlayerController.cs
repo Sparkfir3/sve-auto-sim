@@ -220,8 +220,9 @@ namespace SVESimulator
 
             LocalEvents.InitializeDeckAndLeader();
             InitializePlayPointMeters();
-            GameUIManager.GameControlsUI.SetTurn(false);
+            GameUIManager.GameControlsUI.SetTurn(false, 0);
             GameUIManager.GameControlsUI.SetTurnDisplayActive(true);
+            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Setup);
         }
 
         public override void OnStartTurn(StartTurnMessage msg)
@@ -239,7 +240,8 @@ namespace SVESimulator
             // -----
 
             // Set up turn
-            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer);
+            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer, gameState.currentPlayer.numTurn - 5); // 5 = setup turn count
+            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Main);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
             AdditionalStats.Reset();
@@ -414,6 +416,7 @@ namespace SVESimulator
         {
             if(gameState.currentPhase != SVEProperties.GamePhase.Main)
                 return;
+            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.End);
             StartCoroutine(RunEndPhase());
 
             IEnumerator RunEndPhase()

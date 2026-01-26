@@ -15,7 +15,11 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject turnInfoContainer;
         [SerializeField]
-        private TextMeshProUGUI currentTurnTextBox;
+        private TextMeshProUGUI currentPhaseTextBox;
+        [SerializeField]
+        private TextMeshProUGUI currentTurnNumberTextBox;
+        [SerializeField]
+        private TextMeshProUGUI currentPlayerTextBox;
         [SerializeField]
         private Button endTurnButton;
         [SerializeField]
@@ -41,10 +45,16 @@ namespace SVESimulator.UI
             turnInfoContainer.SetActive(active);
         }
 
-        public void SetTurn(bool isLocalPlayerTurn)
+        public void SetTurn(bool isLocalPlayerTurn, int turnNumber)
         {
-            currentTurnTextBox.text = isLocalPlayerTurn ? "Your Turn" : "Opponent's Turn";
-            endTurnButton.interactable = isLocalPlayerTurn;
+            currentPlayerTextBox.text = isLocalPlayerTurn ? "End Turn" : "Opponent's Turn";
+            endTurnButton.interactable = isLocalPlayerTurn && turnNumber > 0;
+            currentTurnNumberTextBox.text = $"Turn {turnNumber}";
+        }
+
+        public void SetPhase(SVEProperties.GamePhase phase)
+        {
+            currentPhaseTextBox.text = $"{phase} Phase";
         }
 
         private void ReturnToMainMenu()
