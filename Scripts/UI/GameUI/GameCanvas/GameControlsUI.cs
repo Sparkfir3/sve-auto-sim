@@ -1,11 +1,8 @@
 using System;
-using CCGKit;
 using Mirror;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Steamworks;
-using TMPro;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SVESimulator.UI
@@ -13,15 +10,9 @@ namespace SVESimulator.UI
     public class GameControlsUI : MonoBehaviour
     {
         [SerializeField]
-        private GameObject turnInfoContainer;
+        private TurnInformationContainer turnInfoContainer;
         [SerializeField]
-        private TextMeshProUGUI currentPhaseTextBox;
-        [SerializeField]
-        private TextMeshProUGUI currentTurnNumberTextBox;
-        [SerializeField]
-        private TextMeshProUGUI currentPlayerTextBox;
-        [SerializeField]
-        private Button endTurnButton;
+        private GameDebugControls debugButtonContainer;
         [SerializeField]
         private Button quitGameButton;
 
@@ -32,30 +23,18 @@ namespace SVESimulator.UI
         private void Awake()
         {
             SetTurnDisplayActive(false);
-            endTurnButton.onClick.AddListener(() =>
-            {
-                endTurnButton.interactable = false;
-                OnPressEndTurn?.Invoke();
-            });
+            turnInfoContainer.OnPressEndTurn += () => OnPressEndTurn?.Invoke();
             quitGameButton.onClick.AddListener(ReturnToMainMenu);
         }
 
         public void SetTurnDisplayActive(bool active)
         {
-            turnInfoContainer.SetActive(active);
+            turnInfoContainer.gameObject.SetActive(active);
+            debugButtonContainer.gameObject.SetActive(active);
         }
 
-        public void SetTurn(bool isLocalPlayerTurn, int turnNumber)
-        {
-            currentPlayerTextBox.text = isLocalPlayerTurn ? "End Turn" : "Opponent's Turn";
-            endTurnButton.interactable = isLocalPlayerTurn && turnNumber > 0;
-            currentTurnNumberTextBox.text = $"Turn {turnNumber}";
-        }
-
-        public void SetPhase(SVEProperties.GamePhase phase)
-        {
-            currentPhaseTextBox.text = $"{phase} Phase";
-        }
+        public void SetTurn(bool isLocalPlayerTurn, bool increment = false) => turnInfoContainer.SetTurn(isLocalPlayerTurn, increment);
+        public void SetPhase(SVEProperties.GamePhase phase) => turnInfoContainer.SetPhase(phase);
 
         private void ReturnToMainMenu()
         {

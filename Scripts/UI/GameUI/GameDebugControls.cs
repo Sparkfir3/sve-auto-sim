@@ -48,6 +48,20 @@ namespace SVESimulator
         }
 
         [Button]
+        public void Salvage()
+        {
+            if(Player.ZoneController.cemeteryZone.Runtime.cards.Count == 0)
+                return;
+            SalvageCardEffect salvageEffect = new()
+            {
+                amount = "m(1,10)",
+                filter = null,
+                text = "[Debug Mode] Salvage"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(salvageEffect, Player.ZoneController.cemeteryZone.Runtime.cards[0]); // dummy card to perform the effect
+        }
+
+        [Button]
         public void IncrementPlayPoints()
         {
             Player.LocalEvents.IncrementMaxPlayPoints(updateCurrentPoints: true);

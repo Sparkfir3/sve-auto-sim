@@ -220,7 +220,7 @@ namespace SVESimulator
 
             LocalEvents.InitializeDeckAndLeader();
             InitializePlayPointMeters();
-            GameUIManager.GameControlsUI.SetTurn(false, 0);
+            GameUIManager.GameControlsUI.SetTurn(false);
             GameUIManager.GameControlsUI.SetTurnDisplayActive(true);
             GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Setup);
         }
@@ -240,7 +240,7 @@ namespace SVESimulator
             // -----
 
             // Set up turn
-            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer, gameState.currentPlayer.numTurn - 5); // 5 = setup turn count
+            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer, playerInfo.isGoingFirst == msg.isRecipientTheActivePlayer);
             GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Main);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
@@ -374,7 +374,7 @@ namespace SVESimulator
 
                 case 6: // actual game - skip host if they are not first (opponent takes first turn)
                     GameUIManager.MulliganScreen.Close();
-                    if(IsHostTurn() && !playerInfo.isGoingFirst)
+                    if(msg.isRecipientTheActivePlayer && IsHostTurn() && !playerInfo.isGoingFirst)
                     {
                         endTurn = true;
                         return true;
