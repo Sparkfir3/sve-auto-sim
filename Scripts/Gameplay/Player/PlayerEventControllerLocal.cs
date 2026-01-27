@@ -91,6 +91,19 @@ namespace SVESimulator
             });
         }
 
+        public void SetGamePhase(SVEProperties.GamePhase phase)
+        {
+            sveEffectSolver.SetGamePhase(phase);
+            GameUIManager.GameControlsUI.SetPhase(phase);
+
+            SetGamePhaseMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                phase = phase
+            };
+            NetworkClient.Send(msg);
+        }
+
         public void ExtraTurn()
         {
             if(!isActivePlayer)

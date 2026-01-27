@@ -50,6 +50,12 @@ namespace SVESimulator
         public NetCard leaderCard;
     }
 
+    public struct SetGamePhaseMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public SVEProperties.GamePhase phase;
+    }
+
     public struct ExtraTurnMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;

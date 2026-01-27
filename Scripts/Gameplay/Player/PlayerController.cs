@@ -241,13 +241,12 @@ namespace SVESimulator
 
             // Set up turn
             GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer, playerInfo.isGoingFirst == msg.isRecipientTheActivePlayer);
-            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Main);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
-            sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
             AdditionalStats.Reset();
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
             SVEEffectPool.Instance.UpdatePassiveDurationsStartOfTurn(this, msg.isRecipientTheActivePlayer);
+            LocalEvents.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
 
             // Failsafe Calls
             GameUIManager.EffectTargeting.CloseOpponentIsTargeting();
@@ -416,13 +415,11 @@ namespace SVESimulator
         {
             if(gameState.currentPhase != SVEProperties.GamePhase.Main)
                 return;
-            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.End);
             StartCoroutine(RunEndPhase());
 
             IEnumerator RunEndPhase()
             {
-                // TODO - set end phase on networked effect solver
-                sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.End);
+                LocalEvents.SetGamePhase(SVEProperties.GamePhase.End);
                 ZoneController.fieldZone.RemoveAllCardHighlights();
 
                 bool waiting = true;

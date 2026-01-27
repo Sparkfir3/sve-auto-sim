@@ -37,6 +37,12 @@ namespace SVESimulator
             }
             // Re-drawing hand is handled by opponent's PlayerController drawing cards and sending draw card messages
         }
+
+        public void SetGamePhase(SVEProperties.GamePhase phase)
+        {
+            sveEffectSolver.SetGamePhase(phase);
+            GameUIManager.GameControlsUI.SetPhase(phase);
+        }
         
         #endregion
 
