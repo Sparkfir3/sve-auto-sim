@@ -265,7 +265,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Non-Network Message Game Controls
+        #region Non-Network Game Setup
 
         private bool HandleGameSetupTurn(StartTurnMessage msg, out bool endTurn)
         {
@@ -358,6 +358,12 @@ namespace SVESimulator
             }
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Non-Network Game Controls
+
         public void ReserveAllCardsOnField()
         {
             List<CardObject> cardsToReserve = localPlayerZoneController.fieldZone.GetAllPrimaryCards();
@@ -387,7 +393,7 @@ namespace SVESimulator
                 };
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseTrigger>(gameState, null, localPlayerZoneController.fieldZone.Runtime, playerInfo,
                     _ => true, true);
-                yield return new WaitUntil(() => !waiting); // TODO - fix confirmation timing call causing extra end turn delay
+                yield return new WaitUntil(() => !waiting);
 
                 SelectWardCardsToEngage(() =>
                 {
