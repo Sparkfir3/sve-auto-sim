@@ -3,6 +3,7 @@ using Mirror;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Steamworks;
+using TMPro;
 using UnityEngine.UI;
 
 namespace SVESimulator.UI
@@ -16,16 +17,32 @@ namespace SVESimulator.UI
         [SerializeField]
         private Button quitGameButton;
 
-        public event Action OnPressEndTurn;
+        [Title("Start Turn Animation"), SerializeField]
+        private Animator startTurnAnimator;
+        [SerializeField]
+        private TextMeshProUGUI startTurnTextBox;
+        [SerializeField]
+        private string startTurnAnimTrigger = "Play";
 
         // ------------------------------
 
         private void Awake()
         {
             SetTurnDisplayActive(false);
-            turnInfoContainer.OnPressEndTurn += () => OnPressEndTurn?.Invoke();
             quitGameButton.onClick.AddListener(ReturnToMainMenu);
         }
+
+        public void Initialize(PlayerController player)
+        {
+            turnInfoContainer.Initialize(player);
+            SetTurnDisplayActive(true);
+
+            // Player events
+            player.OnStartLocalTurn += _ => { PlayStartTurnAnimation(true); };
+            player.OnStartOpponentTurn += _ => { PlayStartTurnAnimation(false); };
+        }
+
+        // ------------------------------
 
         public void SetTurnDisplayActive(bool active)
         {
@@ -33,8 +50,13 @@ namespace SVESimulator.UI
             debugButtonContainer.gameObject.SetActive(active);
         }
 
-        public void SetTurn(bool isLocalPlayerTurn, bool increment = false) => turnInfoContainer.SetTurn(isLocalPlayerTurn, increment);
         public void SetPhase(SVEProperties.GamePhase phase) => turnInfoContainer.SetPhase(phase);
+
+        private void PlayStartTurnAnimation(bool isLocalPlayer)
+        {
+            startTurnTextBox.text = isLocalPlayer ? "Your Turn" : "Opponent's Turn";
+            startTurnAnimator.SetTrigger(startTurnAnimTrigger);
+        }
 
         private void ReturnToMainMenu()
         {

@@ -8,7 +8,7 @@ namespace SVESimulator.UI
 {
     public class TurnInformationContainer : MonoBehaviour
     {
-        [SerializeField]
+        [Title("Turn Info Box"), SerializeField]
         private TextMeshProUGUI currentPhaseTextBox;
         [SerializeField]
         private TextMeshProUGUI currentTurnNumberTextBox;
@@ -19,22 +19,38 @@ namespace SVESimulator.UI
         [SerializeField]
         private Button endTurnButton;
 
-        public event Action OnPressEndTurn;
+        private bool isLocalPlayerTurn;
         private int turnNumber;
 
         // ------------------------------
 
-        public void Awake()
+        public void Initialize(PlayerController player)
         {
+            // Internal init
             endTurnButton.onClick.AddListener(() =>
             {
                 endTurnButton.interactable = false;
-                OnPressEndTurn?.Invoke();
+                player.EnterEndPhase();
             });
             turnNumber = 0;
+
+            // Player events
+            player.OnStartLocalTurn += incrementTurnCount => { SetTurn(true, incrementTurnCount); };
+            player.OnStartOpponentTurn += incrementTurnCount => { SetTurn(false, incrementTurnCount); };
+
+            // Game state events
+            SVEEffectPool.Instance.OnConfirmationTimingStartConstant += () => SetEndTurnButtonActive(false);
+            SVEEffectPool.Instance.OnConfirmationTimingEndConstant += () => SetEndTurnButtonActive(!SVEQuickTimingController.Instance.IsActive);
         }
 
-        public void SetTurn(bool isLocalPlayerTurn, bool increment)
+        // ------------------------------
+
+        public void SetPhase(SVEProperties.GamePhase phase)
+        {
+            currentPhaseTextBox.text = phase == SVEProperties.GamePhase.Setup ? "Setting Up" : $"{phase} Phase";
+        }
+
+        private void SetTurn(bool isLocalTurn, bool increment)
         {
             if(increment)
                 turnNumber++;
@@ -44,18 +60,20 @@ namespace SVESimulator.UI
                 endTurnButton.interactable = false;
                 currentTurnNumberTextBox.text = "";
                 textDivider.SetActive(false);
+                isLocalPlayerTurn = false;
                 return;
             }
 
+            isLocalPlayerTurn = isLocalTurn;
             currentPlayerTextBox.text = isLocalPlayerTurn ? "End Turn" : "Opponent's Turn";
             endTurnButton.interactable = isLocalPlayerTurn;
             currentTurnNumberTextBox.text = $"Turn {turnNumber}";
             textDivider.SetActive(true);
         }
 
-        public void SetPhase(SVEProperties.GamePhase phase)
+        private void SetEndTurnButtonActive(bool active)
         {
-            currentPhaseTextBox.text = phase == SVEProperties.GamePhase.Setup ? "Setting Up" : $"{phase} Phase";
+            endTurnButton.interactable = isLocalPlayerTurn && active;
         }
     }
 }

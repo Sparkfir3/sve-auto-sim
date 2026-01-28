@@ -68,12 +68,16 @@ namespace SVESimulator
         protected Stat localMaxPlayPointStat;
         protected Stat opponentPlayPointStat;
 
+        // Events
         public event Action<int> OnCardsInDeckChanged;
         public event Action<int> OnCardsInCemeteryChanged;
         public event Action<int> OnSpellchainChanged;
         public event Action<int> OnCardsInEvolveDeckFaceDownChanged;
         public event Action<int> OnCardsInEvolveDeckFaceUpChanged;
         public event Action<int> OnCardsInBanishedZoneChanged;
+
+        public event Action<bool> OnStartLocalTurn; // bool = increment turn number
+        public event Action<bool> OnStartOpponentTurn;
         public event Action onEndGameEvent;
 
         #endregion
@@ -88,54 +92,6 @@ namespace SVESimulator
             isHuman = true;
             localPlayerZoneController = FieldManager.PlayerZones;
             opponentPlayerZoneController = FieldManager.OpponentZones;
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            if(!isLocalPlayer)
-                return;
-
-            InitializeUI();
-        }
-
-        private void Update()
-        {
-            if(!isLocalPlayer)
-            {
-                return;
-            }
-
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log($"Cards in deck = {localPlayerZoneController.deckZone.Runtime.cards.Count}" +
-                    $" / cards in field = {localPlayerZoneController.fieldZone.Runtime.cards.Count}" +
-                    $" / cards in hand = {localPlayerZoneController.handZone.Runtime.cards.Count}" +
-                    $" / cards in evolve deck = {localPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
-            }
-            if(Input.GetKeyDown(KeyCode.RightAlt))
-            {
-                Debug.Log($"Cards in deck = {opponentPlayerZoneController.deckZone.Runtime.cards.Count}" +
-                    $" / cards in field = {opponentPlayerZoneController.fieldZone.Runtime.cards.Count}" +
-                    $" / cards in hand = {opponentPlayerZoneController.handZone.Runtime.cards.Count}" +
-                    $" / cards in evolve deck = {opponentPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
-            }
-            if(Input.GetKeyDown(KeyCode.L))
-            {
-                Debug.Log($"Local leader def = {playerInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}" +
-                    $" // Opponent leader def = {opponentInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}");
-            }
-        }
-
-        #endregion
-
-        // ------------------------------
-
-        #region Initialization
-
-        private void InitializeUI()
-        {
-            GameUIManager.GameControlsUI.OnPressEndTurn += EnterEndPhase;
         }
 
         #endregion
@@ -220,8 +176,7 @@ namespace SVESimulator
 
             LocalEvents.InitializeDeckAndLeader();
             InitializePlayPointMeters();
-            GameUIManager.GameControlsUI.SetTurn(false);
-            GameUIManager.GameControlsUI.SetTurnDisplayActive(true);
+            GameUIManager.Instance.Initialize(this);
             GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Setup);
         }
 
@@ -240,7 +195,10 @@ namespace SVESimulator
             // -----
 
             // Set up turn
-            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer, playerInfo.isGoingFirst == msg.isRecipientTheActivePlayer);
+            if(msg.isRecipientTheActivePlayer)
+                OnStartLocalTurn?.Invoke(playerInfo.isGoingFirst);
+            else
+                OnStartOpponentTurn?.Invoke(!playerInfo.isGoingFirst);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             AdditionalStats.Reset();
             EvolvedThisTurn = false;
