@@ -207,7 +207,7 @@ namespace SVESimulator
             opponentPlayerZoneController.InitializeZones(controllers.FirstOrDefault(x => !x.isLocalPlayer), opponentInfo, !opponentInfo.netId.isClientOnly);
             FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
-            AdditionalStats.Reset();
+            AdditionalStats.Initialize(this);
             CurrentTurnNumber = 0;
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
@@ -547,7 +547,8 @@ namespace SVESimulator
         {
             if(isOwned)
             {
-                spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+                spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell) +
+                    (AdditionalStats.UseRuneFollowersForSpellchain ? spellchain += localPlayerZoneController.cemeteryZone.CountOfCardByFilter("Fc(rune)") : 0);
                 if(!isServer)
                     SyncHook_OnSpellchainChanged(spellchain, spellchain); // See complaint in: SetDeckCount()
             }

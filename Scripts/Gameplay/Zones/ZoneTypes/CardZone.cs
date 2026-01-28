@@ -75,6 +75,11 @@ namespace SVESimulator
         public bool ContainsCard(RuntimeCard card) => cards.Any(x => x.RuntimeCard.instanceId == card.instanceId);
 
         public virtual int CountOfCardType(string cardType) => cards.Count(x => x.IsCardType(cardType));
+        public virtual int CountOfCardByFilter(string filterFormula)
+        {
+            var filter = SVEFormulaParser.ParseCardFilterFormula(filterFormula);
+            return cards.Count(x => filter.MatchesCard(x));
+        }
 
         // ------------------------------
 
