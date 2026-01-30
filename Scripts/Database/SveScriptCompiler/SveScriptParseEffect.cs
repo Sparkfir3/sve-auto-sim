@@ -331,6 +331,7 @@ namespace SVESimulator.SveScript
             { "TargetForSequence", new EffectParams("SVESimulator.TargetForEffectSequence",                             EffectParameterType.ListOfEffects) },
             { "TargetForEffectSequence", new EffectParams("SVESimulator.TargetForEffectSequence",                       EffectParameterType.ListOfEffects) },
             { "ChooseFromList", new EffectParams("SVESimulator.ChooseEffectFromList",                                   false, false, EffectParameterType.ListOfEffects) },
+            { "ChooseAmountFromList", new EffectParams("SVESimulator.ChooseAmountFromList",                             false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "OpponentPerformEffect", new EffectParams("SVESimulator.OpponentPerformEffect",                           EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
 
