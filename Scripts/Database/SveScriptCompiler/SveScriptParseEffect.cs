@@ -303,6 +303,7 @@ namespace SVESimulator.SveScript
             { "DealDamage", new EffectParams("SVESimulator.DealDamageEffect",                           EffectParameterType.Amount) },
             { "DealDamageDivided", new EffectParams("SVESimulator.DealDamageDividedEffect",             false, true, EffectParameterType.Amount) },
             { "GiveStat", new EffectParams("SVESimulator.GiveStatBoostEffect",                          EffectParameterType.StatType, EffectParameterType.Amount) },
+            { "GiveStatEndOfTurn", new EffectParams("SVESimulator.GiveStatEndOfTurnEffect",             EffectParameterType.StatType, EffectParameterType.Amount) },
             { "SetStat", new EffectParams("SVESimulator.SetStatEffect",                                 EffectParameterType.StatType, EffectParameterType.Amount) },
             { "EngageCard", new EffectParams("SVESimulator.EngageCardEffect")                           },
             { "ReserveCard", new EffectParams("SVESimulator.ReserveCardEffect")                         },
