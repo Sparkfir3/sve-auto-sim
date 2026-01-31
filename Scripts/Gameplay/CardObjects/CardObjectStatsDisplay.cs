@@ -66,6 +66,13 @@ namespace SVESimulator
         [SerializeField]
         private string counterTextTemplate = "{0} {1}";
 
+        [Title("Settings"), SerializeField]
+        private Color32 statBaseColor = Color.white;
+        [SerializeField]
+        private Color32 statBuffColor = Color.green;
+        [SerializeField]
+        private Color32 statDownColor = Color.red;
+
         private RuntimeCard runtimeCard;
         private Stat attackStat;
         private Stat defenseStat;
@@ -173,16 +180,24 @@ namespace SVESimulator
 
         // ------------------------------
 
-        private void SetAttackStat(int oldAtk, int newAtk) => SetAttackStat(newAtk);
-        private void SetAttackStat(int atk)
+        private void SetAttackStat(int oldAtk, int newAtk) => SetAttackStat(newAtk, true, newAtk - oldAtk);
+        private void SetAttackStat(int atk, bool playAnimation = false, int difference = 0)
         {
             attackText.text = atk.ToString();
+            attackText.color = atk == attackStat.baseValue ? statBaseColor :
+                atk < attackStat.baseValue ? statDownColor : statBuffColor;
+            if(playAnimation)
+                CardManager.Animator.PlayStatChangeAnimation(attackText.transform.position, difference);
         }
 
-        private void SetDefenseStat(int oldDef, int newDef) => SetDefenseStat(newDef);
-        private void SetDefenseStat(int def)
+        private void SetDefenseStat(int oldDef, int newDef) => SetDefenseStat(newDef, true, newDef - oldDef);
+        private void SetDefenseStat(int def, bool playAnimation = false, int difference = 0)
         {
             defenseText.text = def.ToString();
+            defenseText.color = def == defenseStat.baseValue ? statBaseColor :
+                def < defenseStat.baseValue ? statDownColor : statBuffColor;
+            if(playAnimation)
+                CardManager.Animator.PlayStatChangeAnimation(defenseText.transform.position, difference);
         }
 
         public void UpdateCostStat()
@@ -201,6 +216,7 @@ namespace SVESimulator
             }
             costContainer.SetActive(true);
             costText.text = cost.ToString();
+            costText.color = cost < baseCost ? statDownColor : statBuffColor;
         }
 
         private void OnKeywordAdded(RuntimeKeyword keyword)

@@ -285,6 +285,15 @@ MonoBehaviour:
   countersContainer: {fileID: 5175718199223590391}
   counterTextPrefab: {fileID: 3414533600455470121, guid: f53ad817c85072b45b711bd64611db40, type: 3}
   counterTextTemplate: '{0} {1}'
+  statBaseColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  statBuffColor:
+    serializedVersion: 2
+    rgba: 4279168270
+  statDownColor:
+    serializedVersion: 2
+    rgba: 4281020099
 --- !u!223 &3053408836200669947
 Canvas:
   m_ObjectHideFlags: 0
@@ -680,11 +689,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3181498906475874219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8746191807618601524
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1179,7 +1188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.33333334, g: 0.64705884, b: 1, a: 1}
+  m_Color: {r: 0.1764706, g: 0.52156866, b: 0.90588236, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
