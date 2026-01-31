@@ -267,8 +267,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   statChangeAnimDuration: 1
-  statChangeAnimStartOffset: {x: 0, y: 0.3, z: 0.1}
-  statChangeAnimMoveDistance: 0.8
+  statChangeAnimStartOffset: {x: 0, y: 0.2, z: 0.3}
+  statChangeAnimMoveDistance: 0.85
   statChangeAnimMoveCurve:
     serializedVersion: 2
     m_Curve:
@@ -300,11 +300,11 @@ MonoBehaviour:
       time: 0
       value: 1
       inSlope: 0
-      outSlope: -0.0397085
+      outSlope: -0.053375877
       tangentMode: 5
-      weightedMode: 0
+      weightedMode: 2
       inWeight: 0
-      outWeight: 0.05939525
+      outWeight: 0.53023756
     - serializedVersion: 3
       time: 1
       value: 0
