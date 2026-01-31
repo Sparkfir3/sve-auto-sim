@@ -68,7 +68,7 @@ MonoBehaviour:
   m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
-  m_sharedMaterial: {fileID: 984527217393061494, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 24fd574ec1508234fb5cc11a3f25fd5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -279,21 +279,13 @@ MonoBehaviour:
   defenseText: {fileID: 5824793504017312549}
   costContainer: {fileID: 7042799930132993449}
   costText: {fileID: 2566487369569421187}
+  statColorSettings: {fileID: 11400000, guid: cf40f97f5b09e4a478d988b6c4d43d57, type: 2}
   keywordIconsContainer: {fileID: 472338463522798650}
   keywordIconPrefab: {fileID: 8915468390179616937, guid: e3564c5d41b92294b9f040ea3478655c, type: 3}
   counterLines: []
   countersContainer: {fileID: 5175718199223590391}
   counterTextPrefab: {fileID: 3414533600455470121, guid: f53ad817c85072b45b711bd64611db40, type: 3}
   counterTextTemplate: '{0} {1}'
-  statBaseColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  statBuffColor:
-    serializedVersion: 2
-    rgba: 4279168270
-  statDownColor:
-    serializedVersion: 2
-    rgba: 4281020099
 --- !u!223 &3053408836200669947
 Canvas:
   m_ObjectHideFlags: 0
@@ -508,7 +500,7 @@ MonoBehaviour:
   m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
-  m_sharedMaterial: {fileID: 984527217393061494, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 24fd574ec1508234fb5cc11a3f25fd5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -725,7 +717,7 @@ MonoBehaviour:
   m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
-  m_sharedMaterial: {fileID: 984527217393061494, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 24fd574ec1508234fb5cc11a3f25fd5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1264,7 +1256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.77647066, g: 0.427451, b: 0.4666667, a: 1}
+  m_Color: {r: 0.6901961, g: 0.23137255, b: 0.2784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
