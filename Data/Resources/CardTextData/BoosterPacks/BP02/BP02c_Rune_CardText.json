@@ -1,0 +1,365 @@
+[
+  {
+    "id": "BP02-035EN",
+    "name": "Daria, Dimensional Witch",
+    "trait": "Mage",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Discard your hand. Put the top card of your deck into your EX area. Repeat this until your EX area is full.\nWhile this card is on your field, include both spells and [runecraft] followers in your cemetery when counting your Spellchain.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-036EN",
+    "name": "Daria, Dimensional Witch (Evolved)",
+    "trait": "Mage",
+    "cardText": "On Evolve: Select a follower in your EX area. For the rest of this turn, it costs 5 less to play.\nOn Evolve: Select a spell in your EX area. For the rest of this turn, it costs 5 less to play.\nWhile this card is on your field, include both spells and [runecraft] followers in your cemetery when counting your Spellchain.",
+    "effectText": [
+      {
+        "key": "Follower",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-037EN",
+    "name": "Sun Oracle Pascale",
+    "trait": "Mage / Dancer",
+    "cardText": "[fanfare] Summon a Magic Sediment token.\n[q][act][engage], Earth Rite: Select an enemy follower on the field and give it [attack]-2/[defense]-2.\n[q][act][engage], Earth Rite: Select another follower on your field and give it [attack]+2/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Enemy",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Player",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-038EN",
+    "name": "Anne, Belle of Mysteria",
+    "trait": "Mage / Academic / Princess",
+    "cardText": "If there is a Grea the Dragonborn on your field, this card costs 2 less to play.\n[evolve][cost01]: Evolve this follower.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-039EN",
+    "name": "Anne, Belle of Mysteria (Evolved)",
+    "trait": "Mage / Academic / Princess",
+    "cardText": "On Evolve: Search your deck for an Academic follower with a different name from this card, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve:",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-040EN",
+    "name": "Grea the Dragonborn",
+    "trait": "Dragonewt / Academic",
+    "cardText": "If there is an Anne, Belle of Mysteria on your field, this card costs 2 less to play.\n[act][engage]: Select an enemy follower on the field and deal it 3 damage. If there is an Anne, Belle of Mysteria on your field, deal 6 damage instead.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-041EN",
+    "name": "Rimewind",
+    "trait": "Mage",
+    "cardText": "[quick]\nSelect an unevolved enemy follower on the field and return it to its owner's hand. Spellchain (10): Put it on top of its owner's deck instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Hand",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "BottomDeck",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-042EN",
+    "name": "Remi & Rami, Witchy Duo",
+    "trait": "Mage / Alchemist",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP02-043EN",
+    "name": "Remi & Rami, Witchy Duo (Evolved)",
+    "trait": "Mage / Alchemist",
+    "cardText": "On Evolve: Summon a Strikeform Golem token. Earth Rite: Give it [attack]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve:",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "EarthRite",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-044EN",
+    "name": "Shadow Witch",
+    "trait": "Mage / Alchemist",
+    "cardText": "[fanfare] Earth Rite: Select an enemy follower on the field and banish it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-045EN",
+    "name": "Multipart Experiment",
+    "trait": "Golem",
+    "cardText": "Choose up to 2 of the following. Spellchain (10): Choose up to 3 instead. (1) Select an enemy follower on the field and deal it 3 damage. (2) Summon a Guardform Golem token. (3) Draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Golem",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-046EN",
+    "name": "Craig, Wizard of Mysteria",
+    "trait": "Mage / Academic",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Discard",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-047EN",
+    "name": "Craig, Wizard of Mysteria (Evolved)",
+    "trait": "Mage / Academic",
+    "cardText": "On Evolve: Draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve:",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Discard",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-048EN",
+    "name": "Grand Gargoyle",
+    "trait": "Golem",
+    "cardText": "Ward.\n[lastwords] Add 2 to a Stack on your field.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "text": "",
+        "trigger": "[lastwords]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-049EN",
+    "name": "Witchbolt",
+    "trait": "Mage",
+    "cardText": "Select an enemy follower on the field. Deal it 5 damage and, if there is an evolved follower on your field, draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Damage",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Draw",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-050EN",
+    "name": "Magical Strategy",
+    "trait": "Mage / Chess",
+    "cardText": "Summon a Magical Pawn token.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-051EN",
+    "name": "Red-Hot Ritual",
+    "trait": "Earth Sigil",
+    "cardText": "Stack.\n[fanfare] Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": ""
+      }
+    ]
+  },
+  {
+    "id": "BP02-T04EN",
+    "name": "Magical Pawn",
+    "trait": "Officer / Token"
+  }
+]

@@ -1,0 +1,374 @@
+name Daria, Dimensional Witch;
+id BP02-035;
+class Rune;
+type Follower;
+trait Mage;
+rarity L;
+cost 6;
+stats 5/5;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Discard your hand. Put the top card of your deck into your EX area. Repeat this until your EX area is full.
+      While this card is on your field, include both spells and [runecraft] followers in your cemetery when counting your Spellchain.";
+
+evolve 1;
+keyword RuneFollowersForSpellchain;
+ability Fanfare {
+    cost (Discard, H);
+    effect TopDeckToEx(5-x());
+}
+
+// ------------------------------
+
+name Daria, Dimensional Witch (Evolved);
+id BP02-036;
+class Rune;
+type Evolved Follower;
+trait Mage;
+rarity L;
+stats 6/6;
+
+text "On Evolve: Select a follower in your EX area. For the rest of this turn, it costs 5 less to play.
+      On Evolve: Select a spell in your EX area. For the rest of this turn, it costs 5 less to play.
+      While this card is on your field, include both spells and [runecraft] followers in your cemetery when counting your Spellchain.";
+
+keyword RuneFollowersForSpellchain;
+ability OnEvolve name Follower {
+    effect GiveStatEndOfTurn(Cost, -5) to TargetPlayerCardEx F;
+}
+ability OnEvolve name Spell {
+    effect GiveStatEndOfTurn(Cost, -5) to TargetPlayerCardEx S;
+}
+
+// ------------------------------
+
+name Sun Oracle Pascale;
+id BP02-037;
+class Rune;
+type Follower;
+trait Mage / Dancer;
+rarity L;
+cost 4;
+stats 3/5;
+
+text "[fanfare] Summon a Magic Sediment token.
+      [q][act][engage], Earth Rite: Select an enemy follower on the field and give it [attack]-2/[defense]-2.
+      [q][act][engage], Earth Rite: Select another follower on your field and give it [attack]+2/[defense]+2.";
+
+ability Fanfare {
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+ability Act name Enemy {
+    condition p(#F);
+    cost (Quick), (EngageSelf), (EarthRite);
+    effect GiveStat(AtkDef, -2) to TargetOpponentCard F;
+}
+ability Act name Player {
+    condition f(FX);
+    cost (Quick), (EngageSelf), (EarthRite);
+    effect GiveStat(AtkDef, 2) to TargetPlayerCard FX;
+}
+
+// ------------------------------
+
+name Anne, Belle of Mysteria;
+id BP02-038;
+class Rune;
+type Follower;
+trait Mage / Academic / Princess;
+rarity G;
+cost 4;
+stats 4/5;
+
+text "If there is a Grea the Dragonborn on your field, this card costs 2 less to play.
+      [evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+ability ModifiedCost {
+    condition f(n(Grea the Dragonborn));
+    effect ReducedCost(2);
+}
+
+// ------------------------------
+
+name Anne, Belle of Mysteria (Evolved);
+id BP02-039;
+class Rune;
+type Evolved Follower;
+trait Mage / Academic / Princess;
+rarity G;
+stats 4/5;
+
+text "On Evolve: Search your deck for an Academic follower with a different name from this card, reveal it, and add it to your hand.";
+
+ability OnEvolve {
+    effect Search(1, Ft(Academic)!n(Anne, Belle of Mysteria), Hand);
+}
+
+// ------------------------------
+
+name Grea the Dragonborn;
+id BP02-040;
+class Rune;
+type Follower;
+trait Dragonewt / Academic;
+rarity G;
+cost 4;
+stats 5/4;
+
+text "If there is an Anne, Belle of Mysteria on your field, this card costs 2 less to play.
+      [act][engage]: Select an enemy follower on the field and deal it 3 damage. If there is an Anne, Belle of Mysteria on your field, deal 6 damage instead.";
+
+ability ModifiedCost {
+    condition f(n(Anne, Belle of Mysteria));
+    effect ReducedCost(2);
+}
+ability Act {
+    condition p(#F);
+    cost (EngageSelf);
+    effect DealDamage(3?(f(n(Anne, Belle of Mysteria)))6) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Rimewind;
+id BP02-041;
+class Rune;
+type Spell;
+trait Mage;
+rarity G;
+cost 2;
+
+text "[quick]
+      Select an unevolved enemy follower on the field and return it to its owner's hand. Spellchain (10): Put it on top of its owner's deck instead.";
+
+keyword Quick;
+ability Spell {
+    condition p(F!k(Aura)!E);
+    effect Sequence(Hand, BottomDeck);
+}
+ability Spell name Hand {
+    condition 1s(10)0;
+    effect ReturnToHand() to TargetOpponentCard F!E;
+}
+ability Spell name BottomDeck {
+    condition 0s(10)1;
+    effect BottomDeck() to TargetOpponentCard F!E;
+}
+
+// ------------------------------
+
+name Remi & Rami, Witchy Duo;
+id BP02-042;
+class Rune;
+type Follower;
+trait Mage / Alchemist;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Remi & Rami, Witchy Duo (Evolved);
+id BP02-043;
+class Rune;
+type Evolved Follower;
+trait Mage / Alchemist;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Summon a Strikeform Golem token. Earth Rite: Give it [attack]+2.";
+
+ability OnEvolve {
+    effect SummonTokenAndTarget(Strikeform Golem, Field, 1, EarthRite);
+}
+ability Spell name EarthRite {
+    cost (EarthRite);
+    effect GiveStat(Atk, 2) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Shadow Witch;
+id BP02-044;
+class Rune;
+type Follower;
+trait Mage / Alchemist;
+rarity S;
+cost 5;
+stats 5/5;
+
+text "[fanfare] Earth Rite: Select an enemy follower on the field and banish it.";
+
+ability Fanfare {
+    condition p(#F);
+    cost (EarthRite);
+    effect Banish() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Multipart Experiment;
+id BP02-045;
+class Rune;
+type Spell;
+trait Golem;
+rarity S;
+cost 4;
+
+text "Choose up to 2 of the following. Spellchain (10): Choose up to 3 instead. (1) Select an enemy follower on the field and deal it 3 damage. (2) Summon a Guardform Golem token. (3) Draw a card.";
+
+ability Spell {
+    effect ChooseAmountFromList(2s(10)3, Damage, Golem, Draw);
+}
+ability Spell name Damage {
+    condition p(#F);
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name Golem {
+    effect SummonToken(Guardform Golem, Field, 1);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Craig, Wizard of Mysteria;
+id BP02-046;
+class Rune;
+type Follower;
+trait Mage / Academic;
+rarity B;
+cost 2;
+stats 2/1;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Draw a card, then discard a card.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Craig, Wizard of Mysteria (Evolved);
+id BP02-047;
+class Rune;
+type Evolved Follower;
+trait Mage / Academic;
+rarity B;
+stats 3/2;
+
+text "On Evolve: Draw a card, then discard a card.";
+
+ability OnEvolve {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Grand Gargoyle;
+id BP02-048;
+class Rune;
+type Follower;
+trait Golem;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "Ward.
+      [lastwords] Add 2 to a Stack on your field.";
+
+keyword Ward;
+ability LastWords {
+    condition f(k(Stack));
+    effect GiveCounter(Stack, 2) to TargetPlayerCard k(Stack);
+}
+
+// ------------------------------
+
+name Witchbolt;
+id BP02-049;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 3;
+
+text "Select an enemy follower on the field. Deal it 5 damage and, if there is an evolved follower on your field, draw a card.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, Draw);
+}
+ability Spell name Damage {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Draw {
+    condition f(EF);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Magical Strategy;
+id BP02-050;
+class Rune;
+type Spell;
+trait Mage / Chess;
+rarity B;
+cost 4;
+
+text "Summon a Magical Pawn token.";
+
+ability Spell {
+    effect SummonToken(Magical Pawn, Field, 1);
+}
+
+// ------------------------------
+
+name Red-Hot Ritual;
+id BP02-051;
+class Rune;
+type Amulet;
+trait Earth Sigil;
+rarity B;
+cost 2;
+
+text "Stack.
+      [fanfare] Select an enemy follower on the field and deal it 3 damage.";
+
+keyword Stack;
+ability Fanfare {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Magical Pawn;
+id BP02-T04;
+class Rune;
+type Follower / Token;
+trait Officer;
+cost 1;
+stats 2/1;
