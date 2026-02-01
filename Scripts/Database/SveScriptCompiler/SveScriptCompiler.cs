@@ -5,6 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sparkfire.Utility;
+using UnityEngine;
 using static SVESimulator.SveScript.SveScriptData;
 using static SVESimulator.SveScript.SveScriptParseCardInfo;
 using static SVESimulator.SveScript.SveScriptKeywordCompiler;
@@ -230,6 +231,7 @@ namespace SVESimulator.SveScript
                     serializer.Serialize(jWriter, setJsons);
                 }
             }
+            Debug.Log("Successfully compiled SVE scripts");
         }
     }
 }
