@@ -49,6 +49,8 @@ namespace SVESimulator
         private GameObject costContainer;
         [SerializeField]
         private TextMeshProUGUI costText;
+        [SerializeField, InlineEditor]
+        private CardStatColorSettings statColorSettings;
 
         [Title("Keywords"), SerializeField]
         private Transform keywordIconsContainer;
@@ -173,16 +175,40 @@ namespace SVESimulator
 
         // ------------------------------
 
-        private void SetAttackStat(int oldAtk, int newAtk) => SetAttackStat(newAtk);
-        private void SetAttackStat(int atk)
+        private void SetAttackStat(int oldAtk, int newAtk) => SetAttackStat(newAtk, true, newAtk - oldAtk);
+        private void SetAttackStat(int atk, bool playAnimation = false, int difference = 0)
         {
             attackText.text = atk.ToString();
+            if(atk < attackStat.baseValue)
+            {
+                attackText.color = statColorSettings.StatDownColor;
+                attackText.fontSharedMaterial = statColorSettings.WhiteOutlineMaterial;
+            }
+            else
+            {
+                attackText.color = atk == attackStat.baseValue ? statColorSettings.StatBaseColor : statColorSettings.StatBuffedColor;
+                attackText.fontSharedMaterial = statColorSettings.BlackOutlineMaterial;
+            }
+            if(playAnimation)
+                CardManager.Animator.PlayStatChangeAnimation(attackText.transform.position, difference);
         }
 
-        private void SetDefenseStat(int oldDef, int newDef) => SetDefenseStat(newDef);
-        private void SetDefenseStat(int def)
+        private void SetDefenseStat(int oldDef, int newDef) => SetDefenseStat(newDef, true, newDef - oldDef);
+        private void SetDefenseStat(int def, bool playAnimation = false, int difference = 0)
         {
             defenseText.text = def.ToString();
+            if(def < defenseStat.baseValue)
+            {
+                defenseText.color = statColorSettings.StatDownColor;
+                defenseText.fontSharedMaterial = statColorSettings.WhiteOutlineMaterial;
+            }
+            else
+            {
+                defenseText.color = def == defenseStat.baseValue ? statColorSettings.StatBaseColor : statColorSettings.StatBuffedColor;
+                defenseText.fontSharedMaterial = statColorSettings.BlackOutlineMaterial;
+            }
+            if(playAnimation)
+                CardManager.Animator.PlayStatChangeAnimation(defenseText.transform.position, difference);
         }
 
         public void UpdateCostStat()
@@ -201,6 +227,8 @@ namespace SVESimulator
             }
             costContainer.SetActive(true);
             costText.text = cost.ToString();
+            costText.color = cost < baseCost ? statColorSettings.StatDownColor : statColorSettings.StatBuffedColor;
+            costText.fontSharedMaterial = cost < baseCost ? statColorSettings.WhiteOutlineMaterial : statColorSettings.BlackOutlineMaterial;
         }
 
         private void OnKeywordAdded(RuntimeKeyword keyword)

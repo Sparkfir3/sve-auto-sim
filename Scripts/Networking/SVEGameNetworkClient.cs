@@ -22,6 +22,7 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<SetMaxPlayPointsMessage>(OnOpponentUpdateMaxPlayPoints);
             NetworkClient.RegisterHandler<SetCurrentPlayPointsMessage>(OnOpponentUpdateCurrentPlayPoints);
             NetworkClient.RegisterHandler<OpponentInitDeckAndLeaderMessage>(OnOpponentInitDeckAndLeader);
+            NetworkClient.RegisterHandler<SetGamePhaseMessage>(OnSetGamePhase);
 
             // Zone Controls
             NetworkClient.RegisterHandler<OpponentShuffleDeckMessage>(OnOpponentShuffleDeck);
@@ -79,6 +80,7 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<SetMaxPlayPointsMessage>();
             NetworkClient.UnregisterHandler<SetCurrentPlayPointsMessage>();
             NetworkClient.UnregisterHandler<OpponentInitDeckAndLeaderMessage>();
+            NetworkClient.UnregisterHandler<SetGamePhaseMessage>();
 
             // Zone Controls
             NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
@@ -192,6 +194,14 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.InitializeDeckAndLeader(msg);
+        }
+
+        private void OnSetGamePhase(SetGamePhaseMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+            player.OpponentEvents.SetGamePhase(msg.phase);
         }
 
         #endregion

@@ -77,6 +77,7 @@ namespace SVESimulator
         private Camera cam;
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
         private Vector3 contentPositionDiff;
+        private Vector3 raycastHitPos;
 
         public bool IsActive => gameObject.activeInHierarchy;
         public int ValidTargetsCount => AllCards.Count(x => currentFilter.MatchesCard(x));
@@ -107,6 +108,7 @@ namespace SVESimulator
             cardContainer.localPosition = Vector3.zero;
             scrollContent.anchoredPosition = Vector2.zero;
             scrollRect.onValueChanged.AddListener(ScrollSelectionArea);
+            raycastHitPos = Vector3.zero;
             SetScrollViewTintActive(false);
 
             int i;
@@ -431,8 +433,15 @@ namespace SVESimulator
             if(currentMode is not SelectionMode.SelectCardsFromDeck and not SelectionMode.SelectCardsFromCemetery and not SelectionMode.SelectCardsFromOppHand)
                 return;
 
-            if(Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
-                   inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer))
+            if(Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                raycastHitPos = Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
+                    inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer)
+                    ? hit.point
+                    : Vector3.zero;
+            }
+            else if(Input.GetKeyUp(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
+                    inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer) && Vector3.Distance(raycastHitPos, hit.point) < 5f)
             {
                 if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card) && currentFilter.MatchesCard(card))
                 {

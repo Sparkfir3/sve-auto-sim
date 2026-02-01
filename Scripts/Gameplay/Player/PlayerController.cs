@@ -68,12 +68,16 @@ namespace SVESimulator
         protected Stat localMaxPlayPointStat;
         protected Stat opponentPlayPointStat;
 
+        // Events
         public event Action<int> OnCardsInDeckChanged;
         public event Action<int> OnCardsInCemeteryChanged;
         public event Action<int> OnSpellchainChanged;
         public event Action<int> OnCardsInEvolveDeckFaceDownChanged;
         public event Action<int> OnCardsInEvolveDeckFaceUpChanged;
         public event Action<int> OnCardsInBanishedZoneChanged;
+
+        public event Action<bool> OnStartLocalTurn; // bool = increment turn number
+        public event Action<bool> OnStartOpponentTurn;
         public event Action onEndGameEvent;
 
         #endregion
@@ -88,54 +92,6 @@ namespace SVESimulator
             isHuman = true;
             localPlayerZoneController = FieldManager.PlayerZones;
             opponentPlayerZoneController = FieldManager.OpponentZones;
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            if(!isLocalPlayer)
-                return;
-
-            InitializeUI();
-        }
-
-        private void Update()
-        {
-            if(!isLocalPlayer)
-            {
-                return;
-            }
-
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log($"Cards in deck = {localPlayerZoneController.deckZone.Runtime.cards.Count}" +
-                    $" / cards in field = {localPlayerZoneController.fieldZone.Runtime.cards.Count}" +
-                    $" / cards in hand = {localPlayerZoneController.handZone.Runtime.cards.Count}" +
-                    $" / cards in evolve deck = {localPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
-            }
-            if(Input.GetKeyDown(KeyCode.RightAlt))
-            {
-                Debug.Log($"Cards in deck = {opponentPlayerZoneController.deckZone.Runtime.cards.Count}" +
-                    $" / cards in field = {opponentPlayerZoneController.fieldZone.Runtime.cards.Count}" +
-                    $" / cards in hand = {opponentPlayerZoneController.handZone.Runtime.cards.Count}" +
-                    $" / cards in evolve deck = {opponentPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
-            }
-            if(Input.GetKeyDown(KeyCode.L))
-            {
-                Debug.Log($"Local leader def = {playerInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}" +
-                    $" // Opponent leader def = {opponentInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}");
-            }
-        }
-
-        #endregion
-
-        // ------------------------------
-
-        #region Initialization
-
-        private void InitializeUI()
-        {
-            GameUIManager.GameControlsUI.OnPressEndTurn += EnterEndPhase;
         }
 
         #endregion
@@ -220,8 +176,8 @@ namespace SVESimulator
 
             LocalEvents.InitializeDeckAndLeader();
             InitializePlayPointMeters();
-            GameUIManager.GameControlsUI.SetTurn(false);
-            GameUIManager.GameControlsUI.SetTurnDisplayActive(true);
+            GameUIManager.Instance.Initialize(this);
+            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Setup);
         }
 
         public override void OnStartTurn(StartTurnMessage msg)
@@ -239,13 +195,16 @@ namespace SVESimulator
             // -----
 
             // Set up turn
-            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer);
+            if(msg.isRecipientTheActivePlayer)
+                OnStartLocalTurn?.Invoke(playerInfo.isGoingFirst);
+            else
+                OnStartOpponentTurn?.Invoke(!playerInfo.isGoingFirst);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
-            sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
             AdditionalStats.Reset();
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
             SVEEffectPool.Instance.UpdatePassiveDurationsStartOfTurn(this, msg.isRecipientTheActivePlayer);
+            LocalEvents.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
 
             // Failsafe Calls
             GameUIManager.EffectTargeting.CloseOpponentIsTargeting();
@@ -306,7 +265,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Non-Network Message Game Controls
+        #region Non-Network Game Setup
 
         private bool HandleGameSetupTurn(StartTurnMessage msg, out bool endTurn)
         {
@@ -372,7 +331,7 @@ namespace SVESimulator
 
                 case 6: // actual game - skip host if they are not first (opponent takes first turn)
                     GameUIManager.MulliganScreen.Close();
-                    if(IsHostTurn() && !playerInfo.isGoingFirst)
+                    if(msg.isRecipientTheActivePlayer && IsHostTurn() && !playerInfo.isGoingFirst)
                     {
                         endTurn = true;
                         return true;
@@ -399,6 +358,12 @@ namespace SVESimulator
             }
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Non-Network Game Controls
+
         public void ReserveAllCardsOnField()
         {
             List<CardObject> cardsToReserve = localPlayerZoneController.fieldZone.GetAllPrimaryCards();
@@ -418,8 +383,7 @@ namespace SVESimulator
 
             IEnumerator RunEndPhase()
             {
-                // TODO - set end phase on networked effect solver
-                sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.End);
+                LocalEvents.SetGamePhase(SVEProperties.GamePhase.End);
                 ZoneController.fieldZone.RemoveAllCardHighlights();
 
                 bool waiting = true;
@@ -429,7 +393,7 @@ namespace SVESimulator
                 };
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseTrigger>(gameState, null, localPlayerZoneController.fieldZone.Runtime, playerInfo,
                     _ => true, true);
-                yield return new WaitUntil(() => !waiting); // TODO - fix confirmation timing call causing extra end turn delay
+                yield return new WaitUntil(() => !waiting);
 
                 SelectWardCardsToEngage(() =>
                 {

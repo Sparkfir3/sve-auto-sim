@@ -94,6 +94,11 @@ namespace SVESimulator.UI
             mouseTooltip.Disable();
         }
 
+        public void Initialize(PlayerController player)
+        {
+            gameControlsUI.Initialize(player);
+        }
+
         public void SetPrimaryMenusVisible(bool visible)
         {
             primaryMenusCanvasGroup.alpha = visible ? 1f : 0f;
