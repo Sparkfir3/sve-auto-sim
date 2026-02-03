@@ -44,13 +44,13 @@ namespace SVESimulator
         public void SetValidQuicksInteractable()
         {
             foreach(CardObject card in cards)
-                card.Interactable = card.HasQuickKeyword() && Player.LocalEvents.CanPayPlayPointsCost(card.RuntimeCard.PlayPointCost());
+                card.Interactable = card.HasQuickKeyword() && Player.LocalEvents.CanPayPlayPointsCost(card.RuntimeCard.PlayPointCost(Player));
         }
 
         public void HighlightValidQuicks()
         {
             foreach(CardObject card in cards)
-                card.SetHighlightMode(card.HasQuickKeyword() && Player.LocalEvents.CanPayPlayPointsCost(card.RuntimeCard.PlayPointCost())
+                card.SetHighlightMode(card.HasQuickKeyword() && Player.LocalEvents.CanPayPlayPointsCost(card.RuntimeCard.PlayPointCost(Player))
                     ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
         }
 

@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d736650078dd99142891ed18ce960a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardObject: {fileID: 1406293292076722110}
   <MainStatContainer>k__BackingField: {fileID: 5837562921779853826}
   <CostStatContainer>k__BackingField: {fileID: 5876713547356883468}
   graphicRaycaster: {fileID: 4984608156008730769}
