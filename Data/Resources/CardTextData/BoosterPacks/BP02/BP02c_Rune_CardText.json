@@ -220,7 +220,7 @@
     "cardText": "Select an enemy follower on the field. Deal it 5 damage and, if there is an evolved follower on your field, draw a card.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "Damage",
         "body": "Select an enemy follower on the field. Deal it 5 damage and, if there is an evolved follower on your field, draw a card."
       }
     ]

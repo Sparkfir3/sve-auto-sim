@@ -512,7 +512,7 @@ namespace SVESimulator
             if(isOwned)
             {
                 spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell) +
-                    (AdditionalStats.UseRuneFollowersForSpellchain ? spellchain += localPlayerZoneController.cemeteryZone.CountOfCardByFilter("Fc(rune)") : 0);
+                    (AdditionalStats.UseRuneFollowersForSpellchain ? localPlayerZoneController.cemeteryZone.CountOfCardByFilter("Fc(rune)") : 0);
                 if(!isServer)
                     SyncHook_OnSpellchainChanged(spellchain, spellchain); // See complaint in: SetDeckCount()
             }

@@ -24753,7 +24753,7 @@
             "type": "Triggered",
             "effect": {
               "effectName1": "Hand",
-              "effectName2": "BottomDeck",
+              "effectName2": "TopDeck",
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
@@ -24784,12 +24784,12 @@
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "BottomDeck",
+            "name": "TopDeck",
             "type": "Triggered",
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F!E",
-              "$type": "SVESimulator.SendToBottomDeckEffect"
+              "$type": "SVESimulator.SendToTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -25203,7 +25203,7 @@
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Damage",
+            "name": "Draw",
             "type": "Triggered",
             "effect": {
               "target": "Self",
