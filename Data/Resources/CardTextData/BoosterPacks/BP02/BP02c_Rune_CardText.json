@@ -7,10 +7,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Discard your hand. Put the top card of your deck into your EX area. Repeat this until your EX area is full."
       }
     ]
   },
@@ -22,17 +20,13 @@
     "effectText": [
       {
         "key": "Follower",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Select a follower in your EX area. For the rest of this turn, it costs 5 less to play."
       },
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "On Evolve:",
+        "body": "Select a spell in your EX area. For the rest of this turn, it costs 5 less to play."
       }
     ]
   },
@@ -44,24 +38,20 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Magic Sediment token."
       },
       {
         "key": "Enemy",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[q][act]",
+        "cost": "[engage], Earth Rite:",
+        "body": "Select an enemy follower on the field and give it [attack]-2/[defense]-2."
       },
       {
         "key": "Player",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "trigger": "[q][act]",
+        "cost": "[engage], Earth Rite:",
+        "body": "Select another follower on your field and give it [attack]+2/[defense]+2."
       }
     ]
   },
@@ -69,16 +59,7 @@
     "id": "BP02-038EN",
     "name": "Anne, Belle of Mysteria",
     "trait": "Mage / Academic / Princess",
-    "cardText": "If there is a Grea the Dragonborn on your field, this card costs 2 less to play.\n[evolve][cost01]: Evolve this follower.",
-    "effectText": [
-      {
-        "key": "ModifiedCost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "If there is a Grea the Dragonborn on your field, this card costs 2 less to play.\n[evolve][cost01]: Evolve this follower."
   },
   {
     "id": "BP02-039EN",
@@ -88,10 +69,8 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
         "trigger": "On Evolve:",
-        "cost": "",
-        "body": ""
+        "body": "Search your deck for an Academic follower with a different name from this card, reveal it, and add it to your hand."
       }
     ]
   },
@@ -102,18 +81,10 @@
     "cardText": "If there is an Anne, Belle of Mysteria on your field, this card costs 2 less to play.\n[act][engage]: Select an enemy follower on the field and deal it 3 damage. If there is an Anne, Belle of Mysteria on your field, deal 6 damage instead.",
     "effectText": [
       {
-        "key": "ModifiedCost",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Act",
-        "text": "",
         "trigger": "[act]",
-        "cost": "",
-        "body": ""
+        "cost": "[engage]:",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If there is an Anne, Belle of Mysteria on your field, deal 6 damage instead."
       }
     ]
   },
@@ -125,24 +96,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Hand",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "BottomDeck",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an unevolved enemy follower on the field and return it to its owner's hand. Spellchain (10): Put it on top of its owner's deck instead."
       }
     ]
   },
@@ -160,17 +114,13 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
         "trigger": "On Evolve:",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Strikeform Golem token. Earth Rite: Give it [attack]+2."
       },
       {
         "key": "EarthRite",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "cost": "Earth Rite:",
+        "body": "Give it [attack]+2."
       }
     ]
   },
@@ -182,10 +132,9 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "cost": "Earth Rite:",
+        "body": "Select an enemy follower on the field and banish it."
       }
     ]
   },
@@ -197,31 +146,19 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Choose up to 2 of the following. Spellchain (10): Choose up to 3 instead. (1) Select an enemy follower on the field and deal it 3 damage. (2) Summon a Guardform Golem token. (3) Draw a card."
       },
       {
         "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 3 damage."
       },
       {
         "key": "Golem",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Summon a Guardform Golem token."
       },
       {
         "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Draw a card."
       }
     ]
   },
@@ -233,24 +170,12 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Draw a card, then discard a card."
       },
       {
         "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Discard a card."
       }
     ]
   },
@@ -262,24 +187,12 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
         "trigger": "On Evolve:",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Draw a card, then discard a card."
       },
       {
         "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Discard a card."
       }
     ]
   },
@@ -291,10 +204,8 @@
     "effectText": [
       {
         "key": "LastWords",
-        "text": "",
         "trigger": "[lastwords]",
-        "cost": "",
-        "body": ""
+        "body": "Add 2 to a Stack on your field."
       }
     ]
   },
@@ -306,24 +217,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal it 5 damage and, if there is an evolved follower on your field, draw a card."
       }
     ]
   },
@@ -331,16 +225,7 @@
     "id": "BP02-050EN",
     "name": "Magical Strategy",
     "trait": "Mage / Chess",
-    "cardText": "Summon a Magical Pawn token.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      }
-    ]
+    "cardText": "Summon a Magical Pawn token."
   },
   {
     "id": "BP02-051EN",
@@ -350,10 +235,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 3 damage."
       }
     ]
   },
