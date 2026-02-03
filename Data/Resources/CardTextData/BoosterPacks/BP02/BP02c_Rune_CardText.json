@@ -95,7 +95,11 @@
     "cardText": "[quick]\nSelect an unevolved enemy follower on the field and return it to its owner's hand. Spellchain (10): Put it on top of its owner's deck instead.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "Hand",
+        "body": "Select an unevolved enemy follower on the field and return it to its owner's hand. Spellchain (10): Put it on top of its owner's deck instead."
+      },
+      {
+        "key": "TopDeck",
         "body": "Select an unevolved enemy follower on the field and return it to its owner's hand. Spellchain (10): Put it on top of its owner's deck instead."
       }
     ]

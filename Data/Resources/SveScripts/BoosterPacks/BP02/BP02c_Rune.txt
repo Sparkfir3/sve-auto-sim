@@ -145,15 +145,15 @@ text "[quick]
 keyword Quick;
 ability Spell {
     condition p(F!k(Aura)!E);
-    effect Sequence(Hand, BottomDeck);
+    effect Sequence(Hand, TopDeck);
 }
 ability Spell name Hand {
     condition 1s(10)0;
     effect ReturnToHand() to TargetOpponentCard F!E;
 }
-ability Spell name BottomDeck {
+ability Spell name TopDeck {
     condition 0s(10)1;
-    effect BottomDeck() to TargetOpponentCard F!E;
+    effect TopDeck() to TargetOpponentCard F!E;
 }
 
 // ------------------------------
