@@ -229,8 +229,8 @@ namespace SVESimulator
             }
             costContainer.SetActive(true);
             costText.text = cost.ToString();
-            costText.color = cost < baseCost ? statColorSettings.StatDownColor : statColorSettings.StatBuffedColor;
-            costText.fontSharedMaterial = cost < baseCost ? statColorSettings.WhiteOutlineMaterial : statColorSettings.BlackOutlineMaterial;
+            costText.color = cost < baseCost ? statColorSettings.StatBuffedColor : statColorSettings.StatDownColor;
+            costText.fontSharedMaterial = cost <= baseCost ? statColorSettings.BlackOutlineMaterial : statColorSettings.WhiteOutlineMaterial;
         }
 
         private void OnKeywordAdded(RuntimeKeyword keyword)
