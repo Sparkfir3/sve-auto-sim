@@ -25574,7 +25574,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "f(k(Stack))",
+              "condition": "f(Ar(Stack))",
               "cost": null,
               "$type": "SVESimulator.SveLastWordsTrigger"
             },
@@ -25582,7 +25582,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TargetPlayerCard",
-              "filter": "k(Stack)",
+              "filter": "Ar(Stack)",
               "keywordType": 3,
               "keywordValue": 1,
               "amount": "2",

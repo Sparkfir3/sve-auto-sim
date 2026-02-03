@@ -33,8 +33,7 @@ namespace SVESimulator
                 foreach(CardObject card in targets)
                 {
                     int counterAmount = amount.IsNullOrWhiteSpace() ? card.RuntimeCard.CountOfKeyword(keywordType, keywordValue) : baseCounterAmount;
-                    for(int i = 0; i < counterAmount; i++)
-                        player.LocalEvents.RemoveCountersFromCard(card.RuntimeCard, (SVEProperties.Counters)keywordType, counterAmount);
+                    player.LocalEvents.RemoveCountersFromCard(card.RuntimeCard, (SVEProperties.Counters)keywordType, counterAmount);
                 }
                 onComplete?.Invoke();
             });

@@ -299,8 +299,8 @@ text "Ward.
 
 keyword Ward;
 ability LastWords {
-    condition f(k(Stack));
-    effect GiveCounter(Stack, 2) to TargetPlayerCard k(Stack);
+    condition f(Ar(Stack));
+    effect GiveCounter(Stack, 2) to TargetPlayerCard Ar(Stack);
 }
 
 // ------------------------------
