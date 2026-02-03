@@ -189,7 +189,7 @@ namespace SVESimulator
                 if(localPlayer.Combo > currentPlayedCardCount || localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count > currentAbilityUsedCount)
                 {
                     yield return new WaitForSeconds(0.25f);
-                    yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect);
+                    yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect && !localPlayer.LocalEvents.IsPayingCosts);
                     yield return new WaitForSeconds(0.25f);
                     if(isCombat)
                         CardManager.Animator.SetTargetingLineActive(true);
