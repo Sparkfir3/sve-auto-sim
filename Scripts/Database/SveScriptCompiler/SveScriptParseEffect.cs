@@ -290,6 +290,7 @@ namespace SVESimulator.SveScript
             // Movement - Other
             { "Discard", new EffectParams("SVESimulator.DiscardEffect",                                             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardToBottomDeck", new EffectParams("SVESimulator.DiscardToBottomDeckEffect",                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "DiscardHand", new EffectParams("SVESimulator.DiscardHandEffect",                                     true, false) },
             { "HandToField", new EffectParams("SVESimulator.HandToFieldEffect",                                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardFromOpponentHand", new EffectParams("SVESimulator.DiscardFromOpponentHandEffect",             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "Salvage", new EffectParams("SVESimulator.SalvageCardEffect",                                         false, false, EffectParameterType.Amount, EffectParameterType.Filter) },

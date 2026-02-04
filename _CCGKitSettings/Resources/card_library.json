@@ -24071,11 +24071,45 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"amount\": \"H\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
               "condition": null,
+              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Discard",
+              "effectName2": "ExArea",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.DiscardHandEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "ExArea",
             "type": "Triggered",
             "effect": {
               "amount": "5-x()",

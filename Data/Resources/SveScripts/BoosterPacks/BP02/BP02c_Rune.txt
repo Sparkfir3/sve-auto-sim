@@ -14,7 +14,12 @@ text "[evolve][cost01]: Evolve this follower.
 evolve 1;
 keyword RuneFollowersForSpellchain;
 ability Fanfare {
-    cost (Discard, H);
+    effect Sequence(Discard, ExArea);
+}
+ability Spell name Discard {
+    effect DiscardHand();
+}
+ability Spell name ExArea {
     effect TopDeckToEx(5-x());
 }
 
