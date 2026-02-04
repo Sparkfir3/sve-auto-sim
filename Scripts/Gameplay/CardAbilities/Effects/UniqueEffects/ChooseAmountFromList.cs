@@ -21,11 +21,12 @@ namespace SVESimulator
             List<string> remainingEffectList = new(effectList);
             for(; amountRemaining > 0; amountRemaining--)
             {
+                bool waiting = true;
                 yield return SVEEffectPool.Instance.StartCoroutine(base.ResolveCoroutine(remainingEffectList, cardObject, libraryCard, sveAbilities,
-                    player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete, onChooseOption: x =>
-                    {
-                        remainingEffectList.Remove(x);
-                    }));
+                    player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+                    onComplete: () => { waiting = false; },
+                    onChooseOption: x => { remainingEffectList.Remove(x); }));
+                yield return new WaitUntil(() => !waiting);
                 yield return new WaitForSeconds(0.2f);
             }
             onComplete?.Invoke();
