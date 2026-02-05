@@ -44,13 +44,13 @@
       {
         "key": "Enemy",
         "trigger": "[q][act]",
-        "cost": "[engage], Earth Rite:",
+        "cost": "[engage], Earth Rite",
         "body": "Select an enemy follower on the field and give it [attack]-2/[defense]-2."
       },
       {
         "key": "Player",
         "trigger": "[q][act]",
-        "cost": "[engage], Earth Rite:",
+        "cost": "[engage], Earth Rite",
         "body": "Select another follower on your field and give it [attack]+2/[defense]+2."
       }
     ]
@@ -83,7 +83,7 @@
       {
         "key": "Act",
         "trigger": "[act]",
-        "cost": "[engage]:",
+        "cost": "[engage]",
         "body": "Select an enemy follower on the field and deal it 3 damage. If there is an Anne, Belle of Mysteria on your field, deal 6 damage instead."
       }
     ]
@@ -123,7 +123,7 @@
       },
       {
         "key": "EarthRite",
-        "cost": "Earth Rite:",
+        "cost": "Earth Rite",
         "body": "Give it [attack]+2."
       }
     ]
@@ -137,7 +137,7 @@
       {
         "key": "Fanfare",
         "trigger": "[fanfare]",
-        "cost": "Earth Rite:",
+        "cost": "Earth Rite",
         "body": "Select an enemy follower on the field and banish it."
       }
     ]
