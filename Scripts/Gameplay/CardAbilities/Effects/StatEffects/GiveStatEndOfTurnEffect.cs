@@ -11,24 +11,50 @@ namespace SVESimulator
         {
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
             {
-                foreach(CardObject card in targets)
+                if(targetStats != SVEProperties.StatBoostType.Cost)
                 {
-                    RegisteredPassiveAbility passive = new()
+                    foreach(CardObject card in targets)
                     {
-                        sourceCardInstanceId = card.RuntimeCard.instanceId,
-                        targetsFormula = null,
-                        filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
-                        effect = new GiveStatBoostPassive
+                        RegisteredPassiveAbility passive = new()
                         {
-                            duration = SVEProperties.PassiveDuration.EndOfTurn,
-                            targetStats = targetStats,
-                            amount = amount
-                        },
-                        affectedCards = new List<RuntimeCard>(),
-                        target = SVEProperties.SVEEffectTarget.Self,
-                        duration = SVEProperties.PassiveDuration.EndOfTurn
-                    };
-                    SVEEffectPool.Instance.RegisterPassiveAbility(passive);
+                            sourceCardInstanceId = card.RuntimeCard.instanceId,
+                            targetsFormula = null,
+                            filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
+                            effect = new GiveStatBoostPassive
+                            {
+                                duration = SVEProperties.PassiveDuration.EndOfTurn,
+                                targetStats = targetStats,
+                                amount = amount
+                            },
+                            affectedCards = new List<RuntimeCard>(),
+                            target = SVEProperties.SVEEffectTarget.Self,
+                            duration = SVEProperties.PassiveDuration.EndOfTurn
+                        };
+                        SVEEffectPool.Instance.RegisterPassiveAbility(passive);
+                    }
+                }
+                else
+                {
+                    foreach(CardObject card in targets)
+                    {
+                        RegisteredPassiveAbility passive = new()
+                        {
+                            sourceCardInstanceId = card.RuntimeCard.instanceId,
+                            targetsFormula = null,
+                            filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>()
+                            {
+                                { SVEFormulaParser.CardFilterSetting.InstanceID, $"{card.RuntimeCard.instanceId}" }
+                            },
+                            effect = new MinusCostOtherPassive
+                            {
+                                amount = amount.StartsWith("-") ? amount[1..] : $"-{amount}" // invert +/- sign -> convert stat boost (increase) to reduced cost (decrease)
+                            },
+                            affectedCards = new List<RuntimeCard>(),
+                            target = SVEProperties.SVEEffectTarget.Self,
+                            duration = SVEProperties.PassiveDuration.EndOfTurn
+                        };
+                        SVEEffectPool.Instance.RegisterPassiveAbility(passive);
+                    }
                 }
                 onComplete?.Invoke();
             });
