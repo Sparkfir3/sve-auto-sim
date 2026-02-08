@@ -34,7 +34,7 @@ namespace SVESimulator
         public override bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName)
         {
             var cardFilter = SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId);
-            int requiredAmount = amount.IsNullOrWhiteSpace() ? 1 : SVEFormulaParser.ParseValue(amount, player);
+            int requiredAmount = amount.IsNullOrWhiteSpace() ? 1 : SVEFormulaParser.ParseValue(amount, player, card);
 
             switch(target)
             {
@@ -78,7 +78,7 @@ namespace SVESimulator
             //     : $"Remove{(removeAmount.HasValue ? $" {removeAmount.Value}" : "")} {(SVEProperties.Counters)keywordType} Counters";
             return new TargetCardForCostEffect()
             {
-                text = text ?? "",
+                text = text ?? "Remove Counters",
                 target = target,
                 filter = filter + $"r({GameManager.Instance.config.keywords[keywordType].name ?? ""},{amount})"
             };

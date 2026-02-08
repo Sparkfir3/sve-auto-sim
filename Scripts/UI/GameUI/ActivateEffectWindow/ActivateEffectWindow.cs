@@ -53,10 +53,9 @@ namespace SVESimulator
 
         public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities, bool onlyQuicks = false)
         {
-            // Effects
             int i = 0;
-            if(!onlyQuicks && card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
-                abilities.Add(CounterUtilities.InnateStackAbility);
+
+            // Effects
             for(; i < abilities.Count; i++)
             {
                 MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
@@ -70,9 +69,9 @@ namespace SVESimulator
                     button.Interactable &= ability.IsQuickAbility();
                 button.OnClickEffect.AddListener(() =>
                 {
+                    player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                     player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
                     {
-                        player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                         SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
                         {
                             SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
@@ -80,6 +79,31 @@ namespace SVESimulator
                     });
                     Close();
                 });
+            }
+
+            // Stack
+            if(!onlyQuicks && card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
+            {
+                MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
+                ActivatedAbility ability = CounterUtilities.InnateStackAbility;
+
+                button.gameObject.SetActive(true);
+                button.Text = (ability.effect as SveEffect)?.text;
+                button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name);
+                button.OnClickEffect.AddListener(() =>
+                {
+                    player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
+                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
+                    {
+                        SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
+                        {
+                            SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                        });
+                    });
+                    Close();
+                });
+                abilities.Add(CounterUtilities.InnateStackAbility);
+                i++;
             }
 
             // Evolve without evolve point

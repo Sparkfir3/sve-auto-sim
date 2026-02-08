@@ -114,6 +114,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
+  UseRuneFollowersForSpellchain: 0
 --- !u!114 &984349466775513389
 MonoBehaviour:
   m_ObjectHideFlags: 0

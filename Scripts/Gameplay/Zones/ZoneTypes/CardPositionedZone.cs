@@ -248,6 +248,11 @@ namespace SVESimulator
         public int GetFirstOpenSlotId() => !HasOpenSlot() ? -1 : cardSlots.First(x => !x.Value.card && x.Value.target.isActiveAndEnabled).Key;
 
         public override int CountOfCardType(string cardType) => GetAllPrimaryCards().Count(x => x.IsCardType(cardType));
+        public virtual int CountOfCardByFilter(string filterFormula)
+        {
+            var filter = SVEFormulaParser.ParseCardFilterFormula(filterFormula);
+            return GetAllPrimaryCards().Count(x => filter.MatchesCard(x));
+        }
 
         #endregion
 

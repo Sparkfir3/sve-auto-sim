@@ -30,7 +30,9 @@ namespace SVESimulator
             }
         }
 
-        [field: Title("Containers"), SerializeField]
+        [Title("Object References"), SerializeField]
+        private CardObject cardObject;
+        [field: SerializeField]
         public GameObject MainStatContainer { get; private set; }
         [field: SerializeField]
         public GameObject CostStatContainer { get; private set; }
@@ -99,10 +101,10 @@ namespace SVESimulator
             }
 
             // Cost
-            if(card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out costStat))
+            if(card.ownerPlayer.netId.isLocalPlayer && card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out costStat))
             {
                 baseCost = costStat.baseValue;
-                int currentCost = card.PlayPointCost();
+                int currentCost = cardObject.CurrentZone ? card.PlayPointCost(cardObject.CurrentZone.Player) : baseCost;
                 SetCostStat(currentCost);
                 SVEEffectPool.Instance.OnConfirmationTimingEndConstant += UpdateCostStat;
             }
@@ -215,7 +217,7 @@ namespace SVESimulator
         {
             if(costStat == null || !CostStatContainer.activeInHierarchy)
                 return;
-            SetCostStat(runtimeCard.PlayPointCost());
+            SetCostStat(runtimeCard.PlayPointCost(cardObject.CurrentZone ? cardObject.CurrentZone.Player : null));
         }
 
         public void SetCostStat(int cost)
@@ -227,8 +229,8 @@ namespace SVESimulator
             }
             costContainer.SetActive(true);
             costText.text = cost.ToString();
-            costText.color = cost < baseCost ? statColorSettings.StatDownColor : statColorSettings.StatBuffedColor;
-            costText.fontSharedMaterial = cost < baseCost ? statColorSettings.WhiteOutlineMaterial : statColorSettings.BlackOutlineMaterial;
+            costText.color = cost < baseCost ? statColorSettings.StatBuffedColor : statColorSettings.StatDownColor;
+            costText.fontSharedMaterial = cost <= baseCost ? statColorSettings.BlackOutlineMaterial : statColorSettings.WhiteOutlineMaterial;
         }
 
         private void OnKeywordAdded(RuntimeKeyword keyword)

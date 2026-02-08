@@ -194,7 +194,7 @@ namespace SVESimulator
             if(counterAsKeyword != null)
                 card.RemoveKeyword(counterAsKeyword.keywordId, counterAsKeyword.valueId);
             if(amount > 0)
-                card.AddKeyword((int)counter, amount - 1);
+                card.AddKeyword((int)counter, amount);
         }
 
         #endregion

@@ -68,7 +68,7 @@ namespace SVESimulator
                     effectToPerform?.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () => { effectDone = true; });
                 };
                 if(trigger?.Costs is { Count: > 0 })
-                    SelectPayCostOrDecline(player, cardObject, trigger, effectToPerform, effectName, resolveAction);
+                    SelectPayCostOrDecline(player, cardObject, trigger, effectToPerform, effectName, resolveAction, () => { effectDone = true; });
                 else
                     resolveAction.Invoke();
                 yield return new WaitUntil(() => effectDone);
@@ -77,11 +77,11 @@ namespace SVESimulator
             onComplete?.Invoke();
         }
 
-        private static void SelectPayCostOrDecline(PlayerController player, CardObject card, SveTrigger trigger, SveEffect effect, string effectName, Action onComplete)
+        private static void SelectPayCostOrDecline(PlayerController player, CardObject card, SveTrigger trigger, SveEffect effect, string effectName, Action onSelect, Action onDecline)
         {
             if(trigger.Costs == null || trigger.Costs.Count == 0)
             {
-                onComplete?.Invoke();
+                onSelect?.Invoke();
                 return;
             }
 
@@ -93,13 +93,13 @@ namespace SVESimulator
                     text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
                     onSelect = () =>
                     {
-                        player.LocalEvents.PayAbilityCosts(card, trigger.Costs, effect, effectName, onComplete);
+                        player.LocalEvents.PayAbilityCosts(card, trigger.Costs, effect, effectName, onSelect);
                     }
                 },
                 new MultipleChoiceWindow.MultipleChoiceEntryData
                 {
                     text = "Decline",
-                    onSelect = onComplete
+                    onSelect = onDecline
                 },
             };
             GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, effect.text);

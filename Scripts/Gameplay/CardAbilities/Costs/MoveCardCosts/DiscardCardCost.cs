@@ -31,7 +31,7 @@ namespace SVESimulator
         public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
             bool waiting = true;
-            int discardAmount = SVEFormulaParser.ParseValue(amount);
+            int discardAmount = SVEFormulaParser.ParseValue(amount, player);
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
 
             selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, discardAmount, discardAmount);

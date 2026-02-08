@@ -15,6 +15,7 @@ namespace SVESimulator
     {
         protected override bool isLocal => true;
 
+        public bool IsPayingCosts { get; private set; }
         public Action OnFinishSpell;
 
         // ------------------------------
@@ -982,12 +983,14 @@ namespace SVESimulator
         {
             if(costs == null || costs.Count == 0)
             {
+                IsPayingCosts = false;
                 onComplete?.Invoke();
                 return;
             }
             StartCoroutine(Resolve());
             IEnumerator Resolve()
             {
+                IsPayingCosts = true;
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
                 string cardOriginZone = card.CurrentZone.Runtime.name;
                 List<MoveCardToZoneData> cardsToMove = new();
@@ -1049,6 +1052,7 @@ namespace SVESimulator
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
                 onComplete?.Invoke();
+                IsPayingCosts = false;
             }
         }
 

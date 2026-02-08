@@ -163,7 +163,7 @@ namespace SVESimulator
             opponentPlayerZoneController.InitializeZones(controllers.FirstOrDefault(x => !x.isLocalPlayer), opponentInfo, !opponentInfo.netId.isClientOnly);
             FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
-            AdditionalStats.Reset();
+            AdditionalStats.Initialize(this);
             CurrentTurnNumber = 0;
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
@@ -498,7 +498,12 @@ namespace SVESimulator
         public void SetCemeteryCount(int count)
         {
             if(isServer)
-                cardsInCemetery = count;
+            {
+                if(cardsInCemetery == count)
+                    SyncHook_OnCemeteryCountChanged(cardsInCemetery, count);
+                else
+                    cardsInCemetery = count;
+            }
             else
             {
                 int oldCount = cardsInCemetery;
@@ -511,11 +516,13 @@ namespace SVESimulator
         {
             if(isOwned)
             {
-                spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+                spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell) +
+                    (AdditionalStats.UseRuneFollowersForSpellchain ? localPlayerZoneController.cemeteryZone.CountOfCardByFilter("Fc(rune)") : 0);
                 if(!isServer)
                     SyncHook_OnSpellchainChanged(spellchain, spellchain); // See complaint in: SetDeckCount()
             }
-            OnCardsInCemeteryChanged?.Invoke(newCount);
+            if(oldCount != newCount)
+                OnCardsInCemeteryChanged?.Invoke(newCount);
         }
 
         private void SyncHook_OnSpellchainChanged(int oldCount, int newCount) { OnSpellchainChanged?.Invoke(newCount); }

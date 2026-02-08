@@ -30,8 +30,7 @@ namespace SVESimulator
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
             {
                 foreach(CardObject card in targets)
-                    for(int i = 0; i < counterAmount; i++)
-                        player.LocalEvents.AddCountersToCard(card.RuntimeCard, (SVEProperties.Counters)keywordType, counterAmount);
+                    player.LocalEvents.AddCountersToCard(card.RuntimeCard, (SVEProperties.Counters)keywordType, counterAmount);
                 onComplete?.Invoke();
             });
         }

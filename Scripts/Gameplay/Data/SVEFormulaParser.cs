@@ -250,7 +250,7 @@ namespace SVESimulator
                     value = player ? player.Combo : 0;
                     break;
                 case 'H': // Cards in hand
-                    if(formula[endIndex] == '(')
+                    if(endIndex < formula.Length && formula[endIndex] == '(')
                     {
                         Dictionary<CardFilterSetting, string> filterH = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                         endIndex += indexDelta + 1; // Move past close parentheses
