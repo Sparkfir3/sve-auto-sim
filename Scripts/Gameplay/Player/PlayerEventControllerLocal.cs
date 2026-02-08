@@ -359,8 +359,13 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.SendToCemetery(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone, isDestroy);
-            if(isLocalPlayersCard && isDestroy && originZone.Equals(SVEProperties.Zones.Field))
-                playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            if(isLocalPlayersCard)
+            {
+                if(isDestroy && originZone.Equals(SVEProperties.Zones.Field))
+                    playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                else if(originZone.Equals(SVEProperties.Zones.Hand))
+                    playerController.AdditionalStats.CardsDiscardedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            }
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToCemetery(x, onComplete));
 
             // ---
