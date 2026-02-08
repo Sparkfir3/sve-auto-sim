@@ -5423,7 +5423,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 3,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
@@ -5451,7 +5451,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 3,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -5793,7 +5793,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 3,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
@@ -6165,7 +6165,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 3,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -6631,7 +6631,7 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "keywordType": 4,
+              "keywordType": 11,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -6647,7 +6647,7 @@
                 "$type": "SVESimulator.ConditionAsCost"
               },
               {
-                "keywordType": 4,
+                "keywordType": 11,
                 "keywordValue": 1,
                 "amount": "3",
                 "target": "Self",
@@ -6746,7 +6746,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 3,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -6972,7 +6972,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 3,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -7106,7 +7106,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 3,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -7405,7 +7405,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "Ar(Stack)",
-              "keywordType": 3,
+              "keywordType": 10,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -7833,7 +7833,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 3,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -7906,7 +7906,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 3,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -14146,7 +14146,7 @@
             "valueId": 0
           },
           {
-            "keywordId": 2,
+            "keywordId": 3,
             "valueId": 4
           }
         ],
@@ -19696,7 +19696,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 3,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -20739,7 +20739,7 @@
             "name": "Passive",
             "type": "Triggered",
             "effect": {
-              "keywordType": 2,
+              "keywordType": 4,
               "keywordValue": 5,
               "duration": "WhileOnField",
               "$type": "SVESimulator.GiveKeywordPassive"
@@ -24355,7 +24355,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 3,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -24389,7 +24389,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 3,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -25016,7 +25016,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 3,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -25122,7 +25122,7 @@
           {
             "trigger": {
               "condition": "p(#F)",
-              "cost": "[\r\n  {\r\n    \"keywordType\": 3,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -25617,7 +25617,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "Ar(Stack)",
-              "keywordType": 3,
+              "keywordType": 10,
               "keywordValue": 1,
               "amount": "2",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -25829,7 +25829,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 3,
+            "keywordId": 10,
             "valueId": 1
           }
         ],

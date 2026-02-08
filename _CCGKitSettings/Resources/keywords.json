@@ -60,7 +60,7 @@
         "id": 1
     },
     {
-        "name": "DamageMods",
+        "name": "PlusDamage",
         "values": [
             {
                 "value": "Plus1Damage"
@@ -73,15 +73,27 @@
             },
             {
                 "value": "Plus4Damage"
-            },
+            }
+        ],
+        "id": 2
+    },
+    {
+        "name": "DamageReduction",
+        "values": [
             {
                 "value": "DamageReduction1"
-            },
+            }
+        ],
+        "id": 3
+    },
+    {
+        "name": "DamageReductionAbilities",
+        "values": [
             {
                 "value": "DamageReductionAbilities1"
             }
         ],
-        "id": 2
+        "id": 4
     },
     {
         "name": "StackCounter",
@@ -97,9 +109,15 @@
             },
             {
                 "value": "Stack3"
+            },
+            {
+                "value": "Stack4"
+            },
+            {
+                "value": "Stack5"
             }
         ],
-        "id": 3
+        "id": 10
     },
     {
         "name": "SpellCounter",
@@ -114,6 +132,6 @@
                 "value": "Spell2"
             }
         ],
-        "id": 4
+        "id": 11
     }
 ]

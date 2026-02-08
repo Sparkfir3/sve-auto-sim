@@ -200,7 +200,9 @@ namespace SVESimulator
                 foreach(JObject jObject in jArray.Children<JObject>())
                 {
                     string rawType = jObject.GetValue("$type")?.Value<string>();
+                    Debug.Assert(rawType != null);
                     Type type = Type.GetType(rawType);
+                    Debug.Assert(type != null);
                     SveCost cost = Activator.CreateInstance(type) as SveCost;
 
                     FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);

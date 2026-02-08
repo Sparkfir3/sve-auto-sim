@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35cc5c4a9b605ea4f8e6aea0e6e92854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DatabaseVersion>k__BackingField: alpha_sd06
+  <DatabaseVersion>k__BackingField: alpha_bp02
   sveScriptResourcesPath: SveScripts
   checkToRunDownloader: 1
   runInEditor: 1

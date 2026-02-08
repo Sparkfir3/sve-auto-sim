@@ -1,6 +1,3 @@
-using UnityEngine;
-using Sirenix.OdinInspector;
-using System.Collections;
 using System.Collections.Generic;
 using CCGKit;
 using Sparkfire.Utility;
