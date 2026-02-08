@@ -61,6 +61,8 @@ namespace SVESimulator.SveScript
             { "DoesntTakeCombatDamage",     new Keyword(1, 5) },
             { "DoesNotTakeCombatDamage",    new Keyword(1, 5) },
             { "RuneFollowersForSpellchain", new Keyword(1, 6) },
+            { "DoubleCombatDamage",         new Keyword(1, 7) },
+            { "DoubleLeaderDamage",         new Keyword(1, 8) },
 
             { "Plus1Damage",                new Keyword(2, 0) },
             { "Plus2Damage",                new Keyword(2, 1) },

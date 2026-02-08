@@ -155,6 +155,8 @@ namespace SVESimulator
             public const string UseDefAsAtk = "UseDefAsAtk";
             public const string DoesNotTakeCombatDamage = "DoesNotTakeCombatDamage";
             public const string UseRuneFollowersForSpellchain = "UseRuneFollowersForSpellchain";
+            public const string DoubleCombatDamage = "DoubleCombatDamage";
+            public const string DoubleLeaderDamage = "DoubleLeaderDamage";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";
