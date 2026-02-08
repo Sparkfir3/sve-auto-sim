@@ -73,8 +73,8 @@ namespace SVESimulator.SveScript
             { "DamageReductionAbilities1",  new Keyword(4, 5) },
 
             // Counters
-            { "Stack",                      new Keyword(10, 1) },
-            { "Spell",                      new Keyword(11, 1) },
+            { "Stack",                      new Keyword(5, 1) },
+            { "Spell",                      new Keyword(6, 1) },
         };
     }
 }
