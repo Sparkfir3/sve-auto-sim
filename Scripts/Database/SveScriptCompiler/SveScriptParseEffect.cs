@@ -287,12 +287,14 @@ namespace SVESimulator.SveScript
             { "SendToExArea", new EffectParams("SVESimulator.SendToExAreaEffect")                       },
             { "PutExToFieldAndTarget", new EffectParams("SVESimulator.PutExToFieldAndTargetEffect",     EffectParameterType.ListOfEffects) },
 
-            // Movement - Other
+            // Movement - Hand to Zone
             { "Discard", new EffectParams("SVESimulator.DiscardEffect",                                             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardToBottomDeck", new EffectParams("SVESimulator.DiscardToBottomDeckEffect",                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardHand", new EffectParams("SVESimulator.DiscardHandEffect",                                     true, false) },
             { "HandToField", new EffectParams("SVESimulator.HandToFieldEffect",                                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardFromOpponentHand", new EffectParams("SVESimulator.DiscardFromOpponentHandEffect",             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+
+            // Movement - Cemetery to Zone
             { "Salvage", new EffectParams("SVESimulator.SalvageCardEffect",                                         false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
             { "CemeteryToField", new EffectParams("SVESimulator.CemeteryToFieldEffect",                             true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("SVESimulator.CemeteryToFieldAndTargetEffect",           true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
@@ -327,7 +329,7 @@ namespace SVESimulator.SveScript
             { "SummonTokenAndTarget", new EffectParams("SVESimulator.SummonTokenAndTargetEffect",       false, false, EffectParameterType.TokenName, EffectParameterType.CreateTokenOption, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "Transform", new EffectParams("SVESimulator.TransformCardEffect",                         EffectParameterType.TokenName) },
 
-            // Effect Execution
+            // Effect Sequencing
             { "DestroyAndControllerPerformEffect", new EffectParams("SVESimulator.DestroyAndControllerPerformEffect",   EffectParameterType.SingleEffect) },
             { "Sequence", new EffectParams("SVESimulator.EffectSequence",                                               false, false, EffectParameterType.ListOfEffects) },
             { "TargetForSequence", new EffectParams("SVESimulator.TargetForEffectSequence",                             EffectParameterType.ListOfEffects) },
