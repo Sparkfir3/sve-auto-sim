@@ -166,6 +166,7 @@ namespace SVESimulator.SveScript
                     case EffectParameterType.SearchDeckAction:
                     case EffectParameterType.CreateTokenOption:
                     case EffectParameterType.TokenName:
+                    case EffectParameterType.Trait:
                     case EffectParameterType.Filter:
                         string keyName = effectParams.parameters[i].ToString();
                         keyName = char.ToLowerInvariant(keyName[0]) + keyName[1..];
@@ -244,7 +245,7 @@ namespace SVESimulator.SveScript
         
         #region Effect Parameters
         
-        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Filter, FilterOptional, PassiveDuration }
+        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Trait, Filter, FilterOptional, PassiveDuration }
         private readonly struct EffectParams
         {
             public readonly string ccgType;
@@ -340,6 +341,7 @@ namespace SVESimulator.SveScript
             { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
 
             // Other Effects
+            { "GiveTrait", new EffectParams("SVESimulator.GiveTraitEffect",                             EffectParameterType.Trait) },
             { "CheckTop", new EffectParams("SVESimulator.CheckTopDeckEffect",                           false, false, EffectParameterType.CheckCardActions) },
             { "ExtraTurn", new EffectParams("SVESimulator.ExtraTurnEffect",                             false, false) },
             { "Evolve", new EffectParams("SVESimulator.EvolveEffect")                                   },
