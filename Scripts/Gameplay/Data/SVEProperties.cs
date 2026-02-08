@@ -29,6 +29,7 @@ namespace SVESimulator
             AllOpponentCards,
             AllOpponentCardsEx,
             AllOpponentCardsFieldAndEx,
+            AllOpponentCardsAndLeader,
             TargetOpponentCard,
             TargetOpponentCardsDivided,
             TargetOpponentCardOrLeader,
@@ -36,6 +37,7 @@ namespace SVESimulator
 
             AllCards,
             TargetCard,
+            TargetCardEx,
 
             AllPlayers,
             AllLeaders
