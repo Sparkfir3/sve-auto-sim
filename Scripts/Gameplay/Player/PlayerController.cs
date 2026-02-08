@@ -498,7 +498,12 @@ namespace SVESimulator
         public void SetCemeteryCount(int count)
         {
             if(isServer)
-                cardsInCemetery = count;
+            {
+                if(cardsInCemetery == count)
+                    SyncHook_OnCemeteryCountChanged(cardsInCemetery, count);
+                else
+                    cardsInCemetery = count;
+            }
             else
             {
                 int oldCount = cardsInCemetery;
@@ -516,7 +521,8 @@ namespace SVESimulator
                 if(!isServer)
                     SyncHook_OnSpellchainChanged(spellchain, spellchain); // See complaint in: SetDeckCount()
             }
-            OnCardsInCemeteryChanged?.Invoke(newCount);
+            if(oldCount != newCount)
+                OnCardsInCemeteryChanged?.Invoke(newCount);
         }
 
         private void SyncHook_OnSpellchainChanged(int oldCount, int newCount) { OnSpellchainChanged?.Invoke(newCount); }
