@@ -58,6 +58,7 @@ namespace SVESimulator.SveScript
             { "CantAttack",                 new Keyword(1, 3) },
             { "CannotAttack",               new Keyword(1, 3) },
             { "UseDefAsAtk",                new Keyword(1, 4) },
+            { "DoesntTakeCombatDamage",     new Keyword(1, 5) },
             { "DoesNotTakeCombatDamage",    new Keyword(1, 5) },
             { "RuneFollowersForSpellchain", new Keyword(1, 6) },
 
@@ -66,12 +67,12 @@ namespace SVESimulator.SveScript
             { "Plus3Damage",                new Keyword(2, 2) },
             { "Plus4Damage",                new Keyword(2, 3) },
 
-            { "DamageReduction1",           new Keyword(2, 4) },
-            { "DamageReductionAbilities1",  new Keyword(2, 5) },
+            { "DamageReduction1",           new Keyword(3, 4) },
+            { "DamageReductionAbilities1",  new Keyword(4, 5) },
 
             // Counters
-            { "Stack",                      new Keyword(3, 1) },
-            { "Spell",                      new Keyword(4, 1) },
+            { "Stack",                      new Keyword(10, 1) },
+            { "Spell",                      new Keyword(11, 1) },
         };
     }
 }
