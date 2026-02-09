@@ -26140,7 +26140,7 @@
               "cost": null,
               "$type": "SVESimulator.SveOnDiscardTrigger"
             },
-            "name": "Token",
+            "name": "OnDiscard",
             "type": "Triggered",
             "effect": {
               "tokenName": "Hellflame Dragon",
@@ -26153,19 +26153,36 @@
           },
           {
             "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"3\",\r\n    \"$type\": \"SVESimulator.PlayPointCost\"\r\n  }\r\n]",
               "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "effectName1": "Token",
+              "effectName1": "Summon",
               "effectName2": "Draw",
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Summon",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Hellflame Dragon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
