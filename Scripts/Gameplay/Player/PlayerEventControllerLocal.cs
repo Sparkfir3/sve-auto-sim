@@ -403,13 +403,13 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void BanishCard(CardObject card, bool sendMessage = true, bool onlyMoveObject = false)
+        public void BanishCard(CardObject card, string originZone = null, bool sendMessage = true, bool onlyMoveObject = false)
         {
             if(CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
 
             RuntimeCard runtimeCard = card.RuntimeCard;
-            string originZone = card.CurrentZone.Runtime.name;
+            originZone ??= card.CurrentZone.Runtime.name;
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
 
