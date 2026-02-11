@@ -447,6 +447,8 @@ namespace SVESimulator
                 OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
                 OnNextConfirmationTimingEnd = null;
+                CardManager.Instance.ReleaseAllDisabledCards();
+
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
                 {
                     localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;

@@ -104,7 +104,7 @@ namespace SVESimulator
                     continue;
                 }
 
-                Action onComplete = card.IsToken() ? () => { CardManager.Instance.ReleaseCard(cardToMove); } : null;
+                Action onComplete = card.IsToken() ? () => { cardToMove.gameObject.SetActive(false); } : null;
                 moveCardAction?.Invoke(cardToMove, onComplete);
             }
         }

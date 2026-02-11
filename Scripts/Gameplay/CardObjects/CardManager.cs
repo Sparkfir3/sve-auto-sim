@@ -96,6 +96,15 @@ namespace SVESimulator
             return true;
         }
 
+        public void ReleaseAllDisabledCards()
+        {
+            foreach(PooledCard pooledCard in cardPool)
+            {
+                if(pooledCard.active && !pooledCard.card.gameObject.activeInHierarchy)
+                    ReleaseCard(pooledCard.card);
+            }
+        }
+
         public CardObject GetCardByInstanceId(int instanceId)
         {
             return cardsByInstanceId.GetValueOrDefault(instanceId, null);
