@@ -45,6 +45,7 @@ namespace SVESimulator
         public event Action OnConfirmationTimingStartConstant;
         public event Action OnNextConfirmationTimingEnd;
         public event Action OnConfirmationTimingEndConstant;
+        public event Action OnNextConfirmationTimingStartOrEnd;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
         public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
@@ -456,12 +457,16 @@ namespace SVESimulator
                 OnNextConfirmationTimingStart?.Invoke();
                 OnConfirmationTimingStartConstant?.Invoke();
                 OnNextConfirmationTimingStart = null;
+                OnNextConfirmationTimingStartOrEnd?.Invoke();
+                OnNextConfirmationTimingStartOrEnd = null;
             }
             else if(oldState == ConfirmationTimingState.FinishedNonTurnPlayer && newState == ConfirmationTimingState.Idle)
             {
                 OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
                 OnNextConfirmationTimingEnd = null;
+                OnNextConfirmationTimingStartOrEnd?.Invoke();
+                OnNextConfirmationTimingStartOrEnd = null;
                 CardManager.Instance.ReleaseAllDisabledCards();
 
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
@@ -487,9 +492,9 @@ namespace SVESimulator
             if(card == null)
                 return;
 
-            // Apply during next confirmation timing to wait for other effects to resolve
+            // Apply during next confirmation timing to wait for other effects to resolve TODO - update any time field changes/apply in the middle of confirmation timing
             //   (i.e. don't apply the passive before we finish playing the card to the field)
-            OnNextConfirmationTimingStart += () =>
+            OnNextConfirmationTimingStartOrEnd += () =>
             {
                 if(!localPlayer.ZoneController.fieldZone.ContainsCard(card) && !opponentPlayer.ZoneController.fieldZone.ContainsCard(card))
                     return;
