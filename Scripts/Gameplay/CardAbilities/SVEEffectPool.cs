@@ -288,14 +288,28 @@ namespace SVESimulator
 
             IEnumerator ResolveOverTime()
             {
+                // Skip prompt if all effects fail condition
+                if(pendingEffects.Where(x => x.triggerState == EffectTriggerState.Immediate)
+                   .All(x =>
+                   {
+                       if(x.condition.IsNullOrWhiteSpace())
+                           return false;
+                       CardObject card = CardManager.Instance.GetCardByInstanceId(x.sourceCardInstanceId);
+                       return !SVEFormulaParser.ParseValueAsCondition(x.condition, localPlayer, card);
+                   }))
+                {
+                    goto exit;
+                }
+
                 // Resolve single effect
-                if(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
+                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
                 {
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
                         if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
                             continue;
                         yield return ResolveEffectAtIndex(i);
+                        break;
                     }
                 }
 
@@ -321,6 +335,7 @@ namespace SVESimulator
                 }
 
                 // Complete
+                exit:
                 yield return null;
                 pendingEffects = pendingEffects.Where(x => x.triggerState != EffectTriggerState.Immediate).ToList();
                 CmdSetConfirmationTimingState(isTurnPlayer ? ConfirmationTimingState.FinishedTurnPlayer : ConfirmationTimingState.FinishedNonTurnPlayer);
@@ -342,7 +357,7 @@ namespace SVESimulator
         public void ResolvePendingEffect(SVEPendingEffect pendingEffect, Action onComplete = null)
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(pendingEffect.sourceCardInstanceId);
-            if(!string.IsNullOrWhiteSpace(pendingEffect.condition) && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
+            if(!pendingEffect.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
             {
                 onComplete?.Invoke();
                 return;
