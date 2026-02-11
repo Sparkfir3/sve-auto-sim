@@ -442,7 +442,11 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
-            StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            // Show if adding from cemetery, otherwise normal move logic
+            if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
+                StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            else
+                localZoneController.RevealCard(card, onComplete: () => localZoneController.AddCardToHand(card, () => card.Interactable = playerController.isActivePlayer));
 
             // ---
 
