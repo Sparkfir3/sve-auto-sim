@@ -266,7 +266,7 @@ namespace SVESimulator
             }
             else if(cardZone.Equals(SVEProperties.Zones.Hand) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardedTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
             }
         }
 

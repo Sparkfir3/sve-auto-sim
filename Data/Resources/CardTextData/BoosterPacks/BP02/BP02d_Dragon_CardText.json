@@ -32,7 +32,7 @@
     "cardText": "When this card is discarded, put a Hellflame Dragon token into your EX area.\n----------\n[fanfare][cost03]: Summon a Hellflame Dragon token. Draw a card.\n[act][engage], discard a card: Put a Hellflame Dragon token into your EX area. This ability can be activated if Overflow is active for you.",
     "effectText": [
       {
-        "key": "OnDiscard",
+        "key": "OnDiscarded",
         "text": "When this card is discarded, put a Hellflame Dragon token into your EX area.",
         "trigger": "When this card is discarded",
         "body": "Put a Hellflame Dragon token into your EX area."

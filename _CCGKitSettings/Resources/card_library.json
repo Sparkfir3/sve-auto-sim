@@ -17747,9 +17747,9 @@
             "trigger": {
               "condition": null,
               "cost": null,
-              "$type": "SVESimulator.SveOnDiscardTrigger"
+              "$type": "SVESimulator.SveOnDiscardedTrigger"
             },
-            "name": "OnDiscard",
+            "name": "OnDiscarded",
             "type": "Triggered",
             "effect": {
               "target": "Self",
@@ -26138,9 +26138,9 @@
             "trigger": {
               "condition": null,
               "cost": null,
-              "$type": "SVESimulator.SveOnDiscardTrigger"
+              "$type": "SVESimulator.SveOnDiscardedTrigger"
             },
-            "name": "OnDiscard",
+            "name": "OnDiscarded",
             "type": "Triggered",
             "effect": {
               "tokenName": "Hellflame Dragon",

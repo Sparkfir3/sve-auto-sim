@@ -52,7 +52,7 @@ text "When this card is discarded, put a Hellflame Dragon token into your EX are
       [fanfare][cost03]: Summon a Hellflame Dragon token. Draw a card.
       [act][engage], discard a card: Put a Hellflame Dragon token into your EX area. This ability can be activated if Overflow is active for you.";
 
-ability OnDiscard {
+ability OnDiscarded {
     effect SummonToken(Hellflame Dragon, ExArea, 1);
 }
 ability Fanfare {

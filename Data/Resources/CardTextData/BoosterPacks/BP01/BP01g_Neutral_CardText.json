@@ -248,7 +248,7 @@
     "cardText": "When this card is discarded, draw a card.\n----------\nDraw a card.",
     "effectText": [
       {
-        "key": "OnDiscard",
+        "key": "OnDiscarded",
         "text": "When this card is discarded, draw a card.",
         "trigger": "When this card is discarded",
         "body": "Draw a card."
