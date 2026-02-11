@@ -308,9 +308,13 @@ namespace SVESimulator
             Debug.Assert(targetZone != null, $"Transform card effect received invalid zone {msg.originZone}");
             Debug.Assert(targetCard != null, $"Failed to find card with instance ID {msg.targetCardInstanceId} in zone {msg.originZone}");
 
-            (server.effectSolver as SVEEffectSolver).BanishCard(player.netId, targetCard, msg.originZone);
-            player.currentCardInstanceId++;
-            RuntimeCard tokenCard = (server.effectSolver as SVEEffectSolver).CreateAndAddToken(msg.playerNetId, msg.libraryCardId, msg.tokenRuntimeCardInstanceId, targetZone);
+            RuntimeCard tokenCard = null;
+            if(!msg.isOpponentCard)
+            {
+                (server.effectSolver as SVEEffectSolver)?.BanishCard(player.netId, targetCard, msg.originZone);
+                player.currentCardInstanceId++;
+                tokenCard = (server.effectSolver as SVEEffectSolver)?.CreateAndAddToken(msg.playerNetId, msg.libraryCardId, msg.tokenRuntimeCardInstanceId, targetZone);
+            }
 
             OpponentTransformCardMessage transformMessage = new()
             {
@@ -319,7 +323,8 @@ namespace SVESimulator
                 isOpponentCard = msg.isOpponentCard,
                 originZone = msg.originZone,
 
-                tokenCard = NetworkingUtils.GetNetCard(tokenCard),
+                tokenCard = tokenCard != null ? NetworkingUtils.GetNetCard(tokenCard) : new NetCard(),
+                tokenCardId = msg.libraryCardId,
                 slotId = msg.slotId
             };
             server.SafeSendToClient(server.gameState.currentOpponent, transformMessage);

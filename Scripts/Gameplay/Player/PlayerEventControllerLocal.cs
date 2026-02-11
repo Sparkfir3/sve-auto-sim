@@ -626,21 +626,20 @@ namespace SVESimulator
 
             // Banish old card & create token
             RuntimeCard targetRuntimeCard = targetCard.RuntimeCard;
+            RuntimeCard tokenRuntimeCard = null;
             int slotId = targetZone.GetSlotNumber(targetCard);
             bool isLocalPlayersCard = targetCard.CurrentZone.IsLocalPlayerZone;
             if(!isLocalPlayersCard)
-            {
-                Debug.LogError("Targeting an opponent's card with Transform is not currently supported");
-                return;
-            }
+                goto sendMessage; // skip local logic, send message tells opponent to perform the effect and send logic back to us
 
             BanishCard(targetCard, sendMessage: false);
-            RuntimeCard tokenRuntimeCard = sveEffectSolver.CreateAndAddToken(netIdentity, tokenLibraryCard.id,
+            tokenRuntimeCard = sveEffectSolver.CreateAndAddToken(netIdentity, tokenLibraryCard.id,
                 isLocalPlayersCard ? playerInfo.currentCardInstanceId++ : opponentInfo.currentCardInstanceId++, targetZone.Runtime);
             CardObject tokenCardObject = CardManager.Instance.RequestCard(tokenRuntimeCard);
             localZoneController.AddAndPlaceToken(tokenCardObject, targetZone, slotId);
 
             // Send message
+            sendMessage:
             LocalTransformCardMessage msg = new()
             {
                 playerNetId = netIdentity,
@@ -649,7 +648,7 @@ namespace SVESimulator
                 originZone = targetZone.Runtime.name,
 
                 libraryCardId = tokenLibraryCard.id,
-                tokenRuntimeCardInstanceId = tokenRuntimeCard.instanceId,
+                tokenRuntimeCardInstanceId = tokenRuntimeCard?.instanceId ?? -1,
                 slotId = slotId
             };
             NetworkClient.Send(msg);

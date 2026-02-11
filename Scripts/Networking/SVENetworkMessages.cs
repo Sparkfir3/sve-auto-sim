@@ -371,6 +371,7 @@ namespace SVESimulator
         public string originZone;
 
         public NetCard tokenCard;
+        public int tokenCardId;
         public int slotId;
     }
 

@@ -289,6 +289,14 @@ namespace SVESimulator
 
         public void TransformCard(OpponentTransformCardMessage msg)
         {
+            if(msg.isOpponentCard)
+            {
+                CardObject baseCard = CardManager.Instance.GetCardByInstanceId(msg.targetCard.instanceId);
+                Card tokenLibraryCard = LibraryCardCache.GetCard(msg.tokenCardId);
+                playerController.LocalEvents.TransformCard(baseCard, tokenLibraryCard.name);
+                return;
+            }
+
             BanishCard(new OpponentBanishCardMessage()
             {
                 playerNetId = msg.playerNetId,
