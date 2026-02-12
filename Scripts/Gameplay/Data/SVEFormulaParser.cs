@@ -336,6 +336,16 @@ namespace SVESimulator
                             Debug.Assert(card);
                             return card && filter.MatchesCard(card);
                         });
+                case "discard":
+                case "discarded":
+                    return filter == null || filter.Count == 0
+                        ? player.AdditionalStats.CardsDiscardedThisTurn.Count
+                        : player.AdditionalStats.CardsDiscardedThisTurn.Count(x =>
+                        {
+                            CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
+                            Debug.Assert(card);
+                            return card && filter.MatchesCard(card);
+                        });
                 default:
                     return 0;
             }

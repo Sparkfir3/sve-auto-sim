@@ -45,6 +45,7 @@ namespace SVESimulator
         public event Action OnConfirmationTimingStartConstant;
         public event Action OnNextConfirmationTimingEnd;
         public event Action OnConfirmationTimingEndConstant;
+        public event Action OnNextConfirmationTimingStartOrEnd;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
         public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
@@ -288,14 +289,28 @@ namespace SVESimulator
 
             IEnumerator ResolveOverTime()
             {
+                // Skip prompt if all effects fail condition
+                if(pendingEffects.Where(x => x.triggerState == EffectTriggerState.Immediate)
+                   .All(x =>
+                   {
+                       if(x.condition.IsNullOrWhiteSpace())
+                           return false;
+                       CardObject card = CardManager.Instance.GetCardByInstanceId(x.sourceCardInstanceId);
+                       return !SVEFormulaParser.ParseValueAsCondition(x.condition, localPlayer, card);
+                   }))
+                {
+                    goto exit;
+                }
+
                 // Resolve single effect
-                if(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
+                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
                 {
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
                         if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
                             continue;
                         yield return ResolveEffectAtIndex(i);
+                        break;
                     }
                 }
 
@@ -321,6 +336,7 @@ namespace SVESimulator
                 }
 
                 // Complete
+                exit:
                 yield return null;
                 pendingEffects = pendingEffects.Where(x => x.triggerState != EffectTriggerState.Immediate).ToList();
                 CmdSetConfirmationTimingState(isTurnPlayer ? ConfirmationTimingState.FinishedTurnPlayer : ConfirmationTimingState.FinishedNonTurnPlayer);
@@ -342,7 +358,7 @@ namespace SVESimulator
         public void ResolvePendingEffect(SVEPendingEffect pendingEffect, Action onComplete = null)
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(pendingEffect.sourceCardInstanceId);
-            if(!string.IsNullOrWhiteSpace(pendingEffect.condition) && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
+            if(!pendingEffect.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
             {
                 onComplete?.Invoke();
                 return;
@@ -441,12 +457,18 @@ namespace SVESimulator
                 OnNextConfirmationTimingStart?.Invoke();
                 OnConfirmationTimingStartConstant?.Invoke();
                 OnNextConfirmationTimingStart = null;
+                OnNextConfirmationTimingStartOrEnd?.Invoke();
+                OnNextConfirmationTimingStartOrEnd = null;
             }
             else if(oldState == ConfirmationTimingState.FinishedNonTurnPlayer && newState == ConfirmationTimingState.Idle)
             {
                 OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
                 OnNextConfirmationTimingEnd = null;
+                OnNextConfirmationTimingStartOrEnd?.Invoke();
+                OnNextConfirmationTimingStartOrEnd = null;
+                CardManager.Instance.ReleaseAllDisabledCards();
+
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
                 {
                     localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
@@ -470,9 +492,9 @@ namespace SVESimulator
             if(card == null)
                 return;
 
-            // Apply during next confirmation timing to wait for other effects to resolve
+            // Apply during next confirmation timing to wait for other effects to resolve TODO - update any time field changes/apply in the middle of confirmation timing
             //   (i.e. don't apply the passive before we finish playing the card to the field)
-            OnNextConfirmationTimingStart += () =>
+            OnNextConfirmationTimingStartOrEnd += () =>
             {
                 if(!localPlayer.ZoneController.fieldZone.ContainsCard(card) && !opponentPlayer.ZoneController.fieldZone.ContainsCard(card))
                     return;

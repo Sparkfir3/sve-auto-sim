@@ -1,0 +1,398 @@
+name Imperial Dragoon;
+id BP02-052;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity L;
+cost 8;
+stats 6/6;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Deal X damage to each enemy leader and enemy follower on the field. X equals the number of cards in your hand. Discard your hand.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(Damage, Discard);
+}
+ability Spell name Damage {
+    effect DealDamage(H) to AllOpponentCardsAndLeader F;
+}
+ability Spell name Discard {
+    effect DiscardHand();
+}
+
+// ------------------------------
+
+name Imperial Dragoon (Evolved);
+id BP02-053;
+class Dragon;
+type Evolved Follower;
+trait Dragonheart;
+rarity L;
+stats 7/7;
+
+text "On Evolve: Draw 3 cards.";
+
+ability OnEvolve {
+    effect Draw(3);
+}
+
+// ------------------------------
+
+name Dragonsong Flute;
+id BP02-054;
+class Dragon;
+type Amulet;
+trait Dragonheart;
+rarity L;
+cost 1;
+
+text "When this card is discarded, put a Hellflame Dragon token into your EX area.
+      ----------
+      [fanfare][cost03]: Summon a Hellflame Dragon token. Draw a card.
+      [act][engage], discard a card: Put a Hellflame Dragon token into your EX area. This ability can be activated if Overflow is active for you.";
+
+ability OnDiscarded {
+    effect SummonToken(Hellflame Dragon, ExArea, 1);
+}
+ability Fanfare {
+    cost (PP, 3);
+    effect Sequence(Summon, Draw);
+}
+ability Spell name Summon {
+    effect SummonToken(Hellflame Dragon, Field, 1);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Act {
+    condition o;
+    cost (EngageSelf), (Discard, 1);
+    effect SummonToken(Hellflame Dragon, ExArea, 1);
+}
+
+// ------------------------------
+
+name Neptune;
+id BP02-055;
+class Dragon;
+type Follower;
+trait Dragonheart / Marine;
+rarity G;
+cost 5;
+stats 4/4;
+
+text "[evolve][cost02]: Evolve this follower.
+      Ward.
+      [fanfare] Summon a Megalorca token.
+      While this card is on your field, your Megalorca tokens have Rush.";
+
+evolve 2;
+keyword Ward;
+ability Fanfare {
+    effect SummonToken(Megalorca, Field, 1);
+}
+ability Passive {
+    effect GiveKeyword(Rush, WhileOnField) to AllPlayerCards Kn(Megalorca);
+}
+
+// ------------------------------
+
+name Neptune (Evolved);
+id BP02-056;
+class Dragon;
+type Evolved Follower;
+trait Dragonheart / Marine;
+rarity G;
+stats 5/5;
+
+text "Ward.
+      On Evolve: Summon a Megalorca token.
+      While this card is on your field, your Megalorca tokens have Storm.";
+
+keyword Ward;
+ability OnEvolve {
+    effect SummonToken(Megalorca, Field, 1);
+}
+ability Passive {
+    effect GiveKeyword(Storm, WhileOnField) to AllPlayerCards Kn(Megalorca);
+}
+
+// ------------------------------
+
+name Draconic Fervor;
+id BP02-057;
+class Dragon;
+type Spell;
+trait Dragonewt;
+rarity G;
+cost 5;
+
+text "Increase your maximum play points by 1. Give your leader [defense]+3. Draw a card.";
+
+ability Spell {
+    effect Sequence(PlayPoints, Defense, Draw);
+}
+ability Spell name PlayPoints {
+    effect GiveStat(MaxPP, 1) to Leader;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 3) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Polyphonic Roar;
+id BP02-058;
+class Dragon;
+type Amulet;
+trait Wyrmkin;
+rarity G;
+cost 5;
+
+text "Once on each of your turns, when a Dragon token is put onto your field, select an enemy leader or enemy follower on the field and deal it 5 damage.";
+
+ability OnOtherEnterField {
+    filter Kn(Dragon);
+    cost (OncePerTurn);
+    effect DealDamage(5) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Siegfried;
+id BP02-059;
+class Dragon;
+type Follower;
+trait Wyrmkin / Cutthroat;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Select an enemy follower on the field and deal it 2 damage.";
+
+evolve 1;
+ability Fanfare {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Siegfried (Evolved);
+id BP02-060;
+class Dragon;
+type Evolved Follower;
+trait Wyrmkin / Cutthroat;
+rarity S;
+stats 3/3;
+
+text "On Evolve: Select an enemy follower with 3 defense or less on the field and destroy it.";
+
+ability OnEvolve {
+    effect Destroy() to TargetOpponentCard Fd(m(0,3));
+}
+
+// ------------------------------
+
+name Transmorgrifried Wyrm;
+id BP02-061;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity S;
+cost 4;
+stats 5/5;
+
+text "[fanfare] Select a card in an EX area and transform it into a Dragon token.";
+
+ability Fanfare {
+    effect Transform(Dragon) to TargetCardEx;
+}
+
+// ------------------------------
+
+name Dracomancer's Rites;
+id BP02-062;
+class Dragon;
+type Amulet;
+trait Dragonheart;
+rarity S;
+cost 3;
+
+text "[fanfare] Discard a card: Give your leader [defense]+1.
+      At the start of your end phase, if you discarded a card this turn, select an enemy leader or enemy follower on the field and deal it 2 damage.";
+
+ability Fanfare {
+    cost (Discard, 1);
+    effect GiveStat(Def, 1) to Leader;
+}
+ability StartEndPhase {
+    condition #(discard);
+    effect DealDamage(2) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Wildfang Dragonewt;
+id BP02-063;
+class Dragon;
+type Follower;
+trait Dragonewt;
+rarity B;
+cost 3;
+stats 4/3;
+
+text "If you've discarded a card this turn, this card costs 2 less to play.";
+
+ability ModifiedCost {
+    condition #(discard);
+    effect ReducedCost(2);
+}
+
+// ------------------------------
+
+name Mushussu;
+id BP02-064;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "Whenever one of your followers evolves, give this follower [attack]+2.";
+
+ability OnOtherEvolve {
+    effect GiveStat(Atk, 2) to Self;
+}
+
+// ------------------------------
+
+name Dragontamer;
+id BP02-065;
+class Dragon;
+type Follower;
+trait Dragonheart;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Draw a card, then discard a card.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Dragontamer (Evolved);
+id BP02-066;
+class Dragon;
+type Evolved Follower;
+trait Dragonheart;
+rarity B;
+stats 3/3;
+
+text "On Evolve, discard a card: Select a Wyrmkin follower in your cemetery and add it to your hand.";
+
+ability OnEvolve {
+    cost (Discard, 1);
+    effect Salvage(1, Ft(Wyrmkin));
+}
+
+// ------------------------------
+
+name Twin-Headed Dragon;
+id BP02-067;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 4;
+stats 2/5;
+
+text "[fanfare][cost03]: Summon a Dragon token.
+      This follower deals double attack damage to leaders and double combat damage to followers.";
+
+keyword DoubleLeaderDamage, DoubleCombatDamage;
+ability Fanfare {
+    cost (PP, 3);
+    effect SummonToken(Dragon, Field, 1);
+}
+
+// ------------------------------
+
+name Draconic Armor;
+id BP02-068;
+class Dragon;
+type Spell;
+trait Wyrmkin / Armed;
+rarity B;
+cost 1;
+
+text "Summon a Draconic Weapon token. If Overflow is active for you, summon 2 instead.";
+
+ability Spell {
+    effect SummonToken(Draconic Weapon, Field, 1o2);
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Megalorca;
+id BP02-T05;
+class Dragon;
+type Follower / Token;
+trait Marine;
+cost 2;
+stats 2/2;
+
+// ------------------------------
+
+name Hellflame Dragon;
+id BP02-T06;
+class Dragon;
+type Follower / Token;
+trait Wyrmkin;
+cost 2;
+stats 4/3;
+
+text "Rush.";
+
+keyword Rush;
+
+// ------------------------------
+
+name Draconic Weapon;
+id BP02-T07;
+class Dragon;
+type Amulet / Token;
+trait Armed;
+cost 1;
+
+text "[act][engage], put this card into its owner's cemetery: Select a [dragoncraft] follower on your field. Give it [defense]+1 and the Armed trait.";
+
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    condition f(Fc(Dragon));
+    effect TargetForSequence(Defense, Armed) to TargetPlayerCard Fc(Dragon);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 1) to AllPlayerCards;
+}
+ability Spell name Armed {
+    effect GiveTrait(Armed) to AllPlayerCards;
+}

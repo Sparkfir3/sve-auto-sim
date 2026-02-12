@@ -46,7 +46,7 @@ namespace SVESimulator
                 {
                     foreach(CardObject banish in cards)
                     {
-                        player.ZoneController.SendCardToBanishedZone(banish);
+                        player.LocalEvents.BanishCard(banish, originZone: SVEProperties.Zones.Cemetery, onlyMoveObject: true);
                         cardsToMove.Add(new MoveCardToZoneData(banish.RuntimeCard.instanceId, SVEProperties.Zones.Cemetery, SVEProperties.Zones.Banished));
                     }
                     waiting = false;

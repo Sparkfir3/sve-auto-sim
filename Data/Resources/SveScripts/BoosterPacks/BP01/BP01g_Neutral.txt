@@ -393,6 +393,6 @@ text "When this card is discarded, draw a card.
 ability Spell {
     effect DrawCard(1);
 }
-ability OnDiscard {
+ability OnDiscarded {
     effect DrawCard(1);
 }

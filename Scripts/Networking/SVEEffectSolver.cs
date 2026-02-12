@@ -266,7 +266,7 @@ namespace SVESimulator
             }
             else if(cardZone.Equals(SVEProperties.Zones.Hand) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardedTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
             }
         }
 
@@ -551,7 +551,8 @@ namespace SVESimulator
 
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage) || (defender != null && defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage)))
+            bool isFollowerCombat = defender != null;
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage) || (isFollowerCombat && defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage)))
                 return 0;
 
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
@@ -566,8 +567,12 @@ namespace SVESimulator
             if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus4Damage))
                 damage += 4;
 
-            if(defender != null && defender.HasKeyword(SVEProperties.PassiveAbilities.DamageReduction1))
+            if(isFollowerCombat && defender.HasKeyword(SVEProperties.PassiveAbilities.DamageReduction1))
                 damage = Mathf.Max(damage - 1, 0);
+
+            if((isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleCombatDamage))
+                || (!isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleLeaderDamage)))
+                damage *= 2;
 
             return damage;
         }

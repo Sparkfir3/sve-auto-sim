@@ -8,8 +8,8 @@ namespace SVESimulator
 
         public enum Counters
         {
-            Stack = 10,
-            Spell = 11
+            Stack = 5,
+            Spell = 6
         }
 
         public enum SVEEffectTarget
@@ -29,6 +29,7 @@ namespace SVESimulator
             AllOpponentCards,
             AllOpponentCardsEx,
             AllOpponentCardsFieldAndEx,
+            AllOpponentCardsAndLeader,
             TargetOpponentCard,
             TargetOpponentCardsDivided,
             TargetOpponentCardOrLeader,
@@ -36,6 +37,7 @@ namespace SVESimulator
 
             AllCards,
             TargetCard,
+            TargetCardEx,
 
             AllPlayers,
             AllLeaders
@@ -155,6 +157,8 @@ namespace SVESimulator
             public const string UseDefAsAtk = "UseDefAsAtk";
             public const string DoesNotTakeCombatDamage = "DoesNotTakeCombatDamage";
             public const string UseRuneFollowersForSpellchain = "UseRuneFollowersForSpellchain";
+            public const string DoubleCombatDamage = "DoubleCombatDamage";
+            public const string DoubleLeaderDamage = "DoubleLeaderDamage";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";

@@ -151,7 +151,8 @@ namespace SVESimulator
         public static bool IsLeader(this SVEProperties.SVEEffectTarget target, out bool localLeader, out bool opponentLeader)
         {
             localLeader = target is SVEProperties.SVEEffectTarget.Leader or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader or SVEProperties.SVEEffectTarget.AllLeaders;
-            opponentLeader = target is SVEProperties.SVEEffectTarget.OpponentLeader or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader or SVEProperties.SVEEffectTarget.AllLeaders;
+            opponentLeader = target is SVEProperties.SVEEffectTarget.OpponentLeader or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader or SVEProperties.SVEEffectTarget.AllOpponentCardsAndLeader
+                or SVEProperties.SVEEffectTarget.AllLeaders;
             return localLeader || opponentLeader;
         }
 
@@ -160,7 +161,7 @@ namespace SVESimulator
             return target is SVEProperties.SVEEffectTarget.AllPlayerCards or SVEProperties.SVEEffectTarget.TargetPlayerCard or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader
                 or SVEProperties.SVEEffectTarget.AllOpponentCards or SVEProperties.SVEEffectTarget.TargetOpponentCard
                 or SVEProperties.SVEEffectTarget.TargetOpponentCardsDivided or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader
-                or SVEProperties.SVEEffectTarget.AllCards;
+                or SVEProperties.SVEEffectTarget.AllOpponentCardsAndLeader or SVEProperties.SVEEffectTarget.AllCards;
         }
 
         #endregion

@@ -55,7 +55,7 @@ namespace SVESimulator
 
     // -----
 
-    public class SveOnDiscardTrigger : SveTrigger { }
+    public class SveOnDiscardedTrigger : SveTrigger { }
 
     #endregion
 

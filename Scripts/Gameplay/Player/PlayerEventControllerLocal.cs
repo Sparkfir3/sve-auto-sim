@@ -359,8 +359,13 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.SendToCemetery(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone, isDestroy);
-            if(isLocalPlayersCard && isDestroy && originZone.Equals(SVEProperties.Zones.Field))
-                playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            if(isLocalPlayersCard)
+            {
+                if(isDestroy && originZone.Equals(SVEProperties.Zones.Field))
+                    playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                else if(originZone.Equals(SVEProperties.Zones.Hand))
+                    playerController.AdditionalStats.CardsDiscardedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            }
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToCemetery(x, onComplete));
 
             // ---
@@ -398,13 +403,13 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void BanishCard(CardObject card, bool sendMessage = true, bool onlyMoveObject = false)
+        public void BanishCard(CardObject card, string originZone = null, bool sendMessage = true, bool onlyMoveObject = false)
         {
             if(CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
 
             RuntimeCard runtimeCard = card.RuntimeCard;
-            string originZone = card.CurrentZone.Runtime.name;
+            originZone ??= card.CurrentZone.Runtime.name;
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
 
@@ -437,7 +442,11 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
-            StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            // Show if adding from cemetery, otherwise normal move logic
+            if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
+                StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            else
+                localZoneController.RevealCard(card, onComplete: () => localZoneController.AddCardToHand(card, () => card.Interactable = playerController.isActivePlayer));
 
             // ---
 
@@ -621,21 +630,20 @@ namespace SVESimulator
 
             // Banish old card & create token
             RuntimeCard targetRuntimeCard = targetCard.RuntimeCard;
+            RuntimeCard tokenRuntimeCard = null;
             int slotId = targetZone.GetSlotNumber(targetCard);
             bool isLocalPlayersCard = targetCard.CurrentZone.IsLocalPlayerZone;
             if(!isLocalPlayersCard)
-            {
-                Debug.LogError("Targeting an opponent's card with Transform is not currently supported");
-                return;
-            }
+                goto sendMessage; // skip local logic, send message tells opponent to perform the effect and send logic back to us
 
             BanishCard(targetCard, sendMessage: false);
-            RuntimeCard tokenRuntimeCard = sveEffectSolver.CreateAndAddToken(netIdentity, tokenLibraryCard.id,
+            tokenRuntimeCard = sveEffectSolver.CreateAndAddToken(netIdentity, tokenLibraryCard.id,
                 isLocalPlayersCard ? playerInfo.currentCardInstanceId++ : opponentInfo.currentCardInstanceId++, targetZone.Runtime);
             CardObject tokenCardObject = CardManager.Instance.RequestCard(tokenRuntimeCard);
             localZoneController.AddAndPlaceToken(tokenCardObject, targetZone, slotId);
 
             // Send message
+            sendMessage:
             LocalTransformCardMessage msg = new()
             {
                 playerNetId = netIdentity,
@@ -644,7 +652,7 @@ namespace SVESimulator
                 originZone = targetZone.Runtime.name,
 
                 libraryCardId = tokenLibraryCard.id,
-                tokenRuntimeCardInstanceId = tokenRuntimeCard.instanceId,
+                tokenRuntimeCardInstanceId = tokenRuntimeCard?.instanceId ?? -1,
                 slotId = slotId
             };
             NetworkClient.Send(msg);

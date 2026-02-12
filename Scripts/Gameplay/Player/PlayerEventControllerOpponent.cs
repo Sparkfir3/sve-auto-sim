@@ -194,6 +194,7 @@ namespace SVESimulator
             {
                 if(msg.originZone.Equals(SVEProperties.Zones.Deck))
                 {
+                    Debug.LogWarning("ReturnToHand should not target a card in the deck. Use DrawCard instead.");
                     RuntimeCard runtimeCard = new RuntimeCard();
                     InitRuntimeCard(ref runtimeCard, msg.card);
                     card = CardManager.Instance.RequestCard(runtimeCard);
@@ -209,7 +210,10 @@ namespace SVESimulator
             }
 
             sveEffectSolver.ReturnCardToHand(msg.isOpponentCard ? playerInfo : opponentInfo, card.RuntimeCard, msg.originZone);
-            StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            if(!msg.isOpponentCard && msg.originZone.Equals(SVEProperties.Zones.Cemetery))
+                oppZoneController.RevealCard(card, onComplete: () => oppZoneController.AddCardToHand(card));
+            else
+                StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
         }
 
         public void SendToBottomDeck(OpponentSendToBottomDeckMessage msg)
@@ -289,6 +293,14 @@ namespace SVESimulator
 
         public void TransformCard(OpponentTransformCardMessage msg)
         {
+            if(msg.isOpponentCard)
+            {
+                CardObject baseCard = CardManager.Instance.GetCardByInstanceId(msg.targetCard.instanceId);
+                Card tokenLibraryCard = LibraryCardCache.GetCard(msg.tokenCardId);
+                playerController.LocalEvents.TransformCard(baseCard, tokenLibraryCard.name);
+                return;
+            }
+
             BanishCard(new OpponentBanishCardMessage()
             {
                 playerNetId = msg.playerNetId,

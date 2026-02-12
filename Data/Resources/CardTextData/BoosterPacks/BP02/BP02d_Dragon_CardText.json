@@ -1,0 +1,256 @@
+[
+  {
+    "id": "BP02-052EN",
+    "name": "Imperial Dragoon",
+    "trait": "Dragonheart",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Deal X damage to each enemy leader and enemy follower on the field. X equals the number of cards in your hand. Discard your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal X damage to each enemy leader and enemy follower on the field. X equals the number of cards in your hand. Discard your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-053EN",
+    "name": "Imperial Dragoon (Evolved)",
+    "trait": "Dragonheart",
+    "cardText": "On Evolve: Draw 3 cards.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Draw 3 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP02-054EN",
+    "name": "Dragonsong Flute",
+    "trait": "Dragonheart",
+    "cardText": "When this card is discarded, put a Hellflame Dragon token into your EX area.\n----------\n[fanfare][cost03]: Summon a Hellflame Dragon token. Draw a card.\n[act][engage], discard a card: Put a Hellflame Dragon token into your EX area. This ability can be activated if Overflow is active for you.",
+    "effectText": [
+      {
+        "key": "OnDiscarded",
+        "text": "When this card is discarded, put a Hellflame Dragon token into your EX area.",
+        "trigger": "When this card is discarded",
+        "body": "Put a Hellflame Dragon token into your EX area."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost03]",
+        "body": "Summon a Hellflame Dragon token. Draw a card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], discard a card",
+        "body": "Put a Hellflame Dragon token into your EX area. This ability can be activated if Overflow is active for you."
+      }
+    ]
+  },
+  {
+    "id": "BP02-055EN",
+    "name": "Neptune",
+    "trait": "Dragonheart / Marine",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nWard.\n[fanfare] Summon a Megalorca token.\nWhile this card is on your field, your Megalorca tokens have Rush.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Megalorca token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-056EN",
+    "name": "Neptune (Evolved)",
+    "trait": "Dragonheart / Marine",
+    "cardText": "Ward.\nOn Evolve: Summon a Megalorca token.\nWhile this card is on your field, your Megalorca tokens have Storm.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Summon a Megalorca token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-057EN",
+    "name": "Draconic Fervor",
+    "trait": "Dragonewt",
+    "cardText": "Increase your maximum play points by 1. Give your leader [defense]+3. Draw a card."
+  },
+  {
+    "id": "BP02-058EN",
+    "name": "Polyphonic Roar",
+    "trait": "Wyrmkin",
+    "cardText": "Once on each of your turns, when a Dragon token is put onto your field, select an enemy leader or enemy follower on the field and deal it 5 damage.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "Once on each of your turns, when a Dragon token is put onto your field, select an enemy leader or enemy follower on the field and deal it 5 damage.",
+        "trigger": "Once on each of your turns, when a Dragon token is put onto your field",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-059EN",
+    "name": "Siegfried",
+    "trait": "Wyrmkin / Cutthroat",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-060EN",
+    "name": "Siegfried (Evolved)",
+    "trait": "Wyrmkin / Cutthroat",
+    "cardText": "On Evolve: Select an enemy follower with 3 defense or less on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower with 3 defense or less on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP02-061EN",
+    "name": "Transmorgrifried Wyrm",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Select a card in an EX area and transform it into a Dragon token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a card in an EX area and transform it into a Dragon token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-062EN",
+    "name": "Dracomancer's Rites",
+    "trait": "Dragonheart",
+    "cardText": "[fanfare] Discard a card: Give your leader [defense]+1.\nAt the start of your end phase, if you discarded a card this turn, select an enemy leader or enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a card",
+        "body": "Give your leader [defense]+1."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if you discarded a card this turn, select an enemy leader or enemy follower on the field and deal it 2 damage.",
+        "trigger": "At the start of your end phase, if you discarded a card this turn",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-063EN",
+    "name": "Wildfang Dragonewt",
+    "trait": "Dragonewt",
+    "cardText": "If you've discarded a card this turn, this card costs 2 less to play."
+  },
+  {
+    "id": "BP02-064EN",
+    "name": "Mushussu",
+    "trait": "Wyrmkin",
+    "cardText": "Whenever one of your followers evolves, give this follower [attack]+2.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever one of your followers evolves, give this follower [attack]+2.",
+        "trigger": "Whenever one of your followers evolves",
+        "body": "Give this follower [attack]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP02-065EN",
+    "name": "Dragontamer",
+    "trait": "Dragonheart",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-066EN",
+    "name": "Dragontamer (Evolved)",
+    "trait": "Dragonheart",
+    "cardText": "On Evolve, discard a card: Select a Wyrmkin follower in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "On Evolve, discard a card: Select a Wyrmkin follower in your cemetery and add it to your hand.",
+        "trigger": "On Evolve:",
+        "cost": "Discard a card",
+        "body": "Select a Wyrmkin follower in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-067EN",
+    "name": "Twin-Headed Dragon",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare][cost03]: Summon a Dragon token.\nThis follower deals double attack damage to leaders and double combat damage to followers.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost03]",
+        "body": "Summon a Dragon token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-068EN",
+    "name": "Draconic Armor",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "Summon a Draconic Weapon token. If Overflow is active for you, summon 2 instead."
+  },
+  {
+    "id": "BP02-T05EN",
+    "name": "Megalorca",
+    "trait": "Marine / Token"
+  },
+  {
+    "id": "BP02-T06EN",
+    "name": "Hellflame Dragon",
+    "trait": "Wyrmkin / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP02-T07EN",
+    "name": "Draconic Weapon",
+    "trait": "Armed / Token",
+    "cardText": "[act][engage], put this card into its owner's cemetery: Select a [dragoncraft] follower on your field. Give it [defense]+1 and the Armed trait.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Select a [dragoncraft] follower on your field. Give it [defense]+1 and the Armed trait."
+      }
+    ]
+  }
+]

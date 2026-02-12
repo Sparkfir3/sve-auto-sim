@@ -44,7 +44,7 @@ namespace SVESimulator
                 {
                     foreach(CardObject discard in cards)
                     {
-                        player.ZoneController.SendCardToCemetery(discard);
+                        player.LocalEvents.SendToCemetery(discard, originZone: SVEProperties.Zones.Hand, onlyMoveObject: true);
                         cardsToMove.Add(new MoveCardToZoneData(discard.RuntimeCard.instanceId, SVEProperties.Zones.Hand, SVEProperties.Zones.Cemetery));
                     }
                     waiting = false;
