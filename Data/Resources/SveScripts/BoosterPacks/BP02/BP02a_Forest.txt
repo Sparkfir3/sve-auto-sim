@@ -1,0 +1,340 @@
+name Crystalia Tia;
+id BP02-001;
+class Forest;
+type Follower;
+trait Crystalian / Princess;
+rarity L;
+cost 2;
+stats 1/1;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Combo (3): Summon a Crystalia Eve token.";
+
+evolve 1;
+ability Fanfare {
+    condition c(3);
+    effect SummonToken(Crystalia Eve, Field, 1);
+}
+
+// ------------------------------
+
+name Crystalia Tia;
+id BP02-002;
+class Forest;
+type Evolved Follower;
+trait Crystalian / Princess;
+rarity L;
+stats 2/2;
+
+text "On Evolve: Select a Crystalia Eve token on your field. Give it [attack]+1/[defense]+1 and Rush.";
+
+ability OnEvolve {
+    effect TargetForSequence(AtkDef, Rush) to TargetPlayerCard Kn(Crystalia Eve);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name White Wolf of Eldwood;
+id BP02-003;
+class Forest;
+type Follower;
+trait Fae-Touched / Beast;
+rarity L;
+cost 7;
+stats 4/4;
+
+text "Storm.
+      [lastwords] Look at the top 4 cards of your deck. You may put a [forestcraft] follower from among them onto your field. Put the remaining cards on the bottom of your deck in any order.";
+
+keyword Storm;
+ability LastWords {
+    effect CheckTop(4, (Field, Fc(Forest), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Elf Girl Liza;
+id BP02-004;
+class Forest;
+type Follower;
+trait Elf;
+rarity G;
+cost 2;
+stats 2/3;
+
+text "While this card is on your field, your followers take 1 less damage from enemy abilities.";
+
+ability Passive {
+    effect GiveKeyword(DamageReductionAbilities1, WhileOnField) to AllPlayerCards F;
+}
+
+// ------------------------------
+
+name Elf Knight Cynthia;
+id BP02-005;
+class Forest;
+type Follower;
+trait Elf;
+rarity G;
+cost 5;
+stats 5/5;
+
+text "Rush.
+      Strike, banish a card in your EX area: Select an enemy leader or enemy follower on the field. Deal it 2 damage and summon 2 Fairy tokens.";
+
+keyword Rush;
+ability Strike {
+    cost (Banish, TargetPlayerCardEx);
+    effect Sequence(Damage, Tokens);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to TargetOpponentCardOrLeader F;
+}
+ability Spell name Tokens {
+    effect SummonToken(Fairy, Field, 2);
+}
+
+// ------------------------------
+
+name Grand Archer Selwyn;
+id BP02-006;
+class Forest;
+type Follower;
+trait Hunter;
+rarity G;
+cost 4;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Combo (4): Select an enemy follower on the field and deal it 5 damage.";
+
+evolve 1;
+ability Fanfare {
+    condition c(4);
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Grand Archer Selwyn (Evolved);
+id BP02-007;
+class Forest;
+type Evolved Follower;
+trait Hunter;
+rarity G;
+stats 4/4;
+
+text "On Evolve: Select an enemy card that costs 3 play points or less on the field and destroy it.";
+
+ability OnEvolve {
+    effect Destroy() to TargetOpponentCard p(m(0,3));
+}
+
+// ------------------------------
+
+name Crystalia Lily;
+id BP02-008;
+class Forest;
+type Follower;
+trait Crystalian;
+rarity S;
+cost 2;
+stats 1/3;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Look at the top 2 cards of your deck. You may reveal a Crystalian or Pixie follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+evolve 2;
+ability Fanfare {
+    effect CheckTop(2, (Hand, Ft(Crystalian,Pixie), m(0,1)), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Crystalia Lily (Evolved);
+id BP02-009;
+class Forest;
+type Evolved Follower;
+trait Crystalian;
+rarity S;
+stats 2/4;
+
+text "On Evolve: Select an enemy follower on the field and put it on the bottom of its owner's deck.";
+
+ability OnEvolve {
+    effect BottomDeck() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Baalt, King of the Elves;
+id BP02-010;
+class Forest;
+type Follower;
+trait Elf;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Choose one of the following. (1) Select a Pixie follower on your field and give it [attack]+2/[defense]+2. (2) Search your deck for a Pixie follower, reveal it, and add it to your hand.";
+
+ability Fanfare {
+    effect ChooseFromList(AtkDef, Search);
+}
+ability Spell name AtkDef {
+    condition f(Ft(Pixie));
+    effect GiveStat(AtkDef, 2) to TargetPlayerCard Ft(Pixie);
+}
+ability Spell name Search {
+    effect Search(1, Ft(Pixie), Hand);
+}
+
+// ------------------------------
+
+name Elven Archery;
+id BP02-011;
+class Forest;
+type Spell;
+trait Elf;
+rarity S;
+cost 1;
+
+text "Select up to 2 enemy followers on the field and deal them 1 damage. Combo (3): Deal 2 damage instead.";
+
+ability Spell {
+    effect DealDamage(1c(3)2) to TargetOpponentCard Fm(0,2);
+}
+
+// ------------------------------
+
+name Dwarf Perfumer;
+id BP02-012;
+class Forest;
+type Follower;
+trait Fae-Touched;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "Whenever one of your followers evolves, select an enemy follower on the field and deal it 2 damage.";
+
+ability OnOtherEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Elf Healer;
+id BP02-013;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 3;
+stats 1/5;
+
+text "[fanfare] Give your leader [defense]+3.";
+
+ability Fanfare {
+    effect GiveStat(Def, 3) to Leader;
+}
+
+// ------------------------------
+
+name Forest Gigas;
+id BP02-014;
+class Forest;
+type Follower;
+trait Fae-Touched / Gigant;
+rarity B;
+cost 6;
+stats 1/7;
+
+text "[evolve][cost01]: Evolve this follower.
+      Ward.
+      [fanfare] Give this follower [attack]+X. X equals the number of cards in your EX area.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(Atk, x()) to Self;
+}
+
+// ------------------------------
+
+name Forest Gigas (Evolved);
+id BP02-015;
+class Forest;
+type Evolved Follower;
+trait Fae-Touched / Gigant;
+rarity B;
+stats 3/7;
+
+text "Ward.
+      On Evolve: Select an enemy follower on the field and deal it X damage. X equals this follower's attack.";
+
+keyword Ward;
+ability OnEvolve {
+    effect DealDamage(A) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Elf Bard;
+id BP02-016;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "Whenever one of your followers evolves, put a Fairy Wisp token into your EX area.";
+
+ability OnOtherEvolve {
+    effect SummonToken(Fairy Wisp, ExArea, 1);
+}
+
+// ------------------------------
+
+name Rose Deer;
+id BP02-017;
+class Forest;
+type Follower;
+trait Fae-Touched / Verdant;
+rarity B;
+cost 4;
+stats 4/3;
+
+text "Rush.
+      [fanfare] Put a Thorn Burst token into your EX area.";
+
+keyword Rush;
+ability Fanfare {
+    effect SummonToken(Thorn Burst, ExArea, 1);
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Michelle, Purehearted Mindreader;
+id BP02-LD01;
+class Forest;
+type Leader;
+
+// ------------------------------
+
+name Crystalia Eve;
+id BP02-T01;
+class Forest;
+type Follower / Token;
+trait Crystalian;
+cost 4;
+stats 4/4;

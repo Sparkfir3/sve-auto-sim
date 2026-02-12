@@ -46,6 +46,21 @@
             },
             {
                 "value": "CannotAttack"
+            },
+            {
+                "value": "UseDefAsAtk"
+            },
+            {
+                "value": "DoesNotTakeCombatDamage"
+            },
+            {
+                "value": "UseRuneFollowersForSpellchain"
+            },
+            {
+                "value": "DoubleCombatDamage"
+            },
+            {
+                "value": "DoubleLeaderDamage"
             }
         ],
         "id": 1
@@ -58,9 +73,33 @@
             },
             {
                 "value": "Plus2Damage"
+            },
+            {
+                "value": "Plus3Damage"
+            },
+            {
+                "value": "Plus4Damage"
             }
         ],
         "id": 2
+    },
+    {
+        "name": "DamageReduction",
+        "values": [
+            {
+                "value": "DamageReduction1"
+            }
+        ],
+        "id": 3
+    },
+    {
+        "name": "DamageReductionAbilities",
+        "values": [
+            {
+                "value": "DamageReductionAbilities1"
+            }
+        ],
+        "id": 4
     },
     {
         "name": "StackCounter",
@@ -76,9 +115,15 @@
             },
             {
                 "value": "Stack3"
+            },
+            {
+                "value": "Stack4"
+            },
+            {
+                "value": "Stack5"
             }
         ],
-        "id": 3
+        "id": 5
     },
     {
         "name": "SpellCounter",
@@ -93,6 +138,6 @@
                 "value": "Spell2"
             }
         ],
-        "id": 4
+        "id": 6
     }
 ]

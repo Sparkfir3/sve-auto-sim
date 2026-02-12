@@ -1,0 +1,222 @@
+[
+  {
+    "id": "SD04-001EN",
+    "name": "Fafnir",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Deal 5 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 5 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "SD04-002EN",
+    "name": "Dragon Oracle",
+    "trait": "Wyrmkin",
+    "cardText": "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following effects. (1) Increase your maximum play points by 1. (2) Draw a card."
+      },
+      {
+        "key": "Increase PP",
+        "body": "Increase your maximum play points by 1."
+      },
+      {
+        "key": "Draw",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "SD04-003EN",
+    "name": "Dragon Warrior",
+    "trait": "Wyrmkin",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "SD04-004EN",
+    "name": "Dragon Warrior (Evolved)",
+    "trait": "Wyrmkin",
+    "cardText": "On Evolve: Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "On Evolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "SD04-005EN",
+    "name": "Dragonewt Princess",
+    "trait": "Dragonewt / Princess",
+    "cardText": "[fanfare] If Overflow is active for you, select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Overflow is active for you, select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "SD04-006EN",
+    "name": "Dragonguard",
+    "trait": "Dragonheart",
+    "cardText": "Ward.\n[fanfare] If Overflow is active for you, give this follower [attack]+2/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Overflow is active for you, give this follower [attack]+2/[defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-094EN",
+    "name": "Fire Lizard",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Select an enemy leader or enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP01-097EN",
+    "name": "Dread Dragon",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 7 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 7 damage."
+      }
+    ]
+  },
+  {
+    "id": "SD04-009EN",
+    "name": "Roc",
+    "trait": "Beast",
+    "cardText": "[evolve][cost00]: Evolve this follower.\nStrike: Give this follower [attack]+1.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Give this follower [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "SD04-010EN",
+    "name": "Roc (Evolved)",
+    "trait": "Beast",
+    "cardText": "Strike: Give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "SD04-011EN",
+    "name": "Glint Dragon",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "SD04-012EN",
+    "name": "Dragonrider",
+    "trait": "Dragonheart",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] If Overflow is active for you, put a Dragon token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Overflow is active for you, put a Dragon token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "SD04-013EN",
+    "name": "Dragonrider (Evolved)",
+    "trait": "Dragonheart",
+    "cardText": "On Evolve: If Overflow is active for you, give this follower [attack]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "If Overflow is active for you, give this follower [attack]+2."
+      }
+    ]
+  },
+  {
+    "id": "SD04-014EN",
+    "name": "Seabrand Dragon",
+    "trait": "Marine",
+    "cardText": "[fanfare] If Overflow is active for you, give this follower Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Overflow is active for you, give this follower Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP01-098EN",
+    "name": "Blazing Breath",
+    "trait": "Wyrmkin",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP01-099EN",
+    "name": "Dragon Wings",
+    "trait": "Wyrmkin",
+    "cardText": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead."
+  },
+  {
+    "id": "BP01-174EN",
+    "name": "Goliath",
+    "trait": "Gigant",
+    "cardText": "[evolve][cost02]: Evolve this follower."
+  },
+  {
+    "id": "BP01-175EN",
+    "name": "Goliath (Evolved)",
+    "trait": "Gigant"
+  },
+  {
+    "id": "BP01-LD07EN",
+    "name": "Rowen"
+  },
+  {
+    "id": "BP01-T11EN",
+    "name": "Dragon",
+    "trait": "Wyrmkin / Token"
+  }
+]

@@ -22,17 +22,25 @@ namespace SVESimulator
         public int CurrentTurnNumber;
         [SyncVar]
         public bool EvolvedThisTurn;
-        [SyncVar]
-        public List<PlayedCardData> CardsPlayedThisTurn = new();
-        [SyncVar]
-        public List<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         [SyncVar, SerializeField]
         private int damageTakenThisTurn;
+        [SyncVar(hook = nameof(SyncHook_OnDeckCountChanged)), SerializeField]
+        private int cardsInDeck;
+        [SyncVar(hook = nameof(SyncHook_OnCemeteryCountChanged)), SerializeField]
+        private int cardsInCemetery;
+        [SyncVar(hook = nameof(SyncHook_OnSpellchainChanged)), SerializeField]
+        private int spellchain;
+        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckFaceDownCountChanged)), SerializeField]
+        private int cardsInEvolveDeckFaceDown;
+        [SyncVar(hook = nameof(SyncHook_OnEvolveDeckFaceUpCountChanged)), SerializeField]
+        private int cardsInEvolveDeckFaceUp;
+        [SyncVar(hook = nameof(SyncHook_OnBanishedZoneCountChanged)), SerializeField]
+        private int cardsInBanishedZone;
 
-        public int Combo => CardsPlayedThisTurn.Count;
-        public int Spellchain => localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell);
+        public int Combo => AdditionalStats.CardsPlayedThisTurn.Count;
+        public int Spellchain => spellchain;
         public bool Overflow => localMaxPlayPointStat != null && localMaxPlayPointStat.effectiveValue >= 7;
-        public int Necrocharge => localPlayerZoneController.cemeteryZone.AllCards.Count;
+        public int Necrocharge => cardsInCemetery;
         public bool Sanguine => damageTakenThisTurn > 0;
 
         [Header("Runtime References"), SerializeField, ReadOnly]
@@ -44,6 +52,8 @@ namespace SVESimulator
         public PlayerEventControllerLocal LocalEvents { get; private set; }
         [field: SerializeField]
         public PlayerEventControllerOpponent OpponentEvents { get; private set; }
+        [field: SerializeField]
+        public AdditionalPlayerStats AdditionalStats { get; private set; }
         [SerializeField]
         private PlayerInputController inputController;
 
@@ -58,7 +68,17 @@ namespace SVESimulator
         protected Stat localMaxPlayPointStat;
         protected Stat opponentPlayPointStat;
 
-        public Action onEndGameEvent;
+        // Events
+        public event Action<int> OnCardsInDeckChanged;
+        public event Action<int> OnCardsInCemeteryChanged;
+        public event Action<int> OnSpellchainChanged;
+        public event Action<int> OnCardsInEvolveDeckFaceDownChanged;
+        public event Action<int> OnCardsInEvolveDeckFaceUpChanged;
+        public event Action<int> OnCardsInBanishedZoneChanged;
+
+        public event Action<bool> OnStartLocalTurn; // bool = increment turn number
+        public event Action<bool> OnStartOpponentTurn;
+        public event Action onEndGameEvent;
 
         #endregion
 
@@ -72,54 +92,6 @@ namespace SVESimulator
             isHuman = true;
             localPlayerZoneController = FieldManager.PlayerZones;
             opponentPlayerZoneController = FieldManager.OpponentZones;
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            if(!isLocalPlayer)
-                return;
-
-            InitializeUI();
-        }
-
-        private void Update()
-        {
-            if(!isLocalPlayer)
-            {
-                return;
-            }
-
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log($"Cards in deck = {localPlayerZoneController.deckZone.Runtime.cards.Count}" +
-                    $" / cards in field = {localPlayerZoneController.fieldZone.Runtime.cards.Count}" +
-                    $" / cards in hand = {localPlayerZoneController.handZone.Runtime.cards.Count}" +
-                    $" / cards in evolve deck = {localPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
-            }
-            if(Input.GetKeyDown(KeyCode.RightAlt))
-            {
-                Debug.Log($"Cards in deck = {opponentPlayerZoneController.deckZone.Runtime.cards.Count}" +
-                    $" / cards in field = {opponentPlayerZoneController.fieldZone.Runtime.cards.Count}" +
-                    $" / cards in hand = {opponentPlayerZoneController.handZone.Runtime.cards.Count}" +
-                    $" / cards in evolve deck = {opponentPlayerZoneController.evolveDeckZone.Runtime.cards.Count}");
-            }
-            if(Input.GetKeyDown(KeyCode.L))
-            {
-                Debug.Log($"Local leader def = {playerInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}" +
-                    $" // Opponent leader def = {opponentInfo.namedStats[SVEProperties.PlayerStats.Defense].baseValue}");
-            }
-        }
-
-        #endregion
-
-        // ------------------------------
-
-        #region Initialization
-
-        private void InitializeUI()
-        {
-            GameUIManager.GameControlsUI.OnPressEndTurn += EnterEndPhase;
         }
 
         #endregion
@@ -154,8 +126,7 @@ namespace SVESimulator
         {
             base.OnStartLocalPlayer();
 
-            localPlayerZoneController.InitializeZones(playerInfo);
-            localPlayerZoneController.Player = this;
+            localPlayerZoneController.InitializeZones(this, playerInfo, !netIdentity.isClientOnly);
             playerInfo.namedStats[SVEProperties.PlayerStats.Defense].onValueChanged += (oldValue, newValue) =>
             {
                 int difference = newValue - oldValue;
@@ -163,9 +134,6 @@ namespace SVESimulator
                     damageTakenThisTurn += -difference;
             };
             FieldManager.PlayerLeaderHealth.Initialize(playerInfo.namedStats[SVEProperties.PlayerStats.Defense]);
-
-            opponentPlayerZoneController.InitializeZones(opponentInfo);
-            FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 
             if(isLocalPlayer && !inputController)
                 inputController = FindObjectOfType<PlayerInputController>();
@@ -191,8 +159,11 @@ namespace SVESimulator
             SVEEffectPool.Instance.LocalInitialize();
             SVEQuickTimingController.Instance.LocalInitialize();
 
-            CardsPlayedThisTurn.Clear();
-            AbilitiesUsedThisTurn.Clear();
+            PlayerController[] controllers = FindObjectsOfType<PlayerController>();
+            opponentPlayerZoneController.InitializeZones(controllers.FirstOrDefault(x => !x.isLocalPlayer), opponentInfo, !opponentInfo.netId.isClientOnly);
+            FieldManager.OpponentLeaderHealth.Initialize(opponentInfo.namedStats[SVEProperties.PlayerStats.Defense]);
+
+            AdditionalStats.Initialize(this);
             CurrentTurnNumber = 0;
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
@@ -205,8 +176,8 @@ namespace SVESimulator
 
             LocalEvents.InitializeDeckAndLeader();
             InitializePlayPointMeters();
-            GameUIManager.GameControlsUI.SetTurn(false);
-            GameUIManager.GameControlsUI.SetTurnDisplayActive(true);
+            GameUIManager.Instance.Initialize(this);
+            GameUIManager.GameControlsUI.SetPhase(SVEProperties.GamePhase.Setup);
         }
 
         public override void OnStartTurn(StartTurnMessage msg)
@@ -224,14 +195,16 @@ namespace SVESimulator
             // -----
 
             // Set up turn
-            GameUIManager.GameControlsUI.SetTurn(msg.isRecipientTheActivePlayer);
+            if(msg.isRecipientTheActivePlayer)
+                OnStartLocalTurn?.Invoke(playerInfo.isGoingFirst);
+            else
+                OnStartOpponentTurn?.Invoke(!playerInfo.isGoingFirst);
             inputController.allowedInputs = msg.isRecipientTheActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
-            sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
-            CardsPlayedThisTurn.Clear();
-            AbilitiesUsedThisTurn.Clear();
+            AdditionalStats.Reset();
             EvolvedThisTurn = false;
             damageTakenThisTurn = 0;
             SVEEffectPool.Instance.UpdatePassiveDurationsStartOfTurn(this, msg.isRecipientTheActivePlayer);
+            LocalEvents.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
 
             // Failsafe Calls
             GameUIManager.EffectTargeting.CloseOpponentIsTargeting();
@@ -244,11 +217,12 @@ namespace SVESimulator
 
                 CurrentTurnNumber++;
                 LocalEvents.IncrementMaxPlayPoints(updateCurrentPoints: true);
+                ReserveAllCardsOnField();
                 foreach(CardObject card in localPlayerZoneController.fieldZone.AllCards)
                     card.OnStartTurn();
-                ReserveAllCardsOnField();
                 localPlayerZoneController.fieldZone.HighlightCardsCanAttack();
                 localPlayerZoneController.fieldZone.SetAllCardsInteractable(true);
+                localPlayerZoneController.exAreaZone.SetAllCardsInteractable(true);
                 localPlayerZoneController.handZone.SetAllCardsInteractable(true);
                 if(CurrentTurnNumber > 1 || !playerInfo.isGoingFirst)
                     LocalEvents.DrawCard();
@@ -291,7 +265,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Non-Network Message Game Controls
+        #region Non-Network Game Setup
 
         private bool HandleGameSetupTurn(StartTurnMessage msg, out bool endTurn)
         {
@@ -357,7 +331,7 @@ namespace SVESimulator
 
                 case 6: // actual game - skip host if they are not first (opponent takes first turn)
                     GameUIManager.MulliganScreen.Close();
-                    if(IsHostTurn() && !playerInfo.isGoingFirst)
+                    if(msg.isRecipientTheActivePlayer && IsHostTurn() && !playerInfo.isGoingFirst)
                     {
                         endTurn = true;
                         return true;
@@ -384,6 +358,12 @@ namespace SVESimulator
             }
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Non-Network Game Controls
+
         public void ReserveAllCardsOnField()
         {
             List<CardObject> cardsToReserve = localPlayerZoneController.fieldZone.GetAllPrimaryCards();
@@ -403,26 +383,30 @@ namespace SVESimulator
 
             IEnumerator RunEndPhase()
             {
-                // TODO - set end phase on networked effect solver
-                sveEffectSolver.SetGamePhase(SVEProperties.GamePhase.End);
+                LocalEvents.SetGamePhase(SVEProperties.GamePhase.End);
                 ZoneController.fieldZone.RemoveAllCardHighlights();
 
                 bool waiting = true;
-                SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+                SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
                 {
                     waiting = false;
                 };
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseTrigger>(gameState, null, localPlayerZoneController.fieldZone.Runtime, playerInfo,
                     _ => true, true);
-                yield return new WaitUntil(() => !waiting); // TODO - fix confirmation timing call causing extra end turn delay
+                yield return new WaitUntil(() => !waiting);
 
                 SelectWardCardsToEngage(() =>
                 {
                     inputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    localPlayerZoneController.fieldZone.RemoveAllCardHighlights();
+
                     SVEQuickTimingController.Instance.CallQuickTimingEndOfTurn(() =>
                     {
                         localPlayerZoneController.fieldZone.RemoveAllCardHighlights();
-                        StartCoroutine(StopTurnOnDelay(0.1f));
+                        DiscardForHandSize(() =>
+                        {
+                            StartCoroutine(StopTurnOnDelay(0.1f));
+                        });
                     });
                 });
             }
@@ -445,6 +429,150 @@ namespace SVESimulator
                 onComplete?.Invoke();
             });
         }
+
+        public void DiscardForHandSize(Action onComplete = null)
+        {
+            if(ZoneController.handZone.AllCards.Count <= SVEProperties.MaxHandSize)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+            StartCoroutine(HandSizeCoroutine());
+            IEnumerator HandSizeCoroutine()
+            {
+                do
+                {
+                    // Discard
+                    bool waiting = true;
+                    int handSize = ZoneController.handZone.AllCards.Count;
+                    ZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, handSize - SVEProperties.MaxHandSize, handSize - SVEProperties.MaxHandSize);
+                    ZoneController.selectionArea.SetFilter(null);
+                    ZoneController.selectionArea.SetConfirmAction(null,
+                        "Discard",
+                        "Discard for Hand Size",
+                        1, handSize - SVEProperties.MaxHandSize,
+                        targets =>
+                        {
+                            foreach(CardObject target in targets)
+                                LocalEvents.SendToCemetery(target, SVEProperties.Zones.Hand);
+                            waiting = false;
+                        });
+                    yield return new WaitUntil(() => !waiting);
+                    ZoneController.selectionArea.Disable();
+                    yield return new WaitForSeconds(0.1f);
+
+                    // Confirmation Timing
+                    waiting = true;
+                    SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () => { waiting = false; };
+                    SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                    yield return new WaitUntil(() => !waiting);
+                    yield return new WaitForSeconds(0.1f);
+
+                } while(ZoneController.handZone.AllCards.Count > SVEProperties.MaxHandSize);
+                onComplete?.Invoke();
+            }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Card Counts Network Syncing
+
+        public void SetDeckCount(int count)
+        {
+            if(isServer)
+                cardsInDeck = count;
+            else
+            {
+                int oldCount = cardsInDeck;
+                cardsInDeck = count;
+                SyncHook_OnDeckCountChanged(oldCount, count); // idk why SyncVar isn't syncing from Server->Client but this manual client-side set fixes/gets around it so fuck it ig
+            }
+        }
+
+        private void SyncHook_OnDeckCountChanged(int oldCount, int newCount) { OnCardsInDeckChanged?.Invoke(newCount); }
+
+        // -----
+
+        public void SetCemeteryCount(int count)
+        {
+            if(isServer)
+            {
+                if(cardsInCemetery == count)
+                    SyncHook_OnCemeteryCountChanged(cardsInCemetery, count);
+                else
+                    cardsInCemetery = count;
+            }
+            else
+            {
+                int oldCount = cardsInCemetery;
+                cardsInCemetery = count;
+                SyncHook_OnCemeteryCountChanged(oldCount, count); // See complaint in: SetDeckCount()
+            }
+        }
+
+        private void SyncHook_OnCemeteryCountChanged(int oldCount, int newCount)
+        {
+            if(isOwned)
+            {
+                spellchain = localPlayerZoneController.cemeteryZone.CountOfCardType(SVEProperties.CardTypes.Spell) +
+                    (AdditionalStats.UseRuneFollowersForSpellchain ? localPlayerZoneController.cemeteryZone.CountOfCardByFilter("Fc(rune)") : 0);
+                if(!isServer)
+                    SyncHook_OnSpellchainChanged(spellchain, spellchain); // See complaint in: SetDeckCount()
+            }
+            if(oldCount != newCount)
+                OnCardsInCemeteryChanged?.Invoke(newCount);
+        }
+
+        private void SyncHook_OnSpellchainChanged(int oldCount, int newCount) { OnSpellchainChanged?.Invoke(newCount); }
+
+        // -----
+
+        public void SetEvolveDeckCount(int faceDownCount, int faceUpCount)
+        {
+            if(isServer)
+            {
+                if(cardsInEvolveDeckFaceDown != faceDownCount)
+                    cardsInEvolveDeckFaceDown = faceDownCount;
+                if(cardsInEvolveDeckFaceUp != faceUpCount)
+                    cardsInEvolveDeckFaceUp = faceUpCount;
+            }
+            else
+            {
+                if(cardsInEvolveDeckFaceDown != faceDownCount)
+                {
+                    int oldCountFaceDown = cardsInEvolveDeckFaceDown;
+                    cardsInEvolveDeckFaceDown = faceDownCount;
+                    SyncHook_OnEvolveDeckFaceDownCountChanged(oldCountFaceDown, faceDownCount);
+                }
+                if(cardsInEvolveDeckFaceUp != faceUpCount)
+                {
+                    int oldCountFaceUp = cardsInEvolveDeckFaceUp;
+                    cardsInEvolveDeckFaceUp = faceUpCount;
+                    SyncHook_OnEvolveDeckFaceUpCountChanged(oldCountFaceUp, faceUpCount);
+                }
+            }
+        }
+
+        private void SyncHook_OnEvolveDeckFaceDownCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckFaceDownChanged?.Invoke(newCount); }
+        private void SyncHook_OnEvolveDeckFaceUpCountChanged(int oldCount, int newCount) { OnCardsInEvolveDeckFaceUpChanged?.Invoke(newCount); }
+
+        // -----
+
+        public void SetBanishedZoneCount(int count)
+        {
+            if(isServer)
+                cardsInBanishedZone = count;
+            else
+            {
+                int oldCount = cardsInBanishedZone;
+                cardsInBanishedZone = count;
+                SyncHook_OnBanishedZoneCountChanged(oldCount, count); // See complaint in: SetDeckCount()
+            }
+        }
+
+        private void SyncHook_OnBanishedZoneCountChanged(int oldCount, int newCount) { OnCardsInBanishedZoneChanged?.Invoke(newCount); }
 
         #endregion
 

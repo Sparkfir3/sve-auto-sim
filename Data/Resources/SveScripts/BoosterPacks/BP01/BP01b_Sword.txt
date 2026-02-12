@@ -12,7 +12,6 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    text "Summon an Otohime's Bodyguard token.";
     effect SummonToken("Otohime's Bodyguard", Field, 1);
 }
 
@@ -29,7 +28,6 @@ stats 4/5;
 text "On Evolve: Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
 
 ability OnEvolve {
-    text "Summon 3 Otohime's Bodyguard tokens. If your field becomes full from this effect, put any remaining tokens into your EX area.";
     effect SummonToken("Otohime's Bodyguard", FieldOverflowToEx, 3);
 }
 
@@ -50,7 +48,6 @@ text "Rush. Assail. Ward.
 keywords Rush, Assail, Ward;
 ability Fanfare {
     condition p() > 2;
-    text "Select an enemy leader. If there are at least 3 cards on their field, give this follower [attack]+2/[defense]+2 and Aura.";
     effect Sequence(Stats, Aura);
 }
 ability Spell name "Stats" {
@@ -76,7 +73,6 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    text "Select an enemy follower on the field and engage it.";
     effect EngageCard() to TargetOpponentCard F;
 }
 
@@ -93,7 +89,6 @@ stats 5/5;
 text "On Evolve: Select an engaged enemy follower and destroy it.";
 
 ability OnEvolve {
-    text "Select an engaged enemy follower and destroy it.";
     effect Destroy() to TargetOpponentCard FN;
 }
 
@@ -113,14 +108,12 @@ text "Ward.
 
 keyword Ward;
 ability LastWords {
-    text "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.";
     effect SummonTokenAndTarget(Steelclad Knight, Field, 2, Ward, Engage);
 }
 ability Spell name Ward {
     effect GiveKeyword(Ward) to AllPlayerCards;
 }
 ability Spell name Engage {
-    text "Summon 2 Steelclad Knight tokens and give them Ward. You may engage any number of them.";
     effect EngageCard() to TargetPlayerCard m(0,2);
 }
 
@@ -163,12 +156,10 @@ text "[fanfare] Give each [swordcraft] follower on your field [attack]+1/[defens
       Whenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.";
 
 ability Fanfare {
-    text "Give each [swordcraft] follower on your field [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to AllPlayerCards c(Sword)F;
 }
 ability OnOtherEnterField {
     filter c(Sword)F;
-    text "Whenever a [swordcraft] follower is put onto your field, give it [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to TriggerCard;
 }
 
@@ -200,7 +191,6 @@ stats 2/2;
 text "On Evolve: Search your deck for a follower with [evolve], reveal it, and add it to your hand.";
 
 ability OnEvolve {
-    text "Search your deck for a follower with [evolve], reveal it, and add it to your hand.";
     effect Search(1, F#e, Hand);
 }
 
@@ -218,7 +208,6 @@ stats 3/2;
 text "[fanfare] Search your deck for a [swordcraft] follower, reveal it, and add it to your hand.";
 
 ability Fanfare {
-    text "Search your deck for a [swordcraft] follower, reveal it, and add it to your hand.";
     effect Search(1, c(sword)F, Hand);
 }
 
@@ -236,7 +225,6 @@ stats 5/5;
 text "[fanfare] Give each other follower on your field [attack]+1/[defense]+1.";
 
 ability Fanfare {
-    text "Give each other follower on your field [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to AllPlayerCards FX;
 }
 
@@ -255,13 +243,11 @@ text "[fanfare] Select an enemy follower on the field and engage it.
       [act][engage]: Select an enemy follower on the field and engage it.";
 
 ability Fanfare {
-    text "Select an enemy follower on the field and engage it.";
     effect EngageCard() to TargetOpponentCard F;
 }
 ability Act {
     condition p(#F);
     cost (EngageSelf);
-    text "[engage]: Select an enemy follower on the field and engage it.";
     effect EngageCard() to TargetOpponentCard F;
 }
 
@@ -279,7 +265,6 @@ stats 3/3;
 text "[fanfare] Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.";
 
 ability Fanfare {
-    text "Look at the top 5 cards of your deck. You may put a follower that costs 1 play point from among them onto your field. Put the remaining cards on the bottom of your deck in any order.";
     effect CheckTop(5, (Field, p(1), m(0,1)), (BottomDeckAnyOrder));
 }
 
@@ -297,7 +282,6 @@ stats 4/4;
 text "[fanfare] Search your deck for a Ninja card, reveal it, and add it to your hand.";
 
 ability Fanfare {
-    text "Search your deck for a Ninja card, reveal it, and add it to your hand.";
     effect Search(1, t(Ninja), Hand);
 }
 
@@ -317,7 +301,6 @@ text "[act][cost01], [engage]: Summon a Knight token and give it Storm.
 
 ability Act name Knight {
     cost (PP, 1), (EngageSelf);
-    text "[cost01], [engage]: Summon a Knight token and give it Storm.";
     effect SummonTokenAndTarget(Knight, Field, 1, Storm);
 }
 ability Spell name Storm {
@@ -326,12 +309,10 @@ ability Spell name Storm {
 ability Act name Engage {
     condition p(#F);
     cost (PP, 2), (EngageSelf);
-    text "[cost02], [engage]: Select an enemy follower on the field and engage it.";
     effect EngageCard() to TargetOpponentCard F;
 }
 ability Act name Draw {
     cost (PP, 3), (EngageSelf);
-    text "[cost03], [engage]: Draw a card.";
     effect DrawCard(1) to Self;
 }
 
@@ -352,7 +333,6 @@ text "[evolve][cost02]: Evolve this follower.
 evolve 2;
 ability OnOtherEnterField {
     filter F;
-    text "Whenever another follower is put onto your field, give this follower [attack]+1.";
     effect GiveStat(Atk, 1) to Self;
 }
 
@@ -370,7 +350,6 @@ text "Whenever another follower is put onto your field, give this follower [atta
 
 ability OnOtherEnterField {
     filter F;
-    text "Whenever another follower is put onto your field, give this follower [attack]+1.";
     effect GiveStat(Atk, 1) to Self;
 }
 
@@ -389,11 +368,9 @@ text "[fanfare] Select another follower on your field and give it [attack]+1.
       [lastwords] Select a follower on your field and give it [attack]+1.";
 
 ability Fanfare {
-    text "Select another follower on your field and give it [attack]+1.";
     effect GiveStat(Atk, 1) to TargetPlayerCard FX;
 }
 ability LastWords {
-    text "Select a follower on your field and give it [attack]+1.";
     effect GiveStat(Atk, 1) to TargetPlayerCard F;
 }
 
@@ -411,7 +388,6 @@ stats 2/3;
 text "[fanfare] Select another follower on your field and give it Assail.";
 
 ability Fanfare {
-    text "Select another follower on your field and give it Assail.";
     effect GiveKeyword(Assail) to TargetPlayerCard FX;
 }
 

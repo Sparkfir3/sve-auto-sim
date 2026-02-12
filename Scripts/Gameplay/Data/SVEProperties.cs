@@ -8,8 +8,8 @@ namespace SVESimulator
 
         public enum Counters
         {
-            Stack = 3,
-            Spell = 4
+            Stack = 5,
+            Spell = 6
         }
 
         public enum SVEEffectTarget
@@ -27,12 +27,17 @@ namespace SVESimulator
             Opponent,
             OpponentLeader,
             AllOpponentCards,
+            AllOpponentCardsEx,
+            AllOpponentCardsFieldAndEx,
+            AllOpponentCardsAndLeader,
             TargetOpponentCard,
             TargetOpponentCardsDivided,
             TargetOpponentCardOrLeader,
+            TargetOpponentCardEx,
 
             AllCards,
             TargetCard,
+            TargetCardEx,
 
             AllPlayers,
             AllLeaders
@@ -55,6 +60,7 @@ namespace SVESimulator
         public static Quaternion CardEngagedRotation = Quaternion.Euler(0f, 90f, 0f);
 
         public const int StartingHandSize = 4;
+        public const int MaxHandSize = 7;
         public const int MaxPlayPointsAmount = 10;
         public const float CardThickness = 0.01f;
 
@@ -148,9 +154,19 @@ namespace SVESimulator
             public const string PutOnFieldEngaged = "PutOnFieldEngaged";
             public const string CannotDealDamage = "CannotDealDamage";
             public const string CannotAttack = "CannotAttack";
+            public const string UseDefAsAtk = "UseDefAsAtk";
+            public const string DoesNotTakeCombatDamage = "DoesNotTakeCombatDamage";
+            public const string UseRuneFollowersForSpellchain = "UseRuneFollowersForSpellchain";
+            public const string DoubleCombatDamage = "DoubleCombatDamage";
+            public const string DoubleLeaderDamage = "DoubleLeaderDamage";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";
+            public const string Plus3Damage = "Plus3Damage";
+            public const string Plus4Damage = "Plus4Damage";
+
+            public const string DamageReduction1 = "DamageReduction1";
+            public const string DamageReductionAbilities1 = "DamageReductionAbilities1";
         }
     }
 }

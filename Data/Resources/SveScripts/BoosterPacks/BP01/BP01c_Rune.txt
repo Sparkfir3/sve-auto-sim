@@ -12,17 +12,14 @@ text "[fanfare] Earth Rite: Select an enemy follower on the field. Deal 6 damage
 
 ability Fanfare {
     cost (EarthRite);
-    text "Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
     effect Sequence("Damage Follower", "Damage Leader");
 }
 ability Act {
     condition p(F);
     cost (EngageSelf), (EarthRite);
-    text "[engage], Earth Rite: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
     effect Sequence("Damage Follower", "Damage Leader");
 }
 ability Spell name "Damage Follower" {
-    text "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
     effect DealDamage(6) to TargetOpponentCard F;
 }
 ability Spell name "Damage Leader" {
@@ -45,7 +42,6 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    text "Search your deck for a spell, reveal it, and add it to your hand.";
     effect Search(1, S, Hand);
 }
 
@@ -62,7 +58,6 @@ stats 4/3;
 text "On Evolve: Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.";
 
 ability OnEvolve {
-    text "Select a spell that costs 3 play points or less in your cemetery and play it for 0 play points.";
     effect PlaySpellFromCemeterySetCost(Sp(m(0,3)), 0);
 }
 
@@ -83,7 +78,6 @@ text "[evolve][cost03]: Evolve this follower.
 evolve 3;
 ability Fanfare {
     cost (EarthRite);
-    text "Earth Rite: Put 2 Guardform Golem tokens into your EX area.";
     effect SummonToken(Guardform Golem, ExArea, 2);
 }
 
@@ -105,7 +99,6 @@ ability Passive {
 }
 ability OnOtherEnterField {
     filter Ft(Golem);
-    text "Select an enemy leader or enemy follower on the field and deal it 3 damage.";
     effect DealDamage(3) to TargetOpponentCardOrLeader F;
 }
 
@@ -128,7 +121,6 @@ ability Spell name "Fill EX" {
     effect TopDeckToEx(5-x());
 }
 ability StartEndPhase name Banish {
-    text "At the start of your next end phase, banish each card in your EX area.";
     effect Banish() to AllPlayerCardsEx;
 }
 
@@ -150,7 +142,6 @@ ability Spell name Extra Turn {
 }
 ability ModifiedCost {
     cost (BanishFromCemetery, 10, S), (PP, 7);
-    text "Banish 10 spells in your cemetery: This card costs 7 play points to play.";
     effect AlternateCost();
 }
 
@@ -169,26 +160,21 @@ text "[fanfare] Summon a Guardform Golem or Strikeform Golem token.
       [act][engage], Earth Rite: Summon a Guardform Golem or Strikeform Golem token.";
 
 ability Fanfare {
-    text "Summon a Guardform Golem or Strikeform Golem token";
     effect ChooseFromList("Guardform Golem", "Strikeform Golem");
 }
 ability Act name "Summon Magic Sediment" {
     cost (EngageSelf);
-    text "[engage]: Summon a Magic Sediment token";
     effect SummonToken(Magic Sediment, Field, 1);
 }
 ability Act name "Summon Golem" {
     cost (EngageSelf), (EarthRite);
-    text "[engage], Earth Rite: Summon a Guardform Golem or Strikeform Golem token";
     effect ChooseFromList("Guardform Golem", "Strikeform Golem");
 }
 
 ability Spell name "Guardform Golem" {
-    text "Guardform Golem";
     effect SummonToken(Guardform Golem, Field, 1);
 }
 ability Spell name "Strikeform Golem" {
-    text "Strikeform Golem";
     effect SummonToken(Strikeform Golem, Field, 1);
 }
 
@@ -208,7 +194,6 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    text "Look at the top card of your deck. If it's a spell, you may reveal it and add it to your hand.";
     effect CheckTop(1, (Hand, S, m(0,1)), (TopDeckSameOrder));
 }
 
@@ -226,7 +211,6 @@ text "On Evolve, discard a spell: Select an enemy follower on the field and deal
 
 ability OnEvolve {
     cost (Discard, 1, S);
-    text "Discard a spell: Select an enemy follower on the field and deal it 4 damage.";
     effect DealDamage(4) to TargetOpponentCard F;
 }
 
@@ -265,13 +249,11 @@ text "Whenever you play a spell, place 1 spell counter on this card.
       [act] Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.";
 
 ability OnPlaySpell {
-    text "Whenever you play a spell, place 1 spell counter on this card.";
     effect GiveCounter(Spell, 1) to Self;
 }
 ability Act {
     condition p(F);
     cost (RemoveCounters, Spell, 3);
-    text "[act] Remove 3 spell counters from this card: Select an enemy follower on the field and deal it 5 damage.";
     effect DealDamage(5) to TargetOpponentCard F;
 }
 
@@ -296,7 +278,6 @@ ability Spell name Tokens {
 }
 ability Spell name Earth Rite {
     cost (EarthRite);
-    text "Earth Rite: Give each Golem follower on your field [attack]+1/[defense]+1.";
     effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Golem);
 }
 
@@ -356,7 +337,6 @@ text "Stack.
 
 keyword Stack;
 ability Fanfare {
-    text "Select an enemy follower with 4 defense or less on the field and banish it.";
     effect Banish() to TargetOpponentCard Fd(m(0,4));
 }
 
@@ -376,13 +356,11 @@ text "Ward.
 
 keyword Ward;
 ability Fanfare {
-    text "Choose one of the following effects. (1) Earth Rite: Give this follower [attack]+1/[defense]+2. (2) Summon a Magic Sediment token.";
     effect ChooseFromList(Earth Rite, Token);
 }
 
 ability Spell name Earth Rite {
     cost (EarthRite);
-    text "Earth Rite: Give this follower [attack]+1/[defense]+2.";
     effect Sequence(Attack, Defense);
 }
 ability Spell name Attack {
@@ -393,7 +371,6 @@ ability Spell name Defense {
 }
 
 ability Spell name Token {
-    text "Summon a Magic Sediment token.";
     effect SummonToken(Magic Sediment, Field, 1);
 }
 
@@ -413,7 +390,6 @@ text "[evolve][cost01]: Evolve this follower.
 
 evolve 1;
 ability LastWords {
-    text "Summon a Magic Sediment token.";
     effect SummonToken(Magic Sediment, Field, 1);
 }
 
@@ -430,14 +406,12 @@ stats 3/3;
 text "[lastwords] Summon a Magic Sediment token. Add 1 to a Stack on your field.";
 
 ability LastWords {
-    text "Summon a Magic Sediment token. Add 1 to a Stack on your field.";
     effect Sequence(Token, Stack);
 }
 ability Spell name Token {
     effect SummonToken(Magic Sediment, Field, 1);
 }
 ability Spell name Stack {
-    text "Add 1 to a Stack on your field.";
     effect GiveCounter(Stack, 1) to TargetPlayerCard Ar(Stack);
 }
 
@@ -456,7 +430,6 @@ text "Stack.
 
 keyword Stack;
 ability Fanfare {
-    text "Summon a Strikeform Golem token.";
     effect SummonToken(Strikeform Golem, Field, 1);
 }
 
@@ -475,7 +448,6 @@ text "Stack.
 
 keyword Stack;
 ability Fanfare {
-    text "Draw a card.";
     effect DrawCard(1) to Self;
 }
 

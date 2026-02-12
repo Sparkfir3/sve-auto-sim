@@ -28,23 +28,23 @@ namespace SVESimulator
             return player.GetPlayerInfo().namedZones[SVEProperties.Zones.Hand].cards.Count(x => filters.MatchesCard(x)) >= value;
         }
 
-        public override IEnumerator PayCost(PlayerController player, CardObject card, SveEffect effect, List<MoveCardToZoneData> cardsToMove)
+        public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
             bool waiting = true;
-            int discardAmount = SVEFormulaParser.ParseValue(amount);
+            int discardAmount = SVEFormulaParser.ParseValue(amount, player);
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
 
             selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, discardAmount, discardAmount);
             selectionArea.SetFilter(filter);
             selectionArea.SetConfirmAction(LibraryCardCache.GetCard(card.RuntimeCard.cardId).name,
                 "Discard",
-                effect?.text,
+                LibraryCardCache.GetEffectTextCost(card.LibraryCard.id, abilityName),
                 discardAmount, discardAmount,
                 cards =>
                 {
                     foreach(CardObject discard in cards)
                     {
-                        player.ZoneController.SendCardToCemetery(discard);
+                        player.LocalEvents.SendToCemetery(discard, originZone: SVEProperties.Zones.Hand, onlyMoveObject: true);
                         cardsToMove.Add(new MoveCardToZoneData(discard.RuntimeCard.instanceId, SVEProperties.Zones.Hand, SVEProperties.Zones.Cemetery));
                     }
                     waiting = false;

@@ -20,10 +20,15 @@ namespace SVESimulator.UI
             public bool disabled;
         }
 
+        [TitleGroup("Runtime Data"), ShowInInspector, ReadOnly]
+        private ButtonDisplayPosition currentDisplayPosition;
+
         [Title("Settings"), SerializeField]
         private string defaultHeaderString = "Select an effect";
         [SerializeField]
         private string templateResolving = "Resolving {0}";
+        [SerializeField]
+        private SerializedDictionary<ButtonDisplayPosition, ButtonPositionData> displayPositions = new();
 
         [Title("Object References"), SerializeField]
         private Transform buttonContainer;
@@ -33,6 +38,8 @@ namespace SVESimulator.UI
         private List<GameObject> testButtons;
         [SerializeField]
         private MultipleChoiceButton buttonPrefab;
+        [SerializeField]
+        private RectTransform textContainer;
         [SerializeField]
         private TextMeshProUGUI resolvingTextBox;
         [SerializeField]
@@ -45,13 +52,14 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        public void Initialize()
+        public void Initialize(ButtonDisplayPosition displayPosition = ButtonDisplayPosition.Center)
         {
             mainInputController = FindObjectOfType<PlayerInputController>();
             foreach(GameObject testButton in testButtons)
             {
                 Destroy(testButton);
             }
+            SetDisplayPosition(displayPosition);
         }
 
         // ------------------------------
@@ -59,12 +67,14 @@ namespace SVESimulator.UI
         #region Controls
 
         public void Open(PlayerController player, string cardName, List<MultipleChoiceEntryData> entries, string effectText, bool showBackgroundTint = true,
-            bool showTargetingToOpponent = true, bool disablePlayerInputs = true)
+            bool showTargetingToOpponent = true, bool disablePlayerInputs = true, ButtonDisplayPosition position = ButtonDisplayPosition.Center)
         {
             this.player = player;
             if(disablePlayerInputs)
                 mainInputController.allowedInputs = PlayerInputController.InputTypes.None;
             player.ZoneController.fieldZone.RemoveAllCardHighlights();
+            if(currentDisplayPosition != position)
+                SetDisplayPosition(position);
 
             // Entries
             for(int i = 0; i < entries.Count; i++)
@@ -165,13 +175,29 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        #region Other
+        #region Internal Controls
 
         private MultipleChoiceButton AddNewButton()
         {
             MultipleChoiceButton button = Instantiate(buttonPrefab, buttonContainer);
             buttons.Add(button);
             return button;
+        }
+
+        public void SetDisplayPosition(ButtonDisplayPosition position)
+        {
+            currentDisplayPosition = position;
+            ButtonPositionData positionData = displayPositions[position];
+            RectTransform buttonContainerRectTransform = buttonContainer.GetComponent<RectTransform>();
+
+            textContainer.anchorMin = positionData.textAnchor;
+            textContainer.anchorMax = positionData.textAnchor;
+            textContainer.pivot = positionData.textPivot;
+            textContainer.anchoredPosition = new Vector3(0f, positionData.textPosition, 0f);
+            buttonContainerRectTransform.anchorMin = positionData.buttonAnchor;
+            buttonContainerRectTransform.anchorMax = positionData.buttonAnchor;
+            buttonContainerRectTransform.pivot = positionData.buttonPivot;
+            buttonContainerRectTransform.anchoredPosition = new Vector3(0f, positionData.buttonPosition, 0f);
         }
 
         #endregion

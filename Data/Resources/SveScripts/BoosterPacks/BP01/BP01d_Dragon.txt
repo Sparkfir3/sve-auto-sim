@@ -42,17 +42,14 @@ text "[fanfare] Put a Dragon token into your EX area.
       [act][cost02], [engage]: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
 
 ability Fanfare {
-    text "Put a Dragon token into your EX area.";
     effect SummonToken(Dragon, ExArea, 1);
 }
 ability Act {
     condition x(n(Dragon));
     cost (PP, 2), (EngageSelf);
-    text "[cost02], [engage]: Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
     effect Sequence(Play Dragon, Play Points);
 }
 ability Spell name Play Dragon {
-    text "Select a Dragon token in your EX area. Put it onto your field and give it Rush. If Overflow is active for you, recover 2 play points.";
     effect PutExToFieldAndTarget(Kn(Dragon), Give Rush) to TargetPlayerCardEx;
 }
 ability Spell name Give Rush {
@@ -79,7 +76,6 @@ text "Assail.
 
 keyword Assail;
 ability LastWords {
-    text "Increase your maximum play points by 1.";
     effect GiveStat(MaxPP, 1) to Self;
 }
 
@@ -115,7 +111,6 @@ text "[evolve][cost01]: Evolve this follower.
 evolve 1;
 ability Fanfare {
     condition o;
-    text "If Overflow is active for you, give this follower [attack]+3/[defense]+3.";
     effect GiveStat(AtkDef, 3) to Self;
 }
 
@@ -146,11 +141,9 @@ cost 5;
 text "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.";
 
 ability StartMainPhase name Check Top {
-    text "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.";
     effect CheckTop(1, (Field, F, m(0,1)), (TopDeckSameOrder));
 }
 ability StartOpponentMainPhase {
-    text "At the start of each player's main phase, that player looks at the top card of their deck. If it's a follower, they may put it onto their field.";
     effect OpponentPerformEffect(Check Top);
 }
 
@@ -168,7 +161,6 @@ stats 5/5;
 text "[fanfare] Put the top card of your deck into your EX area. It costs 2 less to play.";
 
 ability Fanfare {
-    text "Put the top card of your deck into your EX area. It costs 2 less to play.";
     effect TopDeckToExAndTarget(1, Minus Cost);
 }
 ability Spell name Minus Cost {
@@ -191,14 +183,12 @@ text "Intimidate.
 
 keyword Intimidate;
 ability Strike {
-    text "Draw a card, then discard a card.";
     effect Sequence(Draw, Discard);
 }
 ability Spell name Draw {
     effect DrawCard(1);
 }
 ability Spell name Discard {
-    text "Discard a card.";
     effect Discard(1);
 }
 
@@ -220,14 +210,12 @@ text "[evolve][cost02]: Evolve this follower.
 evolve 2;
 keyword Ward;
 ability Fanfare {
-    text "Draw 2 cards, then discard a card.";
     effect Sequence(Draw, Discard);
 }
 ability Spell name Draw {
     effect DrawCard(2);
 }
 ability Spell name Discard {
-    text "Discard a card.";
     effect Discard(1);
 }
 
@@ -246,7 +234,6 @@ text "Ward.
 
 keyword Ward;
 ability OnEvolve {
-    text "Give your leader [defense]+5.";
     effect GiveStat(Def, 5) to Leader;
 }
 
@@ -301,7 +288,6 @@ ability Spell {
     effect Sequence(Damage, Draw);
 }
 ability Spell name Damage {
-    text "Select an enemy follower on the field. Deal it 5 damage and, if Overflow is active for you, draw a card.";
     effect DealDamage(5) to TargetOpponentCard F;
 }
 ability Spell name Draw {
@@ -328,7 +314,6 @@ ability Passive {
 ability Act {
     condition f(F)+p(F);
     cost (EngageSelf);
-    text "[engage]: Select a follower on the field and destroy it. Its controller summons a Dragon token.";
     effect DestroyAndControllerPerformEffect(Token) to TargetCard F;
 }
 ability Spell name Token {
@@ -364,7 +349,6 @@ text "On Evolve: If Overflow is active for you, draw a card.";
 
 ability OnEvolve {
     condition o;
-    text "If Overflow is active for you, draw a card.";
     effect DrawCard(1);
 }
 
@@ -385,7 +369,6 @@ text "Rush.
 keyword Rush;
 ability Fanfare {
     condition [f(FX)+p(F)];
-    text "Select another follower on the field and give this follower [attack]+X. X equals the selected follower's attack.";
     effect PerformAsEachTarget(Give Attack) to TargetCard FX;
 }
 ability Spell name Give Attack {
@@ -420,7 +403,6 @@ cost 1;
 text "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
 
 ability Spell {
-    text "Look at the top 5 cards of your deck. You may reveal a [dragoncraft] card that costs at least 5 play points from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
     effect CheckTop(5, (Hand, c(Dragon)p(m(5,99)), 1), (BottomDeckAnyOrder));
 }
 

@@ -22,6 +22,7 @@ namespace SVESimulator
             public CardObject card;
 
             public Vector3 position => transform.position;
+            public Vector3 localPosition => transform.localPosition;
         }
 
         // ---
@@ -125,6 +126,8 @@ namespace SVESimulator
 
             int slotA = GetSlotNumber(cardA);
             int slotB = GetSlotNumber(cardB);
+            if(slotA == slotB)
+                return false;
             cardSlots[slotA].card = cardB;
             cardSlots[slotB].card = cardA;
             return true;
@@ -193,6 +196,20 @@ namespace SVESimulator
                 card.Interactable = filterDict.MatchesCard(card);
         }
 
+        public void SetValidQuicksInteractable()
+        {
+            foreach(CardObject card in GetAllPrimaryCards())
+            {
+                card.Interactable = card.LibraryCard.abilities.Any(x => x is ActivatedAbility act && act.costs.Any(y => y is QuickEffectAsCost)
+                    && Player.LocalEvents.CanPayCosts(card.RuntimeCard, act.costs, x.name));
+                if(card.Interactable && !Player.isActivePlayer)
+                {
+                    card.CanAttack = false;
+                    card.CanAttackLeader = false;
+                }
+            }
+        }
+
         #endregion
 
         // ------------------------------
@@ -220,6 +237,7 @@ namespace SVESimulator
 
         public Vector3 GetSlotPosition(TargetableSlot slot) => GetSlotPosition(slot.SlotNumber);
         public Vector3 GetSlotPosition(int slotNumber) => cardSlots[slotNumber].position;
+        public Vector3 GetSlotLocalPosition(int slotNumber) => cardSlots[slotNumber].localPosition;
 
         public CardObject GetCard(int slotNumber) => (slotNumber >= 0 && slotNumber < cardSlots.Count) ? cardSlots[slotNumber].card : null;
         public List<CardObject> GetAllPrimaryCards() => cardSlots.Where(x => x.Value.card != null).Select(x => x.Value.card).ToList();
@@ -230,6 +248,11 @@ namespace SVESimulator
         public int GetFirstOpenSlotId() => !HasOpenSlot() ? -1 : cardSlots.First(x => !x.Value.card && x.Value.target.isActiveAndEnabled).Key;
 
         public override int CountOfCardType(string cardType) => GetAllPrimaryCards().Count(x => x.IsCardType(cardType));
+        public virtual int CountOfCardByFilter(string filterFormula)
+        {
+            var filter = SVEFormulaParser.ParseCardFilterFormula(filterFormula);
+            return GetAllPrimaryCards().Count(x => filter.MatchesCard(x));
+        }
 
         #endregion
 
@@ -243,6 +266,12 @@ namespace SVESimulator
                 return;
             foreach(CardObject card in cards)
                 card.SetHighlightMode(card.CanAttack ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
+        }
+
+        public void HighlightInteractableCards()
+        {
+            foreach(CardObject card in cards)
+                card.SetHighlightMode(card.Interactable ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
         }
 
         #endregion

@@ -243,6 +243,18 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: SS_SveTextIcons_26
     m_HashCode: -1651292095
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 27
+    m_Scale: 1
+    m_Name: SS_SveTextIcons_27
+    m_HashCode: -1651292096
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 28
+    m_Scale: 1
+    m_Name: SS_SveTextIcons_28
+    m_HashCode: -1651292081
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -676,5 +688,37 @@ MonoBehaviour:
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 618644012, guid: 2b549563585079845b83503c64361c7e, type: 3}
+  - m_Index: 27
+    m_Metrics:
+      m_Width: 28
+      m_Height: 28
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 24
+      m_HorizontalAdvance: 28
+    m_GlyphRect:
+      m_X: 194
+      m_Y: 130
+      m_Width: 28
+      m_Height: 28
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 2110122051, guid: 2b549563585079845b83503c64361c7e, type: 3}
+  - m_Index: 28
+    m_Metrics:
+      m_Width: 58
+      m_Height: 58
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 29
+      m_HorizontalAdvance: 58
+    m_GlyphRect:
+      m_X: 3
+      m_Y: 35
+      m_Width: 58
+      m_Height: 58
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1977707873, guid: 2b549563585079845b83503c64361c7e, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

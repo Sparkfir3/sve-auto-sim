@@ -166,6 +166,7 @@ namespace SVESimulator.SveScript
                     case EffectParameterType.SearchDeckAction:
                     case EffectParameterType.CreateTokenOption:
                     case EffectParameterType.TokenName:
+                    case EffectParameterType.Trait:
                     case EffectParameterType.Filter:
                         string keyName = effectParams.parameters[i].ToString();
                         keyName = char.ToLowerInvariant(keyName[0]) + keyName[1..];
@@ -244,7 +245,7 @@ namespace SVESimulator.SveScript
         
         #region Effect Parameters
         
-        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Filter, FilterOptional, PassiveDuration }
+        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Trait, Filter, FilterOptional, PassiveDuration }
         private readonly struct EffectParams
         {
             public readonly string ccgType;
@@ -264,8 +265,10 @@ namespace SVESimulator.SveScript
         private static Dictionary<string, EffectParams> StandardEffectInfoDictionary = new()
         {
             // Movement - Deck to Zone
+            { "Draw", new EffectParams("SVESimulator.DrawCardEffect",                                   true, false, EffectParameterType.Amount) },
             { "DrawCard", new EffectParams("SVESimulator.DrawCardEffect",                               true, false, EffectParameterType.Amount) },
             { "DrawThenDamage", new EffectParams("SVESimulator.DrawThenDamageEffect",                   EffectParameterType.Amount, EffectParameterType.Amount2) },
+            { "RedrawHand", new EffectParams("SVESimulator.RedrawHandEffect",                           EffectParameterType.AmountDefaultNull) },
             { "TopDeckToEx", new EffectParams("SVESimulator.TopDeckToExEffect",                         false, false, EffectParameterType.Amount) },
             { "TopDeckToExArea", new EffectParams("SVESimulator.TopDeckToExEffect",                     false, false, EffectParameterType.Amount) },
             { "TopDeckToExAndTarget", new EffectParams("SVESimulator.TopDeckToExAndTargetEffect",       false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
@@ -281,11 +284,18 @@ namespace SVESimulator.SveScript
             { "DestroyCard", new EffectParams("SVESimulator.DestroyCardEffect")                         },
             { "Banish", new EffectParams("SVESimulator.BanishCardEffect")                               },
             { "BanishCard", new EffectParams("SVESimulator.BanishCardEffect")                           },
+            { "SendToEx", new EffectParams("SVESimulator.SendToExAreaEffect")                           },
+            { "SendToExArea", new EffectParams("SVESimulator.SendToExAreaEffect")                       },
             { "PutExToFieldAndTarget", new EffectParams("SVESimulator.PutExToFieldAndTargetEffect",     EffectParameterType.ListOfEffects) },
 
-            // Movement - Other
+            // Movement - Hand to Zone
             { "Discard", new EffectParams("SVESimulator.DiscardEffect",                                             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "DiscardToBottomDeck", new EffectParams("SVESimulator.DiscardToBottomDeckEffect",                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "DiscardHand", new EffectParams("SVESimulator.DiscardHandEffect",                                     true, false) },
+            { "HandToField", new EffectParams("SVESimulator.HandToFieldEffect",                                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardFromOpponentHand", new EffectParams("SVESimulator.DiscardFromOpponentHandEffect",             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+
+            // Movement - Cemetery to Zone
             { "Salvage", new EffectParams("SVESimulator.SalvageCardEffect",                                         false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
             { "CemeteryToField", new EffectParams("SVESimulator.CemeteryToFieldEffect",                             true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("SVESimulator.CemeteryToFieldAndTargetEffect",           true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
@@ -298,9 +308,11 @@ namespace SVESimulator.SveScript
             { "DealDamage", new EffectParams("SVESimulator.DealDamageEffect",                           EffectParameterType.Amount) },
             { "DealDamageDivided", new EffectParams("SVESimulator.DealDamageDividedEffect",             false, true, EffectParameterType.Amount) },
             { "GiveStat", new EffectParams("SVESimulator.GiveStatBoostEffect",                          EffectParameterType.StatType, EffectParameterType.Amount) },
+            { "GiveStatEndOfTurn", new EffectParams("SVESimulator.GiveStatEndOfTurnEffect",             EffectParameterType.StatType, EffectParameterType.Amount) },
             { "SetStat", new EffectParams("SVESimulator.SetStatEffect",                                 EffectParameterType.StatType, EffectParameterType.Amount) },
             { "EngageCard", new EffectParams("SVESimulator.EngageCardEffect")                           },
             { "ReserveCard", new EffectParams("SVESimulator.ReserveCardEffect")                         },
+            { "Refresh", new EffectParams("SVESimulator.ReserveCardEffect")                             },
 
             // Keyword Effects
             { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                         EffectParameterType.Keyword) },
@@ -318,14 +330,18 @@ namespace SVESimulator.SveScript
             { "SummonTokenAndTarget", new EffectParams("SVESimulator.SummonTokenAndTargetEffect",       false, false, EffectParameterType.TokenName, EffectParameterType.CreateTokenOption, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "Transform", new EffectParams("SVESimulator.TransformCardEffect",                         EffectParameterType.TokenName) },
 
-            // Effect Execution
+            // Effect Sequencing
             { "DestroyAndControllerPerformEffect", new EffectParams("SVESimulator.DestroyAndControllerPerformEffect",   EffectParameterType.SingleEffect) },
             { "Sequence", new EffectParams("SVESimulator.EffectSequence",                                               false, false, EffectParameterType.ListOfEffects) },
+            { "TargetForSequence", new EffectParams("SVESimulator.TargetForEffectSequence",                             EffectParameterType.ListOfEffects) },
+            { "TargetForEffectSequence", new EffectParams("SVESimulator.TargetForEffectSequence",                       EffectParameterType.ListOfEffects) },
             { "ChooseFromList", new EffectParams("SVESimulator.ChooseEffectFromList",                                   false, false, EffectParameterType.ListOfEffects) },
+            { "ChooseAmountFromList", new EffectParams("SVESimulator.ChooseAmountFromList",                             false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "OpponentPerformEffect", new EffectParams("SVESimulator.OpponentPerformEffect",                           EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
 
             // Other Effects
+            { "GiveTrait", new EffectParams("SVESimulator.GiveTraitEffect",                             EffectParameterType.Trait) },
             { "CheckTop", new EffectParams("SVESimulator.CheckTopDeckEffect",                           false, false, EffectParameterType.CheckCardActions) },
             { "ExtraTurn", new EffectParams("SVESimulator.ExtraTurnEffect",                             false, false) },
             { "Evolve", new EffectParams("SVESimulator.EvolveEffect")                                   },

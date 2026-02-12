@@ -59,7 +59,8 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        if(!libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').Any(x => x.Trim().Equals(value)) ^ inverse)
+                        string[] traitList = value.Split(',');
+                        if(!libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').Any(x => traitList.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.Keyword:
@@ -150,7 +151,8 @@ namespace SVESimulator
         public static bool IsLeader(this SVEProperties.SVEEffectTarget target, out bool localLeader, out bool opponentLeader)
         {
             localLeader = target is SVEProperties.SVEEffectTarget.Leader or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader or SVEProperties.SVEEffectTarget.AllLeaders;
-            opponentLeader = target is SVEProperties.SVEEffectTarget.OpponentLeader or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader or SVEProperties.SVEEffectTarget.AllLeaders;
+            opponentLeader = target is SVEProperties.SVEEffectTarget.OpponentLeader or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader or SVEProperties.SVEEffectTarget.AllOpponentCardsAndLeader
+                or SVEProperties.SVEEffectTarget.AllLeaders;
             return localLeader || opponentLeader;
         }
 
@@ -159,7 +161,7 @@ namespace SVESimulator
             return target is SVEProperties.SVEEffectTarget.AllPlayerCards or SVEProperties.SVEEffectTarget.TargetPlayerCard or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader
                 or SVEProperties.SVEEffectTarget.AllOpponentCards or SVEProperties.SVEEffectTarget.TargetOpponentCard
                 or SVEProperties.SVEEffectTarget.TargetOpponentCardsDivided or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader
-                or SVEProperties.SVEEffectTarget.AllCards;
+                or SVEProperties.SVEEffectTarget.AllOpponentCardsAndLeader or SVEProperties.SVEEffectTarget.AllCards;
         }
 
         #endregion
@@ -181,6 +183,11 @@ namespace SVESimulator
             };
         }
 
+        public static bool IsQuickAbility(this ActivatedAbility ability)
+        {
+            return ability.costs.Any(x => x is QuickEffectAsCost);
+        }
+
         public static List<Cost> ToCostList(this string input)
         {
             if(input.IsNullOrWhiteSpace())
@@ -194,7 +201,9 @@ namespace SVESimulator
                 foreach(JObject jObject in jArray.Children<JObject>())
                 {
                     string rawType = jObject.GetValue("$type")?.Value<string>();
+                    Debug.Assert(rawType != null);
                     Type type = Type.GetType(rawType);
+                    Debug.Assert(type != null);
                     SveCost cost = Activator.CreateInstance(type) as SveCost;
 
                     FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);

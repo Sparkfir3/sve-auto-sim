@@ -22,3 +22,6 @@ MonoBehaviour:
   <FieldRaycastLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 320
+  <UIRaycastLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 32

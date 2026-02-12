@@ -30,7 +30,7 @@ namespace SVESimulator
         [Header("Settings"), SerializeField]
         private float quickDuration = 15f;
 
-        public bool IsActive => quickTimingState == QuickTimingState.Inactive;
+        public bool IsActive => quickTimingState != QuickTimingState.Inactive;
 
         #endregion
 
@@ -120,7 +120,7 @@ namespace SVESimulator
         {
             yield return new WaitUntil(() => quickTimingState != QuickTimingState.Inactive);
             yield return new WaitUntil(() => quickTimingState == QuickTimingState.Inactive);
-            yield return new WaitForSeconds(0.1f); // test delay
+            yield return new WaitForSeconds(0.1f);
             onComplete?.Invoke();
         }
 
@@ -137,15 +137,16 @@ namespace SVESimulator
 
                 quickTimingState = QuickTimingState.WaitingForEffect;
                 TargetQuickTimingPlayer(nonTurnPlayer, isCombat);
-                TargetOpenWaitForQuickTimingUI(turnPlayer); // TODO - timer on turn-player's client
-                yield return new WaitForSeconds(0.1f); // test delay
+                TargetOpenWaitForQuickTimingUI(turnPlayer);
+                yield return new WaitForSeconds(0.1f);
 
                 yield return new WaitUntil(() => quickTimingState == QuickTimingState.Complete);
-                yield return new WaitForSeconds(0.1f); // test delay
+                yield return new WaitForSeconds(0.1f);
 
                 quickTimingState = QuickTimingState.Inactive;
                 TargetCloseQuickTimingUI(turnPlayer);
-                CmdEndAttackPreview();
+                if(isCombat)
+                    CmdEndAttackPreview();
             }
         }
 
@@ -158,18 +159,21 @@ namespace SVESimulator
             {
                 // Init/open UI
                 startQuickTiming:
+                yield return new WaitUntil(() => !SVEEffectPool.Instance.IsActive);
                 GameUIManager.QuickTiming.OpenPerformQuickUI();
                 GameUIManager.QuickTiming.SetSubtitle(isCombat ? "Combat" : "End Phase");
                 localPlayer.ZoneController.handZone.SetValidQuicksInteractable();
                 localPlayer.ZoneController.handZone.HighlightValidQuicks();
-                localInputController.allowedInputs = PlayerInputController.InputTypes.PlayCards | PlayerInputController.InputTypes.Quick;
+                localPlayer.ZoneController.fieldZone.SetValidQuicksInteractable();
+                localPlayer.ZoneController.fieldZone.HighlightInteractableCards();
+                localInputController.allowedInputs = PlayerInputController.InputTypes.QuickTiming;
 
                 // Run timer
                 int currentPlayedCardCount = localPlayer.Combo;
+                int currentAbilityUsedCount = localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count;
                 for(float i = 0f; i <= quickDuration; i += Time.deltaTime)
                 {
-                    // TODO - quick abilities
-                    if(GameUIManager.QuickTiming.WasCanceled || localPlayer.Combo > currentPlayedCardCount)
+                    if(GameUIManager.QuickTiming.WasCanceled || localPlayer.Combo > currentPlayedCardCount || localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count > currentAbilityUsedCount)
                         break;
                     GameUIManager.QuickTiming.SetTimer(1f - (i / quickDuration));
                     yield return null;
@@ -181,19 +185,19 @@ namespace SVESimulator
                 localInputController.allowedInputs = PlayerInputController.InputTypes.None;
                 GameUIManager.QuickTiming.CloseAll();
 
-                // Loop if we played a card
-                if(localPlayer.Combo > currentPlayedCardCount)
+                // Loop if we played a card or used an ability
+                if(localPlayer.Combo > currentPlayedCardCount || localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Count > currentAbilityUsedCount)
                 {
-                    yield return new WaitForSeconds(0.25f); // test delay
-                    yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect);
-                    yield return new WaitForSeconds(0.25f); // test delay
+                    yield return new WaitForSeconds(0.25f);
+                    yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect && !localPlayer.LocalEvents.IsPayingCosts);
+                    yield return new WaitForSeconds(0.25f);
                     if(isCombat)
                         CardManager.Animator.SetTargetingLineActive(true);
                     goto startQuickTiming;
                 }
 
                 // End
-                yield return new WaitForSeconds(0.1f); // test delay
+                yield return new WaitForSeconds(0.1f);
                 CmdSetQuickTimingState(QuickTimingState.Complete);
             }
         }
@@ -215,7 +219,20 @@ namespace SVESimulator
         {
             localPlayer.ZoneController.handZone.SetAllCardsInteractable(false);
             localPlayer.ZoneController.handZone.RemoveAllCardHighlights();
+            localPlayer.ZoneController.fieldZone.RemoveAllCardHighlights();
+            localPlayer.InputController.allowedInputs = PlayerInputController.InputTypes.None;
             GameUIManager.QuickTiming.OpenWaitingOnQuickUI();
+            StartCoroutine(UITimer());
+            IEnumerator UITimer()
+            {
+                for(float i = 0f; i <= quickDuration; i += Time.deltaTime)
+                {
+                    if(!GameUIManager.QuickTiming.gameObject.activeInHierarchy)
+                        yield break;
+                    GameUIManager.QuickTiming.SetTimer(1f - (i / quickDuration));
+                    yield return null;
+                }
+            }
         }
 
         [TargetRpc]
@@ -227,22 +244,6 @@ namespace SVESimulator
                 localInputController.allowedInputs = PlayerInputController.InputTypes.All;
                 localPlayer.ZoneController.fieldZone.HighlightCardsCanAttack();
                 localPlayer.ZoneController.handZone.SetAllCardsInteractable(true);
-            }
-        }
-
-        [TargetRpc]
-        private void TargetStartTimerUI(NetworkConnectionToClient networkConnection)
-        {
-            StartCoroutine(UITimer());
-            IEnumerator UITimer()
-            {
-                for(float i = 0f; i <= quickDuration; i += Time.deltaTime)
-                {
-                    if(!GameUIManager.QuickTiming.gameObject.activeInHierarchy)
-                        yield break;
-                    GameUIManager.QuickTiming.SetTimer(1f - (i / quickDuration));
-                    yield return null;
-                }
             }
         }
 

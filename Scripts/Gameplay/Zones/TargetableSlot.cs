@@ -14,6 +14,8 @@ namespace SVESimulator
         public int SlotNumber { get; private set; } = -1;
         [field: SerializeField, LabelText("Interaction Type")]
         public InteractionType CurrentInteractionType { get; set; }
+        [SerializeField]
+        public GameObject background;
 
         [ShowInInspector, ReadOnly]
         public CardObject Card => (ParentZone is CardPositionedZone zone) ? zone.GetCard(SlotNumber) : null;
@@ -22,15 +24,23 @@ namespace SVESimulator
 
         #region Unity Messages
 
+        private void Start()
+        {
+            if(!ParentZone)
+            {
+                ParentZone = GetComponentInParent<CardZone>();
+                if(ParentZone && ParentZone is CardPositionedZone zone)
+                    SlotNumber = zone.GetSlotNumber(this);
+            }
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
             if(!ParentZone)
                 ParentZone = GetComponentInParent<CardZone>();
             if(!Application.isPlaying && ParentZone is CardPositionedZone zone)
-            {
                 SlotNumber = zone.GetSlotNumber(this);
-            }
         }
 #endif
 
@@ -38,7 +48,12 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Hover
+        #region Other
+
+        public void SetBackgroundActive(bool active)
+        {
+            background.SetActive(active);
+        }
 
         public void OnHoverBegin()
         {

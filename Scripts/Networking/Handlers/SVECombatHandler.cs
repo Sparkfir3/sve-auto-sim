@@ -60,7 +60,7 @@ namespace SVESimulator
                 cardInstanceId = msg.cardInstanceId
             };
             server.SafeSendToClient(server.gameState.currentOpponent, oppAtkMsg);
-            (server.effectSolver as SVEEffectSolver).DeclareAttack(player.netId, card);
+            (server.effectSolver as SVEEffectSolver).DeclareAttack(player.netId, card, msg.isAttackingLeader);
         }
 
         private void OnAttackFollower(NetworkConnection conn, LocalAttackFollowerMessage msg)
@@ -202,6 +202,8 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[SVEProperties.Zones.Field].cards.Find(x => x.instanceId == msg.cardInstanceId);
+            if(card == null && !msg.adding) // catch for if trying to remove a keyword from a card that has already left the field
+                return;
             Debug.Assert(card != null);
 
             OpponentApplyKeywordMessage oppMsg = new()

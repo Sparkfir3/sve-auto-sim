@@ -51,26 +51,27 @@ namespace SVESimulator
 
         #region Open/Close Controls
 
-        public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities)
+        public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities, bool onlyQuicks = false)
         {
-            // Effects
             int i = 0;
-            if(card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
-                abilities.Add(CounterUtilities.InnateStackAbility);
+
+            // Effects
             for(; i < abilities.Count; i++)
             {
                 MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
                 ActivatedAbility ability = abilities[i]; // need to detach reference from var i for the button event
 
                 button.gameObject.SetActive(true);
-                button.Text = (ability.effect as SveEffect)?.text;
+                button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
-                    && (ability.effect is EvolveEffect evolveEffect ? evolveEffect.CanEvolve(player, card.RuntimeCard) : true);
+                    && (ability.effect is not EvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
+                if(onlyQuicks)
+                    button.Interactable &= ability.IsQuickAbility();
                 button.OnClickEffect.AddListener(() =>
                 {
+                    player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                     player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
                     {
-                        player.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                         SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
                         {
                             SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
@@ -80,8 +81,33 @@ namespace SVESimulator
                 });
             }
 
+            // Stack
+            if(!onlyQuicks && card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
+            {
+                MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
+                ActivatedAbility ability = CounterUtilities.InnateStackAbility;
+
+                button.gameObject.SetActive(true);
+                button.Text = (ability.effect as SveEffect)?.text;
+                button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name);
+                button.OnClickEffect.AddListener(() =>
+                {
+                    player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
+                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
+                    {
+                        SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
+                        {
+                            SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                        });
+                    });
+                    Close();
+                });
+                abilities.Add(CounterUtilities.InnateStackAbility);
+                i++;
+            }
+
             // Evolve without evolve point
-            int evolveCost = card.GetEvolveCost();
+            int evolveCost = onlyQuicks ? -1 : card.GetEvolveCost();
             if(evolveCost >= 0)
             {
                 MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();

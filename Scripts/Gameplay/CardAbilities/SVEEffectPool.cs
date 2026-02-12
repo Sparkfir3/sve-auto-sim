@@ -41,12 +41,14 @@ namespace SVESimulator
         [field: SerializeField, SyncVar]
         public bool IsResolvingEffect { get; private set; }
 
-        public event Action OnConfirmationTimingStart;
+        public event Action OnNextConfirmationTimingStart;
         public event Action OnConfirmationTimingStartConstant;
-        public event Action OnConfirmationTimingEnd;
+        public event Action OnNextConfirmationTimingEnd;
         public event Action OnConfirmationTimingEndConstant;
+        public event Action OnNextConfirmationTimingStartOrEnd;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
+        public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
 
         private Dictionary<System.Type, EffectTriggerState> TriggerStateTypeMap = new()
         {
@@ -106,6 +108,7 @@ namespace SVESimulator
                     bool isCardLocalPlayer = resolvingPlayer == localPlayer.GetPlayerInfo(); // should always be true but safety check never hurts
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
+
                     SVEPendingEffect effect = new()
                     {
                         triggeringCardInstanceId = (triggeringCard ?? sourceCard).instanceId,
@@ -115,7 +118,7 @@ namespace SVESimulator
                         resolvingPlayerId = resolvingPlayer.netId.netId,
                         effect = sveEffect,
                         costs = trigger.Costs,
-                        cardName = libraryCard.name,
+                        cardId = libraryCard.id,
                         abilityName = triggeredAbility.name,
                         condition = trigger.condition,
                         triggerState = triggerState
@@ -286,14 +289,28 @@ namespace SVESimulator
 
             IEnumerator ResolveOverTime()
             {
+                // Skip prompt if all effects fail condition
+                if(pendingEffects.Where(x => x.triggerState == EffectTriggerState.Immediate)
+                   .All(x =>
+                   {
+                       if(x.condition.IsNullOrWhiteSpace())
+                           return false;
+                       CardObject card = CardManager.Instance.GetCardByInstanceId(x.sourceCardInstanceId);
+                       return !SVEFormulaParser.ParseValueAsCondition(x.condition, localPlayer, card);
+                   }))
+                {
+                    goto exit;
+                }
+
                 // Resolve single effect
-                if(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
+                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
                 {
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
                         if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
                             continue;
                         yield return ResolveEffectAtIndex(i);
+                        break;
                     }
                 }
 
@@ -319,6 +336,7 @@ namespace SVESimulator
                 }
 
                 // Complete
+                exit:
                 yield return null;
                 pendingEffects = pendingEffects.Where(x => x.triggerState != EffectTriggerState.Immediate).ToList();
                 CmdSetConfirmationTimingState(isTurnPlayer ? ConfirmationTimingState.FinishedTurnPlayer : ConfirmationTimingState.FinishedNonTurnPlayer);
@@ -340,7 +358,7 @@ namespace SVESimulator
         public void ResolvePendingEffect(SVEPendingEffect pendingEffect, Action onComplete = null)
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(pendingEffect.sourceCardInstanceId);
-            if(!string.IsNullOrWhiteSpace(pendingEffect.condition) && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
+            if(!pendingEffect.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(pendingEffect.condition, localPlayer, cardObject))
             {
                 onComplete?.Invoke();
                 return;
@@ -350,13 +368,23 @@ namespace SVESimulator
             if(pendingEffect.costs == null || pendingEffect.costs.Count == 0)
             {
                 Resolve();
-                localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, 0, pendingEffect.abilityName));
             }
             else
             {
                 Debug.Assert(cardObject, $"Failed to find card with instance ID {pendingEffect.sourceCardInstanceId} in zone {pendingEffect.sourceCardZone} for ability {pendingEffect.abilityName}");
                 bool canPayCost = localPlayer.LocalEvents.CanPayCosts(cardObject.RuntimeCard, pendingEffect.costs, pendingEffect.abilityName);
 
+                // Skip prompt if all costs are internal
+                if(pendingEffect.costs.All(x => x is SveCost { IsInternalCost: true }))
+                {
+                    if(canPayCost)
+                        ResolveWithCost();
+                    else
+                        onComplete?.Invoke();
+                    return;
+                }
+
+                // Prompt player to pay for cost or decline
                 List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
                 {
                     new MultipleChoiceWindow.MultipleChoiceEntryData
@@ -365,8 +393,7 @@ namespace SVESimulator
                         onSelect = () =>
                         {
                             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(localPlayer.GetOpponentInfo().netId);
-                            localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
-                            localPlayer.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, 0, pendingEffect.abilityName));
+                            ResolveWithCost();
                         }
                     },
                     new MultipleChoiceWindow.MultipleChoiceEntryData
@@ -387,12 +414,18 @@ namespace SVESimulator
 
             void Resolve()
             {
+                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
                 {
                     IsResolvingEffect = false;
                     onComplete?.Invoke();
                 });
+            }
+            void ResolveWithCost()
+            {
+                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
             }
         }
 
@@ -421,20 +454,29 @@ namespace SVESimulator
         {
             if(oldState == ConfirmationTimingState.Idle && newState == ConfirmationTimingState.ResolvingTurnPlayer)
             {
-                OnConfirmationTimingStart?.Invoke();
+                OnNextConfirmationTimingStart?.Invoke();
                 OnConfirmationTimingStartConstant?.Invoke();
-                OnConfirmationTimingStart = null;
+                OnNextConfirmationTimingStart = null;
+                OnNextConfirmationTimingStartOrEnd?.Invoke();
+                OnNextConfirmationTimingStartOrEnd = null;
             }
             else if(oldState == ConfirmationTimingState.FinishedNonTurnPlayer && newState == ConfirmationTimingState.Idle)
             {
-                OnConfirmationTimingEnd?.Invoke();
+                OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
-                OnConfirmationTimingEnd = null;
-                localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
+                OnNextConfirmationTimingEnd = null;
+                OnNextConfirmationTimingStartOrEnd?.Invoke();
+                OnNextConfirmationTimingStartOrEnd = null;
+                CardManager.Instance.ReleaseAllDisabledCards();
+
                 if(localPlayer && !SVEQuickTimingController.Instance.IsActive)
                 {
+                    localPlayer.InputController.allowedInputs = localPlayer.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                     localPlayer.ZoneController.handZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
                     localPlayer.ZoneController.fieldZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
+                    if(localPlayer.isActivePlayer)
+                        foreach(CardObject card in localPlayer.ZoneController.fieldZone.GetAllPrimaryCards())
+                            card.CalculateCanAttackStatus(updateHighlightMode: false);
                 }
             }
         }
@@ -450,9 +492,9 @@ namespace SVESimulator
             if(card == null)
                 return;
 
-            // Apply during next confirmation timing to wait for other effects to resolve
+            // Apply during next confirmation timing to wait for other effects to resolve TODO - update any time field changes/apply in the middle of confirmation timing
             //   (i.e. don't apply the passive before we finish playing the card to the field)
-            OnConfirmationTimingStart += () =>
+            OnNextConfirmationTimingStartOrEnd += () =>
             {
                 if(!localPlayer.ZoneController.fieldZone.ContainsCard(card) && !opponentPlayer.ZoneController.fieldZone.ContainsCard(card))
                     return;
@@ -577,7 +619,7 @@ namespace SVESimulator
         public uint resolvingPlayerId;
         public SveEffect effect;
         public List<Cost> costs;
-        public string cardName;
+        public int cardId;
         public string abilityName;
         public string condition;
         public SVEEffectPool.EffectTriggerState triggerState;
@@ -586,7 +628,7 @@ namespace SVESimulator
         {
             return new MultipleChoiceWindow.MultipleChoiceEntryData()
             {
-                text = $"{cardName}{(effect.text.IsNullOrWhiteSpace() ? "" : $" - {effect.text}")}",
+                text = $"{LibraryCardCache.GetName(cardId)}{(effect.text.IsNullOrWhiteSpace() ? "" : $" - {effect.text}")}",
                 onSelect = onSelect
             };
         }

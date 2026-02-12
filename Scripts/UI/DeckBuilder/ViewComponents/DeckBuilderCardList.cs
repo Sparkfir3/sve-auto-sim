@@ -42,6 +42,7 @@ namespace SVESimulator.DeckBuilder
         public event Action<Card> OnMouseHoverOverCard;
         public event Action<Card> AddCard;
         public event Action<Card> RemoveCard;
+        public event Action OnListUpdated;
 
         #endregion
 
@@ -95,6 +96,7 @@ namespace SVESimulator.DeckBuilder
             int index = ImageCount * (CurrentPage - 1);
             int listCount = Mathf.Min(model.FilteredCardList.Count - index, ImageCount);
             SetImages(model.FilteredCardList.GetRange(index, listCount));
+            OnListUpdated?.Invoke();
         }
 
         [Button, HorizontalGroup("Page Prev"), DisableInEditorMode]

@@ -28,25 +28,25 @@ namespace SVESimulator
             return player.GetPlayerInfo().namedZones[SVEProperties.Zones.Cemetery].cards.Count(x => filters.MatchesCard(x)) >= value;
         }
 
-        public override IEnumerator PayCost(PlayerController player, CardObject card, SveEffect effect, List<MoveCardToZoneData> cardsToMove)
+        public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
             bool waiting = true;
             int banishAmount = SVEFormulaParser.ParseValue(amount);
             int cemeteryCount = player.ZoneController.cemeteryZone.AllCards.Count;
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
 
-            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromCemetery, cemeteryCount, cemeteryCount);
+            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromCemetery, cemeteryCount, cemeteryCount, slotBackgroundsActive: false);
             selectionArea.SetFilter(filter);
             selectionArea.AddCemetery();
             selectionArea.SetConfirmAction(LibraryCardCache.GetCard(card.RuntimeCard.cardId).name,
                 "Banish",
-                effect?.text,
+                LibraryCardCache.GetEffectTextCost(card.LibraryCard.id, abilityName),
                 banishAmount, banishAmount,
                 cards =>
                 {
                     foreach(CardObject banish in cards)
                     {
-                        player.ZoneController.SendCardToBanishedZone(banish);
+                        player.LocalEvents.BanishCard(banish, originZone: SVEProperties.Zones.Cemetery, onlyMoveObject: true);
                         cardsToMove.Add(new MoveCardToZoneData(banish.RuntimeCard.instanceId, SVEProperties.Zones.Cemetery, SVEProperties.Zones.Banished));
                     }
                     waiting = false;

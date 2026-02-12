@@ -20,6 +20,10 @@ namespace SVESimulator
             NetworkServer.RegisterHandler<SetMaxPlayPointsMessage>(SetMaxPlayPoints);
             NetworkServer.RegisterHandler<SetCurrentPlayPointsMessage>(SetCurrentPlayPoints);
             NetworkServer.RegisterHandler<LocalInitDeckAndLeaderMessage>(OnInitDeckAndLeader);
+            NetworkServer.RegisterHandler<SetGamePhaseMessage>(OnSetGamePhase);
+
+            // Zone Controls
+            NetworkServer.RegisterHandler<LocalShuffleDeckMessage>(OnShuffleDeck);
 
             // Deck movement
             NetworkServer.RegisterHandler<LocalDrawCardMessage>(OnDrawCard);
@@ -58,6 +62,10 @@ namespace SVESimulator
             NetworkServer.UnregisterHandler<SetMaxPlayPointsMessage>();
             NetworkServer.UnregisterHandler<SetCurrentPlayPointsMessage>();
             NetworkServer.UnregisterHandler<LocalInitDeckAndLeaderMessage>();
+            NetworkServer.UnregisterHandler<SetGamePhaseMessage>();
+
+            // Zone Controls
+            NetworkServer.UnregisterHandler<LocalShuffleDeckMessage>();
 
             // Deck movement
             NetworkServer.UnregisterHandler<LocalDrawCardMessage>();
@@ -176,6 +184,29 @@ namespace SVESimulator
             (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, leaderCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
         }
 
+        private void OnSetGamePhase(NetworkConnection conn, SetGamePhaseMessage msg)
+        {
+            server.gameState.currentPhase = msg.phase;
+            server.SafeSendToClient(server.gameState.currentOpponent, msg);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Controls
+
+
+        private void OnShuffleDeck(NetworkConnection conn, LocalShuffleDeckMessage msg)
+        {
+            OpponentShuffleDeckMessage shuffleMsg = new()
+            {
+                playerNetId = msg.playerNetId
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, shuffleMsg);
+            (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId);
+        }
+
         #endregion
 
         // ------------------------------
@@ -277,9 +308,13 @@ namespace SVESimulator
             Debug.Assert(targetZone != null, $"Transform card effect received invalid zone {msg.originZone}");
             Debug.Assert(targetCard != null, $"Failed to find card with instance ID {msg.targetCardInstanceId} in zone {msg.originZone}");
 
-            (server.effectSolver as SVEEffectSolver).BanishCard(player.netId, targetCard, msg.originZone);
-            player.currentCardInstanceId++;
-            RuntimeCard tokenCard = (server.effectSolver as SVEEffectSolver).CreateAndAddToken(msg.playerNetId, msg.libraryCardId, msg.tokenRuntimeCardInstanceId, targetZone);
+            RuntimeCard tokenCard = null;
+            if(!msg.isOpponentCard)
+            {
+                (server.effectSolver as SVEEffectSolver)?.BanishCard(player.netId, targetCard, msg.originZone);
+                player.currentCardInstanceId++;
+                tokenCard = (server.effectSolver as SVEEffectSolver)?.CreateAndAddToken(msg.playerNetId, msg.libraryCardId, msg.tokenRuntimeCardInstanceId, targetZone);
+            }
 
             OpponentTransformCardMessage transformMessage = new()
             {
@@ -288,7 +323,8 @@ namespace SVESimulator
                 isOpponentCard = msg.isOpponentCard,
                 originZone = msg.originZone,
 
-                tokenCard = NetworkingUtils.GetNetCard(tokenCard),
+                tokenCard = tokenCard != null ? NetworkingUtils.GetNetCard(tokenCard) : new NetCard(),
+                tokenCardId = msg.libraryCardId,
                 slotId = msg.slotId
             };
             server.SafeSendToClient(server.gameState.currentOpponent, transformMessage);
@@ -340,10 +376,11 @@ namespace SVESimulator
                 playerNetId = msg.playerNetId,
                 card = NetworkingUtils.GetNetCard(card),
                 isOpponentCard = msg.isOpponentCard,
-                originZone = msg.originZone
+                originZone = msg.originZone,
+                isDestroy = msg.isDestroy
             };
             server.SafeSendToClient(server.gameState.currentOpponent, sendCardToCemeteryMessage);
-            (server.effectSolver as SVEEffectSolver).SendToCemetery(player.netId, card, msg.originZone);
+            (server.effectSolver as SVEEffectSolver).SendToCemetery(player.netId, card, msg.originZone, msg.isDestroy);
         }
 
         private void OnBanishCard(NetworkConnection conn, LocalBanishCardMessage msg)

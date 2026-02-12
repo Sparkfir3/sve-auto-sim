@@ -28,12 +28,17 @@ namespace SVESimulator.SveScript
             { "OnOtherEnterField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardLeaveFieldTrigger", TriggerParameterType.Filter) },
+            { "OnDiscarded", new EffectTriggerInfo("SVESimulator.SveOnDiscardedTrigger") },
 
             // Card/Player Actions
             { "OnEvolve", new EffectTriggerInfo("SVESimulator.SveOnEvolveTrigger") },
+            { "OnOtherEvolve", new EffectTriggerInfo("SVESimulator.SveOnOtherEvolveTrigger", TriggerParameterType.Filter) },
             { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger") },
+            { "FollowerStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackFollowerTrigger") },
+            { "LeaderStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackLeaderTrigger") },
             { "OnOtherAttack", new EffectTriggerInfo("SVESimulator.SveOnOtherCardAttackTrigger", TriggerParameterType.Filter) },
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
+            { "OnDealCombatDamage", new EffectTriggerInfo("SVESimulator.SveOnDealCombatDamageTrigger") },
 
             // Game Phases
             { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },

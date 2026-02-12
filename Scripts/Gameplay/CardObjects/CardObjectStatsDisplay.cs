@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using Sparkfire.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +30,14 @@ namespace SVESimulator
             }
         }
 
-        [field: Title("Containers"), SerializeField]
+        [Title("Object References"), SerializeField]
+        private CardObject cardObject;
+        [field: SerializeField]
         public GameObject MainStatContainer { get; private set; }
         [field: SerializeField]
         public GameObject CostStatContainer { get; private set; }
+        [SerializeField]
+        private GraphicRaycaster graphicRaycaster;
 
         [Title("Stat Displays"), SerializeField]
         private GameObject attackContainer;
@@ -45,6 +51,15 @@ namespace SVESimulator
         private GameObject costContainer;
         [SerializeField]
         private TextMeshProUGUI costText;
+        [SerializeField, InlineEditor]
+        private CardStatColorSettings statColorSettings;
+
+        [Title("Keywords"), SerializeField]
+        private Transform keywordIconsContainer;
+        [SerializeField, AssetsOnly]
+        private KeywordIcon keywordIconPrefab;
+        [ShowInInspector, HideInEditorMode]
+        private SerializedDictionary<int, GameObject> currentKeywordIcons = new();
 
         [Title("Counters Display"), SerializeField, DisableInEditorMode]
         private List<CounterDisplay> counterLines;
@@ -86,10 +101,10 @@ namespace SVESimulator
             }
 
             // Cost
-            if(card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out costStat))
+            if(card.ownerPlayer.netId.isLocalPlayer && card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out costStat))
             {
                 baseCost = costStat.baseValue;
-                int currentCost = card.PlayPointCost();
+                int currentCost = cardObject.CurrentZone ? card.PlayPointCost(cardObject.CurrentZone.Player) : baseCost;
                 SetCostStat(currentCost);
                 SVEEffectPool.Instance.OnConfirmationTimingEndConstant += UpdateCostStat;
             }
@@ -99,12 +114,17 @@ namespace SVESimulator
                 costContainer.SetActive(false);
             }
 
-            // Counters
+            // Keywords & Counters
             runtimeCard = card;
             runtimeCard.onKeywordAdded += OnKeywordAdded;
             runtimeCard.onKeywordRemoved += OnKeywordRemoved;
             foreach(RuntimeKeyword keyword in runtimeCard.keywords)
                 OnKeywordAdded(keyword);
+            if(currentKeywordIcons.Count == 0)
+            {
+                keywordIconsContainer.gameObject.SetActive(false);
+                graphicRaycaster.enabled = false;
+            }
         }
 
         public void Reset()
@@ -133,13 +153,18 @@ namespace SVESimulator
                 costStat = null;
             }
 
-            // Counters
+            // Keywords & Counters
             if(runtimeCard != null)
             {
                 runtimeCard.onKeywordAdded -= OnKeywordAdded;
                 runtimeCard.onKeywordRemoved -= OnKeywordRemoved;
                 runtimeCard = null;
             }
+            foreach(GameObject icon in currentKeywordIcons.Select(x => x.Value))
+                Destroy(icon);
+            currentKeywordIcons.Clear();
+            keywordIconsContainer.gameObject.SetActive(false);
+            graphicRaycaster.enabled = false;
             foreach(TextMeshProUGUI textbox in counterLines.Select(x => x.textbox))
                 Destroy(textbox.gameObject);
             counterLines.Clear();
@@ -152,23 +177,47 @@ namespace SVESimulator
 
         // ------------------------------
 
-        private void SetAttackStat(int oldAtk, int newAtk) => SetAttackStat(newAtk);
-        private void SetAttackStat(int atk)
+        private void SetAttackStat(int oldAtk, int newAtk) => SetAttackStat(newAtk, true, newAtk - oldAtk);
+        private void SetAttackStat(int atk, bool playAnimation = false, int difference = 0)
         {
             attackText.text = atk.ToString();
+            if(atk < attackStat.baseValue)
+            {
+                attackText.color = statColorSettings.StatDownColor;
+                attackText.fontSharedMaterial = statColorSettings.WhiteOutlineMaterial;
+            }
+            else
+            {
+                attackText.color = atk == attackStat.baseValue ? statColorSettings.StatBaseColor : statColorSettings.StatBuffedColor;
+                attackText.fontSharedMaterial = statColorSettings.BlackOutlineMaterial;
+            }
+            if(playAnimation)
+                CardManager.Animator.PlayStatChangeAnimation(attackText.transform.position, difference);
         }
 
-        private void SetDefenseStat(int oldDef, int newDef) => SetDefenseStat(newDef);
-        private void SetDefenseStat(int def)
+        private void SetDefenseStat(int oldDef, int newDef) => SetDefenseStat(newDef, true, newDef - oldDef);
+        private void SetDefenseStat(int def, bool playAnimation = false, int difference = 0)
         {
             defenseText.text = def.ToString();
+            if(def < defenseStat.baseValue)
+            {
+                defenseText.color = statColorSettings.StatDownColor;
+                defenseText.fontSharedMaterial = statColorSettings.WhiteOutlineMaterial;
+            }
+            else
+            {
+                defenseText.color = def == defenseStat.baseValue ? statColorSettings.StatBaseColor : statColorSettings.StatBuffedColor;
+                defenseText.fontSharedMaterial = statColorSettings.BlackOutlineMaterial;
+            }
+            if(playAnimation)
+                CardManager.Animator.PlayStatChangeAnimation(defenseText.transform.position, difference);
         }
 
         public void UpdateCostStat()
         {
             if(costStat == null || !CostStatContainer.activeInHierarchy)
                 return;
-            SetCostStat(runtimeCard.PlayPointCost());
+            SetCostStat(runtimeCard.PlayPointCost(cardObject.CurrentZone ? cardObject.CurrentZone.Player : null));
         }
 
         public void SetCostStat(int cost)
@@ -180,10 +229,31 @@ namespace SVESimulator
             }
             costContainer.SetActive(true);
             costText.text = cost.ToString();
+            costText.color = cost < baseCost ? statColorSettings.StatBuffedColor : statColorSettings.StatDownColor;
+            costText.fontSharedMaterial = cost <= baseCost ? statColorSettings.BlackOutlineMaterial : statColorSettings.WhiteOutlineMaterial;
         }
 
         private void OnKeywordAdded(RuntimeKeyword keyword)
         {
+            // Standard keyword
+            if(keyword.keywordId == 0)
+            {
+                if(currentKeywordIcons.TryGetValue(keyword.valueId, out GameObject keywordIcon))
+                {
+                    keywordIcon.SetActive(true);
+                }
+                else if(CardManager.Instance.TryGetKeywordIconData(keyword.valueId, out KeywordIcon.KeywordIconData data))
+                {
+                    KeywordIcon newImage = Instantiate(keywordIconPrefab, keywordIconsContainer);
+                    newImage.Initialize(data);
+                    currentKeywordIcons.Add(keyword.valueId, newImage.gameObject);
+                }
+                keywordIconsContainer.gameObject.SetActive(true);
+                graphicRaycaster.enabled = true;
+                return;
+            }
+
+            // Counters
             if(keyword.keywordId < (int)SVEProperties.Counters.Stack)
                 return;
             CounterDisplay display = counterLines.FirstOrDefault(x => x.keywordId == keyword.keywordId);
@@ -193,11 +263,28 @@ namespace SVESimulator
                 counterLines.Add(display);
             }
             display.count = runtimeCard.CountOfCounter((SVEProperties.Counters)keyword.keywordId);
-            display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "");
+            display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "").Trim();
         }
 
         private void OnKeywordRemoved(RuntimeKeyword keyword)
         {
+            // Standard keyword
+            if(keyword.keywordId == 0)
+            {
+                if(currentKeywordIcons.TryGetValue(keyword.valueId, out GameObject keywordIcon))
+                {
+                    Destroy(keywordIcon);
+                    currentKeywordIcons.Remove(keyword.valueId);
+                    if(currentKeywordIcons.Count == 0)
+                    {
+                        keywordIconsContainer.gameObject.SetActive(false);
+                        graphicRaycaster.enabled = false;
+                    }
+                }
+                return;
+            }
+
+            // Counters
             if(keyword.keywordId < (int)SVEProperties.Counters.Stack)
                 return;
             CounterDisplay display = counterLines.FirstOrDefault(x => x.keywordId == keyword.keywordId);
@@ -206,7 +293,7 @@ namespace SVESimulator
             display.count = runtimeCard.CountOfCounter((SVEProperties.Counters)keyword.keywordId);
             if(display.count > 0)
             {
-                display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "");
+                display.textbox.text = string.Format(counterTextTemplate, display.counterName, display.count > 1 ? display.count : "").Trim();
             }
             else
             {

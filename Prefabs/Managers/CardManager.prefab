@@ -47,4 +47,30 @@ MonoBehaviour:
   <UseDontDestroyOnLoad>k__BackingField: 0
   defaultRotation: {x: 90, y: 0, z: 0}
   cardAnimator: {fileID: 0}
+  keywordIcons:
+    serializedPairs:
+    - key: 3
+      value:
+        sprite: {fileID: 21300000, guid: 50659bfff1445a0428011782c99029f5, type: 3}
+        text: Assail
+    - key: 7
+      value:
+        sprite: {fileID: 21300000, guid: 6526ab275479c63408aabd3360ce35e7, type: 3}
+        text: Aura
+    - key: 6
+      value:
+        sprite: {fileID: 21300000, guid: 15f89cb14ba14b845a174944a712dd32, type: 3}
+        text: Bane
+    - key: 5
+      value:
+        sprite: {fileID: 21300000, guid: 77f26ad54a99d5c40b2a3673e41ae61f, type: 3}
+        text: Drain
+    - key: 4
+      value:
+        sprite: {fileID: 21300000, guid: 4a735b95cdef7a544b32602536269847, type: 3}
+        text: Intimidate
+    - key: 0
+      value:
+        sprite: {fileID: 21300000, guid: b464e904f233f6f42b9747f59fd31c05, type: 3}
+        text: Ward
   cardPrefab: {fileID: 1406293292076722110, guid: da35744a35e93814ca573b6eea2480e7, type: 3}

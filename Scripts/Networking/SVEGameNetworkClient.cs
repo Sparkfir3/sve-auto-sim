@@ -22,6 +22,10 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<SetMaxPlayPointsMessage>(OnOpponentUpdateMaxPlayPoints);
             NetworkClient.RegisterHandler<SetCurrentPlayPointsMessage>(OnOpponentUpdateCurrentPlayPoints);
             NetworkClient.RegisterHandler<OpponentInitDeckAndLeaderMessage>(OnOpponentInitDeckAndLeader);
+            NetworkClient.RegisterHandler<SetGamePhaseMessage>(OnSetGamePhase);
+
+            // Zone Controls
+            NetworkClient.RegisterHandler<OpponentShuffleDeckMessage>(OnOpponentShuffleDeck);
 
             // Deck movement
             NetworkClient.RegisterHandler<OpponentDrawCardMessage>(OnOpponentDrawCard);
@@ -76,6 +80,10 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<SetMaxPlayPointsMessage>();
             NetworkClient.UnregisterHandler<SetCurrentPlayPointsMessage>();
             NetworkClient.UnregisterHandler<OpponentInitDeckAndLeaderMessage>();
+            NetworkClient.UnregisterHandler<SetGamePhaseMessage>();
+
+            // Zone Controls
+            NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
 
             // Deck movement
             NetworkClient.UnregisterHandler<OpponentDrawCardMessage>();
@@ -186,6 +194,29 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.InitializeDeckAndLeader(msg);
+        }
+
+        private void OnSetGamePhase(SetGamePhaseMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+            player.OpponentEvents.SetGamePhase(msg.phase);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Zone Controls
+
+        private void OnOpponentShuffleDeck(OpponentShuffleDeckMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.ShuffleDeck(msg);
         }
 
         #endregion

@@ -72,7 +72,8 @@ namespace SVESimulator
         public void SetTimer(float amount)
         {
             foreach(Image timer in timers)
-                timer.fillAmount = amount;
+                if(timer.isActiveAndEnabled)
+                    timer.fillAmount = amount;
         }
 
         public void SetSubtitle(string text)

@@ -1,0 +1,373 @@
+name Albert, Levin Saber;
+id BP02-018;
+class Sword;
+type Follower;
+trait Commander / Levin;
+rarity L;
+cost 4;
+stats 3/5;
+
+text "[evolve][cost03]: Evolve this follower.
+      Storm.";
+
+evolve 3;
+keyword Storm;
+
+// ------------------------------
+
+name Albert, Levin Saber (Evolved);
+id BP02-019;
+class Sword;
+type Evolved Follower;
+trait Commander / Levin;
+rarity L;
+stats 3/5;
+
+text "Storm.
+      On Evolve: For the rest of this turn, this follower doesn't take combat damage.
+      Strike: Refresh this follower. Perform this ability only once per turn.";
+
+keyword Storm;
+ability OnEvolve {
+    effect GiveKeywordEndOfTurn(DoesNotTakeCombatDamage) to Self;
+}
+ability Strike {
+    cost (OncePerTurn);
+    effect Refresh() to Self;
+}
+
+// ------------------------------
+
+name Alexander;
+id BP02-020;
+class Sword;
+type Follower;
+trait Commander;
+rarity L;
+cost 6;
+stats 5/9;
+
+text "Rush. Assail.
+      During your turn, whenever this follower deals combat damage, refresh it.";
+
+keywords Rush, Assail;
+ability OnDealCombatDamage {
+    condition t;
+    effect Refresh() to Self;
+}
+
+// ------------------------------
+
+name Amelia, Silver Paladin;
+id BP02-021;
+class Sword;
+type Follower;
+trait Commander;
+rarity G;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Choose one of the following. (1) Select a follower that costs 3 play points or less in your hand and put it onto your field. (2) Select an enemy follower on the field and deal it 4 damage.";
+
+ability Fanfare {
+    condition H(Fp(m(0,3))) | p(#F);
+    effect ChooseFromList(Field, Damage);
+}
+ability Spell name Field {
+    condition H(Fp(m(0,3)));
+    effect HandToField(1, Fp(m(0,3)));
+}
+ability Spell name Damage {
+    condition p(#F);
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Leonidas;
+id BP02-022;
+class Sword;
+type Follower;
+trait Commander;
+rarity G;
+cost 6;
+stats 5/6;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Leonidas (Evolved);
+id BP02-023;
+class Sword;
+type Evolved Follower;
+trait Commander;
+rarity G;
+stats 6/7;
+
+text "On Evolve: Select an enemy follower on the field. Deal 5 damage to it and this follower.
+      [lastwords] Summon a Leonidas's Resolve token.";
+
+ability OnEvolve {
+    effect Sequence(DamageEnemy, DamageSelf);
+}
+ability Spell name DamageEnemy {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name DamageSelf {
+    effect DealDamage(5) to Self;
+}
+ability LastWords {
+    effect SummonToken(Leonidas's Resolve, Field, 1);
+}
+
+// ------------------------------
+
+name White Paladin;
+id BP02-024;
+class Sword;
+type Follower;
+trait Commander;
+rarity G;
+cost 3;
+stats 3/4;
+
+text "Ward.
+      [act][cost02], [engage]: Summon 2 Shield Guardian tokens.";
+
+keyword Ward;
+ability Act {
+    cost (PP, 2), (EngageSelf);
+    effect SummonToken(Shield Guardian, Field, 2);
+}
+
+// ------------------------------
+
+name Jeno, Levin Vanguard;
+id BP02-025;
+class Sword;
+type Follower;
+trait Officer / Levin;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Jeno, Levin Vanguard (Evolved);
+id BP02-026;
+class Sword;
+type Evolved Follower;
+trait Officer / Levin;
+rarity S;
+stats 4/4;
+
+text "Assail.
+      On Evolve: Look at the top 4 cards of your deck. From among them, you may reveal a Levin follower with a different name from this card and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+keyword Assail;
+ability OnEvolve {
+    effect CheckTop(4, (Hand, Ft(Levin)!n(Jeno, Levin Vanguard), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Yurius, Levin Duke;
+id BP02-027;
+class Sword;
+type Follower;
+trait Noble / Levin;
+rarity S;
+cost 2;
+stats 0/4;
+
+text "[q][act][engage]: Select an enemy follower on the field and deal it 1 damage.";
+
+ability Act {
+    cost (Quick), (EngageSelf);
+    condition p(#F);
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Whole-Souled Swing;
+id BP02-028;
+class Sword;
+type Spell;
+trait Officer;
+rarity S;
+cost 2;
+
+text "[quick]
+      Select an enemy follower on the field. Deal it 3 damage and put a Knight token into your EX area.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, Token);
+}
+ability Spell name Damage {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name Token {
+    effect SummonToken(Knight, ExArea, 1);
+}
+
+// ------------------------------
+
+name Swift Infiltrator;
+id BP02-029;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "Whenever one of your followers evolves, give this follower [attack]+1/[defense]+1.";
+
+ability OnOtherEvolve {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Samurai;
+id BP02-030;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[act][cost03]: Give this follower Storm and Bane.";
+
+ability Act {
+    cost (PP, 3);
+    effect Sequence(Storm, Bane);
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to Self;
+}
+ability Spell name Bane {
+    effect GiveKeyword(Bane) to Self;
+}
+
+// ------------------------------
+
+name Avant Blader;
+id BP02-031;
+class Sword;
+type Follower;
+trait Commander;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "[evolve][cost01]: Evolve this follower.";
+
+evolve 1;
+
+// ------------------------------
+
+name Avant Blader (Evolved);
+id BP02-032;
+class Sword;
+type Evolved Follower;
+trait Commander;
+rarity B;
+stats 5/5;
+
+text "On Evolve: Search your deck for up to 2 Officer followers, reveal them, and add them to your hand.";
+
+ability OnEvolve {
+    effect Search(m(0,2), Ft(Officer), Hand);
+}
+
+// ------------------------------
+
+name Flame Soldier;
+id BP02-033;
+class Sword;
+type Follower;
+trait Officer / Heroic;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Select an enemy follower on the field and deal it 1 damage. If any of your followers have been destroyed this turn, deal 4 damage instead.";
+
+ability Fanfare {
+    effect DealDamage(1?(#(destroyed,F)>0)4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Gunner Maid Seria;
+id BP02-034;
+class Sword;
+type Follower;
+trait Officer / Maid;
+rarity B;
+cost 2;
+stats 1/3;
+
+text "[fanfare] Search your deck for a Princess follower, reveal it, and add it to your hand.";
+
+ability Fanfare {
+    effect Search(1, Ft(Princess), Hand);
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Prim, Adventuring Princess;
+id BP02-LD02;
+class Sword;
+type Leader;
+
+// ------------------------------
+
+name Shield Guardian;
+id BP02-T02;
+class Sword;
+type Follower / Token;
+trait Officer;
+cost 1;
+stats 1/1;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Leonidas's Resolve;
+id BP02-T03;
+class Sword;
+type Amulet / Token;
+trait Commander;
+cost 8;
+stats 1/2;
+
+text "Whenever a [swordcraft] follower is put onto your field, give it [attack]+3/[defense]+3 and Rush.";
+
+ability OnOtherEnterField {
+    filter Fc(Sword);
+    effect TargetForSequence(AtkDef, Rush) to TriggerCard;
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 3) to AllPlayerCards;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}

@@ -39,12 +39,26 @@ namespace SVESimulator
         {
             SearchDeckEffect searchEffect = new()
             {
-                amount = "1",
+                amount = "m(1,10)",
                 filter = null,
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.Hand,
                 text = "[Debug Mode] Search for a card"
             };
             SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
+        }
+
+        [Button]
+        public void Salvage()
+        {
+            if(Player.ZoneController.cemeteryZone.Runtime.cards.Count == 0)
+                return;
+            SalvageCardEffect salvageEffect = new()
+            {
+                amount = "m(1,10)",
+                filter = null,
+                text = "[Debug Mode] Salvage"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(salvageEffect, Player.ZoneController.cemeteryZone.Runtime.cards[0]); // dummy card to perform the effect
         }
 
         [Button]

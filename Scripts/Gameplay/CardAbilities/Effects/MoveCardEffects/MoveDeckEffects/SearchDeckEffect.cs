@@ -8,7 +8,7 @@ namespace SVESimulator
 {
     public class SearchDeckEffect : ChooseFromCardStackEffect
     {
-        public enum SearchDeckAction { Hand, Cemetery }
+        public enum SearchDeckAction { Hand, Cemetery, Field }
 
         [StringField("Action", width = 100), Order(10)]
         public SearchDeckAction searchDeckAction;
@@ -24,7 +24,7 @@ namespace SVESimulator
         protected override void InitializeSelectionArea(PlayerController player, CardSelectionArea selectionArea)
         {
             int cardCount = player.ZoneController.deckZone.Runtime.cards.Count;
-            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, cardCount, cardCount);
+            selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, cardCount, cardCount, slotBackgroundsActive: false);
             selectionArea.SetFilter(filter);
             selectionArea.AddAllCardsInDeck();
         }
@@ -43,6 +43,10 @@ namespace SVESimulator
                         card.Interactable = false;
                         player.LocalEvents.SendToCemetery(card, SVEProperties.Zones.Deck);
                         break;
+                    case SearchDeckAction.Field:
+                        card.Interactable = player.isActivePlayer;
+                        player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
+                        break;
                     default:
                         Debug.LogError($"Search deck action {searchDeckAction} is not implemented.");
                         break;
@@ -53,7 +57,7 @@ namespace SVESimulator
 
         protected override void OnCompleteInternal(PlayerController player)
         {
-            // TODO - shuffle deck
+            player.LocalEvents.ShuffleDeck();
         }
     }
 }

@@ -23,8 +23,9 @@ namespace SVESimulator
             Attack = 2,
             ActivateAbilities = 4,
             MoveCards = 8,
-            Quick = 16,
-            All = -1
+            OnlyQuicks = 16,
+            All = ~OnlyQuicks,
+            QuickTiming = PlayCards | ActivateAbilities | OnlyQuicks
         }
 
         [TitleGroup("Runtime Data"), SerializeField]
@@ -96,8 +97,11 @@ namespace SVESimulator
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
             if(allowedInputs == InputTypes.None)
             {
-                if(!isInteracting) // this is needed to update the current hovered card info display
-                    FindSelectedCard(mousePosition);
+                if(!isInteracting)
+                {
+                    FindSelectedCard(mousePosition); // update the current hovered card info display
+                    FindTargetSlot(mousePosition); // handle input for viewing zones
+                }
                 return;
             }
 
@@ -235,9 +239,16 @@ namespace SVESimulator
                             break;
                         if(currentSelectedCard.CurrentZone.InteractionType == CardZone.ZoneInteractionType.MoveCard)
                         {
+                            if(currentTargetSlot.ParentZone is PlayerHandZone)
+                            {
+                                if(currentSelectedCard.CurrentZone is PlayerHandZone)
+                                    break;
+                                Player.ZoneController.AddCardToHand(currentSelectedCard);
+                                return;
+                            }
                             if(currentTargetSlot.ParentZone is not CardSelectionArea)
                             {
-                                Debug.LogError($"Unsupported action: attempted to MoveCard from into zone {currentTargetSlot.ParentZone}, which is not supported!");
+                                Debug.LogError($"Unsupported action: attempted to MoveCard into zone {currentTargetSlot.ParentZone}, which is not supported!");
                                 break;
                             }
                             if(currentSelectedCard.CurrentZone is CardSelectionArea)
@@ -365,12 +376,16 @@ namespace SVESimulator
 
         private bool TryOpenActivateEffectWindow(CardObject card)
         {
-            if(!card.CurrentZone.IsLocalPlayerZone || !allowedInputs.HasFlag(InputTypes.ActivateAbilities)) // TODO - quick abilities
+            if(!card.CurrentZone.IsLocalPlayerZone || !allowedInputs.HasFlag(InputTypes.ActivateAbilities))
                 return false;
+            bool onlyQuicks = allowedInputs.HasFlag(InputTypes.OnlyQuicks);
             List<ActivatedAbility> activatedAbilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility && x.effect is SveEffect).Select(x => x as ActivatedAbility).ToList();
+
+            if(onlyQuicks && !activatedAbilities.Any(x => x.costs.Any(y => y is QuickEffectAsCost)))
+                return false;
             if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
             {
-                GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities);
+                GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, onlyQuicks: onlyQuicks);
                 return true;
             }
             return false;
@@ -464,15 +479,16 @@ namespace SVESimulator
                     if(currentTargetSlot)
                         currentTargetSlot.OnHoverEnd();
                     currentTargetSlot = slot;
-                    currentTargetSlot.OnHoverBegin();
+                    if(currentTargetSlot)
+                        currentTargetSlot.OnHoverBegin();
+                }
+                else if(!slot && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.TryGetComponent(out ViewZoneControllerBase viewZoneCollider)
+                    && (!currentHoveredCard || currentHoveredCard.CurrentZone == viewZoneCollider.Zone))
+                {
+                    viewZoneCollider.ViewZone();
                 }
             }
             else
-            {
-                RemoveCurrentTarget();
-            }
-
-            void RemoveCurrentTarget()
             {
                 if(currentTargetSlot)
                     currentTargetSlot.OnHoverEnd();

@@ -31,6 +31,8 @@ namespace SVESimulator
 
         [TitleGroup("Object References"), SerializeField, Required]
         private CardAnimationController cardAnimator;
+        [SerializeField]
+        private SerializedDictionary<int, KeywordIcon.KeywordIconData> keywordIcons;
 
         [TitleGroup("Prefabs"), SerializeField, AssetsOnly]
         private CardObject cardPrefab;
@@ -50,7 +52,10 @@ namespace SVESimulator
         /// <param name="setActive">Whether to set the card active or not</param>
         public CardObject RequestCard(RuntimeCard runtimeCard, bool setActive = true)
         {
-            // TODO - if card is active in pool, return that instead of making a new one
+            CardObject existingCard = GetCardByInstanceId(runtimeCard.instanceId);
+            if(existingCard)
+                return existingCard;
+
             if(!TryGetFirstAvailableCard(out PooledCard newCard))
             {
                 newCard = SpawnNewCard();
@@ -86,13 +91,28 @@ namespace SVESimulator
             card.RuntimeCard = null;
             card.gameObject.SetActive(false);
             card.transform.parent = transform;
+            card.transform.localScale = Vector3.one;
             pooledCard.active = false;
             return true;
+        }
+
+        public void ReleaseAllDisabledCards()
+        {
+            foreach(PooledCard pooledCard in cardPool)
+            {
+                if(pooledCard.active && !pooledCard.card.gameObject.activeInHierarchy)
+                    ReleaseCard(pooledCard.card);
+            }
         }
 
         public CardObject GetCardByInstanceId(int instanceId)
         {
             return cardsByInstanceId.GetValueOrDefault(instanceId, null);
+        }
+
+        public bool TryGetKeywordIconData(int keywordValue, out KeywordIcon.KeywordIconData data)
+        {
+            return keywordIcons.TryGetValue(keywordValue, out data);
         }
 
         // ------------------------------

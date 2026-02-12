@@ -15,6 +15,7 @@ namespace SVESimulator
     {
         protected override bool isLocal => true;
 
+        public bool IsPayingCosts { get; private set; }
         public Action OnFinishSpell;
 
         // ------------------------------
@@ -91,6 +92,19 @@ namespace SVESimulator
             });
         }
 
+        public void SetGamePhase(SVEProperties.GamePhase phase)
+        {
+            sveEffectSolver.SetGamePhase(phase);
+            GameUIManager.GameControlsUI.SetPhase(phase);
+
+            SetGamePhaseMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                phase = phase
+            };
+            NetworkClient.Send(msg);
+        }
+
         public void ExtraTurn()
         {
             if(!isActivePlayer)
@@ -108,7 +122,23 @@ namespace SVESimulator
         #endregion
         
         // ------------------------------
-        
+
+        #region Zone Controls
+
+        public void ShuffleDeck()
+        {
+            sveEffectSolver.ShuffleDeck(netIdentity);
+            LocalShuffleDeckMessage msg = new()
+            {
+                playerNetId = netIdentity
+            };
+            NetworkClient.Send(msg);
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Card Movement
 
         public void InitializeDeckAndLeader()
@@ -237,7 +267,7 @@ namespace SVESimulator
             }
 
             // Play card to field
-            playerController.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            playerController.AdditionalStats.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
 
             if(originZone.IsNullOrWhiteSpace())
@@ -317,7 +347,7 @@ namespace SVESimulator
             return true;
         }
 
-        public void SendToCemetery(CardObject card, string originZone = null, bool onlyMoveObject = false, bool handleStack = true)
+        public void SendToCemetery(CardObject card, string originZone = null, bool onlyMoveObject = false, bool handleStack = true, bool isDestroy = false)
         {
             if(handleStack && CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
@@ -328,11 +358,18 @@ namespace SVESimulator
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
 
             if(!onlyMoveObject)
-                sveEffectSolver.SendToCemetery(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone);
+                sveEffectSolver.SendToCemetery(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone, isDestroy);
+            if(isLocalPlayersCard)
+            {
+                if(isDestroy && originZone.Equals(SVEProperties.Zones.Field))
+                    playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                else if(originZone.Equals(SVEProperties.Zones.Hand))
+                    playerController.AdditionalStats.CardsDiscardedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            }
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToCemetery(x, onComplete));
 
             // ---
-            
+
             if(onlyMoveObject)
                 return;
             LocalSendCardToCemeteryMessage msg = new()
@@ -340,7 +377,8 @@ namespace SVESimulator
                 playerNetId = netIdentity,
                 cardInstanceId = runtimeCard.instanceId,
                 isOpponentCard = !isLocalPlayersCard,
-                originZone = originZone
+                originZone = originZone,
+                isDestroy = isDestroy
             };
             NetworkClient.Send(msg);
         }
@@ -351,7 +389,7 @@ namespace SVESimulator
                 return;
             if(card.CurrentZone.IsLocalPlayerZone)
             {
-                SendToCemetery(card, handleStack: handleStack);
+                SendToCemetery(card, handleStack: handleStack, isDestroy: true);
                 return;
             }
 
@@ -365,13 +403,13 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void BanishCard(CardObject card, bool sendMessage = true, bool onlyMoveObject = false)
+        public void BanishCard(CardObject card, string originZone = null, bool sendMessage = true, bool onlyMoveObject = false)
         {
             if(CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
 
             RuntimeCard runtimeCard = card.RuntimeCard;
-            string originZone = card.CurrentZone.Runtime.name;
+            originZone ??= card.CurrentZone.Runtime.name;
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
 
@@ -404,7 +442,11 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
-            StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            // Show if adding from cemetery, otherwise normal move logic
+            if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
+                StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
+            else
+                localZoneController.RevealCard(card, onComplete: () => localZoneController.AddCardToHand(card, () => card.Interactable = playerController.isActivePlayer));
 
             // ---
 
@@ -588,21 +630,20 @@ namespace SVESimulator
 
             // Banish old card & create token
             RuntimeCard targetRuntimeCard = targetCard.RuntimeCard;
+            RuntimeCard tokenRuntimeCard = null;
             int slotId = targetZone.GetSlotNumber(targetCard);
             bool isLocalPlayersCard = targetCard.CurrentZone.IsLocalPlayerZone;
             if(!isLocalPlayersCard)
-            {
-                Debug.LogError("Targeting an opponent's card with Transform is not currently supported");
-                return;
-            }
+                goto sendMessage; // skip local logic, send message tells opponent to perform the effect and send logic back to us
 
             BanishCard(targetCard, sendMessage: false);
-            RuntimeCard tokenRuntimeCard = sveEffectSolver.CreateAndAddToken(netIdentity, tokenLibraryCard.id,
+            tokenRuntimeCard = sveEffectSolver.CreateAndAddToken(netIdentity, tokenLibraryCard.id,
                 isLocalPlayersCard ? playerInfo.currentCardInstanceId++ : opponentInfo.currentCardInstanceId++, targetZone.Runtime);
             CardObject tokenCardObject = CardManager.Instance.RequestCard(tokenRuntimeCard);
             localZoneController.AddAndPlaceToken(tokenCardObject, targetZone, slotId);
 
             // Send message
+            sendMessage:
             LocalTransformCardMessage msg = new()
             {
                 playerNetId = netIdentity,
@@ -611,7 +652,7 @@ namespace SVESimulator
                 originZone = targetZone.Runtime.name,
 
                 libraryCardId = tokenLibraryCard.id,
-                tokenRuntimeCardInstanceId = tokenRuntimeCard.instanceId,
+                tokenRuntimeCardInstanceId = tokenRuntimeCard?.instanceId ?? -1,
                 slotId = slotId
             };
             NetworkClient.Send(msg);
@@ -652,7 +693,7 @@ namespace SVESimulator
             // Play Spell
             card.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.SendCardToResolution(card);
-            playerController.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            playerController.AdditionalStats.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             sveEffectSolver.PlaySpell(netIdentity, card.RuntimeCard, originZone, playPointCost, onComplete: () =>
             {
                 FinishSpell(card);
@@ -703,13 +744,14 @@ namespace SVESimulator
         
         #region Combat
 
-        private void DeclareAttack(CardObject attackingCard)
+        private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
         {
-            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard);
+            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, isAttackingLeader);
             LocalDeclareAttackMessage msg = new()
             {
                 playerNetId = netIdentity,
-                cardInstanceId = attackingCard.RuntimeCard.instanceId
+                cardInstanceId = attackingCard.RuntimeCard.instanceId,
+                isAttackingLeader = isAttackingLeader
             };
             NetworkClient.Send(msg);
         }
@@ -719,8 +761,8 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null || defendingCard == null)
                 return;
 
-            DeclareAttack(attackingCard);
-            SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+            DeclareAttack(attackingCard, isAttackingLeader: false);
+            SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
                 SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, defendingCard, () =>
@@ -734,9 +776,9 @@ namespace SVESimulator
                         sveEffectSolver.FightFollower(netIdentity, attackingCard.RuntimeCard, defendingCard.RuntimeCard);
                         // Runtime card gets moved in the effect solver, so we only need to move the game object here
                         if(attackingCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0 || defendingCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Bane))
-                            SendToCemetery(attackingCard, onlyMoveObject: true);
+                            SendToCemetery(attackingCard, onlyMoveObject: true, isDestroy: true);
                         if(defendingCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0 || attackingCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Bane))
-                            SendToCemetery(defendingCard, onlyMoveObject: true);
+                            SendToCemetery(defendingCard, onlyMoveObject: true, isDestroy: true);
                     });
 
                     LocalAttackFollowerMessage msg = new()
@@ -755,8 +797,8 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null)
                 return;
 
-            DeclareAttack(attackingCard);
-            SVEEffectPool.Instance.OnConfirmationTimingEnd += () =>
+            DeclareAttack(attackingCard, isAttackingLeader: true);
+            SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.LeaderCardObject);
                 SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, oppZoneController.LeaderCardObject, () =>
@@ -822,7 +864,7 @@ namespace SVESimulator
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
-                SendToCemetery(cardObject, onlyMoveObject: true);
+                SendToCemetery(cardObject, onlyMoveObject: true, isDestroy: true);
             }
 
             LocalSetCardStatMessage msg = new()
@@ -844,7 +886,7 @@ namespace SVESimulator
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
-                SendToCemetery(cardObject, onlyMoveObject: true);
+                SendToCemetery(cardObject, onlyMoveObject: true, isDestroy: true);
             }
 
             // Assuming we can only apply modifiers to cards on the field, might have to fix later
@@ -949,12 +991,14 @@ namespace SVESimulator
         {
             if(costs == null || costs.Count == 0)
             {
+                IsPayingCosts = false;
                 onComplete?.Invoke();
                 return;
             }
             StartCoroutine(Resolve());
             IEnumerator Resolve()
             {
+                IsPayingCosts = true;
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
                 string cardOriginZone = card.CurrentZone.Runtime.name;
                 List<MoveCardToZoneData> cardsToMove = new();
@@ -965,9 +1009,9 @@ namespace SVESimulator
                         continue;
 
                     if(sveCost is RemoveCountersCost removeCounterCost)
-                        yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, effect, countersToRemove));
+                        yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, abilityName, countersToRemove));
                     else
-                        yield return StartCoroutine(sveCost.PayCost(playerController, card, effect, cardsToMove));
+                        yield return StartCoroutine(sveCost.PayCost(playerController, card, abilityName, cardsToMove));
                 }
 
                 // Cards with Stack - implicit convert "move card" into "remove stack counter"
@@ -1016,6 +1060,7 @@ namespace SVESimulator
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
                 onComplete?.Invoke();
+                IsPayingCosts = false;
             }
         }
 

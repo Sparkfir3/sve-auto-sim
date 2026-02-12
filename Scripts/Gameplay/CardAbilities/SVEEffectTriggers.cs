@@ -1,6 +1,3 @@
-using UnityEngine;
-using Sirenix.OdinInspector;
-using System.Collections;
 using System.Collections.Generic;
 using CCGKit;
 using Sparkfire.Utility;
@@ -56,6 +53,10 @@ namespace SVESimulator
 
     public class SveOnOpponentCardLeaveFieldTrigger : SveTriggerWithFilter { }
 
+    // -----
+
+    public class SveOnDiscardedTrigger : SveTrigger { }
+
     #endregion
 
     // ------------------------------
@@ -64,11 +65,19 @@ namespace SVESimulator
 
     public class SveOnEvolveTrigger : SveTrigger { }
 
+    public class SveOnOtherEvolveTrigger : SveTriggerWithFilter { }
+
     public class SveOnAttackTrigger : SveTrigger { }
+
+    public class SveOnAttackFollowerTrigger : SveTrigger { }
+
+    public class SveOnAttackLeaderTrigger : SveTrigger { }
 
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
     public class SveOnPlaySpellTrigger : SveTrigger { }
+
+    public class SveOnDealCombatDamageTrigger : SveTrigger { }
 
     #endregion
 

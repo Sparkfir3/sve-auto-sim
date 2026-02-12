@@ -50,7 +50,29 @@ namespace SVESimulator
         public NetCard leaderCard;
     }
 
+    public struct SetGamePhaseMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public SVEProperties.GamePhase phase;
+    }
+
     public struct ExtraTurnMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+    }
+
+    #endregion
+
+    // ------------------------------
+
+    #region Zone Controls
+
+    public struct LocalShuffleDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+    }
+
+    public struct OpponentShuffleDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
     }
@@ -129,6 +151,7 @@ namespace SVESimulator
         public int cardInstanceId;
         public bool isOpponentCard;
         public string originZone;
+        public bool isDestroy;
     }
 
     public struct OpponentSendCardToCemeteryMessage : NetworkMessage
@@ -137,6 +160,7 @@ namespace SVESimulator
         public NetCard card;
         public bool isOpponentCard;
         public string originZone;
+        public bool isDestroy;
     }
 
     public struct LocalBanishCardMessage : NetworkMessage
@@ -243,6 +267,7 @@ namespace SVESimulator
     {
         public NetworkIdentity playerNetId;
         public int cardInstanceId;
+        public bool isAttackingLeader;
     }
 
     public struct OpponentDeclareAttackMessage : NetworkMessage
@@ -346,6 +371,7 @@ namespace SVESimulator
         public string originZone;
 
         public NetCard tokenCard;
+        public int tokenCardId;
         public int slotId;
     }
 

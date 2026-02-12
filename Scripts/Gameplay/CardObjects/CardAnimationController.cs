@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -27,12 +28,24 @@ namespace SVESimulator
         private AnimationCurve cardMoveCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
         [SerializeField]
         private float cardLerpedMoveSpeed = 10f;
+
         [FoldoutGroup("Attack Settings", true), SerializeField]
         private float attackAnimDuration = 1f;
         [FoldoutGroup("Attack Settings", true), SerializeField]
         private AnimationCurve attackAnimCurveX = AnimationCurve.Linear(0f, 0f, 1f, 1f);
         [FoldoutGroup("Attack Settings", true), SerializeField]
         private AnimationCurve attackAnimCurveY = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+
+        [FoldoutGroup("Stat Change Settings", true), SerializeField]
+        private float statChangeAnimDuration = 1f;
+        [FoldoutGroup("Stat Change Settings", true), SerializeField]
+        private Vector3 statChangeAnimStartOffset;
+        [FoldoutGroup("Stat Change Settings", true), SerializeField]
+        private float statChangeAnimMoveDistance;
+        [FoldoutGroup("Stat Change Settings", true), SerializeField]
+        private AnimationCurve statChangeAnimMoveCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        [FoldoutGroup("Stat Change Settings", true), SerializeField]
+        private AnimationCurve statChangeAnimFadeCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
         [TitleGroup("Timing Settings"), SerializeField]
         private float afterAttackDelay;
@@ -41,8 +54,14 @@ namespace SVESimulator
         private LineRenderer targetingLine;
         [SerializeField, AssetsOnly]
         private GameObject attackEffectPrefab;
-        [SerializeField, ReadOnly]
+        [SerializeField, ReadOnly, HideInEditorMode]
         private List<GameObject> attackEffectObjectPool;
+        [SerializeField]
+        private Transform statChangeEffectContainer;
+        [SerializeField, AssetsOnly]
+        private GameObject statChangeEffectPrefab;
+        [SerializeField, ReadOnly, HideInEditorMode]
+        private List<GameObject> statChangeEffectObjectPool;
 
         private Dictionary<CardObject, CardMovementData> currentMovingCardsData = new();
 
@@ -64,15 +83,16 @@ namespace SVESimulator
         #region Movement
 
         public void MoveCardToPosition(CardObject card, Vector3 targetPos, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out _);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, Action onComplete = null) => MoveCardToPosition(card, targetPos, targetRot, out _, onComplete);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, Action onComplete = null)
+        public void MoveCardToPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete: onComplete);
+        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null) => MoveCardToPosition(card, targetPos, targetRot, out _, scale, onComplete);
+        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
 
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
+            float startScale = card.transform.localScale.x;
             float distance = (startPos - targetPos).magnitude;
             moveTime = distance / cardMoveSpeed;
             float duration = moveTime;
@@ -86,9 +106,13 @@ namespace SVESimulator
                     Vector3 newPosition = Vector3.Lerp(startPos, targetPos, t);
                     Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
+                    if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                        card.transform.localScale = Vector3.one * Mathf.Lerp(startScale, scale.Value, t);
                     yield return null;
                 }
                 card.transform.SetPositionAndRotation(targetPos, targetRot);
+                if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                    card.transform.localScale = Vector3.one * scale.Value;
                 card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();
@@ -96,15 +120,16 @@ namespace SVESimulator
         }
 
         public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out _);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, targetRot, out _, onComplete);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, Action onComplete = null)
+        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete: onComplete);
+        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, targetRot, out _, scale, onComplete);
+        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
 
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
+            float startScale = card.transform.localScale.x;
             float distance = (startPos - targetPos).magnitude;
             moveTime = distance / cardMoveSpeed;
             float duration = moveTime;
@@ -118,9 +143,13 @@ namespace SVESimulator
                     Vector3 newPosition = Vector3.Lerp(startPos, card.transform.parent.TransformPoint(targetPos), t);
                     Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
+                    if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                        card.transform.localScale = Vector3.one * Mathf.Lerp(startScale, scale.Value, t);
                     yield return null;
                 }
                 card.transform.SetPositionAndRotation(card.transform.parent.TransformPoint(targetPos), targetRot);
+                if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
+                    card.transform.localScale = Vector3.one * scale.Value;
                 card.IsAnimating = false;
                 currentMovingCardsData.Remove(card);
                 onComplete?.Invoke();
@@ -230,6 +259,50 @@ namespace SVESimulator
 
             obj = Instantiate(attackEffectPrefab, Vector3.zero, Quaternion.identity, transform);
             attackEffectObjectPool.Add(obj);
+            return obj;
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Stat Change
+
+        public void PlayStatChangeAnimation(Vector3 startPosition, int amount)
+        {
+            if(amount == 0)
+                return;
+
+            GameObject effect = GetStatChangeEffectObject();
+            effect.transform.position = startPosition + statChangeAnimStartOffset;
+            effect.SetActive(true);
+            TextMeshProUGUI text = effect.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = amount < 0 ? amount.ToString() : $"+{amount}";
+            text.alpha = 1f;
+            StartCoroutine(PerformStatChangeEffect());
+
+            IEnumerator PerformStatChangeEffect()
+            {
+                Vector3 moveStartPos = effect.transform.position;
+                for(float i = 0f; i < statChangeAnimDuration; i += Time.deltaTime)
+                {
+                    float t = i / statChangeAnimDuration;
+                    effect.transform.position = moveStartPos + (Vector3.forward * (statChangeAnimMoveDistance * statChangeAnimMoveCurve.Evaluate(t)));
+                    text.alpha = statChangeAnimFadeCurve.Evaluate(t);
+                    yield return null;
+                }
+                effect.SetActive(false);
+            }
+        }
+
+        private GameObject GetStatChangeEffectObject()
+        {
+            GameObject obj = statChangeEffectObjectPool.FirstOrDefault(x => !x.activeSelf);
+            if(obj)
+                return obj;
+
+            obj = Instantiate(statChangeEffectPrefab, Vector3.zero, statChangeEffectContainer.rotation, statChangeEffectContainer);
+            statChangeEffectObjectPool.Add(obj);
             return obj;
         }
 

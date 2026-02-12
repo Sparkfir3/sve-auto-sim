@@ -26,6 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2492143386361620997}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.86, y: 1, z: 7.91}
@@ -33,7 +34,6 @@ Transform:
   m_Children:
   - {fileID: 7137492230370267163}
   m_Father: {fileID: 8433953147609613462}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5335679790985397126
 BoxCollider:
@@ -130,6 +130,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8133597360156777187}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 20, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -139,7 +140,6 @@ Transform:
   - {fileID: 6222852838490794481}
   - {fileID: 5180326929259839254}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1901704032749244144
 MonoBehaviour:
@@ -156,6 +156,7 @@ MonoBehaviour:
   <ParentZone>k__BackingField: {fileID: 0}
   <SlotNumber>k__BackingField: -1
   <CurrentInteractionType>k__BackingField: -1
+  background: {fileID: 2624541522260585682}
 --- !u!1001 &5462029003615986872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -377,6 +378,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cafb0e177e4f6441adfa0e37519e1c3, type: 3}
+--- !u!1 &2624541522260585682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4902385998611806291, guid: 1cafb0e177e4f6441adfa0e37519e1c3, type: 3}
+  m_PrefabInstance: {fileID: 6945949807965901953}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6222852838490794481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3907148805229149552, guid: 1cafb0e177e4f6441adfa0e37519e1c3, type: 3}
