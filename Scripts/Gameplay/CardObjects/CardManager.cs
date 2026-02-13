@@ -144,9 +144,7 @@ namespace SVESimulator
                 return;
             }
 
-            string id = (card.LibraryCard.properties.FirstOrDefault(x => x.name.Equals(SVEProperties.CardStats.ID)) as StringProperty)?.value;
-            if(string.IsNullOrWhiteSpace(id))
-                return;
+            string id = card.LibraryCard.GetEnglishSveID();
             card.SetCardFront(CardTextureManager.GetCardTexture(id));
         }
 

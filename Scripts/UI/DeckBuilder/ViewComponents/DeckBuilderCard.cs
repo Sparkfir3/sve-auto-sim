@@ -23,7 +23,7 @@ namespace SVESimulator
         [ShowInInspector, LabelText("Name"), HideInEditorMode]
         public string CardName => CurrentCard != null ? CurrentCard.name : "";
         [ShowInInspector, LabelText("ID"), HideInEditorMode]
-        public string ID => CurrentCard != null ? CurrentCard.GetStringProperty(SVEProperties.CardStats.ID) : "";
+        public string ID => CurrentCard != null ? CurrentCard.GetEnglishSveID() : "";
 
         public Card CurrentCard { get; set; }
 
@@ -36,7 +36,7 @@ namespace SVESimulator
         public void SetCard(Card card, int amount = 0)
         {
             CurrentCard = card;
-            Image.texture = CurrentCard != null ? CardTextureManager.GetCardTexture(CurrentCard.GetStringProperty(SVEProperties.CardStats.ID)) : CardTextureManager.GetCardBackTexture();
+            Image.texture = CardTextureManager.GetCardTexture(CurrentCard?.GetEnglishSveID());
             SetAmount(amount);
         }
 

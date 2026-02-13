@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Sparkfire.Utility;
 
 namespace SVESimulator
 {
@@ -31,13 +32,15 @@ namespace SVESimulator
 
         public static Texture GetCardTexture(string cardId)
         {
+            if(cardId.IsNullOrWhiteSpace())
+                return GetMissingCardTexture();
             if(cardTextureCache.TryGetValue(cardId, out Texture texture))
                 return texture;
             ValidatePathInfo();
 
-            string filePath = Path.Combine(Path.Combine(pathInfo.BuildFolderImagesPath, GetSubfolderFromID(cardId), $"{cardId}EN{pathInfo.DefaultFileExtension}"));
+            string filePath = Path.Combine(Path.Combine(pathInfo.BuildFolderImagesPath, GetSubfolderFromID(cardId), $"{cardId}{pathInfo.DefaultFileExtension}"));
             if(!File.Exists(filePath))
-                filePath = Path.Combine(pathInfo.ImagesPath, GetSubfolderFromID(cardId), $"{cardId}EN{pathInfo.DefaultFileExtension}");
+                filePath = Path.Combine(pathInfo.ImagesPath, GetSubfolderFromID(cardId), $"{cardId}{pathInfo.DefaultFileExtension}");
             texture = LoadTextureFromFile(filePath);
             CacheCardTexture(cardId, texture);
             return texture;
