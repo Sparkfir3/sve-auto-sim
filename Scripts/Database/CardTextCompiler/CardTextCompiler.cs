@@ -40,14 +40,16 @@ namespace SVESimulator.CardTextData
                 JArray properties = cardData["properties"] as JArray;
                 if(properties == null)
                     continue;
-                string id = properties.FirstOrDefault(x => x.Value<string>("name").Equals("ID"))?["value"]?.ToString();
+                string id = (properties.FirstOrDefault(x => x.Value<string>("name").Equals("ID EN"))?["value"]
+                    ?? properties.FirstOrDefault(x => x.Value<string>("name").Equals("ID"))?["value"])?.ToString();
                 string name = cardData["name"]?.ToString();
                 string trait = properties.FirstOrDefault(x => x.Value<string>("name").Equals("Trait"))?["value"]?.ToString();
                 string cardText = properties.FirstOrDefault(x => x.Value<string>("name").Equals("Text"))?["value"]?.ToString();
                 if(id.IsNullOrWhiteSpace() || name.IsNullOrWhiteSpace())
                     continue;
 
-                id += "EN";
+                if(!id.EndsWith("EN"))
+                    id += "EN";
                 TextData oldData = oldTextData?.FirstOrDefault(x => x.id.Equals(id));
                 TextData newData = new()
                 {

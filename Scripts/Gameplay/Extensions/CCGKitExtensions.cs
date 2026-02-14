@@ -83,6 +83,22 @@ namespace SVESimulator
 
         #region Get Card Info
 
+        public static string GetEnglishSveID(this Card card)
+        {
+            if(card == null)
+                return null;
+
+            string id = null;
+            foreach(Property property in card.properties)
+            {
+                if(property.name.Equals(SVEProperties.CardStats.ID_EN))
+                    return (property as StringProperty)?.value;
+                if(property.name.Equals(SVEProperties.CardStats.ID))
+                    id = $"{(property as StringProperty)?.value}EN";
+            }
+            return id;
+        }
+
         public static int PlayPointCost(this RuntimeCard card, PlayerController player = null)
         {
             int baseCost = card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat costStat) ? costStat.effectiveValue : 0;

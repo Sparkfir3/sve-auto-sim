@@ -108,6 +108,7 @@ namespace SVESimulator
             public const string FaceUp = "Face Up";
 
             public const string ID = "ID";
+            public const string ID_EN = "ID EN";
             public const string Class = "Class";
             public const string Name = "Name";
             public const string Text = "Text";

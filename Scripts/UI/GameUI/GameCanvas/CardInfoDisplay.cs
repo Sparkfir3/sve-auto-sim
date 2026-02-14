@@ -46,13 +46,14 @@ namespace SVESimulator.UI
 
         public void Display(Card libraryCard)
         {
-            if(libraryCard == null)
+            string id = libraryCard?.GetEnglishSveID();
+            if(id.IsNullOrWhiteSpace())
             {
                 Hide();
                 return;
             }
+
             gameObject.SetActive(true);
-            string id = libraryCard.GetStringProperty(SVEProperties.CardStats.ID);
             if(currentCardId.Equals(id))
                 return;
             LibraryCardCache.CacheCard(libraryCard);
