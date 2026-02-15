@@ -878,6 +878,13 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        public void SetLeaderDefense(PlayerInfo targetPlayer, int amount)
+        {
+            int difference = amount - targetPlayer.namedStats[SVEProperties.PlayerStats.Defense].effectiveValue;
+            if(difference != 0)
+                AddLeaderDefense(targetPlayer, difference);
+        }
+
         public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool adding, int duration = 0)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
