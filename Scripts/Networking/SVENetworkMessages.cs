@@ -77,6 +77,20 @@ namespace SVESimulator
         public NetworkIdentity playerNetId;
     }
 
+    public struct LocalDiscardRandomCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetNetId;
+        public int amount;
+    }
+
+    public struct OpponentDiscardRandomCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetNetId;
+        public int amount;
+    }
+
     #endregion
 
     // ------------------------------

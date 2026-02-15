@@ -84,6 +84,22 @@ namespace SVESimulator
             }
         }
 
+        public void DiscardRandomCards(NetworkIdentity playerNetId, int amount) => DiscardRandomCards(playerNetId, amount, out _);
+        public void DiscardRandomCards(NetworkIdentity playerNetId, int amount, out List<RuntimeCard> discardedCards)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            discardedCards = new();
+            for(int i = 0; i < amount; i++)
+            {
+                int n = player.namedZones[SVEProperties.Zones.Hand].cards.Count;
+                if(n == 0)
+                    return;
+                RuntimeCard card = player.namedZones[SVEProperties.Zones.Hand].cards[rng.Next(0, n)];
+                SendToCemetery(playerNetId, card, SVEProperties.Zones.Hand);
+                discardedCards.Add(card);
+            }
+        }
+
         #endregion
 
         // ------------------------------

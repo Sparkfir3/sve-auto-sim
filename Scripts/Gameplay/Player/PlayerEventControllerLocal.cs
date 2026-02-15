@@ -135,6 +135,38 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        public void DiscardRandomCards(PlayerInfo targetPlayer, int amount)
+        {
+            bool isLocalPlayer = targetPlayer.netId.isLocalPlayer;
+            PlayerCardZoneController targetZoneController = isLocalPlayer ? localZoneController : oppZoneController;
+            if(amount <= targetZoneController.handZone.AllCards.Count)
+            {
+                List<CardObject> cards = new(targetZoneController.handZone.AllCards);
+                foreach(CardObject card in cards)
+                    SendToCemetery(card, SVEProperties.Zones.Hand);
+                return;
+            }
+
+            sveEffectSolver.DiscardRandomCards(targetPlayer.netId, amount, out List<RuntimeCard> discardedCards);
+            foreach(RuntimeCard card in discardedCards)
+            {
+                if(!targetZoneController.handZone.TryGetCard(card.instanceId, out CardObject cardObject))
+                {
+                    Debug.LogError($"Failed to find card with instance ID {card.instanceId} in player's hand when attempting to discard random card!");
+                    continue;
+                }
+                SendToCemetery(cardObject, SVEProperties.Zones.Hand, onlyMoveObject: true);
+            }
+
+            LocalDiscardRandomCardsMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetNetId = isLocalPlayer ? netIdentity : opponentInfo.netId,
+                amount = amount
+            };
+            NetworkClient.Send(msg);
+        }
+
         #endregion
 
         // ------------------------------

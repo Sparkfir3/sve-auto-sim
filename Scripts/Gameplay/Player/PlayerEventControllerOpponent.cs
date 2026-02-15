@@ -55,6 +55,21 @@ namespace SVESimulator
             sveEffectSolver.ShuffleDeck(msg.playerNetId);
         }
 
+        public void DiscardRandomCards(OpponentDiscardRandomCardsMessage msg)
+        {
+            PlayerCardZoneController targetZoneController = msg.targetNetId.netId == netIdentity.netId ? localZoneController : oppZoneController;
+            sveEffectSolver.DiscardRandomCards(msg.targetNetId, msg.amount, out List<RuntimeCard> discardedCards);
+            foreach(RuntimeCard card in discardedCards)
+            {
+                if(!targetZoneController.handZone.TryGetCard(card.instanceId, out CardObject cardObject))
+                {
+                    Debug.LogError($"Failed to find card with instance ID {card.instanceId} in opponent's hand when attempting to discard random card!");
+                    continue;
+                }
+                targetZoneController.SendCardToCemetery(cardObject);
+            }
+        }
+
         #endregion
         
         // ------------------------------

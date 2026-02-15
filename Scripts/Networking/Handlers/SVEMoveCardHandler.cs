@@ -24,6 +24,7 @@ namespace SVESimulator
 
             // Zone Controls
             NetworkServer.RegisterHandler<LocalShuffleDeckMessage>(OnShuffleDeck);
+            NetworkServer.RegisterHandler<LocalDiscardRandomCardsMessage>(OnDiscardRandomCards);
 
             // Deck movement
             NetworkServer.RegisterHandler<LocalDrawCardMessage>(OnDrawCard);
@@ -66,6 +67,7 @@ namespace SVESimulator
 
             // Zone Controls
             NetworkServer.UnregisterHandler<LocalShuffleDeckMessage>();
+            NetworkServer.UnregisterHandler<LocalDiscardRandomCardsMessage>();
 
             // Deck movement
             NetworkServer.UnregisterHandler<LocalDrawCardMessage>();
@@ -196,7 +198,6 @@ namespace SVESimulator
 
         #region Zone Controls
 
-
         private void OnShuffleDeck(NetworkConnection conn, LocalShuffleDeckMessage msg)
         {
             OpponentShuffleDeckMessage shuffleMsg = new()
@@ -205,6 +206,18 @@ namespace SVESimulator
             };
             server.SafeSendToClient(server.gameState.currentOpponent, shuffleMsg);
             (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId);
+        }
+
+        private void OnDiscardRandomCards(NetworkConnection conn, LocalDiscardRandomCardsMessage msg)
+        {
+            OpponentDiscardRandomCardsMessage discardMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                targetNetId = msg.targetNetId,
+                amount = msg.amount
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, discardMsg);
+            (server.effectSolver as SVEEffectSolver).DiscardRandomCards(msg.targetNetId, msg.amount);
         }
 
         #endregion
