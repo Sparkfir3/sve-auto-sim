@@ -129,7 +129,7 @@ namespace SVESimulator
                 textDataList = Resources.LoadAll<TextAsset>(TextDataResourcesPath);
             }
 
-            string baseId = data.card.GetStringProperty(SVEProperties.CardStats.ID) + "EN";
+            string baseId = data.card.GetEnglishSveID();
             foreach(TextAsset textAsset in textDataList)
             {
                 List<TextData> allTextData = JsonConvert.DeserializeObject<List<TextData>>(textAsset.text);
