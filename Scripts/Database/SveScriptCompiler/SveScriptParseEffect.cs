@@ -339,6 +339,7 @@ namespace SVESimulator.SveScript
             { "ChooseAmountFromList", new EffectParams("SVESimulator.ChooseAmountFromList",                             false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "OpponentPerformEffect", new EffectParams("SVESimulator.OpponentPerformEffect",                           EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
+            { "PerformWithTargetAmount", new EffectParams("SVESimulator.PerformWithTargetAmountEffectEffect",           EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
 
             // Other Effects
             { "GiveTrait", new EffectParams("SVESimulator.GiveTraitEffect",                             EffectParameterType.Trait) },
