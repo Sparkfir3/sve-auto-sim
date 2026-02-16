@@ -1,0 +1,404 @@
+name Vania, Vampire Princess;
+id BP02-069;
+class Abyss;
+type Follower;
+trait Vampire / Princess;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "[fanfare] Give this follower [attack]+X/[defense]+X. X equals the number of Forest Bat tokens on your field.
+      [act][cost01], put a Forest Bat token from your field into its owner's cemetery: Select an enemy follower on the field. Deal 3 damage to it and 1 damage to its leader.";
+
+ability Fanfare {
+    effect GiveStat(AtkDef, f(Kn(Forest Bat))) to Self;
+}
+ability Act {
+    condition p(#F);
+    cost (PP, 1), (SendToCemetery, TargetPlayerCard, Kn(Forest Bat));
+    effect TargetForSequence(DamageFollower, DamageLeader) to TargetOpponentCard F;
+}
+ability Spell name DamageFollower {
+    effect DealDamage(3) to AllOpponentCards;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(1) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Soul Dealer;
+id BP02-071;
+id-en BP02-070;
+class Abyss;
+type Follower;
+trait Demon;
+rarity L;
+cost 4;
+stats 6/5;
+
+text "[evolve][cost02]: Evolve this follower.
+      Ward.
+      [fanfare] Deal 3 damage to your leader.";
+
+keyword Ward;
+evolve 2;
+ability Fanfare {
+    effect DealDamage(3) to Leader;
+}
+
+// ------------------------------
+
+name Soul Dealer (Evolved);
+id BP02-072;
+id-en BP02-071;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity L;
+stats 7/5;
+
+text "Ward.
+      On Evolve: Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack.";
+
+keyword Ward;
+ability OnEvolve {
+    effect TargetForSequence(TargetForDef, Destroy) to TargetOpponentCard F;
+}
+ability Spell name Destroy {
+    effect Destroy() to AllOpponentCards;
+}
+ability Spell name TargetForDef {
+    effect PerformWithTargetAmount(A, Defense) to AllOpponentCards;
+}
+ability Spell name Defense {
+    effect GiveStat(_) to Leader;
+}
+
+// ------------------------------
+
+name Underworld Watchman Khawy;
+id BP02-073;
+id-en BP02-072;
+class Abyss;
+type Follower;
+trait Necromancer;
+rarity G;
+cost 5;
+stats 5/5;
+
+text "Ward.
+      [lastwords] Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack.";
+
+keyword Ward;
+ability LastWords {
+    effect TargetForSequence(TargetForDef, Destroy) to TargetOpponentCard F;
+}
+ability Spell name Destroy {
+    effect Destroy() to AllOpponentCards;
+}
+ability Spell name TargetForDef {
+    effect PerformWithTargetAmount(A, Defense) to AllOpponentCards;
+}
+ability Spell name Defense {
+    effect GiveStat(_) to Leader;
+}
+
+// ------------------------------
+
+name Azazel;
+id BP02-074;
+id-en BP02-073;
+class Abyss;
+type Follower;
+trait Demon;
+rarity G;
+cost 7;
+stats 6/6;
+
+text "Necrocharge (10): This card costs 3 less to play.
+      [evolve][cost01]: Evolve this follower.
+      Bane.
+      [fanfare] Each opponent discards a random card.";
+
+evolve 1;
+keyword Bane;
+ability ModifiedCost {
+    condition n(10);
+    effect ReducedCost(3);
+}
+ability Fanfare {
+    effect DiscardRandomCard(1) to Opponent;
+}
+
+// ------------------------------
+
+name Azazel (Evolved);
+id BP02-075;
+id-en BP02-074;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity G;
+stats 7/7;
+
+text "Bane.
+      On Evolve: Change each enemy leader's [defense] to 10.";
+
+keyword Bane;
+ability OnEvolve {
+    effect SetStat(Def, 10) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Vampiric Fortress;
+id BP02-076;
+id-en BP02-075;
+class Abyss;
+type Amulet;
+trait Vampire;
+rarity G;
+cost 1;
+
+text "[fanfare] Look at the top 3 cards of your deck. You may reveal a Vampire card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.
+      [act][cost01], [engage], put this card into its owner's cemetery: Summon a Forest Bat token.";
+
+ability Fanfare {
+    effect CheckTop(3, (Hand, 1, t(Vampire)), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
+    effect SummonToken(Forest Bat, Field, 1);
+}
+
+// ------------------------------
+
+name Veight, Vampire Noble;
+id BP02-078;
+id-en BP02-076;
+class Abyss;
+type Follower;
+trait Vampire;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      Strike: Summon a Forest Bat token.";
+
+evolve 1;
+ability Strike {
+    effect SummonToken(Forest Bat, Field, 1);
+}
+
+// ------------------------------
+
+name Veight, Vampire Noble (Evolved);
+id BP02-079;
+id-en BP02-077;
+class Abyss;
+type Evolved Follower;
+trait Vampire;
+rarity S;
+stats 3/3;
+
+text "On Evolve: Put a Forest Bat token into your EX area.
+      Strike: Summon a Forest Bat token.";
+
+ability OnEvolve {
+    effect SummonToken(Forest Bat, ExArea, 1);
+}
+ability Strike {
+    effect SummonToken(Forest Bat, Field, 1);
+}
+
+// ------------------------------
+
+name Trick Dullahan;
+id BP02-080;
+id-en BP02-078;
+class Abyss;
+type Follower;
+trait Departed;
+rarity S;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Put a Ghost token into your EX area. Necrocharge (10): Put 3 instead.";
+
+ability Fanfare {
+    effect SummonToken(Ghost, ExArea, 1n(10)3);
+}
+
+// ------------------------------
+
+name Precious Bloodfangs;
+id BP02-081;
+id-en BP02-079;
+class Abyss;
+type Spell;
+trait Vampire;
+rarity S;
+cost 2;
+
+text "Choose one of the following. (1) Summon X Forest Bat tokens. X equals the number of enemy cards on the field. (2) Give each Forest Bat token on your field [attack]+1/[defense]+1.";
+
+ability Spell {
+    effect ChooseFromList(Summon, AtkDef);
+}
+ability Spell name Summon {
+    effect SummonToken(Forest Bat, Field, p());
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Kn(Forest Bat);
+}
+
+// ------------------------------
+
+name Mini Soul Devil;
+id BP02-083;
+id-en BP02-080;
+class Abyss;
+type Follower;
+trait Demon;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "Whenever one of your followers evolves, deal 2 damage to each enemy leader.";
+
+ability OnOtherEvolve {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Moriana the Bejeweled;
+id BP02-084;
+id-en BP02-081;
+class Abyss;
+type Follower;
+trait Demon;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "[fanfare] If Sanguine is active for you, give your leader [defense]+3 and draw a card.";
+
+ability Fanfare {
+    condition g;
+    effect Sequence(Defense, Draw);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 3) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Demonic Hedonist;
+id BP02-085;
+id-en BP02-082;
+class Abyss;
+type Follower;
+trait Demon;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      At the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.";
+
+evolve 1;
+ability StartEndPhase {
+    condition g;
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Demonic Hedonist (Evolved);
+id BP02-086;
+id-en BP02-083;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity B;
+stats 3/3;
+
+text "Strike: Deal 1 damage to each leader.
+      At the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.";
+
+ability Strike {
+    effect DealDamage(1) to AllLeaders;
+}
+ability StartEndPhase {
+    condition g;
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Bone Chimera;
+id BP02-087;
+id-en BP02-084;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 3;
+stats 1/1;
+
+text "Necrocharge (7): This follower has Rush and Bane.
+      [fanfare] Put the top 3 cards of your deck into your cemetery.";
+
+ability Fanfare {
+    effect Mill(3);
+}
+ability Passive name Rush {
+    condition n(7);
+    effect GiveKeyword(Rush, WhileOnField) to Self;
+}
+ability Passive name Bane {
+    condition n(7);
+    effect GiveKeyword(Bane, WhileOnField) to Self;
+}
+
+// ------------------------------
+
+name Necrocarnival;
+id BP02-088;
+id-en BP02-085;
+class Abyss;
+type Spell;
+trait Departed;
+rarity B;
+cost 3;
+
+text "Choose one of the following. Necrocharge (10): Choose up to 2 instead. (1) Select a follower that costs 2 play points or less in your cemetery and put it onto your field. (2) Summon 2 Ghost tokens.";
+
+ability Spell {
+    effect ChooseAmountFromList(1n(10)2, Cemetery, Tokens);
+}
+ability Spell name Cemetery {
+    condition y(Fp(m(0,2)));
+    effect CemeteryToField(1, Fp(m(0,2)));
+}
+ability Spell name Tokens {
+    effect SummonToken(Ghost, Field, 2);
+}
