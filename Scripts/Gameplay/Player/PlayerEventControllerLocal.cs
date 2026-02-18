@@ -139,7 +139,7 @@ namespace SVESimulator
         {
             bool isLocalPlayer = targetPlayer.netId.isLocalPlayer;
             PlayerCardZoneController targetZoneController = isLocalPlayer ? localZoneController : oppZoneController;
-            if(amount <= targetZoneController.handZone.AllCards.Count)
+            if(amount >= targetZoneController.handZone.AllCards.Count)
             {
                 List<CardObject> cards = new(targetZoneController.handZone.AllCards);
                 foreach(CardObject card in cards)
