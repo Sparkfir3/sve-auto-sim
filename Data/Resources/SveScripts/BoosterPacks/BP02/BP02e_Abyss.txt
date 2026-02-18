@@ -72,7 +72,7 @@ ability Spell name TargetForDef {
     effect PerformWithTargetAmount(A, Defense) to AllOpponentCards;
 }
 ability Spell name Defense {
-    effect GiveStat(_) to Leader;
+    effect GiveStat(Def, _) to Leader;
 }
 
 // ------------------------------
@@ -101,7 +101,7 @@ ability Spell name TargetForDef {
     effect PerformWithTargetAmount(A, Defense) to AllOpponentCards;
 }
 ability Spell name Defense {
-    effect GiveStat(_) to Leader;
+    effect GiveStat(Def, _) to Leader;
 }
 
 // ------------------------------
@@ -165,7 +165,7 @@ text "[fanfare] Look at the top 3 cards of your deck. You may reveal a Vampire c
       [act][cost01], [engage], put this card into its owner's cemetery: Summon a Forest Bat token.";
 
 ability Fanfare {
-    effect CheckTop(3, (Hand, 1, t(Vampire)), (BottomDeckAnyOrder));
+    effect CheckTop(3, (Hand, t(Vampire), 1), (BottomDeckAnyOrder));
 }
 ability Act {
     cost (PP, 1), (EngageSelf), (SendToCemetery, Self);

@@ -28101,8 +28101,8 @@
             "effect": {
               "target": "Leader",
               "filter": null,
-              "targetStats": "",
-              "amount": "1",
+              "targetStats": "Defense",
+              "amount": "_",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -28275,8 +28275,8 @@
             "effect": {
               "target": "Leader",
               "filter": null,
-              "targetStats": "",
-              "amount": "1",
+              "targetStats": "Defense",
+              "amount": "_",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -28583,8 +28583,8 @@
             "effect": {
               "amount": "3",
               "checkAction1": "Hand",
-              "checkFilter1": "1",
-              "checkAmount1": "t(Vampire)",
+              "checkFilter1": "t(Vampire)",
+              "checkAmount1": "1",
               "checkAction2": "BottomDeckAnyOrder",
               "checkFilter2": null,
               "checkAmount2": null,
