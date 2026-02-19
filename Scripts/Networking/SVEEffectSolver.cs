@@ -94,7 +94,9 @@ namespace SVESimulator
                 int n = player.namedZones[SVEProperties.Zones.Hand].cards.Count;
                 if(n == 0)
                     return;
-                RuntimeCard card = player.namedZones[SVEProperties.Zones.Hand].cards[rng.Next(0, n)];
+                // Sorting prevents desyncs if card order is off between players
+                RuntimeCard[] sortedCardList = player.namedZones[SVEProperties.Zones.Hand].cards.OrderBy(x => x.instanceId).ToArray();
+                RuntimeCard card = sortedCardList[rng.Next(0, n)];
                 SendToCemetery(playerNetId, card, SVEProperties.Zones.Hand);
                 discardedCards.Add(card);
             }
