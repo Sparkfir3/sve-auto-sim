@@ -27,8 +27,14 @@ namespace SVESimulator
 
         [Title("Data"), SerializeField, ReadOnly]
         private List<SerializedPassive> registeredPassives = new();
-        
+
         // ------------------------------
+
+        [Title("Buttons"), Button, DisableInEditorMode]
+        public void ConfirmationTiming()
+        {
+            effectPool.CmdExecuteConfirmationTiming();
+        }
 
         private void UpdatePassives()
         {
@@ -45,9 +51,9 @@ namespace SVESimulator
                 });
             }
         }
-        
+
 #if UNITY_EDITOR
-        [Button("Update"), DisableInEditorMode]
+        [Button("Update Passives"), DisableInEditorMode]
         private void OnValidate()
         {
             if(!effectPool)
