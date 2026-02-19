@@ -57,7 +57,7 @@ namespace SVESimulator
 
         public void DiscardRandomCards(OpponentDiscardRandomCardsMessage msg)
         {
-            PlayerCardZoneController targetZoneController = msg.targetNetId.netId == netIdentity.netId ? localZoneController : oppZoneController;
+            PlayerCardZoneController targetZoneController = msg.targetNetId.netId ==  playerInfo.netId.netId ? localZoneController : oppZoneController;
             sveEffectSolver.DiscardRandomCards(msg.targetNetId, msg.amount, out List<RuntimeCard> discardedCards);
             foreach(RuntimeCard card in discardedCards)
             {

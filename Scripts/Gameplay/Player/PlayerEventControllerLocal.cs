@@ -161,7 +161,7 @@ namespace SVESimulator
             LocalDiscardRandomCardsMessage msg = new()
             {
                 playerNetId = netIdentity,
-                targetNetId = isLocalPlayer ? netIdentity : opponentInfo.netId,
+                targetNetId = targetPlayer.netId,
                 amount = amount
             };
             NetworkClient.Send(msg);
