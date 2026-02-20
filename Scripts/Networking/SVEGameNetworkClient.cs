@@ -31,7 +31,6 @@ namespace SVESimulator
             // Deck movement
             NetworkClient.RegisterHandler<OpponentDrawCardMessage>(OnOpponentDrawCard);
             NetworkClient.RegisterHandler<OpponentTellOppDrawCardMessage>(OnOpponentTellOppDrawCard);
-            NetworkClient.RegisterHandler<OpponentTellOppMillDeckMessage>(OnOpponentTellOppMillDeck);
 
             // Play cards on field
             NetworkClient.RegisterHandler<OpponentPlayCardMessage>(OnOpponentPlayCard);
@@ -90,7 +89,6 @@ namespace SVESimulator
             // Deck movement
             NetworkClient.UnregisterHandler<OpponentDrawCardMessage>();
             NetworkClient.UnregisterHandler<OpponentTellOppDrawCardMessage>();
-            NetworkClient.UnregisterHandler<OpponentTellOppMillDeckMessage>();
 
             // Play cards on field
             NetworkClient.UnregisterHandler<OpponentPlayCardMessage>();
@@ -253,15 +251,6 @@ namespace SVESimulator
 
             for(int i = 0; i < msg.count; i++)
                 player.LocalEvents.DrawCard();
-        }
-
-        private void OnOpponentTellOppMillDeck(OpponentTellOppMillDeckMessage msg)
-        {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
-            if(!player)
-                return;
-
-            player.LocalEvents.MillDeck(msg.count);
         }
 
         #endregion

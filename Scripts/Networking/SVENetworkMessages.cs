@@ -123,18 +123,6 @@ namespace SVESimulator
         public int count;
     }
 
-    public struct LocalTellOppMillDeckMessage : NetworkMessage
-    {
-        public NetworkIdentity playerNetId;
-        public int count;
-    }
-
-    public struct OpponentTellOppMillDeckMessage : NetworkMessage
-    {
-        public NetworkIdentity playerNetId;
-        public int count;
-    }
-
     #endregion
 
     // ------------------------------

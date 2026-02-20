@@ -234,38 +234,33 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void MillDeck(int count)
+        public void MillDeck(bool targetLocalPlayer, int count, Action onComplete)
         {
             StartCoroutine(MillCoroutine());
-            IEnumerator MillCoroutine()
+            IEnumerator MillCoroutine() // Use delay to prevents cards from moving all at once
             {
+                int movedCount = 0;
+                PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
                 for(int i = 0; i < count; i++)
                 {
-                    RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
-                    CardObject cardObject = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
-                    localZoneController.SendCardToCemetery(cardObject);
-                    sveEffectSolver.SendToCemetery(netIdentity, runtimeCard, SVEProperties.Zones.Deck);
+                    RuntimeCard runtimeCard = targetZoneController.deckZone.Runtime.cards[0];
+                    CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
 
+                    targetZoneController.SendCardToCemetery(cardObject, onComplete: () => { movedCount++; });
+                    sveEffectSolver.SendToCemetery(targetLocalPlayer ? netIdentity : opponentInfo.netId, runtimeCard, SVEProperties.Zones.Deck);
                     LocalSendCardToCemeteryMessage msg = new()
                     {
                         playerNetId = netIdentity,
                         cardInstanceId = runtimeCard.instanceId,
+                        isOpponentCard = !targetLocalPlayer,
                         originZone = SVEProperties.Zones.Deck
                     };
                     NetworkClient.Send(msg);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.15f);
                 }
+                yield return new WaitUntil(() => movedCount >= count);
+                onComplete?.Invoke();
             }
-        }
-
-        public void TellOpponentMillDeck(int count = 1)
-        {
-            LocalTellOppMillDeckMessage msg = new()
-            {
-                playerNetId = netIdentity,
-                count = count
-            };
-            NetworkClient.Send(msg);
         }
 
         public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true) =>

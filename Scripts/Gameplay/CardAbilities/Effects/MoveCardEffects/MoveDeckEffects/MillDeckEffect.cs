@@ -22,10 +22,9 @@ namespace SVESimulator
 
             int millCount = SVEFormulaParser.ParseValue(amount, player);
             if(selfMill)
-                player.LocalEvents.MillDeck(millCount);
+                player.LocalEvents.MillDeck(true, millCount, !oppMill ? onComplete : null);
             if(oppMill)
-                player.LocalEvents.TellOpponentMillDeck(millCount);
-            onComplete?.Invoke();
+                player.LocalEvents.MillDeck(false, millCount, onComplete);
         }
     }
 }

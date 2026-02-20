@@ -29,7 +29,6 @@ namespace SVESimulator
             // Deck movement
             NetworkServer.RegisterHandler<LocalDrawCardMessage>(OnDrawCard);
             NetworkServer.RegisterHandler<LocalTellOppDrawCardMessage>(OnTellOpponentDrawCard);
-            NetworkServer.RegisterHandler<LocalTellOppMillDeckMessage>(OnTellOpponentMillDeck);
 
             // Play cards on field
             NetworkServer.RegisterHandler<LocalPlayCardMessage>(OnPlayCard);
@@ -72,7 +71,6 @@ namespace SVESimulator
             // Deck movement
             NetworkServer.UnregisterHandler<LocalDrawCardMessage>();
             NetworkServer.UnregisterHandler<LocalTellOppDrawCardMessage>();
-            NetworkServer.UnregisterHandler<OpponentTellOppMillDeckMessage>();
 
             // Play cards on field
             NetworkServer.UnregisterHandler<LocalPlayCardMessage>();
@@ -255,16 +253,6 @@ namespace SVESimulator
                 count = msg.count
             };
             server.SafeSendToClient(server.gameState.currentOpponent, drawMsg);
-        }
-
-        private void OnTellOpponentMillDeck(NetworkConnection conn, LocalTellOppMillDeckMessage msg)
-        {
-            OpponentTellOppMillDeckMessage millMsg = new()
-            {
-                playerNetId = msg.playerNetId,
-                count = msg.count
-            };
-            server.SafeSendToClient(server.gameState.currentOpponent, millMsg);
         }
 
         #endregion

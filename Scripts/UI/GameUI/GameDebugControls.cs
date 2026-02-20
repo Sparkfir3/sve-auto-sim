@@ -70,7 +70,7 @@ namespace SVESimulator
         [Button]
         public void Mill()
         {
-            Player.LocalEvents.MillDeck(1);
+            Player.LocalEvents.MillDeck(true, 1, null);
         }
     }
 }
