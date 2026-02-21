@@ -63,17 +63,24 @@ namespace SVESimulator
             player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue = Mathf.Clamp(value, 0, player.namedStats[SVEProperties.PlayerStats.MaxPlayPoints].baseValue);
         }
 
+        public void AdvanceRNG(int amount)
+        {
+            for(int i = 0; i < amount; i++)
+                rng.Next();
+        }
+
         #endregion
 
         // ------------------------------
 
         #region Zone Controls
 
-        public void ShuffleDeck(NetworkIdentity playerNetId)
+        public void ShuffleDeck(NetworkIdentity playerNetId, out int rngAdvances)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
 
             // Reference: CCG Kit ListShuffle.cs
+            rngAdvances = 0;
             int n = player.namedZones[SVEProperties.Zones.Deck].cards.Count;
             while(n > 1)
             {
@@ -81,6 +88,7 @@ namespace SVESimulator
                 n--;
                 (player.namedZones[SVEProperties.Zones.Deck].cards[k], player.namedZones[SVEProperties.Zones.Deck].cards[n])
                     = (player.namedZones[SVEProperties.Zones.Deck].cards[n], player.namedZones[SVEProperties.Zones.Deck].cards[k]);
+                rngAdvances++;
             }
         }
 

@@ -70,11 +70,13 @@ namespace SVESimulator
     public struct LocalShuffleDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
+        public int rngAdvances;
     }
 
     public struct OpponentShuffleDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
+        public int rngAdvances;
     }
 
     public struct LocalDiscardRandomCardsMessage : NetworkMessage

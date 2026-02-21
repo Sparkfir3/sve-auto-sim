@@ -52,7 +52,7 @@ namespace SVESimulator
 
         public void ShuffleDeck(OpponentShuffleDeckMessage msg)
         {
-            sveEffectSolver.ShuffleDeck(msg.playerNetId);
+            sveEffectSolver.AdvanceRNG(msg.rngAdvances);
         }
 
         public void DiscardRandomCards(OpponentDiscardRandomCardsMessage msg)

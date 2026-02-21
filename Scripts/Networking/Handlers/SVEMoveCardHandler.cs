@@ -200,10 +200,12 @@ namespace SVESimulator
         {
             OpponentShuffleDeckMessage shuffleMsg = new()
             {
-                playerNetId = msg.playerNetId
+                playerNetId = msg.playerNetId,
+                rngAdvances = msg.rngAdvances
             };
             server.SafeSendToClient(server.gameState.currentOpponent, shuffleMsg);
-            (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId);
+            (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId, out int rngAdvances);
+            Debug.Assert(msg.rngAdvances == rngAdvances);
         }
 
         private void OnDiscardRandomCards(NetworkConnection conn, LocalDiscardRandomCardsMessage msg)

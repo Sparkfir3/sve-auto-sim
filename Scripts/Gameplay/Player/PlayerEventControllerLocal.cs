@@ -127,10 +127,11 @@ namespace SVESimulator
 
         public void ShuffleDeck()
         {
-            sveEffectSolver.ShuffleDeck(netIdentity);
+            sveEffectSolver.ShuffleDeck(netIdentity, out int rngAdvances);
             LocalShuffleDeckMessage msg = new()
             {
-                playerNetId = netIdentity
+                playerNetId = netIdentity,
+                rngAdvances = rngAdvances
             };
             NetworkClient.Send(msg);
         }
