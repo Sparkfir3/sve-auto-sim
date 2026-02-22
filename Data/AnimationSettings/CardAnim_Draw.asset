@@ -12,27 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993f8cccd5ba9c7479e971b7e474f7ad, type: 3}
   m_Name: CardAnim_Draw
   m_EditorClassIdentifier: 
-  <MoveDuration>k__BackingField: 0.25
+  <MoveDuration>k__BackingField: 0.3
   <MoveCurveXZ>k__BackingField:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.0010795593
       value: 0
-      inSlope: 0
-      outSlope: 1
+      inSlope: 0.647096
+      outSlope: 0.647096
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.058378715
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
+      inSlope: 1.515403
+      outSlope: 1.515403
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.052915752
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -61,27 +61,80 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <InitialRotateOffset>k__BackingField: {x: 0, y: 0, z: 0}
+  <DropHeight>k__BackingField: 0
+  <MoveRiseCurve>k__BackingField:
+    time: {x: 0, y: 0.5}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  <MoveFallCurve>k__BackingField:
+    time: {x: 0.5, y: 1}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  <InitialRotateOffset>k__BackingField: {x: 0, y: 0, z: -1}
   <RotateCurve>k__BackingField:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 1
+      inSlope: 0.0036582286
+      outSlope: 0.0036582286
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.6447084
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
+      inSlope: 3.5468855
+      outSlope: 3.5468855
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
+      weightedMode: 3
+      inWeight: 0.14362854
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

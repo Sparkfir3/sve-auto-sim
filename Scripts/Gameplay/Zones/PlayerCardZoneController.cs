@@ -163,7 +163,8 @@ namespace SVESimulator
             MoveCardTransform(cardToPlay, fieldZone.GetSlotPosition(slotNumber),
                 cardToPlay.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0
                 ? SVEProperties.CardEngagedRotation
-                : SVEProperties.CardFaceUpRotation);
+                : SVEProperties.CardFaceUpRotation,
+                moveType: CardMovementType.Play);
 
             fieldZone.MoveCardToSlot(cardToPlay, slotNumber,
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
