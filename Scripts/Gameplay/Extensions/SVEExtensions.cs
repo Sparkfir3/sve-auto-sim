@@ -285,6 +285,26 @@ namespace SVESimulator
             return newEffect;
         }
 
+        public static SveEffect CopyWithOverrideAmount(this SveEffect baseEffect, string newAmount)
+        {
+            Type type = baseEffect.GetType();
+            SveEffect newEffect = Activator.CreateInstance(type) as SveEffect;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "amount":
+                        fields[i].SetValue(newEffect, newAmount);
+                        continue;
+                    default:
+                        fields[i].SetValue(newEffect, fields[i].GetValue(baseEffect));
+                        continue;
+                }
+            }
+            return newEffect;
+        }
+
         #endregion
     }
 }

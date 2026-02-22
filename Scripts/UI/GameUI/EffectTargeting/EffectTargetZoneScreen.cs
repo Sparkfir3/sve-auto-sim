@@ -76,8 +76,11 @@ namespace SVESimulator.UI
             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(player.GetOpponentInfo().netId);
             OnSelectZone.RemoveAllListeners();
 
-            mainInputController.allowedInputs = PlayerInputController.InputTypes.All;
-            player.ZoneController.fieldZone.HighlightCardsCanAttack();
+            if(!SVEEffectPool.Instance.IsActive)
+            {
+                mainInputController.allowedInputs = PlayerInputController.InputTypes.All;
+                player.ZoneController.fieldZone.HighlightCardsCanAttack();
+            }
         }
 
         public void SetDescriptionText(string effectDescription)

@@ -63,17 +63,24 @@ namespace SVESimulator
             player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue = Mathf.Clamp(value, 0, player.namedStats[SVEProperties.PlayerStats.MaxPlayPoints].baseValue);
         }
 
+        public void AdvanceRNG(int amount)
+        {
+            for(int i = 0; i < amount; i++)
+                rng.Next();
+        }
+
         #endregion
 
         // ------------------------------
 
         #region Zone Controls
 
-        public void ShuffleDeck(NetworkIdentity playerNetId)
+        public void ShuffleDeck(NetworkIdentity playerNetId, out int rngAdvances)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
 
             // Reference: CCG Kit ListShuffle.cs
+            rngAdvances = 0;
             int n = player.namedZones[SVEProperties.Zones.Deck].cards.Count;
             while(n > 1)
             {
@@ -81,6 +88,25 @@ namespace SVESimulator
                 n--;
                 (player.namedZones[SVEProperties.Zones.Deck].cards[k], player.namedZones[SVEProperties.Zones.Deck].cards[n])
                     = (player.namedZones[SVEProperties.Zones.Deck].cards[n], player.namedZones[SVEProperties.Zones.Deck].cards[k]);
+                rngAdvances++;
+            }
+        }
+
+        public void DiscardRandomCards(NetworkIdentity playerNetId, int amount) => DiscardRandomCards(playerNetId, amount, out _);
+        public void DiscardRandomCards(NetworkIdentity playerNetId, int amount, out List<RuntimeCard> discardedCards)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            discardedCards = new();
+            for(int i = 0; i < amount; i++)
+            {
+                int n = player.namedZones[SVEProperties.Zones.Hand].cards.Count;
+                if(n == 0)
+                    return;
+                // Sorting prevents desyncs if card order is off between players
+                RuntimeCard[] sortedCardList = player.namedZones[SVEProperties.Zones.Hand].cards.OrderBy(x => x.instanceId).ToArray();
+                RuntimeCard card = sortedCardList[rng.Next(0, n)];
+                SendToCemetery(playerNetId, card, SVEProperties.Zones.Hand);
+                discardedCards.Add(card);
             }
         }
 
@@ -246,6 +272,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
@@ -274,6 +301,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Banished);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -288,6 +316,7 @@ namespace SVESimulator
         {
             ReserveCard(card);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Hand);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -303,6 +332,7 @@ namespace SVESimulator
         {
             ReserveCard(card);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Deck);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -317,6 +347,7 @@ namespace SVESimulator
         {
             ReserveCard(card);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Deck, addToTop: true);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -451,14 +482,18 @@ namespace SVESimulator
                 engagedStat.baseValue = 1;
         }
 
-        public void SetCardStat(RuntimeCard card, int statId, int value)
+        public void SetCardStat(RuntimeCard card, int statId, int value) => SetCardStat(card, statId, value, out _);
+        public void SetCardStat(RuntimeCard card, int statId, int value, out bool isDestroyed)
         {
             card.stats[statId].baseValue = value;
-            CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
+            isDestroyed = DestroyZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration = 0, bool checkDefense = true, bool isCombatDamage = false)
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, bool checkDefense = true, bool isCombatDamage = false)
+            => ApplyCardStatModifier(card, statId, value, adding, duration, out _, checkDefense, isCombatDamage);
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, out bool isDestroyed, bool checkDefense = true, bool isCombatDamage = false)
         {
+            isDestroyed = false;
             int modAmount = value;
             if(statId == 1 && adding) // Defense
             {
@@ -474,7 +509,7 @@ namespace SVESimulator
             else
                 card.stats[statId].RemoveModifier(modifier);
             if(checkDefense)
-                CheckZeroDefenseFollower(card.ownerPlayer.netId, card);
+                isDestroyed = DestroyZeroDefenseFollower(card.ownerPlayer.netId, card);
         }
 
         public void ApplyKeywordToCard(RuntimeCard card, int type, int value, bool adding)
@@ -486,29 +521,39 @@ namespace SVESimulator
         }
 
         public void FightFollower(NetworkIdentity playerNetId, RuntimeCard attackingCard, RuntimeCard defendingCard)
+            => FightFollower(playerNetId, attackingCard, defendingCard, out _, out _);
+        public void FightFollower(NetworkIdentity playerNetId, RuntimeCard attackingCard, RuntimeCard defendingCard, out bool attackerDestroyed, out bool defenderDestroyed)
         {
+            attackerDestroyed = false;
+            defenderDestroyed = false;
             int attackerDamage = GetCardDamageOutput(attackingCard, defendingCard);
             int defenderDamage = GetCardDamageOutput(defendingCard, attackingCard);
 
             // Do not check for 0 defense here - instead check below during Bane handling
-            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, checkDefense: false, isCombatDamage: true);
-            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, 0, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, 0, checkDefense: false, isCombatDamage: true);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
                 AddLeaderDefense(attackingCard.ownerPlayer, attackerDamage);
 
-            // Check defender destruction
-            if(defendingCard.HasKeyword(SVEProperties.Keywords.Bane))
-                SendToCemetery(attackingCard.ownerPlayer.netId, attackingCard, SVEProperties.Zones.Field, isDestroy: true);
-            else
-                CheckZeroDefenseFollower(attackingCard.ownerPlayer.netId, attackingCard);
-
             // Check attacker destruction
-            if(attackingCard.HasKeyword(SVEProperties.Keywords.Bane))
-                SendToCemetery(defendingCard.ownerPlayer.netId, defendingCard, SVEProperties.Zones.Field, isDestroy: true);
+            if(defendingCard.HasKeyword(SVEProperties.Keywords.Bane))
+            {
+                SendToCemetery(attackingCard.ownerPlayer.netId, attackingCard, SVEProperties.Zones.Field, isDestroy: true);
+                attackerDestroyed = true;
+            }
             else
-                CheckZeroDefenseFollower(defendingCard.ownerPlayer.netId, defendingCard);
+                attackerDestroyed = DestroyZeroDefenseFollower(attackingCard.ownerPlayer.netId, attackingCard);
+
+            // Check defender destruction
+            if(attackingCard.HasKeyword(SVEProperties.Keywords.Bane))
+            {
+                SendToCemetery(defendingCard.ownerPlayer.netId, defendingCard, SVEProperties.Zones.Field, isDestroy: true);
+                defenderDestroyed = true;
+            }
+            else
+                defenderDestroyed = DestroyZeroDefenseFollower(defendingCard.ownerPlayer.netId, defendingCard);
 
             // Confirmation timing
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
@@ -540,13 +585,14 @@ namespace SVESimulator
             player.namedStats[SVEProperties.PlayerStats.Defense].baseValue += amount;
         }
 
-        public void CheckZeroDefenseFollower(NetworkIdentity playerNetId, RuntimeCard card)
+        private bool DestroyZeroDefenseFollower(NetworkIdentity playerNetId, RuntimeCard card)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             if(!card.IsFollowerOrEvolvedFollower() || !player.namedZones[SVEProperties.Zones.Field].cards.Contains(card) || card.namedStats[SVEProperties.CardStats.Defense].effectiveValue > 0)
-                return;
+                return false;
 
             SendToCemetery(playerNetId, card, SVEProperties.Zones.Field, isDestroy: true);
+            return true;
         }
 
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)

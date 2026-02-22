@@ -34,7 +34,7 @@ namespace SVESimulator
         // ------------------------------
 
         public static IEnumerator ResolveEffectsAsSequence(List<string> effectList, PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone,
-            Action onComplete, string additionalFilters = null)
+            Action onComplete, string additionalFilters = null, string overrideAmount = null)
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
@@ -58,11 +58,15 @@ namespace SVESimulator
                 if(trigger != null && !string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
                     continue;
 
-                // Resolve with cost check
-                bool effectDone = false;
+                // Copy effect
                 SveEffect effectToPerform = additionalFilters.IsNullOrWhiteSpace()
                     ? baseAbility.effect as SveEffect
                     : (baseAbility.effect as SveEffect).CopyWithAddFilters(additionalFilters);
+                if(!overrideAmount.IsNullOrWhiteSpace())
+                    effectToPerform = effectToPerform.CopyWithOverrideAmount(overrideAmount);
+
+                // Resolve with cost check
+                bool effectDone = false;
                 Action resolveAction = () =>
                 {
                     effectToPerform?.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () => { effectDone = true; });

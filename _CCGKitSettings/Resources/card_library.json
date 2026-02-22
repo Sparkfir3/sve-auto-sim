@@ -27662,6 +27662,2201 @@
         "id": 100021068
       },
       {
+        "cardTypeId": 0,
+        "name": "Vania, Vampire Princess",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Vampire / Princess",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Give this follower [attack]+X/[defense]+X. X equals the number of Forest Bat tokens on your field.\n[act][cost01], put a Forest Bat token from your field into its owner's cemetery: Select an enemy follower on the field. Deal 3 damage to it and 1 damage to its leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-069",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "f(Kn(Forest Bat))",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "condition": "p(#F)",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "target": "TargetPlayerCard",
+                "filter": "Kn(Forest Bat)",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "effectName1": "DamageFollower",
+              "effectName2": "DamageLeader",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "DamageFollower",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": null,
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "DamageLeader",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021069
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Soul Dealer",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost02]: Evolve this follower.\nWard.\n[fanfare] Deal 3 damage to your leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-071",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-070EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 6,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021071
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Soul Dealer (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\nOn Evolve: Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-072",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-071EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 7,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "effectName1": "TargetForDef",
+              "effectName2": "Destroy",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Destroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": null,
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "TargetForDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": null,
+              "amount": "A",
+              "effectName1": "Defense",
+              "effectName2": null,
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.PerformWithTargetAmountEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Defense",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "_",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021072
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Underworld Watchman Khawy",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Necromancer",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\n[lastwords] Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-073",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-072EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "effectName1": "TargetForDef",
+              "effectName2": "Destroy",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Destroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": null,
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "TargetForDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": null,
+              "amount": "A",
+              "effectName1": "Defense",
+              "effectName2": null,
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.PerformWithTargetAmountEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Defense",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "_",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021073
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Azazel",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Necrocharge (10): This card costs 3 less to play.\n[evolve][cost01]: Evolve this follower.\nBane.\n[fanfare] Each opponent discards a random card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-074",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-073EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 6,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 7,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 6
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "n(10)",
+              "cost": null,
+              "$type": "SVESimulator.ModifiedCostTrigger"
+            },
+            "name": "ModifiedCost",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "$type": "SVESimulator.ReducedCostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Opponent",
+              "amount": "1",
+              "$type": "SVESimulator.DiscardRandomCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021074
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Azazel (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Bane.\nOn Evolve: Change each enemy leader's [defense] to 10.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-075",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-074EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 7,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 7,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 6
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "10",
+              "$type": "SVESimulator.SetStatEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021075
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Vampiric Fortress",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Vampire",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Look at the top 3 cards of your deck. You may reveal a Vampire card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.\n[act][cost01], [engage], put this card into its owner's cemetery: Summon a Forest Bat token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-076",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-075EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "checkAction1": "Hand",
+              "checkFilter1": "t(Vampire)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkFilter2": null,
+              "checkAmount2": null,
+              "checkAction3": "None",
+              "checkFilter3": null,
+              "checkAmount3": null,
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "tokenName": "Forest Bat",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100021076
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Veight, Vampire Noble",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Vampire",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.\nStrike: Summon a Forest Bat token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-078",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-076EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Forest Bat",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021078
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Veight, Vampire Noble (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Vampire",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Put a Forest Bat token into your EX area.\nStrike: Summon a Forest Bat token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-079",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-077EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Forest Bat",
+              "createTokenOption": "ExArea",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Forest Bat",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021079
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Trick Dullahan",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Departed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Put a Ghost token into your EX area. Necrocharge (10): Put 3 instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-080",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-078EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Ghost",
+              "createTokenOption": "ExArea",
+              "amount": "1n(10)3",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021080
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Precious Bloodfangs",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Vampire",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Choose one of the following. (1) Summon X Forest Bat tokens. X equals the number of enemy cards on the field. (2) Give each Forest Bat token on your field [attack]+1/[defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-081",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-079EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Summon",
+              "effectName2": "AtkDef",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.ChooseEffectFromList"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Summon",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Forest Bat",
+              "createTokenOption": "Field",
+              "amount": "p()",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": "Kn(Forest Bat)",
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021081
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mini Soul Devil",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Whenever one of your followers evolves, deal 2 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-083",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-080EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnOtherEvolveTrigger"
+            },
+            "name": "OnOtherEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021083
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Moriana the Bejeweled",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If Sanguine is active for you, give your leader [defense]+3 and draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-084",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-081EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "g",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Defense",
+              "effectName2": "Draw",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Defense",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "3",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021084
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Demonic Hedonist",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.\nAt the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-085",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-082EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "g",
+              "cost": null,
+              "$type": "SVESimulator.SveStartEndPhaseTrigger"
+            },
+            "name": "StartEndPhase",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Draw",
+              "effectName2": "Discard",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": null,
+              "$type": "SVESimulator.DiscardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021085
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Demonic Hedonist (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Demon",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Strike: Deal 1 damage to each leader.\nAt the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-086",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-083EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllLeaders",
+              "filter": null,
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "g",
+              "cost": null,
+              "$type": "SVESimulator.SveStartEndPhaseTrigger"
+            },
+            "name": "StartEndPhase",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Draw",
+              "effectName2": "Discard",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": null,
+              "$type": "SVESimulator.DiscardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021086
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Bone Chimera",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Departed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Necrocharge (7): This follower has Rush and Bane.\n[fanfare] Put the top 3 cards of your deck into your cemetery.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-087",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-084EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "$type": "SVESimulator.MillDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "n(7)",
+              "target": "Self",
+              "filter": null,
+              "cost": null,
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Rush",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 2,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "n(7)",
+              "target": "Self",
+              "filter": null,
+              "cost": null,
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Bane",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 6,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021087
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Necrocarnival",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Departed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Choose one of the following. Necrocharge (10): Choose up to 2 instead. (1) Select a follower that costs 2 play points or less in your cemetery and put it onto your field. (2) Summon 2 Ghost tokens.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-088",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP02-085EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1n(10)2",
+              "effectName1": "Cemetery",
+              "effectName2": "Tokens",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.ChooseAmountFromList"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "y(Fp(m(0,2)))",
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Cemetery",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "filter": "Fp(m(0,2))",
+              "$type": "SVESimulator.CemeteryToFieldEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Tokens",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Ghost",
+              "createTokenOption": "Field",
+              "amount": "2",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100021088
+      },
+      {
         "cardTypeId": 5,
         "name": "Michelle, Purehearted Mindreader",
         "costs": [],

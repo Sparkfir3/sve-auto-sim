@@ -24,11 +24,11 @@ namespace SVESimulator
 
             // Zone Controls
             NetworkServer.RegisterHandler<LocalShuffleDeckMessage>(OnShuffleDeck);
+            NetworkServer.RegisterHandler<LocalDiscardRandomCardsMessage>(OnDiscardRandomCards);
 
             // Deck movement
             NetworkServer.RegisterHandler<LocalDrawCardMessage>(OnDrawCard);
             NetworkServer.RegisterHandler<LocalTellOppDrawCardMessage>(OnTellOpponentDrawCard);
-            NetworkServer.RegisterHandler<LocalTellOppMillDeckMessage>(OnTellOpponentMillDeck);
 
             // Play cards on field
             NetworkServer.RegisterHandler<LocalPlayCardMessage>(OnPlayCard);
@@ -66,11 +66,11 @@ namespace SVESimulator
 
             // Zone Controls
             NetworkServer.UnregisterHandler<LocalShuffleDeckMessage>();
+            NetworkServer.UnregisterHandler<LocalDiscardRandomCardsMessage>();
 
             // Deck movement
             NetworkServer.UnregisterHandler<LocalDrawCardMessage>();
             NetworkServer.UnregisterHandler<LocalTellOppDrawCardMessage>();
-            NetworkServer.UnregisterHandler<OpponentTellOppMillDeckMessage>();
 
             // Play cards on field
             NetworkServer.UnregisterHandler<LocalPlayCardMessage>();
@@ -196,15 +196,28 @@ namespace SVESimulator
 
         #region Zone Controls
 
-
         private void OnShuffleDeck(NetworkConnection conn, LocalShuffleDeckMessage msg)
         {
             OpponentShuffleDeckMessage shuffleMsg = new()
             {
-                playerNetId = msg.playerNetId
+                playerNetId = msg.playerNetId,
+                rngAdvances = msg.rngAdvances
             };
             server.SafeSendToClient(server.gameState.currentOpponent, shuffleMsg);
-            (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId);
+            (server.effectSolver as SVEEffectSolver).ShuffleDeck(msg.playerNetId, out int rngAdvances);
+            Debug.Assert(msg.rngAdvances == rngAdvances);
+        }
+
+        private void OnDiscardRandomCards(NetworkConnection conn, LocalDiscardRandomCardsMessage msg)
+        {
+            OpponentDiscardRandomCardsMessage discardMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                targetNetId = msg.targetNetId,
+                amount = msg.amount
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, discardMsg);
+            (server.effectSolver as SVEEffectSolver).DiscardRandomCards(msg.targetNetId, msg.amount);
         }
 
         #endregion
@@ -242,16 +255,6 @@ namespace SVESimulator
                 count = msg.count
             };
             server.SafeSendToClient(server.gameState.currentOpponent, drawMsg);
-        }
-
-        private void OnTellOpponentMillDeck(NetworkConnection conn, LocalTellOppMillDeckMessage msg)
-        {
-            OpponentTellOppMillDeckMessage millMsg = new()
-            {
-                playerNetId = msg.playerNetId,
-                count = msg.count
-            };
-            server.SafeSendToClient(server.gameState.currentOpponent, millMsg);
         }
 
         #endregion

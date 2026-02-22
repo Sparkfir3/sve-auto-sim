@@ -26,11 +26,11 @@ namespace SVESimulator
 
             // Zone Controls
             NetworkClient.RegisterHandler<OpponentShuffleDeckMessage>(OnOpponentShuffleDeck);
+            NetworkClient.RegisterHandler<OpponentDiscardRandomCardsMessage>(OnOpponentDiscardRandomCards);
 
             // Deck movement
             NetworkClient.RegisterHandler<OpponentDrawCardMessage>(OnOpponentDrawCard);
             NetworkClient.RegisterHandler<OpponentTellOppDrawCardMessage>(OnOpponentTellOppDrawCard);
-            NetworkClient.RegisterHandler<OpponentTellOppMillDeckMessage>(OnOpponentTellOppMillDeck);
 
             // Play cards on field
             NetworkClient.RegisterHandler<OpponentPlayCardMessage>(OnOpponentPlayCard);
@@ -84,11 +84,11 @@ namespace SVESimulator
 
             // Zone Controls
             NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
+            NetworkClient.UnregisterHandler<OpponentDiscardRandomCardsMessage>();
 
             // Deck movement
             NetworkClient.UnregisterHandler<OpponentDrawCardMessage>();
             NetworkClient.UnregisterHandler<OpponentTellOppDrawCardMessage>();
-            NetworkClient.UnregisterHandler<OpponentTellOppMillDeckMessage>();
 
             // Play cards on field
             NetworkClient.UnregisterHandler<OpponentPlayCardMessage>();
@@ -219,6 +219,15 @@ namespace SVESimulator
             player.OpponentEvents.ShuffleDeck(msg);
         }
 
+        private void OnOpponentDiscardRandomCards(OpponentDiscardRandomCardsMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.DiscardRandomCards(msg);
+        }
+
         #endregion
 
         // ------------------------------
@@ -242,15 +251,6 @@ namespace SVESimulator
 
             for(int i = 0; i < msg.count; i++)
                 player.LocalEvents.DrawCard();
-        }
-
-        private void OnOpponentTellOppMillDeck(OpponentTellOppMillDeckMessage msg)
-        {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
-            if(!player)
-                return;
-
-            player.LocalEvents.MillDeck(msg.count);
         }
 
         #endregion

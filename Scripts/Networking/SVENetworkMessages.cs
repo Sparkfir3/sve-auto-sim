@@ -70,11 +70,27 @@ namespace SVESimulator
     public struct LocalShuffleDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
+        public int rngAdvances;
     }
 
     public struct OpponentShuffleDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
+        public int rngAdvances;
+    }
+
+    public struct LocalDiscardRandomCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetNetId;
+        public int amount;
+    }
+
+    public struct OpponentDiscardRandomCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetNetId;
+        public int amount;
     }
 
     #endregion
@@ -104,18 +120,6 @@ namespace SVESimulator
     }
 
     public struct OpponentTellOppDrawCardMessage : NetworkMessage
-    {
-        public NetworkIdentity playerNetId;
-        public int count;
-    }
-
-    public struct LocalTellOppMillDeckMessage : NetworkMessage
-    {
-        public NetworkIdentity playerNetId;
-        public int count;
-    }
-
-    public struct OpponentTellOppMillDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
         public int count;

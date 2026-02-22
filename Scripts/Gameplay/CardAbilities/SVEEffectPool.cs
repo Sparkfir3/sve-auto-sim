@@ -46,6 +46,7 @@ namespace SVESimulator
         public event Action OnNextConfirmationTimingEnd;
         public event Action OnConfirmationTimingEndConstant;
         public event Action OnNextConfirmationTimingStartOrEnd;
+        public event Action OnConfirmationTimingStartOrEndConstant;
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
         public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
@@ -77,9 +78,10 @@ namespace SVESimulator
             PlayerController[] controllers = FindObjectsOfType<PlayerController>();
             localPlayer = controllers.FirstOrDefault(x => x.isLocalPlayer);
             opponentPlayer = controllers.FirstOrDefault(x => !x.isLocalPlayer);
-
             Debug.Assert(localPlayer);
             Debug.Assert(opponentPlayer);
+
+            OnConfirmationTimingStartOrEndConstant += UpdatePassivesByCondition;
         }
 
         #endregion
@@ -191,7 +193,8 @@ namespace SVESimulator
                         effect = passiveEffect,
                         affectedCards = new List<RuntimeCard>(),
                         target = trigger.target,
-                        duration = passiveEffect.duration
+                        duration = passiveEffect.duration,
+                        condition = trigger.condition
                     };
                     RegisterPassiveAbility(newPassive);
                 }
@@ -454,17 +457,29 @@ namespace SVESimulator
         {
             if(oldState == ConfirmationTimingState.Idle && newState == ConfirmationTimingState.ResolvingTurnPlayer)
             {
-                OnNextConfirmationTimingStart?.Invoke();
                 OnConfirmationTimingStartConstant?.Invoke();
+                OnNextConfirmationTimingStart?.Invoke();
                 OnNextConfirmationTimingStart = null;
+
+                OnConfirmationTimingStartOrEndConstant?.Invoke();
                 OnNextConfirmationTimingStartOrEnd?.Invoke();
                 OnNextConfirmationTimingStartOrEnd = null;
+
+                if(localPlayer)
+                {
+                    localPlayer.InputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    localPlayer.ZoneController.handZone.RemoveAllCardHighlights();
+                    localPlayer.ZoneController.fieldZone.RemoveAllCardHighlights();
+                    localPlayer.ZoneController.exAreaZone.RemoveAllCardHighlights();
+                }
             }
             else if(oldState == ConfirmationTimingState.FinishedNonTurnPlayer && newState == ConfirmationTimingState.Idle)
             {
-                OnNextConfirmationTimingEnd?.Invoke();
                 OnConfirmationTimingEndConstant?.Invoke();
+                OnNextConfirmationTimingEnd?.Invoke();
                 OnNextConfirmationTimingEnd = null;
+
+                OnConfirmationTimingStartOrEndConstant?.Invoke();
                 OnNextConfirmationTimingStartOrEnd?.Invoke();
                 OnNextConfirmationTimingStartOrEnd = null;
                 CardManager.Instance.ReleaseAllDisabledCards();
@@ -476,7 +491,7 @@ namespace SVESimulator
                     localPlayer.ZoneController.fieldZone.SetAllCardsInteractable(localPlayer.isActivePlayer);
                     if(localPlayer.isActivePlayer)
                         foreach(CardObject card in localPlayer.ZoneController.fieldZone.GetAllPrimaryCards())
-                            card.CalculateCanAttackStatus(updateHighlightMode: false);
+                            card.CalculateCanAttackStatus();
                 }
             }
         }
@@ -504,7 +519,8 @@ namespace SVESimulator
                     if((registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
 						|| registeredPassive.effect is MinusCostOtherPassive
                         || !registeredPassive.filters.MatchesCard(card)
-                        || registeredPassive.affectedCards.Contains(card))
+                        || registeredPassive.affectedCards.Contains(card)
+                        || !registeredPassive.MeetsCondition(localPlayer))
                         continue;
 
                     registeredPassive.effect.ApplyPassive(card, localPlayer);
@@ -520,6 +536,22 @@ namespace SVESimulator
             {
                 passive.affectedCards.Remove(card);
                 passive.effect.RemovePassive(card, player);
+            }
+        }
+
+        public void UpdatePassivesByCondition()
+        {
+            foreach(RegisteredPassiveAbility passive in registeredPassives)
+            {
+                if(passive.condition.IsNullOrWhiteSpace())
+                    continue;
+                bool meetsCondition = passive.MeetsCondition(localPlayer)
+                    && (passive.duration != SVEProperties.PassiveDuration.OpponentTurn || localPlayer.isActivePlayer);
+
+                if(meetsCondition && passive.affectedCards.Count == 0)
+                    EnablePassive(passive, localPlayer);
+                else if(!meetsCondition && passive.affectedCards.Count > 0)
+                    DisablePassive(passive);
             }
         }
 
@@ -552,7 +584,7 @@ namespace SVESimulator
             {
                 if(passive.effect is not MinusCostOtherPassive minusCostEffect)
                     continue;
-                if(!passive.filters.MatchesCard(card))
+                if(!passive.filters.MatchesCard(card) || !passive.MeetsCondition(player))
                     continue;
 
                 PlayerInfo playerInfo = player ? player.GetPlayerInfo() : card.ownerPlayer;
@@ -566,6 +598,12 @@ namespace SVESimulator
 
         private void EnablePassive(RegisteredPassiveAbility passive, PlayerController player)
         {
+            if(!passive.MeetsCondition(player))
+            {
+                DisablePassive(passive);
+                return;
+            }
+
             List<CardObject> potentialPassiveTargets = new();
             potentialPassiveTargets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards());
             potentialPassiveTargets.AddRange(player.OppZoneController.fieldZone.GetAllPrimaryCards());
@@ -644,8 +682,22 @@ namespace SVESimulator
         public List<RuntimeCard> affectedCards;
         public SVEProperties.SVEEffectTarget target;
         public SVEProperties.PassiveDuration duration;
+        public string condition;
 
         // ------------------------------
+
+        public bool MeetsCondition(PlayerController player, RuntimeCard sourceCard = null)
+        {
+            if(condition.IsNullOrWhiteSpace())
+                return true;
+            if(sourceCard == null)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
+                sourceCard = cardObject ? cardObject.RuntimeCard : null;
+            }
+            Debug.Assert(sourceCard != null);
+            return SVEFormulaParser.ParseValueAsCondition(condition, player, sourceCard);
+        }
 
         public bool Equals(RegisteredPassiveAbility other)
         {
@@ -654,7 +706,8 @@ namespace SVESimulator
                 && effect.GetType() == other.effect.GetType()
                 && affectedCards.Count == other.affectedCards.Count
                 && target == other.target
-                && duration == other.duration;
+                && duration == other.duration
+                && condition == null ? other.condition == null : condition.Equals(other.condition);
         }
 
         public override bool Equals(object obj) => obj is RegisteredPassiveAbility other && Equals(other);

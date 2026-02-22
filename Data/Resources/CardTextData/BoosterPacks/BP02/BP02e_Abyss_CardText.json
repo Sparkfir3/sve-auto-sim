@@ -1,0 +1,276 @@
+[
+  {
+    "id": "BP02-069EN",
+    "name": "Vania, Vampire Princess",
+    "trait": "Vampire / Princess",
+    "cardText": "[fanfare] Give this follower [attack]+X/[defense]+X. X equals the number of Forest Bat tokens on your field.\n[act][cost01], put a Forest Bat token from your field into its owner's cemetery: Select an enemy follower on the field. Deal 3 damage to it and 1 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give this follower [attack]+X/[defense]+X. X equals the number of Forest Bat tokens on your field."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], put a Forest Bat token from your field into its owner's cemetery",
+        "body": "Select an enemy follower on the field. Deal 3 damage to it and 1 damage to its leader."
+      },
+      {
+        "key": "DamageFollower",
+        "body": "Select an enemy follower on the field. Deal 3 damage to it and 1 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP02-070EN",
+    "name": "Soul Dealer",
+    "trait": "Demon",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nWard.\n[fanfare] Deal 3 damage to your leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 3 damage to your leader."
+      }
+    ]
+  },
+  {
+    "id": "BP02-071EN",
+    "name": "Soul Dealer (Evolved)",
+    "trait": "Demon",
+    "cardText": "Ward.\nOn Evolve: Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack."
+      }
+    ]
+  },
+  {
+    "id": "BP02-072EN",
+    "name": "Underworld Watchman Khawy",
+    "trait": "Necromancer",
+    "cardText": "Ward.\n[lastwords] Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "text": "",
+        "trigger": "[lastwords]",
+        "cost": "",
+        "body": "Select an enemy follower on the field. Destroy it and give your leader [defense]+X. X equals the selected follower's attack."
+      }
+    ]
+  },
+  {
+    "id": "BP02-073EN",
+    "name": "Azazel",
+    "trait": "Demon",
+    "cardText": "Necrocharge (10): This card costs 3 less to play.\n[evolve][cost01]: Evolve this follower.\nBane.\n[fanfare] Each opponent discards a random card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Each opponent discards a random card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-074EN",
+    "name": "Azazel (Evolved)",
+    "trait": "Demon",
+    "cardText": "Bane.\nOn Evolve: Change each enemy leader's [defense] to 10.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Change each enemy leader's [defense] to 10."
+      }
+    ]
+  },
+  {
+    "id": "BP02-075EN",
+    "name": "Vampiric Fortress",
+    "trait": "Vampire",
+    "cardText": "[fanfare] Look at the top 3 cards of your deck. You may reveal a Vampire card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.\n[act][cost01], [engage], put this card into its owner's cemetery: Summon a Forest Bat token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. You may reveal a Vampire card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], put this card into its owner's cemetery",
+        "body": "Summon a Forest Bat token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-076EN",
+    "name": "Veight, Vampire Noble",
+    "trait": "Vampire",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nStrike: Summon a Forest Bat token.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Summon a Forest Bat token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-077EN",
+    "name": "Veight, Vampire Noble (Evolved)",
+    "trait": "Vampire",
+    "cardText": "On Evolve: Put a Forest Bat token into your EX area.\nStrike: Summon a Forest Bat token.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Put a Forest Bat token into your EX area."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Summon a Forest Bat token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-078EN",
+    "name": "Trick Dullahan",
+    "trait": "Departed",
+    "cardText": "[fanfare] Put a Ghost token into your EX area. Necrocharge (10): Put 3 instead.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Ghost token into your EX area. Necrocharge (10): Put 3 instead."
+      }
+    ]
+  },
+  {
+    "id": "BP02-079EN",
+    "name": "Precious Bloodfangs",
+    "trait": "Vampire",
+    "cardText": "Choose one of the following. (1) Summon X Forest Bat tokens. X equals the number of enemy cards on the field. (2) Give each Forest Bat token on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following. (1) Summon X Forest Bat tokens. X equals the number of enemy cards on the field. (2) Give each Forest Bat token on your field [attack]+1/[defense]+1."
+      },
+      {
+        "key": "Summon",
+        "body": "Summon X Forest Bat tokens. X equals the number of enemy cards on the field."
+      },
+      {
+        "key": "AtkDef",
+        "body": "Give each Forest Bat token on your field [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP02-080EN",
+    "name": "Mini Soul Devil",
+    "trait": "Demon",
+    "cardText": "Whenever one of your followers evolves, deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever one of your followers evolves, deal 2 damage to each enemy leader.",
+        "trigger": "Whenever one of your followers evolves",
+        "body": "Deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP02-081EN",
+    "name": "Moriana the Bejeweled",
+    "trait": "Demon",
+    "cardText": "[fanfare] If Sanguine is active for you, give your leader [defense]+3 and draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Sanguine is active for you, give your leader [defense]+3 and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-082EN",
+    "name": "Demonic Hedonist",
+    "trait": "Demon",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nAt the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.",
+        "trigger": "At the start of your end phase, if Sanguine is active for you",
+        "body": "Draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-083EN",
+    "name": "Demonic Hedonist (Evolved)",
+    "trait": "Demon",
+    "cardText": "Strike: Deal 1 damage to each leader.\nAt the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Deal 1 damage to each leader."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if Sanguine is active for you, draw a card, then discard a card.",
+        "trigger": "At the start of your end phase, if Sanguine is active for you",
+        "body": "Draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-084EN",
+    "name": "Bone Chimera",
+    "trait": "Departed",
+    "cardText": "Necrocharge (7): This follower has Rush and Bane.\n[fanfare] Put the top 3 cards of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put the top 3 cards of your deck into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP02-085EN",
+    "name": "Necrocarnival",
+    "trait": "Departed",
+    "cardText": "Choose one of the following. Necrocharge (10): Choose up to 2 instead. (1) Select a follower that costs 2 play points or less in your cemetery and put it onto your field. (2) Summon 2 Ghost tokens.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following. Necrocharge (10): Choose up to 2 instead. (1) Select a follower that costs 2 play points or less in your cemetery and put it onto your field. (2) Summon 2 Ghost tokens."
+      },
+      {
+        "key": "Cemetery",
+        "body": "Select a follower that costs 2 play points or less in your cemetery and put it onto your field."
+      },
+      {
+        "key": "Tokens",
+        "body": "Summon 2 Ghost tokens."
+      }
+    ]
+  }
+]

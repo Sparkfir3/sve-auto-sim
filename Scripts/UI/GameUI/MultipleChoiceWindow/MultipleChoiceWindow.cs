@@ -153,7 +153,7 @@ namespace SVESimulator.UI
             if(!gameObject.activeSelf)
                 return;
 
-            if(player.isActivePlayer && !SVEEffectPool.Instance.IsResolvingEffect)
+            if(player.isActivePlayer && !SVEEffectPool.Instance.IsActive)
             {
                 mainInputController.allowedInputs = PlayerInputController.InputTypes.All;
                 player.ZoneController.fieldZone.HighlightCardsCanAttack();

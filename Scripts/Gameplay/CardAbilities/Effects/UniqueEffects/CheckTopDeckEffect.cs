@@ -112,6 +112,7 @@ namespace SVESimulator
         private bool GetActionInfo(CheckActionParameters action, PlayerController player, ref int minSelect, ref int maxSelect, out string actionText, out Action<List<CardObject>> confirmAction)
         {
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
+            minSelect = 0;
             switch(action.action)
             {
                 case CheckCardAction.Hand:

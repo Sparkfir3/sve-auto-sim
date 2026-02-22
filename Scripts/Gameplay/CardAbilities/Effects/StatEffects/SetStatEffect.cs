@@ -23,7 +23,7 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            int boostAmount = SVEFormulaParser.ParseValue(amount, player);
+            int boostAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
 
             // Target leader
             if(target.IsLeader(out bool local, out bool opponent))
@@ -32,7 +32,10 @@ namespace SVESimulator
                 {
                     case StatBoostType.Defense:
                     case StatBoostType.AttackDefense:
-                        Debug.LogError("Directly setting leader defense via SetStat is not currently supported");
+                        if(local)
+                            player.LocalEvents.SetLeaderDefense(player.GetPlayerInfo(), boostAmount);
+                        if(opponent)
+                            player.LocalEvents.SetLeaderDefense(player.GetOpponentInfo(), boostAmount);
                         break;
                     case StatBoostType.MaxPlayPoint:
                         Debug.LogError("Directly setting max play points via SetStat effect is not supported.");

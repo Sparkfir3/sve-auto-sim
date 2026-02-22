@@ -203,6 +203,19 @@ namespace SVESimulator
             return false;
         }
 
+        public static void RemoveAllModifiersWithoutNotify(this Stat stat)
+        {
+            if(stat.modifiers.Count == 0)
+                return;
+            stat.modifiers.Clear();
+        }
+
+        public static void RemoveAllModifiersWithoutNotify(this RuntimeCard card)
+        {
+            foreach(Stat stat in card.stats.Values)
+                stat.RemoveAllModifiersWithoutNotify();
+        }
+
         public static void SetCounterAmount(this CardObject card, SVEProperties.Counters counter, int amount) => SetCounterAmount(card.RuntimeCard, counter, amount);
         public static void SetCounterAmount(this RuntimeCard card, SVEProperties.Counters counter, int amount)
         {

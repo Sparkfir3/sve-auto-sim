@@ -155,7 +155,11 @@ namespace SVESimulator.UI
             if(!gameObject.activeSelf)
                 return;
 
-            mainInputController.allowedInputs = PlayerInputController.InputTypes.All;
+            if(!SVEEffectPool.Instance.IsActive)
+            {
+                mainInputController.allowedInputs = PlayerInputController.InputTypes.All;
+                player.ZoneController.fieldZone.HighlightCardsCanAttack();
+            }
             foreach(CardObject card in availableTargets)
                 card.SetHighlightMode(CardObject.HighlightMode.None);
             foreach(EffectTargetingMultiSelectInfo box in multiSelectBoxes.Values)
@@ -164,7 +168,6 @@ namespace SVESimulator.UI
                 box.gameObject.SetActive(false);
             }
             multiSelectBoxes.Clear();
-            player.ZoneController.fieldZone.HighlightCardsCanAttack();
             OnSelectionComplete.RemoveAllListeners();
             gameObject.SetActive(false);
         }

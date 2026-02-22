@@ -127,10 +127,43 @@ namespace SVESimulator
 
         public void ShuffleDeck()
         {
-            sveEffectSolver.ShuffleDeck(netIdentity);
+            sveEffectSolver.ShuffleDeck(netIdentity, out int rngAdvances);
             LocalShuffleDeckMessage msg = new()
             {
-                playerNetId = netIdentity
+                playerNetId = netIdentity,
+                rngAdvances = rngAdvances
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void DiscardRandomCards(PlayerInfo targetPlayer, int amount)
+        {
+            bool isLocalPlayer = targetPlayer.netId.isLocalPlayer;
+            PlayerCardZoneController targetZoneController = isLocalPlayer ? localZoneController : oppZoneController;
+            if(amount >= targetZoneController.handZone.AllCards.Count)
+            {
+                List<CardObject> cards = new(targetZoneController.handZone.AllCards);
+                foreach(CardObject card in cards)
+                    SendToCemetery(card, SVEProperties.Zones.Hand);
+                return;
+            }
+
+            sveEffectSolver.DiscardRandomCards(targetPlayer.netId, amount, out List<RuntimeCard> discardedCards);
+            foreach(RuntimeCard card in discardedCards)
+            {
+                if(!targetZoneController.handZone.TryGetCard(card.instanceId, out CardObject cardObject))
+                {
+                    Debug.LogError($"Failed to find card with instance ID {card.instanceId} in player's hand when attempting to discard random card!");
+                    continue;
+                }
+                SendToCemetery(cardObject, SVEProperties.Zones.Hand, onlyMoveObject: true);
+            }
+
+            LocalDiscardRandomCardsMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetNetId = targetPlayer.netId,
+                amount = amount
             };
             NetworkClient.Send(msg);
         }
@@ -202,38 +235,33 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void MillDeck(int count)
+        public void MillDeck(bool targetLocalPlayer, int count, Action onComplete)
         {
             StartCoroutine(MillCoroutine());
-            IEnumerator MillCoroutine()
+            IEnumerator MillCoroutine() // Use delay to prevents cards from moving all at once
             {
+                int movedCount = 0;
+                PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
                 for(int i = 0; i < count; i++)
                 {
-                    RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
-                    CardObject cardObject = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
-                    localZoneController.SendCardToCemetery(cardObject);
-                    sveEffectSolver.SendToCemetery(netIdentity, runtimeCard, SVEProperties.Zones.Deck);
+                    RuntimeCard runtimeCard = targetZoneController.deckZone.Runtime.cards[0];
+                    CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
 
+                    targetZoneController.SendCardToCemetery(cardObject, onComplete: () => { movedCount++; });
+                    sveEffectSolver.SendToCemetery(targetLocalPlayer ? netIdentity : opponentInfo.netId, runtimeCard, SVEProperties.Zones.Deck);
                     LocalSendCardToCemeteryMessage msg = new()
                     {
                         playerNetId = netIdentity,
                         cardInstanceId = runtimeCard.instanceId,
+                        isOpponentCard = !targetLocalPlayer,
                         originZone = SVEProperties.Zones.Deck
                     };
                     NetworkClient.Send(msg);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.15f);
                 }
+                yield return new WaitUntil(() => movedCount >= count);
+                onComplete?.Invoke();
             }
-        }
-
-        public void TellOpponentMillDeck(int count = 1)
-        {
-            LocalTellOppMillDeckMessage msg = new()
-            {
-                playerNetId = netIdentity,
-                count = count
-            };
-            NetworkClient.Send(msg);
         }
 
         public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true) =>
@@ -773,11 +801,11 @@ namespace SVESimulator
 
                     CardManager.Animator.PlayAttackAnimation(attackingCard, defendingCard, () =>
                     {
-                        sveEffectSolver.FightFollower(netIdentity, attackingCard.RuntimeCard, defendingCard.RuntimeCard);
+                        sveEffectSolver.FightFollower(netIdentity, attackingCard.RuntimeCard, defendingCard.RuntimeCard, out bool attackerDestroyed, out bool defenderDestroyed);
                         // Runtime card gets moved in the effect solver, so we only need to move the game object here
-                        if(attackingCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0 || defendingCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Bane))
+                        if(attackerDestroyed)
                             SendToCemetery(attackingCard, onlyMoveObject: true, isDestroy: true);
-                        if(defendingCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0 || attackingCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Bane))
+                        if(defenderDestroyed)
                             SendToCemetery(defendingCard, onlyMoveObject: true, isDestroy: true);
                     });
 
@@ -859,8 +887,8 @@ namespace SVESimulator
         public void SetCardStat(RuntimeCard card, int statId, int value)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
-            sveEffectSolver.SetCardStat(card, statId, value);
-            if(card.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
+            sveEffectSolver.SetCardStat(card, statId, value, out bool isDestroyed);
+            if(isDestroyed)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
@@ -878,11 +906,18 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        public void SetLeaderDefense(PlayerInfo targetPlayer, int amount)
+        {
+            int difference = amount - targetPlayer.namedStats[SVEProperties.PlayerStats.Defense].effectiveValue;
+            if(difference != 0)
+                AddLeaderDefense(targetPlayer, difference);
+        }
+
         public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool adding, int duration = 0)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
-            sveEffectSolver.ApplyCardStatModifier(card, statId, value, adding, duration);
-            if(card.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
+            sveEffectSolver.ApplyCardStatModifier(card, statId, value, adding, duration, out bool isDestroyed);
+            if(isDestroyed)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);

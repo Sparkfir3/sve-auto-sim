@@ -39,7 +39,7 @@ namespace SVESimulator
         {
             SearchDeckEffect searchEffect = new()
             {
-                amount = "m(1,10)",
+                amount = "m(0,10)",
                 filter = null,
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.Hand,
                 text = "[Debug Mode] Search for a card"
@@ -54,7 +54,7 @@ namespace SVESimulator
                 return;
             SalvageCardEffect salvageEffect = new()
             {
-                amount = "m(1,10)",
+                amount = "m(0,10)",
                 filter = null,
                 text = "[Debug Mode] Salvage"
             };
@@ -70,7 +70,7 @@ namespace SVESimulator
         [Button]
         public void Mill()
         {
-            Player.LocalEvents.MillDeck(1);
+            Player.LocalEvents.MillDeck(true, 1, null);
         }
     }
 }

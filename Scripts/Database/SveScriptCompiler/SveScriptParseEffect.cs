@@ -293,6 +293,8 @@ namespace SVESimulator.SveScript
             { "DiscardToBottomDeck", new EffectParams("SVESimulator.DiscardToBottomDeckEffect",                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardHand", new EffectParams("SVESimulator.DiscardHandEffect",                                     true, false) },
             { "HandToField", new EffectParams("SVESimulator.HandToFieldEffect",                                     false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "DiscardRandomCard", new EffectParams("SVESimulator.DiscardRandomCardEffect",                         true, false, EffectParameterType.Amount) },
+            { "DiscardRandomCards", new EffectParams("SVESimulator.DiscardRandomCardEffect",                        true, false, EffectParameterType.Amount) },
             { "DiscardFromOpponentHand", new EffectParams("SVESimulator.DiscardFromOpponentHandEffect",             false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
 
             // Movement - Cemetery to Zone
@@ -339,6 +341,7 @@ namespace SVESimulator.SveScript
             { "ChooseAmountFromList", new EffectParams("SVESimulator.ChooseAmountFromList",                             false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "OpponentPerformEffect", new EffectParams("SVESimulator.OpponentPerformEffect",                           EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
+            { "PerformWithTargetAmount", new EffectParams("SVESimulator.PerformWithTargetAmountEffect",                 EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
 
             // Other Effects
             { "GiveTrait", new EffectParams("SVESimulator.GiveTraitEffect",                             EffectParameterType.Trait) },
