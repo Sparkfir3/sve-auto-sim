@@ -272,6 +272,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
@@ -300,6 +301,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Banished);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -314,6 +316,7 @@ namespace SVESimulator
         {
             ReserveCard(card);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Hand);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -329,6 +332,7 @@ namespace SVESimulator
         {
             ReserveCard(card);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Deck);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -343,6 +347,7 @@ namespace SVESimulator
         {
             ReserveCard(card);
             StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Deck, addToTop: true);
+            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
