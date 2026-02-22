@@ -23,9 +23,7 @@ namespace SVESimulator
         }
 
         [TitleGroup("Movement Settings"), SerializeField]
-        private float cardMoveSpeed = 50f;
-        [SerializeField]
-        private AnimationCurve cardMoveCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        private CardAnimationSettings defaultMoveSettings;
         [SerializeField]
         private float cardLerpedMoveSpeed = 10f;
 
@@ -90,21 +88,21 @@ namespace SVESimulator
             CancelCardMovement(card);
             card.IsAnimating = true;
 
+            CardAnimationSettings settings = defaultMoveSettings;
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
             float startScale = card.transform.localScale.x;
-            float distance = (startPos - targetPos).magnitude;
-            moveTime = distance / cardMoveSpeed;
-            float duration = moveTime;
+            moveTime = settings.MoveDuration;
+            float duration = moveTime; // re-assign to keep value from out var in coroutine
             currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine())));
 
             IEnumerator MoveCardCoroutine()
             {
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
-                    float t = cardMoveCurve.Evaluate(i / duration);
-                    Vector3 newPosition = Vector3.Lerp(startPos, targetPos, t);
-                    Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
+                    float t = i / duration;
+                    Vector3 newPosition = settings.GetLerpedPosition(startPos, targetPos, t);
+                    Quaternion newRotation = settings.GetLerpedRotation(startRot, targetRot, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
                     if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
                         card.transform.localScale = Vector3.one * Mathf.Lerp(startScale, scale.Value, t);
@@ -127,21 +125,21 @@ namespace SVESimulator
             CancelCardMovement(card);
             card.IsAnimating = true;
 
+            CardAnimationSettings settings = defaultMoveSettings;
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
             float startScale = card.transform.localScale.x;
-            float distance = (startPos - targetPos).magnitude;
-            moveTime = distance / cardMoveSpeed;
-            float duration = moveTime;
+            moveTime = settings.MoveDuration;
+            float duration = moveTime; // re-assign to keep value from out var in coroutine
             currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine())));
 
             IEnumerator MoveCardCoroutine()
             {
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
-                    float t = cardMoveCurve.Evaluate(i / duration);
-                    Vector3 newPosition = Vector3.Lerp(startPos, card.transform.parent.TransformPoint(targetPos), t);
-                    Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
+                    float t = i / duration;
+                    Vector3 newPosition = settings.GetLerpedPosition(startPos, card.transform.parent.TransformPoint(targetPos), t);
+                    Quaternion newRotation = settings.GetLerpedRotation(startRot, targetRot, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
                     if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
                         card.transform.localScale = Vector3.one * Mathf.Lerp(startScale, scale.Value, t);
@@ -172,7 +170,8 @@ namespace SVESimulator
             CancelCardMovement(card);
             card.IsAnimating = true;
 
-            float duration = 0.2f; // TODO - properly find what this should be or make it a setting
+            CardAnimationSettings settings = defaultMoveSettings;
+            float duration = settings.MoveDuration;
             Quaternion startRot = card.transform.rotation;
             currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(RotateCardCoroutine())));
 
@@ -180,8 +179,8 @@ namespace SVESimulator
             {
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
-                    float t = cardMoveCurve.Evaluate(i / duration);
-                    Quaternion newRotation = Quaternion.Lerp(startRot, targetRot, t);
+                    float t = i / duration;
+                    Quaternion newRotation = settings.GetLerpedRotation(startRot, targetRot, t);
                     card.transform.rotation = newRotation;
                     yield return null;
                 }
