@@ -220,7 +220,6 @@ namespace SVESimulator
                 ReserveAllCardsOnField();
                 foreach(CardObject card in localPlayerZoneController.fieldZone.AllCards)
                     card.OnStartTurn();
-                localPlayerZoneController.fieldZone.HighlightCardsCanAttack();
                 localPlayerZoneController.fieldZone.SetAllCardsInteractable(true);
                 localPlayerZoneController.exAreaZone.SetAllCardsInteractable(true);
                 localPlayerZoneController.handZone.SetAllCardsInteractable(true);

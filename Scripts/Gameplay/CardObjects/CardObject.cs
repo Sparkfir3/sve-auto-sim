@@ -114,7 +114,6 @@ namespace SVESimulator
         public void OnStartTurn()
         {
             NumberOfTurnsOnBoard++;
-            CalculateCanAttackStatus();
         }
 
         public void OnMoveZone()
