@@ -25,7 +25,7 @@ namespace SVESimulator
         [TitleGroup("Movement Settings"), SerializeField]
         private CardAnimationSettings defaultMoveSettings;
         [SerializeField]
-        private float cardLerpedMoveSpeed = 10f;
+        private float cardDragSpeed = 10f;
 
         [FoldoutGroup("Attack Settings", true), SerializeField]
         private float attackAnimDuration = 1f;
@@ -33,6 +33,8 @@ namespace SVESimulator
         private AnimationCurve attackAnimCurveX = AnimationCurve.Linear(0f, 0f, 1f, 1f);
         [FoldoutGroup("Attack Settings", true), SerializeField]
         private AnimationCurve attackAnimCurveY = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        [FoldoutGroup("Attack Settings", true), SerializeField]
+        private float afterAttackDelay;
 
         [FoldoutGroup("Stat Change Settings", true), SerializeField]
         private float statChangeAnimDuration = 1f;
@@ -44,9 +46,6 @@ namespace SVESimulator
         private AnimationCurve statChangeAnimMoveCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
         [FoldoutGroup("Stat Change Settings", true), SerializeField]
         private AnimationCurve statChangeAnimFadeCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
-
-        [TitleGroup("Timing Settings"), SerializeField]
-        private float afterAttackDelay;
 
         [TitleGroup("Object References"), SerializeField]
         private LineRenderer targetingLine;
@@ -156,7 +155,7 @@ namespace SVESimulator
 
         public void LerpCardToPosition(CardObject card, Vector3 targetPos)
         {
-            card.transform.position = Vector3.Lerp(card.transform.position, targetPos, Time.deltaTime * cardLerpedMoveSpeed);
+            card.transform.position = Vector3.Lerp(card.transform.position, targetPos, Time.deltaTime * cardDragSpeed);
         }
 
         #endregion
@@ -195,7 +194,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Targeting
+        #region Targeting & Attack
 
         public void SetTargetingLineActive(bool active)
         {
@@ -208,11 +207,7 @@ namespace SVESimulator
             targetingLine.SetPositions(new []{ startPos + Vector3.up, endPos + Vector3.up });
         }
 
-        #endregion
-
-        // ------------------------------
-
-        #region Attack
+        // ---
 
         public void PlayAttackPreview(CardObject attackingCard, CardObject defendingCard)
         {

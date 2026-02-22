@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMoveSettings: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
-  cardLerpedMoveSpeed: 10
+  cardDragSpeed: 10
   attackAnimDuration: 0.3
   attackAnimCurveX:
     serializedVersion: 2
@@ -242,6 +242,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  afterAttackDelay: 0.15
   statChangeAnimDuration: 1
   statChangeAnimStartOffset: {x: 0, y: 0.2, z: 0.3}
   statChangeAnimMoveDistance: 0.85
@@ -293,7 +294,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  afterAttackDelay: 0.15
   targetingLine: {fileID: 6415873333596843278}
   attackEffectPrefab: {fileID: 4155480587704801316, guid: ebd2e176499e2f24b8ca73f58b97b65e, type: 3}
   attackEffectObjectPool: []

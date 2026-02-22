@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 
 namespace SVESimulator
 {
-    [CreateAssetMenu(menuName = "SVE Simulator/Card Animation Settings", fileName = "CardAnimationSettings", order = 1)]
+    [CreateAssetMenu(menuName = "SVE Simulator/Card Animation Settings", fileName = "CardAnim_TYPE", order = 1)]
     public class CardAnimationSettings : ScriptableObject
     {
         [field: SerializeField]
