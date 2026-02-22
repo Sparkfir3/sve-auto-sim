@@ -801,11 +801,11 @@ namespace SVESimulator
 
                     CardManager.Animator.PlayAttackAnimation(attackingCard, defendingCard, () =>
                     {
-                        sveEffectSolver.FightFollower(netIdentity, attackingCard.RuntimeCard, defendingCard.RuntimeCard);
+                        sveEffectSolver.FightFollower(netIdentity, attackingCard.RuntimeCard, defendingCard.RuntimeCard, out bool attackerDestroyed, out bool defenderDestroyed);
                         // Runtime card gets moved in the effect solver, so we only need to move the game object here
-                        if(attackingCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0 || defendingCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Bane))
+                        if(attackerDestroyed)
                             SendToCemetery(attackingCard, onlyMoveObject: true, isDestroy: true);
-                        if(defendingCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0 || attackingCard.RuntimeCard.HasKeyword(SVEProperties.Keywords.Bane))
+                        if(defenderDestroyed)
                             SendToCemetery(defendingCard, onlyMoveObject: true, isDestroy: true);
                     });
 
@@ -887,8 +887,8 @@ namespace SVESimulator
         public void SetCardStat(RuntimeCard card, int statId, int value)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
-            sveEffectSolver.SetCardStat(card, statId, value);
-            if(card.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
+            sveEffectSolver.SetCardStat(card, statId, value, out bool isDestroyed);
+            if(isDestroyed)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
@@ -916,8 +916,8 @@ namespace SVESimulator
         public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool adding, int duration = 0)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
-            sveEffectSolver.ApplyCardStatModifier(card, statId, value, adding, duration);
-            if(card.namedStats[SVEProperties.CardStats.Defense].effectiveValue <= 0)
+            sveEffectSolver.ApplyCardStatModifier(card, statId, value, adding, duration, out bool isDestroyed);
+            if(isDestroyed)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
