@@ -2,6 +2,11 @@ namespace SVESimulator
 {
     public enum CardMovementType
     {
-        Standard
+        Standard,
+        Draw,
+        Play,
+        PlayFromDrag,
+        Mill,
+        StackToStack,
     }
 }

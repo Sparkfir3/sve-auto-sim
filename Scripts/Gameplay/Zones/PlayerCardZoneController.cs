@@ -147,8 +147,9 @@ namespace SVESimulator
 
         public void AddCardToHand(CardObject card, Action onComplete = null)
         {
+            CardMovementType moveType = IsLocalPlayer && card.CurrentZone == deckZone ? CardMovementType.Draw : CardMovementType.Standard;
             MoveCardZone(card, card.CurrentZone, handZone);
-            MoveCardLocalTransform(card, handZone.transform.InverseTransformPoint(handZone.GetLastCardPosition()), handZone.CardRotation, onComplete: onComplete);
+            MoveCardLocalTransform(card, handZone.transform.InverseTransformPoint(handZone.GetLastCardPosition()), handZone.CardRotation, moveType: moveType, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(true);
         }
@@ -313,7 +314,7 @@ namespace SVESimulator
                 return;
 
             MoveCardZone(card, card.CurrentZone, selectionArea);
-            MoveCardLocalTransform(card, selectionArea.GetSlotLocalPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
+            MoveCardLocalTransform(card, selectionArea.GetSlotLocalPosition(slotNumber), SVEProperties.CardFaceUpRotation, targetScale: selectionArea.SlotScale);
             selectionArea.MoveCardToSlot(card, slotNumber, selectionArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
@@ -333,7 +334,7 @@ namespace SVESimulator
                 return;
 
             MoveCardZone(card, card.CurrentZone, zoneViewingArea);
-            MoveCardTransform(card, zoneViewingArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, zoneViewingArea.SlotScale);
+            MoveCardTransform(card, zoneViewingArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, targetScale: zoneViewingArea.SlotScale);
             zoneViewingArea.MoveCardToSlot(card, slotNumber, zoneViewingArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
@@ -395,7 +396,7 @@ namespace SVESimulator
             card.OnMoveZone();
         }
 
-        private void MoveCardTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, float? targetScale = 1f,
+        private void MoveCardTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, CardMovementType moveType = CardMovementType.Standard, float? targetScale = 1f,
             bool rotateIfOpponent = true, bool instant = false, bool disableOnComplete = false, Action onComplete = null)
         {
             if(rotateIfOpponent && !IsLocalPlayer)
@@ -408,7 +409,7 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            CardManager.Animator.MoveCardToPosition(card, targetPosition, targetRotation, targetScale, onComplete: () =>
+            CardManager.Animator.MoveCardToPosition(moveType, card, targetPosition, targetRotation, targetScale, onComplete: () =>
             {
                 if(disableOnComplete && card)
                     CardManager.Instance.ReleaseCard(card);
@@ -416,7 +417,7 @@ namespace SVESimulator
             });
         }
 
-        private void MoveCardLocalTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, float? targetScale = 1f,
+        private void MoveCardLocalTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, CardMovementType moveType = CardMovementType.Standard, float? targetScale = 1f,
             bool rotateIfOpponent = true, bool instant = false, Action onComplete = null)
         {
             if(rotateIfOpponent && !IsLocalPlayer)
@@ -429,7 +430,7 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            CardManager.Animator.MoveCardToLocalPosition(card, targetPosition, targetRotation, targetScale, onComplete: () =>
+            CardManager.Animator.MoveCardToLocalPosition(moveType, card, targetPosition, targetRotation, targetScale, onComplete: () =>
             {
                 onComplete?.Invoke();
             });

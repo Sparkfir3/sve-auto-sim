@@ -182,7 +182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211995d19a5ac3e489a97286db38c0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMoveSettings: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
+  <DefaultMoveSettings>k__BackingField: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
+  movementSettings:
+    serializedPairs:
+    - key: 1
+      value: {fileID: 11400000, guid: fd50dd5b462206647b615180c0871cfd, type: 2}
+    - key: 0
+      value: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
   cardDragSpeed: 10
   attackAnimDuration: 0.3
   attackAnimCurveX:

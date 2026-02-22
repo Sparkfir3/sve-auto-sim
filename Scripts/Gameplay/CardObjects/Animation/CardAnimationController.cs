@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Sparkfire.Utility;
 
 namespace SVESimulator
 {
@@ -22,8 +23,10 @@ namespace SVESimulator
             }
         }
 
-        [TitleGroup("Movement Settings"), SerializeField]
-        private CardAnimationSettings defaultMoveSettings;
+        [field: TitleGroup("Movement Settings"), SerializeField]
+        public CardAnimationSettings DefaultMoveSettings { get; private set; }
+        [SerializeField]
+        private SerializedDictionary<CardMovementType, CardAnimationSettings> movementSettings;
         [SerializeField]
         private float cardDragSpeed = 10f;
 
@@ -79,15 +82,16 @@ namespace SVESimulator
 
         #region Movement
 
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out _);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete: onComplete);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null) => MoveCardToPosition(card, targetPos, targetRot, out _, scale, onComplete);
-        public void MoveCardToPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
+        public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null)
+            => MoveCardToPosition(movementType, card, targetPos, targetRot, out _, scale, onComplete);
+        public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
 
-            CardAnimationSettings settings = defaultMoveSettings;
+            CardAnimationSettings settings = movementSettings.GetValueOrDefault(movementType, DefaultMoveSettings);
+            card.transform.Rotate(settings.InitialRotateOffset, Space.Self);
+
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
             float startScale = card.transform.localScale.x;
@@ -116,15 +120,16 @@ namespace SVESimulator
             }
         }
 
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out _);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, out float moveTime, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, card.transform.rotation, out moveTime, onComplete: onComplete);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null) => MoveCardToLocalPosition(card, targetPos, targetRot, out _, scale, onComplete);
-        public void MoveCardToLocalPosition(CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
+        public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null)
+            => MoveCardToLocalPosition(movementType, card, targetPos, targetRot, out _, scale, onComplete);
+        public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
 
-            CardAnimationSettings settings = defaultMoveSettings;
+            CardAnimationSettings settings = movementSettings.GetValueOrDefault(movementType, DefaultMoveSettings);
+            card.transform.Rotate(settings.InitialRotateOffset, Space.Self);
+
             Vector3 startPos = card.transform.position;
             Quaternion startRot = card.transform.rotation;
             float startScale = card.transform.localScale.x;
@@ -169,7 +174,7 @@ namespace SVESimulator
             CancelCardMovement(card);
             card.IsAnimating = true;
 
-            CardAnimationSettings settings = defaultMoveSettings;
+            CardAnimationSettings settings = DefaultMoveSettings;
             float duration = settings.MoveDuration;
             Quaternion startRot = card.transform.rotation;
             currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(RotateCardCoroutine())));
