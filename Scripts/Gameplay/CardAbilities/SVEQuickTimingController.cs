@@ -84,7 +84,7 @@ namespace SVESimulator
             CmdPlayAttackPreview(attackingCard.RuntimeCard.instanceId, defendingCard.RuntimeCard.instanceId);
             StartCoroutine(WaitForQuickTimingComplete(() =>
             {
-                if(localPlayer.isActivePlayer)
+                if(localPlayer.isActivePlayer && !SVEEffectPool.Instance.IsActive)
                 {
                     localPlayer.ZoneController.fieldZone.HighlightCardsCanAttack();
                     localPlayer.ZoneController.fieldZone.SetAllCardsInteractable(true);
@@ -239,7 +239,7 @@ namespace SVESimulator
         private void TargetCloseQuickTimingUI(NetworkConnectionToClient networkConnection)
         {
             GameUIManager.QuickTiming.CloseAll();
-            if(localPlayer.isActivePlayer && localPlayer.CurrentPhase == SVEProperties.GamePhase.Main)
+            if(localPlayer.isActivePlayer && localPlayer.CurrentPhase == SVEProperties.GamePhase.Main && !SVEEffectPool.Instance.IsActive)
             {
                 localInputController.allowedInputs = PlayerInputController.InputTypes.All;
                 localPlayer.ZoneController.fieldZone.HighlightCardsCanAttack();

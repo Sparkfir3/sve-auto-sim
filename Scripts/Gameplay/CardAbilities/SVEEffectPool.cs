@@ -464,6 +464,14 @@ namespace SVESimulator
                 OnConfirmationTimingStartOrEndConstant?.Invoke();
                 OnNextConfirmationTimingStartOrEnd?.Invoke();
                 OnNextConfirmationTimingStartOrEnd = null;
+
+                if(localPlayer)
+                {
+                    localPlayer.InputController.allowedInputs = PlayerInputController.InputTypes.None;
+                    localPlayer.ZoneController.handZone.RemoveAllCardHighlights();
+                    localPlayer.ZoneController.fieldZone.RemoveAllCardHighlights();
+                    localPlayer.ZoneController.exAreaZone.RemoveAllCardHighlights();
+                }
             }
             else if(oldState == ConfirmationTimingState.FinishedNonTurnPlayer && newState == ConfirmationTimingState.Idle)
             {
