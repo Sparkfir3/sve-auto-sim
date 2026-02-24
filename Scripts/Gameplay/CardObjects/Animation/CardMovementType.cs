@@ -6,7 +6,9 @@ namespace SVESimulator
         Draw,
         Play,
         PlayFromDrag,
-        Mill,
         StackToStack,
+        FlipFromDeck,
+        SendToDeckTop,
+        SendToDeckBottom,
     }
 }
