@@ -4,7 +4,8 @@ namespace SVESimulator
     {
         Standard,
         Draw,
-        Play,
+        PlayFromFaceDown,
+        PlayFromFaceUp,
         PlayFromDrag,
         StackToStack,
         FlipFromDeck,
