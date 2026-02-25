@@ -149,27 +149,66 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <ScaleCurve>k__BackingField:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  <UseAdvancedScaling>k__BackingField: 1
+  <ScaleMultiplier>k__BackingField: 1.2
+  <ScaleGrowCurve>k__BackingField:
+    time: {x: 0, y: 0.625}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.1
+        value: 0
+        inSlope: Infinity
+        outSlope: 2.1552262
+        tangentMode: 7
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.036477074
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: -0.026633084
+        outSlope: 1
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.09839211
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  <ScaleShrinkCurve>k__BackingField:
+    time: {x: 0.625, y: 1}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -0.041999374
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.056155507
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1.8427188
+        outSlope: -1
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.034557223
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4

@@ -40,12 +40,19 @@ namespace SVESimulator
         [field: BoxGroup("Advanced Y Movement"), SerializeField, ShowIf("UseAdvancedYMovement")]
         private AdvancedCurve MoveFallCurve { get; set; } = new(0.5f, 1f, AnimationCurve.Linear(0f, 1f, 1f, 0f));
 
-        [field: TitleGroup("Rotation & Scale"), SerializeField]
+        [field: TitleGroup("Rotation"), SerializeField]
         public Vector3 InitialRotateOffset { get; private set; }
         [field: SerializeField]
         public AnimationCurve RotateCurve { get; private set; } = AnimationCurve.Linear(0f, 0f, 1f, 1f);
-        [field: SerializeField]
-        public AnimationCurve ScaleCurve { get; private set; } = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+
+        [field: TitleGroup("Scale"), SerializeField]
+        public bool UseAdvancedScaling { get; private set; }
+        [field: BoxGroup("Advanced Scaling"), SerializeField, ShowIf("UseAdvancedScaling")]
+        public float ScaleMultiplier { get; private set; } = 1f;
+        [field: BoxGroup("Advanced Scaling"), SerializeField, ShowIf("UseAdvancedScaling")]
+        private AdvancedCurve ScaleGrowCurve { get; set; } = new(0f, 0.5f, AnimationCurve.Linear(0f, 0f, 1f, 1f));
+        [field: BoxGroup("Advanced Scaling"), SerializeField, ShowIf("UseAdvancedScaling")]
+        private AdvancedCurve ScaleShrinkCurve { get; set; } = new(0.5f, 1f, AnimationCurve.Linear(0f, 1f, 1f, 0f));
 
         // ------------------------------
 
@@ -79,6 +86,23 @@ namespace SVESimulator
             return Quaternion.LerpUnclamped(startRotation, endRotation, RotateCurve.Evaluate(t));
         }
 
+        public float GetLerpedScale(float startScale, float endScale, float t)
+        {
+            if(!UseAdvancedScaling)
+                return Mathf.Lerp(startScale, endScale, t);
+            float peakScale = Mathf.Max(startScale, endScale) * ScaleMultiplier;
+            if(t < ScaleGrowCurve.endTime)
+            {
+                t = Mathf.InverseLerp(ScaleGrowCurve.startTime, ScaleGrowCurve.endTime, t);
+                return Mathf.LerpUnclamped(startScale, peakScale, ScaleGrowCurve.curve.Evaluate(t));
+            }
+            else
+            {
+                t = Mathf.InverseLerp(ScaleShrinkCurve.startTime, ScaleShrinkCurve.endTime, t);
+                return Mathf.LerpUnclamped(endScale, peakScale, ScaleShrinkCurve.curve.Evaluate(t));
+            }
+        }
+
         // ------------------------------
 
 #if UNITY_EDITOR
@@ -87,6 +111,10 @@ namespace SVESimulator
             MoveRiseCurve.time.x = 0f;
             MoveFallCurve.time.x = MoveRiseCurve.time.y;
             MoveFallCurve.time.y = 1f;
+
+            ScaleGrowCurve.time.x = 0f;
+            ScaleShrinkCurve.time.x = ScaleGrowCurve.time.y;
+            ScaleShrinkCurve.time.y = 1f;
         }
 #endif
     }
