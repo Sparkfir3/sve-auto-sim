@@ -28,14 +28,16 @@ namespace SVESimulator
         public float MoveDuration { get; private set; } = 0.25f;
         [field: TitleGroup("Movement"), SerializeField]
         public AnimationCurve MoveCurveXZ { get; private set; } = AnimationCurve.Linear(0f, 0f, 1f, 1f);
-        [field: SerializeField]
-        public AnimationCurve MoveCurveY { get; private set; } = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
         [field: SerializeField]
+        public bool UseAdvancedYMovement { get; private set; }
+        [field: SerializeField, HideIf("UseAdvancedYMovement")]
+        public AnimationCurve MoveCurveY { get; private set; } = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        [field: BoxGroup("Advanced Y Movement"), SerializeField, ShowIf("UseAdvancedYMovement")]
         public float DropHeight { get; private set; }
-        [field: SerializeField]
+        [field: BoxGroup("Advanced Y Movement"), SerializeField, ShowIf("UseAdvancedYMovement")]
         private AdvancedCurve MoveRiseCurve { get; set; } = new(0f, 0.5f, AnimationCurve.Linear(0f, 0f, 1f, 1f));
-        [field: SerializeField]
+        [field: BoxGroup("Advanced Y Movement"), SerializeField, ShowIf("UseAdvancedYMovement")]
         private AdvancedCurve MoveFallCurve { get; set; } = new(0.5f, 1f, AnimationCurve.Linear(0f, 1f, 1f, 0f));
 
         [field: TitleGroup("Rotation & Scale"), SerializeField]
@@ -50,7 +52,7 @@ namespace SVESimulator
         public Vector3 GetLerpedPosition(Vector3 startPosition, Vector3 endPosition, float t)
         {
             Vector3 targetPosition = Vector3.LerpUnclamped(startPosition, endPosition, MoveCurveXZ.Evaluate(t));
-            if(DropHeight <= 0f)
+            if(UseAdvancedYMovement && DropHeight <= 0f)
             {
                 targetPosition.y = Mathf.LerpUnclamped(startPosition.y, endPosition.y, MoveCurveY.Evaluate(t));
             }

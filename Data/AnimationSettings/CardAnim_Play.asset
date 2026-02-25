@@ -46,6 +46,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <UseAdvancedYMovement>k__BackingField: 1
   <MoveCurveY>k__BackingField:
     serializedVersion: 2
     m_Curve:
