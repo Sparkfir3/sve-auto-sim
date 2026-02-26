@@ -148,7 +148,7 @@ namespace SVESimulator
             }
 
             // Y Movement
-            if(UseAdvancedYMovement && DropHeight <= 0f)
+            if(!UseAdvancedYMovement || DropHeight <= 0f)
             {
                 targetPosition.y = Mathf.LerpUnclamped(startPosition.y, endPosition.y, MoveCurveY.Evaluate(t));
             }
