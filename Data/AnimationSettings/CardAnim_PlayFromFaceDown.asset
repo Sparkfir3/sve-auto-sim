@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardAnim_PlayFromFaceDown
   m_EditorClassIdentifier: 
   <MoveDuration>k__BackingField: 0.8
+  <UseAdvancedXZMovement>k__BackingField: 0
   <MoveCurveXZ>k__BackingField:
     serializedVersion: 2
     m_Curve:
@@ -46,6 +47,61 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <MoveSlideType>k__BackingField: 0
+  <SidewaysSlideDistanceVector>k__BackingField: {x: 0, y: 0, z: 0}
+  <SidewaysSlideDistanceFloat>k__BackingField: 0
+  <MoveSlideOutCurve>k__BackingField:
+    time: {x: 0, y: 0.5}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  <MoveSlideInCurve>k__BackingField:
+    time: {x: 0.5, y: 1}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   <UseAdvancedYMovement>k__BackingField: 1
   <MoveCurveY>k__BackingField:
     serializedVersion: 2
@@ -71,6 +127,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <MoveDropType>k__BackingField: 2
   <DropHeight>k__BackingField: 1
   <MoveRiseCurve>k__BackingField:
     time: {x: 0, y: 0.6}
@@ -176,8 +233,63 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <ApplyPickedUpRotation>k__BackingField: 0
+  <PickUpRiseAngle>k__BackingField: {x: 0, y: 0, z: 0}
+  <PickUpRiseCurve>k__BackingField:
+    time: {x: 0, y: 0.5}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  <PickUpFallAngle>k__BackingField: {x: 0, y: 0, z: 0}
+  <PickUpFallCurve>k__BackingField:
+    time: {x: 0.5, y: 1}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   <UseAdvancedScaling>k__BackingField: 1
-  <ScaleMultiplier>k__BackingField: 1.14
+  <ScaleMultiplier>k__BackingField: 1.1
   <ScaleGrowCurve>k__BackingField:
     time: {x: 0, y: 0.6}
     curve:

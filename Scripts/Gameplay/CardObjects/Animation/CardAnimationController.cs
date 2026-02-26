@@ -104,8 +104,7 @@ namespace SVESimulator
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
                     float t = i / duration;
-                    Vector3 newPosition = settings.GetLerpedPosition(startPos, targetPos, t);
-                    Quaternion newRotation = settings.GetLerpedRotation(startRot, targetRot, t);
+                    settings.GetLerpedPositionAndRotation(startPos, targetPos, out Vector3 newPosition, startRot, targetRot, out Quaternion newRotation, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
                     if(settings.UseAdvancedScaling || (scale.HasValue && !Mathf.Approximately(startScale, scale.Value)))
                         card.transform.localScale = Vector3.one * settings.GetLerpedScale(startScale, scale ?? 1f, t);
@@ -142,8 +141,7 @@ namespace SVESimulator
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
                     float t = i / duration;
-                    Vector3 newPosition = settings.GetLerpedPosition(startPos, card.transform.parent.TransformPoint(targetPos), t);
-                    Quaternion newRotation = settings.GetLerpedRotation(startRot, targetRot, t);
+                    settings.GetLerpedPositionAndRotation(startPos, card.transform.parent.TransformPoint(targetPos), out Vector3 newPosition, startRot, targetRot, out Quaternion newRotation, t);
                     card.transform.SetPositionAndRotation(newPosition, newRotation);
                     if(settings.UseAdvancedScaling || (scale.HasValue && !Mathf.Approximately(startScale, scale.Value)))
                         card.transform.localScale = Vector3.one * settings.GetLerpedScale(startScale, scale ?? 1f, t);
