@@ -12,46 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993f8cccd5ba9c7479e971b7e474f7ad, type: 3}
   m_Name: CardAnim_FlipFromDeck
   m_EditorClassIdentifier: 
-  <MoveDuration>k__BackingField: 0.5
-  <UseAdvancedXZMovement>k__BackingField: 0
+  <MoveDuration>k__BackingField: 0.4
+  <UseAdvancedXZMovement>k__BackingField: 1
   <MoveCurveXZ>k__BackingField:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.95
-      value: 1
-      inSlope: 0.088959984
-      outSlope: 0
-      tangentMode: 65
-      weightedMode: 0
-      inWeight: 0.062380888
-      outWeight: 0
-    - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: -0
-      outSlope: 0
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0
+      inSlope: 0.009557845
+      outSlope: 0.009557845
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.4935205
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <MoveSlideType>k__BackingField: 0
-  <SidewaysSlideDistanceVector>k__BackingField: {x: 0, y: 0, z: 0}
-  <SidewaysSlideDistanceFloat>k__BackingField: 0
+  <MoveSlideType>k__BackingField: 1
+  <SidewaysSlideDistanceVector>k__BackingField: {x: -0.75, y: 0, z: 0}
+  <SidewaysSlideDistanceFloat>k__BackingField: -0.8
   <MoveSlideOutCurve>k__BackingField:
-    time: {x: 0, y: 0.5}
+    time: {x: 0.1, y: 0.6}
     curve:
       serializedVersion: 2
       m_Curve:
@@ -59,7 +50,7 @@ MonoBehaviour:
         time: 0
         value: 0
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -67,7 +58,7 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
+        inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
@@ -77,7 +68,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   <MoveSlideInCurve>k__BackingField:
-    time: {x: 0.5, y: 1}
+    time: {x: 0.6, y: 0.95}
     curve:
       serializedVersion: 2
       m_Curve:
@@ -85,19 +76,19 @@ MonoBehaviour:
         time: 0
         value: 1
         inSlope: 0
-        outSlope: -1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -1
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -2.0474665
+        outSlope: 1
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.034557223
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -128,9 +119,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   <MoveDropType>k__BackingField: 0
-  <DropHeight>k__BackingField: 4.5
+  <DropHeight>k__BackingField: 3
   <MoveRiseCurve>k__BackingField:
-    time: {x: 0, y: 0.5}
+    time: {x: 0, y: 0.25}
     curve:
       serializedVersion: 2
       m_Curve:
@@ -146,29 +137,29 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: 0.015236982
+        outSlope: 0.015236982
         tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
+        weightedMode: 1
+        inWeight: 0.46436286
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
   <MoveFallCurve>k__BackingField:
-    time: {x: 0.5, y: 1}
+    time: {x: 0.25, y: 1}
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 1.0023575
         inSlope: Infinity
-        outSlope: -0.05352848
+        outSlope: -0.17085743
         tangentMode: 1
-        weightedMode: 0
+        weightedMode: 2
         inWeight: 0
-        outWeight: 0.44060475
+        outWeight: 0.44276458
       - serializedVersion: 3
         time: 1
         value: 0
@@ -188,20 +179,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.029119499
+      outSlope: 0.029119499
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 2
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.53995675
     - serializedVersion: 3
-      time: 0.6
+      time: 0.8
       value: 1
-      inSlope: 0.056875087
+      inSlope: 0.05167093
       outSlope: 0
       tangentMode: 65
-      weightedMode: 0
-      inWeight: 0.05277468
+      weightedMode: 1
+      inWeight: 0.45644352
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
