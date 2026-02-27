@@ -235,7 +235,7 @@ namespace SVESimulator
                 return;
 
             CardZone startZone = card.CurrentZone;
-            CardMovementType moveType = startZone.Runtime.name switch
+            CardMovementType moveType = startZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck    => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.Hand    => CardMovementType.Standard,
@@ -255,7 +255,7 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone.Runtime.name switch
+            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck    => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.Hand    => CardMovementType.Standard,
@@ -302,7 +302,7 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone.Runtime.name switch
+            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.FlipFromDeck,
@@ -340,11 +340,11 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone.Runtime.name switch
+            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
-                _                               => CardMovementType.Standard
+                _                               => CardMovementType.StackToStack
             };
 
             MoveCardZone(card, card.CurrentZone, selectionArea);
@@ -367,11 +367,11 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone.Runtime.name switch
+            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
-                _                               => CardMovementType.Standard
+                _                               => CardMovementType.StackToStack
             };
 
             MoveCardZone(card, card.CurrentZone, zoneViewingArea);
