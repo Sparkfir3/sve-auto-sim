@@ -8,6 +8,7 @@ namespace SVESimulator
         PlayFromFaceUp,
         StackToStack,
         FlipFromDeck,
-        SlideIntoDeck,
+        SlideIntoDeckLeft,
+        SlideIntoDeckRight,
     }
 }

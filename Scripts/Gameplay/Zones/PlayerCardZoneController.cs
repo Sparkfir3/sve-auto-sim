@@ -211,7 +211,8 @@ namespace SVESimulator
                 return;
 
             MoveCardZone(card, card.CurrentZone, deckZone);
-            MoveCardTransform(card, deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation, moveType: CardMovementType.SlideIntoDeck, disableOnComplete: true, onComplete: onComplete);
+            MoveCardTransform(card, deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation,
+                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, disableOnComplete: true, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
@@ -222,7 +223,8 @@ namespace SVESimulator
                 return;
 
             MoveCardZone(card, card.CurrentZone, deckZone);
-            MoveCardTransform(card, deckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation, moveType: CardMovementType.SlideIntoDeck, disableOnComplete: true, onComplete: onComplete);
+            MoveCardTransform(card, deckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
+                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, disableOnComplete: true, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
@@ -276,7 +278,8 @@ namespace SVESimulator
             if(isFaceUp)
                 MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.StackToStack);
             else
-                MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation, moveType: CardMovementType.SlideIntoDeck, disableOnComplete: true);
+                MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
+                    moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckRight : CardMovementType.SlideIntoDeckLeft, disableOnComplete: true);
             card.SetStatOverlayActive(false);
         }
 
