@@ -73,6 +73,7 @@ namespace SVESimulator
             for(int i = 0; i < minCheck; i++)
             {
                 selectionArea.AddCardFromTopDeck();
+                yield return new WaitForSeconds(selectionArea.AddRemoveCardDelay);
             }
 
             // Perform actions

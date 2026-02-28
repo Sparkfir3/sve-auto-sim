@@ -82,9 +82,9 @@ namespace SVESimulator
 
         #region Movement
 
-        public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null)
-            => MoveCardToPosition(movementType, card, targetPos, targetRot, out _, scale, onComplete);
-        public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
+        public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, float delay = 0f, Action onComplete = null)
+            => MoveCardToPosition(movementType, card, targetPos, targetRot, out _, scale, delay, onComplete);
+        public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, float delay = 0f, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
@@ -101,6 +101,8 @@ namespace SVESimulator
 
             IEnumerator MoveCardCoroutine()
             {
+                if(delay > 0f)
+                    yield return new WaitForSeconds(delay);
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
                     float t = i / duration;
@@ -119,9 +121,9 @@ namespace SVESimulator
             }
         }
 
-        public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, Action onComplete = null)
-            => MoveCardToLocalPosition(movementType, card, targetPos, targetRot, out _, scale, onComplete);
-        public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, Action onComplete = null)
+        public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, float delay = 0f, Action onComplete = null)
+            => MoveCardToLocalPosition(movementType, card, targetPos, targetRot, out _, scale, delay, onComplete);
+        public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, float delay = 0f, Action onComplete = null)
         {
             CancelCardMovement(card);
             card.IsAnimating = true;
@@ -138,6 +140,8 @@ namespace SVESimulator
 
             IEnumerator MoveCardCoroutine()
             {
+                if(delay > 0f)
+                    yield return new WaitForSeconds(delay);
                 for(float i = 0f; i < duration; i += Time.deltaTime)
                 {
                     float t = i / duration;
