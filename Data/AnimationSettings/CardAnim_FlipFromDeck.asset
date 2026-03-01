@@ -40,7 +40,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   <MoveSlideType>k__BackingField: 1
   <SidewaysSlideDistanceVector>k__BackingField: {x: -0.75, y: 0, z: 0}
-  <SidewaysSlideDistanceFloat>k__BackingField: -0.8
+  <SidewaysSlideDistanceFloat>k__BackingField: -0.6
   <MoveSlideOutCurve>k__BackingField:
     time: {x: 0.1, y: 0.6}
     curve:

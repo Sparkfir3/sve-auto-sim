@@ -349,7 +349,7 @@ namespace SVESimulator
         public void AddCemetery()
         {
             List<CardObject> cardsToMove = new(zoneController.cemeteryZone.AllCards);
-            MoveCardsToSelectionArea(cardsToMove);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -371,7 +371,7 @@ namespace SVESimulator
         public void AddBanished()
         {
             List<CardObject> cardsToMove = new(zoneController.banishedZone.AllCards);
-            MoveCardsToSelectionArea(cardsToMove);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -388,7 +388,7 @@ namespace SVESimulator
         public void AddOpponentCemetery()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.cemeteryZone.AllCards);
-            MoveCardsToSelectionArea(cardsToMove);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -402,7 +402,7 @@ namespace SVESimulator
         public void AddOpponentBanished()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.banishedZone.AllCards);
-            MoveCardsToSelectionArea(cardsToMove);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -501,13 +501,13 @@ namespace SVESimulator
 
         #region Internal Controls
 
-        protected void MoveCardsToSelectionArea(List<CardObject> cardsToMove)
+        protected void MoveCardsToSelectionArea(List<CardObject> cardsToMove, bool inverseDelay = false)
         {
             for(int i = 0; i < cardsToMove.Count; i++)
-                MoveCardToSelectionArea(cardsToMove[i], i * AddRemoveCardDelay);
+                MoveCardToSelectionArea(cardsToMove[i], (inverseDelay ? cardsToMove.Count - 1 - i : i) * AddRemoveCardDelay);
         }
 
-        protected void MoveCardsToSelectionAreaWithInstantiate(List<RuntimeCard> cardsToMove, Func<RuntimeCard, CardObject> instantiateAction)
+        protected void MoveCardsToSelectionAreaWithInstantiate(List<RuntimeCard> cardsToMove, Func<RuntimeCard, CardObject> instantiateAction, bool inverseDelay = false)
         {
             for(int i = 0; i < cardsToMove.Count; i++)
             {
@@ -518,7 +518,7 @@ namespace SVESimulator
                     if(!cardObject)
                         continue;
                 }
-                MoveCardToSelectionArea(cardObject, i * AddRemoveCardDelay);
+                MoveCardToSelectionArea(cardObject, (inverseDelay ? cardsToMove.Count - 1 - i : i) * AddRemoveCardDelay);
             }
         }
 

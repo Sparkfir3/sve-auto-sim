@@ -225,7 +225,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   <UseAdvancedScaling>k__BackingField: 1
-  <ScaleMultiplier>k__BackingField: 1.1
+  <ScaleMultiplier>k__BackingField: 1.15
   <ScaleGrowCurve>k__BackingField:
     time: {x: 0, y: 0.4}
     curve:
