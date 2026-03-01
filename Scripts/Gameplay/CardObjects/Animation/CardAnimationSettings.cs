@@ -71,17 +71,6 @@ namespace SVESimulator
         [field: SerializeField]
         public AnimationCurve RotateCurve { get; private set; } = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
-        [field: SerializeField, Tooltip("Rotates in the direction of movement, simulating the natural curve of picking up and placing a physical card.")]
-        public bool ApplyPickedUpRotation { get; private set; }
-        [field: BoxGroup("Advanced Rotation"), SerializeField, ShowIf("ApplyPickedUpRotation")]
-        public Vector3 PickUpRiseAngle { get; private set; }
-        [field: BoxGroup("Advanced Rotation"), SerializeField, ShowIf("ApplyPickedUpRotation")]
-        private AdvancedCurve PickUpRiseCurve { get; set; } = new(0f, 0.5f, AnimationCurve.Linear(0f, 0f, 1f, 1f));
-        [field: BoxGroup("Advanced Rotation"), SerializeField, ShowIf("ApplyPickedUpRotation")]
-        public Vector3 PickUpFallAngle { get; private set; }
-        [field: BoxGroup("Advanced Rotation"), SerializeField, ShowIf("ApplyPickedUpRotation")]
-        private AdvancedCurve PickUpFallCurve { get; set; } = new(0.5f, 1f, AnimationCurve.Linear(0f, 1f, 1f, 0f));
-
         // -----
 
         [field: TitleGroup("Scale"), SerializeField]
@@ -100,25 +89,6 @@ namespace SVESimulator
         {
             outPosition = GetLerpedPosition(startPosition, endPosition, t);
             outRotation = GetLerpedRotation(startRotation, endRotation, t);
-            if(ApplyPickedUpRotation && t >= PickUpRiseCurve.startTime && t <= PickUpFallCurve.endTime)
-            {
-                Vector3 moveDirection = endPosition - startPosition;
-                moveDirection = new Vector3(moveDirection.x, 0f, moveDirection.z).normalized;
-                float peakHeight = !UseAdvancedYMovement ? Mathf.Max(startPosition.y, endPosition.y) : DropHeight + MoveDropType switch
-                {
-                    DropType.Start  => startPosition.y,
-                    DropType.End    => endPosition.y,
-                    _               => Mathf.Max(startPosition.y, endPosition.y)
-                };
-                bool isRising = UseAdvancedYMovement
-                    ? t <= MoveFallCurve.startTime
-                    : outPosition.y >= endPosition.y;
-
-                AdvancedCurve targetCurve = isRising ? PickUpRiseCurve : PickUpFallCurve;
-                float t2 = Mathf.InverseLerp(targetCurve.startTime, targetCurve.endTime, t);
-                Quaternion tilt = Quaternion.Slerp(Quaternion.identity, Quaternion.Euler(isRising ? PickUpRiseAngle : PickUpFallAngle), t2);
-                outRotation *= tilt * Quaternion.LookRotation(moveDirection, Vector3.up);
-            }
         }
 
         public Vector3 GetLerpedPosition(Vector3 startPosition, Vector3 endPosition, float t)
@@ -212,7 +182,6 @@ namespace SVESimulator
         {
             MoveSlideInCurve.time.x = MoveSlideOutCurve.time.y;
             MoveFallCurve.time.x = MoveRiseCurve.time.y;
-            PickUpFallCurve.time.x = PickUpRiseCurve.time.y;
             ScaleShrinkCurve.time.x = ScaleGrowCurve.time.y;
         }
 #endif
