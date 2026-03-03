@@ -12,28 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993f8cccd5ba9c7479e971b7e474f7ad, type: 3}
   m_Name: CardAnim_Draw
   m_EditorClassIdentifier: 
-  <MoveDuration>k__BackingField: 0.3
+  <MoveDuration>k__BackingField: 0.5
   <UseAdvancedXZMovement>k__BackingField: 0
   <MoveCurveXZ>k__BackingField:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0010795593
+      time: 0
       value: 0
-      inSlope: 0.647096
-      outSlope: 0.647096
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.058378715
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.515403
-      outSlope: 1.515403
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.052915752
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -100,8 +100,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 1
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
@@ -179,20 +179,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.0036582286
-      outSlope: 0.0036582286
+      inSlope: 0.0034914047
+      outSlope: 0.0034914047
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.6447084
+      outWeight: 0.67710584
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 3.5468855
-      outSlope: 3.5468855
+      inSlope: 9.105433
+      outSlope: 9.105433
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.14362854
+      inWeight: 0.07451403
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

@@ -349,6 +349,7 @@ namespace SVESimulator
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
+                SVEProperties.Zones.Hand        => CardMovementType.StackToStackUp,
                 SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
                 SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
                 _                               => CardMovementType.StackToStackNormal
