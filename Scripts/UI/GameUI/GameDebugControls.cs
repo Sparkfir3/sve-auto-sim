@@ -72,5 +72,29 @@ namespace SVESimulator
         {
             Player.LocalEvents.MillDeck(true, 1, null);
         }
+
+        [Button]
+        public void Destroy()
+        {
+            DestroyCardEffect destroyEffect = new()
+            {
+                target = SVEProperties.SVEEffectTarget.TargetCard,
+                filter = "m(0,10)",
+                text = "[Debug Mode] Destroy"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(destroyEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+        }
+
+        [Button]
+        public void Banish()
+        {
+            BanishCardEffect banishEffect = new()
+            {
+                target = SVEProperties.SVEEffectTarget.TargetCard,
+                filter = "m(0,10)",
+                text = "[Debug Mode] Banish"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(banishEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+        }
     }
 }
