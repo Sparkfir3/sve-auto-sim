@@ -13,15 +13,45 @@ namespace SVESimulator
     {
         #region Variables
 
-        private struct CardMovementData
+        [Serializable]
+        private class CardMovementData
         {
-            public Coroutine coroutine;
+            public CardObject card;
+            public bool isLocalSpace;
+            public Vector3 startPos;
+            public Vector3 targetPos;
+            public Quaternion startRot;
+            public Quaternion targetRot;
+            public float startScale;
+            public float? targetScale;
+            public CardAnimationSettings settings;
+            public float delay;
+            public Action onComplete;
 
-            public CardMovementData(Coroutine coroutine)
+            public float time;
+
+            public CardMovementData(CardObject card, bool isLocalSpace, Vector3 targetPosition, Quaternion targetRotation, float? targetScale, CardAnimationSettings animSettings, float delay, Action onComplete)
             {
-                this.coroutine = coroutine;
+                this.card = card;
+                this.isLocalSpace = isLocalSpace;
+                startPos = card.transform.position;
+                targetPos = targetPosition;
+                startRot = card.transform.rotation;
+                targetRot = targetRotation;
+                startScale = card.transform.localScale.x;
+                this.targetScale = targetScale;
+                settings = animSettings;
+                this.delay = delay;
+                this.onComplete = onComplete;
+
+                time = delay * -1f;
             }
         }
+
+        // -----
+
+        [field: TitleGroup("Runtime Data"), SerializeField]
+        private List<CardMovementData> currentMovingCards = new();
 
         [field: TitleGroup("Movement Settings"), SerializeField]
         public CardAnimationSettings DefaultMoveSettings { get; private set; }
@@ -63,8 +93,6 @@ namespace SVESimulator
         [SerializeField, ReadOnly, HideInEditorMode]
         private List<GameObject> statChangeEffectObjectPool;
 
-        private Dictionary<CardObject, CardMovementData> currentMovingCardsData = new();
-
         #endregion
 
         // ------------------------------
@@ -74,6 +102,46 @@ namespace SVESimulator
         private void Start()
         {
             SetTargetingLineActive(false);
+        }
+
+        private void Update()
+        {
+            for(int i = 0; i < currentMovingCards.Count; i++)
+            {
+                CardMovementData data = currentMovingCards[i];
+                CardObject card = data.card;
+
+                // Delay
+                if(data.time < 0f)
+                {
+                    data.time += Time.deltaTime;
+                    continue;
+                }
+
+                // End animation
+                if(data.time + Time.deltaTime >= data.settings.MoveDuration)
+                {
+                    card.transform.SetPositionAndRotation(data.isLocalSpace ? card.transform.parent.TransformPoint(data.targetPos) : data.targetPos, data.targetRot);
+                    if(data.targetScale.HasValue && !Mathf.Approximately(data.startScale, data.targetScale.Value))
+                        card.transform.localScale = Vector3.one * data.targetScale.Value;
+                    card.IsAnimating = false;
+                    data.onComplete?.Invoke();
+
+                    currentMovingCards.RemoveAt(i--);
+                    continue;
+                }
+
+                // Move
+                float t = data.time / data.settings.MoveDuration;
+                Vector3 targetPos = data.isLocalSpace ? card.transform.parent.TransformPoint(data.targetPos) : data.targetPos;
+                data.settings.GetLerpedPositionAndRotation(data.startPos, targetPos, out Vector3 newPos, data.startRot, data.targetRot, out Quaternion newRot, t);
+                card.transform.SetPositionAndRotation(newPos, newRot);
+                if(data.settings.UseAdvancedScaling || (data.targetScale.HasValue && !Mathf.Approximately(data.startScale, data.targetScale.Value)))
+                    card.transform.localScale = Vector3.one * data.settings.GetLerpedScale(data.startScale, data.targetScale ?? 1f, t);
+
+                // Increment
+                data.time += Time.deltaTime;
+            }
         }
 
         #endregion
@@ -87,38 +155,13 @@ namespace SVESimulator
         public void MoveCardToPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, float delay = 0f, Action onComplete = null)
         {
             CancelCardMovement(card);
-            card.IsAnimating = true;
-
             CardAnimationSettings settings = movementSettings.GetValueOrDefault(movementType, DefaultMoveSettings);
+            card.IsAnimating = true;
             card.transform.Rotate(settings.InitialRotateOffset, Space.Self);
-
-            Vector3 startPos = card.transform.position;
-            Quaternion startRot = card.transform.rotation;
-            float startScale = card.transform.localScale.x;
             moveTime = settings.MoveDuration;
-            float duration = moveTime; // re-assign to keep value from out var in coroutine
-            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine())));
 
-            IEnumerator MoveCardCoroutine()
-            {
-                if(delay > 0f)
-                    yield return new WaitForSeconds(delay);
-                for(float i = 0f; i < duration; i += Time.deltaTime)
-                {
-                    float t = i / duration;
-                    settings.GetLerpedPositionAndRotation(startPos, targetPos, out Vector3 newPosition, startRot, targetRot, out Quaternion newRotation, t);
-                    card.transform.SetPositionAndRotation(newPosition, newRotation);
-                    if(settings.UseAdvancedScaling || (scale.HasValue && !Mathf.Approximately(startScale, scale.Value)))
-                        card.transform.localScale = Vector3.one * settings.GetLerpedScale(startScale, scale ?? 1f, t);
-                    yield return null;
-                }
-                card.transform.SetPositionAndRotation(targetPos, targetRot);
-                if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
-                    card.transform.localScale = Vector3.one * scale.Value;
-                card.IsAnimating = false;
-                currentMovingCardsData.Remove(card);
-                onComplete?.Invoke();
-            }
+            CardMovementData moveData = new(card, false, targetPos, targetRot, scale, settings, delay, onComplete);
+            currentMovingCards.Add(moveData);
         }
 
         public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, float? scale = null, float delay = 0f, Action onComplete = null)
@@ -126,38 +169,13 @@ namespace SVESimulator
         public void MoveCardToLocalPosition(CardMovementType movementType, CardObject card, Vector3 targetPos, Quaternion targetRot, out float moveTime, float? scale = null, float delay = 0f, Action onComplete = null)
         {
             CancelCardMovement(card);
-            card.IsAnimating = true;
-
             CardAnimationSettings settings = movementSettings.GetValueOrDefault(movementType, DefaultMoveSettings);
+            card.IsAnimating = true;
             card.transform.Rotate(settings.InitialRotateOffset, Space.Self);
-
-            Vector3 startPos = card.transform.position;
-            Quaternion startRot = card.transform.rotation;
-            float startScale = card.transform.localScale.x;
             moveTime = settings.MoveDuration;
-            float duration = moveTime; // re-assign to keep value from out var in coroutine
-            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(MoveCardCoroutine())));
 
-            IEnumerator MoveCardCoroutine()
-            {
-                if(delay > 0f)
-                    yield return new WaitForSeconds(delay);
-                for(float i = 0f; i < duration; i += Time.deltaTime)
-                {
-                    float t = i / duration;
-                    settings.GetLerpedPositionAndRotation(startPos, card.transform.parent.TransformPoint(targetPos), out Vector3 newPosition, startRot, targetRot, out Quaternion newRotation, t);
-                    card.transform.SetPositionAndRotation(newPosition, newRotation);
-                    if(settings.UseAdvancedScaling || (scale.HasValue && !Mathf.Approximately(startScale, scale.Value)))
-                        card.transform.localScale = Vector3.one * settings.GetLerpedScale(startScale, scale ?? 1f, t);
-                    yield return null;
-                }
-                card.transform.SetPositionAndRotation(card.transform.parent.TransformPoint(targetPos), targetRot);
-                if(scale.HasValue && !Mathf.Approximately(startScale, scale.Value))
-                    card.transform.localScale = Vector3.one * scale.Value;
-                card.IsAnimating = false;
-                currentMovingCardsData.Remove(card);
-                onComplete?.Invoke();
-            }
+            CardMovementData moveData = new(card, true, targetPos, targetRot, scale, settings, delay, onComplete);
+            currentMovingCards.Add(moveData);
         }
 
         public void LerpCardToPosition(CardObject card, Vector3 targetPos)
@@ -174,27 +192,12 @@ namespace SVESimulator
         public void RotateCard(CardObject card, Quaternion targetRot, Action onComplete = null)
         {
             CancelCardMovement(card);
-            card.IsAnimating = true;
-
             CardAnimationSettings settings = DefaultMoveSettings;
-            float duration = settings.MoveDuration;
-            Quaternion startRot = card.transform.rotation;
-            currentMovingCardsData.Add(card, new CardMovementData(StartCoroutine(RotateCardCoroutine())));
+            card.IsAnimating = true;
+            card.transform.Rotate(settings.InitialRotateOffset, Space.Self);
 
-            IEnumerator RotateCardCoroutine()
-            {
-                for(float i = 0f; i < duration; i += Time.deltaTime)
-                {
-                    float t = i / duration;
-                    Quaternion newRotation = settings.GetLerpedRotation(startRot, targetRot, t);
-                    card.transform.rotation = newRotation;
-                    yield return null;
-                }
-                card.transform.rotation = targetRot;
-                card.IsAnimating = false;
-                currentMovingCardsData.Remove(card);
-                onComplete?.Invoke();
-            }
+            CardMovementData moveData = new(card, false, card.transform.position, targetRot, null, settings, 0f, onComplete);
+            currentMovingCards.Add(moveData);
         }
 
         #endregion
@@ -315,12 +318,11 @@ namespace SVESimulator
 
         private void CancelCardMovement(CardObject card)
         {
-            if(currentMovingCardsData.TryGetValue(card, out CardMovementData movementData))
+            CardMovementData moveData = currentMovingCards.FirstOrDefault(x => x.card == card);
+            if(moveData != null)
             {
-                if(movementData.coroutine != null)
-                    StopCoroutine(movementData.coroutine);
                 card.IsAnimating = false;
-                currentMovingCardsData.Remove(card);
+                currentMovingCards.Remove(moveData);
             }
         }
 

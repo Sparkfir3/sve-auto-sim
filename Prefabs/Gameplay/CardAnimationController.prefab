@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211995d19a5ac3e489a97286db38c0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMovingCards: []
   <DefaultMoveSettings>k__BackingField: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
   movementSettings:
     serializedPairs:
