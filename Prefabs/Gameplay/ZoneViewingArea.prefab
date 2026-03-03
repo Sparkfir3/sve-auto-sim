@@ -302,6 +302,7 @@ MonoBehaviour:
   scrollAreaHeightPerRow: 12.55
   scrollAreaMargin: 1
   repositionTime: 0.5
+  <AddRemoveCardDelay>k__BackingField: 0.0028
   slotPrefab: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
   zoneController: {fileID: 0}
   targetSlot: {fileID: 6995951572743064937}
@@ -311,3 +312,4 @@ MonoBehaviour:
   scrollRect: {fileID: 7164331076492227861}
   scrollContent: {fileID: 4906053820448364504}
   scrollViewTint: {fileID: 5238554857330570798}
+  scrollViewRaycastBlocker: {fileID: 0}

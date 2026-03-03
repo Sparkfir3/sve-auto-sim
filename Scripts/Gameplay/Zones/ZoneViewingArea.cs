@@ -30,9 +30,9 @@ namespace SVESimulator
                 ZoneController.fieldZone.HighlightCardsCanAttack();
         }
 
-        protected override void MoveCardToSelectionArea(CardObject card, bool rearrangeHand = false)
+        protected override void MoveCardToSelectionArea(CardObject card, float delay = 0f)
         {
-            ZoneController.MoveCardToZoneViewingArea(card, rearrangeHand);
+            ZoneController.MoveCardToZoneViewingArea(card, delay: delay, rearrangeHand: false);
         }
     }
 }

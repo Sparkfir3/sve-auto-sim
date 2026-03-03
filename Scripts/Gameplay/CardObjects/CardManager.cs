@@ -21,7 +21,7 @@ namespace SVESimulator
 
         #region Variables
 
-        [TitleGroup("Runtime Data"), ShowInInspector, TableList, ReadOnly]
+        [TitleGroup("Runtime Data"), ShowInInspector, TableList, DisableInPlayMode]
         private List<PooledCard> cardPool = new();
         [ShowInInspector, ReadOnly]
         private SerializedDictionary<int, CardObject> cardsByInstanceId = new();
@@ -44,6 +44,8 @@ namespace SVESimulator
         #endregion
 
         // ------------------------------
+
+        #region Public Card Controls
 
         /// <summary>
         /// Get a new available card object from the object pool
@@ -115,7 +117,23 @@ namespace SVESimulator
             return keywordIcons.TryGetValue(keywordValue, out data);
         }
 
+        #endregion
+
         // ------------------------------
+
+        #region Private Card Management
+
+        protected override void Awake()
+        {
+            base.Awake();
+            cardPool = cardPool.Where(x => x.card).ToList();
+            foreach(PooledCard pooledCard in cardPool)
+            {
+                pooledCard.active = false;
+                pooledCard.card.gameObject.SetActive(false);
+            }
+            cardsByInstanceId.Clear();
+        }
 
         private bool TryGetFirstAvailableCard(out PooledCard card)
         {
@@ -148,5 +166,6 @@ namespace SVESimulator
             card.SetCardFront(CardTextureManager.GetCardTexture(id));
         }
 
+        #endregion
     }
 }

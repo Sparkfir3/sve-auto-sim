@@ -182,32 +182,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211995d19a5ac3e489a97286db38c0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardMoveSpeed: 50
-  cardMoveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  cardLerpedMoveSpeed: 10
+  currentMovingCards: []
+  <DefaultMoveSettings>k__BackingField: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
+  movementSettings:
+    serializedPairs:
+    - key: 1
+      value: {fileID: 11400000, guid: fd50dd5b462206647b615180c0871cfd, type: 2}
+    - key: 0
+      value: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
+    - key: 2
+      value: {fileID: 11400000, guid: 76533aab893e4124ab13884385e66ecd, type: 2}
+    - key: 3
+      value: {fileID: 11400000, guid: de0c007297707ce41bcb754744416b30, type: 2}
+    - key: 4
+      value: {fileID: 11400000, guid: bc16fdf242490f94b92c8d0876276e09, type: 2}
+    - key: 7
+      value: {fileID: 11400000, guid: 193c66a7b57804548941a17b8ca671f4, type: 2}
+    - key: 8
+      value: {fileID: 11400000, guid: 6096a0d7fd3be104893f3a35c2836675, type: 2}
+    - key: 9
+      value: {fileID: 11400000, guid: f23189343b315ea46aa8bf60c67fc6f3, type: 2}
+    - key: 5
+      value: {fileID: 11400000, guid: f5fab35c0b903a6458c267143dc91343, type: 2}
+    - key: 6
+      value: {fileID: 11400000, guid: f554278ae86d137459ab204cc2cfca91, type: 2}
+  cardDragSpeed: 10
   attackAnimDuration: 0.3
   attackAnimCurveX:
     serializedVersion: 2
@@ -266,6 +265,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  afterAttackDelay: 0.15
   statChangeAnimDuration: 1
   statChangeAnimStartOffset: {x: 0, y: 0.2, z: 0.3}
   statChangeAnimMoveDistance: 0.85
@@ -317,7 +317,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  afterAttackDelay: 0.15
   targetingLine: {fileID: 6415873333596843278}
   attackEffectPrefab: {fileID: 4155480587704801316, guid: ebd2e176499e2f24b8ca73f58b97b65e, type: 3}
   attackEffectObjectPool: []

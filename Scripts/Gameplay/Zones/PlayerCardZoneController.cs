@@ -131,7 +131,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Card Zone Controls (Player)
+        #region Move Between Zones
 
         public CardObject CreateNewCardObjectTopDeck(RuntimeCard runtimeCard)
         {
@@ -145,10 +145,12 @@ namespace SVESimulator
             return card;
         }
 
-        public void AddCardToHand(CardObject card, Action onComplete = null)
+        public void AddCardToHand(CardObject card, Action onComplete = null) => AddCardToHand(card, 0f, onComplete);
+        public void AddCardToHand(CardObject card, float delay, Action onComplete = null)
         {
+            CardMovementType moveType = IsLocalPlayer && card.CurrentZone == deckZone ? CardMovementType.Draw : CardMovementType.Standard;
             MoveCardZone(card, card.CurrentZone, handZone);
-            MoveCardLocalTransform(card, handZone.transform.InverseTransformPoint(handZone.GetLastCardPosition()), handZone.CardRotation, onComplete: onComplete);
+            MoveCardLocalTransform(card, handZone.transform.InverseTransformPoint(handZone.GetLastCardPosition()), handZone.CardRotation, moveType: moveType, delay: delay, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(true);
         }
@@ -162,7 +164,8 @@ namespace SVESimulator
             MoveCardTransform(cardToPlay, fieldZone.GetSlotPosition(slotNumber),
                 cardToPlay.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0
                 ? SVEProperties.CardEngagedRotation
-                : SVEProperties.CardFaceUpRotation);
+                : SVEProperties.CardFaceUpRotation,
+                moveType: Vector3.Dot(cardToPlay.transform.up, Vector3.up) > 0.5f ? CardMovementType.PlayFromFaceUp : CardMovementType.PlayFromFaceDown);
 
             fieldZone.MoveCardToSlot(cardToPlay, slotNumber,
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
@@ -203,54 +206,74 @@ namespace SVESimulator
                 token.SetHighlightMode(CardObject.HighlightMode.None);
         }
 
-        public void SendCardToTopDeck(CardObject card, Action onComplete = null)
+        public void SendCardToTopDeck(CardObject card, Action onComplete = null) => SendCardToTopDeck(card, 0f, onComplete);
+        public void SendCardToTopDeck(CardObject card, float delay, Action onComplete = null)
         {
             if(!card)
                 return;
 
             MoveCardZone(card, card.CurrentZone, deckZone);
-            MoveCardTransform(card, deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation, disableOnComplete: true, onComplete: onComplete);
+            MoveCardTransform(card, deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation,
+                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, delay: delay, disableOnComplete: true, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
 
-        public void SendCardToBottomDeck(CardObject card, Action onComplete = null)
+        public void SendCardToBottomDeck(CardObject card, Action onComplete = null) => SendCardToBottomDeck(card, 0f, onComplete);
+        public void SendCardToBottomDeck(CardObject card, float delay, Action onComplete = null)
         {
             if(!card)
                 return;
 
             MoveCardZone(card, card.CurrentZone, deckZone);
-            MoveCardTransform(card, deckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation, disableOnComplete: true, onComplete: onComplete);
+            MoveCardTransform(card, deckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
+                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, delay: delay, disableOnComplete: true, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
 
-        public void SendCardToCemetery(CardObject card, Action onComplete = null)
+        public void SendCardToCemetery(CardObject card, Action onComplete = null) => SendCardToCemetery(card, 0f, onComplete);
+        public void SendCardToCemetery(CardObject card, float delay, Action onComplete = null)
         {
             if(!card)
                 return;
 
             CardZone startZone = card.CurrentZone;
+            CardMovementType moveType = startZone is CardSelectionArea ? CardMovementType.StackToStackDown : startZone.Runtime?.name switch
+            {
+                SVEProperties.Zones.Deck    => CardMovementType.FlipFromDeck,
+                SVEProperties.Zones.Hand    => CardMovementType.Standard,
+                _                           => CardMovementType.StackToStackNormal
+            };
+
             MoveCardZone(card, card.CurrentZone, cemeteryZone);
-            MoveCardTransform(card, cemeteryZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, onComplete: onComplete);
+            MoveCardTransform(card, cemeteryZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: moveType, delay: delay, onComplete: onComplete);
             if(startZone is PlayerHandZone)
                 RearrangeHand();
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
 
-        public void SendCardToBanishedZone(CardObject card, Action onComplete = null)
+        public void SendCardToBanishedZone(CardObject card, Action onComplete = null) => SendCardToBanishedZone(card, 0f, onComplete);
+        public void SendCardToBanishedZone(CardObject card, float delay, Action onComplete = null)
         {
             if(!card)
                 return;
 
+            CardMovementType moveType = card.CurrentZone is CardSelectionArea ? CardMovementType.StackToStackDown : card.CurrentZone.Runtime?.name switch
+            {
+                SVEProperties.Zones.Deck    => CardMovementType.FlipFromDeck,
+                SVEProperties.Zones.Hand    => CardMovementType.Standard,
+                _                           => CardMovementType.StackToStackNormal
+            };
+
             MoveCardZone(card, card.CurrentZone, banishedZone);
-            MoveCardTransform(card, banishedZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, onComplete: onComplete);
+            MoveCardTransform(card, banishedZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: moveType, delay: delay, onComplete: onComplete);
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
 
-        public void SendCardToEvolveDeck(CardObject card)
+        public void SendCardToEvolveDeck(CardObject card, float delay = 0f)
         {
             if(!card)
                 return;
@@ -258,9 +281,10 @@ namespace SVESimulator
             bool isFaceUp = card.RuntimeCard.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue > 0;
             MoveCardZone(card, card.CurrentZone, evolveDeckZone);
             if(isFaceUp)
-                MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
+                MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.StackToStackNormal, delay: delay);
             else
-                MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(),  SVEProperties.CardFaceDownRotation, disableOnComplete: true);
+                MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
+                    moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckRight : CardMovementType.SlideIntoDeckLeft, delay: delay, disableOnComplete: true);
             card.SetStatOverlayActive(false);
         }
 
@@ -271,7 +295,8 @@ namespace SVESimulator
             bool engaged = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue > 0;
             evolvedCard.transform.SetPositionAndRotation(evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
             MoveCardZone(evolvedCard, evolveDeckZone, fieldZone);
-            MoveCardTransform(evolvedCard, fieldZone.GetSlotPosition(slotNumber) + (Vector3.up * 0.1f), SVEProperties.CardFaceUpRotation * (engaged ? SVEProperties.CardEngagedRotation : Quaternion.identity));
+            MoveCardTransform(evolvedCard, fieldZone.GetSlotPosition(slotNumber) + (Vector3.up * 0.1f), SVEProperties.CardFaceUpRotation * (engaged ? SVEProperties.CardEngagedRotation : Quaternion.identity),
+                moveType: CardMovementType.FlipFromDeck);
             fieldZone.MoveCardToSlot(evolvedCard, slotNumber,
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
             evolvedCard.SetStatOverlayActive(true);
@@ -282,8 +307,16 @@ namespace SVESimulator
             if(!card)
                 return;
 
+            CardMovementType moveType = card.CurrentZone is CardSelectionArea ? CardMovementType.StackToStackDown : card.CurrentZone.Runtime?.name switch
+            {
+                SVEProperties.Zones.Deck        => CardMovementType.FlipFromDeck,
+                SVEProperties.Zones.EvolveDeck  => CardMovementType.FlipFromDeck,
+                SVEProperties.Zones.Hand        => CardMovementType.Standard,
+                _                               => CardMovementType.StackToStackNormal
+            };
+
             MoveCardZone(card, card.CurrentZone, resolutionZone);
-            MoveCardTransform(card, resolutionZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
+            MoveCardTransform(card, resolutionZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: moveType);
             RearrangeHand();
         }
 
@@ -299,41 +332,60 @@ namespace SVESimulator
             }
         }
 
-        public void MoveCardToSelectionArea(CardObject card, bool rearrangeHand = true)
+        public void MoveCardToSelectionArea(CardObject card, bool rearrangeHand = true, float delay = 0f)
         {
             int slot = selectionArea.GetFirstOpenSlotId();
             if(slot == -1)
                 slot = 0;
-            MoveCardToSelectionArea(card, slot, rearrangeHand);
+            MoveCardToSelectionArea(card, slot, rearrangeHand, delay);
         }
 
-        public void MoveCardToSelectionArea(CardObject card, int slotNumber, bool rearrangeHand = true)
+        public void MoveCardToSelectionArea(CardObject card, int slotNumber, bool rearrangeHand = true, float delay = 0f)
         {
             if(!card)
                 return;
 
+            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
+            {
+                SVEProperties.Zones.Deck        => CardMovementType.Draw,
+                SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
+                SVEProperties.Zones.Hand        => CardMovementType.StackToStackUp,
+                SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
+                SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
+                _                               => CardMovementType.StackToStackNormal
+            };
+
             MoveCardZone(card, card.CurrentZone, selectionArea);
-            MoveCardLocalTransform(card, selectionArea.GetSlotLocalPosition(slotNumber), SVEProperties.CardFaceUpRotation, selectionArea.SlotScale);
+            MoveCardLocalTransform(card, selectionArea.GetSlotLocalPosition(slotNumber), SVEProperties.CardFaceUpRotation, moveType: moveType, delay: delay, targetScale: selectionArea.SlotScale);
             selectionArea.MoveCardToSlot(card, slotNumber, selectionArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
         }
 
-        public void MoveCardToZoneViewingArea(CardObject card, bool rearrangeHand = true)
+        public void MoveCardToZoneViewingArea(CardObject card, bool rearrangeHand = false, float delay = 0f)
         {
             int slot = zoneViewingArea.GetFirstOpenSlotId();
             if(slot == -1)
                 slot = 0;
-            MoveCardToZoneViewingArea(card, slot, rearrangeHand);
+            MoveCardToZoneViewingArea(card, slot, rearrangeHand, delay);
         }
 
-        public void MoveCardToZoneViewingArea(CardObject card, int slotNumber, bool rearrangeHand = true)
+        public void MoveCardToZoneViewingArea(CardObject card, int slotNumber, bool rearrangeHand = false, float delay = 0f)
         {
             if(!card)
                 return;
 
+            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
+            {
+                SVEProperties.Zones.Deck        => CardMovementType.Draw,
+                SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
+                SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
+                SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
+                _                               => CardMovementType.StackToStackNormal
+            };
+
             MoveCardZone(card, card.CurrentZone, zoneViewingArea);
-            MoveCardTransform(card, zoneViewingArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, zoneViewingArea.SlotScale);
+            MoveCardTransform(card, zoneViewingArea.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, moveType: moveType, delay: delay, targetScale: zoneViewingArea.SlotScale);
             zoneViewingArea.MoveCardToSlot(card, slotNumber, zoneViewingArea.endInteractionType);
             if(rearrangeHand)
                 RearrangeHand();
@@ -346,8 +398,8 @@ namespace SVESimulator
 
             if(!zoneA.SwapCardsInSlots(cardA, cardB))
                 return false;
-            MoveCardTransform(cardA, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardA)), cardA.transform.rotation, targetScale: null);
-            MoveCardTransform(cardB, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardB)), cardB.transform.rotation, targetScale: null);
+            MoveCardTransform(cardA, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardA)), cardA.transform.rotation, moveType: CardMovementType.StackToStackNormal, targetScale: null);
+            MoveCardTransform(cardB, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardB)), cardB.transform.rotation, moveType: CardMovementType.StackToStackNormal, targetScale: null);
             return true;
         }
 
@@ -355,7 +407,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Card Movement Controls (Single Zone-Contained)
+        #region Single Zone Movement
 
         public void RearrangeHand()
         {
@@ -395,8 +447,8 @@ namespace SVESimulator
             card.OnMoveZone();
         }
 
-        private void MoveCardTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, float? targetScale = 1f,
-            bool rotateIfOpponent = true, bool instant = false, bool disableOnComplete = false, Action onComplete = null)
+        private void MoveCardTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, CardMovementType moveType = CardMovementType.Standard, float? targetScale = 1f,
+            bool rotateIfOpponent = true, float delay = 0f, bool instant = false, bool disableOnComplete = false, Action onComplete = null)
         {
             if(rotateIfOpponent && !IsLocalPlayer)
                 targetRotation *= SVEProperties.OpponentCardRotation;
@@ -408,7 +460,7 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            CardManager.Animator.MoveCardToPosition(card, targetPosition, targetRotation, targetScale, onComplete: () =>
+            CardManager.Animator.MoveCardToPosition(moveType, card, targetPosition, targetRotation, targetScale, delay, onComplete: () =>
             {
                 if(disableOnComplete && card)
                     CardManager.Instance.ReleaseCard(card);
@@ -416,8 +468,8 @@ namespace SVESimulator
             });
         }
 
-        private void MoveCardLocalTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, float? targetScale = 1f,
-            bool rotateIfOpponent = true, bool instant = false, Action onComplete = null)
+        private void MoveCardLocalTransform(CardObject card, Vector3 targetPosition, Quaternion targetRotation, CardMovementType moveType = CardMovementType.Standard, float? targetScale = 1f,
+            bool rotateIfOpponent = true, float delay = 0f, bool instant = false, Action onComplete = null)
         {
             if(rotateIfOpponent && !IsLocalPlayer)
                 targetRotation *= SVEProperties.OpponentCardRotation;
@@ -429,7 +481,7 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            CardManager.Animator.MoveCardToLocalPosition(card, targetPosition, targetRotation, targetScale, onComplete: () =>
+            CardManager.Animator.MoveCardToLocalPosition(moveType, card, targetPosition, targetRotation, targetScale, delay, onComplete: () =>
             {
                 onComplete?.Invoke();
             });

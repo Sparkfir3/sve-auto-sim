@@ -52,6 +52,8 @@ namespace SVESimulator
         private float scrollAreaMargin = 5f;
         [TitleGroup("Settings"), SerializeField]
         private float repositionTime = 0.5f;
+        [field: TitleGroup("Settings"), SerializeField]
+        public float AddRemoveCardDelay { get; private set; } = 0.02f;
 
         [TitleGroup("Object References"), SerializeField, AssetsOnly]
         private TargetableSlot slotPrefab;
@@ -138,43 +140,43 @@ namespace SVESimulator
             {
                 // Local player zones modes
                 case SelectionMode.PlaceCardsFromHand:
-                    foreach(CardObject card in cardsToMove)
-                        zoneController.AddCardToHand(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        zoneController.AddCardToHand(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.SelectCardsFromDeck:
-                    foreach(CardObject card in cardsToMove)
-                        zoneController.SendCardToTopDeck(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        zoneController.SendCardToTopDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.SelectCardsFromCemetery:
                 case SelectionMode.ViewCardsCemetery:
-                    foreach(CardObject card in cardsToMove)
-                        zoneController.SendCardToCemetery(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        zoneController.SendCardToCemetery(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsEvolveDeck:
-                    foreach(CardObject card in cardsToMove)
-                        zoneController.SendCardToEvolveDeck(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        zoneController.SendCardToEvolveDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsBanished:
-                    foreach(CardObject card in cardsToMove)
-                        zoneController.SendCardToBanishedZone(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        zoneController.SendCardToBanishedZone(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
 
                 // Opponent zone modes
                 case SelectionMode.SelectCardsFromOppHand:
-                    foreach(CardObject card in cardsToMove)
-                        Player.OppZoneController.AddCardToHand(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        Player.OppZoneController.AddCardToHand(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsOppCemetery:
-                    foreach(CardObject card in cardsToMove)
-                        Player.OppZoneController.SendCardToCemetery(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        Player.OppZoneController.SendCardToCemetery(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsOppEvolveDeck:
-                    foreach(CardObject card in cardsToMove)
-                        Player.OppZoneController.SendCardToEvolveDeck(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        Player.OppZoneController.SendCardToEvolveDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsOppBanished:
-                    foreach(CardObject card in cardsToMove)
-                        Player.OppZoneController.SendCardToBanishedZone(card);
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        Player.OppZoneController.SendCardToBanishedZone(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
             }
 
@@ -308,8 +310,7 @@ namespace SVESimulator
         public void AddAllCardsInHand()
         {
             List<CardObject> cardsToMove = new(zoneController.handZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove);
         }
 
         public void AddCardFromTopDeck()
@@ -326,32 +327,29 @@ namespace SVESimulator
                 RepositionSlots(false);
             }
 
-            // assuming that if we're adding cards from top deck, cards are *only* from top deck
             RuntimeCard runtimeCard = zoneController.deckZone.Runtime.cards[FilledSlotCount()];
-            CardObject cardObject = CardManager.Instance.RequestCard(runtimeCard);
-            cardObject.transform.SetPositionAndRotation(zoneController.deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation);
-            cardObject.CurrentZone = zoneController.deckZone;
+            CardObject cardObject = zoneController.CreateNewCardObjectTopDeck(runtimeCard);
             MoveCardToSelectionArea(cardObject);
         }
 
         public void AddAllCardsInDeck()
         {
             Debug.Assert(minSlotCount >= zoneController.deckZone.Runtime.cards.Count);
-            foreach(RuntimeCard runtimeCard in zoneController.deckZone.Runtime.cards)
+            List<RuntimeCard> cardsInZone = new(zoneController.deckZone.Runtime.cards);
+            MoveCardsToSelectionAreaWithInstantiate(cardsInZone, runtimeCard =>
             {
                 CardObject cardObject = CardManager.Instance.RequestCard(runtimeCard);
                 cardObject.transform.SetPositionAndRotation(zoneController.deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation);
                 cardObject.CurrentZone = zoneController.deckZone;
-                MoveCardToSelectionArea(cardObject);
-            }
+                return cardObject;
+            });
             SetScrollViewTintActive(true);
         }
 
         public void AddCemetery()
         {
             List<CardObject> cardsToMove = new(zoneController.cemeteryZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -360,25 +358,20 @@ namespace SVESimulator
             Debug.Assert(minSlotCount >= zoneController.evolveDeckZone.Runtime.cards.Count);
             List<RuntimeCard> cardsInZone = zoneController.evolveDeckZone.Runtime.cards.OrderByDescending(x => x.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue)
                 .ThenBy(x => x.cardId).ToList();
-            foreach(RuntimeCard runtimeCard in cardsInZone)
+            MoveCardsToSelectionAreaWithInstantiate(cardsInZone, runtimeCard =>
             {
-                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
-                if(!cardObject)
-                {
-                    cardObject = CardManager.Instance.RequestCard(runtimeCard);
-                    cardObject.transform.SetPositionAndRotation(zoneController.evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation);
-                    cardObject.CurrentZone = zoneController.evolveDeckZone;
-                }
-                MoveCardToSelectionArea(cardObject);
-            }
+                CardObject cardObject = CardManager.Instance.RequestCard(runtimeCard);
+                cardObject.transform.SetPositionAndRotation(zoneController.evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation);
+                cardObject.CurrentZone = zoneController.evolveDeckZone;
+                return cardObject;
+            });
             SetScrollViewTintActive(true);
         }
 
         public void AddBanished()
         {
             List<CardObject> cardsToMove = new(zoneController.banishedZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -389,31 +382,27 @@ namespace SVESimulator
         public void AddAllCardsInOpponentsHand()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.handZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove);
         }
 
         public void AddOpponentCemetery()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.cemeteryZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
         public void AddOpponentEvolveDeck()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.evolveDeckZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove);
             SetScrollViewTintActive(true);
         }
 
         public void AddOpponentBanished()
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.banishedZone.AllCards);
-            foreach(CardObject card in cardsToMove)
-                MoveCardToSelectionArea(card);
+            MoveCardsToSelectionArea(cardsToMove, inverseDelay: true);
             SetScrollViewTintActive(true);
         }
 
@@ -512,9 +501,30 @@ namespace SVESimulator
 
         #region Internal Controls
 
-        protected virtual void MoveCardToSelectionArea(CardObject card, bool rearrangeHand = false)
+        protected void MoveCardsToSelectionArea(List<CardObject> cardsToMove, bool inverseDelay = false)
         {
-            zoneController.MoveCardToSelectionArea(card, rearrangeHand);
+            for(int i = 0; i < cardsToMove.Count; i++)
+                MoveCardToSelectionArea(cardsToMove[i], (inverseDelay ? cardsToMove.Count - 1 - i : i) * AddRemoveCardDelay);
+        }
+
+        protected void MoveCardsToSelectionAreaWithInstantiate(List<RuntimeCard> cardsToMove, Func<RuntimeCard, CardObject> instantiateAction, bool inverseDelay = false)
+        {
+            for(int i = 0; i < cardsToMove.Count; i++)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(cardsToMove[i].instanceId);
+                if(!cardObject)
+                {
+                    cardObject = instantiateAction(cardsToMove[i]);
+                    if(!cardObject)
+                        continue;
+                }
+                MoveCardToSelectionArea(cardObject, (inverseDelay ? cardsToMove.Count - 1 - i : i) * AddRemoveCardDelay);
+            }
+        }
+
+        protected virtual void MoveCardToSelectionArea(CardObject card, float delay = 0f)
+        {
+            zoneController.MoveCardToSelectionArea(card, delay: delay, rearrangeHand: false);
         }
         
         private void SetScrollViewTintActive(bool active)
