@@ -195,12 +195,16 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: de0c007297707ce41bcb754744416b30, type: 2}
     - key: 4
       value: {fileID: 11400000, guid: bc16fdf242490f94b92c8d0876276e09, type: 2}
-    - key: 5
-      value: {fileID: 11400000, guid: 193c66a7b57804548941a17b8ca671f4, type: 2}
-    - key: 6
-      value: {fileID: 11400000, guid: 6096a0d7fd3be104893f3a35c2836675, type: 2}
     - key: 7
+      value: {fileID: 11400000, guid: 193c66a7b57804548941a17b8ca671f4, type: 2}
+    - key: 8
+      value: {fileID: 11400000, guid: 6096a0d7fd3be104893f3a35c2836675, type: 2}
+    - key: 9
       value: {fileID: 11400000, guid: f23189343b315ea46aa8bf60c67fc6f3, type: 2}
+    - key: 5
+      value: {fileID: 11400000, guid: f5fab35c0b903a6458c267143dc91343, type: 2}
+    - key: 6
+      value: {fileID: 11400000, guid: f554278ae86d137459ab204cc2cfca91, type: 2}
   cardDragSpeed: 10
   attackAnimDuration: 0.3
   attackAnimCurveX:

@@ -239,11 +239,11 @@ namespace SVESimulator
                 return;
 
             CardZone startZone = card.CurrentZone;
-            CardMovementType moveType = startZone.Runtime?.name switch
+            CardMovementType moveType = startZone is CardSelectionArea ? CardMovementType.StackToStackDown : startZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck    => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.Hand    => CardMovementType.Standard,
-                _                           => CardMovementType.StackToStack
+                _                           => CardMovementType.StackToStackNormal
             };
 
             MoveCardZone(card, card.CurrentZone, cemeteryZone);
@@ -260,11 +260,11 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
+            CardMovementType moveType = card.CurrentZone is CardSelectionArea ? CardMovementType.StackToStackDown : card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck    => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.Hand    => CardMovementType.Standard,
-                _                           => CardMovementType.StackToStack
+                _                           => CardMovementType.StackToStackNormal
             };
 
             MoveCardZone(card, card.CurrentZone, banishedZone);
@@ -281,7 +281,7 @@ namespace SVESimulator
             bool isFaceUp = card.RuntimeCard.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue > 0;
             MoveCardZone(card, card.CurrentZone, evolveDeckZone);
             if(isFaceUp)
-                MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.StackToStack, delay: delay);
+                MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.StackToStackNormal, delay: delay);
             else
                 MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
                     moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckRight : CardMovementType.SlideIntoDeckLeft, delay: delay, disableOnComplete: true);
@@ -307,12 +307,12 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone.Runtime?.name switch
+            CardMovementType moveType = card.CurrentZone is CardSelectionArea ? CardMovementType.StackToStackDown : card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.Hand        => CardMovementType.Standard,
-                _                               => CardMovementType.StackToStack
+                _                               => CardMovementType.StackToStackNormal
             };
 
             MoveCardZone(card, card.CurrentZone, resolutionZone);
@@ -349,7 +349,9 @@ namespace SVESimulator
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
-                _                               => CardMovementType.StackToStack
+                SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
+                SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
+                _                               => CardMovementType.StackToStackNormal
             };
 
             MoveCardZone(card, card.CurrentZone, selectionArea);
@@ -376,7 +378,9 @@ namespace SVESimulator
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
-                _                               => CardMovementType.StackToStack
+                SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
+                SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
+                _                               => CardMovementType.StackToStackNormal
             };
 
             MoveCardZone(card, card.CurrentZone, zoneViewingArea);
@@ -393,8 +397,8 @@ namespace SVESimulator
 
             if(!zoneA.SwapCardsInSlots(cardA, cardB))
                 return false;
-            MoveCardTransform(cardA, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardA)), cardA.transform.rotation, targetScale: null);
-            MoveCardTransform(cardB, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardB)), cardB.transform.rotation, targetScale: null);
+            MoveCardTransform(cardA, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardA)), cardA.transform.rotation, moveType: CardMovementType.StackToStackNormal, targetScale: null);
+            MoveCardTransform(cardB, zoneA.GetSlotPosition(zoneA.GetSlotNumber(cardB)), cardB.transform.rotation, moveType: CardMovementType.StackToStackNormal, targetScale: null);
             return true;
         }
 
