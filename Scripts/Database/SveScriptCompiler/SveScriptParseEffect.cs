@@ -124,8 +124,7 @@ namespace SVESimulator.SveScript
                             currentArg = currentArg.Trim();
                             if(currentArg.StartsWith('\"') && currentArg.EndsWith('\"'))
                                 currentArg = currentArg[1..^1];
-                            if(!string.IsNullOrWhiteSpace(currentArg))
-                                output.Add(currentArg);
+                            output.Add(currentArg);
                             currentArg = "";
                             continue;
                         }
@@ -137,8 +136,7 @@ namespace SVESimulator.SveScript
             currentArg = currentArg.Trim();
             if(currentArg.StartsWith('\"') && currentArg.EndsWith('\"'))
                 currentArg = currentArg[1..^1];
-            if(!string.IsNullOrWhiteSpace(currentArg))
-                output.Add(currentArg);
+            output.Add(currentArg);
             return output.ToArray();
         }
 

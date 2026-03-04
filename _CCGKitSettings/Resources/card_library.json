@@ -11362,7 +11362,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TriggerCard",
-              "amount": "1",
+              "amount": "",
               "filter": null,
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
