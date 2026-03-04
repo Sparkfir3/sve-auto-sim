@@ -61,6 +61,12 @@
             },
             {
                 "value": "DoubleLeaderDamage"
+            },
+            {
+                "value": "DoesNotTakeDamage"
+            },
+            {
+                "value": "CantDestroyByAbilities"
             }
         ],
         "id": 1

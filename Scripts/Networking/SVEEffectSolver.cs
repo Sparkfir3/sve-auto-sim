@@ -603,7 +603,8 @@ namespace SVESimulator
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
             bool isFollowerCombat = defender != null;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage) || (isFollowerCombat && defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage)))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage)
+                || (isFollowerCombat && (defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeDamage) || defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage))))
                 return 0;
 
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)

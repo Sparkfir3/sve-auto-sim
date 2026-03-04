@@ -20,6 +20,8 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
+                    if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CantDestroyByAbilities))
+                        continue;
                     player.LocalEvents.DestroyCard(card);
                 }
                 onComplete?.Invoke();

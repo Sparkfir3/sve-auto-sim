@@ -34,6 +34,8 @@ namespace SVESimulator
                 foreach(KeyValuePair<CardObject, int> cardPair in targetPoints)
                 {
                     (CardObject card, int damageAmount) = (cardPair.Key, -cardPair.Value);
+                    if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeDamage))
+                        continue;
                     player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, damageAmount, true);
                 }
                 onComplete?.Invoke();
