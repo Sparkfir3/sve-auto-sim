@@ -583,6 +583,11 @@ namespace SVESimulator
         public void AddLeaderDefense(PlayerInfo player, int amount)
         {
             player.namedStats[SVEProperties.PlayerStats.Defense].baseValue += amount;
+            if(amount > 0 && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnLeaderGainDefenseTrigger>(gameState, player.namedZones[SVEProperties.Zones.Leader].cards[0],
+                    SVEProperties.Zones.Leader, player.namedZones[SVEProperties.Zones.Field], player, _ => true, false);
+            }
         }
 
         private bool DestroyZeroDefenseFollower(NetworkIdentity playerNetId, RuntimeCard card)

@@ -79,6 +79,8 @@ namespace SVESimulator
 
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
 
+    public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
+
     #endregion
 
     // ------------------------------
