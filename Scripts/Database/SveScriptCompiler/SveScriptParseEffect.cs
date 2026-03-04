@@ -318,8 +318,9 @@ namespace SVESimulator.SveScript
             { "Refresh", new EffectParams("SVESimulator.ReserveCardEffect")                             },
 
             // Keyword Effects
-            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                         EffectParameterType.Keyword) },
-            { "GiveKeywordEndOfTurn", new EffectParams("SVESimulator.GiveKeywordEndOfTurnEffect",       EffectParameterType.Keyword) },
+            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                             EffectParameterType.Keyword) },
+            { "GiveKeywordEndOfTurn", new EffectParams("SVESimulator.GiveKeywordEndOfTurnEffect",           EffectParameterType.Keyword) },
+            { "GiveKeywordEndOfNextTurn", new EffectParams("SVESimulator.GiveKeywordEndOfNextTurnEffect",   EffectParameterType.Keyword) },
 
             // Counter Effects
             { "GiveCounter", new EffectParams("SVESimulator.GiveCounterEffect",                         EffectParameterType.Keyword, EffectParameterType.Amount) },

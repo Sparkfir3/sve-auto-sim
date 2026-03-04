@@ -52,7 +52,7 @@ namespace SVESimulator
         }
 
         public enum StatBoostType { Attack, Defense, AttackDefense, Cost, EvolveCost, MaxPlayPoint, PlayPoint }
-        public enum PassiveDuration  { WhileOnField, OpponentTurn, EndOfTurn }
+        public enum PassiveDuration  { WhileOnField, OpponentTurn, EndOfTurn, EndOfNextTurn }
 
         public static Quaternion CardFaceUpRotation = Quaternion.Euler(0f, 0f, 0f);
         public static Quaternion CardFaceDownRotation = Quaternion.Euler(0f, 0f, 180f);

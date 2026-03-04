@@ -7,6 +7,8 @@ namespace SVESimulator
 {
     public class GiveKeywordEndOfTurnEffect : GiveKeywordEffect
     {
+        protected virtual SVEProperties.PassiveDuration duration => SVEProperties.PassiveDuration.EndOfTurn;
+
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
@@ -20,13 +22,13 @@ namespace SVESimulator
                         filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
                         effect = new GiveKeywordPassive
                         {
-                            duration = SVEProperties.PassiveDuration.EndOfTurn,
+                            duration = duration,
                             keywordType = keywordType,
                             keywordValue = keywordValue
                         },
                         affectedCards = new List<RuntimeCard>(),
                         target = SVEProperties.SVEEffectTarget.Self,
-                        duration = SVEProperties.PassiveDuration.EndOfTurn
+                        duration = duration
                     };
                     SVEEffectPool.Instance.RegisterPassiveAbility(passive);
                 }

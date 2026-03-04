@@ -573,6 +573,9 @@ namespace SVESimulator
                     case SVEProperties.PassiveDuration.EndOfTurn:
                         UnregisterPassiveAbility(passive);
                         break;
+                    case SVEProperties.PassiveDuration.EndOfNextTurn:
+                        passive.duration = SVEProperties.PassiveDuration.EndOfTurn;
+                        break;
                 }
             }
         }
@@ -673,7 +676,7 @@ namespace SVESimulator
     }
 
     [Serializable]
-    public struct RegisteredPassiveAbility : IEquatable<RegisteredPassiveAbility>
+    public class RegisteredPassiveAbility : IEquatable<RegisteredPassiveAbility>
     {
         public int sourceCardInstanceId;
         public string targetsFormula;
