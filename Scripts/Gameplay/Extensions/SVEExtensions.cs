@@ -125,6 +125,11 @@ namespace SVESimulator
                         break;
 
                     // Other
+                    case CardFilterSetting.Advanced:
+                        bool advancedFilterPassed = CheckAdvancedCardFilter(card, value);
+                        if(!advancedFilterPassed ^ inverse)
+                            return false;
+                        break;
                     case CardFilterSetting.ExcludeSelf:
                         if(value.Equals(card.instanceId.ToString()) ^ inverse)
                             return false;
@@ -140,6 +145,31 @@ namespace SVESimulator
         }
 
         public static bool HasExcludeSelf(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.ExcludeSelf);
+
+        private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value)
+        {
+            if(value.IsNullOrWhiteSpace())
+                return true;
+            string[] args = value.Split(',');
+            if(args.Length == 0)
+                return true;
+
+            args[0] = args[0].Trim().ToLower();
+            switch(args[0])
+            {
+                case "turnsonfield":
+                    int minTurnsOnField = 0;
+                    int maxTurnsOnField = 0;
+                    if(args.Length > 1)
+                        SVEFormulaParser.ParseValueAsMinMax(args[1].Trim(), null, out minTurnsOnField, out maxTurnsOnField);
+                    CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                    int actualTurnsOnField = cardObject ? cardObject.NumberOfTurnsOnBoard : -1;
+                    return actualTurnsOnField >= minTurnsOnField && actualTurnsOnField <= maxTurnsOnField;
+                default:
+                    Debug.LogWarning($"Attempted to parse invalid advanced card filter \"{value}\" with invalid field {args[0]}");
+                    return true;
+            }
+        }
 
 		#endregion
 
