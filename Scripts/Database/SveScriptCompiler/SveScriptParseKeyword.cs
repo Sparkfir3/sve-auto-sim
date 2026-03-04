@@ -78,6 +78,7 @@ namespace SVESimulator.SveScript
             // Counters
             { "Stack",                      new Keyword(5, 1) },
             { "Spell",                      new Keyword(6, 1) },
+            { "Prayer",                     new Keyword(7, 1) },
         };
     }
 }

@@ -9,7 +9,8 @@ namespace SVESimulator
         public enum Counters
         {
             Stack = 5,
-            Spell = 6
+            Spell = 6,
+            Prayer = 7,
         }
 
         public enum SVEEffectTarget
