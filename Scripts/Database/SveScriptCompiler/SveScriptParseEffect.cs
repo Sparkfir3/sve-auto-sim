@@ -283,6 +283,7 @@ namespace SVESimulator.SveScript
             { "TopOrBottomDeck", new EffectParams("SVESimulator.SendToTopOrBottomDeckEffect")           },
             { "Destroy", new EffectParams("SVESimulator.DestroyCardEffect")                             },
             { "DestroyCard", new EffectParams("SVESimulator.DestroyCardEffect")                         },
+            { "SendToCemetery", new EffectParams("SVESimulator.SendToCemeteryEffect")                   },
             { "Banish", new EffectParams("SVESimulator.BanishCardEffect")                               },
             { "BanishCard", new EffectParams("SVESimulator.BanishCardEffect")                           },
             { "SendToEx", new EffectParams("SVESimulator.SendToExAreaEffect")                           },
