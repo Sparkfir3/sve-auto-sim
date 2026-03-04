@@ -8,7 +8,7 @@ namespace SVESimulator
 {
     public class SearchDeckEffect : ChooseFromCardStackEffect
     {
-        public enum SearchDeckAction { Hand, Cemetery, Field }
+        public enum SearchDeckAction { Hand, Cemetery, Field, ExArea }
 
         [StringField("Action", width = 100), Order(10)]
         public SearchDeckAction searchDeckAction;
@@ -19,6 +19,8 @@ namespace SVESimulator
         {
             SVEFormulaParser.ParseValueAsMinMax(amount, player, out _, out max);
             min = 0; // searches can always fail or be declined
+            if(searchDeckAction == SearchDeckAction.ExArea)
+                max = Mathf.Min(max, 5 - player.ZoneController.exAreaZone.OpenSlotCount());
         }
 
         protected override void InitializeSelectionArea(PlayerController player, CardSelectionArea selectionArea)
@@ -30,6 +32,12 @@ namespace SVESimulator
         }
 
         protected override void ConfirmationAction(PlayerController player, List<CardObject> selectedCards, Action onComplete)
+        {
+            PerformSearchDeckAction(player, selectedCards);
+            onComplete?.Invoke();
+        }
+
+        protected virtual void PerformSearchDeckAction(PlayerController player, List<CardObject> selectedCards)
         {
             foreach(CardObject card in selectedCards)
             {
@@ -47,12 +55,15 @@ namespace SVESimulator
                         card.Interactable = player.isActivePlayer;
                         player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
                         break;
+                    case SearchDeckAction.ExArea:
+                        card.Interactable = player.isActivePlayer;
+                        player.LocalEvents.SendToExArea(card, SVEProperties.Zones.Deck);
+                        break;
                     default:
                         Debug.LogError($"Search deck action {searchDeckAction} is not implemented.");
                         break;
                 }
             }
-            onComplete?.Invoke();
         }
 
         protected override void OnCompleteInternal(PlayerController player)

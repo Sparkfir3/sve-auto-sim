@@ -273,6 +273,7 @@ namespace SVESimulator.SveScript
             { "TopDeckToExArea", new EffectParams("SVESimulator.TopDeckToExEffect",                     false, false, EffectParameterType.Amount) },
             { "TopDeckToExAndTarget", new EffectParams("SVESimulator.TopDeckToExAndTargetEffect",       false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "Search", new EffectParams("SVESimulator.SearchDeckEffect",                               false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
+            { "SearchAndTarget", new EffectParams("SVESimulator.SearchDeckAndTargetEffect",             false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction, EffectParameterType.ListOfEffects) },
             { "Mill", new EffectParams("SVESimulator.MillDeckEffect",                                   false, false, EffectParameterType.Amount) },
 
             // Movement - Field/EX to Zone
