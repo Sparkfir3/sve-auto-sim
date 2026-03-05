@@ -30376,7 +30376,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "amount": "1",
+              "amount": "m(0,1)",
               "filter": "Ap(m(0,3))",
               "$type": "SVESimulator.HandToFieldEffect"
             },
@@ -30515,10 +30515,47 @@
             "name": "OnEvolve",
             "type": "Triggered",
             "effect": {
+              "effectName1": "Token",
+              "effectName2": "Defense",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
               "tokenName": "Ephemeral Moon",
               "createTokenOption": "Field",
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Defense",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "3",
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"

@@ -97,7 +97,7 @@ text "[evolve][cost02]: Evolve this follower.
 
 evolve 2;
 ability Fanfare {
-    effect HandToField(1, Ap(m(0,3)));
+    effect HandToField(m(0,1), Ap(m(0,3)));
 }
 ability OnOtherEnterField {
     filter A;
@@ -123,7 +123,13 @@ text "On Evolve: Summon an Ephemeral Moon token. Give your leader [defense]+3.
       Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.";
 
 ability OnEvolve {
+    effect Sequence(Token, Defense);
+}
+ability Spell name Token {
     effect SummonToken(Ephemeral Moon, Field, 1);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 3) to Leader;
 }
 ability OnOtherEnterField {
     filter A;
