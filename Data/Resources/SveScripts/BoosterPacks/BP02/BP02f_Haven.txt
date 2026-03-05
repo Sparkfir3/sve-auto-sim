@@ -338,7 +338,7 @@ ability OnEvolve {
 
 name Sledgehammer Exorcist;
 id BP02-104;
-id-en BP02-102;
+id-en BP02-101;
 class Haven;
 type Follower;
 trait Faith;
@@ -358,7 +358,7 @@ ability Fanfare {
 
 name Emerald Maiden;
 id BP02-105;
-id-en BP02-103;
+id-en BP02-102;
 class Haven;
 type Follower;
 trait Faith;
