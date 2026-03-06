@@ -366,6 +366,9 @@ namespace SVESimulator
                 case "discarded":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDiscardedThisTurn, filter) : 0;
+                case "attacked":
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
 
                 // Card
                 case "turnsOnField":
