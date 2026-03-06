@@ -439,6 +439,8 @@ namespace SVESimulator
                 if(targetZone == player.namedZones[SVEProperties.Zones.Field])
                 {
                     SVEEffectPool.Instance.ApplyAllActivePassivesToCard(card);
+                    SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, card);
+
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, SVEProperties.Zones.Field, targetZone, player,
                         x => x.MatchesFilter(card), false);
                 }
