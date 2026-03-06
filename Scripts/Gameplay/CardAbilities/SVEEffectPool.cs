@@ -517,6 +517,7 @@ namespace SVESimulator
                 foreach(RegisteredPassiveAbility registeredPassive in registeredPassives)
                 {
                     if((registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
+                        || (registeredPassive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != registeredPassive.sourceCardInstanceId)
 						|| registeredPassive.effect is MinusCostOtherPassive
                         || !registeredPassive.filters.MatchesCard(card)
                         || registeredPassive.affectedCards.Contains(card)
@@ -604,6 +605,16 @@ namespace SVESimulator
             if(!passive.MeetsCondition(player))
             {
                 DisablePassive(passive);
+                return;
+            }
+            if(passive.target == SVEProperties.SVEEffectTarget.Self)
+            {
+                CardObject card = CardManager.Instance.GetCardByInstanceId(passive.sourceCardInstanceId);
+                if(card)
+                {
+                    passive.effect.ApplyPassive(card.RuntimeCard, player);
+                    passive.affectedCards.Add(card.RuntimeCard);
+                }
                 return;
             }
 
