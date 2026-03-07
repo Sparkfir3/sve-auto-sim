@@ -68,7 +68,17 @@ namespace SVESimulator
         public bool IsAnimating
         {
             get => _isAnimating;
-            set => _isAnimating = value;
+            set
+            {
+                if(_isAnimating == value)
+                    return;
+                _isAnimating = value;
+                if(!_isAnimating)
+                {
+                    OnAnimatingEnd?.Invoke();
+                    OnAnimatingEnd = null;
+                }
+            }
         }
         public bool Engaged => RuntimeCard != null &&
             RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.baseValue > 0;
@@ -87,6 +97,8 @@ namespace SVESimulator
             }
         }
         public Card LibraryCard { get; protected set; }
+
+        public event Action OnAnimatingEnd;
 
         #endregion
 

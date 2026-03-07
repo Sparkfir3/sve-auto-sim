@@ -141,7 +141,7 @@ MonoBehaviour:
   cardHighlightObject: {fileID: 7188803460961627075}
   cardHighlightTransform: {fileID: 9148819158065630129}
   cardHighlightOffset: {x: 0, y: -0.125, z: 0}
-  cardLiftDistance: 1
+  cardLiftDistance: 2
   inputSettings: {fileID: 11400000, guid: 37c93085c40ac0b409906f4c4da29c6f, type: 2}
   debugMode: 0
   debugSphere: {fileID: 2840345713806509636}

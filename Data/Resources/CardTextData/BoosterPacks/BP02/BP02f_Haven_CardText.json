@@ -1,0 +1,290 @@
+[
+  {
+    "id": "BP02-086EN",
+    "name": "Heavenly Aegis",
+    "trait": "Faith / Eidolon",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[evolve] Discard 3 cards: Evolve this follower.\nAura.\nThis card can't be destroyed by abilities. (It can still be destroyed by ability damage.)",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "[evolve] Discard 3 cards: Evolve this follower.",
+        "trigger": "[evolve]",
+        "cost": "Discard 3 cards",
+        "body": "Evolve this follower."
+      }
+    ]
+  },
+  {
+    "id": "BP02-087EN",
+    "name": "Heavenly Aegis (Evolved)",
+    "trait": "Faith / Eidolon",
+    "cardText": "Aura.\nOn Evolve: For the rest of this turn and during each opponent's next turn, this follower doesn't take damage.\nThis card can't be destroyed by abilities.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "For the rest of this turn and during each opponent's next turn, this follower doesn't take damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-088EN",
+    "name": "Enstatued Seraph",
+    "trait": "Faith / Eidolon",
+    "cardText": "This card can't be destroyed by abilities.\nAt the start of your end phase, put a prayer counter on this card. Then, if this card has at least 4 prayer counters, put it into its owner's cemetery, give your leader [defense]+10, and search your deck for up to 2 cards and put them into your EX area. Those cards cost 0 play points to play.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, put a prayer counter on this card. Then, if this card has at least 4 prayer counters, put it into its owner's cemetery, give your leader [defense]+10, and search your deck for up to 2 cards and put them into your EX area. Those cards cost 0 play points to play.",
+        "trigger": "At the start of your end phase",
+        "body": "Put a prayer counter on this card. Then, if this card has at least 4 prayer counters, put it into its owner's cemetery, give your leader [defense]+10, and search your deck for up to 2 cards and put them into your EX area. Those cards cost 0 play points to play."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for up to 2 cards and put them into your EX area. Those cards cost 0 play points to play."
+      }
+    ]
+  },
+  {
+    "id": "BP02-089EN",
+    "name": "Kaguya",
+    "trait": "Faith",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Select an amulet that costs 3 play points or less in your hand and put it onto your field.\nWhenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an amulet that costs 3 play points or less in your hand and put it onto your field."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.",
+        "trigger": "Whenever an amulet is put onto your field",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the amulet's cost."
+      },
+      {
+        "key": "Damage",
+        "text": "Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.",
+        "trigger": "Whenever an amulet is put onto your field",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the amulet's cost."
+      }
+    ]
+  },
+  {
+    "id": "BP02-090EN",
+    "name": "Kaguya (Evolved)",
+    "trait": "Faith",
+    "cardText": "On Evolve: Summon an Ephemeral Moon token. Give your leader [defense]+3.\nWhenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Summon an Ephemeral Moon token. Give your leader [defense]+3."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.",
+        "trigger": "Whenever an amulet is put onto your field",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the amulet's cost."
+      },
+      {
+        "key": "Damage",
+        "text": "Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.",
+        "trigger": "Whenever an amulet is put onto your field",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the amulet's cost."
+      }
+    ]
+  },
+  {
+    "id": "BP02-091EN",
+    "name": "Tribunal of Good and Evil",
+    "trait": "Faith",
+    "cardText": "[fanfare] Select an enemy follower on the field and destroy it.\n[act][engage], put this card into its owner's cemetery: Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and destroy it."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-092EN",
+    "name": "Elana's Prayer",
+    "trait": "Faith",
+    "cardText": "Once per turn, when your leader gains [defense], give each follower on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnLeaderGainDefense",
+        "text": "Once per turn, when your leader gains [defense], give each follower on your field [attack]+1/[defense]+1.",
+        "trigger": "Once per turn, when your leader gains [defense]",
+        "body": "Give each follower on your field [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP02-093EN",
+    "name": "Radiance Angel",
+    "trait": "Faith",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\n[fanfare] Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-094EN",
+    "name": "Radiance Angel (Evolved)",
+    "trait": "Faith",
+    "cardText": "Ward.\nOn Evolve: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP02-095EN",
+    "name": "Sapphire Priestess",
+    "trait": "Faith",
+    "cardText": "At the start of your end phase, if your followers attacked at least 3 times this turn, draw 3 cards.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if your followers attacked at least 3 times this turn, draw 3 cards.",
+        "trigger": "At the start of your end phase, if your followers attacked at least 3 times this turn",
+        "cost": "",
+        "body": "Draw 3 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP02-096EN",
+    "name": "Beastcall Aria",
+    "trait": "Faith",
+    "cardText": "[fanfare] Summon a Holy Falcon token.\n[act][cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Holy Falcon token."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02], [engage], put this card into its owner's cemetery",
+        "body": "Summon a Holy Tiger token."
+      }
+    ]
+  },
+  {
+    "id": "BP02-097EN",
+    "name": "Frog Cleric",
+    "trait": "Faith",
+    "cardText": "[fanfare] Give your leader [defense]+2.\n[act][cost02]: Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+2."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02]",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP02-098EN",
+    "name": "Sky Sprite",
+    "trait": "Faith",
+    "cardText": "[fanfare] Select another follower on your field that was put onto the field this turn and give it [attack]+2/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select another follower on your field that was put onto the field this turn and give it [attack]+2/[defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP02-099EN",
+    "name": "Soul Collector",
+    "trait": "Zealot",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Select an enemy follower that costs 4 play points or less on the field and banish it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower that costs 4 play points or less on the field and banish it."
+      }
+    ]
+  },
+  {
+    "id": "BP02-100EN",
+    "name": "Soul Collector (Evolved)",
+    "trait": "Zealot",
+    "cardText": "On Evolve: Select a [havencraft] follower in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a [havencraft] follower in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-101EN",
+    "name": "Sledgehammer Exorcist",
+    "trait": "Faith",
+    "cardText": "[fanfare][cost02]: Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost02]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP02-102EN",
+    "name": "Emerald Maiden",
+    "trait": "Faith",
+    "cardText": "Ward.\n[fanfare] Give this follower [defense]+X. X equals the number of other followers with Ward on your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give this follower [defense]+X. X equals the number of other followers with Ward on your field."
+      }
+    ]
+  },
+  {
+    "id": "BP02-T08EN",
+    "name": "Ephemeral Moon",
+    "trait": "Faith / Token",
+    "cardText": "While this card is on your field, during your turn, your followers named Kaguya don't take damage.\nAt the start of your main phase, banish this card.",
+    "effectText": [
+      {
+        "key": "StartMainPhase",
+        "text": "At the start of your main phase, banish this card.",
+        "trigger": "At the start of your main phase",
+        "body": "Banish this card."
+      }
+    ]
+  }
+]

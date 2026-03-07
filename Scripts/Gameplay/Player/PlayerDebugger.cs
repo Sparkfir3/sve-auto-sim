@@ -28,6 +28,8 @@ namespace SVESimulator
         private List<PlayedCardData> cardsDestroyedThisTurn => player.AdditionalStats.CardsDestroyedThisTurn.ToList();
         [ShowInInspector, TableList, ReadOnly]
         private List<PlayedCardData> cardsDiscardedThisTurn => player.AdditionalStats.CardsDiscardedThisTurn.ToList();
+        [ShowInInspector, TableList, ReadOnly]
+        private List<PlayedCardData> cardsAttackedThisTurn => player.AdditionalStats.CardsAttackedThisTurn.ToList();
 
         // ------------------------------
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993f8cccd5ba9c7479e971b7e474f7ad, type: 3}
   m_Name: CardAnim_StackToStackUp
   m_EditorClassIdentifier: 
-  <MoveDuration>k__BackingField: 0.65
+  <MoveDuration>k__BackingField: 0.6
   <UseAdvancedXZMovement>k__BackingField: 0
   <MoveCurveXZ>k__BackingField:
     serializedVersion: 2

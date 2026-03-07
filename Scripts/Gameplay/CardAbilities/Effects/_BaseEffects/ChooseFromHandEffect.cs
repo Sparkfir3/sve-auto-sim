@@ -35,7 +35,7 @@ namespace SVESimulator
             minTargets = Mathf.Min(minTargets, player.ZoneController.handZone.AllCards.Count);
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
 
-            selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, minTargets, maxTargets);
+            selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, maxTargets, maxTargets);
             selectionArea.SetFilter(filter);
             selectionArea.SetConfirmAction(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).name,
                 ActionText,

@@ -1,10 +1,9 @@
 using System;
-using UnityEngine;
 using CCGKit;
 
 namespace SVESimulator
 {
-    public class DestroyCardEffect : SveEffect
+    public class SendToCemeteryEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
@@ -20,9 +19,7 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CantDestroyByAbilities))
-                        continue;
-                    player.LocalEvents.DestroyCard(card);
+                    player.LocalEvents.SendToCemetery(card);
                 }
                 onComplete?.Invoke();
             });

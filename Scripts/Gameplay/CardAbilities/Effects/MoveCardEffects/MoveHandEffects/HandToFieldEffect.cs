@@ -12,7 +12,7 @@ namespace SVESimulator
         protected override void GetMinMax(PlayerController player, out int min, out int max)
         {
             base.GetMinMax(player, out min, out max);
-            max = Mathf.Max(max, player.ZoneController.fieldZone.OpenSlotCount());
+            max = Mathf.Min(max, player.ZoneController.fieldZone.OpenSlotCount());
             min = Mathf.Min(min, max);
         }
 

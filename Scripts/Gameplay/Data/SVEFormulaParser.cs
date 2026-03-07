@@ -36,6 +36,7 @@ namespace SVESimulator
             Engaged,
 
             // Other
+            Advanced,
             InstanceID,
             ExcludeSelf,
             MinMaxCount,
@@ -69,6 +70,10 @@ namespace SVESimulator
             // Arithmetic
             Addition,
             Subtraction,
+            Multiplication,
+            Division,
+            Modulus,
+            Equals,
             GreaterThan,
             LessThan,
             BooleanOr,
@@ -113,14 +118,21 @@ namespace SVESimulator
                 nextIndex++;
             FormulaType formulaType = formula[nextIndex++] switch
             {
+                // Player Info
                 'c' => FormulaType.Combo,
                 's' => FormulaType.Spellchain,
                 'o' => FormulaType.Overflow,
                 'n' => FormulaType.Necrocharge,
                 'g' => FormulaType.Sanguine,
                 't' => FormulaType.IsTurnPlayer,
+
+                // Arithmetic
                 '+' => FormulaType.Addition,
                 '-' => FormulaType.Subtraction,
+                '*' => FormulaType.Multiplication,
+                '/' => FormulaType.Division,
+                '%' => FormulaType.Modulus,
+                '=' => FormulaType.Equals,
                 '>' => FormulaType.GreaterThan,
                 '<' => FormulaType.LessThan,
                 '|' => FormulaType.BooleanOr,
@@ -183,13 +195,17 @@ namespace SVESimulator
                 rightHandValue = 1; // default to 1 if right hand side is blank
             return formulaType switch
             {
-                FormulaType.Addition =>     leftHandValue + rightHandValue,
-                FormulaType.Subtraction =>  leftHandValue - rightHandValue,
-                FormulaType.GreaterThan =>  leftHandValue > rightHandValue ? 1 : 0,
-                FormulaType.LessThan =>     leftHandValue < rightHandValue ? 1 : 0,
-                FormulaType.BooleanOr =>    leftHandValue > 0 || rightHandValue > 0 ? 1 : 0,
-                FormulaType.BooleanAnd =>   leftHandValue > 0 && rightHandValue > 0 ? 1 : 0,
-                _ =>                        rightHandValue
+                FormulaType.Addition =>         leftHandValue + rightHandValue,
+                FormulaType.Subtraction =>      leftHandValue - rightHandValue,
+                FormulaType.Multiplication =>   leftHandValue * rightHandValue,
+                FormulaType.Division =>         leftHandValue / rightHandValue,
+                FormulaType.Modulus =>          leftHandValue % rightHandValue,
+                FormulaType.Equals =>           leftHandValue == rightHandValue ? 1 : 0,
+                FormulaType.GreaterThan =>      leftHandValue > rightHandValue ? 1 : 0,
+                FormulaType.LessThan =>         leftHandValue < rightHandValue ? 1 : 0,
+                FormulaType.BooleanOr =>        leftHandValue > 0 || rightHandValue > 0 ? 1 : 0,
+                FormulaType.BooleanAnd =>       leftHandValue > 0 && rightHandValue > 0 ? 1 : 0,
+                _ =>                            rightHandValue
             };
         }
 
@@ -217,7 +233,7 @@ namespace SVESimulator
                 min = max = ParseValue(formula, player);
             }
         }
-        
+
         private static int ParseFormulaInt(in string formula, int startIndex, out int endIndex, in PlayerController player = null, in RuntimeCard card = null)
         {
             // Int value
@@ -264,10 +280,6 @@ namespace SVESimulator
                 case 'L': // Leader defense
                     value = player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.Defense].effectiveValue : 0;
                     break;
-                case '#': // Misc player stats
-                    value = GetMiscPlayerStats(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), player);
-                    endIndex += indexDelta + 1; // Move past close parentheses
-                    break;
 
                 // Card stats
                 case 'A': // Attack
@@ -278,6 +290,19 @@ namespace SVESimulator
                 case 'D': // Defense
                     value = card != null ? card.namedStats[SVEProperties.CardStats.Defense].effectiveValue : 0;
                     Debug.Assert(card != null, $"Attempted to parse card's Defense for value formula {formula}, but no card was provided");
+                    usedPlayerReference = false;
+                    break;
+                case 'P': // Play Point Cost
+                    value = card != null ? card.namedStats[SVEProperties.CardStats.Cost].effectiveValue : 0;
+                    Debug.Assert(card != null, $"Attempted to parse card's Play Point Cost for value formula {formula}, but no card was provided");
+                    usedPlayerReference = false;
+                    break;
+                case 'r': // Counters
+                    string counterName = formula[endIndex..].TextInsideParentheses(out _, out indexDelta);
+                    endIndex += indexDelta + 1; // Move past close parentheses
+                    SVEProperties.Counters counterType = (SVEProperties.Counters)Enum.Parse(typeof(SVEProperties.Counters), counterName);
+                    value = card != null ? card.CountOfCounter(counterType) : 0;
+                    Debug.Assert(card != null, $"Attempted to parse card's counters of type {counterName} for value formula {formula}, but no card was provided");
                     usedPlayerReference = false;
                     break;
 
@@ -305,6 +330,11 @@ namespace SVESimulator
                     value = player ? player.OppZoneController.fieldZone.GetAllPrimaryCards().Count(x => filterP.MatchesCard(x.RuntimeCard)) : 0;
                     break;
 
+                // Other
+                case '#': // Advanced stats
+                    value = GetAdvancedValue(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), player, card, ref usedPlayerReference);
+                    endIndex += indexDelta + 1; // Move past close parentheses
+                    break;
                 default:
                     usedPlayerReference = false;
                     endIndex--; // offset the ++ we did at start of switch
@@ -315,9 +345,9 @@ namespace SVESimulator
             return value * (negative ? -1 : 1);
         }
 
-        private static int GetMiscPlayerStats(in string formula, in PlayerController player = null)
+        private static int GetAdvancedValue(in string formula, in PlayerController player, in RuntimeCard card, ref bool usedPlayerReference)
         {
-            if(!player || formula.IsNullOrWhiteSpace())
+            if(formula.IsNullOrWhiteSpace())
                 return 0;
             string[] args = formula.Split(',');
             if(args.Length == 0)
@@ -325,30 +355,44 @@ namespace SVESimulator
 
             args[0] = args[0].Trim().ToLower();
             Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
+            usedPlayerReference = false;
             switch(args[0])
             {
+                // Player
                 case "destroyed":
-                    return filter == null || filter.Count == 0
-                        ? player.AdditionalStats.CardsDestroyedThisTurn.Count
-                        : player.AdditionalStats.CardsDestroyedThisTurn.Count(x =>
-                        {
-                            CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
-                            Debug.Assert(card);
-                            return card && filter.MatchesCard(card);
-                        });
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDestroyedThisTurn, filter) : 0;
                 case "discard":
                 case "discarded":
-                    return filter == null || filter.Count == 0
-                        ? player.AdditionalStats.CardsDiscardedThisTurn.Count
-                        : player.AdditionalStats.CardsDiscardedThisTurn.Count(x =>
-                        {
-                            CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
-                            Debug.Assert(card);
-                            return card && filter.MatchesCard(card);
-                        });
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDiscardedThisTurn, filter) : 0;
+                case "attacked":
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
+
+                // Card
+                case "turnsOnField":
+                    if(card == null)
+                        return 0;
+                    CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                    return cardObject ? cardObject.NumberOfTurnsOnBoard : -1;
+
+                // Default
                 default:
                     return 0;
             }
+        }
+
+        private static int GetMiscPlayerStatFromCardList(in IEnumerable<PlayedCardData> cardList, Dictionary<CardFilterSetting, string> filter)
+        {
+            return filter == null || filter.Count == 0
+                ? cardList.Count()
+                : cardList.Count(x =>
+                {
+                    CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
+                    Debug.Assert(card);
+                    return card && filter.MatchesCard(card);
+                });
         }
 
         #endregion
@@ -382,7 +426,7 @@ namespace SVESimulator
                 // ---
 
                 // Card Type Check
-                CardFilterSetting? filterSettingCardType = formula[nextIndex] switch
+                CardFilterSetting? filterSetting = formula[nextIndex] switch
                 {
                     'F' => CardFilterSetting.Follower,
                     'S' => CardFilterSetting.Spell,
@@ -394,12 +438,12 @@ namespace SVESimulator
                     'N' => CardFilterSetting.Engaged,
                     _ => null
                 };
-                if(filterSettingCardType.HasValue)
+                if(filterSetting.HasValue)
                 {
                     if(formula[nextIndex] == 'K') // Token
                         currentFilterData = $"{currentFilterData}{SVEProperties.CardTypes.Token}";
 
-                    filters.Add(filterSettingCardType.Value, currentFilterData);
+                    filters.Add(filterSetting.Value, currentFilterData);
                     nextIndex++;
                     continue;
                 }
@@ -407,27 +451,28 @@ namespace SVESimulator
                 // ---
 
                 // Card Property/Stat Check
-                FormulaType formulaType = formula[nextIndex++] switch
+                filterSetting = formula[nextIndex++] switch
                 {
-                    'n' => FormulaType.Name,
-                    't' => FormulaType.Trait,
-                    'k' => FormulaType.Keyword,
-                    'r' => FormulaType.Counter,
-                    'c' => FormulaType.Class,
-                    'a' => FormulaType.Attack,
-                    'd' => FormulaType.Defense,
-                    'e' => FormulaType.EvolveCost,
-                    'p' => FormulaType.PlayPointCost,
-                    'm' => FormulaType.MinMaxCount,
-                    'i' => FormulaType.InstanceID,
-                    _ => FormulaType.None
+                    'n' => CardFilterSetting.Name,
+                    't' => CardFilterSetting.Trait,
+                    'k' => CardFilterSetting.Keyword,
+                    'r' => CardFilterSetting.Counter,
+                    'c' => CardFilterSetting.Class,
+                    'a' => CardFilterSetting.Attack,
+                    'd' => CardFilterSetting.Defense,
+                    'e' => CardFilterSetting.EvolveCost,
+                    'p' => CardFilterSetting.PlayPointCost,
+                    '#' => CardFilterSetting.Advanced,
+                    'm' => CardFilterSetting.MinMaxCount,
+                    'i' => CardFilterSetting.InstanceID,
+                    _ => null
                 };
 
-                if(formulaType == FormulaType.None)
+                if(!filterSetting.HasValue)
                     continue;
 
                 nextIndex++; // move past open parentheses TODO - actually check for a parentheses
-                if(formulaType == FormulaType.Name)
+                if(filterSetting == CardFilterSetting.Name)
                 {
                     string name = ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex).Trim();
                     if(name.StartsWith('\"') && name.EndsWith('\"'))
@@ -436,21 +481,7 @@ namespace SVESimulator
                 }
                 else
                 {
-                    CardFilterSetting filterSetting = formulaType switch
-                    {
-                        FormulaType.Trait => CardFilterSetting.Trait,
-                        FormulaType.Keyword => CardFilterSetting.Keyword,
-                        FormulaType.Counter => CardFilterSetting.Counter,
-                        FormulaType.Class => CardFilterSetting.Class,
-                        FormulaType.Attack => CardFilterSetting.Attack,
-                        FormulaType.Defense => CardFilterSetting.Defense,
-                        FormulaType.EvolveCost => CardFilterSetting.EvolveCost,
-                        FormulaType.PlayPointCost => CardFilterSetting.PlayPointCost,
-                        FormulaType.MinMaxCount => CardFilterSetting.MinMaxCount,
-                        FormulaType.InstanceID => CardFilterSetting.InstanceID,
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
-                    filters.Add(filterSetting, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
+                    filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
                 }
                 nextIndex++; // move past close parentheses
             }

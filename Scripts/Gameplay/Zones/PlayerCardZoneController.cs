@@ -155,7 +155,7 @@ namespace SVESimulator
             card.SetCostOverlayActive(true);
         }
 
-        public void PlayCardToField(CardObject cardToPlay, int slotNumber)
+        public void PlayCardToField(CardObject cardToPlay, int slotNumber, Action onComplete = null)
         {
             Debug.Assert(cardToPlay);
             Debug.Assert(fieldZone.IsSlotNumberValid(slotNumber));
@@ -163,9 +163,10 @@ namespace SVESimulator
             MoveCardZone(cardToPlay, cardToPlay.CurrentZone, fieldZone);
             MoveCardTransform(cardToPlay, fieldZone.GetSlotPosition(slotNumber),
                 cardToPlay.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0
-                ? SVEProperties.CardEngagedRotation
-                : SVEProperties.CardFaceUpRotation,
-                moveType: Vector3.Dot(cardToPlay.transform.up, Vector3.up) > 0.5f ? CardMovementType.PlayFromFaceUp : CardMovementType.PlayFromFaceDown);
+                    ? SVEProperties.CardEngagedRotation
+                    : SVEProperties.CardFaceUpRotation,
+                moveType: Vector3.Dot(cardToPlay.transform.up, Vector3.up) > 0.5f ? CardMovementType.PlayFromFaceUp : CardMovementType.PlayFromFaceDown,
+                onComplete: onComplete);
 
             fieldZone.MoveCardToSlot(cardToPlay, slotNumber,
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
@@ -307,7 +308,7 @@ namespace SVESimulator
             if(!card)
                 return;
 
-            CardMovementType moveType = card.CurrentZone is CardSelectionArea ? CardMovementType.StackToStackDown : card.CurrentZone.Runtime?.name switch
+            CardMovementType moveType = card.CurrentZone is CardSelectionArea ? CardMovementType.Standard : card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.FlipFromDeck,
                 SVEProperties.Zones.EvolveDeck  => CardMovementType.FlipFromDeck,
@@ -348,8 +349,10 @@ namespace SVESimulator
             CardMovementType moveType = card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
-                SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
-                SVEProperties.Zones.Hand        => CardMovementType.StackToStackUp,
+                SVEProperties.Zones.EvolveDeck  => Vector3.Dot(card.transform.up, Vector3.up) > 0.5f ? CardMovementType.StackToStackUp : CardMovementType.Draw,
+                SVEProperties.Zones.Hand        => Vector3.Distance(card.transform.position, selectionArea.GetSlotPosition(slotNumber)) < 8f // if card is nearby/dragging, use faster movement
+                    ? CardMovementType.Standard
+                    : CardMovementType.StackToStackUp,
                 SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
                 SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
                 _                               => CardMovementType.StackToStackNormal
@@ -378,7 +381,7 @@ namespace SVESimulator
             CardMovementType moveType = card.CurrentZone.Runtime?.name switch
             {
                 SVEProperties.Zones.Deck        => CardMovementType.Draw,
-                SVEProperties.Zones.EvolveDeck  => CardMovementType.Draw,
+                SVEProperties.Zones.EvolveDeck  => Vector3.Dot(card.transform.up, Vector3.up) > 0.5f ? CardMovementType.StackToStackUp : CardMovementType.Draw,
                 SVEProperties.Zones.Cemetery    => CardMovementType.StackToStackUp,
                 SVEProperties.Zones.Banished    => CardMovementType.StackToStackUp,
                 _                               => CardMovementType.StackToStackNormal

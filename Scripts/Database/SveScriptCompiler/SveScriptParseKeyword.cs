@@ -63,6 +63,9 @@ namespace SVESimulator.SveScript
             { "RuneFollowersForSpellchain", new Keyword(1, 6) },
             { "DoubleCombatDamage",         new Keyword(1, 7) },
             { "DoubleLeaderDamage",         new Keyword(1, 8) },
+            { "DoesntTakeDamage",           new Keyword(1, 9) },
+            { "DoesNotTakeDamage",          new Keyword(1, 9) },
+            { "CantDestroyByAbilities",     new Keyword(1, 10) },
 
             { "Plus1Damage",                new Keyword(2, 0) },
             { "Plus2Damage",                new Keyword(2, 1) },
@@ -75,6 +78,7 @@ namespace SVESimulator.SveScript
             // Counters
             { "Stack",                      new Keyword(5, 1) },
             { "Spell",                      new Keyword(6, 1) },
+            { "Prayer",                     new Keyword(7, 1) },
         };
     }
 }

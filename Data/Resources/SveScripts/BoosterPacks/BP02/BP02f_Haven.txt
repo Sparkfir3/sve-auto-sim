@@ -1,0 +1,400 @@
+name Heavenly Aegis;
+id BP02-089;
+id-en BP02-086;
+class Haven;
+type Follower;
+trait Faith / Eidolon;
+rarity L;
+cost 8;
+stats 8/8;
+
+text "[evolve][cost02]: Evolve this follower.
+      [evolve] Discard 3 cards: Evolve this follower.
+      Aura.
+      This card can't be destroyed by abilities. (It can still be destroyed by ability damage.)";
+
+evolve 2;
+keywords Aura, CantDestroyByAbilities;
+ability Act {
+    cost (Discard, 3);
+    effect Evolve();
+}
+
+// ------------------------------
+
+name Heavenly Aegis (Evolved);
+id BP02-090;
+id-en BP02-087;
+class Haven;
+type Evolved Follower;
+trait Faith / Eidolon;
+rarity L;
+stats 10/10;
+
+text "Aura.
+      On Evolve: For the rest of this turn and during each opponent's next turn, this follower doesn't take damage.
+      This card can't be destroyed by abilities.";
+
+keywords Aura, CantDestroyByAbilities;
+ability OnEvolve {
+    effect GiveKeywordEndOfNextTurn(DoesNotTakeDamage) to Self;
+}
+
+// ------------------------------
+
+name Enstatued Seraph;
+id BP02-091;
+id-en BP02-088;
+class Haven;
+type Amulet;
+trait Faith / Eidolon;
+rarity L;
+cost 6;
+
+text "This card can't be destroyed by abilities.
+      At the start of your end phase, put a prayer counter on this card. Then, if this card has at least 4 prayer counters, put it into its owner's cemetery, give your leader [defense]+10, and search your deck for up to 2 cards and put them into your EX area. Those cards cost 0 play points to play.";
+
+keyword CantDestroyByAbilities;
+ability StartEndPhase {
+    effect Sequence(Counter, Sequence);
+}
+ability Spell name Counter {
+    effect GiveCounter(Prayer, 1) to Self;
+}
+
+ability Spell name Sequence {
+    condition r(Prayer)>3;
+    effect Sequence(Cemetery, Defense, Search);
+}
+ability Spell name Cemetery {
+    effect SendToCemetery() to Self;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 10) to Leader;
+}
+ability Spell name Search {
+    effect SearchAndTarget(m(0,2), "", ExArea, SetCost);
+}
+ability Spell name SetCost {
+    effect SetStat(Cost, 0) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Kaguya;
+id BP02-092;
+id-en BP02-089;
+class Haven;
+type Follower;
+trait Faith;
+rarity G;
+cost 5;
+stats 4/4;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Select an amulet that costs 3 play points or less in your hand and put it onto your field.
+      Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.";
+
+evolve 2;
+ability Fanfare {
+    effect HandToField(m(0,1), Ap(m(0,3)));
+}
+ability OnOtherEnterField {
+    filter A;
+    condition p(#F);
+    effect PerformWithTargetAmount(P, Damage) to TriggerCard;
+}
+ability Spell name Damage {
+    effect DealDamage(_) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Kaguya (Evolved);
+id BP02-093;
+id-en BP02-090;
+class Haven;
+type Evolved Follower;
+trait Faith;
+rarity G;
+stats 5/5;
+
+text "On Evolve: Summon an Ephemeral Moon token. Give your leader [defense]+3.
+      Whenever an amulet is put onto your field, select an enemy follower on the field and deal it X damage. X equals the amulet's cost.";
+
+ability OnEvolve {
+    effect Sequence(Token, Defense);
+}
+ability Spell name Token {
+    effect SummonToken(Ephemeral Moon, Field, 1);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 3) to Leader;
+}
+ability OnOtherEnterField {
+    filter A;
+    condition p(#F);
+    effect PerformWithTargetAmount(P, Damage) to TriggerCard;
+}
+ability Spell name Damage {
+    effect DealDamage(_) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Tribunal of Good and Evil;
+id BP02-094;
+id-en BP02-091;
+class Haven;
+type Amulet;
+trait Faith;
+rarity G;
+cost 5;
+
+text "[fanfare] Select an enemy follower on the field and destroy it.
+      [act][engage], put this card into its owner's cemetery: Draw a card.";
+
+ability Fanfare {
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Elana's Prayer;
+id BP02-095;
+id-en BP02-092;
+class Haven;
+type Amulet;
+trait Faith;
+rarity G;
+cost 3;
+
+text "Once per turn, when your leader gains [defense], give each follower on your field [attack]+1/[defense]+1.";
+
+ability OnLeaderGainDefense {
+    cost (OncePerTurn);
+    effect GiveStat(AtkDef, 1) to AllPlayerCards F;
+}
+
+// ------------------------------
+
+name Radiance Angel;
+id BP02-096;
+id-en BP02-093;
+class Haven;
+type Follower;
+trait Faith;
+rarity S;
+cost 4;
+stats 3/4;
+
+text "[evolve][cost01]: Evolve this follower.
+      Ward.
+      [fanfare] Draw a card.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Radiance Angel (Evolved);
+id BP02-097;
+id-en BP02-094;
+class Haven;
+type Evolved Follower;
+trait Faith;
+rarity S;
+stats 4/5;
+
+text "Ward.
+      On Evolve: Give your leader [defense]+2.";
+
+keyword Ward;
+ability OnEvolve {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Sapphire Priestess;
+id BP02-098;
+id-en BP02-095;
+class Haven;
+type Follower;
+trait Faith;
+rarity S;
+cost 4;
+stats 4/5;
+
+text "At the start of your end phase, if your followers attacked at least 3 times this turn, draw 3 cards.";
+
+ability StartEndPhase {
+    condition #(attacked);
+    effect Draw(3);
+}
+
+// ------------------------------
+
+name Beastcall Aria;
+id BP02-099;
+id-en BP02-096;
+class Haven;
+type Amulet;
+trait Faith;
+rarity S;
+cost 3;
+
+text "[fanfare] Summon a Holy Falcon token.
+      [act][cost02], [engage], put this card into its owner's cemetery: Summon a Holy Tiger token.";
+
+ability Fanfare {
+    effect SummonToken(Holy Falcon, Field, 1);
+}
+ability Act {
+    cost (PP, 2), (EngageSelf), (SendToCemetery, Self);
+    effect SummonToken(Holy Tiger, Field, 1);
+}
+
+// ------------------------------
+
+name Frog Cleric;
+id BP02-100;
+id-en BP02-097;
+class Haven;
+type Follower;
+trait Faith;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[fanfare] Give your leader [defense]+2.
+      [act][cost02]: Give your leader [defense]+1.";
+
+ability Fanfare {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Act {
+    cost (PP, 2);
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Sky Sprite;
+id BP02-101;
+id-en BP02-098;
+class Haven;
+type Follower;
+trait Faith;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Select another follower on your field that was put onto the field this turn and give it [attack]+2/[defense]+2.";
+
+ability Fanfare {
+    effect GiveStat(AtkDef, 2) to TargetPlayerCard FX#(turnsOnField, 0);
+}
+
+// ------------------------------
+
+name Soul Collector;
+id BP02-102;
+id-en BP02-099;
+class Haven;
+type Follower;
+trait Zealot;
+rarity B;
+cost 6;
+stats 4/4;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Select an enemy follower that costs 4 play points or less on the field and banish it.";
+
+evolve 1;
+ability Fanfare {
+    effect Banish() to TargetOpponentCard Fp(m(0,4));
+}
+
+// ------------------------------
+
+name Soul Collector (Evolved);
+id BP02-103;
+id-en BP02-100;
+class Haven;
+type Evolved Follower;
+trait Zealot;
+rarity B;
+stats 5/5;
+
+text "On Evolve: Select a [havencraft] follower in your cemetery and add it to your hand.";
+
+ability OnEvolve {
+    effect Salvage(1, Fc(Haven));
+}
+
+// ------------------------------
+
+name Sledgehammer Exorcist;
+id BP02-104;
+id-en BP02-101;
+class Haven;
+type Follower;
+trait Faith;
+rarity B;
+cost 3;
+stats 4/3;
+
+text "[fanfare][cost02]: Select an enemy follower on the field and deal it 4 damage.";
+
+ability Fanfare {
+    cost (PP, 2);
+    condition p(#F);
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Emerald Maiden;
+id BP02-105;
+id-en BP02-102;
+class Haven;
+type Follower;
+trait Faith;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "Ward.
+      [fanfare] Give this follower [defense]+X. X equals the number of other followers with Ward on your field.";
+
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(Def, f(XFk(Ward))) to Self;
+}
+
+// ------------------------------
+
+name Ephemeral Moon;
+id BP02-T08;
+class Haven;
+type Amulet;
+trait Faith / Token;
+cost 3;
+
+text "While this card is on your field, during your turn, your followers named Kaguya don't take damage.
+      At the start of your main phase, banish this card.";
+
+ability Passive {
+    effect GiveKeyword(DoesNotTakeDamage, WhileOnField) to AllPlayerCards Fn(Kaguya);
+}
+ability StartMainPhase {
+    effect Banish() to Self;
+}

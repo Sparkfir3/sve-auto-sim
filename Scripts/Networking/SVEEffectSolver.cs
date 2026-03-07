@@ -439,6 +439,8 @@ namespace SVESimulator
                 if(targetZone == player.namedZones[SVEProperties.Zones.Field])
                 {
                     SVEEffectPool.Instance.ApplyAllActivePassivesToCard(card);
+                    SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, card);
+
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, SVEProperties.Zones.Field, targetZone, player,
                         x => x.MatchesFilter(card), false);
                 }
@@ -583,6 +585,11 @@ namespace SVESimulator
         public void AddLeaderDefense(PlayerInfo player, int amount)
         {
             player.namedStats[SVEProperties.PlayerStats.Defense].baseValue += amount;
+            if(amount > 0 && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnLeaderGainDefenseTrigger>(gameState, player.namedZones[SVEProperties.Zones.Leader].cards[0],
+                    SVEProperties.Zones.Leader, player.namedZones[SVEProperties.Zones.Field], player, _ => true, false);
+            }
         }
 
         private bool DestroyZeroDefenseFollower(NetworkIdentity playerNetId, RuntimeCard card)
@@ -598,7 +605,8 @@ namespace SVESimulator
         private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
             bool isFollowerCombat = defender != null;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage) || (isFollowerCombat && defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage)))
+            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage)
+                || (isFollowerCombat && (defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeDamage) || defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage))))
                 return 0;
 
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)

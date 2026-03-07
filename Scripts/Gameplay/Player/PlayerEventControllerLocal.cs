@@ -774,6 +774,7 @@ namespace SVESimulator
 
         private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
         {
+            playerController.AdditionalStats.CardsAttackedThisTurn.Add(new PlayedCardData(attackingCard.RuntimeCard.instanceId, attackingCard.RuntimeCard.cardId));
             sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, isAttackingLeader);
             LocalDeclareAttackMessage msg = new()
             {

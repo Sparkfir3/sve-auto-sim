@@ -61,6 +61,12 @@
             },
             {
                 "value": "DoubleLeaderDamage"
+            },
+            {
+                "value": "DoesNotTakeDamage"
+            },
+            {
+                "value": "CantDestroyByAbilities"
             }
         ],
         "id": 1
@@ -139,5 +145,29 @@
             }
         ],
         "id": 6
+    },
+    {
+        "name": "PrayerCounter",
+        "values": [
+            {
+                "value": "Prayer0"
+            },
+            {
+                "value": "Prayer1"
+            },
+            {
+                "value": "Prayer2"
+            },
+            {
+                "value": "Prayer3"
+            },
+            {
+                "value": "Prayer4"
+            },
+            {
+                "value": "Prayer5"
+            }
+        ],
+        "id": 7
     }
 ]

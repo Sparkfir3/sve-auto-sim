@@ -124,8 +124,7 @@ namespace SVESimulator.SveScript
                             currentArg = currentArg.Trim();
                             if(currentArg.StartsWith('\"') && currentArg.EndsWith('\"'))
                                 currentArg = currentArg[1..^1];
-                            if(!string.IsNullOrWhiteSpace(currentArg))
-                                output.Add(currentArg);
+                            output.Add(currentArg);
                             currentArg = "";
                             continue;
                         }
@@ -137,8 +136,7 @@ namespace SVESimulator.SveScript
             currentArg = currentArg.Trim();
             if(currentArg.StartsWith('\"') && currentArg.EndsWith('\"'))
                 currentArg = currentArg[1..^1];
-            if(!string.IsNullOrWhiteSpace(currentArg))
-                output.Add(currentArg);
+            output.Add(currentArg);
             return output.ToArray();
         }
 
@@ -273,6 +271,7 @@ namespace SVESimulator.SveScript
             { "TopDeckToExArea", new EffectParams("SVESimulator.TopDeckToExEffect",                     false, false, EffectParameterType.Amount) },
             { "TopDeckToExAndTarget", new EffectParams("SVESimulator.TopDeckToExAndTargetEffect",       false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "Search", new EffectParams("SVESimulator.SearchDeckEffect",                               false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
+            { "SearchAndTarget", new EffectParams("SVESimulator.SearchDeckAndTargetEffect",             false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction, EffectParameterType.ListOfEffects) },
             { "Mill", new EffectParams("SVESimulator.MillDeckEffect",                                   false, false, EffectParameterType.Amount) },
 
             // Movement - Field/EX to Zone
@@ -282,6 +281,7 @@ namespace SVESimulator.SveScript
             { "TopOrBottomDeck", new EffectParams("SVESimulator.SendToTopOrBottomDeckEffect")           },
             { "Destroy", new EffectParams("SVESimulator.DestroyCardEffect")                             },
             { "DestroyCard", new EffectParams("SVESimulator.DestroyCardEffect")                         },
+            { "SendToCemetery", new EffectParams("SVESimulator.SendToCemeteryEffect")                   },
             { "Banish", new EffectParams("SVESimulator.BanishCardEffect")                               },
             { "BanishCard", new EffectParams("SVESimulator.BanishCardEffect")                           },
             { "SendToEx", new EffectParams("SVESimulator.SendToExAreaEffect")                           },
@@ -317,8 +317,9 @@ namespace SVESimulator.SveScript
             { "Refresh", new EffectParams("SVESimulator.ReserveCardEffect")                             },
 
             // Keyword Effects
-            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                         EffectParameterType.Keyword) },
-            { "GiveKeywordEndOfTurn", new EffectParams("SVESimulator.GiveKeywordEndOfTurnEffect",       EffectParameterType.Keyword) },
+            { "GiveKeyword", new EffectParams("SVESimulator.GiveKeywordEffect",                             EffectParameterType.Keyword) },
+            { "GiveKeywordEndOfTurn", new EffectParams("SVESimulator.GiveKeywordEndOfTurnEffect",           EffectParameterType.Keyword) },
+            { "GiveKeywordEndOfNextTurn", new EffectParams("SVESimulator.GiveKeywordEndOfNextTurnEffect",   EffectParameterType.Keyword) },
 
             // Counter Effects
             { "GiveCounter", new EffectParams("SVESimulator.GiveCounterEffect",                         EffectParameterType.Keyword, EffectParameterType.Amount) },

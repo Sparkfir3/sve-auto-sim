@@ -105,6 +105,12 @@ namespace SVESimulator.UI
 
         public void OpenEngageWardCardOptions(PlayerController player, CardObject card, bool executeConfirmationTiming = true, Action onComplete = null)
         {
+            Action confirmOption = () =>
+            {
+                if(executeConfirmationTiming)
+                    SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                onComplete?.Invoke();
+            };
             List<MultipleChoiceEntryData> multipleChoiceEntries = new()
             {
                 new MultipleChoiceEntryData()
@@ -112,21 +118,25 @@ namespace SVESimulator.UI
                     text = "Yes",
                     onSelect = () =>
                     {
-                        player.LocalEvents.EngageCard(card.RuntimeCard);
-                        if(executeConfirmationTiming)
-                            SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
-                        onComplete?.Invoke();
+                        if(!card.IsAnimating)
+                        {
+                            player.LocalEvents.EngageCard(card.RuntimeCard);
+                            confirmOption.Invoke();
+                        }
+                        else
+                        {
+                            card.OnAnimatingEnd += () =>
+                            {
+                                player.LocalEvents.EngageCard(card.RuntimeCard);
+                                confirmOption.Invoke();
+                            };
+                        }
                     }
                 },
                 new MultipleChoiceEntryData()
                 {
                     text = "No",
-                    onSelect = () =>
-                    {
-                        if(executeConfirmationTiming)
-                            SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
-                        onComplete?.Invoke();
-                    }
+                    onSelect = confirmOption
                 }
             };
             GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, multipleChoiceEntries, "Engage played card with Ward?", showTargetingToOpponent: false);
