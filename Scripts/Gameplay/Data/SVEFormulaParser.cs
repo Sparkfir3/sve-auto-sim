@@ -369,6 +369,14 @@ namespace SVESimulator
                 case "attacked":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
+                case "evolveDeckFaceUp":
+                    usedPlayerReference = true;
+                    return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
+                        && faceUpStat.effectiveValue == 1 && (filter == null || filter.MatchesCard(x))) : 0;
+                case "evolveDeckFaceDown":
+                    usedPlayerReference = true;
+                    return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
+                        && faceUpStat.effectiveValue == 0 && (filter == null || filter.MatchesCard(x))) : 0;
 
                 // Card
                 case "turnsOnField":
