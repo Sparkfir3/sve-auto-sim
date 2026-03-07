@@ -294,8 +294,8 @@ namespace SVESimulator
 
             CanAttack = RuntimeCard.IsCardType(SVEProperties.CardTypes.EvolvedFollower) || NumberOfTurnsOnBoard > 0 ||
                 RuntimeCard.HasKeyword(SVEProperties.Keywords.Rush) || RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm);
-            CanAttackLeader = NumberOfTurnsOnBoard > 0 ||
-                RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm);
+            CanAttackLeader = !RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotAttackLeaders) &&
+                (NumberOfTurnsOnBoard > 0 || RuntimeCard.HasKeyword(SVEProperties.Keywords.Storm));
             if(updateHighlightMode)
                 SetHighlightMode(CanAttack ? HighlightMode.ValidTarget : HighlightMode.None);
         }

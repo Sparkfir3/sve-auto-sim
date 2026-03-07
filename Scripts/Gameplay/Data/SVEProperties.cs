@@ -163,6 +163,7 @@ namespace SVESimulator
             public const string DoubleLeaderDamage = "DoubleLeaderDamage";
             public const string DoesNotTakeDamage = "DoesNotTakeDamage";
             public const string CantDestroyByAbilities = "CantDestroyByAbilities";
+            public const string CannotAttackLeaders = "CannotAttackLeaders";
 
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";
