@@ -70,6 +70,33 @@ namespace SVESimulator
             }
         }
 
+        public void FlipEvolveDeckCards(OpponentFlipEvolveDeckCardsMessage msg)
+        {
+            List<CardObject> cardsToFlip = new();
+            foreach(NetCard netCard in msg.cards)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(netCard.instanceId);
+                if(cardObject)
+                {
+                    cardsToFlip.Add(cardObject);
+                    continue;
+                }
+                RuntimeCard runtimeCard = new();
+                InitRuntimeCard(ref runtimeCard, netCard);
+                cardObject = CardManager.Instance.RequestCard(runtimeCard);
+                cardsToFlip.Add(cardObject);
+            }
+            for(int i = 0; i < cardsToFlip.Count; i++)
+            {
+                if(msg.toFaceDown)
+                    oppZoneController.FlipCardToFaceDown(cardsToFlip[i], i * 0.15f);
+                else
+                    oppZoneController.FlipCardToFaceUp(cardsToFlip[i], i * 0.15f);
+            }
+
+            sveEffectSolver.FlipEvolveDeckCards(msg.playerNetId, null, msg.toFaceDown);
+        }
+
         #endregion
         
         // ------------------------------

@@ -93,6 +93,20 @@ namespace SVESimulator
         public int amount;
     }
 
+    public struct LocalFlipEvolveDeckCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+        public bool toFaceDown;
+    }
+
+    public struct OpponentFlipEvolveDeckCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetCard[] cards;
+        public bool toFaceDown;
+    }
+
     #endregion
 
     // ------------------------------

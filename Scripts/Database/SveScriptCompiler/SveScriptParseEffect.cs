@@ -351,6 +351,7 @@ namespace SVESimulator.SveScript
             { "CheckTop", new EffectParams("SVESimulator.CheckTopDeckEffect",                           false, false, EffectParameterType.CheckCardActions) },
             { "ExtraTurn", new EffectParams("SVESimulator.ExtraTurnEffect",                             false, false) },
             { "Evolve", new EffectParams("SVESimulator.EvolveEffect")                                   },
+            { "FlipEvolveDeckFaceDown", new EffectParams("SVESimulator.FlipEvolveDeckFaceDownEffect",   EffectParameterType.FilterOptional) },
 
             // ------------------------------
 

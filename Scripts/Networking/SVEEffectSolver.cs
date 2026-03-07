@@ -110,6 +110,12 @@ namespace SVESimulator
             }
         }
 
+        public void FlipEvolveDeckCards(NetworkIdentity playerNetId, List<RuntimeCard> cards, bool toFaceDown)
+        {
+            foreach(RuntimeCard card in cards)
+                card.namedStats[SVEProperties.CardStats.FaceUp].baseValue = toFaceDown ? 0 : 1;
+        }
+
         #endregion
 
         // ------------------------------
