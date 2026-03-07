@@ -124,10 +124,9 @@ namespace SVESimulator
                     card.transform.SetPositionAndRotation(data.isLocalSpace ? card.transform.parent.TransformPoint(data.targetPos) : data.targetPos, data.targetRot);
                     if(data.targetScale.HasValue && !Mathf.Approximately(data.startScale, data.targetScale.Value))
                         card.transform.localScale = Vector3.one * data.targetScale.Value;
+                    currentMovingCards.RemoveAt(i--);
                     card.IsAnimating = false;
                     data.onComplete?.Invoke();
-
-                    currentMovingCards.RemoveAt(i--);
                     continue;
                 }
 
