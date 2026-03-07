@@ -128,7 +128,7 @@ namespace SVESimulator
                 MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
                 button.gameObject.SetActive(true);
                 button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost - 1, true));
-                button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(evolveCost - 1, true) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
+                button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(evolveCost, true) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
                 button.OnClickEffect.AddListener(() =>
                 {
                     player.LocalEvents.EvolveCard(card, true);
