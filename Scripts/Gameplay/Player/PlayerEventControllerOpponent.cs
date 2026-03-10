@@ -113,16 +113,16 @@ namespace SVESimulator
         }
 
         #endregion
-        
+
         // ------------------------------
-        
+
         #region Card Movement
-        
+
         public void InitializeDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
         {
             // Evolve deck
             oppZoneController.evolveDeckZone.SetStackHeight(msg.evolveDeckSize);
-            
+
             // Leader
             RuntimeCard leader = new RuntimeCard();
             InitRuntimeCard(ref leader, msg.leaderCard);
@@ -130,21 +130,21 @@ namespace SVESimulator
             oppZoneController.deckZone.Runtime.RemoveCard(leader);
             oppZoneController.leaderZone.Runtime.AddCard(leader);
         }
-        
+
         public void DrawCard(OpponentDrawCardMessage msg)
         {
-            RuntimeCard runtimeCard = new RuntimeCard();;
+            RuntimeCard runtimeCard = new RuntimeCard();
             InitRuntimeCard(ref runtimeCard, msg.card);
             oppZoneController.deckZone.Runtime.RemoveCard(runtimeCard);
             oppZoneController.handZone.Runtime.AddCard(runtimeCard);
-            
+
             CardObject cardObject = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
             if(!msg.reveal)
                 oppZoneController.AddCardToHand(cardObject);
             else
                 oppZoneController.RevealCard(cardObject, onComplete: () => oppZoneController.AddCardToHand(cardObject));
         }
-        
+
         public void PlayCardToField(OpponentPlayCardMessage msg)
         {
             CardZone originZone = oppZoneController.AllZones[msg.originZone];
@@ -167,7 +167,7 @@ namespace SVESimulator
             sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost);
             oppZoneController.PlayCardToField(card, msg.fieldSlotId);
         }
-        
+
         public void EvolveCard(OpponentEvolveCardMessage msg)
         {
             // Init objects
