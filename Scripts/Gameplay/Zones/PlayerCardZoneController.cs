@@ -420,14 +420,14 @@ namespace SVESimulator
             }
         }
 
-        public void FlipCardToFaceUp(CardObject card, float delay = 0f)
+        public void FlipCardToFaceUp(CardObject card, float delay = 0f, Action onComplete = null)
         {
-            MoveCardTransform(card, card.transform.position, SVEProperties.CardFaceUpRotation, moveType: CardMovementType.FlipFromDeck, delay: delay);
+            MoveCardTransform(card, card.transform.position, SVEProperties.CardFaceUpRotation, moveType: CardMovementType.FlipFromDeck, delay: delay, onComplete: onComplete);
         }
 
-        public void FlipCardToFaceDown(CardObject card, float delay = 0f)
+        public void FlipCardToFaceDown(CardObject card, float delay = 0f, Action onComplete = null)
         {
-            MoveCardTransform(card, card.transform.position, SVEProperties.CardFaceDownRotation, moveType: CardMovementType.FlipFromDeck, delay: delay, disableOnComplete: true);
+            MoveCardTransform(card, card.transform.position, SVEProperties.CardFaceDownRotation, moveType: CardMovementType.FlipFromDeck, delay: delay, disableOnComplete: true, onComplete: onComplete);
         }
 
         #endregion

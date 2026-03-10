@@ -25,6 +25,7 @@ namespace SVESimulator
             // Zone Controls
             NetworkServer.RegisterHandler<LocalShuffleDeckMessage>(OnShuffleDeck);
             NetworkServer.RegisterHandler<LocalDiscardRandomCardsMessage>(OnDiscardRandomCards);
+            NetworkServer.RegisterHandler<LocalFlipTopDeckMessage>(OnFlipTopDeck);
             NetworkServer.RegisterHandler<LocalFlipEvolveDeckCardsMessage>(OnFlipEvolveDeck);
 
             // Deck movement
@@ -68,6 +69,7 @@ namespace SVESimulator
             // Zone Controls
             NetworkServer.UnregisterHandler<LocalShuffleDeckMessage>();
             NetworkServer.UnregisterHandler<LocalDiscardRandomCardsMessage>();
+            NetworkServer.UnregisterHandler<LocalFlipTopDeckMessage>();
             NetworkServer.UnregisterHandler<LocalFlipEvolveDeckCardsMessage>();
 
             // Deck movement
@@ -220,6 +222,25 @@ namespace SVESimulator
             };
             server.SafeSendToClient(server.gameState.currentOpponent, discardMsg);
             (server.effectSolver as SVEEffectSolver).DiscardRandomCards(msg.targetNetId, msg.amount);
+        }
+
+        private void OnFlipTopDeck(NetworkConnection conn, LocalFlipTopDeckMessage msg)
+        {
+            PlayerInfo player = GetPlayerInfo(msg.playerNetId);
+            RuntimeCard card = player.namedZones[SVEProperties.Zones.Deck].cards.Find(x => x.instanceId == msg.cardInstanceId);
+            if(card == null)
+            {
+                Debug.LogError($"[OnFlipTopDeck] Failed to find card w/ instance ID {msg.cardInstanceId}");
+                return;
+            }
+
+            OpponentFlipTopDeckMessage flipMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                card = NetworkingUtils.GetNetCard(card),
+                toFaceUp = msg.toFaceUp
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, flipMsg);
         }
 
         private void OnFlipEvolveDeck(NetworkConnection conn, LocalFlipEvolveDeckCardsMessage msg)

@@ -168,6 +168,40 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        public void RevealTopDeck(Action<CardObject> onComplete)
+        {
+            RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+            CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            localZoneController.FlipCardToFaceUp(card, onComplete: () => onComplete?.Invoke(card));
+
+            LocalFlipTopDeckMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceId = runtimeCard.instanceId,
+                toFaceUp = true
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void FlipTopDeckToFaceDown(CardObject card = null)
+        {
+            if(!card)
+            {
+                RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+                card = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
+            }
+            if(!card)
+                return;
+
+            LocalFlipTopDeckMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceId = card.RuntimeCard.instanceId,
+                toFaceUp = false
+            };
+            NetworkClient.Send(msg);
+        }
+
         public void FlipEvolveDeckCards(bool toFaceDown, List<RuntimeCard> targetCards = null)
         {
             targetCards ??= localZoneController.evolveDeckZone.Runtime.cards.Where(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)

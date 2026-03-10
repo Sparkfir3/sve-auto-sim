@@ -27,6 +27,7 @@ namespace SVESimulator
             // Zone Controls
             NetworkClient.RegisterHandler<OpponentShuffleDeckMessage>(OnOpponentShuffleDeck);
             NetworkClient.RegisterHandler<OpponentDiscardRandomCardsMessage>(OnOpponentDiscardRandomCards);
+            NetworkClient.RegisterHandler<OpponentFlipTopDeckMessage>(OnOpponentFlipTopDeck);
             NetworkClient.RegisterHandler<OpponentFlipEvolveDeckCardsMessage>(OnOpponentFlipEvolveDeck);
 
             // Deck movement
@@ -86,6 +87,7 @@ namespace SVESimulator
             // Zone Controls
             NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
             NetworkClient.UnregisterHandler<OpponentDiscardRandomCardsMessage>();
+            NetworkClient.UnregisterHandler<OpponentFlipTopDeckMessage>();
             NetworkClient.UnregisterHandler<OpponentFlipEvolveDeckCardsMessage>();
 
             // Deck movement
@@ -228,6 +230,15 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.DiscardRandomCards(msg);
+        }
+
+        private void OnOpponentFlipTopDeck(OpponentFlipTopDeckMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.FlipTopDeck(msg);
         }
 
         private void OnOpponentFlipEvolveDeck(OpponentFlipEvolveDeckCardsMessage msg)

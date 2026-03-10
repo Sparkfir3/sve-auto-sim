@@ -70,6 +70,21 @@ namespace SVESimulator
             }
         }
 
+        public void FlipTopDeck(OpponentFlipTopDeckMessage msg)
+        {
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(msg.card.instanceId);
+            if(!cardObject)
+            {
+                RuntimeCard runtimeCard = new RuntimeCard();
+                InitRuntimeCard(ref runtimeCard, msg.card);
+                cardObject = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            }
+            if(msg.toFaceUp)
+                oppZoneController.FlipCardToFaceUp(cardObject);
+            else
+                oppZoneController.FlipCardToFaceDown(cardObject);
+        }
+
         public void FlipEvolveDeckCards(OpponentFlipEvolveDeckCardsMessage msg)
         {
             List<CardObject> cardsToFlip = new();
