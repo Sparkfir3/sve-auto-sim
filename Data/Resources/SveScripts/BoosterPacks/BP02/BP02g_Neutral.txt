@@ -1,0 +1,327 @@
+name Dark Angel Olivia;
+id BP02-106;
+id-en BP02-103;
+class Neutral;
+type Follower;
+trait Fallen Angel;
+rarity L;
+cost 5;
+stats 5/5;
+
+text "[fanfare] Choose up to 2 of the following. (1) Gain 1 Evolution Point. (2) Give your leader [defense]+3. (3) Draw a card. (4) Each opponent discards a card.";
+
+ability Fanfare {
+    effect ChooseAmountFromList(m(0,2), EP, Defense, Draw, OppDiscard);
+}
+ability Spell name EP {
+    effect GiveStat(EP, 1) to Leader;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 3) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name OppDiscard {
+    effect OpponentPerformEffect(Discard);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Bahamut;
+id BP02-107;
+id-en BP02-104;
+class Neutral;
+type Follower;
+trait Deity / Supreme;
+rarity L;
+cost 9;
+stats 9/9;
+
+text "[evolve][cost00]: Evolve this follower.
+      [fanfare] Destroy each other follower on the field.
+      If there are at least 2 enemy followers on the field, this follower can't attack enemy leaders.";
+
+evolve 0;
+ability Fanfare {
+    effect Destroy() to AllCards FX;
+}
+ability Passive {
+    condition p(F)>1;
+    effect GiveKeyword(CannotAttackLeaders, WhileOnField) to Self;
+}
+
+// ------------------------------
+
+name Bahamut (Evolved);
+id BP02-108;
+id-en BP02-105;
+class Neutral;
+type Evolved Follower;
+trait Deity / Supreme;
+rarity L;
+stats 11/11;
+
+text "On Evolve: Destroy each amulet on the field.
+      If there are at least 2 enemy followers on the field, this follower can't attack enemy leaders.";
+
+ability Fanfare {
+    effect Destroy() to AllCards A;
+}
+ability Passive {
+    condition p(F)>1;
+    effect GiveKeyword(CannotAttackLeaders, WhileOnField) to Self;
+}
+
+// ------------------------------
+
+name Demonic Simulacrum;
+id BP02-109;
+id-en BP02-106;
+class Neutral;
+type Follower;
+trait Fiend;
+rarity G;
+cost 3;
+stats 6/5;
+
+text "[fanfare] Deal 3 damage to your leader. Discard a random card.";
+
+ability Fanfare {
+    effect Sequence(Damage, Discard);
+}
+ability Spell name Damage {
+    effect DealDamage(3) to Leader;
+}
+ability Spell name Discard {
+    effect DiscardRandomCard() to Self;
+}
+
+// ------------------------------
+
+name Archangel Reina;
+id BP02-110;
+id-en BP02-107;
+class Neutral;
+type Follower;
+trait Angel;
+rarity G;
+cost 4;
+stats 4/5;
+
+text "[evolve][cost01]: Evolve this follower.
+      Ward.";
+
+evolve 1;
+keyword Ward;
+
+// ------------------------------
+
+name Archangel Reina (Evolved);
+id BP02-111;
+id-en BP02-108;
+class Neutral;
+type Evolved Follower;
+trait Faith;
+rarity G;
+stats 5/6;
+
+text "Ward.
+      On Evolve - Recover play points equal to the number of faceup evolved followers in your evolve deck. Turn them facedown.";
+
+keyword Ward;
+ability OnEvolve {
+    effect Sequence(PP, Facedown);
+}
+ability Spell name PP {
+    effect GiveStat(PP, #(evolveDeckFaceUp, F)) to Leader;
+}
+ability Spell name Facedown {
+    effect FlipEvolveDeckFaceDown(F) to Self;
+}
+
+// ------------------------------
+
+name Surefire Bullet;
+id BP02-112;
+id-en BP02-109;
+class Neutral;
+type Spell;
+trait Mercenary;
+rarity G;
+cost 2;
+
+text "[quick]
+      Select an enemy follower on the field and deal it 3 damage. If it's an evolved follower, deal 4 damage instead.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect TargetForSequenceWithTargetAmount(3e4, Damage) to TargetOpponentCard F;
+}
+ability Spell name Damage {
+    effect DealDamage(_) to AllOpponentCards;
+}
+
+// ------------------------------
+
+name Unicorn Dancer Unica;
+id BP02-113;
+id-en BP02-110;
+class Neutral;
+type Follower;
+trait Lightborne;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      Strike: Give your leader [defense]+2.";
+
+evolve 1;
+ability Strike {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Unicorn Dancer Unica (Evolved);
+id BP02-114;
+id-en BP02-111;
+class Neutral;
+type Evolved Follower;
+trait Lightborne;
+rarity S;
+stats 3/3;
+
+text "Strike: Give your leader [defense]+2.";
+
+ability Strike {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Gourmet Emperor Khaiza;
+id BP02-115;
+id-en BP02-112;
+class Neutral;
+type Follower;
+trait Fiend / Chef;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Select an enemy follower that costs 2 play points or less on the field. Destroy it and give its leader [defense]+3.";
+
+ability Fanfare {
+    effect DestroyAndControllerPerformEffect(Def) to TargetOpponentCard Fp(m(0,2));
+}
+ability Spell name Def {
+    effect GiveStat(Def, 3) to Leader;
+}
+
+// ------------------------------
+
+name Call of Cocytus;
+id BP02-116;
+id-en BP02-113;
+class Neutral;
+type Spell;
+trait Archfiend;
+rarity S;
+cost 6;
+
+text "[quick]
+      Select an enemy follower on the field. Destroy it, then search your deck for a [neutral] follower, reveal it, and add it to your hand.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect Sequence(Destroy, Search);
+}
+ability Spell name Destroy {
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name Search {
+    effect Search(1, Fc(Neutral), Hand);
+}
+
+// ------------------------------
+
+name Hamsa;
+id BP02-117;
+id-en BP02-114;
+class Neutral;
+type Follower;
+trait Lightborne;
+rarity B;
+cost 3;
+stats 0/3;
+
+text "[fanfare] Reveal the top card of your deck. Give this follower [attack]+X. X equals the revealed card's cost.";
+
+ability Fanfare {
+    effect RevealTopPerformWithRevealedAmount(P, Atk);
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, _) to Self;
+}
+
+// ------------------------------
+
+name Sektor;
+id BP02-118;
+id-en BP02-115;
+class Neutral;
+type Follower;
+trait Mercenary;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost03]: Evolve this follower.";
+
+evolve 3;
+
+// ------------------------------
+
+name Sektor (Evolved);
+id BP02-119;
+id-en BP02-116;
+class Neutral;
+type Evolved Follower;
+trait Mercenary;
+rarity B;
+stats 4/4;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Dance of Death;
+id BP02-120;
+id-en BP02-117;
+class Neutral;
+type Spell;
+trait Zealot;
+rarity B;
+cost 4;
+
+text "Select an enemy follower on the field. Deal 5 damage to it and 2 damage to its leader.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
