@@ -387,6 +387,8 @@ namespace SVESimulator.SveScript
             { "PlayPoint", "PlayPoint"},
             { "PlayPoints", "PlayPoint"},
             { "PP", "PlayPoint"},
+            { "EvolvePoint", "EvolvePoint"},
+            { "EP", "EvolvePoint"},
         };
 
         #endregion
