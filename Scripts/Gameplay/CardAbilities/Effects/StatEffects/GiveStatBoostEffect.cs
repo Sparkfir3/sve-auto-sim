@@ -26,7 +26,8 @@ namespace SVESimulator
             int boostAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
 
             // Target leader
-            if(target.IsLeader(out bool local, out bool opponent) || targetStats is StatBoostType.MaxPlayPoint or StatBoostType.PlayPoint)
+            bool isLeaderOnlyStat = targetStats is StatBoostType.MaxPlayPoint or StatBoostType.PlayPoint or StatBoostType.EvolvePoint;
+            if(target.IsLeader(out bool local, out bool opponent) || isLeaderOnlyStat)
             {
                 local |= target == SVEProperties.SVEEffectTarget.Self;
                 opponent |= target == SVEProperties.SVEEffectTarget.Opponent;
@@ -48,6 +49,12 @@ namespace SVESimulator
                     case StatBoostType.PlayPoint:
                         player.LocalEvents.IncrementCurrentPlayPoints(boostAmount);
                         break;
+                    case StatBoostType.EvolvePoint:
+                        if(local)
+                            player.LocalEvents.AddEvolvePoints(player.GetPlayerInfo(), boostAmount);
+                        if(opponent)
+                            player.LocalEvents.AddEvolvePoints(player.GetOpponentInfo(), boostAmount);
+                        break;
                     default:
                         Debug.LogError($"Attempted to apply invalid stat boost {targetStats} to {target}!");
                         break;
@@ -60,7 +67,7 @@ namespace SVESimulator
             }
 
             // Target cards (on field)
-            if(targetStats is StatBoostType.MaxPlayPoint or StatBoostType.PlayPoint)
+            if(isLeaderOnlyStat)
             {
                 if(target is not (SVEProperties.SVEEffectTarget.Self or SVEProperties.SVEEffectTarget.Opponent))
                     Debug.LogError($"Attempted to apply invalid stat boost {targetStats} to {target}!");

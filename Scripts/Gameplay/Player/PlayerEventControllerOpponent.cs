@@ -524,7 +524,19 @@ namespace SVESimulator
             if(msg.isOpponentCard && isActivePlayer && localZoneController.fieldZone.TryGetCard(msg.cardInstanceId, out CardObject cardObject))
                 cardObject.CalculateCanAttackStatus();
         }
-        
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        public void AddEvolvePoints(OpponentAddEvolvePointsMessage msg)
+        {
+            PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
+            sveEffectSolver.AddEvolvePoints(targetPlayer, msg.amount);
+        }
+
         #endregion
 
         // ------------------------------

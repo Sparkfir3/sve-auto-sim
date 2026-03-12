@@ -641,6 +641,17 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Player Stats
+
+        public void AddEvolvePoints(PlayerInfo player, int amount)
+        {
+            player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue += amount;
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Effect Costs
 
         public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, RemoveCounterData[] countersToRemove)

@@ -531,6 +531,20 @@ namespace SVESimulator
         public int amount;
     }
 
+    public struct LocalAddEvolvePointsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetPlayer;
+        public int amount;
+    }
+
+    public struct OpponentAddEvolvePointsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetPlayer;
+        public int amount;
+    }
+
     #endregion
 
     // ------------------------------

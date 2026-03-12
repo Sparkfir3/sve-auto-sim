@@ -67,6 +67,9 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<OpponentCardStatModifierMessage>(OnOpponentApplyCardStatModifier);
             NetworkClient.RegisterHandler<OpponentApplyKeywordMessage>(OnOpponentApplyKeyword);
 
+            // Player stats
+            NetworkServer.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
+
             // Other
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
         }
@@ -126,6 +129,9 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<OpponentSetCardStatMessage>();
             NetworkClient.UnregisterHandler<OpponentCardStatModifierMessage>();
             NetworkClient.UnregisterHandler<OpponentApplyKeywordMessage>();
+
+            // Player stats
+            NetworkServer.UnregisterHandler<OpponentAddEvolvePointsMessage>();
 
             // Other
             NetworkClient.UnregisterHandler<OpponentTellOpponentPerformEffectMessage>();
@@ -510,6 +516,21 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.ApplyKeywordToCard(msg);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        private void OnOpponentAddEvolvePoints(NetworkConnection conn, OpponentAddEvolvePointsMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.AddEvolvePoints(msg);
         }
 
         #endregion

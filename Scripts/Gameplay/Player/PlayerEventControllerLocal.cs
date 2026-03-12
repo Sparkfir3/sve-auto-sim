@@ -1079,7 +1079,25 @@ namespace SVESimulator
             if(targetAmount > 0)
                 ApplyKeywordToCard(card, (int)counterType, targetAmount, adding: true);
         }
-        
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        public void AddEvolvePoints(PlayerInfo targetPlayer, int amount)
+        {
+            sveEffectSolver.AddEvolvePoints(targetPlayer, amount);
+            LocalAddEvolvePointsMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetPlayer = targetPlayer.netId,
+                amount = amount
+            };
+            NetworkClient.Send(msg);
+        }
+
         #endregion
 
         // ------------------------------
