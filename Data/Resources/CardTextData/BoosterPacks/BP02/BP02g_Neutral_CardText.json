@@ -7,45 +7,24 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
+        "body": "Choose up to 2 of the following. (1) Gain 1 Evolution Point. (2) Give your leader [defense]+3. (3) Draw a card. (4) Each opponent discards a card."
       },
       {
         "key": "EP",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Gain 1 Evolution Point."
       },
       {
         "key": "Defense",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Give your leader [defense]+3."
       },
       {
         "key": "Draw",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Draw a card."
       },
       {
         "key": "OppDiscard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Each opponent discards a card."
       }
     ]
   },
@@ -57,17 +36,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Destroy each other follower on the field."
       }
     ]
   },
@@ -79,17 +49,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Passive",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Destroy each amulet on the field."
       }
     ]
   },
@@ -101,24 +62,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Discard",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Deal 3 damage to your leader. Discard a random card."
       }
     ]
   },
@@ -132,28 +77,12 @@
     "id": "BP02-108EN",
     "name": "Archangel Reina (Evolved)",
     "trait": "Faith",
-    "cardText": "Ward.\nOn Evolve - Recover play points equal to the number of faceup evolved followers in your evolve deck. Turn them facedown.",
+    "cardText": "Ward.\nOn Evolve: Recover play points equal to the number of faceup evolved followers in your evolve deck. Turn them facedown.",
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
         "trigger": "On Evolve:",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "PP",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Facedown",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Recover play points equal to the number of faceup evolved followers in your evolve deck. Turn them facedown."
       }
     ]
   },
@@ -165,17 +94,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Damage",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field and deal it 3 damage. If it's an evolved follower, deal 4 damage instead."
       }
     ]
   },
@@ -187,10 +106,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
         "trigger": "Strike:",
-        "cost": "",
-        "body": ""
+        "body": "Give your leader [defense]+2."
       }
     ]
   },
@@ -202,10 +119,8 @@
     "effectText": [
       {
         "key": "Strike",
-        "text": "",
         "trigger": "Strike:",
-        "cost": "",
-        "body": ""
+        "body": "Give your leader [defense]+2."
       }
     ]
   },
@@ -217,17 +132,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Def",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower that costs 2 play points or less on the field. Destroy it and give its leader [defense]+3."
       }
     ]
   },
@@ -239,24 +145,11 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Destroy",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Destroy it, then search your deck for a [neutral] follower, reveal it, and add it to your hand."
       },
       {
         "key": "Search",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Search your deck for a [neutral] follower, reveal it, and add it to your hand."
       }
     ]
   },
@@ -268,17 +161,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Atk",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Reveal the top card of your deck. Give this follower [attack]+X. X equals the revealed card's cost."
       }
     ]
   },
@@ -302,24 +186,7 @@
     "effectText": [
       {
         "key": "Spell",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Follower",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
-        "key": "Leader",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
+        "body": "Select an enemy follower on the field. Deal 5 damage to it and 2 damage to its leader."
       }
     ]
   }
