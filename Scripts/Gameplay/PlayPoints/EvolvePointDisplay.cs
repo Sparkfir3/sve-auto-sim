@@ -32,16 +32,24 @@ namespace SVESimulator
         {
             if(!IsActive)
             {
-                Debug.LogError("Attempted to update evolve point count on disabled evolve point display!");
+                Initialize(true, count);
                 return;
             }
 
-            int amountToFlip = currentEvolvePoints - count;
-            for(int i = 1; i <= amountToFlip; i++)
+            for(; currentEvolvePoints != count; currentEvolvePoints += (currentEvolvePoints > count ? -1 : 1))
             {
-                FlipEvolvePoint(evolvePointCards[currentEvolvePoints - i]);
+                if(currentEvolvePoints - 1 > evolvePointCards.Length)
+                {
+                    Debug.LogError($"Attempted to set evolve point display to {count}, which is higher than the supported displayed amount ${evolvePointCards.Length}");
+                    continue;
+                }
+                if(currentEvolvePoints - 1 < count)
+                {
+                    evolvePointCards[currentEvolvePoints - 1].gameObject.SetActive(true);
+                    continue;
+                }
+                FlipEvolvePoint(evolvePointCards[currentEvolvePoints - 1]);
             }
-            currentEvolvePoints -= amountToFlip;
         }
 
         // ------------------------------
