@@ -144,7 +144,7 @@
     "cardText": "[quick]\nSelect an enemy follower on the field. Destroy it, then search your deck for a [neutral] follower, reveal it, and add it to your hand.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "Destroy",
         "body": "Select an enemy follower on the field. Destroy it, then search your deck for a [neutral] follower, reveal it, and add it to your hand."
       },
       {
@@ -185,7 +185,7 @@
     "cardText": "Select an enemy follower on the field. Deal 5 damage to it and 2 damage to its leader.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "Follower",
         "body": "Select an enemy follower on the field. Deal 5 damage to it and 2 damage to its leader."
       }
     ]
