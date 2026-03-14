@@ -11362,7 +11362,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TriggerCard",
-              "amount": "",
+              "amount": "1",
               "filter": null,
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
@@ -32446,7 +32446,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "amount": "",
+              "amount": "1",
               "$type": "SVESimulator.DiscardRandomCardEffect"
             },
             "target": null,
