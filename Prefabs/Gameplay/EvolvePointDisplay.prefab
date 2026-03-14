@@ -52,9 +52,11 @@ MonoBehaviour:
   <IsActive>k__BackingField: 0
   currentEvolvePoints: 0
   evolvePointCards:
-  - {fileID: 9057359797385560183}
-  - {fileID: 5928963879092704760}
   - {fileID: 8561701726801499047}
+  - {fileID: 5928963879092704760}
+  - {fileID: 9057359797385560183}
+  - {fileID: 2831640026174126783}
+  - {fileID: 5215184306101474749}
 --- !u!1001 &3803335883338128641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175,6 +177,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4545805010937091202, guid: da35744a35e93814ca573b6eea2480e7, type: 3}
   m_PrefabInstance: {fileID: 3803335883338128641}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2831640026174126783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1406293292076722110, guid: da35744a35e93814ca573b6eea2480e7, type: 3}
+  m_PrefabInstance: {fileID: 3803335883338128641}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204f14fbfd455624eb0588e1306ffb38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4738843921706005062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,6 +430,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da35744a35e93814ca573b6eea2480e7, type: 3}
+--- !u!114 &5215184306101474749 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1406293292076722110, guid: da35744a35e93814ca573b6eea2480e7, type: 3}
+  m_PrefabInstance: {fileID: 6621459351005671939}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204f14fbfd455624eb0588e1306ffb38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7273831955382740609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4545805010937091202, guid: da35744a35e93814ca573b6eea2480e7, type: 3}
