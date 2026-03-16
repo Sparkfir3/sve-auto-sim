@@ -109,7 +109,7 @@ namespace SVESimulator
                     oppZoneController.FlipCardToFaceUp(cardsToFlip[i], i * 0.15f);
             }
 
-            sveEffectSolver.FlipEvolveDeckCards(msg.playerNetId, null, msg.toFaceDown);
+            sveEffectSolver.FlipEvolveDeckCards(msg.playerNetId, cardsToFlip.Select(x => x.RuntimeCard).ToList(), msg.toFaceDown);
         }
 
         #endregion
