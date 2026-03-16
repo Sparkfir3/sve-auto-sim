@@ -32277,9 +32277,9 @@
             "trigger": {
               "condition": null,
               "cost": null,
-              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+              "$type": "SVESimulator.SveOnEvolveTrigger"
             },
-            "name": "Fanfare",
+            "name": "OnEvolve",
             "type": "Triggered",
             "effect": {
               "target": "AllCards",

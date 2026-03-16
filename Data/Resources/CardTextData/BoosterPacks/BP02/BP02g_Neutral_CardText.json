@@ -48,8 +48,8 @@
     "cardText": "On Evolve: Destroy each amulet on the field.\nIf there are at least 2 enemy followers on the field, this follower can't attack enemy leaders.",
     "effectText": [
       {
-        "key": "Fanfare",
-        "trigger": "[fanfare]",
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
         "body": "Destroy each amulet on the field."
       }
     ]

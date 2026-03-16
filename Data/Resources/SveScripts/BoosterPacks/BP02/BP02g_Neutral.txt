@@ -68,7 +68,7 @@ stats 11/11;
 text "On Evolve: Destroy each amulet on the field.
       If there are at least 2 enemy followers on the field, this follower can't attack enemy leaders.";
 
-ability Fanfare {
+ability OnEvolve {
     effect Destroy() to AllCards A;
 }
 ability Passive {
