@@ -353,7 +353,7 @@ namespace SVESimulator
             if(args.Length == 0)
                 return 0;
 
-            args[0] = args[0].Trim().ToLower();
+            args[0] = args[0].Trim();
             Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
             usedPlayerReference = false;
             switch(args[0])
