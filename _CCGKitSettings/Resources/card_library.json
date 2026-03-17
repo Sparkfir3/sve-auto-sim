@@ -33322,8 +33322,6 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "target": "Self",
-              "filter": null,
               "amount": "P",
               "effectName1": "Atk",
               "effectName2": null,

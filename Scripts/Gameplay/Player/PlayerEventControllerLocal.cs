@@ -192,6 +192,7 @@ namespace SVESimulator
             }
             if(!card)
                 return;
+            localZoneController.FlipCardToFaceDown(card);
 
             LocalFlipTopDeckMessage msg = new()
             {

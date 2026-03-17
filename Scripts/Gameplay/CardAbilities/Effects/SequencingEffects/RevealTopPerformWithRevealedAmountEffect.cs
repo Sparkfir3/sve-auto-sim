@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using CCGKit;
 
@@ -9,12 +10,6 @@ namespace SVESimulator
         [StringField("Amount", width = 100), Order(11)]
         public string amount;
 
-        [EnumField("Target", width = 200), Order(12)]
-        public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
-
-        [StringField("Target Filter", width = 100), Order(13)]
-        public string filter;
-
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
@@ -22,13 +17,17 @@ namespace SVESimulator
             player.LocalEvents.RevealTopDeck(revealedCard =>
             {
                 int targetAmount = SVEFormulaParser.ParseValue(amount, player, revealedCard);
-                ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
-                {
-                    player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
-                    SVEEffectPool.Instance.StartCoroutine(ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
-                        onComplete, overrideAmount: targetAmount.ToString()));
-                });
+                SVEEffectPool.Instance.StartCoroutine(ResolveWithDelays(revealedCard, targetAmount));
             });
+
+            IEnumerator ResolveWithDelays(CardObject revealedCard, int targetAmount)
+            {
+                yield return new WaitForSeconds(0.4f);
+                player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
+                yield return new WaitForSeconds(0.1f);
+                SVEEffectPool.Instance.StartCoroutine(ResolveEffectsAsSequence(allEffects, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+                    onComplete, overrideAmount: targetAmount.ToString()));
+            }
         }
     }
 }
