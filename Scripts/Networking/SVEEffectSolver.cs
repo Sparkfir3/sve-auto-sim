@@ -112,8 +112,10 @@ namespace SVESimulator
 
         public void FlipEvolveDeckCards(NetworkIdentity playerNetId, List<RuntimeCard> cards, bool toFaceDown)
         {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
             foreach(RuntimeCard card in cards)
                 card.namedStats[SVEProperties.CardStats.FaceUp].baseValue = toFaceDown ? 0 : 1;
+            player.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged?.Invoke(player.namedZones[SVEProperties.Zones.EvolveDeck].numCards);
         }
 
         #endregion
