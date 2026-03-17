@@ -68,7 +68,7 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<OpponentApplyKeywordMessage>(OnOpponentApplyKeyword);
 
             // Player stats
-            NetworkServer.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
+            NetworkClient.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
 
             // Other
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
@@ -524,7 +524,7 @@ namespace SVESimulator
 
         #region Player Stats
 
-        private void OnOpponentAddEvolvePoints(NetworkConnection conn, OpponentAddEvolvePointsMessage msg)
+        private void OnOpponentAddEvolvePoints(OpponentAddEvolvePointsMessage msg)
         {
             PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
             if(!player)

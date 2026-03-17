@@ -233,16 +233,16 @@ namespace SVESimulator
 
         private void OnAddEvolvePoints(NetworkConnection conn, LocalAddEvolvePointsMessage msg)
         {
-            PlayerInfo targetPlayer = server.gameState.players.Find(x => x.netId == msg.targetPlayer);
+            PlayerInfo player = GetPlayerInfo(msg.playerNetId);
 
-            OpponentAddEvolvePointsMessage addDefMsg = new()
+            OpponentAddEvolvePointsMessage addEvolvePointsMsg = new()
             {
                 playerNetId = msg.playerNetId,
                 targetPlayer = msg.targetPlayer,
                 amount = msg.amount
             };
-            server.SafeSendToClient(server.gameState.currentOpponent, addDefMsg);
-            (server.effectSolver as SVEEffectSolver).AddEvolvePoints(targetPlayer, msg.amount);
+            server.SafeSendToClient(server.gameState.currentOpponent, addEvolvePointsMsg);
+            (server.effectSolver as SVEEffectSolver).AddEvolvePoints(player, msg.amount);
         }
 
         #endregion
