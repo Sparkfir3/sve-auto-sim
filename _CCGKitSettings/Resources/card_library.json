@@ -32751,7 +32751,7 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "amount": "3e4",
+              "amount": "3~(EF)4",
               "effectName1": "Damage",
               "effectName2": null,
               "effectName3": null,

@@ -160,7 +160,7 @@ text "[quick]
 keyword Quick;
 ability Spell {
     condition p(#F);
-    effect TargetForSequenceWithTargetAmount(3e4, Damage) to TargetOpponentCard F;
+    effect TargetForSequenceWithTargetAmount(3~(EF)4, Damage) to TargetOpponentCard F;
 }
 ability Spell name Damage {
     effect DealDamage(_) to AllOpponentCards;

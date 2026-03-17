@@ -60,6 +60,7 @@ namespace SVESimulator
             Counter,
             Name,
             Class,
+            CardFilter,
 
             // Card Stats
             Attack,
@@ -126,6 +127,9 @@ namespace SVESimulator
                 'g' => FormulaType.Sanguine,
                 't' => FormulaType.IsTurnPlayer,
 
+                // Card Info
+                '~' => FormulaType.CardFilter,
+
                 // Arithmetic
                 '+' => FormulaType.Addition,
                 '-' => FormulaType.Subtraction,
@@ -145,6 +149,7 @@ namespace SVESimulator
                 case FormulaType.None:
                     return leftHandValue;
 
+                // Player Info
                 case FormulaType.Combo:
                 case FormulaType.Spellchain:
                 case FormulaType.Necrocharge:
@@ -163,7 +168,6 @@ namespace SVESimulator
                         return leftHandValue;
                     nextIndex++; // Move past close parentheses
                     break;
-
                 case FormulaType.Overflow:
                     if(!player || !player.Overflow)
                         return leftHandValue;
@@ -177,6 +181,15 @@ namespace SVESimulator
                         return leftHandValue;
                     break;
 
+                // Card Info
+                case FormulaType.CardFilter:
+                    var filter = ParseCardFilterFormula(formula[nextIndex..].TextInsideParentheses(out _, out int filterCloseIndex));
+                    if(card == null || !filter.MatchesCard(card))
+                        return leftHandValue;
+                    nextIndex += filterCloseIndex + 1; // Move past parentheses content + close parentheses
+                    break;
+
+                // Other
                 case FormulaType.Conditional:
                     int conditionalCheck = ParseValue(formula[nextIndex..].TextInsideParentheses(out _, out int conditionalCloseIndex), player, card);
                     if(conditionalCheck <= 0)
@@ -217,7 +230,8 @@ namespace SVESimulator
             return ParseValue(formula, player, card) > 0;
         }
 
-        public static void ParseValueAsMinMax(in string formula, PlayerController player, out int min, out int max)
+        public static void ParseValueAsMinMax(in string formula, PlayerController player, out int min, out int max) => ParseValueAsMinMax(formula, player, null, out min, out max);
+        public static void ParseValueAsMinMax(in string formula, PlayerController player, RuntimeCard card, out int min, out int max)
         {
             if(string.IsNullOrWhiteSpace(formula))
             {
@@ -230,7 +244,7 @@ namespace SVESimulator
             }
             else
             {
-                min = max = ParseValue(formula, player);
+                min = max = ParseValue(formula, player, card);
             }
         }
 
