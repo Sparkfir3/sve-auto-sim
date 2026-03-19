@@ -623,11 +623,13 @@ namespace SVESimulator
             ZoneController.evolvePointDisplay.Initialize(!isGoingFirst);
             OppZoneController.evolvePointDisplay.Initialize(isGoingFirst);
 
-            EvolvePointDisplay displayToConnect = isGoingFirst ? OppZoneController.evolvePointDisplay : ZoneController.evolvePointDisplay;
-            PlayerInfo playerInfoToConnect = isGoingFirst ? opponentInfo : playerInfo;
-            playerInfoToConnect.namedStats[SVEProperties.PlayerStats.EvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
+            playerInfo.namedStats[SVEProperties.PlayerStats.EvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
             {
-                displayToConnect.SetEvolvePointCount(newAmount);
+                ZoneController.evolvePointDisplay.SetEvolvePointCount(newAmount);
+            };
+            opponentInfo.namedStats[SVEProperties.PlayerStats.EvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                OppZoneController.evolvePointDisplay.SetEvolvePointCount(newAmount);
             };
         }
 
