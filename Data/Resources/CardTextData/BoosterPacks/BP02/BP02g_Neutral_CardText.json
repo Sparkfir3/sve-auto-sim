@@ -25,6 +25,10 @@
       {
         "key": "OppDiscard",
         "body": "Each opponent discards a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
       }
     ]
   },
