@@ -33322,13 +33322,8 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "amount": "P",
-              "effectName1": "Atk",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
-              "$type": "SVESimulator.RevealTopPerformWithRevealedAmount"
+              "function": "let amt = revealTopDeck.getValue(P)         perform Atk { amount amt }",
+              "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
