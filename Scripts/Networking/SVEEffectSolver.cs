@@ -110,6 +110,14 @@ namespace SVESimulator
             }
         }
 
+        public void FlipEvolveDeckCards(NetworkIdentity playerNetId, List<RuntimeCard> cards, bool toFaceDown)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            foreach(RuntimeCard card in cards)
+                card.namedStats[SVEProperties.CardStats.FaceUp].baseValue = toFaceDown ? 0 : 1;
+            player.namedZones[SVEProperties.Zones.EvolveDeck].onZoneChanged?.Invoke(player.namedZones[SVEProperties.Zones.EvolveDeck].numCards);
+        }
+
         #endregion
 
         // ------------------------------
@@ -629,6 +637,17 @@ namespace SVESimulator
                 damage *= 2;
 
             return damage;
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        public void AddEvolvePoints(PlayerInfo player, int amount)
+        {
+            player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue += amount;
         }
 
         #endregion

@@ -93,6 +93,34 @@ namespace SVESimulator
         public int amount;
     }
 
+    public struct LocalFlipTopDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int cardInstanceId;
+        public bool toFaceUp;
+    }
+
+    public struct OpponentFlipTopDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetCard card;
+        public bool toFaceUp;
+    }
+
+    public struct LocalFlipEvolveDeckCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+        public bool toFaceDown;
+    }
+
+    public struct OpponentFlipEvolveDeckCardsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetCard[] cards;
+        public bool toFaceDown;
+    }
+
     #endregion
 
     // ------------------------------
@@ -497,6 +525,20 @@ namespace SVESimulator
     }
 
     public struct OpponentAddLeaderDefenseMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetPlayer;
+        public int amount;
+    }
+
+    public struct LocalAddEvolvePointsMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetPlayer;
+        public int amount;
+    }
+
+    public struct OpponentAddEvolvePointsMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
         public NetworkIdentity targetPlayer;

@@ -147,14 +147,13 @@ namespace SVESimulator.SveScript
             for(int i = 0; i < effectParams.parameters.Length; i++)
             {
                 string argument = i < argsArray.Length ? argsArray[i] : null;
-                if(argument == null)
+                if(argument.IsNullOrWhiteSpace() && effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
+                    argument = "1";
+                if(argument == null && (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.FilterOptional))
                 {
-                    if(effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
-                        argument = "1";
-                    else if(effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.FilterOptional)
-                        Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
-                            $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
-                            $"\nReceived: ({string.Join(", ", argsArray)})");
+                    Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
+                        $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
+                        $"\nReceived: ({string.Join(", ", argsArray)})");
                 }
 
                 switch(effectParams.parameters[i])
@@ -343,12 +342,16 @@ namespace SVESimulator.SveScript
             { "OpponentPerformEffect", new EffectParams("SVESimulator.OpponentPerformEffect",                           EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("SVESimulator.PerformAsEachTargetEffect",                         EffectParameterType.SingleEffect) },
             { "PerformWithTargetAmount", new EffectParams("SVESimulator.PerformWithTargetAmountEffect",                 EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            { "RevealTopPerformWithRevealedAmount", new EffectParams("SVESimulator.RevealTopPerformWithRevealedAmount", false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            { "TargetForSequenceWithTargetAmount", new EffectParams("SVESimulator.TargetForEffectSequenceWithTargetAmount",
+                EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
 
             // Other Effects
             { "GiveTrait", new EffectParams("SVESimulator.GiveTraitEffect",                             EffectParameterType.Trait) },
             { "CheckTop", new EffectParams("SVESimulator.CheckTopDeckEffect",                           false, false, EffectParameterType.CheckCardActions) },
             { "ExtraTurn", new EffectParams("SVESimulator.ExtraTurnEffect",                             false, false) },
             { "Evolve", new EffectParams("SVESimulator.EvolveEffect")                                   },
+            { "FlipEvolveDeckFaceDown", new EffectParams("SVESimulator.FlipEvolveDeckFaceDownEffect",   false, false, EffectParameterType.FilterOptional) },
 
             // ------------------------------
 
@@ -383,6 +386,8 @@ namespace SVESimulator.SveScript
             { "PlayPoint", "PlayPoint"},
             { "PlayPoints", "PlayPoint"},
             { "PP", "PlayPoint"},
+            { "EvolvePoint", "EvolvePoint"},
+            { "EP", "EvolvePoint"},
         };
 
         #endregion

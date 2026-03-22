@@ -367,7 +367,7 @@ namespace SVESimulator
                 return;
             }
 
-            IsResolvingEffect = true;
+            CmdSetIsResolvingEffect(true);
             if(pendingEffect.costs == null || pendingEffect.costs.Count == 0)
             {
                 Resolve();
@@ -404,7 +404,7 @@ namespace SVESimulator
                         text = "Decline",
                         onSelect = () =>
                         {
-                            IsResolvingEffect = false;
+                            CmdSetIsResolvingEffect(false);
                             onComplete?.Invoke();
                         }
                     },
@@ -421,7 +421,7 @@ namespace SVESimulator
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
                 {
-                    IsResolvingEffect = false;
+                    CmdSetIsResolvingEffect(false);
                     onComplete?.Invoke();
                 });
             }
@@ -437,15 +437,21 @@ namespace SVESimulator
         /// </summary>
         public void ResolveEffectImmediate(SveEffect effect, RuntimeCard card, string zoneName = "Resolution", Action onComplete = null, bool useLocalPlayer = true)
         {
-            IsResolvingEffect = true;
+            CmdSetIsResolvingEffect(true);
             effect.Resolve(useLocalPlayer ? localPlayer : opponentPlayer, card.instanceId, zoneName, card.instanceId, zoneName, () =>
             {
-                IsResolvingEffect = false;
+                CmdSetIsResolvingEffect(false);
                 onComplete?.Invoke();
             });
         }
 
         // ---
+
+        [Command(requiresAuthority = false)]
+        private void CmdSetIsResolvingEffect(bool isResolving)
+        {
+            IsResolvingEffect = isResolving;
+        }
 
         [Command(requiresAuthority = false)]
         private void CmdSetConfirmationTimingState(ConfirmationTimingState newState)

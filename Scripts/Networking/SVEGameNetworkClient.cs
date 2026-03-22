@@ -27,6 +27,8 @@ namespace SVESimulator
             // Zone Controls
             NetworkClient.RegisterHandler<OpponentShuffleDeckMessage>(OnOpponentShuffleDeck);
             NetworkClient.RegisterHandler<OpponentDiscardRandomCardsMessage>(OnOpponentDiscardRandomCards);
+            NetworkClient.RegisterHandler<OpponentFlipTopDeckMessage>(OnOpponentFlipTopDeck);
+            NetworkClient.RegisterHandler<OpponentFlipEvolveDeckCardsMessage>(OnOpponentFlipEvolveDeck);
 
             // Deck movement
             NetworkClient.RegisterHandler<OpponentDrawCardMessage>(OnOpponentDrawCard);
@@ -65,6 +67,9 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<OpponentCardStatModifierMessage>(OnOpponentApplyCardStatModifier);
             NetworkClient.RegisterHandler<OpponentApplyKeywordMessage>(OnOpponentApplyKeyword);
 
+            // Player stats
+            NetworkClient.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
+
             // Other
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
         }
@@ -85,6 +90,8 @@ namespace SVESimulator
             // Zone Controls
             NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
             NetworkClient.UnregisterHandler<OpponentDiscardRandomCardsMessage>();
+            NetworkClient.UnregisterHandler<OpponentFlipTopDeckMessage>();
+            NetworkClient.UnregisterHandler<OpponentFlipEvolveDeckCardsMessage>();
 
             // Deck movement
             NetworkClient.UnregisterHandler<OpponentDrawCardMessage>();
@@ -122,6 +129,9 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<OpponentSetCardStatMessage>();
             NetworkClient.UnregisterHandler<OpponentCardStatModifierMessage>();
             NetworkClient.UnregisterHandler<OpponentApplyKeywordMessage>();
+
+            // Player stats
+            NetworkServer.UnregisterHandler<OpponentAddEvolvePointsMessage>();
 
             // Other
             NetworkClient.UnregisterHandler<OpponentTellOpponentPerformEffectMessage>();
@@ -226,6 +236,24 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.DiscardRandomCards(msg);
+        }
+
+        private void OnOpponentFlipTopDeck(OpponentFlipTopDeckMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.FlipTopDeck(msg);
+        }
+
+        private void OnOpponentFlipEvolveDeck(OpponentFlipEvolveDeckCardsMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.FlipEvolveDeckCards(msg);
         }
 
         #endregion
@@ -488,6 +516,21 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.ApplyKeywordToCard(msg);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        private void OnOpponentAddEvolvePoints(OpponentAddEvolvePointsMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.AddEvolvePoints(msg);
         }
 
         #endregion

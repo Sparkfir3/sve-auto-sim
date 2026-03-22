@@ -35,10 +35,10 @@ namespace SVESimulator
                 {
                     int[] targetInstanceIds = target != SVEProperties.SVEEffectTarget.Self ? targets.Select(x => x.RuntimeCard.instanceId).ToArray() : null;
                     player.LocalEvents.TellOpponentToPerformEffect(cardObject, effectName, targetInstanceIds);
-                    onComplete?.Invoke();
                 });
                 // Wait for PlayerEventControllerOpponent.TellPerformEffect to set IsResolvingEffect to false
                 yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect);
+                onComplete?.Invoke();
             }
         }
     }

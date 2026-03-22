@@ -168,6 +168,75 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        public void RevealTopDeck(Action<CardObject> onComplete)
+        {
+            RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+            CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            localZoneController.FlipCardToFaceUp(card, onComplete: () => onComplete?.Invoke(card));
+
+            LocalFlipTopDeckMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceId = runtimeCard.instanceId,
+                toFaceUp = true
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void FlipTopDeckToFaceDown(CardObject card = null)
+        {
+            if(!card)
+            {
+                RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+                card = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
+            }
+            if(!card)
+                return;
+            localZoneController.FlipCardToFaceDown(card);
+
+            LocalFlipTopDeckMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceId = card.RuntimeCard.instanceId,
+                toFaceUp = false
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void FlipEvolveDeckCards(bool toFaceDown, List<RuntimeCard> targetCards = null)
+        {
+            targetCards ??= localZoneController.evolveDeckZone.Runtime.cards.Where(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
+                && faceUpStat.effectiveValue == (toFaceDown ? 1 : 0)).ToList();
+
+            List<CardObject> cardsToFlip = new();
+            foreach(RuntimeCard card in targetCards)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                if(cardObject)
+                {
+                    cardsToFlip.Add(cardObject);
+                    continue;
+                }
+                cardsToFlip.Add(CardManager.Instance.RequestCard(card));
+            }
+            for(int i = 0; i < cardsToFlip.Count; i++)
+            {
+                if(toFaceDown)
+                    localZoneController.FlipCardToFaceDown(cardsToFlip[i], i * 0.15f);
+                else
+                    localZoneController.FlipCardToFaceUp(cardsToFlip[i], i * 0.15f);
+            }
+
+            sveEffectSolver.FlipEvolveDeckCards(netIdentity, targetCards, toFaceDown);
+            LocalFlipEvolveDeckCardsMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceIds = targetCards.Select(x => x.instanceId).ToArray(),
+                toFaceDown = toFaceDown
+            };
+            NetworkClient.Send(msg);
+        }
+
         #endregion
 
         // ------------------------------
@@ -1011,7 +1080,25 @@ namespace SVESimulator
             if(targetAmount > 0)
                 ApplyKeywordToCard(card, (int)counterType, targetAmount, adding: true);
         }
-        
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        public void AddEvolvePoints(PlayerInfo targetPlayer, int amount)
+        {
+            sveEffectSolver.AddEvolvePoints(targetPlayer, amount);
+            LocalAddEvolvePointsMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetPlayer = targetPlayer.netId,
+                amount = amount
+            };
+            NetworkClient.Send(msg);
+        }
+
         #endregion
 
         // ------------------------------

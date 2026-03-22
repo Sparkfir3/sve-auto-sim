@@ -1,0 +1,197 @@
+[
+  {
+    "id": "BP02-103EN",
+    "name": "Dark Angel Olivia",
+    "trait": "Fallen Angel",
+    "cardText": "[fanfare] Choose up to 2 of the following. (1) Gain 1 Evolution Point. (2) Give your leader [defense]+3. (3) Draw a card. (4) Each opponent discards a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose up to 2 of the following. (1) Gain 1 Evolution Point. (2) Give your leader [defense]+3. (3) Draw a card. (4) Each opponent discards a card."
+      },
+      {
+        "key": "EP",
+        "body": "Gain 1 Evolution Point."
+      },
+      {
+        "key": "Defense",
+        "body": "Give your leader [defense]+3."
+      },
+      {
+        "key": "Draw",
+        "body": "Draw a card."
+      },
+      {
+        "key": "OppDiscard",
+        "body": "Each opponent discards a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-104EN",
+    "name": "Bahamut",
+    "trait": "Deity / Supreme",
+    "cardText": "[evolve][cost00]: Evolve this follower.\n[fanfare] Destroy each other follower on the field.\nIf there are at least 2 enemy followers on the field, this follower can't attack enemy leaders.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Destroy each other follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP02-105EN",
+    "name": "Bahamut (Evolved)",
+    "trait": "Deity / Supreme",
+    "cardText": "On Evolve: Destroy each amulet on the field.\nIf there are at least 2 enemy followers on the field, this follower can't attack enemy leaders.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Destroy each amulet on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP02-106EN",
+    "name": "Demonic Simulacrum",
+    "trait": "Fiend",
+    "cardText": "[fanfare] Deal 3 damage to your leader. Discard a random card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 3 damage to your leader. Discard a random card."
+      }
+    ]
+  },
+  {
+    "id": "BP02-107EN",
+    "name": "Archangel Reina",
+    "trait": "Angel",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard."
+  },
+  {
+    "id": "BP02-108EN",
+    "name": "Archangel Reina (Evolved)",
+    "trait": "Faith",
+    "cardText": "Ward.\nOn Evolve: Recover play points equal to the number of faceup evolved followers in your evolve deck. Turn them facedown.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Recover play points equal to the number of faceup evolved followers in your evolve deck. Turn them facedown."
+      }
+    ]
+  },
+  {
+    "id": "BP02-109EN",
+    "name": "Surefire Bullet",
+    "trait": "Mercenary",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 3 damage. If it's an evolved follower, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If it's an evolved follower, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP02-110EN",
+    "name": "Unicorn Dancer Unica",
+    "trait": "Lightborne",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nStrike: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP02-111EN",
+    "name": "Unicorn Dancer Unica (Evolved)",
+    "trait": "Lightborne",
+    "cardText": "Strike: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP02-112EN",
+    "name": "Gourmet Emperor Khaiza",
+    "trait": "Fiend / Chef",
+    "cardText": "[fanfare] Select an enemy follower that costs 2 play points or less on the field. Destroy it and give its leader [defense]+3.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower that costs 2 play points or less on the field. Destroy it and give its leader [defense]+3."
+      }
+    ]
+  },
+  {
+    "id": "BP02-113EN",
+    "name": "Call of Cocytus",
+    "trait": "Archfiend",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Destroy it, then search your deck for a [neutral] follower, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Destroy",
+        "body": "Select an enemy follower on the field. Destroy it, then search your deck for a [neutral] follower, reveal it, and add it to your hand."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a [neutral] follower, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP02-114EN",
+    "name": "Hamsa",
+    "trait": "Lightborne",
+    "cardText": "[fanfare] Reveal the top card of your deck. Give this follower [attack]+X. X equals the revealed card's cost.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Reveal the top card of your deck. Give this follower [attack]+X. X equals the revealed card's cost."
+      }
+    ]
+  },
+  {
+    "id": "BP02-115EN",
+    "name": "Sektor",
+    "trait": "Mercenary",
+    "cardText": "[evolve][cost03]: Evolve this follower."
+  },
+  {
+    "id": "BP02-116EN",
+    "name": "Sektor (Evolved)",
+    "trait": "Mercenary",
+    "cardText": "Ward."
+  },
+  {
+    "id": "BP02-117EN",
+    "name": "Dance of Death",
+    "trait": "Zealot",
+    "cardText": "Select an enemy follower on the field. Deal 5 damage to it and 2 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Follower",
+        "body": "Select an enemy follower on the field. Deal 5 damage to it and 2 damage to its leader."
+      }
+    ]
+  }
+]

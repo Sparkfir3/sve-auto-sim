@@ -60,6 +60,7 @@ namespace SVESimulator
             Counter,
             Name,
             Class,
+            CardFilter,
 
             // Card Stats
             Attack,
@@ -126,6 +127,9 @@ namespace SVESimulator
                 'g' => FormulaType.Sanguine,
                 't' => FormulaType.IsTurnPlayer,
 
+                // Card Info
+                '~' => FormulaType.CardFilter,
+
                 // Arithmetic
                 '+' => FormulaType.Addition,
                 '-' => FormulaType.Subtraction,
@@ -145,6 +149,7 @@ namespace SVESimulator
                 case FormulaType.None:
                     return leftHandValue;
 
+                // Player Info
                 case FormulaType.Combo:
                 case FormulaType.Spellchain:
                 case FormulaType.Necrocharge:
@@ -163,7 +168,6 @@ namespace SVESimulator
                         return leftHandValue;
                     nextIndex++; // Move past close parentheses
                     break;
-
                 case FormulaType.Overflow:
                     if(!player || !player.Overflow)
                         return leftHandValue;
@@ -177,6 +181,15 @@ namespace SVESimulator
                         return leftHandValue;
                     break;
 
+                // Card Info
+                case FormulaType.CardFilter:
+                    var filter = ParseCardFilterFormula(formula[nextIndex..].TextInsideParentheses(out _, out int filterCloseIndex));
+                    if(card == null || !filter.MatchesCard(card))
+                        return leftHandValue;
+                    nextIndex += filterCloseIndex + 1; // Move past parentheses content + close parentheses
+                    break;
+
+                // Other
                 case FormulaType.Conditional:
                     int conditionalCheck = ParseValue(formula[nextIndex..].TextInsideParentheses(out _, out int conditionalCloseIndex), player, card);
                     if(conditionalCheck <= 0)
@@ -217,7 +230,8 @@ namespace SVESimulator
             return ParseValue(formula, player, card) > 0;
         }
 
-        public static void ParseValueAsMinMax(in string formula, PlayerController player, out int min, out int max)
+        public static void ParseValueAsMinMax(in string formula, PlayerController player, out int min, out int max) => ParseValueAsMinMax(formula, player, null, out min, out max);
+        public static void ParseValueAsMinMax(in string formula, PlayerController player, RuntimeCard card, out int min, out int max)
         {
             if(string.IsNullOrWhiteSpace(formula))
             {
@@ -230,7 +244,7 @@ namespace SVESimulator
             }
             else
             {
-                min = max = ParseValue(formula, player);
+                min = max = ParseValue(formula, player, card);
             }
         }
 
@@ -353,7 +367,7 @@ namespace SVESimulator
             if(args.Length == 0)
                 return 0;
 
-            args[0] = args[0].Trim().ToLower();
+            args[0] = args[0].Trim();
             Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
             usedPlayerReference = false;
             switch(args[0])
@@ -369,6 +383,14 @@ namespace SVESimulator
                 case "attacked":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
+                case "evolveDeckFaceUp":
+                    usedPlayerReference = true;
+                    return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
+                        && faceUpStat.effectiveValue == 1 && (filter == null || filter.MatchesCard(x))) : 0;
+                case "evolveDeckFaceDown":
+                    usedPlayerReference = true;
+                    return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
+                        && faceUpStat.effectiveValue == 0 && (filter == null || filter.MatchesCard(x))) : 0;
 
                 // Card
                 case "turnsOnField":

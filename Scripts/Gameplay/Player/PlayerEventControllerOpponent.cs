@@ -70,17 +70,59 @@ namespace SVESimulator
             }
         }
 
+        public void FlipTopDeck(OpponentFlipTopDeckMessage msg)
+        {
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(msg.card.instanceId);
+            if(!cardObject)
+            {
+                RuntimeCard runtimeCard = new RuntimeCard();
+                InitRuntimeCard(ref runtimeCard, msg.card);
+                cardObject = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            }
+            if(msg.toFaceUp)
+                oppZoneController.FlipCardToFaceUp(cardObject);
+            else
+                oppZoneController.FlipCardToFaceDown(cardObject);
+        }
+
+        public void FlipEvolveDeckCards(OpponentFlipEvolveDeckCardsMessage msg)
+        {
+            List<CardObject> cardsToFlip = new();
+            foreach(NetCard netCard in msg.cards)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(netCard.instanceId);
+                if(cardObject)
+                {
+                    cardsToFlip.Add(cardObject);
+                    continue;
+                }
+                RuntimeCard runtimeCard = new();
+                InitRuntimeCard(ref runtimeCard, netCard);
+                cardObject = CardManager.Instance.RequestCard(runtimeCard);
+                cardsToFlip.Add(cardObject);
+            }
+            for(int i = 0; i < cardsToFlip.Count; i++)
+            {
+                if(msg.toFaceDown)
+                    oppZoneController.FlipCardToFaceDown(cardsToFlip[i], i * 0.15f);
+                else
+                    oppZoneController.FlipCardToFaceUp(cardsToFlip[i], i * 0.15f);
+            }
+
+            sveEffectSolver.FlipEvolveDeckCards(msg.playerNetId, cardsToFlip.Select(x => x.RuntimeCard).ToList(), msg.toFaceDown);
+        }
+
         #endregion
-        
+
         // ------------------------------
-        
+
         #region Card Movement
-        
+
         public void InitializeDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
         {
             // Evolve deck
             oppZoneController.evolveDeckZone.SetStackHeight(msg.evolveDeckSize);
-            
+
             // Leader
             RuntimeCard leader = new RuntimeCard();
             InitRuntimeCard(ref leader, msg.leaderCard);
@@ -88,21 +130,21 @@ namespace SVESimulator
             oppZoneController.deckZone.Runtime.RemoveCard(leader);
             oppZoneController.leaderZone.Runtime.AddCard(leader);
         }
-        
+
         public void DrawCard(OpponentDrawCardMessage msg)
         {
-            RuntimeCard runtimeCard = new RuntimeCard();;
+            RuntimeCard runtimeCard = new RuntimeCard();
             InitRuntimeCard(ref runtimeCard, msg.card);
             oppZoneController.deckZone.Runtime.RemoveCard(runtimeCard);
             oppZoneController.handZone.Runtime.AddCard(runtimeCard);
-            
+
             CardObject cardObject = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
             if(!msg.reveal)
                 oppZoneController.AddCardToHand(cardObject);
             else
                 oppZoneController.RevealCard(cardObject, onComplete: () => oppZoneController.AddCardToHand(cardObject));
         }
-        
+
         public void PlayCardToField(OpponentPlayCardMessage msg)
         {
             CardZone originZone = oppZoneController.AllZones[msg.originZone];
@@ -125,7 +167,7 @@ namespace SVESimulator
             sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost);
             oppZoneController.PlayCardToField(card, msg.fieldSlotId);
         }
-        
+
         public void EvolveCard(OpponentEvolveCardMessage msg)
         {
             // Init objects
@@ -482,7 +524,19 @@ namespace SVESimulator
             if(msg.isOpponentCard && isActivePlayer && localZoneController.fieldZone.TryGetCard(msg.cardInstanceId, out CardObject cardObject))
                 cardObject.CalculateCanAttackStatus();
         }
-        
+
+        #endregion
+
+        // ------------------------------
+
+        #region Player Stats
+
+        public void AddEvolvePoints(OpponentAddEvolvePointsMessage msg)
+        {
+            PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
+            sveEffectSolver.AddEvolvePoints(targetPlayer, msg.amount);
+        }
+
         #endregion
 
         // ------------------------------

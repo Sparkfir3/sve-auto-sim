@@ -8,11 +8,13 @@ namespace SVESimulator
     {
         [field: Title("Runtime Data"), SerializeField, ReadOnly]
         public bool IsActive { get; private set; }
-        [SerializeField, Range(0, 3), ReadOnly]
+        [SerializeField, Range(0, 5), ReadOnly]
         private int currentEvolvePoints;
 
         [Title("Object References"), SerializeField]
         private CardObject[] evolvePointCards;
+
+        private int currentMaxEvolvePointCards = 3;
 
         // ------------------------------
 
@@ -25,6 +27,7 @@ namespace SVESimulator
             {
                 evolvePointCards[i].gameObject.SetActive(active && i < count);
             }
+            currentMaxEvolvePointCards = count;
         }
 
         [Button, HideInEditorMode]
@@ -32,16 +35,33 @@ namespace SVESimulator
         {
             if(!IsActive)
             {
-                Debug.LogError("Attempted to update evolve point count on disabled evolve point display!");
+                Initialize(true, count);
                 return;
             }
 
-            int amountToFlip = currentEvolvePoints - count;
-            for(int i = 1; i <= amountToFlip; i++)
+            count = Mathf.Clamp(count, 0, evolvePointCards.Length);
+            if(currentEvolvePoints < count) // Add evolve points
             {
-                FlipEvolvePoint(evolvePointCards[currentEvolvePoints - i]);
+                if(count > currentMaxEvolvePointCards) // Add new card
+                {
+                    for(int i = currentEvolvePoints; i < count; i++)
+                        evolvePointCards[i].gameObject.SetActive(true);
+                    currentMaxEvolvePointCards = count;
+                }
+                else // Flip old card
+                {
+                    for(int i = currentMaxEvolvePointCards - currentEvolvePoints - 1; i >= currentMaxEvolvePointCards - count; i--)
+                        FlipEvolvePoint(evolvePointCards[i]);
+                }
             }
-            currentEvolvePoints -= amountToFlip;
+            else // Remove evolve points
+            {
+                int currentFlippedCards = currentMaxEvolvePointCards - currentEvolvePoints;
+                int targetFlippedCards = currentMaxEvolvePointCards - count;
+                for(int i = currentFlippedCards; i < targetFlippedCards; i++)
+                    FlipEvolvePoint(evolvePointCards[i]);
+            }
+            currentEvolvePoints = count;
         }
 
         // ------------------------------

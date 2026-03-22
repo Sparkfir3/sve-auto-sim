@@ -22,6 +22,7 @@ namespace SVESimulator
         public string effectName5;
 
         public List<string> allEffects => new() { effectName1, effectName2, effectName3, effectName4, effectName5 };
+        protected virtual bool ShouldAddSkipButton => false;
 
         // ------------------------------
 
@@ -82,6 +83,22 @@ namespace SVESimulator
                 };
                 choices.Add(entry);
             }
+
+            // Skip button
+            if(ShouldAddSkipButton)
+            {
+                choices.Add(new MultipleChoiceWindow.MultipleChoiceEntryData()
+                {
+                    text = "Skip",
+                    onSelect = () =>
+                    {
+                        onChooseOption?.Invoke(null);
+                        effectDone = true;
+                    }
+                });
+            }
+
+            // Open menu
             GameUIManager.MultipleChoice.Open(player, libraryCard.name, choices, text);
             yield return new WaitUntil(() => effectDone);
 
