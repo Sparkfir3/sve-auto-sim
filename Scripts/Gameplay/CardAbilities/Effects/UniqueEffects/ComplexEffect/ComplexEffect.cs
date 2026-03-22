@@ -21,6 +21,7 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            Debug.Log($"[CE] Function Length: {function.Length}\n{function}");
             this.player = player;
             SVEEffectPool.Instance.StartCoroutine(ResolveOverTime(triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete));
         }
@@ -34,13 +35,14 @@ namespace SVESimulator
             pointerR = 0;
             while(pointerL < function.Length)
             {
-                if(function[pointerL] == ' ' || function[pointerL] == '\n' || function[pointerL] == '\t' || function[pointerL] == ';')
+                if(function[pointerL] == ' ' || function[pointerL] == '\n' || function[pointerL] == '\t' || function[pointerL] == '\r' || function[pointerL] == ';')
                 {
                     pointerL++;
                     continue;
                 }
 
                 string token = function.NextWord(pointerL, out pointerR).ToLower();
+                Debug.Log($"[CE] [Main Parser] Token: {token}\nPointers: {pointerL}, {pointerR}");
                 pointerL = pointerR;
                 switch(token)
                 {
@@ -58,7 +60,7 @@ namespace SVESimulator
                     default:
                         break;
                 }
-                pointerL = pointerR;
+                pointerL = pointerR + 1;
                 yield return null;
             }
 
@@ -71,25 +73,25 @@ namespace SVESimulator
         private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
         {
             string variableName = function.NextWord(pointerL, out pointerL);
+            Debug.Log($"[CE] [Parse Variable] var = {variableName}\nPointers: {pointerL}, {pointerR}");
             if(!function.NextWord(pointerL, out pointerL).Trim().Equals("="))
             {
                 pointerR = pointerL;
                 yield break;
             }
 
-            pointerR = function.IndexOf(';', pointerL);
+            pointerR = function.IndexOf('\n', pointerL);
             if(pointerR < pointerL)
                 pointerR = function.Length - 1;
             string line = function[pointerL..pointerR].Trim();
+            Debug.Log($"[CE] [Parse Variable] Line = {line}\nPointers: {pointerL}, {pointerR}");
 
             Task<string> task = ParseValue(line);
             yield return new WaitUntil(() => task.IsCompleted);
             string value = task.Result;
 
-            if(variables.ContainsKey(variableName))
-                variables[variableName] = value;
-            else
-                variables.Add(variableName, value);
+            variables[variableName] = value;
+            Debug.Log($"[CE] [Parse Variable] var {variableName} = {value}\nPointers: {pointerL}, {pointerR}");
         }
 
         private async Task<string> ParseValue(string line)
@@ -112,7 +114,7 @@ namespace SVESimulator
                 {
                     case CE_Card:
                         string[] parameters = line[pointer..].TextInsideParentheses(out int valuePointerL, out int valuePointerR).Split();
-                        token = line[pointer..valuePointerL];
+                        token = line[pointer..(pointer + valuePointerL)];
                         pointer = valuePointerR;
                         obj = await obj.GetValue(player, token, parameters);
                         break;
@@ -129,19 +131,21 @@ namespace SVESimulator
         private async Task<CE_Object> RevealTopDeck()
         {
             bool waiting = true;
-            CardObject card = null;
+            RuntimeCard card = null;
             player.LocalEvents.RevealTopDeck(async revealedCard =>
             {
                 await Task.Delay(400);
                 player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
-                card = revealedCard;
+                card = revealedCard.RuntimeCard;
                 waiting = false;
             });
             while(waiting || !player || !Application.isPlaying)
                 await Task.Yield();
-            return card && player ? new CE_Card()
+            await Task.Delay(200);
+            Debug.Log($"[CE] [Reveal Top Deck] Instance ID {(card != null ? card.instanceId : "null")}");
+            return card != null ? new CE_Card
             {
-                card = card.RuntimeCard
+                card = card
             } : null;
         }
 
@@ -150,17 +154,19 @@ namespace SVESimulator
         private IEnumerator PerformEffect(Dictionary<string, string> variables, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone,
             Action onComplete = null)
         {
-            string effectName = function.NextWord(pointerL, out pointerL);
-            pointerR = function.IndexOf(';', pointerL);
-            if(pointerR < pointerL)
-                pointerR = function.Length - 1;
+            string effectName = function.NextWord(pointerL, out pointerR);
+            Debug.Log($"[CE] [Perform Effect] Name = {effectName}\nPointers: {pointerL}, {pointerR}");
 
-            string arguments = function[pointerL..].TextInsideBraces(out pointerL, out pointerR);
-            string overrideAmount = null;
+            string arguments = function[pointerR..].TextInsideBraces(out _, out int pointerEffectR);
+            pointerR += pointerEffectR;
+            Debug.Log($"[CE] [Perform Effect] Args = {arguments}\nPointers: {pointerL}, {pointerR}");
             pointerL = pointerR;
+
+            string overrideAmount = null;
             if(!arguments.IsNullOrWhiteSpace())
             {
                 string token = arguments.NextWord(0, out int argPointer);
+                Debug.Log($"[CE] [Perform Effect] Token: {token}\nPointers: {pointerL}, {pointerR}");
                 switch(token)
                 {
                     case "amount":
@@ -171,6 +177,7 @@ namespace SVESimulator
                             (string variable, string value) = (kvPair.Key, kvPair.Value);
                             overrideAmount = overrideAmount.Replace(variable, value);
                         }
+                        Debug.Log($"[CE] [Perform Effect] Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
                         break;
                     default:
                         break;
@@ -179,6 +186,7 @@ namespace SVESimulator
 
             yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
                 onComplete, overrideAmount: overrideAmount);
+            yield return new WaitForEndOfFrame();
         }
     }
 }
