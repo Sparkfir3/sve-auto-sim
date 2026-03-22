@@ -4,6 +4,24 @@ namespace Sparkfire.Utility
     {
         public static bool IsNullOrWhiteSpace(this string input) => string.IsNullOrWhiteSpace(input);
 
+        public static string NextWord(this string input, int startIndex) => input?.NextWord(startIndex, out _);
+        public static string NextWord(this string input, int startIndex, out int endIndex)
+        {
+            while(startIndex < input.Length && input[startIndex] == ' ')
+                startIndex++;
+            endIndex = input.IndexOf(' ', startIndex);
+            if(endIndex < startIndex)
+            {
+                endIndex = input.Length - 1;
+                return input[startIndex..].Trim();
+            }
+            return input[startIndex..endIndex].Trim();
+        }
+
+        // -----
+
+        #region Enclosed Text
+
         /// <summary>
         /// Gets the substring of text inside the first valid pair of parentheses found
         /// </summary>
@@ -12,7 +30,7 @@ namespace Sparkfire.Utility
         /// Substring within the next valid pair of parentheses, excluding the parentheses.
         /// Returns empty string if no valid parentheses pair is found
         /// </returns>
-        public static string TextInsideParentheses(this string input) => input.TextInsideParentheses(out _, out _);
+        public static string TextInsideParentheses(this string input) => input.TextInsideEnclosures(out _, out _, '(', ')');
 
         /// <summary>
         /// Gets the substring of text inside the first valid pair of parentheses found
@@ -24,37 +42,9 @@ namespace Sparkfire.Utility
         /// Substring within the next valid pair of parentheses, excluding the parentheses.
         /// Returns empty string if no valid parentheses pair is found
         /// </returns>
-        public static string TextInsideParentheses(this string input, out int openIndex, out int closeIndex)
-        {
-            int openParenCount = 0, closeParenCount = 0;
-            openIndex = -1;
-            closeIndex = -1;
-            for(int i = 0; i < input.Length; i++)
-            {
-                if(input[i] == '(')
-                {
-                    openParenCount++;
-                    if(openIndex == -1)
-                        openIndex = i;
-                }
-                else if(input[i] == ')')
-                {
-                    closeParenCount++;
-                    if(closeParenCount > openParenCount)
-                        return "";
-                    if(closeParenCount == openParenCount)
-                    {
-                        closeIndex = i;
-                        break;
-                    }
-                }
-            }
-            if(openIndex == -1 || closeIndex == -1)
-                return "";
-            return input[(openIndex + 1)..closeIndex];
-        }
+        public static string TextInsideParentheses(this string input, out int openIndex, out int closeIndex) => input.TextInsideEnclosures(out openIndex, out closeIndex, '(', ')');
 
-        // ------------------------------
+        // -----
 
         /// <summary>
         /// Gets the substring of text inside the first valid pair of brackets found
@@ -64,7 +54,7 @@ namespace Sparkfire.Utility
         /// Substring within the next valid pair of brackets, excluding the brackets.
         /// Returns empty string if no valid brackets pair is found
         /// </returns>
-        public static string TextInsideBrackets(this string input) => input.TextInsideBrackets(out _, out _);
+        public static string TextInsideBrackets(this string input) => input.TextInsideEnclosures(out _, out _, '[', ']');
 
         /// <summary>
         /// Gets the substring of text inside the first valid pair of brackets found
@@ -76,25 +66,55 @@ namespace Sparkfire.Utility
         /// Substring within the next valid pair of brackets, excluding the brackets.
         /// Returns empty string if no valid brackets pair is found
         /// </returns>
-        public static string TextInsideBrackets(this string input, out int openIndex, out int closeIndex)
+        public static string TextInsideBrackets(this string input, out int openIndex, out int closeIndex) => input.TextInsideEnclosures(out openIndex, out closeIndex, '[', ']');
+
+        // -----
+
+        /// <summary>
+        /// Gets the substring of text inside the first valid pair of braces found
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>
+        /// Substring within the next valid pair of braces, excluding the braces.
+        /// Returns empty string if no valid braces pair is found
+        /// </returns>
+        public static string TextInsideBraces(this string input) => input.TextInsideEnclosures(out _, out _, '{', '}');
+
+        /// <summary>
+        /// Gets the substring of text inside the first valid pair of braces found
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="openIndex">String index of the first open braces</param>
+        /// <param name="closeIndex">String index of the close brackets corresponding to the first one</param>
+        /// <returns>
+        /// Substring within the next valid pair of braces, excluding the braces.
+        /// Returns empty string if no valid braces pair is found
+        /// </returns>
+        public static string TextInsideBraces(this string input, out int openIndex, out int closeIndex) => input.TextInsideEnclosures(out openIndex, out closeIndex, '{', '}');
+
+        // ------------------------------
+
+        private static string TextInsideEnclosures(this string input, out int openIndex, out int closeIndex, in char openChar, in char closeChar)
         {
-            int openBracketCount = 0, closeBracketCount = 0;
+            int openCharCount = 0, closeCharCount = 0;
             openIndex = -1;
             closeIndex = -1;
+            if(input == null)
+                return null;
             for(int i = 0; i < input.Length; i++)
             {
-                if(input[i] == '[')
+                if(input[i] == openChar)
                 {
-                    openBracketCount++;
+                    openCharCount++;
                     if(openIndex == -1)
                         openIndex = i;
                 }
-                else if(input[i] == ']')
+                else if(input[i] == closeChar)
                 {
-                    closeBracketCount++;
-                    if(closeBracketCount > openBracketCount)
+                    closeCharCount++;
+                    if(closeCharCount > openCharCount)
                         return "";
-                    if(closeBracketCount == openBracketCount)
+                    if(closeCharCount == openCharCount)
                     {
                         closeIndex = i;
                         break;
@@ -105,5 +125,7 @@ namespace Sparkfire.Utility
                 return "";
             return input[(openIndex + 1)..closeIndex];
         }
+
+        #endregion
     }
 }

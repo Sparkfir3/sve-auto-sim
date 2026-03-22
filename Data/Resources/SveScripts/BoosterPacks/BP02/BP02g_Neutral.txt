@@ -265,7 +265,10 @@ stats 0/3;
 text "[fanfare] Reveal the top card of your deck. Give this follower [attack]+X. X equals the revealed card's cost.";
 
 ability Fanfare {
-    effect RevealTopPerformWithRevealedAmount(P, Atk);
+    effect ComplexEffect(
+        let amt = revealTopDeck.getValue(P)
+        perform Atk { amount = amt }
+    );
 }
 ability Spell name Atk {
     effect GiveStat(Atk, _) to Self;
