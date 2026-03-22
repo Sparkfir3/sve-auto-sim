@@ -4,9 +4,11 @@ namespace Sparkfire.Utility
     {
         public static bool IsNullOrWhiteSpace(this string input) => string.IsNullOrWhiteSpace(input);
 
-        public static string NextWord(this string input, in int startIndex) => input?.NextWord(startIndex, out _);
-        public static string NextWord(this string input, in int startIndex, out int endIndex)
+        public static string NextWord(this string input, int startIndex) => input?.NextWord(startIndex, out _);
+        public static string NextWord(this string input, int startIndex, out int endIndex)
         {
+            while(startIndex < input.Length && input[startIndex] == ' ')
+                startIndex++;
             endIndex = input.IndexOf(' ', startIndex);
             if(endIndex < startIndex)
             {
