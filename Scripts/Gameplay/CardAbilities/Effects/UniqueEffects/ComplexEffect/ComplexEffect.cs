@@ -21,7 +21,7 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            Debug.Log($"[CE] Function Length: {function.Length}\n{function}");
+            ComplexLog(LogMode.Main, $"{function}\nLength = {function.Length}");
             this.player = player;
             SVEEffectPool.Instance.StartCoroutine(ResolveOverTime(triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete));
         }
@@ -42,7 +42,7 @@ namespace SVESimulator
                 }
 
                 string token = function.NextWord(pointerL, out pointerR).ToLower();
-                Debug.Log($"[CE] [Main Parser] Token: {token}\nPointers: {pointerL}, {pointerR}");
+                ComplexLog(LogMode.Main, $"Token: {token}\nPointers: {pointerL}, {pointerR}");
                 pointerL = pointerR;
                 switch(token)
                 {
@@ -73,7 +73,7 @@ namespace SVESimulator
         private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
         {
             string variableName = function.NextWord(pointerL, out pointerL);
-            Debug.Log($"[CE] [Parse Variable] var = {variableName}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"var = {variableName}\nPointers: {pointerL}, {pointerR}");
             if(!function.NextWord(pointerL, out pointerL).Trim().Equals("="))
             {
                 pointerR = pointerL;
@@ -84,14 +84,14 @@ namespace SVESimulator
             if(pointerR < pointerL)
                 pointerR = function.Length - 1;
             string line = function[pointerL..pointerR].Trim();
-            Debug.Log($"[CE] [Parse Variable] Line = {line}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"Line = {line}\nPointers: {pointerL}, {pointerR}");
 
             Task<string> task = ParseValue(line);
             yield return new WaitUntil(() => task.IsCompleted);
             string value = task.Result;
 
             variables[variableName] = value;
-            Debug.Log($"[CE] [Parse Variable] var {variableName} = {value}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"var {variableName} = {value}\nPointers: {pointerL}, {pointerR}");
         }
 
         private async Task<string> ParseValue(string line)
@@ -142,7 +142,7 @@ namespace SVESimulator
             while(waiting || !player || !Application.isPlaying)
                 await Task.Yield();
             await Task.Delay(200);
-            Debug.Log($"[CE] [Reveal Top Deck] Instance ID {(card != null ? card.instanceId : "null")}");
+            ComplexLog(LogMode.Value, $"[Reveal Top Deck] Instance ID {(card != null ? card.instanceId : "null")}");
             return card != null ? new CE_Card
             {
                 card = card
@@ -155,18 +155,18 @@ namespace SVESimulator
             Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
-            Debug.Log($"[CE] [Perform Effect] Name = {effectName}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Perform, $"Effect Name = {effectName}\nPointers: {pointerL}, {pointerR}");
 
             string arguments = function[pointerR..].TextInsideBraces(out _, out int pointerEffectR);
             pointerR += pointerEffectR;
-            Debug.Log($"[CE] [Perform Effect] Args = {arguments}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Perform, $"Args: {arguments}\nPointers: {pointerL}, {pointerR}");
             pointerL = pointerR;
 
             string overrideAmount = null;
             if(!arguments.IsNullOrWhiteSpace())
             {
                 string token = arguments.NextWord(0, out int argPointer);
-                Debug.Log($"[CE] [Perform Effect] Token: {token}\nPointers: {pointerL}, {pointerR}");
+                ComplexLog(LogMode.Perform, $"Token: {token}\nPointers: {pointerL}, {pointerR}");
                 switch(token)
                 {
                     case "amount":
@@ -177,7 +177,7 @@ namespace SVESimulator
                             (string variable, string value) = (kvPair.Key, kvPair.Value);
                             overrideAmount = overrideAmount.Replace(variable, value);
                         }
-                        Debug.Log($"[CE] [Perform Effect] Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
+                        ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
                         break;
                     default:
                         break;
