@@ -11,28 +11,44 @@ namespace SVESimulator
 {
     public partial class ComplexEffect : SveEffect
     {
+        #region Variables
+
         [StringField("Function", width = 200), Order(1)]
         public string function;
 
+        [NonSerialized]
         private PlayerController player;
+        [NonSerialized]
         private int pointerL = 0, pointerR = 0;
+        [NonSerialized]
+        private int triggerInstanceId, sourceInstanceId;
+        [NonSerialized]
+        private string triggerZone, sourceZone;
+
+        #endregion
 
         // ------------------------------
+
+        #region Main Resolve
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
             ComplexLog(LogMode.Main, $"{function}\nLength = {function.Length}");
+
             this.player = player;
-            SVEEffectPool.Instance.StartCoroutine(ResolveOverTime(triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete));
+            triggerInstanceId = triggeringCardInstanceId;
+            triggerZone = triggeringCardZone;
+            sourceInstanceId = sourceCardInstanceId;
+            sourceZone = sourceCardZone;
+            SVEEffectPool.Instance.StartCoroutine(ResolveOverTime(onComplete));
         }
 
-        private IEnumerator ResolveOverTime(int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete)
+        private IEnumerator ResolveOverTime(Action onComplete)
         {
-            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Dictionary<string, string> variables = new();
-
             pointerL = 0;
             pointerR = 0;
+
             while(pointerL < function.Length)
             {
                 if(function[pointerL] == ' ' || function[pointerL] == '\n' || function[pointerL] == '\t' || function[pointerL] == '\r' || function[pointerL] == ';')
@@ -51,7 +67,7 @@ namespace SVESimulator
                         break;
 
                     case "perform":
-                        yield return PerformEffect(variables, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone);
+                        yield return PerformEffect(variables);
                         break;
                     case "performcostless":
                         // TODO
@@ -68,7 +84,11 @@ namespace SVESimulator
             onComplete?.Invoke();
         }
 
+        #endregion
+
         // ------------------------------
+
+        #region Variable Parsing
 
         private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
         {
@@ -128,6 +148,12 @@ namespace SVESimulator
             return (obj as CE_Value)?.value ?? "";
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Get CE Object
+
         private async Task<CE_Object> RevealTopDeck()
         {
             bool waiting = true;
@@ -149,10 +175,13 @@ namespace SVESimulator
             } : null;
         }
 
+        #endregion
+
         // ------------------------------
 
-        private IEnumerator PerformEffect(Dictionary<string, string> variables, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone,
-            Action onComplete = null)
+        #region Perform Effect
+
+        private IEnumerator PerformEffect(Dictionary<string, string> variables, Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
             ComplexLog(LogMode.Perform, $"Effect Name = {effectName}\nPointers: {pointerL}, {pointerR}");
@@ -184,9 +213,11 @@ namespace SVESimulator
                 }
             }
 
-            yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
+            yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
                 onComplete, overrideAmount: overrideAmount);
             yield return new WaitForEndOfFrame();
         }
+
+        #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace SVESimulator
             Perform = 4,
         }
 
-        private const LogMode LOG_MODE = LogMode.All;
+        private const LogMode LOG_MODE = LogMode.None;
 
         private void ComplexLog(LogMode mode, string message)
         {
