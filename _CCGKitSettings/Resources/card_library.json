@@ -33322,7 +33322,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = revealTopDeck.getValue(P)         perform Atk { amount amt }",
+              "function": "let amt = revealTopDeck.getValue(P)\n        perform Atk { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,

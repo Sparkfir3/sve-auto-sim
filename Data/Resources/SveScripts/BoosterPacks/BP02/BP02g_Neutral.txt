@@ -267,7 +267,7 @@ text "[fanfare] Reveal the top card of your deck. Give this follower [attack]+X.
 ability Fanfare {
     effect ComplexEffect(
         let amt = revealTopDeck.getValue(P)
-        perform Atk { amount amt }
+        perform Atk { amount = amt }
     );
 }
 ability Spell name Atk {

@@ -73,7 +73,7 @@ namespace SVESimulator.SveScript
                 name = name
             };
 
-            string[] args = text.Replace('\n', ' ').Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+            string[] args = text.Replace("\r", "").Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
             ParseAbilityArgs(args, newAbility, null);
             cardInfo.abilities.Add(newAbility);
         }
@@ -85,7 +85,7 @@ namespace SVESimulator.SveScript
                 name = name
             };
 
-            string[] args = text.Replace('\n', ' ').Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+            string[] args = text.Replace("\r", "").Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
             ParseAbilityArgs(args, newAbility, triggerType);
             cardInfo.abilities.Add(newAbility);
         }
@@ -97,7 +97,7 @@ namespace SVESimulator.SveScript
                 name = name
             };
 
-            string[] args = text.Replace('\n', ' ').Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+            string[] args = text.Replace("\r", "").Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
             ParseAbilityArgs(args, newAbility, triggerType);
             cardInfo.abilities.Add(newAbility);
         }
