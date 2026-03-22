@@ -25,6 +25,13 @@ namespace SVESimulator.SveScript
                 throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text: {text}");
             effectCcgType = effectParams.ccgType;
 
+            // Unique Case - Complex Effect (Function Parameter Type)
+            if(effectParams.parameters.Length > 0 && effectParams.parameters[0] == EffectParameterType.Function)
+            {
+                ParseMainArgsArray(new [] { mainEffectArgs }, effectParams, ref effectData);
+                return effectData;
+            }
+
             // Parse additional args
             string[] additionalArgs = text[pointer..].Trim().Split();
             for(int i = 0; i < additionalArgs.Length; i++)
@@ -189,6 +196,9 @@ namespace SVESimulator.SveScript
                     case EffectParameterType.SingleEffect:
                         effectData.Add("effectName", argument);
                         break;
+                    case EffectParameterType.Function:
+                        effectData.Add("function", argument?.Trim());
+                        break;
 
                     // Dynamic length arguments - must always be the last argument in the list
                     case EffectParameterType.CheckCardActions:
@@ -242,7 +252,7 @@ namespace SVESimulator.SveScript
         
         #region Effect Parameters
         
-        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Trait, Filter, FilterOptional, PassiveDuration }
+        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Trait, Filter, FilterOptional, Function, PassiveDuration }
         private readonly struct EffectParams
         {
             public readonly string ccgType;
@@ -352,6 +362,8 @@ namespace SVESimulator.SveScript
             { "ExtraTurn", new EffectParams("SVESimulator.ExtraTurnEffect",                             false, false) },
             { "Evolve", new EffectParams("SVESimulator.EvolveEffect")                                   },
             { "FlipEvolveDeckFaceDown", new EffectParams("SVESimulator.FlipEvolveDeckFaceDownEffect",   false, false, EffectParameterType.FilterOptional) },
+            { "Complex", new EffectParams("SVESimulator.ComplexEffect",                                 false, false, EffectParameterType.Function) },
+            { "ComplexEffect", new EffectParams("SVESimulator.ComplexEffect",                           false, false, EffectParameterType.Function) },
 
             // ------------------------------
 

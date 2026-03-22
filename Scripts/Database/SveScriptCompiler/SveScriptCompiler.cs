@@ -165,7 +165,8 @@ namespace SVESimulator.SveScript
                         break;
 
                     case "ability":
-                        nextIndex = text.IndexOf('}', pointer);
+                        text[pointer..].TextInsideBraces(out _, out nextIndex);
+                        nextIndex += pointer;
                         if(nextIndex <= pointer)
                             throw new Exception();
                         ParseAndAddAbility(text[(pointer + 7)..nextIndex], ref cardInfo); // 7 = length of "ability"
