@@ -272,7 +272,9 @@ namespace SVESimulator
 
         public void DrawCard(CardObject cardObject = null, bool reveal = false)
         {
-            // TODO - check deck size before drawing
+            if(!cardObject && localZoneController.deckZone.Runtime.cards.Count == 0)
+                return;
+
             RuntimeCard runtimeCard = cardObject ? cardObject.RuntimeCard : null;
             if(runtimeCard == null)
             {
