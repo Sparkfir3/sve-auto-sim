@@ -16,6 +16,19 @@ namespace SVESimulator
 
         #region Game Flow
 
+        public void InitializeDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
+        {
+            // Evolve deck
+            oppZoneController.evolveDeckZone.SetStackHeight(msg.evolveDeckSize);
+
+            // Leader
+            RuntimeCard leader = new RuntimeCard();
+            InitRuntimeCard(ref leader, msg.leaderCard);
+            oppZoneController.InitializeLeaderCard(leader, leader.cardId);
+            oppZoneController.deckZone.Runtime.RemoveCard(leader);
+            oppZoneController.leaderZone.Runtime.AddCard(leader);
+        }
+
         public void SetGoingFirst(SetGoingFirstPlayerMessage msg)
         {
             playerInfo.isGoingFirstDecided = true;
@@ -117,19 +130,6 @@ namespace SVESimulator
         // ------------------------------
 
         #region Card Movement
-
-        public void InitializeDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
-        {
-            // Evolve deck
-            oppZoneController.evolveDeckZone.SetStackHeight(msg.evolveDeckSize);
-
-            // Leader
-            RuntimeCard leader = new RuntimeCard();
-            InitRuntimeCard(ref leader, msg.leaderCard);
-            oppZoneController.InitializeLeaderCard(leader, leader.cardId);
-            oppZoneController.deckZone.Runtime.RemoveCard(leader);
-            oppZoneController.leaderZone.Runtime.AddCard(leader);
-        }
 
         public void DrawCard(OpponentDrawCardMessage msg)
         {
@@ -412,7 +412,7 @@ namespace SVESimulator
         
         // ------------------------------
         
-        #region Combat
+        #region Combat & Attack Handling
 
         public void DeclareAttack(OpponentDeclareAttackMessage msg)
         {
@@ -457,11 +457,11 @@ namespace SVESimulator
             });
         }
 
-        public void AddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
-        {
-            PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
-            sveEffectSolver.AddLeaderDefense(targetPlayer, msg.amount);
-        }
+        #endregion
+
+        // ------------------------------
+
+        #region Card Stats
 
         public void ReserveCard(OpponentReserveCardMessage msg)
         {
@@ -511,6 +511,12 @@ namespace SVESimulator
                 playerController.LocalEvents.SendToCemetery(card, onlyMoveObject: true, isDestroy: true);
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Keywords (& Counters)
+
         public void ApplyKeywordToCard(OpponentApplyKeywordMessage msg)
         {
             CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
@@ -530,6 +536,12 @@ namespace SVESimulator
         // ------------------------------
 
         #region Player Stats
+
+        public void AddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
+        {
+            PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
+            sveEffectSolver.AddLeaderDefense(targetPlayer, msg.amount);
+        }
 
         public void AddEvolvePoints(OpponentAddEvolvePointsMessage msg)
         {

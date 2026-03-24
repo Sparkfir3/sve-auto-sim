@@ -15,11 +15,11 @@ namespace SVESimulator
         public override void RegisterNetworkHandlers()
         {
             // Game initialization
+            NetworkServer.RegisterHandler<LocalInitDeckAndLeaderMessage>(OnInitDeckAndLeader);
             NetworkServer.RegisterHandler<SetGoingFirstPlayerMessage>(SetGoingFirst);
             NetworkServer.RegisterHandler<LocalPerformMulliganMessage>(DoMulligan);
             NetworkServer.RegisterHandler<SetMaxPlayPointsMessage>(SetMaxPlayPoints);
             NetworkServer.RegisterHandler<SetCurrentPlayPointsMessage>(SetCurrentPlayPoints);
-            NetworkServer.RegisterHandler<LocalInitDeckAndLeaderMessage>(OnInitDeckAndLeader);
             NetworkServer.RegisterHandler<SetGamePhaseMessage>(OnSetGamePhase);
 
             // Zone Controls
@@ -59,11 +59,11 @@ namespace SVESimulator
         public override void UnregisterNetworkHandlers()
         {
             // Game initialization
+            NetworkServer.UnregisterHandler<LocalInitDeckAndLeaderMessage>();
             NetworkServer.UnregisterHandler<SetGoingFirstPlayerMessage>();
             NetworkServer.UnregisterHandler<LocalPerformMulliganMessage>();
             NetworkServer.UnregisterHandler<SetMaxPlayPointsMessage>();
             NetworkServer.UnregisterHandler<SetCurrentPlayPointsMessage>();
-            NetworkServer.UnregisterHandler<LocalInitDeckAndLeaderMessage>();
             NetworkServer.UnregisterHandler<SetGamePhaseMessage>();
 
             // Zone Controls
@@ -105,6 +105,32 @@ namespace SVESimulator
         // ------------------------------
 
         #region Game Initialization
+
+        private void OnInitDeckAndLeader(NetworkConnection conn, LocalInitDeckAndLeaderMessage msg)
+        {
+            PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
+            List<RuntimeCard> evolvedCards = player.namedZones[SVEProperties.Zones.Deck].cards.Where(x => msg.evolvedCardsInstanceIds.Contains(x.instanceId)).ToList();
+            RuntimeCard leaderCard = player.namedZones[SVEProperties.Zones.Deck].cards.Find(x => x.instanceId == msg.leaderCardInstanceId);
+            if(leaderCard == null)
+            {
+                Debug.LogError($"[Init Deck/Leader] Leader card was null!");
+                Debug.LogError(player.namedZones[SVEProperties.Zones.Leader].cards.Count);
+                return;
+            }
+
+            OpponentInitDeckAndLeaderMessage initMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                evolveDeckSize = msg.evolvedCardsInstanceIds.Length,
+                leaderCard = NetworkingUtils.GetNetCard(leaderCard)
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, initMsg);
+            foreach(RuntimeCard card in evolvedCards)
+            {
+                (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, card, SVEProperties.Zones.Deck, SVEProperties.Zones.EvolveDeck);
+            }
+            (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, leaderCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
+        }
 
         private void SetGoingFirst(NetworkConnection conn, SetGoingFirstPlayerMessage msg)
         {
@@ -160,32 +186,6 @@ namespace SVESimulator
 
             (server.effectSolver as SVEEffectSolver).SetCurrentPlayPoints(player.netId, msg.currentPlayPoints);
             server.SafeSendToClient(server.gameState.currentOpponent, msg);
-        }
-
-        private void OnInitDeckAndLeader(NetworkConnection conn, LocalInitDeckAndLeaderMessage msg)
-        {
-            PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
-            List<RuntimeCard> evolvedCards = player.namedZones[SVEProperties.Zones.Deck].cards.Where(x => msg.evolvedCardsInstanceIds.Contains(x.instanceId)).ToList();
-            RuntimeCard leaderCard = player.namedZones[SVEProperties.Zones.Deck].cards.Find(x => x.instanceId == msg.leaderCardInstanceId);
-            if(leaderCard == null)
-            {
-                Debug.LogError($"[Init Deck/Leader] Leader card was null!");
-                Debug.LogError(player.namedZones[SVEProperties.Zones.Leader].cards.Count);
-                return;
-            }
-
-            OpponentInitDeckAndLeaderMessage initMsg = new()
-            {
-                playerNetId = msg.playerNetId,
-                evolveDeckSize = msg.evolvedCardsInstanceIds.Length,
-                leaderCard = NetworkingUtils.GetNetCard(leaderCard)
-            };
-            server.SafeSendToClient(server.gameState.currentOpponent, initMsg);
-            foreach(RuntimeCard card in evolvedCards)
-            {
-                (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, card, SVEProperties.Zones.Deck, SVEProperties.Zones.EvolveDeck);
-            }
-            (server.effectSolver as SVEEffectSolver).MoveCard(msg.playerNetId, leaderCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
         }
 
         private void OnSetGamePhase(NetworkConnection conn, SetGamePhaseMessage msg)

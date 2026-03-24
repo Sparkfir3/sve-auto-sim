@@ -59,15 +59,17 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<OpponentAttackFollowerMessage>(OnOpponentAttackFollower);
             NetworkClient.RegisterHandler<OpponentAttackLeaderMessage>(OnOpponentAttackLeader);
 
-            // Stat and keyword handling
-            NetworkClient.RegisterHandler<OpponentAddLeaderDefenseMessage>(OnOpponentAddLeaderDefense);
+            // Stat handling
             NetworkClient.RegisterHandler<OpponentReserveCardMessage>(OnOpponentReserveCard);
             NetworkClient.RegisterHandler<OpponentEngageCardMessage>(OnOpponentEngageCard);
             NetworkClient.RegisterHandler<OpponentSetCardStatMessage>(OnOpponentSetCardStat);
             NetworkClient.RegisterHandler<OpponentCardStatModifierMessage>(OnOpponentApplyCardStatModifier);
+
+            // Keywords handling
             NetworkClient.RegisterHandler<OpponentApplyKeywordMessage>(OnOpponentApplyKeyword);
 
             // Player stats
+            NetworkClient.RegisterHandler<OpponentAddLeaderDefenseMessage>(OnOpponentAddLeaderDefense);
             NetworkClient.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
 
             // Other
@@ -122,15 +124,17 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<OpponentAttackFollowerMessage>();
             NetworkClient.UnregisterHandler<OpponentAttackLeaderMessage>();
 
-            // Stat and keyword handling
-            NetworkClient.UnregisterHandler<OpponentAddLeaderDefenseMessage>();
+            // Stat handling
             NetworkClient.UnregisterHandler<OpponentReserveCardMessage>();
             NetworkClient.UnregisterHandler<OpponentEngageCardMessage>();
             NetworkClient.UnregisterHandler<OpponentSetCardStatMessage>();
             NetworkClient.UnregisterHandler<OpponentCardStatModifierMessage>();
+
+            // Keywords handling
             NetworkClient.UnregisterHandler<OpponentApplyKeywordMessage>();
 
             // Player stats
+            NetworkClient.UnregisterHandler<OpponentAddLeaderDefenseMessage>();
             NetworkServer.UnregisterHandler<OpponentAddEvolvePointsMessage>();
 
             // Other
@@ -144,6 +148,15 @@ namespace SVESimulator
         // ------------------------------
 
         #region Game Initialization
+
+        private void OnOpponentInitDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.InitializeDeckAndLeader(msg);
+        }
 
         private void SetGoingFirst(SetGoingFirstPlayerMessage msg)
         {
@@ -195,15 +208,6 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.SetCurrentPlayPoints(msg.currentPlayPoints, false);
-        }
-
-        private void OnOpponentInitDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
-        {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
-            if(!player)
-                return;
-
-            player.OpponentEvents.InitializeDeckAndLeader(msg);
         }
 
         private void OnSetGamePhase(SetGamePhaseMessage msg)
@@ -462,16 +466,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Stat and keyword handling
-
-        protected void OnOpponentAddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
-        {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
-            if(!player)
-                return;
-
-            player.OpponentEvents.AddLeaderDefense(msg);
-        }
+        #region Stat Handling
 
         private void OnOpponentReserveCard(OpponentReserveCardMessage msg)
         {
@@ -509,6 +504,12 @@ namespace SVESimulator
             player.OpponentEvents.ApplyModifierToCard(msg);
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Keywords Handling
+
         private void OnOpponentApplyKeyword(OpponentApplyKeywordMessage msg)
         {
             PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
@@ -523,6 +524,15 @@ namespace SVESimulator
         // ------------------------------
 
         #region Player Stats
+
+        protected void OnOpponentAddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.AddLeaderDefense(msg);
+        }
 
         private void OnOpponentAddEvolvePoints(OpponentAddEvolvePointsMessage msg)
         {
