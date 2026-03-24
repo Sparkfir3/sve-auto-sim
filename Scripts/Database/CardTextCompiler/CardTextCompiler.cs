@@ -99,6 +99,7 @@ namespace SVESimulator.CardTextData
                     serializer.Serialize(jWriter, newTextData);
                 }
             }
+            Debug.Log($"Compiled card text for {newTextData.Count} cards in {baseScript.name}, saved to {outputFile.name}");
 #endif
         }
 
