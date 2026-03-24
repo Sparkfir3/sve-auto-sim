@@ -42,31 +42,16 @@
                 "value": "PutOnFieldEngaged"
             },
             {
-                "value": "CannotDealDamage"
-            },
-            {
-                "value": "CannotAttack"
-            },
-            {
                 "value": "UseDefAsAtk"
-            },
-            {
-                "value": "DoesNotTakeCombatDamage"
             },
             {
                 "value": "UseRuneFollowersForSpellchain"
             },
             {
-                "value": "DoubleCombatDamage"
-            },
-            {
-                "value": "DoubleLeaderDamage"
-            },
-            {
-                "value": "DoesNotTakeDamage"
-            },
-            {
                 "value": "CantDestroyByAbilities"
+            },
+            {
+                "value": "CannotAttack"
             },
             {
                 "value": "CannotAttackLeaders"
@@ -111,6 +96,27 @@
         "id": 4
     },
     {
+        "name": "OtherDamageMods",
+        "values": [
+            {
+                "value": "CannotDealDamage"
+            },
+            {
+                "value": "DoesNotTakeDamage"
+            },
+            {
+                "value": "DoesNotTakeCombatDamage"
+            },
+            {
+                "value": "DoubleCombatDamage"
+            },
+            {
+                "value": "DoubleLeaderDamage"
+            }
+        ],
+        "id": 5
+    },
+    {
         "name": "StackCounter",
         "values": [
             {
@@ -132,7 +138,7 @@
                 "value": "Stack5"
             }
         ],
-        "id": 5
+        "id": 6
     },
     {
         "name": "SpellCounter",
@@ -147,7 +153,7 @@
                 "value": "Spell2"
             }
         ],
-        "id": 6
+        "id": 7
     },
     {
         "name": "PrayerCounter",
@@ -171,6 +177,6 @@
                 "value": "Prayer5"
             }
         ],
-        "id": 7
+        "id": 8
     }
 ]
