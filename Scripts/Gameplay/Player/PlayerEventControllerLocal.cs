@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +63,7 @@ namespace SVESimulator
             // playerController.InitializeEvolvePointDisplays(localUserIsFirst); // don't need to call it here??? how much duct tape did i use to make this system lmao
             StartCoroutine(playerController.StopTurnOnDelay());
         }
-        
+
         public void Mulligan(bool performMulligan, bool endTurn = true)
         {
             if(!performMulligan)
@@ -73,7 +72,7 @@ namespace SVESimulator
                     playerController.StopTurn();
                 return;
             }
-            
+
             // ---
 
             // Choose card order for mulligan
@@ -147,7 +146,7 @@ namespace SVESimulator
         }
 
         #endregion
-        
+
         // ------------------------------
 
         #region Zone Controls
@@ -775,7 +774,7 @@ namespace SVESimulator
                 return false;
 
             // Cost Check
-			int playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
+            int playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
             if(!ignoreAltCosts && card.RuntimeCard.HasAvailableAlternateCost(playerController, out List<TriggeredAbility> alternateCostAbilities))
             {
                 if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
@@ -803,7 +802,7 @@ namespace SVESimulator
                 playerNetId = netIdentity,
                 cardInstanceId = card.RuntimeCard.instanceId,
                 originZone = originZone,
-				playPointCost = playPointCost
+                playPointCost = playPointCost
             };
             NetworkClient.Send(msg);
             return true;
@@ -838,9 +837,9 @@ namespace SVESimulator
         }
 
         #endregion
-        
+
         // ------------------------------
-        
+
         #region Combat & Attack Handling
 
         private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
@@ -855,7 +854,7 @@ namespace SVESimulator
             };
             NetworkClient.Send(msg);
         }
-        
+
         public void AttackFollower(CardObject attackingCard, CardObject defendingCard)
         {
             if(!isActivePlayer || attackingCard == null || defendingCard == null)

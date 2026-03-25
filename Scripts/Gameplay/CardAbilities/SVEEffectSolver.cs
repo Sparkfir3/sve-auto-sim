@@ -4,8 +4,6 @@ using System.Linq;
 using CCGKit;
 using Mirror;
 using UnityEngine;
-using Sirenix.OdinInspector;
-using Random = System.Random;
 
 namespace SVESimulator
 {
@@ -552,7 +550,7 @@ namespace SVESimulator
         {
             bool isFollowerCombat = defender != null;
             if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage)
-                || (isFollowerCombat && (defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeDamage) || defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage))))
+               || (isFollowerCombat && (defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeDamage) || defender.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeCombatDamage))))
                 return 0;
 
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
@@ -571,7 +569,7 @@ namespace SVESimulator
                 damage = Mathf.Max(damage - 1, 0);
 
             if((isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleCombatDamage))
-                || (!isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleLeaderDamage)))
+               || (!isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleLeaderDamage)))
                 damage *= 2;
 
             return damage;

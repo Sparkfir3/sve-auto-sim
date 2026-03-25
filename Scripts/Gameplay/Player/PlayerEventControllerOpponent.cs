@@ -1,5 +1,4 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +38,7 @@ namespace SVESimulator
             GameUIManager.GoingFirstScreen.SetDisplayMode(SelectGoingFirstScreen.Mode.None, false);
             playerController.InitializeEvolvePointDisplays(playerInfo.isGoingFirst);
         }
-        
+
         public void Mulligan(OpponentPerformMulliganMessage msg)
         {
             List<CardObject> cards = oppZoneController.handZone.AllCards.ToList(); // copy to not modify collection while iterating
@@ -56,7 +55,7 @@ namespace SVESimulator
             sveEffectSolver.SetGamePhase(phase);
             GameUIManager.GameControlsUI.SetPhase(phase);
         }
-        
+
         #endregion
 
         // ------------------------------
@@ -328,7 +327,7 @@ namespace SVESimulator
             sveEffectSolver.SendCardToExArea(msg.isOpponentCard ? playerInfo : opponentInfo, card.RuntimeCard, msg.originZone);
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToExArea(x, msg.fieldSlotId, onComplete));
         }
-        
+
         #endregion
 
         // ------------------------------
@@ -409,9 +408,9 @@ namespace SVESimulator
         }
 
         #endregion
-        
+
         // ------------------------------
-        
+
         #region Combat & Attack Handling
 
         public void DeclareAttack(OpponentDeclareAttackMessage msg)

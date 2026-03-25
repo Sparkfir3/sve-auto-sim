@@ -420,10 +420,10 @@ namespace SVESimulator
                 localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
-                {
-                    CmdSetIsResolvingEffect(false);
-                    onComplete?.Invoke();
-                });
+                    {
+                        CmdSetIsResolvingEffect(false);
+                        onComplete?.Invoke();
+                    });
             }
             void ResolveWithCost()
             {
@@ -523,11 +523,11 @@ namespace SVESimulator
                 foreach(RegisteredPassiveAbility registeredPassive in registeredPassives)
                 {
                     if((registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
-                        || (registeredPassive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != registeredPassive.sourceCardInstanceId)
-						|| registeredPassive.effect is MinusCostOtherPassive
-                        || !registeredPassive.filters.MatchesCard(card)
-                        || registeredPassive.affectedCards.Contains(card)
-                        || !registeredPassive.MeetsCondition(localPlayer))
+                       || (registeredPassive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != registeredPassive.sourceCardInstanceId)
+                       || registeredPassive.effect is MinusCostOtherPassive
+                       || !registeredPassive.filters.MatchesCard(card)
+                       || registeredPassive.affectedCards.Contains(card)
+                       || !registeredPassive.MeetsCondition(localPlayer))
                         continue;
 
                     registeredPassive.effect.ApplyPassive(card, localPlayer);
