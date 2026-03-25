@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +21,33 @@ namespace SVESimulator
 
         #region Game Flow
 
+        public void InitializeDeckAndLeader()
+        {
+            // Evolve deck
+            List<RuntimeCard> evolvedCards = localZoneController.InitializeEvolveDeck();
+            foreach(RuntimeCard card in evolvedCards)
+            {
+                sveEffectSolver.MoveCard(netIdentity, card, SVEProperties.Zones.Deck, SVEProperties.Zones.EvolveDeck);
+            }
+
+            // Leader
+            // for some reason RuntimeZones aren't getting updated, probably because this gets called on game start??? idk man
+            // leaving the effect solver call in here anyways, though
+            RuntimeCard leader = localZoneController.deckZone.Runtime.cards.FirstOrDefault(x => x.cardType.name.Equals(SVEProperties.CardTypes.Leader));
+            Debug.Assert(leader != null);
+            CardObject leaderCard = localZoneController.InitializeLeaderCard(leader, leader.cardId);
+            sveEffectSolver.MoveCard(netIdentity, leaderCard.RuntimeCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
+
+            // Send msg
+            LocalInitDeckAndLeaderMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                evolvedCardsInstanceIds = evolvedCards.Select(x => x.instanceId).ToArray(),
+                leaderCardInstanceId = leader.instanceId
+            };
+            NetworkClient.Send(msg);
+        }
+
         public void SetGoingFirst(bool localUserIsFirst)
         {
             if(playerInfo.isGoingFirstDecided)
@@ -37,7 +63,7 @@ namespace SVESimulator
             // playerController.InitializeEvolvePointDisplays(localUserIsFirst); // don't need to call it here??? how much duct tape did i use to make this system lmao
             StartCoroutine(playerController.StopTurnOnDelay());
         }
-        
+
         public void Mulligan(bool performMulligan, bool endTurn = true)
         {
             if(!performMulligan)
@@ -46,7 +72,7 @@ namespace SVESimulator
                     playerController.StopTurn();
                 return;
             }
-            
+
             // ---
 
             // Choose card order for mulligan
@@ -120,7 +146,7 @@ namespace SVESimulator
         }
 
         #endregion
-        
+
         // ------------------------------
 
         #region Zone Controls
@@ -243,36 +269,11 @@ namespace SVESimulator
 
         #region Card Movement
 
-        public void InitializeDeckAndLeader()
-        {
-            // Evolve deck
-            List<RuntimeCard> evolvedCards = localZoneController.InitializeEvolveDeck();
-            foreach(RuntimeCard card in evolvedCards)
-            {
-                sveEffectSolver.MoveCard(netIdentity, card, SVEProperties.Zones.Deck, SVEProperties.Zones.EvolveDeck);
-            }
-
-            // Leader
-            // for some reason RuntimeZones aren't getting updated, probably because this gets called on game start??? idk man
-            // leaving the effect solver call in here anyways, though
-            RuntimeCard leader = localZoneController.deckZone.Runtime.cards.FirstOrDefault(x => x.cardType.name.Equals(SVEProperties.CardTypes.Leader));
-            Debug.Assert(leader != null);
-            CardObject leaderCard = localZoneController.InitializeLeaderCard(leader, leader.cardId);
-            sveEffectSolver.MoveCard(netIdentity, leaderCard.RuntimeCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
-
-            // Send msg
-            LocalInitDeckAndLeaderMessage msg = new()
-            {
-                playerNetId = netIdentity,
-                evolvedCardsInstanceIds = evolvedCards.Select(x => x.instanceId).ToArray(),
-                leaderCardInstanceId = leader.instanceId
-            };
-            NetworkClient.Send(msg);
-        }
-
         public void DrawCard(CardObject cardObject = null, bool reveal = false)
         {
-            // TODO - check deck size before drawing
+            if(!cardObject && localZoneController.deckZone.Runtime.cards.Count == 0)
+                return;
+
             RuntimeCard runtimeCard = cardObject ? cardObject.RuntimeCard : null;
             if(runtimeCard == null)
             {
@@ -773,7 +774,7 @@ namespace SVESimulator
                 return false;
 
             // Cost Check
-			int playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
+            int playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
             if(!ignoreAltCosts && card.RuntimeCard.HasAvailableAlternateCost(playerController, out List<TriggeredAbility> alternateCostAbilities))
             {
                 if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
@@ -801,7 +802,7 @@ namespace SVESimulator
                 playerNetId = netIdentity,
                 cardInstanceId = card.RuntimeCard.instanceId,
                 originZone = originZone,
-				playPointCost = playPointCost
+                playPointCost = playPointCost
             };
             NetworkClient.Send(msg);
             return true;
@@ -836,10 +837,10 @@ namespace SVESimulator
         }
 
         #endregion
-        
+
         // ------------------------------
-        
-        #region Combat
+
+        #region Combat & Attack Handling
 
         private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
         {
@@ -853,7 +854,7 @@ namespace SVESimulator
             };
             NetworkClient.Send(msg);
         }
-        
+
         public void AttackFollower(CardObject attackingCard, CardObject defendingCard)
         {
             if(!isActivePlayer || attackingCard == null || defendingCard == null)
@@ -916,17 +917,11 @@ namespace SVESimulator
             };
         }
 
-        public void AddLeaderDefense(PlayerInfo targetPlayer, int amount)
-        {
-            sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
-            LocalAddLeaderDefenseMessage msg = new()
-            {
-                playerNetId = netIdentity,
-                targetPlayer = targetPlayer.netId,
-                amount = amount
-            };
-            NetworkClient.Send(msg);
-        }
+        #endregion
+
+        // ------------------------------
+
+        #region Card Stats
 
         public void ReserveCard(RuntimeCard card)
         {
@@ -1008,6 +1003,12 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Keywords & Counters
+
         public void ApplyKeywordToCard(RuntimeCard card, int type, int value, bool adding)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
@@ -1086,6 +1087,18 @@ namespace SVESimulator
         // ------------------------------
 
         #region Player Stats
+
+        public void AddLeaderDefense(PlayerInfo targetPlayer, int amount)
+        {
+            sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
+            LocalAddLeaderDefenseMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetPlayer = targetPlayer.netId,
+                amount = amount
+            };
+            NetworkClient.Send(msg);
+        }
 
         public void AddEvolvePoints(PlayerInfo targetPlayer, int amount)
         {

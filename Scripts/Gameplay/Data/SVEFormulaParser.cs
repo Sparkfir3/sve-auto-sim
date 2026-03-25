@@ -90,14 +90,14 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Value
+        #region Parse Value
 
         public static int ParseValue(in string formula, in PlayerController player, in CardObject card) => ParseValue(formula, player, card.RuntimeCard);
         public static int ParseValue(in string formula, in PlayerController player, int cardInstanceId, string cardZone)
             => ParseValue(formula, player, player ? player.GetPlayerInfo().namedZones[cardZone].cards.FirstOrDefault(x => x.instanceId == cardInstanceId) : null);
         public static int ParseValue(in string formula, in PlayerController player = null, in RuntimeCard card = null)
         {
-            if(string.IsNullOrWhiteSpace(formula))
+            if(formula.IsNullOrWhiteSpace())
                 return 0;
 
             // Parse left hand side
@@ -114,7 +114,7 @@ namespace SVESimulator
             if(nextIndex >= formula.Length)
                 return leftHandValue;
 
-            // Operator
+            // Get Operator
             while(formula[nextIndex] == ' ')
                 nextIndex++;
             FormulaType formulaType = formula[nextIndex++] switch
@@ -144,6 +144,8 @@ namespace SVESimulator
                 '?' => FormulaType.Conditional,
                 _ => FormulaType.None
             };
+
+            // Check non-arithmetic operator
             switch(formulaType)
             {
                 case FormulaType.None:
@@ -225,7 +227,7 @@ namespace SVESimulator
         public static bool ParseValueAsCondition(in string formula, PlayerController player = null, CardObject card = null) => ParseValueAsCondition(formula, player, card ? card.RuntimeCard : null);
         public static bool ParseValueAsCondition(in string formula, PlayerController player = null, RuntimeCard card = null)
         {
-            if(string.IsNullOrWhiteSpace(formula))
+            if(formula.IsNullOrWhiteSpace())
                 return true;
             return ParseValue(formula, player, card) > 0;
         }
@@ -233,7 +235,7 @@ namespace SVESimulator
         public static void ParseValueAsMinMax(in string formula, PlayerController player, out int min, out int max) => ParseValueAsMinMax(formula, player, null, out min, out max);
         public static void ParseValueAsMinMax(in string formula, PlayerController player, RuntimeCard card, out int min, out int max)
         {
-            if(string.IsNullOrWhiteSpace(formula))
+            if(formula.IsNullOrWhiteSpace())
             {
                 min = max = 0;
             }
@@ -247,6 +249,12 @@ namespace SVESimulator
                 min = max = ParseValue(formula, player, card);
             }
         }
+
+        #endregion
+
+        // -----
+
+        #region Get Value (Private Functions)
 
         private static int ParseFormulaInt(in string formula, int startIndex, out int endIndex, in PlayerController player = null, in RuntimeCard card = null)
         {
@@ -421,13 +429,13 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Filter
+        #region Parse Filter
 
         public static Dictionary<CardFilterSetting, string> ParseCardFilterFormula(string formula)
         {
             int nextIndex = 0;
             Dictionary<CardFilterSetting, string> filters = new();
-            if(string.IsNullOrWhiteSpace(formula))
+            if(formula.IsNullOrWhiteSpace())
                 return filters;
 
             // Shortcut handling
@@ -530,6 +538,8 @@ namespace SVESimulator
             min = ParseFormulaInt(substrings[0], 0, out _);
             max = ParseFormulaInt(substrings[1], 0, out _);
         }
+
+        // -----
         
         private static string ParseFilterFormulaSubstring(in string formula, int startIndex, out int endIndex)
         {
@@ -551,7 +561,7 @@ namespace SVESimulator
         // ------------------------------
 
         #region Parsing Utils
-        
+
         private static bool CharIsInt(char ch) => ch >= 48 && ch <= 57;
         private static int CharToInt(char ch) => ch - 48;
 

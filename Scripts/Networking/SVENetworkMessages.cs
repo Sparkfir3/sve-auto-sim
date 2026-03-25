@@ -1,7 +1,5 @@
 using CCGKit;
 using Mirror;
-using UnityEngine;
-using Sirenix.OdinInspector;
 
 namespace SVESimulator
 {

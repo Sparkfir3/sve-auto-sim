@@ -8,9 +8,9 @@ namespace SVESimulator
 
         public enum Counters
         {
-            Stack = 5,
-            Spell = 6,
-            Prayer = 7,
+            Stack = 6,
+            Spell = 7,
+            Prayer = 8,
         }
 
         public enum SVEEffectTarget
@@ -152,26 +152,31 @@ namespace SVESimulator
 
         public static class PassiveAbilities
         {
+            // Passive Abilities
             public const string IgnoreWard = "IgnoreWard";
             public const string PutOnFieldEngaged = "PutOnFieldEngaged";
-            public const string CannotDealDamage = "CannotDealDamage";
-            public const string CannotAttack = "CannotAttack";
             public const string UseDefAsAtk = "UseDefAsAtk";
-            public const string DoesNotTakeCombatDamage = "DoesNotTakeCombatDamage";
             public const string UseRuneFollowersForSpellchain = "UseRuneFollowersForSpellchain";
-            public const string DoubleCombatDamage = "DoubleCombatDamage";
-            public const string DoubleLeaderDamage = "DoubleLeaderDamage";
-            public const string DoesNotTakeDamage = "DoesNotTakeDamage";
             public const string CantDestroyByAbilities = "CantDestroyByAbilities";
+            public const string CannotAttack = "CannotAttack";
             public const string CannotAttackLeaders = "CannotAttackLeaders";
 
+            // Plus Damage
             public const string Plus1Damage = "Plus1Damage";
             public const string Plus2Damage = "Plus2Damage";
             public const string Plus3Damage = "Plus3Damage";
             public const string Plus4Damage = "Plus4Damage";
 
+            // Damage Reduction
             public const string DamageReduction1 = "DamageReduction1";
             public const string DamageReductionAbilities1 = "DamageReductionAbilities1";
+
+            // Other Damage Mods
+            public const string CannotDealDamage = "CannotDealDamage";
+            public const string DoesNotTakeDamage = "DoesNotTakeDamage";
+            public const string DoesNotTakeCombatDamage = "DoesNotTakeCombatDamage";
+            public const string DoubleCombatDamage = "DoubleCombatDamage";
+            public const string DoubleLeaderDamage = "DoubleLeaderDamage";
         }
     }
 }

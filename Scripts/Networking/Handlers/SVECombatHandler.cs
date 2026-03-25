@@ -17,15 +17,17 @@ namespace SVESimulator
             NetworkServer.RegisterHandler<LocalAttackFollowerMessage>(OnAttackFollower);
             NetworkServer.RegisterHandler<LocalAttackLeaderMessage>(OnAttackLeader);
 
-            // Stat and keyword handling
-            NetworkServer.RegisterHandler<LocalAddLeaderDefenseMessage>(OnAddLeaderDefense);
+            // Stat handling
             NetworkServer.RegisterHandler<LocalReserveCardMessage>(OnReserveCard);
             NetworkServer.RegisterHandler<LocalEngageCardMessage>(OnEngageCard);
             NetworkServer.RegisterHandler<LocalSetCardStatMessage>(OnSetCardStat);
             NetworkServer.RegisterHandler<LocalCardStatModifierMessage>(OnApplyCardStatModifier);
+
+            // Keyword handling
             NetworkServer.RegisterHandler<LocalApplyKeywordMessage>(OnApplyKeyword);
 
             // Player stats
+            NetworkServer.RegisterHandler<LocalAddLeaderDefenseMessage>(OnAddLeaderDefense);
             NetworkServer.RegisterHandler<LocalAddEvolvePointsMessage>(OnAddEvolvePoints);
         }
 
@@ -36,15 +38,17 @@ namespace SVESimulator
             NetworkServer.UnregisterHandler<LocalAttackFollowerMessage>();
             NetworkServer.UnregisterHandler<LocalAttackLeaderMessage>();
 
-            // Stat and keyword handling
-            NetworkServer.UnregisterHandler<LocalAddLeaderDefenseMessage>();
+            // Stat handling
             NetworkServer.UnregisterHandler<LocalReserveCardMessage>();
             NetworkServer.UnregisterHandler<LocalEngageCardMessage>();
             NetworkServer.UnregisterHandler<LocalSetCardStatMessage>();
             NetworkServer.UnregisterHandler<LocalCardStatModifierMessage>();
+
+            // Keyword handling
             NetworkServer.UnregisterHandler<LocalApplyKeywordMessage>();
 
             // Player stats
+            NetworkServer.UnregisterHandler<LocalAddLeaderDefenseMessage>();
             NetworkServer.UnregisterHandler<LocalAddEvolvePointsMessage>();
         }
 
@@ -118,21 +122,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Stat & Keyword Handling
-
-        private void OnAddLeaderDefense(NetworkConnection conn, LocalAddLeaderDefenseMessage msg)
-        {
-            PlayerInfo targetPlayer = server.gameState.players.Find(x => x.netId == msg.targetPlayer);
-
-            OpponentAddLeaderDefenseMessage addDefMsg = new()
-            {
-                playerNetId = msg.playerNetId,
-                targetPlayer = msg.targetPlayer,
-                amount = msg.amount
-            };
-            server.SafeSendToClient(server.gameState.currentOpponent, addDefMsg);
-            (server.effectSolver as SVEEffectSolver).AddLeaderDefense(targetPlayer, msg.amount);
-        }
+        #region Stat Handling
 
         private void OnReserveCard(NetworkConnection conn, LocalReserveCardMessage msg)
         {
@@ -204,6 +194,12 @@ namespace SVESimulator
             (server.effectSolver as SVEEffectSolver).ApplyCardStatModifier(card, msg.statId, msg.value, msg.adding, msg.duration);
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Keyword Handling
+
         private void OnApplyKeyword(NetworkConnection conn, LocalApplyKeywordMessage msg)
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
@@ -230,6 +226,20 @@ namespace SVESimulator
         // ------------------------------
 
         #region Player Stats
+
+        private void OnAddLeaderDefense(NetworkConnection conn, LocalAddLeaderDefenseMessage msg)
+        {
+            PlayerInfo targetPlayer = server.gameState.players.Find(x => x.netId == msg.targetPlayer);
+
+            OpponentAddLeaderDefenseMessage addDefMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                targetPlayer = msg.targetPlayer,
+                amount = msg.amount
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, addDefMsg);
+            (server.effectSolver as SVEEffectSolver).AddLeaderDefense(targetPlayer, msg.amount);
+        }
 
         private void OnAddEvolvePoints(NetworkConnection conn, LocalAddEvolvePointsMessage msg)
         {

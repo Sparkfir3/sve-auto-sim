@@ -133,18 +133,6 @@ namespace SVESimulator
 
         #region Move Between Zones
 
-        public CardObject CreateNewCardObjectTopDeck(RuntimeCard runtimeCard)
-        {
-            CardObject card = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
-            if(card)
-                return card;
-
-            card = CardManager.Instance.RequestCard(runtimeCard);
-            card.transform.SetPositionAndRotation(deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation * (IsLocalPlayer ? Quaternion.identity : SVEProperties.OpponentCardRotation));
-            card.CurrentZone = deckZone;
-            return card;
-        }
-
         public void AddCardToHand(CardObject card, Action onComplete = null) => AddCardToHand(card, 0f, onComplete);
         public void AddCardToHand(CardObject card, float delay, Action onComplete = null)
         {
@@ -187,24 +175,6 @@ namespace SVESimulator
             card.SetStatOverlayActive(true);
             card.SetCostOverlayActive(true);
             card.SetHighlightMode(CardObject.HighlightMode.None);
-        }
-
-        public void AddAndPlaceToken(CardObject token, CardPositionedZone zone, int slotNumber)
-        {
-            token.CurrentZone = zone;
-            zone.AddCard(token);
-            zone.Runtime.AddCard(token.RuntimeCard);
-
-            MoveCardTransform(token, zone.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, instant: true);
-            zone.MoveCardToSlot(token, slotNumber,
-                newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
-
-            token.SetStatOverlayActive(true);
-            token.SetCostOverlayActive(zone == exAreaZone);
-            if(token.IsFollowerOrEvolvedFollower() && zone == fieldZone && zone.IsLocalPlayerZone)
-                token.CalculateCanAttackStatus();
-            else
-                token.SetHighlightMode(CardObject.HighlightMode.None);
         }
 
         public void SendCardToTopDeck(CardObject card, Action onComplete = null) => SendCardToTopDeck(card, 0f, onComplete);
@@ -287,20 +257,6 @@ namespace SVESimulator
                 MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
                     moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckRight : CardMovementType.SlideIntoDeckLeft, delay: delay, disableOnComplete: true);
             card.SetStatOverlayActive(false);
-        }
-
-        public void EvolveCard(CardObject baseCard, CardObject evolvedCard, int slotNumber)
-        {
-            baseCard.AttachToCard(evolvedCard);
-
-            bool engaged = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue > 0;
-            evolvedCard.transform.SetPositionAndRotation(evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
-            MoveCardZone(evolvedCard, evolveDeckZone, fieldZone);
-            MoveCardTransform(evolvedCard, fieldZone.GetSlotPosition(slotNumber) + (Vector3.up * 0.1f), SVEProperties.CardFaceUpRotation * (engaged ? SVEProperties.CardEngagedRotation : Quaternion.identity),
-                moveType: CardMovementType.FlipFromDeck);
-            fieldZone.MoveCardToSlot(evolvedCard, slotNumber,
-                newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
-            evolvedCard.SetStatOverlayActive(true);
         }
 
         public void SendCardToResolution(CardObject card, Action onComplete = null)
@@ -410,7 +366,20 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Single Zone Movement
+        #region Other Zone Controls
+
+        public CardObject CreateNewCardObjectTopDeck(RuntimeCard runtimeCard) => CreateNewCardObjectTopDeck(runtimeCard, deckZone);
+        public CardObject CreateNewCardObjectTopDeck(RuntimeCard runtimeCard, CardStack zone)
+        {
+            CardObject card = CardManager.Instance.GetCardByInstanceId(runtimeCard.instanceId);
+            if(card)
+                return card;
+
+            card = CardManager.Instance.RequestCard(runtimeCard);
+            card.transform.SetPositionAndRotation(zone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation * (IsLocalPlayer ? Quaternion.identity : SVEProperties.OpponentCardRotation));
+            card.CurrentZone = zone;
+            return card;
+        }
 
         public void RearrangeHand()
         {
@@ -418,6 +387,38 @@ namespace SVESimulator
             {
                 MoveCardLocalTransform(card, handZone.transform.InverseTransformPoint(handZone.GetCardPosition(card)), handZone.CardRotation);
             }
+        }
+
+        public void EvolveCard(CardObject baseCard, CardObject evolvedCard, int slotNumber)
+        {
+            baseCard.AttachToCard(evolvedCard);
+
+            bool engaged = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue > 0;
+            evolvedCard.transform.SetPositionAndRotation(evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
+            MoveCardZone(evolvedCard, evolveDeckZone, fieldZone);
+            MoveCardTransform(evolvedCard, fieldZone.GetSlotPosition(slotNumber) + (Vector3.up * 0.1f), SVEProperties.CardFaceUpRotation * (engaged ? SVEProperties.CardEngagedRotation : Quaternion.identity),
+                moveType: CardMovementType.FlipFromDeck);
+            fieldZone.MoveCardToSlot(evolvedCard, slotNumber,
+                newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
+            evolvedCard.SetStatOverlayActive(true);
+        }
+
+        public void AddAndPlaceToken(CardObject token, CardPositionedZone zone, int slotNumber)
+        {
+            token.CurrentZone = zone;
+            zone.AddCard(token);
+            zone.Runtime.AddCard(token.RuntimeCard);
+
+            MoveCardTransform(token, zone.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, instant: true);
+            zone.MoveCardToSlot(token, slotNumber,
+                newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
+
+            token.SetStatOverlayActive(true);
+            token.SetCostOverlayActive(zone == exAreaZone);
+            if(token.IsFollowerOrEvolvedFollower() && zone == fieldZone && zone.IsLocalPlayerZone)
+                token.CalculateCanAttackStatus();
+            else
+                token.SetHighlightMode(CardObject.HighlightMode.None);
         }
 
         public void FlipCardToFaceUp(CardObject card, float delay = 0f, Action onComplete = null)
