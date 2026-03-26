@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using Sparkfire.Utility;
 using Sparkfire.AppStateSystem;
 using SVESimulator.DeckBuilder;
@@ -46,6 +45,8 @@ namespace SVESimulator
         // ------------------------------
 
         #region Variables
+
+        private const string PLAYER_PREFS_SELECTED_DECK = "LastSelectedDeck";
 
         [field: Title("Runtime Data"), SerializeField, DisableInEditorMode]
         public string CurrentDeckName { get; private set; }
@@ -118,19 +119,20 @@ namespace SVESimulator
         {
             starterDecksTabBackground.SetActive(true);
             customDecksTabBackground.SetActive(false);
-            SetListOfDecks(LoadedStarterDecks, true);
+            SetListOfDecks(LoadedStarterDecks, true, PlayerPrefs.GetString(PLAYER_PREFS_SELECTED_DECK));
         }
 
         public void OpenLoadedDecksTab()
         {
             starterDecksTabBackground.SetActive(false);
             customDecksTabBackground.SetActive(true);
-            SetListOfDecks(LoadedDecks, false);
+            SetListOfDecks(LoadedDecks, false, PlayerPrefs.GetString(PLAYER_PREFS_SELECTED_DECK));
         }
 
         public void LoadCurrentDeck()
         {
             Debug.Log($"Loading deck: {CurrentDeckName}");
+            PlayerPrefs.SetString(PLAYER_PREFS_SELECTED_DECK, CurrentDeckName);
             GameManager.Instance.defaultDeck = JsonUtility.FromJson<Deck>(DeckSaveLoadUtils.LoadAsRuntimeJson(CurrentDeckName, CurrentDeckData));
         }
 
@@ -175,7 +177,7 @@ namespace SVESimulator
             LoadedDecks = LoadedDecks.OrderByDescending(x => x.editTime).ToList();
         }
 
-        private void SetListOfDecks(List<DeckInfo> deckInfo, bool isStarterDeck)
+        private void SetListOfDecks(List<DeckInfo> deckInfo, bool isStarterDeck, string deckToSelect = null)
         {
             foreach(DeckSelectionEntry entry in deckEntries)
                 entry.gameObject.SetActive(false);
@@ -193,7 +195,15 @@ namespace SVESimulator
             if(deckInfo.Count > 0)
             {
                 noDecksFoundWarning.SetActive(false);
-                deckEntries[0].SelectDeck();
+                if(deckToSelect.IsNullOrWhiteSpace())
+                    deckEntries[0].SelectDeck();
+                else
+                {
+                    DeckSelectionEntry toSelect = deckEntries.FirstOrDefault(x => x.AssignedDeck.Equals(deckToSelect));
+                    if(!toSelect)
+                        toSelect = deckEntries[0];
+                    toSelect.SelectDeck();
+                }
                 CurrentDeckName = deckInfo[0].name;
                 CurrentDeckData = deckInfo[0].data;
             }
