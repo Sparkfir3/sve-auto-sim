@@ -61,7 +61,7 @@ namespace SVESimulator.DeckBuilder
             InitializeSliders();
 
             cardTypeButtonGroup.Initialize(~CardTypeFilter.Token);
-            cardClassButtonGroup.Initialize();
+            cardClassButtonGroup.Initialize(model.Filters.cardClass);
         }
 
         private void Update()
