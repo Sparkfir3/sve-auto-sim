@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using Sparkfire.Utility;
+using System.Collections.Generic;
 using TMPro;
 
 namespace SVESimulator.DeckBuilder
@@ -10,13 +11,17 @@ namespace SVESimulator.DeckBuilder
     {
         [SerializeField]
         private DeckBuilderModel model;
-        [SerializeField]
+
+        [BoxGroup("Text Fields"), SerializeField]
         private TMP_InputField primaryTextInputField;
-        [SerializeField]
+        [BoxGroup("Text Fields"), SerializeField]
         private TMP_InputField secondaryTextInputField;
-        [SerializeField]
+        [BoxGroup("Text Fields"), SerializeField]
+        private List<Button> clearTextButtons;
+
+        [BoxGroup("Card Properties"), SerializeField]
         private DeckBuilderFilterType cardTypeButtonGroup;
-        [SerializeField]
+        [BoxGroup("Card Properties"), SerializeField]
         private DeckBuilderFilterClass cardClassButtonGroup;
         
         [BoxGroup("Cost"), SerializeField]
@@ -89,6 +94,21 @@ namespace SVESimulator.DeckBuilder
                 primaryTextInputField.SetTextWithoutNotify(x);
                 model.OnUpdateFilters?.Invoke();
             });
+            foreach(Button button in clearTextButtons)
+            {
+                if(!button)
+                    continue;
+                button.onClick.AddListener(() =>
+                {
+                    if(!model.Filters.text.Equals(""))
+                    {
+                        model.Filters.text = "";
+                        primaryTextInputField.SetTextWithoutNotify("");
+                        secondaryTextInputField.SetTextWithoutNotify("");
+                        model.OnUpdateFilters?.Invoke();
+                    }
+                });
+            }
         }
 
         private void InitializeButtonGroups()
