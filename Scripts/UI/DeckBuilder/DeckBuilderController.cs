@@ -58,7 +58,7 @@ namespace SVESimulator.DeckBuilder
             deckPreview.AddCard += model.AddCard;
             cardList.RemoveCard += model.RemoveCard;
             deckPreview.RemoveCard += model.RemoveCard;
-            
+
             saveMenu.OnSaveDeck += SaveDeck;
             model.OnUpdateFilters += HandleFiltersUpdated;
             cardList.OnListUpdated += ManageLibraryCache;

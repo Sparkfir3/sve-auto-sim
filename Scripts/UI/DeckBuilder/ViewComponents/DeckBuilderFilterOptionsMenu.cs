@@ -23,7 +23,7 @@ namespace SVESimulator.DeckBuilder
         private DeckBuilderFilterType cardTypeButtonGroup;
         [BoxGroup("Card Properties"), SerializeField]
         private DeckBuilderFilterClass cardClassButtonGroup;
-        
+
         [BoxGroup("Cost"), SerializeField]
         private MinMaxSlider costSlider;
         [BoxGroup("Cost"), SerializeField]
@@ -32,7 +32,7 @@ namespace SVESimulator.DeckBuilder
         // private TextMeshProUGUI minCostText;
         // [BoxGroup("Cost"), SerializeField]
         // private TextMeshProUGUI maxCostText;
-        
+
         [BoxGroup("Attack"), SerializeField]
         private MinMaxSlider attackSlider;
         [BoxGroup("Attack"), SerializeField]
@@ -41,7 +41,7 @@ namespace SVESimulator.DeckBuilder
         // private TextMeshProUGUI minAttackText;
         // [BoxGroup("Attack"), SerializeField]
         // private TextMeshProUGUI maxAttackText;
-        
+
         [BoxGroup("Defense"), SerializeField]
         private MinMaxSlider defenseSlider;
         [BoxGroup("Defense"), SerializeField]
@@ -54,7 +54,7 @@ namespace SVESimulator.DeckBuilder
         public bool PointerInside { get; set; }
 
         // ------------------------------
-        
+
         public void Initialize()
         {
             InitializeTextInputFields();
@@ -77,9 +77,9 @@ namespace SVESimulator.DeckBuilder
                 model = GetComponentInParent<DeckBuilderModel>();
         }
 #endif
-        
+
         // ------------------------------
-        
+
         private void InitializeTextInputFields()
         {
             primaryTextInputField.onValueChanged.AddListener(x =>
@@ -135,7 +135,7 @@ namespace SVESimulator.DeckBuilder
                 model.Filters.useCost = true;
                 model.OnUpdateFilters?.Invoke();
             });
-            
+
             // Attack
             useAttackToggle.onValueChanged.AddListener(x =>
             {
@@ -152,7 +152,7 @@ namespace SVESimulator.DeckBuilder
                 model.Filters.useAttack = true;
                 model.OnUpdateFilters?.Invoke();
             });
-            
+
             // Defense
             useDefenseToggle.onValueChanged.AddListener(x =>
             {
