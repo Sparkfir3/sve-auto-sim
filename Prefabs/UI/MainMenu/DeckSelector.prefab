@@ -1373,10 +1373,10 @@ MonoBehaviour:
     data: {fileID: 4900000, guid: a4f876a6f3c27db4f86f8415e5b7657a, type: 3}
     deckClass: Dragoncraft
   - name: Abysscraft SD
-    data: {fileID: 4900000, guid: 7b90a5fc2eda11948b930975577a7fc6, type: 3}
+    data: {fileID: 4900000, guid: 82201e0dbbb5aaa4a86ee8f41bcf3275, type: 3}
     deckClass: Abysscraft
   - name: Havencraft SD
-    data: {fileID: 4900000, guid: 82201e0dbbb5aaa4a86ee8f41bcf3275, type: 3}
+    data: {fileID: 4900000, guid: 7b90a5fc2eda11948b930975577a7fc6, type: 3}
     deckClass: Havencraft
   <LoadedDecks>k__BackingField: []
   deckEntries:
