@@ -1034,6 +1034,8 @@ MonoBehaviour:
       value: Evolve deck has more than 10 cards
     - key: 1
       value: Please enter a name
+    - key: 32
+      value: Deck is not valid for Standard format
   model: {fileID: 0}
   cardInfoDisplay: {fileID: 0}
   errorsContainer: {fileID: 6363396410406311225}

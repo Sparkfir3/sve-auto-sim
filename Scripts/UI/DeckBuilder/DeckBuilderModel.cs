@@ -352,7 +352,20 @@ namespace SVESimulator.DeckBuilder
             if(evolveDeckCount > 10)
                 errors |= DeckConstructionErrors.TooMuchEvolveDeck;
 
+            string leaderClass = CurrentLeader?.GetStringProperty(SVEProperties.CardStats.Class);
+            if(!leaderClass.IsNullOrWhiteSpace() && !(DeckIsClass(CurrentMainDeck.Keys, leaderClass) && DeckIsClass(CurrentEvolveDeck.Keys, leaderClass)))
+                errors |= DeckConstructionErrors.NonStandard;
+
             return errors == DeckConstructionErrors.None;
+        }
+
+        private bool DeckIsClass(IEnumerable<Card> cardList, string deckClass)
+        {
+            return cardList.All(x =>
+            {
+                string cardClass = x.GetStringProperty(SVEProperties.CardStats.Class);
+                return cardClass.IsNullOrWhiteSpace() || (cardClass.Equals(SVEProperties.CardClass.Neutral) || cardClass.Equals(deckClass));
+            });
         }
 
         #endregion

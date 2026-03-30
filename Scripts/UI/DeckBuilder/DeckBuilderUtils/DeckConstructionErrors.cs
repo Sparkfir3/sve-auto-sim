@@ -1,6 +1,6 @@
 using System;
 
-namespace SVESimulator
+namespace SVESimulator.DeckBuilder
 {
     [Flags]
     public enum DeckConstructionErrors
@@ -11,5 +11,6 @@ namespace SVESimulator
         TooFewMainDeck = 4,
         TooMuchMainDeck = 8,
         TooMuchEvolveDeck = 16,
+        NonStandard = 32,
     }
 }
