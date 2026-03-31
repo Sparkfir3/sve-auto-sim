@@ -1,10 +1,7 @@
 using System;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
-using Sparkfire.Utility;
-using System.Collections.Generic;
 using TMPro;
 
 namespace SVESimulator
@@ -73,6 +70,7 @@ namespace SVESimulator
 
 		public void SelectDeck()
 		{
+			selectToggle.SetIsOnWithoutNotify(false);
 			selectToggle.isOn = true;
 		}
 

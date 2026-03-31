@@ -1359,6 +1359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CurrentDeckName>k__BackingField: 
   <CurrentDeckData>k__BackingField: 
+  <IsStarterDeckMenu>k__BackingField: 0
   starterDecks:
   - name: Forestcraft SD
     data: {fileID: 4900000, guid: fa0297f6ea1496e4692fd5e8d8480bf0, type: 3}

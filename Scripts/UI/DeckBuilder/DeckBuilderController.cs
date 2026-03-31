@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Sparkfire.AppStateSystem;
 using Sparkfire.Utility;
+using SVESimulator.Database;
 using TMPro;
 
 namespace SVESimulator.DeckBuilder
@@ -159,6 +160,7 @@ namespace SVESimulator.DeckBuilder
         {
             if(deckName.IsNullOrWhiteSpace())
                 return;
+            PlayerPrefs.SetString(PlayerPrefsUtils.SELECTED_DECK, deckName);
 
             string filePath = Path.Combine(pathInfo.DeckFolderPath, $"{deckName}.txt");
             if(File.Exists(filePath))
