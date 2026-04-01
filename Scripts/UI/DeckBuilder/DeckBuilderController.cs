@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -6,10 +7,12 @@ using System.IO;
 using System.Linq;
 using Sparkfire.AppStateSystem;
 using Sparkfire.Utility;
+using SVESimulator.Database;
 using TMPro;
 
 namespace SVESimulator.DeckBuilder
 {
+    [DefaultExecutionOrder(-1000)]
     public class DeckBuilderController : MonoBehaviour
     {
         #region Variables
@@ -56,7 +59,7 @@ namespace SVESimulator.DeckBuilder
             deckPreview.AddCard += model.AddCard;
             cardList.RemoveCard += model.RemoveCard;
             deckPreview.RemoveCard += model.RemoveCard;
-            
+
             saveMenu.OnSaveDeck += SaveDeck;
             model.OnUpdateFilters += HandleFiltersUpdated;
             cardList.OnListUpdated += ManageLibraryCache;
@@ -67,18 +70,18 @@ namespace SVESimulator.DeckBuilder
             sortTypeDropdown.AddOptions(sortModes.Select(x => x.ToString()).ToList());
             sortTypeDropdown.value = 0;
             sortTypeDropdown.onValueChanged.AddListener(HandleSortModeUpdated);
+
+            if(!DeckDataToLoad.IsNullOrWhiteSpace())
+            {
+                model.ImportDeck(DeckDataToLoad);
+                SetInitialFiltersFromDeckData();
+            }
+            DeckDataToLoad = null;
+            DeckNameToLoad = null;
         }
 
         private void Start()
         {
-            LibraryCardCache.ClearCache();
-            if(!DeckDataToLoad.IsNullOrWhiteSpace())
-            {
-                model.ImportDeck(DeckDataToLoad);
-            }
-            DeckDataToLoad = null;
-            DeckNameToLoad = null;
-
             model.SortMode = sortModes[sortTypeDropdown.value];
             model.UpdateFilteredCardList();
         }
@@ -97,6 +100,7 @@ namespace SVESimulator.DeckBuilder
 
         private void OnDestroy()
         {
+            LibraryCardCache.ClearCache();
             DeckDataToLoad = null;
             DeckNameToLoad = null;
         }
@@ -106,6 +110,27 @@ namespace SVESimulator.DeckBuilder
         // ------------------------------
 
         #region Filter/Data Updating
+
+        private void SetInitialFiltersFromDeckData()
+        {
+            int splitIndex = DeckDataToLoad.IndexOf(" ", StringComparison.Ordinal);
+            if(splitIndex < 1)
+                return;
+
+            string deckClass = DeckDataToLoad[..splitIndex].Trim().ToLower().Replace("craft", "");
+            model.Filters.cardClass = deckClass switch
+            {
+                "forest" => ClassFilter.Forest,
+                "sword" => ClassFilter.Sword,
+                "rune" => ClassFilter.Rune,
+                "dragon" => ClassFilter.Dragon,
+                "abyss" => ClassFilter.Abyss,
+                "haven" => ClassFilter.Haven,
+                _ => 0
+            };
+            if(model.Filters.cardClass != 0)
+                model.Filters.cardClass |= ClassFilter.Neutral;
+        }
 
         private void HandleFiltersUpdated()
         {
@@ -135,6 +160,7 @@ namespace SVESimulator.DeckBuilder
         {
             if(deckName.IsNullOrWhiteSpace())
                 return;
+            PlayerPrefs.SetString(PlayerPrefsUtils.SELECTED_DECK, deckName);
 
             string filePath = Path.Combine(pathInfo.DeckFolderPath, $"{deckName}.txt");
             if(File.Exists(filePath))

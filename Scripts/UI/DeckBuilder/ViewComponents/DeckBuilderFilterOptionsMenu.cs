@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using Sparkfire.Utility;
+using System.Collections.Generic;
 using TMPro;
 
 namespace SVESimulator.DeckBuilder
@@ -10,15 +11,19 @@ namespace SVESimulator.DeckBuilder
     {
         [SerializeField]
         private DeckBuilderModel model;
-        [SerializeField]
+
+        [BoxGroup("Text Fields"), SerializeField]
         private TMP_InputField primaryTextInputField;
-        [SerializeField]
+        [BoxGroup("Text Fields"), SerializeField]
         private TMP_InputField secondaryTextInputField;
-        [SerializeField]
+        [BoxGroup("Text Fields"), SerializeField]
+        private List<Button> clearTextButtons;
+
+        [BoxGroup("Card Properties"), SerializeField]
         private DeckBuilderFilterType cardTypeButtonGroup;
-        [SerializeField]
+        [BoxGroup("Card Properties"), SerializeField]
         private DeckBuilderFilterClass cardClassButtonGroup;
-        
+
         [BoxGroup("Cost"), SerializeField]
         private MinMaxSlider costSlider;
         [BoxGroup("Cost"), SerializeField]
@@ -27,7 +32,7 @@ namespace SVESimulator.DeckBuilder
         // private TextMeshProUGUI minCostText;
         // [BoxGroup("Cost"), SerializeField]
         // private TextMeshProUGUI maxCostText;
-        
+
         [BoxGroup("Attack"), SerializeField]
         private MinMaxSlider attackSlider;
         [BoxGroup("Attack"), SerializeField]
@@ -36,7 +41,7 @@ namespace SVESimulator.DeckBuilder
         // private TextMeshProUGUI minAttackText;
         // [BoxGroup("Attack"), SerializeField]
         // private TextMeshProUGUI maxAttackText;
-        
+
         [BoxGroup("Defense"), SerializeField]
         private MinMaxSlider defenseSlider;
         [BoxGroup("Defense"), SerializeField]
@@ -49,14 +54,14 @@ namespace SVESimulator.DeckBuilder
         public bool PointerInside { get; set; }
 
         // ------------------------------
-        
+
         public void Initialize()
         {
             InitializeTextInputFields();
             InitializeSliders();
 
             cardTypeButtonGroup.Initialize(~CardTypeFilter.Token);
-            cardClassButtonGroup.Initialize();
+            cardClassButtonGroup.Initialize(model.Filters.cardClass);
         }
 
         private void Update()
@@ -72,9 +77,9 @@ namespace SVESimulator.DeckBuilder
                 model = GetComponentInParent<DeckBuilderModel>();
         }
 #endif
-        
+
         // ------------------------------
-        
+
         private void InitializeTextInputFields()
         {
             primaryTextInputField.onValueChanged.AddListener(x =>
@@ -89,6 +94,21 @@ namespace SVESimulator.DeckBuilder
                 primaryTextInputField.SetTextWithoutNotify(x);
                 model.OnUpdateFilters?.Invoke();
             });
+            foreach(Button button in clearTextButtons)
+            {
+                if(!button)
+                    continue;
+                button.onClick.AddListener(() =>
+                {
+                    if(!model.Filters.text.Equals(""))
+                    {
+                        model.Filters.text = "";
+                        primaryTextInputField.SetTextWithoutNotify("");
+                        secondaryTextInputField.SetTextWithoutNotify("");
+                        model.OnUpdateFilters?.Invoke();
+                    }
+                });
+            }
         }
 
         private void InitializeButtonGroups()
@@ -115,7 +135,7 @@ namespace SVESimulator.DeckBuilder
                 model.Filters.useCost = true;
                 model.OnUpdateFilters?.Invoke();
             });
-            
+
             // Attack
             useAttackToggle.onValueChanged.AddListener(x =>
             {
@@ -132,7 +152,7 @@ namespace SVESimulator.DeckBuilder
                 model.Filters.useAttack = true;
                 model.OnUpdateFilters?.Invoke();
             });
-            
+
             // Defense
             useDefenseToggle.onValueChanged.AddListener(x =>
             {
