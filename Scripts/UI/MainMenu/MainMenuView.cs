@@ -8,8 +8,8 @@ namespace SVESimulator.UI
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Title("Transitions"), SerializeReference]
-        private SerializedDictionary<MainMenuButton, MainMenuTransition> transitions;
+        [Title("Transitions"), SerializeField]
+        private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
 
         [Title("Object References"), SerializeField]
         private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
@@ -31,7 +31,7 @@ namespace SVESimulator.UI
                         Transform target = moveAction.TargetPosition == MainMenuCardPosition.Static
                             ? card.transform
                             : cardPositions[moveAction.TargetPosition];
-                        yield return moveAction.Execute(card, target, animationController);
+                        StartCoroutine(moveAction.Execute(card, target, animationController));
                         break;
 
                     case MainMenuTransitionDelay delayAction:
@@ -43,8 +43,8 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        [Button]
-        private void TestButton(MainMenuButton buttonType)
+        [TitleGroup("Debug"), Button]
+        private void TestButton(MainMenuAction buttonType)
         {
             if(transitions.TryGetValue(buttonType, out MainMenuTransition transition))
             {
