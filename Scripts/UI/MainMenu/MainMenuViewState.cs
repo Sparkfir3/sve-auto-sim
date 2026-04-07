@@ -30,8 +30,11 @@ namespace SVESimulator.UI
     public enum MainMenuCardPosition
     {
         Static = 0,
-        A = 1,
-        B = 2,
-        C = 3,
+        MainA = 1,
+        MainB = 2,
+        MainC = 3,
+        Back = 4,
+        CenterA = 5,
+        CenterB = 6,
     }
 }
