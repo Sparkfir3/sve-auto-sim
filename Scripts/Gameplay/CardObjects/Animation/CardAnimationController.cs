@@ -207,7 +207,8 @@ namespace SVESimulator
 
         public void SetTargetingLineActive(bool active)
         {
-            targetingLine.gameObject.SetActive(active);
+            if(targetingLine)
+                targetingLine.gameObject.SetActive(active);
         }
 
         public void SetTargetingLine(CardObject card, Vector3 endPos) => SetTargetingLine(card.transform.position, endPos);

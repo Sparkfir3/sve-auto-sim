@@ -8,7 +8,7 @@ namespace SVESimulator.UI
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Title("Transitions"), SerializeField]
+        [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
 
         [Title("Object References"), SerializeField]
@@ -20,36 +20,51 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        private IEnumerator ExecuteTransition(MainMenuTransition transition)
+        private void Awake()
         {
-            foreach(MainMenuTransitionAction action in transition.Actions)
-            {
-                switch(action)
-                {
-                    case MainMenuTransitionMoveCard moveAction:
-                        MainMenuCardObject card = buttonCards[moveAction.TargetButton];
-                        Transform target = moveAction.TargetPosition == MainMenuCardPosition.Static
-                            ? card.transform
-                            : cardPositions[moveAction.TargetPosition];
-                        StartCoroutine(moveAction.Execute(card, target, animationController));
-                        break;
-
-                    case MainMenuTransitionDelay delayAction:
-                        yield return delayAction.Execute();
-                        break;
-                }
-            }
+            foreach(MainMenuCardObject card in buttonCards.Values)
+                card.OnCardSelected += OnButtonCardClicked;
         }
 
         // ------------------------------
 
         [TitleGroup("Debug"), Button]
-        private void TestButton(MainMenuAction buttonType)
+        private void OnButtonCardClicked(MainMenuAction action)
         {
-            if(transitions.TryGetValue(buttonType, out MainMenuTransition transition))
+            if(transitions.TryGetValue(action, out MainMenuTransition transition))
             {
                 StopAllCoroutines();
                 StartCoroutine(ExecuteTransition(transition));
+            }
+        }
+
+        private IEnumerator ExecuteTransition(MainMenuTransition transition)
+        {
+            if(transition.MoveActions.Count > 0)
+                yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActions));
+            if(transition.Delay > 0f)
+                yield return new WaitForSeconds(transition.Delay);
+            if(transition.MoveActionsSecondary.Count > 0)
+                yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActionsSecondary));
+
+            IEnumerator ExecuteMoveActionSequence(List<MainMenuTransitionMoveCardAction> actions)
+            {
+                foreach(MainMenuTransitionMoveCardAction action in actions)
+                {
+                    MainMenuCardObject card = buttonCards[action.TargetButton];
+                    Transform target = action.TargetPosition == MainMenuCardPosition.Static
+                        ? card.transform
+                        : cardPositions[action.TargetPosition];
+
+                    if(action.WaitForComplete)
+                    {
+                        bool waiting = true;
+                        action.Execute(card, target, animationController, () => { waiting = false; });
+                        yield return new WaitUntil(() => !waiting);
+                    }
+                    else
+                        action.Execute(card, target, animationController);
+                }
             }
         }
     }
