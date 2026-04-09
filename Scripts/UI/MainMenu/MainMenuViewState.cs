@@ -14,7 +14,7 @@ namespace SVESimulator.UI
         PlayOnlineJoin      = 2,
         SelectPlayLocal     = 3,
         PlayLocalHost       = 4,
-        PlayLocalStart      = 5,
+        PlayLocalJoin       = 5,
         BackToMain          = 6,
         Quit                = 7
     }
