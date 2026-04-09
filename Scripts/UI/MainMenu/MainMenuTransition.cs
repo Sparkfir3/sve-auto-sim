@@ -10,14 +10,29 @@ namespace SVESimulator.UI
     public class MainMenuTransition : ScriptableObject
     {
         [field: SerializeField, TableList]
+        public List<MainMenuTransitionCardStartPosition> StartPositions { get; private set; } = new();
+        [field: SerializeField, TableList, Space(10)]
         public List<MainMenuTransitionMoveCardAction> MoveActions { get; private set; } = new();
-        [field: SerializeField]
+        [field: SerializeField, Space(10)]
         public float Delay { get; private set; }
         [field: SerializeField, TableList]
         public List<MainMenuTransitionMoveCardAction> MoveActionsSecondary { get; private set; } = new();
     }
 
     // ------------------------------
+
+    [Serializable]
+    public class MainMenuTransitionCardStartPosition
+    {
+        [field: SerializeField]
+        public MainMenuButton TargetButton { get; private set; }
+        [field: SerializeField]
+        public MainMenuCardPosition TargetPosition { get; private set; }
+        [field: SerializeField]
+        public bool FaceUp { get; private set; } = true;
+        [field: SerializeField]
+        public bool IsActive { get; private set; } = true;
+    }
 
     [Serializable]
     public class MainMenuTransitionMoveCardAction
@@ -32,7 +47,7 @@ namespace SVESimulator.UI
         [SerializeField]
         private CardMovementType moveType;
         [SerializeField]
-        private bool isFaceUp;
+        private bool toFaceUp = true;
         [SerializeField]
         private bool isActive = true;
 
@@ -43,7 +58,7 @@ namespace SVESimulator.UI
 
             if(isActive)
                 card.gameObject.SetActive(true);
-            animController.MoveCardToPosition(moveType, card, target.position, target.rotation, onComplete: () =>
+            animController.MoveCardToPosition(moveType, card, target.position, target.rotation * (toFaceUp ? Quaternion.identity : Quaternion.Euler(180f, 0f, 0f)), onComplete: () =>
             {
                 if(!isActive && card)
                     card.gameObject.SetActive(false);

@@ -40,6 +40,14 @@ namespace SVESimulator.UI
 
         private IEnumerator ExecuteTransition(MainMenuTransition transition)
         {
+            foreach(MainMenuTransitionCardStartPosition startData in transition.StartPositions)
+            {
+                MainMenuCardObject card = buttonCards[startData.TargetButton];
+                Transform target = cardPositions[startData.TargetPosition];
+                card.transform.SetLocalPositionAndRotation(target.position, target.rotation * (startData.FaceUp ? Quaternion.identity : Quaternion.Euler(180f, 0f, 0f)));
+                card.gameObject.SetActive(startData.IsActive);
+            }
+
             if(transition.MoveActions.Count > 0)
                 yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActions));
             if(transition.Delay > 0f)
