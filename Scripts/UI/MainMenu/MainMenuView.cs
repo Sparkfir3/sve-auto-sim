@@ -39,7 +39,7 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        [TitleGroup("Debug"), Button]
+        [TitleGroup("Debug"), Button, DisableInEditorMode]
         private void OnButtonCardClicked(MainMenuAction action)
         {
             if(transitions.TryGetValue(action, out MainMenuTransition transition))
@@ -70,7 +70,7 @@ namespace SVESimulator.UI
             {
                 MainMenuCardObject card = buttonCards[startData.TargetButton];
                 Transform target = cardPositions[startData.TargetPosition];
-                card.transform.SetLocalPositionAndRotation(target.position, target.rotation * (startData.FaceUp ? Quaternion.identity : Quaternion.Euler(180f, 0f, 0f)));
+                card.transform.SetLocalPositionAndRotation(target.position, target.rotation * (startData.FaceUp ? Quaternion.identity : Quaternion.Euler(0f, 0f, 180f)));
                 card.gameObject.SetActive(startData.IsActive);
             }
 
@@ -93,14 +93,9 @@ namespace SVESimulator.UI
                         ? card.transform
                         : cardPositions[action.TargetPosition];
 
-                    if(action.WaitForComplete)
-                    {
-                        bool waiting = true;
-                        action.Execute(card, target, animationController, () => { waiting = false; });
-                        yield return new WaitUntil(() => !waiting);
-                    }
-                    else
-                        action.Execute(card, target, animationController);
+                    action.Execute(card, target, animationController);
+                    if(action.PostDelay > 0f)
+                        yield return new WaitForSeconds(action.PostDelay);
                 }
             }
         }

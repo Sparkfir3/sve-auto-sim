@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -44,7 +43,7 @@ namespace SVESimulator.UI
         [field: SerializeField]
         public MainMenuCardPosition TargetPosition { get; private set; }
         [field: SerializeField]
-        public bool WaitForComplete { get; private set; }
+        public float PostDelay { get; private set; }
 
         [SerializeField]
         private CardMovementType moveType;
@@ -60,7 +59,7 @@ namespace SVESimulator.UI
 
             if(isActive)
                 card.gameObject.SetActive(true);
-            animController.MoveCardToPosition(moveType, card, target.position, target.rotation * (toFaceUp ? Quaternion.identity : Quaternion.Euler(180f, 0f, 0f)), onComplete: () =>
+            animController.MoveCardToPosition(moveType, card, target.position, target.rotation * (toFaceUp ? Quaternion.identity : Quaternion.Euler(0f, 0f, 180f)), onComplete: () =>
             {
                 if(!isActive && card)
                     card.gameObject.SetActive(false);

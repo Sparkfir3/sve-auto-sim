@@ -631,11 +631,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5324653751331224196, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -14.5
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.y
@@ -643,7 +643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.w
@@ -651,7 +651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.y
@@ -659,7 +659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -963,9 +963,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMovingCards: []
-  <DefaultMoveSettings>k__BackingField: {fileID: 11400000, guid: d17b4666b9f1bde4a8771e947caad170, type: 2}
+  <DefaultMoveSettings>k__BackingField: {fileID: 11400000, guid: f5b35a30cb18e62428567145ca3b31ed, type: 2}
   movementSettings:
-    serializedPairs: []
+    serializedPairs:
+    - key: 7
+      value: {fileID: 11400000, guid: 3f6e3c58399350a42ad71b4e33954efe, type: 2}
   cardDragSpeed: 10
   attackAnimDuration: 1
   attackAnimCurveX:
@@ -1231,11 +1233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5324653751331224196, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -14.5
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1243,7 +1245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1251,7 +1253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1259,7 +1261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1652,7 +1654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5324653751331224196, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8739848866215447876, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_LocalPosition.x
