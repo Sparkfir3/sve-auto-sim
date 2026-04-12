@@ -17,6 +17,8 @@ namespace SVESimulator.UI
         public float Delay { get; private set; }
         [field: SerializeField, TableList]
         public List<MainMenuTransitionMoveCardAction> MoveActionsSecondary { get; private set; } = new();
+        [field: SerializeField, Space(10)]
+        public MainMenuViewState EndState { get; private set; }
     }
 
     // ------------------------------

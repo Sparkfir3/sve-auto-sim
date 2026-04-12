@@ -4168,7 +4168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkManagerKcp: {fileID: 3691630640573521397, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
-  steamRoomCodeInputField: {fileID: 8288618751006898428}
+  steamRoomCodeInputField: {fileID: 7955537319964416044}
   deckSelectionController: {fileID: 5246060838289412464}
   selectDeckError: {fileID: 1884575220581231787}
 --- !u!1 &6249604121930316989
@@ -5333,8 +5333,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4633196340369651700}
   - component: {fileID: 4980428309697880314}
+  - component: {fileID: 7955537319964416044}
   - component: {fileID: 2838441757080094834}
   - component: {fileID: 8288618751006898428}
+  - component: {fileID: 2750468004056541311}
   m_Layer: 0
   m_Name: RoomCodeInputField
   m_TagString: Untagged
@@ -5370,6 +5372,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8486272041962451209}
   m_CullTransparentMesh: 1
+--- !u!114 &7955537319964416044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486272041962451209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79002eb873116a646aa4faf2be7eeb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputField: {fileID: 8288618751006898428}
+  canvasGroup: {fileID: 2750468004056541311}
 --- !u!114 &2838441757080094834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5498,6 +5514,18 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!225 &2750468004056541311
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486272041962451209}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8502524676625201114
 GameObject:
   m_ObjectHideFlags: 0

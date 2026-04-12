@@ -3,7 +3,6 @@ using CCGKit;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Steamworks;
-using TMPro;
 
 namespace SVESimulator.UI
 {
@@ -12,7 +11,7 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject networkManagerKcp;
         [SerializeField]
-        private TMP_InputField steamRoomCodeInputField;
+        private SteamRoomCodeInputField steamRoomCodeInputField;
         [SerializeField]
         private DeckSelectionController deckSelectionController;
         [SerializeField]
@@ -80,7 +79,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.HostLobby(steamRoomCodeInputField.text);
+            SVEGameNetworkManager.SteamLobby.HostLobby(steamRoomCodeInputField.Text);
         }
 
         public void JoinSteamLobby()
@@ -88,7 +87,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.GetLobby(steamRoomCodeInputField.text, lobbyID =>
+            SVEGameNetworkManager.SteamLobby.GetLobby(steamRoomCodeInputField.Text, lobbyID =>
             {
                 SteamMatchmaking.JoinLobby(lobbyID);
             });

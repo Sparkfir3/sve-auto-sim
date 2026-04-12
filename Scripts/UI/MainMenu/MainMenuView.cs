@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sparkfire.Utility;
@@ -8,8 +9,13 @@ namespace SVESimulator.UI
 {
     public class MainMenuView : MonoBehaviour
     {
+        [Title("Runtime Data"), SerializeField]
+        private MainMenuViewState currentState;
+
         [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
+        [SerializeField]
+        private SteamRoomCodeInputField steamRoomCodeInputField;
 
         [Title("Object References"), SerializeField]
         private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
@@ -18,12 +24,17 @@ namespace SVESimulator.UI
         [SerializeField]
         private CardAnimationController animationController;
 
+        public event Action<MainMenuViewState> OnStateEnter;
+        public event Action<MainMenuViewState> OnStateExit;
+
         // ------------------------------
 
         private void Awake()
         {
             foreach(MainMenuCardObject card in buttonCards.Values)
                 card.OnCardSelected += OnButtonCardClicked;
+            OnStateEnter += HandleStateEnter;
+            OnStateExit += HandleStateExit;
         }
 
         // ------------------------------
@@ -38,8 +49,23 @@ namespace SVESimulator.UI
             }
         }
 
+        private void HandleStateEnter(MainMenuViewState newState)
+        {
+            if(newState == MainMenuViewState.PlayOnline)
+                steamRoomCodeInputField.Show();
+        }
+
+        private void HandleStateExit(MainMenuViewState oldState)
+        {
+            if(oldState == MainMenuViewState.PlayOnline)
+                steamRoomCodeInputField.Hide();
+        }
+
+        // ------------------------------
+
         private IEnumerator ExecuteTransition(MainMenuTransition transition)
         {
+            OnStateExit?.Invoke(currentState);
             foreach(MainMenuTransitionCardStartPosition startData in transition.StartPositions)
             {
                 MainMenuCardObject card = buttonCards[startData.TargetButton];
@@ -54,6 +80,9 @@ namespace SVESimulator.UI
                 yield return new WaitForSeconds(transition.Delay);
             if(transition.MoveActionsSecondary.Count > 0)
                 yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActionsSecondary));
+
+            currentState = transition.EndState;
+            OnStateEnter?.Invoke(currentState);
 
             IEnumerator ExecuteMoveActionSequence(List<MainMenuTransitionMoveCardAction> actions)
             {
