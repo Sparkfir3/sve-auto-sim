@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f604a2cd50c6a489ff793a67f540b6, type: 3}
-  m_Name: MainMenuTrans_Main_PlayOnline
+  m_Name: MainMenuTrans_PlayLocal_Enter
   m_EditorClassIdentifier: 
   <StartPositions>k__BackingField:
   - <TargetButton>k__BackingField: 6
     <TargetPosition>k__BackingField: 1
     <FaceUp>k__BackingField: 0
     <IsActive>k__BackingField: 1
-  - <TargetButton>k__BackingField: 1
+  - <TargetButton>k__BackingField: 4
     <TargetPosition>k__BackingField: 2
     <FaceUp>k__BackingField: 1
     <IsActive>k__BackingField: 1
-  - <TargetButton>k__BackingField: 2
+  - <TargetButton>k__BackingField: 5
     <TargetPosition>k__BackingField: 2
     <FaceUp>k__BackingField: 1
     <IsActive>k__BackingField: 1
@@ -38,13 +38,13 @@ MonoBehaviour:
     moveType: 7
     toFaceUp: 0
     isActive: 0
-  - <TargetButton>k__BackingField: 1
+  - <TargetButton>k__BackingField: 4
     <TargetPosition>k__BackingField: 5
     <PostDelay>k__BackingField: 0
     moveType: 0
     toFaceUp: 1
     isActive: 1
-  - <TargetButton>k__BackingField: 2
+  - <TargetButton>k__BackingField: 5
     <TargetPosition>k__BackingField: 6
     <PostDelay>k__BackingField: 0
     moveType: 0
@@ -64,4 +64,4 @@ MonoBehaviour:
     isActive: 0
   <Delay>k__BackingField: 0
   <MoveActionsSecondary>k__BackingField: []
-  <EndState>k__BackingField: 1
+  <EndState>k__BackingField: 2

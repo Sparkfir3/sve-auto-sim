@@ -1093,6 +1093,12 @@ MonoBehaviour:
     serializedPairs:
     - key: 0
       value: {fileID: 11400000, guid: 095d2906c201d3842a77f0bb5f26d2dc, type: 2}
+    - key: 1
+      value: {fileID: 11400000, guid: fe5642da332ce624b81b17f5ccc8bcbc, type: 2}
+    - key: 2
+      value: {fileID: 11400000, guid: 12f28172ad2843341912b9c75a340b16, type: 2}
+    - key: 3
+      value: {fileID: 11400000, guid: 7bda2a9ceb9ba56449ac3a9326aa1d63, type: 2}
   steamRoomCodeInputField: {fileID: 4901654163943796787}
   buttonCards:
     serializedPairs:
