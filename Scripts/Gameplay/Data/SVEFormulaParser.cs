@@ -34,6 +34,7 @@ namespace SVESimulator
             PlayPointCost,
             Reserved,
             Engaged,
+            Racing,
 
             // Other
             Advanced,
@@ -466,6 +467,7 @@ namespace SVESimulator
                     'X' => CardFilterSetting.ExcludeSelf,
                     'R' => CardFilterSetting.Reserved,
                     'N' => CardFilterSetting.Engaged,
+                    'C' => CardFilterSetting.Racing,
                     _ => null
                 };
                 if(filterSetting.HasValue)

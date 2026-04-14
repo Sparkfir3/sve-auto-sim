@@ -123,6 +123,10 @@ namespace SVESimulator
                         if((evolveCost < minEvolveCost || evolveCost > maxEvolveCost) ^ inverse)
                             return false;
                         break;
+                    case CardFilterSetting.Racing:
+                        if(!card.HasKeyword(SVEProperties.PassiveAbilities.IsRacing) ^ inverse)
+                            return false;
+                        break;
 
                     // Other
                     case CardFilterSetting.Advanced:
