@@ -53,8 +53,10 @@ namespace SVESimulator.SveScript
 
         private static readonly Dictionary<string, int> SetTypeToID = new()
         {
-            { "BP", 1 },
-            { "SD", 2 }
+            { "BP",  1 },
+            { "SD",  2 },
+            { "CP",  3 },
+            { "CSD", 4 },
         };
     }
 }

@@ -61,6 +61,15 @@ namespace SVESimulator.SveScript
                 string trimmedText = text[pointer..];
                 string scriptKeyword = trimmedText.Split()[0].ToLower();
                 int nextIndex = pointer;
+
+                if(scriptKeyword.Trim().StartsWith("serve"))
+                {
+                    nextIndex = text.IndexOf(';', pointer);
+                    ParseAndAddKeywords(text[pointer..nextIndex], ref cardInfo);
+                    pointer = nextIndex + 1; // move past ';'
+                    continue;
+                }
+
                 switch(scriptKeyword.Trim())
                 {
                     case "name":
