@@ -43,6 +43,7 @@ namespace SVESimulator.CardTextData
             { "[engage]",       "<sprite index=23>" },
             { "[quick]",        "<sprite index=24>" },
             { "[q]",            "<sprite index=27>" },
+            { "[feed]",         "<sprite index=28>" },
         };
 
         public static string FormatCardText(string text)
