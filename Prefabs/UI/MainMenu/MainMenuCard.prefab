@@ -146,7 +146,7 @@ MonoBehaviour:
   statsDisplay: {fileID: 0}
   highlights:
     serializedPairs: []
-  <Action>k__BackingField: 0
+  <Action>k__BackingField: -1
 --- !u!65 &8689398793120822546
 BoxCollider:
   m_ObjectHideFlags: 0

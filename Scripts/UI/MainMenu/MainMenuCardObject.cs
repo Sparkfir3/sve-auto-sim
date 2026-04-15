@@ -17,5 +17,15 @@ namespace SVESimulator.UI
         {
             OnCardSelected?.Invoke(Action);
         }
+
+        public override void OnHoverEnter()
+        {
+
+        }
+
+        public override void OnHoverExit()
+        {
+
+        }
     }
 }

@@ -23,7 +23,10 @@ namespace SVESimulator.UI
         private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
         [SerializeField]
         private CardAnimationController animationController;
+        [SerializeField]
+        private MainMenuInputController inputController;
 
+        public bool AllowInputs => !animationController.IsAnimating;
         public event Action<MainMenuViewState> OnStateEnter;
         public event Action<MainMenuViewState> OnStateExit;
 
@@ -35,6 +38,11 @@ namespace SVESimulator.UI
                 card.OnCardSelected += OnButtonCardClicked;
             OnStateEnter += HandleStateEnter;
             OnStateExit += HandleStateExit;
+        }
+
+        private void Update()
+        {
+            inputController.AllowInputs = AllowInputs;
         }
 
         // ------------------------------

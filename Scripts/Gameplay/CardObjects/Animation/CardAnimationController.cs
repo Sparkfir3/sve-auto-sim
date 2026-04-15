@@ -93,6 +93,8 @@ namespace SVESimulator
         [SerializeField, ReadOnly, HideInEditorMode]
         private List<GameObject> statChangeEffectObjectPool;
 
+        public bool IsAnimating => currentMovingCards.Count > 0;
+
         #endregion
 
         // ------------------------------

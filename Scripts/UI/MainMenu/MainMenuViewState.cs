@@ -21,6 +21,7 @@ namespace SVESimulator.UI
 
     public enum MainMenuAction
     {
+        Other               = -1,
         SelectPlayOnline    = 0,
         PlayOnlineBack      = 1,
         SelectPlayLocal     = 2,
