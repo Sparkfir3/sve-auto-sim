@@ -42,10 +42,10 @@ namespace SVESimulator.UI
                         return;
                     }
                     SetCurrentCard(card);
+                    return;
                 }
-                else
-                    SetCurrentCard(null);
             }
+            SetCurrentCard(null);
         }
 
         // ------------------------------
