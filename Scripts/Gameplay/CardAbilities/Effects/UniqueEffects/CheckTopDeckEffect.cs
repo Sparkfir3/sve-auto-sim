@@ -9,7 +9,7 @@ namespace SVESimulator
 {
     public class CheckTopDeckEffect : SveEffect
     {
-        public enum CheckCardAction { None, Hand, Cemetery, Field, TopDeckAnyOrder, TopDeckSameOrder, BottomDeckAnyOrder }
+        public enum CheckCardAction { None, Hand, Cemetery, Field, TopDeckAnyOrder, TopDeckSameOrder, BottomDeckAnyOrder, TopOrBottomDeck }
         private struct CheckActionParameters
         {
             public CheckCardAction action;
