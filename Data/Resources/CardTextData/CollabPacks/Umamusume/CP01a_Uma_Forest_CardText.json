@@ -1,0 +1,193 @@
+[
+  {
+    "id": "CP01-001EN",
+    "name": "Silence Suzuka",
+    "trait": "Umamusume",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[feed][cost01]: Race this follower.\nStorm."
+  },
+  {
+    "id": "CP01-002EN",
+    "name": "Silence Suzuka (Evolved)",
+    "trait": "Umamusume",
+    "cardText": "Storm.\nOn Evolve: Select an enemy follower on the field and put it on top of its owner's deck.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and put it on top of its owner's deck."
+      }
+    ]
+  },
+  {
+    "id": "CP01-003EN",
+    "name": "Smart Falcon",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Return any number of other Umamusume cards on your field to their owners' hands: Deal X damage to each enemy follower on the field. X equals 2 times the number of cards returned.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Return any number of other Umamusume cards on your field to their owners' hands",
+        "body": "Deal X damage to each enemy follower on the field. X equals 2 times the number of cards returned."
+      }
+    ]
+  },
+  {
+    "id": "CP01-004EN",
+    "name": "Gold City",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Recover 3 play points.\nWhile there are at least 8 cards on the field, this follower has Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Recover 3 play points."
+      }
+    ]
+  },
+  {
+    "id": "CP01-005EN",
+    "name": "Eat Fast! Yum Fast!",
+    "trait": "Umamusume",
+    "cardText": "Choose one of the following. (1) Search your deck for a follower with Storm, reveal it, and add it to your hand. (2) Select a follower with Storm on your field and give it [attack]+3.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following. (1) Search your deck for a follower with Storm, reveal it, and add it to your hand. (2) Select a follower with Storm on your field and give it [attack]+3."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a follower with Storm, reveal it, and add it to your hand."
+      },
+      {
+        "key": "Attack",
+        "body": "Select a follower with Storm on your field and give it [attack]+3."
+      }
+    ]
+  },
+  {
+    "id": "CP01-006EN",
+    "name": "Shinko Windy",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Look at the top card of your deck. You may put it on the bottom of your deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top card of your deck. You may put it on the bottom of your deck."
+      }
+    ]
+  },
+  {
+    "id": "CP01-007EN",
+    "name": "Eishin Flash",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Select up to 1 enemy follower on the field and return it to its owner's hand.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "text": "",
+        "trigger": "On Race:",
+        "cost": "",
+        "body": "Give this follower [attack]+1/[defense]+1. Select up to 1 enemy follower on the field and return it to its owner's hand."
+      },
+      {
+        "key": "Return",
+        "body": "Select up to 1 enemy follower on the field and return it to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-008EN",
+    "name": "Systematic Squats",
+    "trait": "Umamusume",
+    "cardText": "[fanfare] Draw a card.\nWhen this card leaves the field, select an Umamusume follower on your field and give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "Draw a card."
+      },
+      {
+        "key": "OnLeaveField",
+        "text": "When this card leaves the field, select an Umamusume follower on your field and give it [attack]+1/[defense]+1.",
+        "trigger": "When this card leaves the field",
+        "body": "Select an Umamusume follower on your field and give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-009EN",
+    "name": "Marvelous Sunday",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Return another card on your field to its owner's hand: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Return another card on your field to its owner's hand",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "CP01-010EN",
+    "name": "Yukino Bijin",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nWard.\n[fanfare] Return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Return another card on your field to its owner's hand",
+        "body": "Give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-011EN",
+    "name": "Ines Fujin",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nRush. Assail.\n[fanfare] Select another card on your field and return it to its owner's hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select another card on your field and return it to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-012EN",
+    "name": "Taiki Shuttle",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nWhen this card is returned to hand from your field, select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "OnReturnToHandFromField",
+        "text": "When this card is returned to hand from your field, select an enemy follower on the field and deal it 2 damage.",
+        "trigger": "When this card is returned to hand from your field",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-013EN",
+    "name": "Haru Urara",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. For the rest of this turn, this follower doesn't take damage.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. For the rest of this turn, this follower doesn't take damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-LD01EN",
+    "name": "Yukino Bijin [Hometown Cheers]"
+  }
+]
