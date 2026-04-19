@@ -23,9 +23,10 @@ namespace SVESimulator.UI
     {
         Other               = -1,
         SelectPlayOnline    = 0,
-        PlayOnlineBack      = 1,
-        SelectPlayLocal     = 2,
-        PlayLocalBack       = 3,
+        SelectPlayLocal     = 1,
+        Back                = 2,
+        PlayOnlineBack      = 3,
+        PlayLocalBack       = 4,
     }
 
     public enum MainMenuCardPosition
@@ -37,5 +38,20 @@ namespace SVESimulator.UI
         Back = 4,
         CenterA = 5,
         CenterB = 6,
+    }
+
+    // ------------------------------
+
+    public static class MainMenuEnumExtensions
+    {
+        public static MainMenuAction BackAction(this MainMenuViewState state)
+        {
+            return state switch
+            {
+                MainMenuViewState.PlayOnline => MainMenuAction.PlayOnlineBack,
+                MainMenuViewState.PlayLocal => MainMenuAction.PlayLocalBack,
+                _ => MainMenuAction.Other
+            };
+        }
     }
 }

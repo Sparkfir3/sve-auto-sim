@@ -50,6 +50,16 @@ namespace SVESimulator.UI
         [TitleGroup("Debug"), Button, DisableInEditorMode]
         private void OnButtonCardClicked(MainMenuAction action)
         {
+            if(action == MainMenuAction.Back)
+            {
+                MainMenuAction newAction = currentState.BackAction();
+                if(newAction != MainMenuAction.Back)
+                {
+                    OnButtonCardClicked(newAction);
+                    return;
+                }
+            }
+
             if(transitions.TryGetValue(action, out MainMenuTransition transition))
             {
                 StopAllCoroutines();
