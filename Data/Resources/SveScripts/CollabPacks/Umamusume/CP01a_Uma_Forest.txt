@@ -1,0 +1,300 @@
+name Silence Suzuka;
+id CP01-001;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 4;
+stats 4/1;
+
+text "[evolve][cost02]: Evolve this follower.
+      [feed][cost01]: Race this follower.
+      Storm.";
+
+evolve 2;
+serve;
+keyword Storm;
+
+// ------------------------------
+
+name Silence Suzuka (Evolved);
+id CP01-002;
+class Forest;
+universe Umamusume;
+type Evolved Follower;
+trait Umamusume;
+rarity L;
+stats 5/2;
+
+text "Storm.
+      On Evolve: Select an enemy follower on the field and put it on top of its owner's deck.";
+
+keyword Storm;
+ability OnEvolve {
+    effect TopDeck() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Smart Falcon;
+id CP01-003;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 5;
+stats 5/5;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Return any number of other Umamusume cards on your field to their owners' hands: Deal X damage to each enemy follower on the field. X equals 2 times the number of cards returned.";
+
+serve;
+ability Fanfare {
+    effect ComplexEffect(
+        let amt = payCost(Damage).movedCardsCount * 2
+        performCostless Damage { amount = amt }
+    );
+}
+ability Spell name Damage {
+    cost (ReturnToHand, TargetPlayerCards, t(Umamusume)Xm(0,5));
+    effect DealDamage(_) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Gold City;
+id CP01-004;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity G;
+cost 4;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Recover 3 play points.
+      While there are at least 8 cards on the field, this follower has Storm.";
+
+serve;
+ability Fanfare {
+    effect GiveStat(PP, 3) to Leader;
+}
+ability Passive {
+    condition [f()+p()]>7;
+    effect GiveKeyword(Storm, WhileOnField) to Self;
+}
+
+// ------------------------------
+
+name Eat Fast! Yum Fast!;
+id CP01-005;
+class Forest;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity G;
+cost 2;
+
+text "Choose one of the following. (1) Search your deck for a follower with Storm, reveal it, and add it to your hand. (2) Select a follower with Storm on your field and give it [attack]+3.";
+
+ability Spell {
+    effect ChooseFromList(Search, Attack);
+}
+ability Spell name Search {
+    effect Search(1, Fk(Storm), Hand);
+}
+ability Spell name Attack {
+    condition f(Fk(Storm));
+    effect GiveStat(Atk, 3) to TargetPlayerCard Fk(Storm);
+}
+
+// ------------------------------
+
+name Shinko Windy;
+id CP01-006;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 1;
+stats 2/1;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Look at the top card of your deck. You may put it on the bottom of your deck.";
+
+serve;
+ability Fanfare {
+    effect CheckTop(1, (TopOrBottomDeck));
+}
+
+// ------------------------------
+
+name Eishin Flash;
+id CP01-007;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Select up to 1 enemy follower on the field and return it to its owner's hand.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, Return);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Return {
+    effect ReturnToHand() to TargetOpponentCard Fm(0,1);
+}
+
+// ------------------------------
+
+name Systematic Squats;
+id CP01-008;
+class Forest;
+universe Umamusume;
+type Amulet;
+trait Umamusume;
+rarity S;
+cost 2;
+
+text "[fanfare] Draw a card.
+      When this card leaves the field, select an Umamusume follower on your field and give it [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    effect Draw(1);
+}
+ability OnLeaveField {
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard Ft(Umamusume);
+}
+
+// ------------------------------
+
+name Marvelous Sunday;
+id CP01-009;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Return another card on your field to its owner's hand: Give your leader [defense]+2.";
+
+serve;
+ability Fanfare {
+    cost (ReturnToHand, TargetPlayerCard, X);
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Yukino Bijin;
+id CP01-010;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      Ward.
+      [fanfare] Return another card on your field to its owner's hand: Give this follower [attack]+1/[defense]+1.";
+
+serve;
+keyword Ward;
+ability Fanfare {
+    cost (ReturnToHand, TargetPlayerCard, X);
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Ines Fujin;
+id CP01-011;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 6;
+stats 7/7;
+
+text "[feed][cost01]: Race this follower.
+      Rush. Assail.
+      [fanfare] Select another card on your field and return it to its owner's hand.";
+
+serve;
+keywords Rush, Assail;
+ability Fanfare {
+    effect ReturnToHand() to TargetPlayerCard X;
+}
+
+// ------------------------------
+
+name Taiki Shuttle;
+id CP01-012;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[feed][cost01]: Race this follower.
+      When this card is returned to hand from your field, select an enemy follower on the field and deal it 2 damage.";
+
+serve;
+keyword Ward;
+ability OnReturnToHandFromField {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Haru Urara;
+id CP01-013;
+class Forest;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. For the rest of this turn, this follower doesn't take damage.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, NoDamage);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name NoDamage {
+    effect GiveKeywordEndOfTurn(DoesNotTakeDamage) to Self;
+}
+
+// ------------------------------
+
+name Yukino Bijin [Hometown Cheers];
+id CP01-LD01;
+class Forest;
+universe Umamusume;
+type Leader;
