@@ -9,6 +9,8 @@ namespace SVESimulator.UI
     public class MainMenuController : MonoBehaviour
     {
         [SerializeField]
+        private MainMenuView mainMenuView;
+        [SerializeField]
         private GameObject networkManagerKcp;
         [SerializeField]
         private SteamRoomCodeInputField steamRoomCodeInputField;
@@ -24,6 +26,29 @@ namespace SVESimulator.UI
             GameManager.Instance.Initialize();
             deckSelectionController.Initialize();
             deckSelectionController.OnSelectDeck += () => selectDeckError.SetActive(false);
+            mainMenuView.OnButtonClicked += HandleButtonClicked;
+        }
+
+        private void HandleButtonClicked(MainMenuButton button)
+        {
+            switch(button)
+            {
+                case MainMenuButton.PlayOnlineHost:
+                    HostSteamLobby();
+                    break;
+                case MainMenuButton.PlayOnlineJoin:
+                    JoinSteamLobby();
+                    break;
+                case MainMenuButton.PlayLocalHost:
+                    StartLocalHost();
+                    break;
+                case MainMenuButton.PlayLocalJoin:
+                    StartLocalClient();
+                    break;
+                case MainMenuButton.Quit:
+                    QuitGame();
+                    break;
+            }
         }
 
         // ------------------------------

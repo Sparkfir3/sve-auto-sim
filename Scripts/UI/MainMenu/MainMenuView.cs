@@ -29,13 +29,20 @@ namespace SVESimulator.UI
         public bool AllowInputs => !animationController.IsAnimating;
         public event Action<MainMenuViewState> OnStateEnter;
         public event Action<MainMenuViewState> OnStateExit;
+        public event Action<MainMenuButton> OnButtonClicked;
 
         // ------------------------------
 
         private void Awake()
         {
-            foreach(MainMenuCardObject card in buttonCards.Values)
-                card.OnCardSelected += OnButtonCardClicked;
+            foreach(var kvPair in buttonCards)
+            {
+                (MainMenuButton button, MainMenuCardObject card) = (kvPair.Key, kvPair.Value);
+                card.OnCardSelected += x =>
+                {
+                    OnButtonClickedInternal(button, x);
+                };
+            }
             OnStateEnter += HandleStateEnter;
             OnStateExit += HandleStateExit;
         }
@@ -48,14 +55,14 @@ namespace SVESimulator.UI
         // ------------------------------
 
         [TitleGroup("Debug"), Button, DisableInEditorMode]
-        private void OnButtonCardClicked(MainMenuAction action)
+        private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)
         {
             if(action == MainMenuAction.Back)
             {
                 MainMenuAction newAction = currentState.BackAction();
                 if(newAction != MainMenuAction.Back)
                 {
-                    OnButtonCardClicked(newAction);
+                    OnButtonClickedInternal(button, newAction);
                     return;
                 }
             }
@@ -65,6 +72,7 @@ namespace SVESimulator.UI
                 StopAllCoroutines();
                 StartCoroutine(ExecuteTransition(transition));
             }
+            OnButtonClicked?.Invoke(button);
         }
 
         private void HandleStateEnter(MainMenuViewState newState)
