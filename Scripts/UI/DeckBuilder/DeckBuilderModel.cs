@@ -125,7 +125,7 @@ namespace SVESimulator.DeckBuilder
                 return;
             cardList = cardList.Where(x =>
             {
-                if(x.properties.Any(y => y is StringProperty property && y.name.Equals(SVEProperties.CardStats.Trait) && property.value.Contains("Token")))
+                if(x.properties.Any(y => y is StringProperty property && y.name.Equals(SVEProperties.CardStats.Trait) && (property.value?.Contains("Token") ?? false)))
                     return checkTokens;
                 return cardTypeIds.Count == 0 || cardTypeIds.Contains(x.cardTypeId);
             }).ToList();
