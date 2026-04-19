@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 namespace SVESimulator.UI
 {
     [CreateAssetMenu(menuName = "SVE Simulator/Main Menu Transition", fileName = "MainMenuTrans_FROM_TO", order = 1000)]
     public class MainMenuTransition : ScriptableObject
     {
+        [field: SerializeField]
+        public UnityEvent OnStartTransition { get; private set; }
         [field: SerializeField, TableList]
         public List<MainMenuTransitionCardStartPosition> StartPositions { get; private set; } = new();
         [field: SerializeField, TableList, Space(10)]
@@ -17,7 +20,9 @@ namespace SVESimulator.UI
         [field: SerializeField, TableList]
         public List<MainMenuTransitionMoveCardAction> MoveActionsSecondary { get; private set; } = new();
         [field: SerializeField, Space(10)]
-        public MainMenuViewState EndState { get; private set; }
+        public MainMenuViewState TargetMenuState { get; private set; }
+        [field: SerializeField]
+        public UnityEvent OnEndTransition { get; private set; }
     }
 
     // ------------------------------

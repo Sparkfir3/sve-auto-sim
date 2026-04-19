@@ -12,6 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f604a2cd50c6a489ff793a67f540b6, type: 3}
   m_Name: MainMenuTrans_PlayOnline_Back
   m_EditorClassIdentifier: 
+  <OnStartTransition>k__BackingField:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 8ea7c10bc031fb44fa868a1f2b32bc05, type: 2}
+        m_TargetAssemblyTypeName: Sparkfire.AppStateSystem.ApplicationState, Assembly-CSharp
+        m_MethodName: SetStateInactive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <StartPositions>k__BackingField:
   - <TargetButton>k__BackingField: 0
     <TargetPosition>k__BackingField: 4
@@ -64,4 +79,7 @@ MonoBehaviour:
     moveType: 0
     toFaceUp: 1
     isActive: 0
-  <EndState>k__BackingField: 0
+  <TargetMenuState>k__BackingField: 0
+  <OnEndTransition>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []

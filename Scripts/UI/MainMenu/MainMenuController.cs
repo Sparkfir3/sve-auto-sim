@@ -13,8 +13,6 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject networkManagerKcp;
         [SerializeField]
-        private SteamRoomCodeInputField steamRoomCodeInputField;
-        [SerializeField]
         private DeckSelectionController deckSelectionController;
         [SerializeField]
         private GameObject selectDeckError;
@@ -104,7 +102,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.HostLobby(steamRoomCodeInputField.Text);
+            SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
         }
 
         public void JoinSteamLobby()
@@ -112,7 +110,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.GetLobby(steamRoomCodeInputField.Text, lobbyID =>
+            SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
             {
                 SteamMatchmaking.JoinLobby(lobbyID);
             });

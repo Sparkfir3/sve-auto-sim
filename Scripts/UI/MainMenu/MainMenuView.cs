@@ -14,19 +14,21 @@ namespace SVESimulator.UI
 
         [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
-        [SerializeField]
-        private SteamRoomCodeInputField steamRoomCodeInputField;
 
         [Title("Object References"), SerializeField]
         private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
         [SerializeField]
         private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
         [SerializeField]
+        private SteamRoomCodeInputField steamRoomCodeInputField;
+        [FoldoutGroup("Controllers"), SerializeField]
         private CardAnimationController animationController;
-        [SerializeField]
+        [FoldoutGroup("Controllers"), SerializeField]
         private MainMenuInputController inputController;
 
         public bool AllowInputs => !animationController.IsAnimating;
+        public string RoomCode => steamRoomCodeInputField.Text;
+
         public event Action<MainMenuViewState> OnStateEnter;
         public event Action<MainMenuViewState> OnStateExit;
         public event Action<MainMenuButton> OnButtonClicked;
@@ -92,6 +94,7 @@ namespace SVESimulator.UI
         private IEnumerator ExecuteTransition(MainMenuTransition transition)
         {
             OnStateExit?.Invoke(currentState);
+            transition.OnStartTransition?.Invoke();
             foreach(MainMenuTransitionCardStartPosition startData in transition.StartPositions)
             {
                 MainMenuCardObject card = buttonCards[startData.TargetButton];
@@ -107,8 +110,9 @@ namespace SVESimulator.UI
             if(transition.MoveActionsSecondary.Count > 0)
                 yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActionsSecondary));
 
-            currentState = transition.EndState;
+            currentState = transition.TargetMenuState;
             OnStateEnter?.Invoke(currentState);
+            transition.OnEndTransition?.Invoke();
 
             IEnumerator ExecuteMoveActionSequence(List<MainMenuTransitionMoveCardAction> actions)
             {
