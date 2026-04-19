@@ -161,54 +161,6 @@ Transform:
   - {fileID: 598585305}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &46431943
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 46431945}
-  - component: {fileID: 46431944}
-  m_Layer: 0
-  m_Name: MainMenuController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &46431944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46431943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b216a42807d1346b96c6d54600956c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuView: {fileID: 1126685909}
-  networkManagerKcp: {fileID: 3691630640573521397, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
-  deckSelectionController: {fileID: 1917708188}
-  selectDeckError: {fileID: 2143401943}
---- !u!4 &46431945
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46431943}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &139142145
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,10 +945,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1126685910}
+  - component: {fileID: 1126685911}
   - component: {fileID: 1126685909}
   - component: {fileID: 1126685908}
   m_Layer: 0
-  m_Name: MainMenuView
+  m_Name: MainMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1202,6 +1155,22 @@ Transform:
   - {fileID: 1260160416}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1126685911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126685907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b216a42807d1346b96c6d54600956c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuView: {fileID: 1126685909}
+  networkManagerKcp: {fileID: 3691630640573521397, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
+  deckSelectionController: {fileID: 1917708188}
+  selectDeckError: {fileID: 2143401943}
 --- !u!1001 &1174928756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1417,7 +1386,7 @@ Transform:
   m_GameObject: {fileID: 1608931590}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5, y: 0, z: -1.5}
+  m_LocalPosition: {x: -4, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1651,7 +1620,7 @@ Transform:
   m_GameObject: {fileID: 1920268662}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: 0, z: -11}
+  m_LocalPosition: {x: 3, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1713,7 +1682,7 @@ Transform:
   m_GameObject: {fileID: 2007703119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -28, y: 0, z: -1}
+  m_LocalPosition: {x: -28, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2666,7 +2635,6 @@ SceneRoots:
   - {fileID: 1841959395}
   - {fileID: 1887145434}
   - {fileID: 1080544805}
-  - {fileID: 46431945}
   - {fileID: 1126685910}
   - {fileID: 24784904}
   - {fileID: 139142146}
