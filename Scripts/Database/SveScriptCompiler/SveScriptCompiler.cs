@@ -107,7 +107,7 @@ namespace SVESimulator.SveScript
                         nextIndex = text.IndexOf(';', pointer);
                         if(nextIndex <= pointer)
                             throw new Exception();
-                        cardInfo.cardClass = ParseUniverse(text[(pointer + scriptKeyword.Length)..nextIndex].Trim());
+                        cardInfo.universe = ParseUniverse(text[(pointer + scriptKeyword.Length)..nextIndex].Trim());
                         break;
 
                     case "type":
