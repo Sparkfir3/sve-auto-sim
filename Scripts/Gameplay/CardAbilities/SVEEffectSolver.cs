@@ -651,6 +651,67 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Serve & Race
+
+        public void ServeCard(NetworkIdentity playerNetId, RuntimeCard card, RuntimeCard[] carrots, bool useEvolvePoint, int serveCount = 1)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            if(player == null)
+                return;
+
+            // Move cards
+            RuntimeZone evolve = player.namedZones[SVEProperties.Zones.EvolveDeck];
+            RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
+            foreach(RuntimeCard carrot in carrots)
+            {
+                evolve.RemoveCard(carrot);
+                field.AddCard(carrot);
+            }
+            // TODO - support for more than one attached card
+            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+                attachedCardInfo.baseValue = carrots[0].instanceId;
+            else
+                Debug.LogError($"Failed to get attached card instance ID value for card (instance id {card.instanceId})");
+
+            // Pay cost
+            int playPointCost = Mathf.Max(serveCount - (useEvolvePoint ? 1 : 0), 0);
+            player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
+            player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+
+            // Update card info
+            foreach(RuntimeCard carrot in carrots)
+            {
+                carrot.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
+            }
+        }
+
+        public void RaceCard(NetworkIdentity playerNetId, RuntimeCard card, int count = 1)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            if(player == null)
+                return;
+
+            // Update card info
+            ApplyKeywordToCard(card, KeywordUtilities.Rush.Id, KeywordUtilities.Rush.Value, true);
+            ApplyKeywordToCard(card, KeywordUtilities.IsRacing.Id, KeywordUtilities.IsRacing.Value, true);
+
+            // Effect triggers
+            if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+            {
+                for(int i = 0; i < count; i++)
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnRaceTrigger>(gameState, card, player, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherRaceTrigger>(gameState, card, SVEProperties.Zones.Field, player.namedZones[SVEProperties.Zones.Field], player,
+                        x => x.MatchesFilter(card), false);
+                }
+                SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+            }
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Player Stats
 
         public void AddLeaderDefense(PlayerInfo player, int amount)

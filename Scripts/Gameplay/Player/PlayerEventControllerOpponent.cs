@@ -534,6 +534,38 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Serve/Race
+
+        public void ServeAndRaceCard(OpponentServeAndRaceMessage msg)
+        {
+            // Init objects
+            CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
+            List<CardObject> carrots = new();
+            for(int i = 0; i < msg.carrots.Length; i++)
+            {
+                CardObject carrot = CardManager.Instance.GetCardByInstanceId(msg.carrots[i].instanceId);
+                if(carrot)
+                {
+                    carrots.Add(carrot);
+                    continue;
+                }
+                RuntimeCard runtimeCard = new RuntimeCard();
+                InitRuntimeCard(ref runtimeCard, msg.carrots[i]);
+                carrot = CardManager.Instance.RequestCard(runtimeCard);
+                carrots.Add(carrot);
+            }
+
+            // Serve
+            for(int i = 0; i < carrots.Count; i++)
+                localZoneController.ServeCard(card, carrots[i]);
+            sveEffectSolver.ServeCard(msg.playerNetId, card.RuntimeCard, carrots.Select(x => x.RuntimeCard).ToArray(), msg.useEvolvePoint, msg.count);
+            sveEffectSolver.RaceCard(msg.playerNetId, card.RuntimeCard, msg.count);
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Player Stats
 
         public void AddLeaderDefense(OpponentAddLeaderDefenseMessage msg)

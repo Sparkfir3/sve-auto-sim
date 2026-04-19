@@ -1086,6 +1086,45 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Serve/Race
+
+        public bool ServeAndRaceCard(CardObject card, bool useEvolvePoint, int count = 1)
+        {
+            if(!isActivePlayer || playerController.EvolvedThisTurn)
+                return false;
+            if(!CanPayEvolveCost(count, useEvolvePoint))
+                return false;
+
+            RuntimeCard[] allCarrots = localZoneController.evolveDeckZone.Runtime.cards.Where(x => x.cardId == UmaUtilities.CarrotCardId &&
+                x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.baseValue == 0).ToArray();
+            if(allCarrots.Length < count)
+                return false;
+
+            List<CardObject> carrots = new();
+            for(int i = 0; i < count; i++)
+            {
+                carrots.Add(CardManager.Instance.RequestCard(allCarrots[i]));
+                localZoneController.ServeCard(card, carrots[i]);
+            }
+            sveEffectSolver.ServeCard(netIdentity, card.RuntimeCard, carrots.Select(x => x.RuntimeCard).ToArray(), useEvolvePoint, count);
+            sveEffectSolver.RaceCard(netIdentity, card.RuntimeCard, count);
+
+            LocalServeAndRaceMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceId = card.RuntimeCard.instanceId,
+                carrotInstanceIds = carrots.Select(x => x.RuntimeCard.instanceId).ToArray(),
+                useEvolvePoint = useEvolvePoint,
+                count = count
+            };
+            NetworkClient.Send(msg);
+            return true;
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Player Stats
 
         public void AddLeaderDefense(PlayerInfo targetPlayer, int amount)

@@ -53,6 +53,7 @@ namespace SVESimulator
             NetworkServer.RegisterHandler<LocalPayEffectCostMessage>(OnPayEffectCost);
 
             // Other
+            NetworkServer.RegisterHandler<LocalServeAndRaceMessage>(OnServeAndRace);
             NetworkServer.RegisterHandler<LocalTellOpponentPerformEffectMessage>(OnTellOpponentPerformEffect);
         }
 
@@ -97,6 +98,7 @@ namespace SVESimulator
             NetworkServer.UnregisterHandler<LocalPayEffectCostMessage>();
 
             // Other
+            NetworkServer.UnregisterHandler<LocalServeAndRaceMessage>();
             NetworkServer.UnregisterHandler<LocalTellOpponentPerformEffectMessage>();
         }
 
@@ -595,6 +597,30 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        private void OnServeAndRace(NetworkConnection conn, LocalServeAndRaceMessage msg)
+        {
+            PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
+            RuntimeCard card = player.namedZones[SVEProperties.Zones.Field].cards.Find(x => x.instanceId == msg.cardInstanceId);
+            RuntimeCard[] carrots = player.namedZones[SVEProperties.Zones.EvolveDeck].cards.Where(x => msg.carrotInstanceIds.Any(y => y == x.instanceId)).ToArray();
+            if(card == null || carrots is not { Length: > 0 })
+            {
+                Debug.LogError($"[Serve & Race] An error occurred when P{player.id} attempted to serve {msg.count} card w/ instance ID {msg.cardInstanceId}");
+                return;
+            }
+
+            OpponentServeAndRaceMessage serveAndRaceMessage = new()
+            {
+                playerNetId = msg.playerNetId,
+                cardInstanceId = msg.cardInstanceId,
+                carrots = carrots.Select(x => NetworkingUtils.GetNetCard(x)).ToArray(),
+                useEvolvePoint = msg.useEvolvePoint,
+                count = msg.count
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, serveAndRaceMessage);
+            (server.effectSolver as SVEEffectSolver).ServeCard(msg.playerNetId, card, carrots, msg.useEvolvePoint, msg.count);
+            (server.effectSolver as SVEEffectSolver).RaceCard(msg.playerNetId, card, msg.count);
+        }
 
         private void OnTellOpponentPerformEffect(NetworkConnection conn, LocalTellOpponentPerformEffectMessage msg)
         {
