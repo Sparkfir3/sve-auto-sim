@@ -34424,6 +34424,57 @@
     ]
   },
   {
+    "name": "Crossover Set \"Umamusume: Pretty Derby\"",
+    "cards": [
+      {
+        "cardTypeId": 3,
+        "name": "Carrot",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Neutral",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": null,
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "You can serve a Carrot to an Umamusume follower to race it. (Racing followers have Rush.)\n----------\nYou can put up to 10 of this card into your evolve deck.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-085",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": -1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [],
+        "id": 300011085
+      }
+    ]
+  },
+  {
     "name": "Starter Deck #1 \"Regal Fairy Princess\"",
     "cards": [
       {
