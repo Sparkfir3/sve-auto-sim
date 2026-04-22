@@ -58,7 +58,7 @@ namespace SVESimulator
         {
             if(card == null)
                 return false;
-            return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower);
+            return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower) ||  card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedSpell);;
         }
 
         public static bool IsToken(this CardObject card, GameConfiguration gameConfig = null) => card.RuntimeCard.IsToken(gameConfig);

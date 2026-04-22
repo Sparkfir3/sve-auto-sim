@@ -298,6 +298,15 @@
                 "maxValue": 20,
                 "id": 4,
                 "$type": "CCGKit.CardStat"
+            },
+            {
+                "name": "Face Up",
+                "baseValue": 0,
+                "originalValue": 0,
+                "minValue": 0,
+                "maxValue": 1,
+                "id": 5,
+                "$type": "CCGKit.CardStat"
             }
         ],
         "destroyConditions": [],

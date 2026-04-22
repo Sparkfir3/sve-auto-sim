@@ -36011,12 +36011,12 @@
         ],
         "stats": [
           {
-            "baseValue": -1,
-            "statId": 4,
-            "name": "Cost",
-            "originalValue": -1,
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
             "minValue": 0,
-            "maxValue": 99,
+            "maxValue": 1,
             "modifiers": []
           }
         ],

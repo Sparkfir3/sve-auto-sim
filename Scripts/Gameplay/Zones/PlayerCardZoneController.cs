@@ -111,7 +111,7 @@ namespace SVESimulator
             Debug.Assert(deckZone.Runtime.cards != null);
             Debug.Assert(deckZone.Runtime.cards.All(x => x.cardType != null));
             Debug.Assert(deckZone.Runtime.cards.All(x => x.cardType.name != null));
-            List<RuntimeCard> evolveCards = deckZone.Runtime.cards.Where(x => x.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower)).ToList();
+            List<RuntimeCard> evolveCards = deckZone.Runtime.cards.Where(x => x.IsEvolvedType()).ToList();
             evolveDeckZone.SetStackHeight(evolveCards.Count);
             return evolveCards;
         }
