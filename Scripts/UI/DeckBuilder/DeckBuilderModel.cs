@@ -4,7 +4,6 @@ using Sirenix.OdinInspector;
 using Sparkfire.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using CCGKit;
 using SVESimulator.Database;
 
@@ -269,9 +268,10 @@ namespace SVESimulator.DeckBuilder
             var targetDeck = card.cardTypeId is 1 or 3 ? CurrentEvolveDeck : CurrentMainDeck;
             if(!targetDeck.TryAdd(card, 1))
             {
-                if(targetDeck[card] >= 3)
+                int maxCount = DeckConstructionRules.GetMaxCardCount(card);
+                if(targetDeck[card] >= maxCount)
                     return;
-                targetDeck[card] = Mathf.Clamp(targetDeck[card] + 1, 1, 3);
+                targetDeck[card] = Mathf.Clamp(targetDeck[card] + 1, 1, maxCount);
                 IsDirty = true;
             }
             OnUpdateDeck?.Invoke();
