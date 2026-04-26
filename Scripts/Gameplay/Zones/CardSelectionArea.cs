@@ -301,6 +301,19 @@ namespace SVESimulator
             UpdateActionButton();
         }
 
+        public void AddAdditionalConfirmAction(string actionText, Action<List<CardObject>> action)
+        {
+            GameUIManager.MultipleChoice.AddSingleEntry(actionText, () =>
+            {
+                action?.Invoke(new List<CardObject>(currentSelectedCards));
+                DeselectAllCards();
+                GameUIManager.MultipleChoice.Close();
+            });
+            if(minSelectCount == 0) // move "Skip" button to end if applicable
+                GameUIManager.MultipleChoice.MoveButtonToEnd(GameUIManager.MultipleChoice.ActiveButtonCount - 1);
+            UpdateActionButton();
+        }
+
         #endregion
 
         // ------------------------------

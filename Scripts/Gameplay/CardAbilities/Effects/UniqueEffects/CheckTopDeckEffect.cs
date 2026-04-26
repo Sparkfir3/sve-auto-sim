@@ -9,7 +9,24 @@ namespace SVESimulator
 {
     public class CheckTopDeckEffect : SveEffect
     {
-        public enum CheckCardAction { None, Hand, Cemetery, Field, TopDeckAnyOrder, TopDeckSameOrder, BottomDeckAnyOrder, TopOrBottomDeck }
+        #region Enums/Structs
+
+        public enum CheckCardAction
+        {
+            None,
+
+            // Send to zone
+            Hand,
+            Cemetery,
+            Field,
+            TopOrBottomDeck,
+
+            // Rearrange and send
+            TopDeckAnyOrder,
+            TopDeckSameOrder,
+            BottomDeckAnyOrder,
+        }
+
         private struct CheckActionParameters
         {
             public CheckCardAction action;
@@ -23,6 +40,12 @@ namespace SVESimulator
                 this.amount = amount;
             }
         }
+
+        #endregion
+
+        // -----
+
+        #region Variables
 
         [StringField("Check Amt", width = 100), Order(1)]
         public string amount;
@@ -53,7 +76,11 @@ namespace SVESimulator
         private CheckActionParameters action3 => new CheckActionParameters(checkAction3, checkFilter3, checkAmount3);
         private List<CheckActionParameters> allActions => new() { action1, action2, action3 };
 
+        #endregion
+
         // ------------------------------
+
+        #region Resolve
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
@@ -82,12 +109,14 @@ namespace SVESimulator
                 if(action.action == CheckCardAction.None)
                     continue;
 
+                // Get actions
                 SVEFormulaParser.ParseValueAsMinMax(action.amount, player, out int minSelect, out int maxSelect);
                 if(!GetActionInfo(action, player, ref minSelect, ref maxSelect, out string actionText, out Action<List<CardObject>> confirmAction))
                     continue;
+                bool hasSecondaryActions = GetSecondaryActionsInfo(action, player, out List<string> secondaryActionTexts, out List<Action<List<CardObject>>> secondaryConfirmActions);
 
                 // Auto-complete if applicable
-                if(action.filter == null && action.amount == null && action.action is CheckCardAction.Hand or CheckCardAction.Cemetery)
+                if(ActionCanAutoComplete(action.action) && !hasSecondaryActions && action.filter == null && action.amount == null)
                 {
                     confirmAction?.Invoke(new List<CardObject>(selectionArea.AllCards));
                     break;
@@ -101,6 +130,9 @@ namespace SVESimulator
                     confirmAction?.Invoke(selectedCards);
                     waiting = false;
                 });
+                if(hasSecondaryActions)
+                    for(int i = 0; i < secondaryActionTexts.Count && i < secondaryConfirmActions.Count; i++)
+                        selectionArea.AddAdditionalConfirmAction(secondaryActionTexts[i], secondaryConfirmActions[i]);
                 yield return new WaitUntil(() => !waiting);
             }
 
@@ -110,12 +142,21 @@ namespace SVESimulator
             onComplete?.Invoke();
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Get Info
+
+        private bool ActionCanAutoComplete(CheckCardAction action) => action is CheckCardAction.Hand or CheckCardAction.Cemetery;
+
         private bool GetActionInfo(CheckActionParameters action, PlayerController player, ref int minSelect, ref int maxSelect, out string actionText, out Action<List<CardObject>> confirmAction)
         {
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
             minSelect = 0;
             switch(action.action)
             {
+                // Send to zone
                 case CheckCardAction.Hand:
                     actionText = "Add to Hand";
                     confirmAction = selectedCards =>
@@ -146,6 +187,16 @@ namespace SVESimulator
                         }
                     };
                     return true;
+                case CheckCardAction.TopOrBottomDeck:
+                    actionText = "Send to Top Deck";
+                    confirmAction = selectedCards =>
+                    {
+                        foreach(CardObject card in selectedCards)
+                            player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
+                    };
+                    return true;
+
+                // Rearrange
                 case CheckCardAction.BottomDeckAnyOrder:
                     actionText = "Send All to Bottom Deck";
                     confirmAction = _ =>
@@ -158,11 +209,38 @@ namespace SVESimulator
                     maxSelect = 0;
                     selectionArea.SwitchMode(CardSelectionArea.SelectionMode.MoveSelectionArea);
                     return true;
+
+                // Other
                 default:
                     actionText = null;
                     confirmAction = null;
                     return false;
             }
         }
+
+        private bool GetSecondaryActionsInfo(CheckActionParameters action, PlayerController player, out List<string> actionTexts, out List<Action<List<CardObject>>> confirmActions)
+        {
+            switch(action.action)
+            {
+                // Send to zone
+                case CheckCardAction.TopOrBottomDeck:
+                    actionTexts = new List<string> { "Send to Bottom Deck" };
+                    confirmActions = new List<Action<List<CardObject>>>();
+                    confirmActions.Add(selectedCards =>
+                    {
+                        foreach(CardObject card in selectedCards)
+                            player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                    });
+                    return true;
+
+                // Other
+                default:
+                    actionTexts = null;
+                    confirmActions = null;
+                    return false;
+            }
+        }
+
+        #endregion
     }
 }

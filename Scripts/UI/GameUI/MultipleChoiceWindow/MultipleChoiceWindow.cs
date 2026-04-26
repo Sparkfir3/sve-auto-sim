@@ -145,7 +145,13 @@ namespace SVESimulator.UI
         public void AddSingleEntry(MultipleChoiceEntryData entry) => AddSingleEntry(entry.text, entry.onSelect);
         public void AddSingleEntry(string text, Action onSelect)
         {
-            MultipleChoiceButton button = buttons.FirstOrDefault(x => !x.isActiveAndEnabled);
+            MultipleChoiceButton button = null;
+            for(int i = 0; i < buttons.Count; i++)
+                if(!buttons[i].isActiveAndEnabled)
+                {
+                    button = buttons[i];
+                    break;
+                }
             if(!button)
                 button = AddNewButton();
 
@@ -180,6 +186,26 @@ namespace SVESimulator.UI
         {
             buttons[index].Interactable = active;
         }
+
+        public void MoveButtonToEnd(int index)
+        {
+            int endIndex = ActiveButtonCount - 1;
+            if(index <= endIndex || index < 0)
+                return;
+
+            MultipleChoiceButton button = buttons[index];
+            buttons.RemoveAt(index);
+            buttons.Insert(endIndex, button);
+            button.transform.SetSiblingIndex(endIndex);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Get Info
+
+        public int ActiveButtonCount => buttons.Count(x => x.isActiveAndEnabled);
 
         #endregion
 
