@@ -70,7 +70,7 @@ namespace SVESimulator
                 button.OnClickEffect.AddListener(() =>
                 {
                     player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
-                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
+                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.name, () =>
                     {
                         SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
                         {
@@ -93,7 +93,7 @@ namespace SVESimulator
                 button.OnClickEffect.AddListener(() =>
                 {
                     player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
-                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.effect as SveEffect, ability.name, () =>
+                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.name, () =>
                     {
                         SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
                         {

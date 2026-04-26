@@ -97,7 +97,7 @@ namespace SVESimulator
                     text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
                     onSelect = () =>
                     {
-                        player.LocalEvents.PayAbilityCosts(card, trigger.Costs, effect, effectName, onSelect);
+                        player.LocalEvents.PayAbilityCosts(card, trigger.Costs, effectName, onSelect);
                     }
                 },
                 new MultipleChoiceWindow.MultipleChoiceEntryData

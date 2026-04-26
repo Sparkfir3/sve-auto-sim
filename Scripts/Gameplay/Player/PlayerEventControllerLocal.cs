@@ -1162,12 +1162,23 @@ namespace SVESimulator
             return costs == null || costs.Count == 0 || costs.All(x => x is not SveCost cost || cost.CanPayCost(playerController, card, abilityName));
         }
 
-        public void PayAbilityCosts(CardObject card, List<Cost> costs, SveEffect effect, string abilityName, Action onComplete)
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action onComplete)
         {
             if(costs == null || costs.Count == 0)
             {
                 IsPayingCosts = false;
                 onComplete?.Invoke();
+                return;
+            }
+            PayAbilityCosts(card, costs, abilityName, (_, _) => { onComplete?.Invoke(); });
+        }
+
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
+        {
+            if(costs == null || costs.Count == 0)
+            {
+                IsPayingCosts = false;
+                onComplete?.Invoke(null, null);
                 return;
             }
             StartCoroutine(Resolve());
@@ -1234,7 +1245,7 @@ namespace SVESimulator
 
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
-                onComplete?.Invoke();
+                onComplete?.Invoke(cardsToMove, countersToRemove);
                 IsPayingCosts = false;
             }
         }
@@ -1285,7 +1296,7 @@ namespace SVESimulator
 
                 MultipleChoiceWindow.MultipleChoiceEntryData entry = effect.AsMultipleChoiceEntry(() =>
                 {
-                    PayAbilityCosts(card, trigger.Costs, effect, ability.name, () => onChooseCost?.Invoke(false));
+                    PayAbilityCosts(card, trigger.Costs, ability.name, () => onChooseCost?.Invoke(false));
                 });
                 entry.disabled = !CanPayCosts(card.RuntimeCard, trigger.Costs, ability.name);
                 playOptions.Add(entry);
