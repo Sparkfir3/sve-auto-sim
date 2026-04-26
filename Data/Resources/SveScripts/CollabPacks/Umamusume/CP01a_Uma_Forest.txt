@@ -260,7 +260,6 @@ text "[feed][cost01]: Race this follower.
       When this card is returned to hand from your field, select an enemy follower on the field and deal it 2 damage.";
 
 serve;
-keyword Ward;
 ability OnReturnToHandFromField {
     effect DealDamage(2) to TargetOpponentCard F;
 }
