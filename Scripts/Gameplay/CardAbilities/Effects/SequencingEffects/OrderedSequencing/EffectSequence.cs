@@ -34,7 +34,7 @@ namespace SVESimulator
         // ------------------------------
 
         public static IEnumerator ResolveEffectsAsSequence(List<string> effectList, PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone,
-            Action onComplete, string additionalFilters = null, string overrideAmount = null)
+            Action onComplete, string additionalFilters = null, string overrideAmount = null, bool ignoreCosts = false)
         {
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
@@ -71,7 +71,7 @@ namespace SVESimulator
                 {
                     effectToPerform?.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () => { effectDone = true; });
                 };
-                if(trigger?.Costs is { Count: > 0 })
+                if(!ignoreCosts && trigger?.Costs is { Count: > 0 })
                     SelectPayCostOrDecline(player, cardObject, trigger, effectToPerform, effectName, resolveAction, () => { effectDone = true; });
                 else
                     resolveAction.Invoke();
