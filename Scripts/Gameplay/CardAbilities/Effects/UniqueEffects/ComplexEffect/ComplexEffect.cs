@@ -70,7 +70,7 @@ namespace SVESimulator
                         yield return PerformEffect(variables);
                         break;
                     case "performcostless":
-                        // TODO
+                        yield return PerformEffect(variables, ignoreCosts: true);
                         break;
 
                     default:
@@ -106,7 +106,7 @@ namespace SVESimulator
             string line = function[pointerL..pointerR].Trim();
             ComplexLog(LogMode.Value, $"Line = {line}\nPointers: {pointerL}, {pointerR}");
 
-            Task<string> task = ParseValue(line);
+            Task<string> task = ParseValue(line, variables);
             yield return new WaitUntil(() => task.IsCompleted);
             string value = task.Result;
 
@@ -114,8 +114,9 @@ namespace SVESimulator
             ComplexLog(LogMode.Value, $"var {variableName} = {value}\nPointers: {pointerL}, {pointerR}");
         }
 
-        private async Task<string> ParseValue(string line)
+        private async Task<string> ParseValue(string line, Dictionary<string, string> variables)
         {
+            // Init
             int pointer = line.IndexOf('.');
             if(pointer < 0)
                 pointer = line.Length - 1;
@@ -123,16 +124,30 @@ namespace SVESimulator
             if(line[pointer] == '.')
                 pointer++;
 
+            string args = null;
+            if(token.Contains('('))
+            {
+                args = token.TextInsideParentheses(out int left, out _);
+                token = token[..left];
+            }
+
+            // Get root object
             CE_Object obj = token switch
             {
                 "revealTopDeck" => await RevealTopDeck(),
+                "payCost" => await PayEffectCost(args),
                 _ => null
             };
+            if(obj == null)
+                return ReplceWithVariableValues(line, variables);
+
+            // Handle object properties/functions
             while(obj != null && obj is not CE_Value)
             {
                 switch(obj)
                 {
                     case CE_Card:
+                    case CE_EffectCost:
                         string[] parameters = line[pointer..].TextInsideParentheses(out int valuePointerL, out int valuePointerR).Split();
                         token = line[pointer..(pointer + valuePointerL)];
                         pointer = valuePointerR;
@@ -165,6 +180,8 @@ namespace SVESimulator
                 card = revealedCard.RuntimeCard;
                 waiting = false;
             });
+
+            // Wait
             while(waiting || !player || !Application.isPlaying)
                 await Task.Yield();
             await Task.Delay(200);
@@ -175,13 +192,41 @@ namespace SVESimulator
             } : null;
         }
 
+        private async Task<CE_Object> PayEffectCost(string effectName)
+        {
+            bool waiting = true;
+            CardObject card = CardManager.Instance.GetCardByInstanceId(sourceInstanceId);
+            if(!card)
+                return null;
+            List<MoveCardToZoneData> movedCardsData = null;
+            List<RemoveCounterData> removedCountersData = null;
+
+            player.LocalEvents.PayAbilityCosts(card, null, effectName, (movedCards, removedCounters) =>
+            {
+                movedCardsData = movedCards;
+                removedCountersData = removedCounters;
+                waiting = false;
+            });
+
+            // Wait
+            while(waiting || !player || !Application.isPlaying)
+                await Task.Yield();
+            await Task.Delay(400);
+            ComplexLog(LogMode.Value, $"[Pay Effect Cost] Instance ID {(card != null ? card.RuntimeCard.instanceId : "null")} / Effect {effectName}");
+            return new CE_EffectCost
+            {
+                movedCardsData = movedCardsData,
+                removedCountersData = removedCountersData
+            };
+        }
+
         #endregion
 
         // ------------------------------
 
         #region Perform Effect
 
-        private IEnumerator PerformEffect(Dictionary<string, string> variables, Action onComplete = null)
+        private IEnumerator PerformEffect(Dictionary<string, string> variables, bool ignoreCosts = false, Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
             ComplexLog(LogMode.Perform, $"Effect Name = {effectName}\nPointers: {pointerL}, {pointerR}");
@@ -200,12 +245,7 @@ namespace SVESimulator
                 {
                     case "amount":
                         arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = arguments[argPointer..].Trim();
-                        foreach(var kvPair in variables)
-                        {
-                            (string variable, string value) = (kvPair.Key, kvPair.Value);
-                            overrideAmount = overrideAmount.Replace(variable, value);
-                        }
+                        overrideAmount = ReplceWithVariableValues(arguments[argPointer..].Trim(), variables);
                         ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
                         break;
                     default:
@@ -214,10 +254,22 @@ namespace SVESimulator
             }
 
             yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
-                onComplete, overrideAmount: overrideAmount);
+                onComplete, overrideAmount: overrideAmount, ignoreCosts: ignoreCosts);
             yield return new WaitForEndOfFrame();
         }
 
         #endregion
+
+        // ------------------------------
+
+        private string ReplceWithVariableValues(string line, Dictionary<string, string> variables)
+        {
+            foreach(var kvPair in variables)
+            {
+                (string variable, string value) = (kvPair.Key, kvPair.Value);
+                line = line.Replace(variable, value);
+            }
+            return line;
+        }
     }
 }

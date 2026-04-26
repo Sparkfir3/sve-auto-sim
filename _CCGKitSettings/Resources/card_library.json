@@ -34724,14 +34724,14 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
+              "condition": "f(Xt(Umamusume))",
               "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = payCost(Damage).movedCardsCount * 2\n        performCostless Damage { amount = amt }",
+              "function": "let amt = payCost(Damage).movedCardsCount\n        let amt = amt * 2\n        performCostless Damage { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CCGKit;
 
@@ -29,6 +30,26 @@ namespace SVESimulator
                         return Task.FromResult<CE_Object>(new CE_Value()
                         {
                             value = parameters.Length > 0 ? SVEFormulaParser.ParseValue(parameters[0], player, card).ToString() : ""
+                        });
+                    default:
+                        return Task.FromResult<CE_Object>(null);
+                }
+            }
+        }
+
+        private class CE_EffectCost : CE_Object
+        {
+            public List<MoveCardToZoneData> movedCardsData;
+            public List<RemoveCounterData> removedCountersData;
+
+            public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
+            {
+                switch(token)
+                {
+                    case "movedCardsCount":
+                        return Task.FromResult<CE_Object>(new CE_Value()
+                        {
+                            value = movedCardsData.Count.ToString()
                         });
                     default:
                         return Task.FromResult<CE_Object>(null);

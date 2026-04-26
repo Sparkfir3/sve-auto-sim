@@ -52,8 +52,10 @@ text "[feed][cost01]: Race this follower.
 
 serve;
 ability Fanfare {
+    condition f(Xt(Umamusume));
     effect ComplexEffect(
-        let amt = payCost(Damage).movedCardsCount * 2
+        let amt = payCost(Damage).movedCardsCount
+        let amt = amt * 2
         performCostless Damage { amount = amt }
     );
 }
