@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sparkfire.Utility;
 using CCGKit;
 
@@ -13,13 +14,19 @@ namespace SVESimulator
         public bool PointerInside { get; set; }
 
         [Title("Settings"), SerializeField]
-        private string evolveTextTemplate = "Evolve ({0})";
-        [SerializeField]
         private float verticalOffset = 50f;
-        [SerializeField]
+
+        [BoxGroup("Evolve Text"), SerializeField]
+        private string evolveTextTemplate = "Evolve ({0})";
+        [BoxGroup("Evolve Text"), SerializeField]
         private SerializedDictionary<int, string> evolveCostFormatting = new();
-        [SerializeField]
+        [BoxGroup("Evolve Text"), SerializeField]
         private string evolvePointFormatting = "EP";
+
+        [FoldoutGroup("Serve Text"), SerializeField]
+        private string serveTextTemplate = "{0} ({1}) Race this follower{2}.";
+        [FoldoutGroup("Serve Text"), SerializeField]
+        private string carrotIconFormatting = "Carrot";
 
         [Title("Object References"), SerializeField]
         private RectTransform rectTransform;
@@ -106,34 +113,11 @@ namespace SVESimulator
                 i++;
             }
 
-            // Evolve without evolve point
-            int evolveCost = onlyQuicks ? -1 : card.GetEvolveCost();
-            if(evolveCost >= 0)
+            // Evolve/Serve
+            if(!onlyQuicks)
             {
-                MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
-                button.gameObject.SetActive(true);
-                button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost));
-                button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(evolveCost) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
-                button.OnClickEffect.AddListener(() =>
-                {
-                    player.LocalEvents.EvolveCard(card, false);
-                    Close();
-                });
-                i++;
-            }
-
-            // Evolve with evolve point
-            if(evolveCost > 0 && player.LocalEvents.HasEvolvePoint())
-            {
-                MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
-                button.gameObject.SetActive(true);
-                button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost - 1, true));
-                button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(evolveCost, true) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
-                button.OnClickEffect.AddListener(() =>
-                {
-                    player.LocalEvents.EvolveCard(card, true);
-                    Close();
-                });
+                AddEvolveEffects(player, card, ref i);
+                AddServeEffects(player, card, ref i);
             }
 
             // Open window
@@ -160,6 +144,86 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Generic Acts
+
+        private void AddEvolveEffects(PlayerController player, CardObject card, ref int buttonsIndex)
+        {
+            // Evolve without evolve point
+            int evolveCost = card.GetEvolveCost();
+            if(evolveCost >= 0)
+            {
+                MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+                button.gameObject.SetActive(true);
+                button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost));
+                button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(evolveCost) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
+                button.OnClickEffect.AddListener(() =>
+                {
+                    player.LocalEvents.EvolveCard(card, false);
+                    Close();
+                });
+                buttonsIndex++;
+            }
+
+            // Evolve with evolve point
+            if(!player.EvolvedThisTurn && evolveCost > 0 && player.LocalEvents.HasEvolvePoint())
+            {
+                MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+                button.gameObject.SetActive(true);
+                button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost - 1, true));
+                button.Interactable = player.LocalEvents.CanPayEvolveCost(evolveCost, true) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
+                button.OnClickEffect.AddListener(() =>
+                {
+                    player.LocalEvents.EvolveCard(card, true);
+                    Close();
+                });
+                buttonsIndex++;
+            }
+        }
+
+        private void AddServeEffects(PlayerController player, CardObject card, ref int buttonsIndex)
+        {
+            if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.IsRacing))
+                return;
+
+            bool allowEvolvePoint = !player.EvolvedThisTurn && player.LocalEvents.HasEvolvePoint();
+            if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve1))
+            {
+                AddServeButton(player, card, ref buttonsIndex, 1, false);
+                if(allowEvolvePoint)
+                    AddServeButton(player, card, ref buttonsIndex, 1, true);
+            }
+            if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve2))
+            {
+                AddServeButton(player, card, ref buttonsIndex, 2, false);
+                if(allowEvolvePoint)
+                    AddServeButton(player, card, ref buttonsIndex, 2, true);
+            }
+            if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve3))
+            {
+                AddServeButton(player, card, ref buttonsIndex, 3, false);
+                if(allowEvolvePoint)
+                    AddServeButton(player, card, ref buttonsIndex, 3, true);
+            }
+        }
+
+        private void AddServeButton(PlayerController player, CardObject card, ref int buttonsIndex, int serveCount, bool withEvolvePoint)
+        {
+            MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+            button.gameObject.SetActive(true);
+            button.Text = GetFormattedServeText(serveCount, withEvolvePoint);
+            button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(serveCount, withEvolvePoint) && serveCount <= player.ZoneController.EvolveDeckCarrotCount();
+            button.OnClickEffect.AddListener(() =>
+            {
+                player.LocalEvents.ServeAndRaceCard(card, withEvolvePoint, serveCount);
+                Close();
+            });
+            buttonsIndex++;
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Other
 
         private void Update()
@@ -180,6 +244,12 @@ namespace SVESimulator
         private string GetFormattedEvolveCost(int cost, bool withEvolvePoint = false)
         {
             return evolveCostFormatting.GetValueOrDefault(cost, cost.ToString()) + (withEvolvePoint ? $" + {evolvePointFormatting}" : "");
+        }
+
+        private string GetFormattedServeText(int serveCount, bool withEvolvePoint = false)
+        {
+            return string.Format(serveTextTemplate, string.Concat(Enumerable.Repeat(carrotIconFormatting, serveCount)), GetFormattedEvolveCost(serveCount, withEvolvePoint),
+                serveCount > 1 ? $" {serveCount} times" : "");
         }
 
         #endregion

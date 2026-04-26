@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2942690425565000330}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -132,7 +131,6 @@ RectTransform:
   - {fileID: 146766529569518436}
   - {fileID: 732276797615554234}
   m_Father: {fileID: 4373415351481364239}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -255,7 +253,6 @@ RectTransform:
   m_Children:
   - {fileID: 2942690425565000330}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -274,8 +271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885191aa8675df442a89431ad4909f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  evolveTextTemplate: Evolve ({0})
   verticalOffset: 95
+  evolveTextTemplate: Evolve ({0})
   evolveCostFormatting:
     serializedPairs:
     - key: 0
@@ -301,6 +298,8 @@ MonoBehaviour:
     - key: 10
       value: 10
   evolvePointFormatting: <sprite index=26>
+  serveTextTemplate: '{0} ({1}) Race this follower{2}.'
+  carrotIconFormatting: <sprite index=28>
   rectTransform: {fileID: 4373415351481364239}
   window: {fileID: 2942690425565000330}
   buttons: []

@@ -456,6 +456,12 @@ namespace SVESimulator
             return evolvedCard != null;
         }
 
+        public int EvolveDeckCarrotCount()
+        {
+            return evolveDeckZone.Runtime.cards.Count(x => x.cardId == UmaUtilities.CarrotCardId
+                && x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.baseValue == 0);
+        }
+
         #endregion
 
         // ------------------------------

@@ -167,6 +167,13 @@ namespace SVESimulator
             return attachedCards;
         }
 
+        public bool CanServe()
+        {
+            return !RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.IsRacing) &&
+                (RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve1) || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve2)
+                    || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve3));
+        }
+
         #endregion
 
         // ------------------------------
