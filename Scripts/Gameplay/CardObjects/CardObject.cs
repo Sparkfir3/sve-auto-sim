@@ -20,20 +20,27 @@ namespace SVESimulator
         public CardZone CurrentZone { get; set; }
         [field: SerializeField, ReadOnly]
         public bool IsVisible { get; set; }
-        [field: HorizontalGroup("Attack"), SerializeField, ReadOnly, LabelWidth(120)]
+        [field: HorizontalGroup("Attack"), SerializeField, ReadOnly, LabelWidth(180)]
         public bool CanAttack { get; set; }
-        [field: HorizontalGroup("Attack"), SerializeField, ReadOnly, LabelWidth(120)]
+        [field: HorizontalGroup("Attack"), SerializeField, ReadOnly, LabelWidth(180)]
         public bool CanAttackLeader { get; set; }
         [field: SerializeField, ReadOnly]
         public bool IsValidDefender { get; set; }
-        [SerializeField, HorizontalGroup("Interactable"), LabelWidth(120)]
+
+        [SerializeField, HorizontalGroup("Interactable"), LabelWidth(180)]
         private bool _interactable = true;
-        [SerializeField, HorizontalGroup("Interactable"), LabelWidth(120)]
+        [SerializeField, HorizontalGroup("Interactable"), LabelWidth(180)]
         private bool _isAnimating = true;
-        [SerializeField, ReadOnly]
+
+        [SerializeField, HorizontalGroup("Engaged"), LabelWidth(180), ReadOnly]
+        private bool canTrackEngageStatus;
+        [SerializeField, HorizontalGroup("Engaged"), LabelWidth(180), ReadOnly]
         private bool isTrackingEngagedStatus;
+
         [field: SerializeField, ReadOnly]
         public int NumberOfTurnsOnBoard { get; set; }
+
+        // ---
 
         [TitleGroup("Runtime Data"), ShowInInspector]
         private bool hasRuntimeCard => _runtimeCard != null;
@@ -115,6 +122,7 @@ namespace SVESimulator
 
             _interactable = true;
             _isAnimating = false;
+            canTrackEngageStatus = RuntimeCard.namedStats.ContainsKey(SVEProperties.CardStats.Engaged);
             parentCard = null;
             NumberOfTurnsOnBoard = 0;
             CanAttack = false;
@@ -182,6 +190,8 @@ namespace SVESimulator
 
         public void StartTrackingEngagedStatus()
         {
+            if(!canTrackEngageStatus)
+                return;
             Debug.Assert(RuntimeCard != null);
             isTrackingEngagedStatus = true;
             RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].onValueChanged += UpdateEngagedStatus;
@@ -191,7 +201,8 @@ namespace SVESimulator
         {
             Debug.Assert(RuntimeCard != null);
             isTrackingEngagedStatus = false;
-            RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].onValueChanged -= UpdateEngagedStatus;
+            if(RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat))
+                engagedStat.onValueChanged -= UpdateEngagedStatus;
         }
 
         public void SetReserved() // untapped
@@ -290,7 +301,7 @@ namespace SVESimulator
 
         public void CalculateCanAttackStatus(bool updateHighlightMode = true)
         {
-            if(!CurrentZone.IsLocalPlayerZone || !this.IsFollowerOrEvolvedFollower() || RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 1
+            if(!CurrentZone.IsLocalPlayerZone || !this.IsFollowerOrEvolvedFollower() || Engaged
                || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotAttack))
             {
                 CanAttack = false;

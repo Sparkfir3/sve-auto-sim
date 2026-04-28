@@ -1075,6 +1075,7 @@ MonoBehaviour:
   <IsValidDefender>k__BackingField: 0
   _interactable: 1
   _isAnimating: 0
+  canTrackEngageStatus: 0
   isTrackingEngagedStatus: 0
   <NumberOfTurnsOnBoard>k__BackingField: 0
   parentCard: {fileID: 0}
