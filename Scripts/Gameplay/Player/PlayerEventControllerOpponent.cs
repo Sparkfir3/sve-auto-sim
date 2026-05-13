@@ -557,7 +557,7 @@ namespace SVESimulator
 
             // Serve
             for(int i = 0; i < carrots.Count; i++)
-                localZoneController.ServeCard(card, carrots[i]);
+                oppZoneController.ServeCard(card, carrots[i]);
             sveEffectSolver.ServeCard(msg.playerNetId, card.RuntimeCard, carrots.Select(x => x.RuntimeCard).ToArray(), msg.useEvolvePoint, msg.count);
             sveEffectSolver.RaceCard(msg.playerNetId, card.RuntimeCard, msg.count);
         }
