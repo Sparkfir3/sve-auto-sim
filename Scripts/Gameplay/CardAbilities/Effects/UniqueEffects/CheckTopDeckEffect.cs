@@ -131,8 +131,17 @@ namespace SVESimulator
                     waiting = false;
                 });
                 if(hasSecondaryActions)
+                {
                     for(int i = 0; i < secondaryActionTexts.Count && i < secondaryConfirmActions.Count; i++)
-                        selectionArea.AddAdditionalConfirmAction(secondaryActionTexts[i], secondaryConfirmActions[i]);
+                    {
+                        int index = i;
+                        selectionArea.AddAdditionalConfirmAction(secondaryActionTexts[i], selectedCards =>
+                        {
+                            secondaryConfirmActions[index]?.Invoke(selectedCards);
+                            waiting = false;
+                        });
+                    }
+                }
                 yield return new WaitUntil(() => !waiting);
             }
 
@@ -191,6 +200,8 @@ namespace SVESimulator
                     actionText = "Send to Top Deck";
                     confirmAction = selectedCards =>
                     {
+                        if(action.amount.IsNullOrWhiteSpace())
+                            selectedCards = new List<CardObject>(selectionArea.GetAllPrimaryCards());
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
                     };
@@ -220,17 +231,22 @@ namespace SVESimulator
 
         private bool GetSecondaryActionsInfo(CheckActionParameters action, PlayerController player, out List<string> actionTexts, out List<Action<List<CardObject>>> confirmActions)
         {
+            CardSelectionArea selectionArea = player.ZoneController.selectionArea;
             switch(action.action)
             {
                 // Send to zone
                 case CheckCardAction.TopOrBottomDeck:
                     actionTexts = new List<string> { "Send to Bottom Deck" };
-                    confirmActions = new List<Action<List<CardObject>>>();
-                    confirmActions.Add(selectedCards =>
+                    confirmActions = new List<Action<List<CardObject>>>
                     {
-                        foreach(CardObject card in selectedCards)
-                            player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
-                    });
+                        selectedCards =>
+                        {
+                            if(action.amount.IsNullOrWhiteSpace())
+                                selectedCards = new List<CardObject>(selectionArea.GetAllPrimaryCards());
+                            foreach(CardObject card in selectedCards)
+                                player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                        }
+                    };
                     return true;
 
                 // Other
