@@ -248,7 +248,8 @@ namespace SVESimulator
 
         private string GetFormattedServeText(int serveCount, bool withEvolvePoint = false)
         {
-            return string.Format(serveTextTemplate, string.Concat(Enumerable.Repeat(carrotIconFormatting, serveCount)), GetFormattedEvolveCost(serveCount, withEvolvePoint),
+            return string.Format(serveTextTemplate, string.Concat(Enumerable.Repeat(carrotIconFormatting, serveCount)),
+                (serveCount == 1 && withEvolvePoint) ? evolvePointFormatting : GetFormattedEvolveCost(serveCount, withEvolvePoint),
                 serveCount > 1 ? $" {serveCount} times" : "");
         }
 
