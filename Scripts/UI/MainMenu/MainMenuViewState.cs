@@ -33,9 +33,17 @@ namespace SVESimulator.UI
     {
         Static = 0,
         MainA = 1,
+        MainALower1 = 11,
+        MainALower2 = 12,
         MainB = 2,
+        MainBLower1 = 21,
+        MainBLower2 = 22,
         MainC = 3,
+        MainCLower1 = 31,
+        MainCLower2 = 32,
         Back = 4,
+        BackLower1 = 41,
+        BackLower2 = 42,
         CenterA = 5,
         CenterB = 6,
     }

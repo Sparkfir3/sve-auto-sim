@@ -21,11 +21,11 @@ MonoBehaviour:
     <FaceUp>k__BackingField: 0
     <IsActive>k__BackingField: 1
   - <TargetButton>k__BackingField: 1
-    <TargetPosition>k__BackingField: 1
+    <TargetPosition>k__BackingField: 11
     <FaceUp>k__BackingField: 1
     <IsActive>k__BackingField: 1
   - <TargetButton>k__BackingField: 2
-    <TargetPosition>k__BackingField: 1
+    <TargetPosition>k__BackingField: 12
     <FaceUp>k__BackingField: 1
     <IsActive>k__BackingField: 1
   <MoveActions>k__BackingField:
@@ -54,13 +54,13 @@ MonoBehaviour:
     toFaceUp: 1
     isActive: 1
   - <TargetButton>k__BackingField: 3
-    <TargetPosition>k__BackingField: 4
+    <TargetPosition>k__BackingField: 41
     <PostDelay>k__BackingField: 0.001
     moveType: 7
     toFaceUp: 0
     isActive: 0
   - <TargetButton>k__BackingField: 7
-    <TargetPosition>k__BackingField: 4
+    <TargetPosition>k__BackingField: 42
     <PostDelay>k__BackingField: 0
     moveType: 7
     toFaceUp: 0
