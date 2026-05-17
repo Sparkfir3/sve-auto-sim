@@ -410,7 +410,6 @@ namespace SVESimulator
             carrotCard.transform.SetPositionAndRotation(evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
             MoveCardZone(carrotCard, evolveDeckZone, fieldZone);
             MoveCardTransform(carrotCard, fieldZone.GetSlotPosition(slotNumber) - (Vector3.up * 0.1f), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.FlipFromDeck);
-            fieldZone.MoveCardToSlot(carrotCard, slotNumber, newInteractionType: TargetableSlot.InteractionType.None);
         }
 
         public void AddAndPlaceToken(CardObject token, CardPositionedZone zone, int slotNumber)
