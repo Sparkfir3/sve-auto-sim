@@ -1090,6 +1090,7 @@ namespace SVESimulator
 
         public bool ServeAndRaceCard(CardObject card, bool useEvolvePoint, int count = 1)
         {
+            // Condition checks & init
             if(!isActivePlayer || playerController.EvolvedThisTurn)
                 return false;
             if(!CanPayEvolveCost(count, useEvolvePoint))
@@ -1100,6 +1101,7 @@ namespace SVESimulator
             if(allCarrots.Length < count)
                 return false;
 
+            // Serve logic
             List<CardObject> carrots = new();
             for(int i = 0; i < count; i++)
             {
@@ -1108,7 +1110,9 @@ namespace SVESimulator
             }
             sveEffectSolver.ServeCard(netIdentity, card.RuntimeCard, carrots.Select(x => x.RuntimeCard).ToArray(), useEvolvePoint, count);
             sveEffectSolver.RaceCard(netIdentity, card.RuntimeCard, count);
+            playerController.EvolvedThisTurn = true;
 
+            // Networking
             LocalServeAndRaceMessage msg = new()
             {
                 playerNetId = netIdentity,
