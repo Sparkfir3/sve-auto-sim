@@ -19,6 +19,7 @@ namespace SVESimulator
             Hand,
             Cemetery,
             Field,
+            BottomDeck,
             TopOrBottomDeck,
 
             // Rearrange and send
@@ -129,7 +130,7 @@ namespace SVESimulator
                 {
                     confirmAction?.Invoke(selectedCards);
                     waiting = false;
-                });
+                }, cancelAction: _ => waiting = false );
                 if(hasSecondaryActions)
                 {
                     for(int i = 0; i < secondaryActionTexts.Count && i < secondaryConfirmActions.Count; i++)
@@ -196,12 +197,18 @@ namespace SVESimulator
                         }
                     };
                     return true;
+                case CheckCardAction.BottomDeck:
+                    actionText = "Send to Bottom Deck";
+                    confirmAction = selectedCards =>
+                    {
+                        foreach(CardObject card in selectedCards)
+                            player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                    };
+                    return true;
                 case CheckCardAction.TopOrBottomDeck:
                     actionText = "Send to Top Deck";
                     confirmAction = selectedCards =>
                     {
-                        if(action.amount.IsNullOrWhiteSpace())
-                            selectedCards = new List<CardObject>(selectionArea.GetAllPrimaryCards());
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
                     };
@@ -241,8 +248,6 @@ namespace SVESimulator
                     {
                         selectedCards =>
                         {
-                            if(action.amount.IsNullOrWhiteSpace())
-                                selectedCards = new List<CardObject>(selectionArea.GetAllPrimaryCards());
                             foreach(CardObject card in selectedCards)
                                 player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
                         }

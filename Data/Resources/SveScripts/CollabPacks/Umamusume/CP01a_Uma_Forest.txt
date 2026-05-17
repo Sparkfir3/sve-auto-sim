@@ -130,7 +130,7 @@ text "[feed][cost01]: Race this follower.
 
 serve;
 ability Fanfare {
-    effect CheckTop(1, (TopOrBottomDeck));
+    effect CheckTop(1, (BottomDeck));
 }
 
 // ------------------------------

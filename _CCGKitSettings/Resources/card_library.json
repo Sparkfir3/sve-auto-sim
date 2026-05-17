@@ -35096,7 +35096,7 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "checkAction1": "TopOrBottomDeck",
+              "checkAction1": "BottomDeck",
               "checkFilter1": null,
               "checkAmount1": null,
               "checkAction2": "None",

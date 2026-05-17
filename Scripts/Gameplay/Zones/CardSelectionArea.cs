@@ -265,7 +265,7 @@ namespace SVESimulator
         }
 
         public void SetConfirmAction(string cardName, string actionText, string effectText, int minSelectionCount, int maxSelectionCount, Action<List<CardObject>> action,
-            bool showTargetingToOpponent = true, ButtonDisplayPosition displayPosition = ButtonDisplayPosition.Top)
+            Action<List<CardObject>> cancelAction = null, bool showTargetingToOpponent = true, ButtonDisplayPosition displayPosition = ButtonDisplayPosition.Top)
         {
             GameUIManager.MultipleChoice.Close();
             minSelectCount = minSelectionCount;
@@ -276,7 +276,9 @@ namespace SVESimulator
                 text = actionText,
                 onSelect = () =>
                 {
-                    action?.Invoke(new List<CardObject>(currentSelectedCards));
+                    action?.Invoke(minSelectionCount == 0 && maxSelectionCount == 0
+                        ? new List<CardObject>(GetAllPrimaryCards())
+                        : new List<CardObject>(currentSelectedCards));
                     DeselectAllCards();
                     GameUIManager.MultipleChoice.Close();
                 }
@@ -289,7 +291,10 @@ namespace SVESimulator
                     text = "Skip",
                     onSelect = () =>
                     {
-                        action?.Invoke(new List<CardObject>());
+                        if(cancelAction == null)
+                            action?.Invoke(new List<CardObject>());
+                        else
+                            cancelAction.Invoke(null);
                         GameUIManager.MultipleChoice.Close();
                     }
                 });
