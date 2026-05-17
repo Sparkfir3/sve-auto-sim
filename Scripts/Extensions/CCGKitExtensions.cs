@@ -69,7 +69,7 @@ namespace SVESimulator
             gameConfig ??= GameManager.Instance.config;
             if(gameConfig == null)
                 return false;
-            return LibraryCardCache.GetCard(card.cardId, gameConfig).GetStringProperty(SVEProperties.CardStats.Trait).Contains(SVEProperties.CardTypes.Token);
+            return LibraryCardCache.GetCard(card.cardId, gameConfig).TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Token);
         }
 
         public static bool IsEvolvedVersionOf(this Card evolvedCard, Card baseCard)
@@ -82,6 +82,18 @@ namespace SVESimulator
         // ------------------------------
 
         #region Get Card Info
+
+        public static int TryGetIntProperty(this Card card, string name, int defaultValue = 0)
+        {
+            Property property = card.properties.Find(x => x.name.Equals(name) && x is IntProperty);
+            return (property as IntProperty)?.value ?? defaultValue;
+        }
+
+        public static string TryGetStringProperty(this Card card, string name, string defaultValue = null)
+        {
+            Property property = card.properties.Find(x => x.name.Equals(name) && x is StringProperty);
+            return (property as StringProperty)?.value ?? defaultValue;
+        }
 
         public static string GetEnglishSveID(this Card card)
         {
