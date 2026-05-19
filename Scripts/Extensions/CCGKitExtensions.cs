@@ -202,6 +202,34 @@ namespace SVESimulator
 
         #region Modify Card Info
 
+        /// <summary>
+        /// Resets all of a RuntimeCard's stats and keywords to their base value, excluding the Face Up stat
+        /// </summary>
+        public static void ResetCardMainStatsAndKeywords(this RuntimeCard card)
+        {
+            Card baseCard = LibraryCardCache.GetCard(card.cardId);
+
+            card.RemoveAllModifiersWithoutNotify();
+            foreach(Stat stat in baseCard.stats)
+            {
+                if(stat.name.Equals(SVEProperties.CardStats.FaceUp))
+                    continue;
+                card.stats[stat.statId].baseValue = stat.baseValue;
+                card.stats[stat.statId].onValueChanged?.Invoke(stat.baseValue, stat.baseValue); // resets atk/def/cost stat displays
+            }
+
+            card.keywords.Clear();
+            foreach(RuntimeKeyword keyword in baseCard.keywords)
+            {
+                RuntimeKeyword newKeyword = new()
+                {
+                    keywordId = keyword.keywordId,
+                    valueId = keyword.valueId
+                };
+                card.keywords.Add(newKeyword); // not using RuntimeCard's native AddKeyword() to avoid calling the onKeywordAdded event multiple times
+            }
+        }
+
         public static bool RemoveModifier(this Stat stat, Modifier modifier)
         {
             Modifier modToRemove = stat.modifiers.FirstOrDefault(x => x.value == modifier.value && x.duration == modifier.duration);

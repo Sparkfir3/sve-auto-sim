@@ -372,8 +372,9 @@ namespace SVESimulator
                     else
                         endZone.AddCard(cardToMove);
                 }
-                if(startZone.name.Equals(SVEProperties.Zones.Field) && cardToMove.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat))
-                    engagedStat.baseValue = 0;
+
+                if(startZoneName.Equals(SVEProperties.Zones.Field) || (startZoneName.Equals(SVEProperties.Zones.ExArea) && endZoneName.Equals(SVEProperties.Zones.Field)))
+                    cardToMove.ResetCardMainStatsAndKeywords();
             }
         }
 
@@ -454,7 +455,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Card Stats/Combat
+        #region Combat
 
         public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card, bool isAttackingLeader)
         {
