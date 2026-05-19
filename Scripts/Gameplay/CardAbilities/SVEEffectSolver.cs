@@ -343,26 +343,15 @@ namespace SVESimulator
         // ---
 
         /// <summary>
-        /// Sends given card to desired zone, with handling evolved cards and tokens having additional logic compared to regular cards
+        /// Sends given card to desired zone, with evolved cards and tokens having additional logic compared to regular cards
+        /// Does not include Playing cards to the field or Playing spells (to resolution)
         /// </summary>
         private void StandardSendRuntimeCardToZone(PlayerInfo player, RuntimeCard card, string startZoneName, string endZoneName, bool addToTop = false)
         {
             RuntimeZone startZone = player.namedZones[startZoneName];
             RuntimeZone endZone = player.namedZones[endZoneName];
             List<RuntimeCard> cardsToMove = new() { card };
-            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo)) // TODO - support for more than one attached card
-            {
-                int attachedCardID = attachedCardInfo.baseValue;
-                if(attachedCardID >= 0)
-                {
-                    RuntimeCard attachedCard = startZone.cards.FirstOrDefault(x => x.instanceId == attachedCardID);
-                    if(attachedCard != null)
-                        cardsToMove.Add(attachedCard);
-                    else
-                        Debug.LogError($"Failed to find attached card with instance ID {attachedCardID} to send to cemetery!");
-                }
-                attachedCardInfo.baseValue = -1;
-            }
+            cardsToMove.AddRange(card.GetAllAttachedCards(startZone, true));
 
             foreach(RuntimeCard cardToMove in cardsToMove)
             {

@@ -1079,7 +1079,7 @@ MonoBehaviour:
   isTrackingEngagedStatus: 0
   <NumberOfTurnsOnBoard>k__BackingField: 0
   parentCard: {fileID: 0}
-  attachedCards: []
+  attachedCard: {fileID: 0}
   cardFront: {fileID: 6868727082917569893}
   cardBack: {fileID: 4429240315663081014}
   statsDisplay: {fileID: 2803146877723192158}

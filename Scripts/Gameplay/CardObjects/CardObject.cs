@@ -52,7 +52,7 @@ namespace SVESimulator
         [BoxGroup("Attachment"), SerializeField]
         private CardObject parentCard;
         [BoxGroup("Attachment"), SerializeField]
-        private List<CardObject> attachedCards = new();
+        private CardObject attachedCard;
 
         // ---
 
@@ -128,7 +128,7 @@ namespace SVESimulator
             CanAttack = false;
             CanAttackLeader = false;
             IsValidDefender = false;
-            attachedCards.Clear();
+            attachedCard = null;
         }
 
         public void OnStartTurn()
@@ -170,9 +170,26 @@ namespace SVESimulator
             return RuntimeCard.EvolveCost();
         }
 
+        public List<CardObject> GetParentCards()
+        {
+            List<CardObject> cardList = new();
+            if(parentCard)
+            {
+                cardList.Add(parentCard);
+                cardList.AddRange(parentCard.GetParentCards());
+            }
+            return cardList;
+        }
+
         public List<CardObject> GetAttachedCards()
         {
-            return attachedCards;
+            List<CardObject> cardList = new();
+            if(attachedCard)
+            {
+                cardList.Add(attachedCard);
+                cardList.AddRange(attachedCard.GetAttachedCards());
+            }
+            return cardList;
         }
 
         public bool CanServe()
@@ -282,13 +299,16 @@ namespace SVESimulator
         {
             if(!newParent)
                 return;
+            if(newParent.attachedCard)
+            {
+                AttachToCard(newParent.attachedCard);
+                return;
+            }
 
             if(parentCard)
-            {
-                parentCard.attachedCards.Remove(this);
-            }
+                parentCard.attachedCard = null;
             parentCard = newParent;
-            newParent.attachedCards.Add(this);
+            newParent.attachedCard = this;
 
             _interactable = false;
             SetStatOverlayActive(false);
