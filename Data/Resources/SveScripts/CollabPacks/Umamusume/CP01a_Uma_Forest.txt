@@ -60,7 +60,7 @@ ability Fanfare {
     );
 }
 ability Spell name Damage {
-    cost (ReturnToHand, TargetPlayerCards, t(Umamusume)Xm(0,5));
+    cost (ReturnToHand, TargetPlayerCard, t(Umamusume)Xm(0,5));
     effect DealDamage(_) to AllOpponentCards F;
 }
 

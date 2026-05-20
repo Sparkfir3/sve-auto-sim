@@ -29,6 +29,10 @@
         "trigger": "[fanfare]",
         "cost": "Return any number of other Umamusume cards on your field to their owners' hands",
         "body": "Deal X damage to each enemy follower on the field. X equals 2 times the number of cards returned."
+      },
+      {
+        "key": "Damage",
+        "cost": "Return any number of other Umamusume cards on your field to their owners' hands: Deal X damage to each enemy follower on the field. X equals 2 times the number of cards returned."
       }
     ]
   },

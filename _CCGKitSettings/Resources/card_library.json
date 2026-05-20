@@ -34739,7 +34739,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCards\",\r\n    \"filter\": \"t(Umamusume)Xm(0,5)\",\r\n    \"$type\": \"SVESimulator.ReturnToHandCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"t(Umamusume)Xm(0,5)\",\r\n    \"$type\": \"SVESimulator.ReturnToHandCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },
