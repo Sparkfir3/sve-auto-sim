@@ -93,7 +93,7 @@ namespace SVESimulator
         private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
         {
             string variableName = function.NextWord(pointerL, out pointerL);
-            ComplexLog(LogMode.Value, $"var = {variableName}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"Variable Name = {variableName}\nPointers: {pointerL}, {pointerR}");
             if(!function.NextWord(pointerL, out pointerL).Trim().Equals("="))
             {
                 pointerR = pointerL;
@@ -148,9 +148,14 @@ namespace SVESimulator
                 {
                     case CE_Card:
                     case CE_EffectCost:
-                        string[] parameters = line[pointer..].TextInsideParentheses(out int valuePointerL, out int valuePointerR).Split();
-                        token = line[pointer..(pointer + valuePointerL)];
-                        pointer = valuePointerR;
+                        string[] parameters = line[pointer..].TextInsideParentheses(out int paramsPointerL, out int paramsPointerR).Split();
+                        if(paramsPointerL == -1 && paramsPointerR == -1)
+                        {
+                            paramsPointerL = line.Length - pointer;
+                            paramsPointerR = paramsPointerL;
+                        }
+                        token = line[pointer..(pointer + paramsPointerL)];
+                        pointer += paramsPointerR;
                         obj = await obj.GetValue(player, token, parameters);
                         break;
 
@@ -198,10 +203,12 @@ namespace SVESimulator
             CardObject card = CardManager.Instance.GetCardByInstanceId(sourceInstanceId);
             if(!card)
                 return null;
+            Ability ability = card.LibraryCard.abilities.FirstOrDefault(x => x.name.Equals(effectName));
+            List<Cost> costs = ((ability as TriggeredAbility)?.trigger as SveTrigger)?.Costs;
             List<MoveCardToZoneData> movedCardsData = null;
             List<RemoveCounterData> removedCountersData = null;
 
-            player.LocalEvents.PayAbilityCosts(card, null, effectName, (movedCards, removedCounters) =>
+            player.LocalEvents.PayAbilityCosts(card, costs, effectName, (movedCards, removedCounters) =>
             {
                 movedCardsData = movedCards;
                 removedCountersData = removedCounters;
@@ -211,7 +218,7 @@ namespace SVESimulator
             // Wait
             while(waiting || !player || !Application.isPlaying)
                 await Task.Yield();
-            await Task.Delay(400);
+            await Task.Delay(200);
             ComplexLog(LogMode.Value, $"[Pay Effect Cost] Instance ID {(card != null ? card.RuntimeCard.instanceId : "null")} / Effect {effectName}");
             return new CE_EffectCost
             {
