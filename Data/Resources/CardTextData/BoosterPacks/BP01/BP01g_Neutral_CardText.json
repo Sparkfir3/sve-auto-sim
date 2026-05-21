@@ -254,5 +254,82 @@
         "body": "Draw a card."
       }
     ]
+  },
+  {
+    "id": "BP01-171EN",
+    "name": "Goblin",
+    "trait": "Goblinoid",
+    "cardText": "[evolve][cost04]: Evolve this follower."
+  },
+  {
+    "id": "BP01-172EN",
+    "name": "Goblin (Evolved)",
+    "trait": "Goblinoid"
+  },
+  {
+    "id": "BP01-173EN",
+    "name": "Fighter",
+    "trait": "Mercenary"
+  },
+  {
+    "id": "BP01-174EN",
+    "name": "Goliath",
+    "trait": "Gigant",
+    "cardText": "[evolve][cost02]: Evolve this follower."
+  },
+  {
+    "id": "BP01-175EN",
+    "name": "Goliath (Evolved)",
+    "trait": "Gigant"
+  },
+  {
+    "id": "BP01-176EN",
+    "name": "Angelic Sword Maiden",
+    "trait": "Angel",
+    "cardText": "Ward."
+  },
+  {
+    "id": "BP01-177EN",
+    "name": "Healing Angel",
+    "trait": "Angel",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP01-178EN",
+    "name": "Healing Angel (Evolved)",
+    "trait": "Angel",
+    "cardText": "On Evolve: Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP01-179EN",
+    "name": "Angelic Snipe",
+    "trait": "Pixie",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "Deal Damage",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP01-180EN",
+    "name": "Angelic Barrage",
+    "trait": "Pixie",
+    "cardText": "[quick]\nDeal 1 damage to each enemy follower on the field."
   }
 ]

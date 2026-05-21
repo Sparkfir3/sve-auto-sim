@@ -78,32 +78,6 @@
     ]
   },
   {
-    "id": "BP01-094EN",
-    "name": "Fire Lizard",
-    "trait": "Wyrmkin",
-    "cardText": "[fanfare] Select an enemy leader or enemy follower on the field and deal it 1 damage.",
-    "effectText": [
-      {
-        "key": "Fanfare",
-        "trigger": "[fanfare]",
-        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage."
-      }
-    ]
-  },
-  {
-    "id": "BP01-097EN",
-    "name": "Dread Dragon",
-    "trait": "Wyrmkin",
-    "cardText": "[fanfare] Select an enemy follower on the field and deal it 7 damage.",
-    "effectText": [
-      {
-        "key": "Fanfare",
-        "trigger": "[fanfare]",
-        "body": "Select an enemy follower on the field and deal it 7 damage."
-      }
-    ]
-  },
-  {
     "id": "SD04-009EN",
     "name": "Roc",
     "trait": "Beast",
@@ -180,43 +154,5 @@
         "body": "If Overflow is active for you, give this follower Storm."
       }
     ]
-  },
-  {
-    "id": "BP01-098EN",
-    "name": "Blazing Breath",
-    "trait": "Wyrmkin",
-    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "body": "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead."
-      }
-    ]
-  },
-  {
-    "id": "BP01-099EN",
-    "name": "Dragon Wings",
-    "trait": "Wyrmkin",
-    "cardText": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead."
-  },
-  {
-    "id": "BP01-174EN",
-    "name": "Goliath",
-    "trait": "Gigant",
-    "cardText": "[evolve][cost02]: Evolve this follower."
-  },
-  {
-    "id": "BP01-175EN",
-    "name": "Goliath (Evolved)",
-    "trait": "Gigant"
-  },
-  {
-    "id": "BP01-LD07EN",
-    "name": "Rowen"
-  },
-  {
-    "id": "BP01-T11EN",
-    "name": "Dragon",
-    "trait": "Wyrmkin / Token"
   }
 ]

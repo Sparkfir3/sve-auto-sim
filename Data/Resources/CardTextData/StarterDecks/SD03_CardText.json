@@ -63,19 +63,6 @@
     ]
   },
   {
-    "id": "BP01-070EN",
-    "name": "Lightning Shooter",
-    "trait": "Mage",
-    "cardText": "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
-    "effectText": [
-      {
-        "key": "Fanfare",
-        "trigger": "[fanfare]",
-        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader."
-      }
-    ]
-  },
-  {
     "id": "SD03-008EN",
     "name": "Penguin Wizard",
     "trait": "Arcanaform",
@@ -137,42 +124,6 @@
     ]
   },
   {
-    "id": "BP01-071EN",
-    "name": "Wind Blast",
-    "trait": "Mage",
-    "cardText": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead."
-      }
-    ]
-  },
-  {
-    "id": "BP01-072EN",
-    "name": "Sorcery Cache",
-    "trait": "Mage",
-    "cardText": "[quick]\nLook at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "body": "Look at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order."
-      }
-    ]
-  },
-  {
-    "id": "BP01-073EN",
-    "name": "Fiery Embrace",
-    "trait": "Mage",
-    "cardText": "[quick]\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
-    "effectText": [
-      {
-        "key": "Destroy Follower",
-        "body": "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader."
-      }
-    ]
-  },
-  {
     "id": "SD03-015EN",
     "name": "Magic Missile",
     "trait": "Mage",
@@ -198,47 +149,5 @@
         "body": "Put a Guardform Golem or Strikeform Golem token into your EX area."
       }
     ]
-  },
-  {
-    "id": "BP01-177EN",
-    "name": "Healing Angel",
-    "trait": "Angel",
-    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Give your leader [defense]+1.",
-    "effectText": [
-      {
-        "key": "Fanfare",
-        "trigger": "[fanfare]",
-        "body": "Give your leader [defense]+1."
-      }
-    ]
-  },
-  {
-    "id": "BP01-178EN",
-    "name": "Healing Angel (Evolved)",
-    "trait": "Angel",
-    "cardText": "On Evolve: Give your leader [defense]+2.",
-    "effectText": [
-      {
-        "key": "OnEvolve",
-        "trigger": "On Evolve:",
-        "body": "Give your leader [defense]+2."
-      }
-    ]
-  },
-  {
-    "id": "BP01-LD05EN",
-    "name": "Isabelle"
-  },
-  {
-    "id": "BP01-T08EN",
-    "name": "Strikeform Golem",
-    "trait": "Golem / Token",
-    "cardText": "Rush."
-  },
-  {
-    "id": "BP01-T09EN",
-    "name": "Guardform Golem",
-    "trait": "Golem / Token",
-    "cardText": "Ward."
   }
 ]

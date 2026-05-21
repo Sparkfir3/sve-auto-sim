@@ -91,25 +91,6 @@
     ]
   },
   {
-    "id": "BP01-142EN",
-    "name": "Cruel Priestess",
-    "trait": "Zealot",
-    "cardText": "[fanfare] Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.",
-    "effectText": [
-      {
-        "key": "Fanfare",
-        "trigger": "[fanfare]",
-        "body": "Select an amulet that costs 5 play points or less in your cemetery and put it onto your field."
-      }
-    ]
-  },
-  {
-    "id": "BP01-146EN",
-    "name": "Snake Priestess",
-    "trait": "Zealot",
-    "cardText": "Ward."
-  },
-  {
     "id": "SD06-009EN",
     "name": "Ardent Nun",
     "trait": "Faith",
@@ -148,32 +129,6 @@
     ]
   },
   {
-    "id": "BP01-148EN",
-    "name": "Hallowed Dogma",
-    "trait": "Faith",
-    "cardText": "[quick]\nLook at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
-    "effectText": [
-      {
-        "key": "Spell",
-        "body": "Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
-      }
-    ]
-  },
-  {
-    "id": "BP01-150EN",
-    "name": "Death Sentence",
-    "trait": "Zealot",
-    "cardText": "This card is put onto the field engaged.\n[act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.",
-    "effectText": [
-      {
-        "key": "Activate",
-        "trigger": "[act]",
-        "cost": "[engage], put this card into its owner's cemetery",
-        "body": "Select an enemy follower on the field and destroy it."
-      }
-    ]
-  },
-  {
     "id": "SD06-015EN",
     "name": "Pinion Prayer",
     "trait": "Faith / Avian",
@@ -200,21 +155,5 @@
         "body": "Summon a Holy Tiger token."
       }
     ]
-  },
-  {
-    "id": "BP01-LD11EN",
-    "name": "Eris"
-  },
-  {
-    "id": "BP01-T16EN",
-    "name": "Holy Falcon",
-    "trait": "Avian / Token",
-    "cardText": "Storm."
-  },
-  {
-    "id": "BP01-T17EN",
-    "name": "Holy Tiger",
-    "trait": "Beast / Token",
-    "cardText": "Rush."
   }
 ]

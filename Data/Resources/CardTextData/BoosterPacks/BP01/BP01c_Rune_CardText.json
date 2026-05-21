@@ -290,6 +290,55 @@
     ]
   },
   {
+    "id": "BP01-070EN",
+    "name": "Lightning Shooter",
+    "trait": "Mage",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader."
+      }
+    ]
+  },
+  {
+    "id": "BP01-071EN",
+    "name": "Wind Blast",
+    "trait": "Mage",
+    "cardText": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP01-072EN",
+    "name": "Sorcery Cache",
+    "trait": "Mage",
+    "cardText": "[quick]\nLook at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Look at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP01-073EN",
+    "name": "Fiery Embrace",
+    "trait": "Mage",
+    "cardText": "[quick]\nSelect an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.",
+    "effectText": [
+      {
+        "key": "Destroy Follower",
+        "body": "Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader."
+      }
+    ]
+  },
+  {
     "id": "BP01-074EN",
     "name": "Alchemist's Workshop",
     "trait": "Earth Sigil",
@@ -316,8 +365,24 @@
     ]
   },
   {
+    "id": "BP01-LD05EN",
+    "name": "Isabelle"
+  },
+  {
     "id": "BP01-LD06EN",
     "name": "Erasmus, Magical Sage"
+  },
+  {
+    "id": "BP01-T08EN",
+    "name": "Strikeform Golem",
+    "trait": "Golem / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP01-T09EN",
+    "name": "Guardform Golem",
+    "trait": "Golem / Token",
+    "cardText": "Ward."
   },
   {
     "id": "BP01-T10EN",

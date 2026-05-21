@@ -396,3 +396,151 @@ ability Spell {
 ability OnDiscarded {
     effect DrawCard(1);
 }
+
+// ------------------------------
+
+name Goblin;
+id BP01-171;
+class Neutral;
+type Follower;
+trait Goblinoid;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[evolve][cost04]: Evolve this follower.";
+
+evolve 4;
+
+// ------------------------------
+
+name Goblin (Evolved);
+id BP01-172;
+class Neutral;
+type Evolved Follower;
+trait Goblinoid;
+rarity B;
+stats 4/4;
+
+// ------------------------------
+
+name Fighter;
+id BP01-173;
+class Neutral;
+type Follower;
+trait Mercenary;
+rarity B;
+cost 2;
+stats 2/3;
+
+// ------------------------------
+
+name Goliath;
+id BP01-174;
+class Neutral;
+type Follower;
+trait Gigant;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "[evolve][cost02]: Evolve this follower.";
+
+evolve 2;
+
+// ------------------------------
+
+name Goliath (Evolved);
+id BP01-175;
+class Neutral;
+type Evolved Follower;
+trait Gigant;
+rarity B;
+stats 5/6;
+
+// ------------------------------
+
+name Angelic Sword Maiden;
+id BP01-176;
+class Neutral;
+type Follower;
+trait Angel;
+rarity B;
+cost 5;
+stats 4/6;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
+name Healing Angel;
+id BP01-177;
+class Neutral;
+type Follower;
+trait Angel;
+rarity B;
+cost 3;
+stats 2/4;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Give your leader [defense]+1.";
+
+evolve 1;
+ability Fanfare {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Healing Angel (Evolved);
+id BP01-178;
+class Neutral;
+type Evolved Follower;
+trait Angel;
+rarity B;
+stats 3/5;
+
+text "On Evolve: Give your leader [defense]+2.";
+
+ability OnEvolve {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Angelic Snipe;
+id BP01-179;
+class Neutral;
+type Spell;
+trait Pixie;
+rarity B;
+cost 1;
+
+text "[quick]
+Select an enemy follower on the field and deal it 2 damage.";
+
+keyword Quick;
+ability Spell name "Deal Damage" {
+    condition p(#F);
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Angelic Barrage;
+id BP01-180;
+class Neutral;
+type Spell;
+trait Pixie;
+rarity B;
+cost 1;
+
+text "[quick]
+Deal 1 damage to each enemy follower on the field.";
+
+keyword Quick;
+ability Spell {
+    effect DealDamage(1) to AllOpponentCards F;
+}

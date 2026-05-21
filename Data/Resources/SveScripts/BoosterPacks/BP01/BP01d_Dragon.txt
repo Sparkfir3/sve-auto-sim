@@ -354,6 +354,23 @@ ability OnEvolve {
 
 // ------------------------------
 
+name Fire Lizard;
+id BP01-094;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Select an enemy leader or enemy follower on the field and deal it 1 damage.";
+
+ability Fanfare {
+    effect DealDamage(1) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
 name Ace Dragoon;
 id BP01-095;
 class Dragon;
@@ -392,6 +409,58 @@ keyword Intimidate;
 
 // ------------------------------
 
+name Dread Dragon;
+id BP01-097;
+class Dragon;
+type Follower;
+trait Wyrmkin;
+rarity B;
+cost 7;
+stats 7/7;
+
+text "[fanfare] Select an enemy follower on the field and deal it 7 damage.";
+
+ability Fanfare {
+    effect DealDamage(7) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Blazing Breath;
+id BP01-098;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity B;
+cost 1;
+
+text "[quick]
+      Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect DealDamage(2o4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Dragon Wings;
+id BP01-099;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity B;
+cost 1;
+
+text "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead.";
+
+ability Spell {
+    effect DealDamage(2o3) to AllOpponentCards F;
+}
+
+// ------------------------------
+
 name Dragon Emissary;
 id BP01-100;
 class Dragon;
@@ -410,7 +479,24 @@ ability Spell {
 // ------------------------------
 // ------------------------------
 
+name Rowen;
+id BP01-LD07;
+class Dragon;
+type Leader;
+
+// ------------------------------
+
 name Zirnitra, Zealous Wings;
 id BP01-LD08;
 class Dragon;
 type Leader;
+
+// ------------------------------
+
+name Dragon;
+id BP01-T11;
+class Dragon;
+type Follower / Token;
+trait Wyrmkin;
+cost 4;
+stats 5/5;

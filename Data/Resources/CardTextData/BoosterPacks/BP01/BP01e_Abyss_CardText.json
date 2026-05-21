@@ -259,6 +259,33 @@
     ]
   },
   {
+    "id": "BP01-119EN",
+    "name": "Spectre",
+    "trait": "Departed",
+    "cardText": "Bane.\n[fanfare] Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Give your leader [defense]-2",
+        "body": "Give this follower Rush. Put the top card of your deck into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP01-120EN",
+    "name": "Spartoi Sergeant",
+    "trait": "Departed",
+    "cardText": "[fanfare] Put the top 2 cards of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put the top 2 cards of your deck into your cemetery."
+      }
+    ]
+  },
+  {
     "id": "BP01-121EN",
     "name": "Rabbit Necromancer",
     "trait": "Necromancer",
@@ -293,6 +320,35 @@
     ]
   },
   {
+    "id": "BP01-124EN",
+    "name": "Undead King",
+    "trait": "Departed",
+    "cardText": "[fanfare] Select up to 2 followers in your cemetery and add them to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select up to 2 followers in your cemetery and add them to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP01-125EN",
+    "name": "Razory Claw",
+    "trait": "Demon",
+    "cardText": "[quick]\nDeal 2 damage to your leader.\nSelect an enemy leader or enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Opponent Damage",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD09EN",
+    "name": "Luna"
+  },
+  {
     "id": "BP01-LD10EN",
     "name": "Urias"
   },
@@ -319,5 +375,24 @@
         "body": "Select a follower on your field and give it [attack]+2."
       }
     ]
+  },
+  {
+    "id": "BP01-T14EN",
+    "name": "Ghost",
+    "trait": "Departed / Token",
+    "cardText": "Storm.\nAt the start of your end phase, banish this card.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, banish this card.",
+        "trigger": "At the start of your end phase",
+        "body": "Banish this card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-T15EN",
+    "name": "Forest Bat",
+    "trait": "Vampire / Token"
   }
 ]
