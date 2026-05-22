@@ -318,6 +318,17 @@ ability Act name Draw {
 
 // ------------------------------
 
+name Ninja Trainee;
+id BP01-042;
+class Sword;
+type Follower;
+trait Officer / Ninja;
+rarity B;
+cost 1;
+stats 2/2;
+
+// ------------------------------
+
 name Fervid Solider;
 id BP01-043;
 class Sword;
@@ -376,6 +387,21 @@ ability LastWords {
 
 // ------------------------------
 
+name Veteran Lancer;
+id BP01-046;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "Ward.";
+
+keywords Ward;
+
+// ------------------------------
+
 name Navy Lieutenant;
 id BP01-047;
 class Sword;
@@ -407,7 +433,39 @@ text "Storm.";
 keyword Storm;
 
 // ------------------------------
+
+name Forge Weaponry;
+id BP01-049;
+class Sword;
+type Spell;
+trait Officer;
+rarity B;
+cost 2;
+
+text "[quick]
+Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.";
+
+keyword Quick;
+ability Spell name "Sequence" {
+    condition f(F);
+    effect Sequence("Give +1/+1", "Draw");
+}
+ability Spell name "Give +1/+1" {
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard F;
+}
+ability Spell name "Draw" {
+    effect DrawCard(1) to Self;
+}
+
 // ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Erika;
+id BP01-LD03;
+class Sword;
+type Leader;
+
 // ------------------------------
 
 name Aurelia, Blooming Blade;
@@ -431,6 +489,16 @@ keyword Ward;
 
 // ------------------------------
 
+name Knight;
+id BP01-T05;
+class Sword;
+type Follower / Token;
+trait Officer;
+cost 1;
+stats 1/1;
+
+// ------------------------------
+
 name Viking;
 id BP01-T06;
 class Sword;
@@ -442,3 +510,13 @@ stats 3/2;
 text "Storm.";
 
 keyword Storm;
+
+// ------------------------------
+
+name Steelclad Knight;
+id BP01-T07;
+class Sword;
+type Follower / Token;
+trait Officer;
+cost 2;
+stats 2/2;

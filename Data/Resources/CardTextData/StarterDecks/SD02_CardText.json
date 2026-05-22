@@ -72,17 +72,6 @@
     ]
   },
   {
-    "id": "BP01-042EN",
-    "name": "Ninja Trainee",
-    "trait": "Officer / Ninja"
-  },
-  {
-    "id": "BP01-046EN",
-    "name": "Veteran Lancer",
-    "trait": "Officer",
-    "cardText": "Ward."
-  },
-  {
     "id": "SD02-009EN",
     "name": "Fencer",
     "trait": "Commander / Noble",
@@ -127,30 +116,6 @@
     "cardText": "Storm."
   },
   {
-    "id": "BP01-049EN",
-    "name": "Forge Weaponry",
-    "trait": "Officer",
-    "cardText": "[quick]\nSelect a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.",
-    "effectText": [
-      {
-        "key": "Give +1/+1",
-        "body": "Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card."
-      }
-    ]
-  },
-  {
-    "id": "BP01-050EN",
-    "name": "Onslaught",
-    "trait": "Officer",
-    "cardText": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.",
-    "effectText": [
-      {
-        "key": "Deal Damage",
-        "body": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area."
-      }
-    ]
-  },
-  {
     "id": "SD02-016EN",
     "name": "Unbridled Fury",
     "trait": "Officer",
@@ -161,30 +126,5 @@
         "body": "Select an enemy follower on the field and deal it X damage. X equals the number of followers on your field."
       }
     ]
-  },
-  {
-    "id": "BP01-173EN",
-    "name": "Fighter",
-    "trait": "Mercenary"
-  },
-  {
-    "id": "BP01-176EN",
-    "name": "Angelic Sword Maiden",
-    "trait": "Angel",
-    "cardText": "Ward."
-  },
-  {
-    "id": "BP01-LD03EN",
-    "name": "Erika"
-  },
-  {
-    "id": "BP01-T05EN",
-    "name": "Knight",
-    "trait": "Officer / Token"
-  },
-  {
-    "id": "BP01-T07EN",
-    "name": "Steelclad Knight",
-    "trait": "Officer / Token"
   }
 ]

@@ -238,6 +238,11 @@
     ]
   },
   {
+    "id": "BP01-042EN",
+    "name": "Ninja Trainee",
+    "trait": "Officer / Ninja"
+  },
+  {
     "id": "BP01-043EN",
     "name": "Fervid Solider",
     "trait": "Officer",
@@ -284,6 +289,12 @@
     ]
   },
   {
+    "id": "BP01-046EN",
+    "name": "Veteran Lancer",
+    "trait": "Officer",
+    "cardText": "Ward."
+  },
+  {
     "id": "BP01-047EN",
     "name": "Navy Lieutenant",
     "trait": "Commander",
@@ -303,6 +314,34 @@
     "cardText": "Storm."
   },
   {
+    "id": "BP01-049EN",
+    "name": "Forge Weaponry",
+    "trait": "Officer",
+    "cardText": "[quick]\nSelect a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.",
+    "effectText": [
+      {
+        "key": "Give +1/+1",
+        "body": "Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP01-050EN",
+    "name": "Onslaught",
+    "trait": "Officer",
+    "cardText": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area.",
+    "effectText": [
+      {
+        "key": "Deal Damage",
+        "body": "Select an enemy follower on the field. Deal it 5 damage and put a Knight token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP01-LD03EN",
+    "name": "Erika"
+  },
+  {
     "id": "BP01-LD04EN",
     "name": "Aurelia, Blooming Blade"
   },
@@ -313,9 +352,19 @@
     "cardText": "Ward."
   },
   {
+    "id": "BP01-T05EN",
+    "name": "Knight",
+    "trait": "Officer / Token"
+  },
+  {
     "id": "BP01-T06EN",
     "name": "Viking",
     "trait": "Thief / Token",
     "cardText": "Storm."
+  },
+  {
+    "id": "BP01-T07EN",
+    "name": "Steelclad Knight",
+    "trait": "Officer / Token"
   }
 ]

@@ -16866,8 +16866,6 @@
             "name": "Redraw",
             "type": "Triggered",
             "effect": {
-              "target": "Self",
-              "filter": null,
               "amount": "H",
               "$type": "SVESimulator.RedrawHandEffect"
             },

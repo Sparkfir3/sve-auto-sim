@@ -106,32 +106,6 @@ ability Strike {
 
 // ------------------------------
 
-name Ninja Trainee;
-id BP01-042;
-class Sword;
-type Follower;
-trait Officer / Ninja;
-rarity B;
-cost 1;
-stats 2/2;
-
-// ------------------------------
-
-name Veteran Lancer;
-id BP01-046;
-class Sword;
-type Follower;
-trait Officer;
-rarity B;
-cost 2;
-stats 2/3;
-
-text "Ward.";
-
-keywords Ward;
-
-// ------------------------------
-
 name Fencer;
 id SD02-009;
 class Sword;
@@ -213,31 +187,6 @@ keyword Storm;
 
 // ------------------------------
 
-name Forge Weaponry;
-id BP01-049;
-class Sword;
-type Spell;
-trait Officer;
-rarity B;
-cost 2;
-
-text "[quick]
-Select a follower on your field. Give it [attack]+1/[defense]+1 and draw a card.";
-
-keyword Quick;
-ability Spell name "Sequence" {
-    condition f(F);
-    effect Sequence("Give +1/+1", "Draw");
-}
-ability Spell name "Give +1/+1" {
-    effect GiveStat(AtkDef, 1) to TargetPlayerCard F;
-}
-ability Spell name "Draw" {
-    effect DrawCard(1) to Self;
-}
-
-// ------------------------------
-
 name Onslaught;
 id BP01-050;
 class Sword;
@@ -277,56 +226,3 @@ ability Spell name "Deal X Damage" {
     condition p(#F);
     effect DealDamage(f(F)) to TargetOpponentCard F;
 }
-
-// ------------------------------
-
-name Fighter;
-id BP01-173;
-class Neutral;
-type Follower;
-trait Mercenary;
-rarity B;
-cost 2;
-stats 2/3;
-
-// ------------------------------
-
-name Angelic Sword Maiden;
-id BP01-176;
-class Neutral;
-type Follower;
-trait Angel;
-rarity B;
-cost 5;
-stats 4/6;
-
-text "Ward.";
-
-keyword Ward;
-
-// ------------------------------
-
-name Erika;
-id BP01-LD03;
-class Sword;
-type Leader;
-
-// ------------------------------
-
-name Knight;
-id BP01-T05;
-class Sword;
-type Follower / Token;
-trait Officer;
-cost 1;
-stats 1/1;
-
-// ------------------------------
-
-name Steelclad Knight;
-id BP01-T07;
-class Sword;
-type Follower / Token;
-trait Officer;
-cost 2;
-stats 2/2;

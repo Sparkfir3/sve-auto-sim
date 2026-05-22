@@ -207,6 +207,19 @@
     ]
   },
   {
+    "id": "BP01-094EN",
+    "name": "Fire Lizard",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Select an enemy leader or enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
     "id": "BP01-095EN",
     "name": "Ace Dragoon",
     "trait": "Dragonheart",
@@ -226,6 +239,37 @@
     "cardText": "Intimidate."
   },
   {
+    "id": "BP01-097EN",
+    "name": "Dread Dragon",
+    "trait": "Wyrmkin",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 7 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 7 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP01-098EN",
+    "name": "Blazing Breath",
+    "trait": "Wyrmkin",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 2 damage. If Overflow is active for you, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP01-099EN",
+    "name": "Dragon Wings",
+    "trait": "Wyrmkin",
+    "cardText": "Deal 2 damage to each follower on the field. If Overflow is active for you, deal 3 damage instead."
+  },
+  {
     "id": "BP01-100EN",
     "name": "Dragon Emissary",
     "trait": "Wyrmkin",
@@ -238,7 +282,16 @@
     ]
   },
   {
+    "id": "BP01-LD07EN",
+    "name": "Rowen"
+  },
+  {
     "id": "BP01-LD08EN",
     "name": "Zirnitra, Zealous Wings"
+  },
+  {
+    "id": "BP01-T11EN",
+    "name": "Dragon",
+    "trait": "Wyrmkin / Token"
   }
 ]
