@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sparkfire.Utility;
 using UnityEngine;
 using CCGKit;
+using SVESimulator.UI;
 
 namespace SVESimulator
 {
@@ -24,6 +25,8 @@ namespace SVESimulator
         private int triggerInstanceId, sourceInstanceId;
         [NonSerialized]
         private string triggerZone, sourceZone;
+        [NonSerialized]
+        private bool forceExit;
 
         #endregion
 
@@ -62,10 +65,12 @@ namespace SVESimulator
                 pointerL = pointerR;
                 switch(token)
                 {
+                    // Variables
                     case "let":
                         yield return ParseNewVariable(variables);
                         break;
 
+                    // Perform effect
                     case "perform":
                         yield return PerformEffect(variables);
                         break;
@@ -73,14 +78,22 @@ namespace SVESimulator
                         yield return PerformEffect(variables, ignoreCosts: true);
                         break;
 
+                    // Other
                     default:
                         break;
                 }
+
+                if(forceExit)
+                {
+                    onComplete?.Invoke();
+                    yield break;
+                }
+
                 pointerL = pointerR + 1;
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
 
-            yield return null;
+            yield return new WaitForEndOfFrame();
             onComplete?.Invoke();
         }
 
@@ -139,10 +152,10 @@ namespace SVESimulator
                 _ => null
             };
             if(obj == null)
-                return ReplceWithVariableValues(line, variables);
+                return ReplaceWithVariableValues(line, variables);
 
             // Handle object properties/functions
-            while(obj != null && obj is not CE_Value)
+            while(obj != null && obj is not CE_Value && !forceExit)
             {
                 switch(obj)
                 {
@@ -199,15 +212,46 @@ namespace SVESimulator
 
         private async Task<CE_Object> PayEffectCost(string effectName)
         {
-            bool waiting = true;
+            // Init
             CardObject card = CardManager.Instance.GetCardByInstanceId(sourceInstanceId);
             if(!card)
                 return null;
             Ability ability = card.LibraryCard.abilities.FirstOrDefault(x => x.name.Equals(effectName));
-            List<Cost> costs = ((ability as TriggeredAbility)?.trigger as SveTrigger)?.Costs;
+            SveTrigger trigger = (ability as TriggeredAbility)?.trigger as SveTrigger;
+            List<Cost> costs = trigger?.Costs;
             List<MoveCardToZoneData> movedCardsData = null;
             List<RemoveCounterData> removedCountersData = null;
 
+            // Select pay or decline
+            bool waiting = true;
+            bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, effectName);
+            List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
+            {
+                new MultipleChoiceWindow.MultipleChoiceEntryData
+                {
+                    text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
+                    onSelect = canPayCost ? () => waiting = false : null
+                },
+                new MultipleChoiceWindow.MultipleChoiceEntryData
+                {
+                    text = "Decline",
+                    onSelect = () =>
+                    {
+                        forceExit = true;
+                        waiting = false;
+                    }
+                },
+            };
+            GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, effectName));
+            GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
+
+            while(waiting || !player || !Application.isPlaying)
+                await Task.Yield();
+            if(forceExit)
+                return null;
+
+            // Pay cost
+            waiting = true;
             player.LocalEvents.PayAbilityCosts(card, costs, effectName, (movedCards, removedCounters) =>
             {
                 movedCardsData = movedCards;
@@ -252,7 +296,7 @@ namespace SVESimulator
                 {
                     case "amount":
                         arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = ReplceWithVariableValues(arguments[argPointer..].Trim(), variables);
+                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim(), variables);
                         ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
                         break;
                     default:
@@ -269,7 +313,9 @@ namespace SVESimulator
 
         // ------------------------------
 
-        private string ReplceWithVariableValues(string line, Dictionary<string, string> variables)
+        #region Utilities
+
+        private string ReplaceWithVariableValues(string line, Dictionary<string, string> variables)
         {
             foreach(var kvPair in variables)
             {
@@ -278,5 +324,7 @@ namespace SVESimulator
             }
             return line;
         }
+
+        #endregion
     }
 }
