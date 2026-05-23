@@ -306,12 +306,12 @@ namespace SVESimulator
 
         #region Hover Enter/Exit
 
-        public void OnHoverEnter()
+        public virtual void OnHoverEnter()
         {
 
         }
 
-        public void OnHoverExit()
+        public virtual void OnHoverExit()
         {
 
         }

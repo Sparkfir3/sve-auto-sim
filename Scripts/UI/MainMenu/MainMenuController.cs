@@ -3,16 +3,15 @@ using CCGKit;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Steamworks;
-using TMPro;
 
 namespace SVESimulator.UI
 {
     public class MainMenuController : MonoBehaviour
     {
         [SerializeField]
-        private GameObject networkManagerKcp;
+        private MainMenuView mainMenuView;
         [SerializeField]
-        private TMP_InputField steamRoomCodeInputField;
+        private GameObject networkManagerKcp;
         [SerializeField]
         private DeckSelectionController deckSelectionController;
         [SerializeField]
@@ -25,6 +24,29 @@ namespace SVESimulator.UI
             GameManager.Instance.Initialize();
             deckSelectionController.Initialize();
             deckSelectionController.OnSelectDeck += () => selectDeckError.SetActive(false);
+            mainMenuView.OnButtonClicked += HandleButtonClicked;
+        }
+
+        private void HandleButtonClicked(MainMenuButton button)
+        {
+            switch(button)
+            {
+                case MainMenuButton.PlayOnlineHost:
+                    HostSteamLobby();
+                    break;
+                case MainMenuButton.PlayOnlineJoin:
+                    JoinSteamLobby();
+                    break;
+                case MainMenuButton.PlayLocalHost:
+                    StartLocalHost();
+                    break;
+                case MainMenuButton.PlayLocalJoin:
+                    StartLocalClient();
+                    break;
+                case MainMenuButton.Quit:
+                    QuitGame();
+                    break;
+            }
         }
 
         // ------------------------------
@@ -77,18 +99,18 @@ namespace SVESimulator.UI
 
         public void HostSteamLobby()
         {
-            if(!TryLoadSelectedDeck())
+            if(!SVEGameNetworkManager.SteamLobby.IsSteamConnected || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.HostLobby(steamRoomCodeInputField.text);
+            SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
         }
 
         public void JoinSteamLobby()
         {
-            if(!TryLoadSelectedDeck())
+            if(!SVEGameNetworkManager.SteamLobby.IsSteamConnected || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.GetLobby(steamRoomCodeInputField.text, lobbyID =>
+            SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
             {
                 SteamMatchmaking.JoinLobby(lobbyID);
             });
@@ -97,6 +119,8 @@ namespace SVESimulator.UI
         #endregion
 
         // ------------------------------
+
+        #region Other
 
         private bool TryLoadSelectedDeck()
         {
@@ -118,5 +142,7 @@ namespace SVESimulator.UI
             Application.Quit();
 #endif
         }
+
+        #endregion
     }
 }
