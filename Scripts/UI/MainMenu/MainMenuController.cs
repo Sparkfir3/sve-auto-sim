@@ -99,7 +99,7 @@ namespace SVESimulator.UI
 
         public void HostSteamLobby()
         {
-            if(!TryLoadSelectedDeck())
+            if(!SVEGameNetworkManager.SteamLobby.IsSteamConnected || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
             SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
@@ -107,7 +107,7 @@ namespace SVESimulator.UI
 
         public void JoinSteamLobby()
         {
-            if(!TryLoadSelectedDeck())
+            if(!SVEGameNetworkManager.SteamLobby.IsSteamConnected || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
             SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
@@ -119,6 +119,8 @@ namespace SVESimulator.UI
         #endregion
 
         // ------------------------------
+
+        #region Other
 
         private bool TryLoadSelectedDeck()
         {
@@ -140,5 +142,7 @@ namespace SVESimulator.UI
             Application.Quit();
 #endif
         }
+
+        #endregion
     }
 }
