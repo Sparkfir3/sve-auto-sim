@@ -115,6 +115,7 @@ namespace SVESimulator.CardTextData
                 "LeaderStrike" => "Leader Strike:",
                 "Act" => "[act]",
                 "Activate" => "[act]",
+                "OnRace" => "On Race:",
                 _ => ""
             };
         }

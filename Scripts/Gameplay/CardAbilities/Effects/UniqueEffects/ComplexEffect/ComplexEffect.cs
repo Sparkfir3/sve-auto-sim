@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sparkfire.Utility;
 using UnityEngine;
 using CCGKit;
+using SVESimulator.UI;
 
 namespace SVESimulator
 {
@@ -24,6 +25,8 @@ namespace SVESimulator
         private int triggerInstanceId, sourceInstanceId;
         [NonSerialized]
         private string triggerZone, sourceZone;
+        [NonSerialized]
+        private bool forceExit;
 
         #endregion
 
@@ -62,25 +65,35 @@ namespace SVESimulator
                 pointerL = pointerR;
                 switch(token)
                 {
+                    // Variables
                     case "let":
                         yield return ParseNewVariable(variables);
                         break;
 
+                    // Perform effect
                     case "perform":
                         yield return PerformEffect(variables);
                         break;
                     case "performcostless":
-                        // TODO
+                        yield return PerformEffect(variables, ignoreCosts: true);
                         break;
 
+                    // Other
                     default:
                         break;
                 }
+
+                if(forceExit)
+                {
+                    onComplete?.Invoke();
+                    yield break;
+                }
+
                 pointerL = pointerR + 1;
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
 
-            yield return null;
+            yield return new WaitForEndOfFrame();
             onComplete?.Invoke();
         }
 
@@ -93,7 +106,7 @@ namespace SVESimulator
         private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
         {
             string variableName = function.NextWord(pointerL, out pointerL);
-            ComplexLog(LogMode.Value, $"var = {variableName}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"Variable Name = {variableName}\nPointers: {pointerL}, {pointerR}");
             if(!function.NextWord(pointerL, out pointerL).Trim().Equals("="))
             {
                 pointerR = pointerL;
@@ -106,7 +119,7 @@ namespace SVESimulator
             string line = function[pointerL..pointerR].Trim();
             ComplexLog(LogMode.Value, $"Line = {line}\nPointers: {pointerL}, {pointerR}");
 
-            Task<string> task = ParseValue(line);
+            Task<string> task = ParseValue(line, variables);
             yield return new WaitUntil(() => task.IsCompleted);
             string value = task.Result;
 
@@ -114,8 +127,9 @@ namespace SVESimulator
             ComplexLog(LogMode.Value, $"var {variableName} = {value}\nPointers: {pointerL}, {pointerR}");
         }
 
-        private async Task<string> ParseValue(string line)
+        private async Task<string> ParseValue(string line, Dictionary<string, string> variables)
         {
+            // Init
             int pointer = line.IndexOf('.');
             if(pointer < 0)
                 pointer = line.Length - 1;
@@ -123,19 +137,38 @@ namespace SVESimulator
             if(line[pointer] == '.')
                 pointer++;
 
+            string args = null;
+            if(token.Contains('('))
+            {
+                args = token.TextInsideParentheses(out int left, out _);
+                token = token[..left];
+            }
+
+            // Get root object
             CE_Object obj = token switch
             {
                 "revealTopDeck" => await RevealTopDeck(),
+                "payCost" => await PayEffectCost(args),
                 _ => null
             };
-            while(obj != null && obj is not CE_Value)
+            if(obj == null)
+                return ReplaceWithVariableValues(line, variables);
+
+            // Handle object properties/functions
+            while(obj != null && obj is not CE_Value && !forceExit)
             {
                 switch(obj)
                 {
                     case CE_Card:
-                        string[] parameters = line[pointer..].TextInsideParentheses(out int valuePointerL, out int valuePointerR).Split();
-                        token = line[pointer..(pointer + valuePointerL)];
-                        pointer = valuePointerR;
+                    case CE_EffectCost:
+                        string[] parameters = line[pointer..].TextInsideParentheses(out int paramsPointerL, out int paramsPointerR).Split();
+                        if(paramsPointerL == -1 && paramsPointerR == -1)
+                        {
+                            paramsPointerL = line.Length - pointer;
+                            paramsPointerR = paramsPointerL;
+                        }
+                        token = line[pointer..(pointer + paramsPointerL)];
+                        pointer += paramsPointerR;
                         obj = await obj.GetValue(player, token, parameters);
                         break;
 
@@ -165,6 +198,8 @@ namespace SVESimulator
                 card = revealedCard.RuntimeCard;
                 waiting = false;
             });
+
+            // Wait
             while(waiting || !player || !Application.isPlaying)
                 await Task.Yield();
             await Task.Delay(200);
@@ -175,13 +210,74 @@ namespace SVESimulator
             } : null;
         }
 
+        private async Task<CE_Object> PayEffectCost(string effectName)
+        {
+            // Init
+            CardObject card = CardManager.Instance.GetCardByInstanceId(sourceInstanceId);
+            if(!card)
+                return null;
+            Ability ability = card.LibraryCard.abilities.FirstOrDefault(x => x.name.Equals(effectName));
+            SveTrigger trigger = (ability as TriggeredAbility)?.trigger as SveTrigger;
+            List<Cost> costs = trigger?.Costs;
+            List<MoveCardToZoneData> movedCardsData = null;
+            List<RemoveCounterData> removedCountersData = null;
+
+            // Select pay or decline
+            bool waiting = true;
+            bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, effectName);
+            List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
+            {
+                new MultipleChoiceWindow.MultipleChoiceEntryData
+                {
+                    text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
+                    onSelect = canPayCost ? () => waiting = false : null
+                },
+                new MultipleChoiceWindow.MultipleChoiceEntryData
+                {
+                    text = "Decline",
+                    onSelect = () =>
+                    {
+                        forceExit = true;
+                        waiting = false;
+                    }
+                },
+            };
+            GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, effectName));
+            GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
+
+            while(waiting || !player || !Application.isPlaying)
+                await Task.Yield();
+            if(forceExit)
+                return null;
+
+            // Pay cost
+            waiting = true;
+            player.LocalEvents.PayAbilityCosts(card, costs, effectName, (movedCards, removedCounters) =>
+            {
+                movedCardsData = movedCards;
+                removedCountersData = removedCounters;
+                waiting = false;
+            });
+
+            // Wait
+            while(waiting || !player || !Application.isPlaying)
+                await Task.Yield();
+            await Task.Delay(200);
+            ComplexLog(LogMode.Value, $"[Pay Effect Cost] Instance ID {(card != null ? card.RuntimeCard.instanceId : "null")} / Effect {effectName}");
+            return new CE_EffectCost
+            {
+                movedCardsData = movedCardsData,
+                removedCountersData = removedCountersData
+            };
+        }
+
         #endregion
 
         // ------------------------------
 
         #region Perform Effect
 
-        private IEnumerator PerformEffect(Dictionary<string, string> variables, Action onComplete = null)
+        private IEnumerator PerformEffect(Dictionary<string, string> variables, bool ignoreCosts = false, Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
             ComplexLog(LogMode.Perform, $"Effect Name = {effectName}\nPointers: {pointerL}, {pointerR}");
@@ -200,12 +296,7 @@ namespace SVESimulator
                 {
                     case "amount":
                         arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = arguments[argPointer..].Trim();
-                        foreach(var kvPair in variables)
-                        {
-                            (string variable, string value) = (kvPair.Key, kvPair.Value);
-                            overrideAmount = overrideAmount.Replace(variable, value);
-                        }
+                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim(), variables);
                         ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
                         break;
                     default:
@@ -214,8 +305,24 @@ namespace SVESimulator
             }
 
             yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
-                onComplete, overrideAmount: overrideAmount);
+                onComplete, overrideAmount: overrideAmount, ignoreCosts: ignoreCosts);
             yield return new WaitForEndOfFrame();
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Utilities
+
+        private string ReplaceWithVariableValues(string line, Dictionary<string, string> variables)
+        {
+            foreach(var kvPair in variables)
+            {
+                (string variable, string value) = (kvPair.Key, kvPair.Value);
+                line = line.Replace(variable, value);
+            }
+            return line;
         }
 
         #endregion

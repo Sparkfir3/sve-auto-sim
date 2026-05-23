@@ -1086,6 +1086,49 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Serve/Race
+
+        public bool ServeAndRaceCard(CardObject card, bool useEvolvePoint, int count = 1)
+        {
+            // Condition checks & init
+            if(!isActivePlayer || playerController.EvolvedThisTurn)
+                return false;
+            if(!CanPayEvolveCost(count, useEvolvePoint))
+                return false;
+
+            RuntimeCard[] allCarrots = localZoneController.evolveDeckZone.Runtime.cards.Where(x => x.cardId == UmaUtilities.CarrotCardId &&
+                x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.baseValue == 0).ToArray();
+            if(allCarrots.Length < count)
+                return false;
+
+            // Serve logic
+            List<CardObject> carrots = new();
+            for(int i = 0; i < count; i++)
+            {
+                carrots.Add(CardManager.Instance.RequestCard(allCarrots[i]));
+                localZoneController.ServeCard(card, carrots[i]);
+            }
+            sveEffectSolver.ServeCard(netIdentity, card.RuntimeCard, carrots.Select(x => x.RuntimeCard).ToArray(), useEvolvePoint, count);
+            sveEffectSolver.RaceCard(netIdentity, card.RuntimeCard, count);
+            playerController.EvolvedThisTurn = true;
+
+            // Networking
+            LocalServeAndRaceMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceId = card.RuntimeCard.instanceId,
+                carrotInstanceIds = carrots.Select(x => x.RuntimeCard.instanceId).ToArray(),
+                useEvolvePoint = useEvolvePoint,
+                count = count
+            };
+            NetworkClient.Send(msg);
+            return true;
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Player Stats
 
         public void AddLeaderDefense(PlayerInfo targetPlayer, int amount)
@@ -1123,12 +1166,23 @@ namespace SVESimulator
             return costs == null || costs.Count == 0 || costs.All(x => x is not SveCost cost || cost.CanPayCost(playerController, card, abilityName));
         }
 
-        public void PayAbilityCosts(CardObject card, List<Cost> costs, SveEffect effect, string abilityName, Action onComplete)
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action onComplete)
         {
             if(costs == null || costs.Count == 0)
             {
                 IsPayingCosts = false;
                 onComplete?.Invoke();
+                return;
+            }
+            PayAbilityCosts(card, costs, abilityName, (_, _) => { onComplete?.Invoke(); });
+        }
+
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
+        {
+            if(costs == null || costs.Count == 0)
+            {
+                IsPayingCosts = false;
+                onComplete?.Invoke(null, null);
                 return;
             }
             StartCoroutine(Resolve());
@@ -1195,7 +1249,7 @@ namespace SVESimulator
 
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
-                onComplete?.Invoke();
+                onComplete?.Invoke(cardsToMove, countersToRemove);
                 IsPayingCosts = false;
             }
         }
@@ -1246,7 +1300,7 @@ namespace SVESimulator
 
                 MultipleChoiceWindow.MultipleChoiceEntryData entry = effect.AsMultipleChoiceEntry(() =>
                 {
-                    PayAbilityCosts(card, trigger.Costs, effect, ability.name, () => onChooseCost?.Invoke(false));
+                    PayAbilityCosts(card, trigger.Costs, ability.name, () => onChooseCost?.Invoke(false));
                 });
                 entry.disabled = !CanPayCosts(card.RuntimeCard, trigger.Costs, ability.name);
                 playOptions.Add(entry);

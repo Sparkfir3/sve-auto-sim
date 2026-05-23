@@ -93,6 +93,7 @@ namespace SVESimulator
             public const string Follower = "Follower";
             public const string EvolvedFollower = "Evolved Follower";
             public const string Spell = "Spell";
+            public const string EvolvedSpell = "Evolved Spell";
             public const string Amulet = "Amulet";
             public const string Token = "Token";
             public const string Leader = "Leader";

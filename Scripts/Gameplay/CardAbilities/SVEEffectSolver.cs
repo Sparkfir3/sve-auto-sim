@@ -343,26 +343,15 @@ namespace SVESimulator
         // ---
 
         /// <summary>
-        /// Sends given card to desired zone, with handling evolved cards and tokens having additional logic compared to regular cards
+        /// Sends given card to desired zone, with evolved cards and tokens having additional logic compared to regular cards
+        /// Does not include Playing cards to the field or Playing spells (to resolution)
         /// </summary>
         private void StandardSendRuntimeCardToZone(PlayerInfo player, RuntimeCard card, string startZoneName, string endZoneName, bool addToTop = false)
         {
             RuntimeZone startZone = player.namedZones[startZoneName];
             RuntimeZone endZone = player.namedZones[endZoneName];
             List<RuntimeCard> cardsToMove = new() { card };
-            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo)) // TODO - support for more than one attached card
-            {
-                int attachedCardID = attachedCardInfo.baseValue;
-                if(attachedCardID >= 0)
-                {
-                    RuntimeCard attachedCard = startZone.cards.FirstOrDefault(x => x.instanceId == attachedCardID);
-                    if(attachedCard != null)
-                        cardsToMove.Add(attachedCard);
-                    else
-                        Debug.LogError($"Failed to find attached card with instance ID {attachedCardID} to send to cemetery!");
-                }
-                attachedCardInfo.baseValue = -1;
-            }
+            cardsToMove.AddRange(card.GetAllAttachedCards(startZone, true));
 
             foreach(RuntimeCard cardToMove in cardsToMove)
             {
@@ -383,8 +372,9 @@ namespace SVESimulator
                     else
                         endZone.AddCard(cardToMove);
                 }
-                if(startZone.name.Equals(SVEProperties.Zones.Field) && cardToMove.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat))
-                    engagedStat.baseValue = 0;
+
+                if(startZoneName.Equals(SVEProperties.Zones.Field) || (startZoneName.Equals(SVEProperties.Zones.ExArea) && endZoneName.Equals(SVEProperties.Zones.Field)))
+                    cardToMove.ResetCardMainStatsAndKeywords();
             }
         }
 
@@ -465,7 +455,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Card Stats/Combat
+        #region Combat
 
         public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card, bool isAttackingLeader)
         {
@@ -645,6 +635,67 @@ namespace SVESimulator
                 card.AddKeyword(type, value);
             else
                 card.RemoveKeyword(type, value);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Serve & Race
+
+        public void ServeCard(NetworkIdentity playerNetId, RuntimeCard card, RuntimeCard[] carrots, bool useEvolvePoint, int serveCount = 1)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            if(player == null)
+                return;
+
+            // Move cards
+            RuntimeZone evolve = player.namedZones[SVEProperties.Zones.EvolveDeck];
+            RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
+            foreach(RuntimeCard carrot in carrots)
+            {
+                evolve.RemoveCard(carrot);
+                field.AddCard(carrot);
+            }
+            // TODO - support for more than one attached card
+            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+                attachedCardInfo.baseValue = carrots[0].instanceId;
+            else
+                Debug.LogError($"Failed to get attached card instance ID value for card (instance id {card.instanceId})");
+
+            // Pay cost
+            int playPointCost = Mathf.Max(serveCount - (useEvolvePoint ? 1 : 0), 0);
+            player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
+            player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+
+            // Update card info
+            foreach(RuntimeCard carrot in carrots)
+            {
+                carrot.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
+            }
+        }
+
+        public void RaceCard(NetworkIdentity playerNetId, RuntimeCard card, int count = 1)
+        {
+            PlayerInfo player = GetPlayerInfo(playerNetId);
+            if(player == null)
+                return;
+
+            // Update card info
+            ApplyKeywordToCard(card, KeywordUtilities.Rush.Id, KeywordUtilities.Rush.Value, true);
+            ApplyKeywordToCard(card, KeywordUtilities.IsRacing.Id, KeywordUtilities.IsRacing.Value, true);
+
+            // Effect triggers
+            if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+            {
+                for(int i = 0; i < count; i++)
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnRaceTrigger>(gameState, card, player, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherRaceTrigger>(gameState, card, SVEProperties.Zones.Field, player.namedZones[SVEProperties.Zones.Field], player,
+                        x => x.MatchesFilter(card), false);
+                }
+                SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+            }
         }
 
         #endregion

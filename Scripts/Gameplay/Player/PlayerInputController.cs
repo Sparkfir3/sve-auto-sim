@@ -383,7 +383,7 @@ namespace SVESimulator
 
             if(onlyQuicks && !activatedAbilities.Any(x => x.costs.Any(y => y is QuickEffectAsCost)))
                 return false;
-            if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
+            if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack) || card.CanServe())
             {
                 GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, onlyQuicks: onlyQuicks);
                 return true;

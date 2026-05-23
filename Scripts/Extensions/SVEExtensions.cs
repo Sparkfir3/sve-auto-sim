@@ -275,6 +275,46 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Attached Cards
+
+        public static RuntimeCard GetAttachedCard(this RuntimeCard card, RuntimeZone cardZone, bool clearAttachedCard)
+        {
+            if(cardZone == null)
+                return null;
+            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+            {
+                int attachedCardID = attachedCardInfo.baseValue;
+                if(attachedCardID >= 0)
+                {
+                    RuntimeCard attachedCard = cardZone.cards.FirstOrDefault(x => x.instanceId == attachedCardID);
+                    if(attachedCard != null)
+                        return attachedCard;
+                    else
+                        Debug.LogError($"Failed to find attached card with instance ID {attachedCardID}");
+                    if(clearAttachedCard)
+                        attachedCardInfo.baseValue = -1;
+                }
+            }
+            return null;
+        }
+
+        public static List<RuntimeCard> GetAllAttachedCards(this RuntimeCard card, RuntimeZone cardZone, bool clearAttachedCard)
+        {
+            List<RuntimeCard> cardList = new();
+            RuntimeCard targetCard = card;
+            while(targetCard != null)
+            {
+                targetCard = targetCard.GetAttachedCard(cardZone, clearAttachedCard);
+                if(targetCard != null)
+                    cardList.Add(targetCard);
+            }
+            return cardList;
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Copy SVE Effects with Modifications
 
         public static SveEffect CopyWithAddFilters(this SveEffect baseEffect, string additionalFilters = null)

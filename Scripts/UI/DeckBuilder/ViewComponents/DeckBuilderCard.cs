@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-namespace SVESimulator
+namespace SVESimulator.DeckBuilder
 {
     public class DeckBuilderCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     {
@@ -26,6 +26,7 @@ namespace SVESimulator
         public string ID => CurrentCard != null ? CurrentCard.GetEnglishSveID() : "";
 
         public Card CurrentCard { get; set; }
+        private int maxAmount = 1;
 
         public event Action OnMouseEnter;
         public event Action OnLeftClick;
@@ -36,11 +37,12 @@ namespace SVESimulator
         public void SetCard(Card card, int amount = 0)
         {
             CurrentCard = card;
+            maxAmount = DeckConstructionRules.GetMaxCardCount(CurrentCard);
             Image.texture = CardTextureManager.GetCardTexture(CurrentCard?.GetEnglishSveID());
             SetAmount(amount);
         }
 
-        public void SetAmount(int amount, int max = 3)
+        public void SetAmount(int amount)
         {
             // Leader or none
             if(CurrentCard == null || CurrentCard.cardTypeId == 5 || amount == 0)
@@ -51,7 +53,7 @@ namespace SVESimulator
 
             containerAmountText.SetActive(true);
             textCurrentCount.text = $"{amount}";
-            textMaxCount.text = $"{max}";
+            textMaxCount.text = $"{maxAmount}";
         }
 
         // ------------------------------
