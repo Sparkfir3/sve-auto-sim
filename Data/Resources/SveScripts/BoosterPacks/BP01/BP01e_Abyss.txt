@@ -390,6 +390,49 @@ ability Fanfare {
 
 // ------------------------------
 
+name Spectre;
+id BP01-119;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 2;
+stats 2/1;
+
+text "Bane.
+      [fanfare] Give your leader [defense]-2: Give this follower Rush. Put the top card of your deck into your cemetery.";
+
+keyword Bane;
+ability Fanfare {
+    cost (LeaderDefense, 2);
+    effect Sequence("Rush", "Mill");
+}
+ability Spell name "Rush" {
+    effect GiveKeyword(Rush) to Self;
+}
+ability Spell name "Mill" {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Spartoi Sergeant;
+id BP01-120;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Put the top 2 cards of your deck into your cemetery.";
+
+ability Fanfare {
+    effect Mill(2);
+}
+
+// ------------------------------
+
 name Rabbit Necromancer;
 id BP01-121;
 class Abyss;
@@ -438,7 +481,56 @@ ability OnEvolve {
 }
 
 // ------------------------------
+
+name Undead King;
+id BP01-124;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 6;
+stats 6/6;
+
+text "[fanfare] Select up to 2 followers in your cemetery and add them to your hand.";
+
+ability Fanfare {
+    effect Salvage(m(0,2), F);
+}
+
 // ------------------------------
+
+name Razory Claw;
+id BP01-125;
+class Abyss;
+type Spell;
+trait Demon;
+rarity B;
+cost 2;
+
+text "[quick]
+      Deal 2 damage to your leader.
+      Select an enemy leader or enemy follower on the field and deal it 3 damage.";
+
+keyword Quick;
+ability Spell {
+    effect Sequence("Self Damage", "Opponent Damage");
+}
+ability Spell name "Self Damage" {
+    effect DealDamage(2) to Leader;
+}
+ability Spell name "Opponent Damage" {
+    effect DealDamage(3) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Luna;
+id BP01-LD09;
+class Abyss;
+type Leader;
+
 // ------------------------------
 
 name Urias;
@@ -477,3 +569,31 @@ ability Spell {
     condition f(F);
     effect GiveStat(Atk, 2) to TargetPlayerCard F;
 }
+
+// ------------------------------
+
+name Ghost;
+id BP01-T14;
+class Abyss;
+type Follower / Token;
+trait Departed;
+cost 1;
+stats 1/1;
+
+text "Storm.
+      At the start of your end phase, banish this card.";
+
+keyword Storm;
+ability StartEndPhase {
+    effect Banish() to Self;
+}
+
+// ------------------------------
+
+name Forest Bat;
+id BP01-T15;
+class Abyss;
+type Follower / Token;
+trait Vampire;
+cost 1;
+stats 1/1;

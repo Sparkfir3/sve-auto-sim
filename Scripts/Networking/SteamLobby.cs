@@ -38,6 +38,8 @@ namespace SVESimulator
 
         private Action<LobbyDataUpdate_t> OnLobbyDataFound;
 
+        public bool IsSteamConnected => appStateConnected.IsStateActive;
+
         #endregion
 
         // ------------------------------

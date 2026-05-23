@@ -114,30 +114,6 @@ ability Spell {
 
 // ------------------------------
 
-name Lightning Shooter;
-id BP01-070;
-class Rune;
-type Follower;
-trait Mage;
-rarity B;
-cost 4;
-stats 3/3;
-
-text "[fanfare] Select an enemy follower on the field and deal it 2 damage. Spellchain (5): Deal 4 damage instead. SC (10): Deal 2 damage to that follower's leader.";
-
-ability Fanfare {
-    effect Sequence("Damage Follower", "Damage Leader");
-}
-ability Spell name "Damage Follower" {
-    effect DealDamage(2s(5)4) to TargetOpponentCard F;
-}
-ability Spell name "Damage Leader" {
-    condition s(10);
-    effect DealDamage(2) to OpponentLeader;
-}
-
-// ------------------------------
-
 name Penguin Wizard;
 id SD03-008;
 class Rune;
@@ -214,67 +190,6 @@ ability OnEvolve {
 
 // ------------------------------
 
-name Wind Blast;
-id BP01-071;
-class Rune;
-type Spell;
-trait Mage;
-rarity B;
-cost 1;
-
-text "Select an enemy follower on the field and deal it 2 damage. Spellchain (10): Deal 4 damage instead.";
-
-ability Spell {
-    condition p(#F);
-    effect DealDamage(2s(10)4) to TargetOpponentCard F;
-}
-
-// ------------------------------
-
-name Sorcery Cache;
-id BP01-072;
-class Rune;
-type Spell;
-trait Mage;
-rarity B;
-cost 2;
-
-text "[quick]
-      Look at the top 4 cards of your deck. You may reveal a spell from among them and add it to your hand. You may also put a spell into your cemetery. Put the remaining cards on the bottom of your deck in any order.";
-
-keyword Quick;
-ability Spell {
-    effect CheckTop(4, (Hand, S, m(0,1)), (Cemetery, S, m(0,1)), (BottomDeckAnyOrder));
-}
-
-// ------------------------------
-
-name Fiery Embrace;
-id BP01-073;
-class Rune;
-type Spell;
-trait Mage;
-rarity B;
-cost 4;
-
-text "[quick]
-      Select an enemy follower on the field and destroy it. Spellchain (10): Deal 3 damage to that follower's leader.";
-
-keyword Quick;
-ability Spell {
-    condition p(#F);
-    effect Sequence("Destroy Follower", "Damage Leader");
-}
-ability Spell name "Destroy Follower" {
-    effect DestroyCard() to TargetOpponentCard F;
-}
-ability Spell name "Damage Leader" {
-    condition s(10);
-    effect DealDamage(3) to OpponentLeader;
-}
-
-// ------------------------------
-
 name Magic Missile;
 id SD03-015;
 class Rune;
@@ -321,75 +236,3 @@ ability Spell name "Guardform Golem" {
 ability Spell name "Strikeform Golem" {
     effect SummonToken(Strikeform Golem, ExArea, 1);
 }
-
-// ------------------------------
-
-name Healing Angel;
-id BP01-177;
-class Neutral;
-type Follower;
-trait Angel;
-rarity B;
-cost 3;
-stats 2/4;
-
-text "[evolve][cost01]: Evolve this follower.
-      [fanfare] Give your leader [defense]+1.";
-
-evolve 1;
-ability Fanfare {
-    effect GiveStat(Def, 1) to Leader;
-}
-
-// ------------------------------
-
-name Healing Angel (Evolved);
-id BP01-178;
-class Neutral;
-type Evolved Follower;
-trait Angel;
-rarity B;
-stats 3/5;
-
-text "On Evolve: Give your leader [defense]+2.";
-
-ability OnEvolve {
-    effect GiveStat(Def, 2) to Leader;
-}
-
-// ------------------------------
-
-name Isabelle;
-id BP01-LD05;
-class Rune;
-type Leader;
-
-// ------------------------------
-
-name Strikeform Golem;
-id BP01-T08;
-class Rune;
-type Follower / Token;
-trait Golem;
-rarity B;
-cost 2;
-stats 3/2;
-
-text "Rush.";
-
-keyword Rush;
-
-// ------------------------------
-
-name Guardform Golem;
-id BP01-T09;
-class Rune;
-type Follower / Token;
-trait Golem;
-rarity B;
-cost 2;
-stats 2/3;
-
-text "Ward.";
-
-keyword Ward;

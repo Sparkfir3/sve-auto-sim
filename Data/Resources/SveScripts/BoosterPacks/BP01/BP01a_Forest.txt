@@ -343,6 +343,23 @@ ability OnLeaveField {
 
 // ------------------------------
 
+name Elf Metallurgist;
+id BP01-017;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Select an enemy follower on the field and deal it 1 damage. Combo (3): Deal 3 damage instead.";
+
+ability Fanfare {
+    effect DealDamage(1c(3)3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
 name Archer;
 id BP01-018;
 class Forest;
@@ -403,6 +420,24 @@ ability Spell name EX {
 
 // ------------------------------
 
+name Okami;
+id BP01-021;
+class Forest;
+type Follower;
+trait Beast;
+rarity B;
+cost 4;
+stats 5/5;
+
+text "Whenever another follower is put onto your field, give this follower [attack]+1/[defense]+1.";
+
+ability OnOtherEnterField {
+    filter F;
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
 name Mana Elk;
 id BP01-022;
 class Forest;
@@ -439,7 +474,35 @@ ability Spell {
 }
 
 // ------------------------------
+
+name Woodland Refuge;
+id BP01-025;
+class Forest;
+type Amulet;
+trait Fae-Touched;
+rarity B;
+cost 1;
+
+text "[fanfare] Select a Pixie follower on your field and give it [attack]+1.
+[act][cost01], [engage]: Return this card to its owner's hand.";
+
+ability Fanfare name "Fanfare" {
+    effect GiveStat(Atk, 1) to TargetPlayerCard Ft(Pixie);
+}
+ability Act name "Return to Hand" {
+    costs (PP, 1), (EngageSelf);
+    effect ReturnToHand() to Self;
+}
+
 // ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Arisa;
+id BP01-LD01;
+class Forest;
+type Leader;
+
 // ------------------------------
 
 name Aria, Dancing Fairy;
@@ -476,4 +539,14 @@ class Forest;
 type Follower / Token;
 trait Pixie;
 cost 0;
+stats 1/1;
+
+// ------------------------------
+
+name Fairy;
+id BP01-T03;
+class Forest;
+type Follower / Token;
+trait Pixie;
+cost 1;
 stats 1/1;

@@ -304,6 +304,23 @@ ability Spell name Ward {
 
 // ------------------------------
 
+name Cruel Priestess;
+id BP01-142;
+class Haven;
+type Follower;
+trait Zealot;
+rarity B;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Select an amulet that costs 5 play points or less in your cemetery and put it onto your field.";
+
+ability Fanfare {
+    effect CemeteryToField(1, Ap(m(0,5)));
+}
+
+// ------------------------------
+
 name Sister Initiate;
 id BP01-143;
 class Haven;
@@ -353,6 +370,21 @@ keyword Aura;
 
 // ------------------------------
 
+name Snake Priestess;
+id BP01-146;
+class Haven;
+type Follower;
+trait Zealot;
+rarity B;
+cost 1;
+stats 1/3;
+
+text "Ward.";
+
+keyword Ward;
+
+// ------------------------------
+
 name Curate;
 id BP01-147;
 class Haven;
@@ -372,6 +404,24 @@ ability Spell name Defense {
 }
 ability Spell name Draw {
     effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Hallowed Dogma;
+id BP01-148;
+class Haven;
+type Spell;
+trait Faith;
+rarity B;
+cost 1;
+
+text "[quick]
+      Look at the top 5 cards of your deck. You may reveal an amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+keyword Quick;
+ability Spell {
+    effect CheckTop(5, (Hand, A, 1), (BottomDeckAnyOrder));
 }
 
 // ------------------------------
@@ -397,10 +447,65 @@ ability Act {
 }
 
 // ------------------------------
+
+name Death Sentence;
+id BP01-150;
+class Haven;
+type Amulet;
+trait Zealot;
+rarity B;
+cost 3;
+
+text "This card is put onto the field engaged.
+      [act][engage], put this card into its owner's cemetery: Select an enemy follower on the field and destroy it.";
+
+keyword PutOnFieldEngaged;
+ability Activate {
+    condition p(#F);
+    cost (EngageSelf), (SendToCemetery, Self);
+    effect Destroy() to TargetOpponentCard F;
+}
+
 // ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Eris;
+id BP01-LD11;
+class Haven;
+type Leader;
+
 // ------------------------------
 
 name Ramina, Crescent Beast;
 id BP01-LD12;
 class Haven;
 type Leader;
+
+// ------------------------------
+
+name Holy Falcon;
+id BP01-T16;
+class Haven;
+type Follower / Token;
+trait Avian;
+cost 3;
+stats 2/2;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+
+name Holy Tiger;
+id BP01-T17;
+class Haven;
+type Follower / Token;
+trait Beast;
+cost 4;
+stats 4/4;
+
+text "Rush.";
+
+keyword Rush;

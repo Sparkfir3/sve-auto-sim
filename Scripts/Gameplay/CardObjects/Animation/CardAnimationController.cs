@@ -93,6 +93,8 @@ namespace SVESimulator
         [SerializeField, ReadOnly, HideInEditorMode]
         private List<GameObject> statChangeEffectObjectPool;
 
+        public bool IsAnimating => currentMovingCards.Count > 0;
+
         #endregion
 
         // ------------------------------
@@ -207,7 +209,8 @@ namespace SVESimulator
 
         public void SetTargetingLineActive(bool active)
         {
-            targetingLine.gameObject.SetActive(active);
+            if(targetingLine)
+                targetingLine.gameObject.SetActive(active);
         }
 
         public void SetTargetingLine(CardObject card, Vector3 endPos) => SetTargetingLine(card.transform.position, endPos);
