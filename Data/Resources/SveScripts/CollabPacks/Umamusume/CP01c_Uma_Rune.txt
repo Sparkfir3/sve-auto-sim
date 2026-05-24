@@ -1,0 +1,324 @@
+name Agnes Tachyon;
+id CP01-027;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [feed][cost01]: Race this follower.
+      Whenever you play a spell, select an enemy follower on the field and give it [attack]-1/[defense]-1.";
+
+evolve 1;
+serve;
+ability OnPlaySpell {
+    effect GiveStat(AtkDef, -1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Agnes Tachyon (Evolved);
+id CP01-028;
+class Rune;
+universe Umamusume;
+type Evolved Follower;
+trait Umamusume;
+rarity L;
+stats 3/3;
+
+text "On Evolve: Select a spell in your cemetery and add it to your hand.
+      Whenever you play a spell, select an enemy follower on the field and give it [attack]-1/[defense]-1.";
+
+ability OnEvolve {
+    effect Salvage(1, S);
+}
+ability OnPlaySpell {
+    effect GiveStat(AtkDef, -1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Daiwa Scarlet;
+id CP01-029;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 4;
+stats 3/4;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Search your deck for an Umamusume spell, reveal it, and add it to your hand.
+      While this card is on your field, the 1st Umamusume spell you play each turn costs 1 less to play.
+      When you play a spell, if it's your 3rd this turn, select an Umamusume follower on your field. Give it and this follower Storm.";
+
+serve;
+ability Fanfare {
+    effect Search(1, St(Umamusume), Hand);
+}
+ability Passive {
+    condition #(spellsPlayed) = 0;
+    effect MinusCostOther(1, WhileOnField) to AllPlayerCards St(Umamusume);
+}
+ability OnPlaySpell {
+    condition [#(spellsPlayed) = 3];
+    effect Sequence(StormOther, StormSelf);
+}
+ability Spell name StormOther {
+    effect GiveKeyword(Storm) to TargetPlayerCard Ft(Umamusume);
+}
+ability Spell name StormSelf {
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Vodka;
+id CP01-030;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity G;
+cost 3;
+stats 3/3;
+
+text "If there is a Daiwa Scarlet on your field, this card costs 2 less to play.
+      [feed][cost01]: Race this follower.
+      Once per turn, when you play a spell, give each Umamusume follower on your field [attack]+1/[defense]+1 and Rush.";
+
+serve;
+ability ModifiedCost {
+    condition f(n(Daiwa Scarlet));
+    effect ReducedCost(2);
+}
+ability OnPlaySpell {
+    cost (OncePerTurn);
+    effect Sequence(AtkDef, Rush);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Umamusume);
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards Ft(Umamusume);
+}
+
+// ------------------------------
+
+name Make! Some! NOISE!;
+id CP01-031;
+class Rune;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity G;
+cost 2;
+
+text "[quick]
+      Select an enemy follower on the field and deal it 3 damage. If there is an Umamusume card on your field, deal 4 damage instead.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect DealDamage(3?(f(t(Umamusume)))4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Zenno Rob Roy;
+id CP01-032;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 1;
+stats 0/2;
+
+text "[feed][cost01]: Race this follower.
+      Whenever another one of your followers races, look at the top 4 cards of your deck. You may reveal a spell or amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+serve;
+ability OnOtherRace {
+    effect CheckTop(4, (Hand, !F, 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Agnes Digital;
+id CP01-033;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 1;
+stats 2/1;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Draw a card, then discard a card.";
+
+serve;
+ability OnRace {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Lamplit Training of a Witch-to-Be;
+id CP01-034;
+class Rune;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity S;
+cost 1;
+
+text "[quick]
+      Select an enemy follower on the field and deal it 2 damage. If there is a racing follower on your field, deal 3 damage instead.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect DealDamage(2?(f(FC))3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Admire Vega;
+id CP01-035;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[feed][cost01]: Race this follower.
+      [act][engage]: Select a spell that costs 2 play points or less in your hand and put it into your EX area. For the rest of this turn, it costs 0 play points to play.";
+
+serve;
+ability Act {
+    cost (EngageSelf);
+    condition H(Sp(m(0,2)));
+    effect HandToExAndTarget(1, Sp(m(0,2)), SetCost);
+}
+ability Spell name SetCost {
+    effect SetStatEndOfTurn(Cost, 0) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Kawakami Princess;
+id CP01-036;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Discard a card: Select an enemy follower on the field and deal it 4 damage.";
+
+serve;
+ability Fanfare {
+    condition p(#F);
+    cost (Discard, 1);
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Nakayama Festa;
+id CP01-037;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 9;
+stats 7/7;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Deal 5 damage to each enemy leader and enemy follower on the field. Discard your hand.";
+
+serve;
+ability Fanfare {
+    effect Sequence(Damage, Discard);
+}
+ability Spell name Damage {
+    effect DealDamage(5) to AllOpponentCardsAndLeader F;
+}
+ability Spell name Discard {
+    effect DiscardHand() to Self;
+}
+
+// ------------------------------
+
+name Tosen Jordan;
+id CP01-038;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/1;
+
+text "[feed][cost01]: Race this follower.
+      [lastwords] Select a spell in your cemetery and add it to your hand.";
+
+serve;
+ability LastWords {
+    effect Salvage(1, S);
+}
+
+// ------------------------------
+
+name Narita Top Road;
+id CP01-039;
+class Rune;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Draw 2 cards, then discard a card.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, Draw, Discard);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Draw {
+    effect Draw(2);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Kawakami Princess [Princess Bride];
+id CP01-LD03;
+class Rune;
+universe Umamusume;
+type Leader;

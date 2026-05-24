@@ -1,0 +1,204 @@
+[
+  {
+    "id": "CP01-027EN",
+    "name": "Agnes Tachyon",
+    "trait": "Umamusume",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[feed][cost01]: Race this follower.\nWhenever you play a spell, select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+    "effectText": [
+      {
+        "key": "OnPlaySpell",
+        "text": "Whenever you play a spell, select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+        "trigger": "Whenever you play a spell",
+        "body": "Select an enemy follower on the field and give it [attack]-1/[defense]-1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-028EN",
+    "name": "Agnes Tachyon (Evolved)",
+    "trait": "Umamusume",
+    "cardText": "On Evolve: Select a spell in your cemetery and add it to your hand.\nWhenever you play a spell, select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a spell in your cemetery and add it to your hand."
+      },
+      {
+        "key": "OnPlaySpell",
+        "text": "Whenever you play a spell, select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+        "trigger": "Whenever you play a spell",
+        "body": "Select an enemy follower on the field and give it [attack]-1/[defense]-1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-029EN",
+    "name": "Daiwa Scarlet",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Search your deck for an Umamusume spell, reveal it, and add it to your hand.\nWhile this card is on your field, the 1st Umamusume spell you play each turn costs 1 less to play.\nWhen you play a spell, if it's your 3rd this turn, select an Umamusume follower on your field. Give it and this follower Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for an Umamusume spell, reveal it, and add it to your hand."
+      },
+      {
+        "key": "OnPlaySpell",
+        "text": "When you play a spell, if it's your 3rd this turn, select an Umamusume follower on your field. Give it and this follower Storm.",
+        "trigger": "When you play a spell, if it's your 3rd this turn",
+        "body": "Select an Umamusume follower on your field. Give it and this follower Storm."
+      },
+      {
+        "key": "StormOther",
+        "body": "Select an Umamusume follower on your field. Give it and this follower Storm."
+      }
+    ]
+  },
+  {
+    "id": "CP01-030EN",
+    "name": "Vodka",
+    "trait": "Umamusume",
+    "cardText": "If there is a Daiwa Scarlet on your field, this card costs 2 less to play.\n[feed][cost01]: Race this follower.\nOnce per turn, when you play a spell, give each Umamusume follower on your field [attack]+1/[defense]+1 and Rush.",
+    "effectText": [
+      {
+        "key": "OnPlaySpell",
+        "text": "Once per turn, when you play a spell, give each Umamusume follower on your field [attack]+1/[defense]+1 and Rush.",
+        "trigger": "Once per turn, when you play a spell",
+        "body": "Give each Umamusume follower on your field [attack]+1/[defense]+1 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "CP01-031EN",
+    "name": "Make! Some! NOISE!",
+    "trait": "Umamusume",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 3 damage. If there is an Umamusume card on your field, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If there is an Umamusume card on your field, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "CP01-032EN",
+    "name": "Zenno Rob Roy",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nWhenever another one of your followers races, look at the top 4 cards of your deck. You may reveal a spell or amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "OnOtherRace",
+        "text": "Whenever another one of your followers races, look at the top 4 cards of your deck. You may reveal a spell or amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+        "trigger": "Whenever another one of your followers races",
+        "body": "Look at the top 4 cards of your deck. You may reveal a spell or amulet from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "CP01-033EN",
+    "name": "Agnes Digital",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "CP01-034EN",
+    "name": "Lamplit Training of a Witch-to-Be",
+    "trait": "Umamusume",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 2 damage. If there is a racing follower on your field, deal 3 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 2 damage. If there is a racing follower on your field, deal 3 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "CP01-035EN",
+    "name": "Admire Vega",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[act][engage]: Select a spell that costs 2 play points or less in your hand and put it into your EX area. For the rest of this turn, it costs 0 play points to play.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select a spell that costs 2 play points or less in your hand and put it into your EX area. For the rest of this turn, it costs 0 play points to play."
+      }
+    ]
+  },
+  {
+    "id": "CP01-036EN",
+    "name": "Kawakami Princess",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Discard a card: Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a card",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-037EN",
+    "name": "Nakayama Festa",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Deal 5 damage to each enemy leader and enemy follower on the field. Discard your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 5 damage to each enemy leader and enemy follower on the field. Discard your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-038EN",
+    "name": "Tosen Jordan",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[lastwords] Select a spell in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select a spell in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-039EN",
+    "name": "Narita Top Road",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Draw 2 cards, then discard a card.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "text": "",
+        "trigger": "On Race:",
+        "cost": "",
+        "body": "Give this follower [attack]+1/[defense]+1. Draw 2 cards, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "CP01-LD03EN",
+    "name": "Kawakami Princess [Princess Bride]"
+  }
+]
