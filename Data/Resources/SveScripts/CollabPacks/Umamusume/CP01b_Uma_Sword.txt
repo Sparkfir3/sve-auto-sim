@@ -1,0 +1,296 @@
+name Tokai Teio;
+id CP01-014;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 5;
+stats 4/4;
+
+text "[evolve][cost02]: Evolve this follower.
+      [feed][cost01]: Race this follower.
+      [fanfare] Select an enemy follower on the field and deal it X damage. X equals 2 times the number of followers on your field, including this one.";
+
+evolve 2;
+serve;
+ability Fanfare {
+    effect DealDamage(f(F)*2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Tokai Teio (Evolved);
+id CP01-015;
+class Sword;
+universe Umamusume;
+type Evolved Follower;
+trait Umamusume;
+rarity L;
+stats 5/5;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+
+name Narita Brian;
+id CP01-016;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 8;
+stats 6/8;
+
+text "[feed][cost01]: Race this follower.
+      Bane. Ward. Aura.
+      [act][engage]: Select an enemy leader or enemy follower on the field and deal it 5 damage.";
+
+serve;
+keywords Bane, Ward, Aura;
+ability Act {
+    cost (EngageSelf);
+    effect DealDamage(5) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Winning Ticket;
+id CP01-017;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume / BNW;
+rarity G;
+cost 3;
+stats 2/2;
+
+text "[feed][cost01]: Race this follower.
+      Storm.
+      [fanfare] If there is a Trial Initiation and Narita Taishin in your cemetery, give this follower [attack]+3/[defense]+1.";
+
+serve;
+keyword Storm;
+ability Fanfare {
+    condition y(n(Trial Initiation)) & y(n(Narita Taishin));
+    effect Sequence(Atk, Def);
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 3) to Self;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Self;
+}
+
+// ------------------------------
+
+name Outrunning the Encroaching Heat;
+id CP01-018;
+class Sword;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity G;
+cost 2;
+
+text "Select a follower on your field. Give it Storm and, if it's an Umamusume follower, [attack]+1/[defense]+1.";
+
+ability Spell {
+    condition f(F);
+    effect TargetForSequence(Storm, AtkDef) to TargetPlayerCard F;
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to AllPlayerCards;
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards t(Umamusume);
+}
+
+// ------------------------------
+
+name Air Groove;
+id CP01-019;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Select up to 1 other follower on your field and refresh it. For the rest of this turn, that follower can't attack enemies.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, Target);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Target {
+    condition f(FX)N;
+    effect TargetForSequence(Refresh, CantAttack) to TargetPlayerCard FXNm(0,1);
+}
+ability Spell name Refresh {
+    effect Refresh() to AllPlayerCards;
+}
+ability Spell name CantAttack {
+    effect GiveKeyword(CantAttack) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Hishi Amazon;
+id CP01-020;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 3;
+stats 4/2;
+
+text "[feed][cost01]: Race this follower.
+      Rush.
+      [fanfare][cost03]: Search your deck for an Umamusume follower that costs 3 play points and put it onto your field.";
+
+serve;
+keyword Rush;
+ability Fanfare {
+    cost (PP, 3);
+    effect Search(1, Ft(Umamusume)p(3), Field);
+}
+
+// ------------------------------
+
+name Trial Initiation;
+id CP01-021;
+class Sword;
+universe Umamusume;
+type Spell;
+trait Umamusume / BNW;
+rarity S;
+cost 1;
+
+text "Choose one of the following. (1) Look at the top 2 cards of your deck. You may reveal an Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order. (2) Select a BNW follower in your cemetery and add it to your hand.";
+
+ability Spell {
+    effect ChooseFromList(TopDeck, Cemetery);
+}
+ability Spell name TopDeck {
+    effect CheckTop(2, (Hand, t(Umamusume), m(0,1)), (BottomDeckAnyOrder));
+}
+ability Spell name Cemetery {
+    condition y(Ft(BNW));
+    effect Salvage(1, Ft(BNW));
+}
+
+// ------------------------------
+
+name Sirius Symboli;
+id CP01-022;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "[feed][cost01]: Race this follower.
+      Bane.";
+
+serve;
+keyword Bane;
+
+// ------------------------------
+
+name Narita Taishin;
+id CP01-023;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume / BNW;
+rarity B;
+cost 2;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      Rush.";
+
+serve;
+keyword Rush;
+
+// ------------------------------
+
+name Symboli Rudolf;
+id CP01-024;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      [lastwords] Search your deck for a Tokai Teio, reveal it, and add it to your hand.";
+
+serve;
+ability LastWords {
+    effect Search(1, n(Tokai Teio), Hand);
+}
+
+// ------------------------------
+
+name Biko Pegasus;
+id CP01-025;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 1;
+stats 2/1;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Select an enemy follower on the field and engage it.";
+
+serve;
+ability OnRace {
+    effect Engage() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Fuji Kiseki;
+id CP01-026;
+class Sword;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[feed][cost01]: Race this follower.
+      [act][cost03], [engage]: Select an enemy follower on the field and deal it 3 damage.";
+
+serve;
+ability Act {
+    condition p(#F);
+    cost (PP, 3), (EngageSelf);
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Narita Taishin [A Bazaar Outing];
+id CP01-LD02;
+class Sword;
+universe Umamusume;
+type Leader;
