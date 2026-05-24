@@ -333,6 +333,7 @@ namespace SVESimulator.SveScript
             { "Reserve", new EffectParams("ReserveCardEffect")                              },
             { "ReserveCard", new EffectParams("ReserveCardEffect")                          },
             { "SetStat", new EffectParams("SetStatEffect",                                  EffectParameterType.StatType, EffectParameterType.Amount) },
+            { "SetStatEndOfTurn", new EffectParams("SetStatEndOfTurnEffect",                EffectParameterType.StatType, EffectParameterType.Amount) },
             { "DealDamageDivided", new EffectParams("DealDamageDividedEffect",              false, true, EffectParameterType.Amount) },
 
             // Keyword Effects
