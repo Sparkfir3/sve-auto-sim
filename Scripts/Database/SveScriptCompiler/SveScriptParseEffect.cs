@@ -308,6 +308,10 @@ namespace SVESimulator.SveScript
             { "Discard", new EffectParams("DiscardEffect",                                              false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardFromOpponentHand", new EffectParams("DiscardFromOpponentHandEffect",              false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "DiscardToBottomDeck", new EffectParams("DiscardToBottomDeckEffect",                      false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "HandToEx", new EffectParams("HandToExAreaEffect",                                        false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "HandToExArea", new EffectParams("HandToExAreaEffect",                                    false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "HandToExAndTarget", new EffectParams("HandToExAreaAndTargetEffect",                      false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
+            { "HandToExAreaAndTarget", new EffectParams("HandToExAreaAndTargetEffect",                  false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "HandToField", new EffectParams("HandToFieldEffect",                                      false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
 
             // Movement - Cemetery to Zone
