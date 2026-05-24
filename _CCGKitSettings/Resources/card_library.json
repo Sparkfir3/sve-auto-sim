@@ -36513,13 +36513,12 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "F",
-              "amount": "Storm",
-              "effectName1": "AtkDef",
-              "effectName2": null,
+              "effectName1": "Storm",
+              "effectName2": "AtkDef",
               "effectName3": null,
               "effectName4": null,
               "effectName5": null,
-              "$type": "SVESimulator.TargetForEffectSequenceWithTargetAmount"
+              "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -36552,9 +36551,9 @@
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCards",
-              "filter": null,
+              "filter": "t(Umamusume)",
               "targetStats": "AttackDefense",
-              "amount": "0~(t(Umamusume))1",
+              "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "target": null,
@@ -36696,7 +36695,7 @@
           },
           {
             "trigger": {
-              "condition": "f(FX)",
+              "condition": "f(FX)N",
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -36704,7 +36703,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TargetPlayerCard",
-              "filter": "FXm(0,1)",
+              "filter": "FXNm(0,1)",
               "effectName1": "Refresh",
               "effectName2": "CantAttack",
               "effectName3": null,
@@ -36945,7 +36944,7 @@
               "amount": "2",
               "checkAction1": "Hand",
               "checkFilter1": "t(Umamusume)",
-              "checkAmount1": "1",
+              "checkAmount1": "m(0,1)",
               "checkAction2": "BottomDeckAnyOrder",
               "checkFilter2": null,
               "checkAmount2": null,
@@ -36959,7 +36958,7 @@
           },
           {
             "trigger": {
-              "condition": null,
+              "condition": "y(Ft(BNW))",
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -37145,10 +37144,10 @@
             "modifiers": []
           },
           {
-            "baseValue": 3,
+            "baseValue": 2,
             "statId": 4,
             "name": "Cost",
-            "originalValue": 3,
+            "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []

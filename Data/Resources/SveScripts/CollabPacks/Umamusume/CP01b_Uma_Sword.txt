@@ -100,13 +100,13 @@ text "Select a follower on your field. Give it Storm and, if it's an Umamusume f
 
 ability Spell {
     condition f(F);
-    effect TargetForSequenceWithTargetAmount(Storm, AtkDef) to TargetPlayerCard F;
+    effect TargetForSequence(Storm, AtkDef) to TargetPlayerCard F;
 }
 ability Spell name Storm {
     effect GiveKeyword(Storm) to AllPlayerCards;
 }
 ability Spell name AtkDef {
-    effect GiveStat(AtkDef, 0~(t(Umamusume))1) to AllPlayerCards;
+    effect GiveStat(AtkDef, 1) to AllPlayerCards t(Umamusume);
 }
 
 // ------------------------------
@@ -132,8 +132,8 @@ ability Spell name AtkDef {
     effect GiveStat(AtkDef, 1) to Self;
 }
 ability Spell name Target {
-    condition f(FX);
-    effect TargetForSequence(Refresh, CantAttack) to TargetPlayerCard FXm(0,1);
+    condition f(FX)N;
+    effect TargetForSequence(Refresh, CantAttack) to TargetPlayerCard FXNm(0,1);
 }
 ability Spell name Refresh {
     effect Refresh() to AllPlayerCards;
@@ -182,9 +182,10 @@ ability Spell {
     effect ChooseFromList(TopDeck, Cemetery);
 }
 ability Spell name TopDeck {
-    effect CheckTop(2, (Hand, t(Umamusume), 1), (BottomDeckAnyOrder));
+    effect CheckTop(2, (Hand, t(Umamusume), m(0,1)), (BottomDeckAnyOrder));
 }
 ability Spell name Cemetery {
+    condition y(Ft(BNW));
     effect Salvage(1, Ft(BNW));
 }
 
@@ -215,7 +216,7 @@ universe Umamusume;
 type Follower;
 trait Umamusume / BNW;
 rarity B;
-cost 3;
+cost 2;
 stats 3/3;
 
 text "[feed][cost01]: Race this follower.
