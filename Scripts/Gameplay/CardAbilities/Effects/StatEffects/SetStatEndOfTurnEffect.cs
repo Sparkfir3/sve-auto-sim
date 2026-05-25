@@ -42,7 +42,7 @@ namespace SVESimulator
                         },
                         effect = new MinusCostOtherPassive
                         {
-                            amount = amountDiff.ToString()
+                            amount = (amountDiff * -1).ToString()
                         },
                         affectedCards = new List<RuntimeCard>(),
                         target = SVEProperties.SVEEffectTarget.Self,
