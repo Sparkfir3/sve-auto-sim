@@ -1,0 +1,212 @@
+[
+  {
+    "id": "CP01-040EN",
+    "name": "Special Week",
+    "trait": "Umamusume",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[feed][cost01]: Race this follower.\n[fanfare] Look at the top card of your deck. If it's an Umamusume card, you may reveal it and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top card of your deck. If it's an Umamusume card, you may reveal it and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-041EN",
+    "name": "Special Week (Evolved)",
+    "trait": "Umamusume",
+    "cardText": "On Evolve: If Overflow is active for you, give each other Umamusume follower on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "If Overflow is active for you, give each other Umamusume follower on your field [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-042EN",
+    "name": "Oguri Cap",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[feed][feed][cost02]: Race this follower 2 times.\n[feed][feed][feed][cost03]: Race this follower 3 times.\nOn Race: Give this follower [attack]+2/[defense]+1.\n[fanfare] Discard 2 cards: Give this follower Storm.\nStrike: Deal 3 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+2/[defense]+1."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard 2 cards:",
+        "body": "Give this follower Storm."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Deal 3 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "CP01-043EN",
+    "name": "Seiun Sky",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nStorm. Intimidate.\nStrike: Give this follower [attack]+1.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Give this follower [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-044EN",
+    "name": "Champion's Passion",
+    "trait": "Umamusume",
+    "cardText": "[fanfare] If there is another Umamusume card on your field, select an enemy follower on the field and deal it 4 damage.\nAt the start of your main phase, select an enemy leader or enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is another Umamusume card on your field, select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "StartMainPhase",
+        "text": "At the start of your main phase, select an enemy leader or enemy follower on the field and deal it 4 damage.",
+        "trigger": "At the start of your main phase,",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-045EN",
+    "name": "King Halo",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Choose one of the following. (1) Put the top card of your deck into your EX area. Do this 3 times. (2) Search your deck for a Kawakami Princess and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose one of the following. (1) Put the top card of your deck into your EX area. Do this 3 times. (2) Search your deck for a Kawakami Princess and put it onto your field."
+      },
+      {
+        "key": "ExArea",
+        "body": "Put the top card of your deck into your EX area. Do this 3 times."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a Kawakami Princess and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "CP01-046EN",
+    "name": "Tamamo Cross",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Select up to 1 enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Select up to 1 enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "Damage",
+        "body": "Select up to 1 enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-047EN",
+    "name": "Flowers for You",
+    "trait": "Umamusume",
+    "cardText": "Select an Umamusume follower on your field. Give it [attack]+1 and draw a card. If the selected follower is a Seiun Sky, give it [attack]+1/[defense]+1 more.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an Umamusume follower on your field. Give it [attack]+1 and draw a card. If the selected follower is a Seiun Sky, give it [attack]+1/[defense]+1 more."
+      }
+    ]
+  },
+  {
+    "id": "CP01-048EN",
+    "name": "Bamboo Memory",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Discard a card: Deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a card:",
+        "body": "Deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "CP01-049EN",
+    "name": "Yaeno Muteki",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Select up to 1 other follower on your field and give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Select up to 1 other follower on your field and give it [attack]+1/[defense]+1."
+      },
+      {
+        "key": "Other",
+        "body": "Select up to 1 other follower on your field and give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-050EN",
+    "name": "Grass Wonder",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Deal 2 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 2 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "CP01-051EN",
+    "name": "Super Creek",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nWard.\n[fanfare] Give your leader [defense]+5.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+5."
+      }
+    ]
+  },
+  {
+    "id": "CP01-052EN",
+    "name": "Super Creek",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Give your leader [defense]+10.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+10."
+      }
+    ]
+  },
+  {
+    "id": "CP01-LD04EN",
+    "name": "Yaeno Muteki [Fiery Discipline]"
+  },
+  {
+    "id": "CP01-LD05EN",
+    "name": "Grass Wonder [Fairest Fleur]"
+  }
+]
