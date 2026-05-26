@@ -160,7 +160,8 @@ namespace SVESimulator.SveScript
                 string argument = i < argsArray.Length ? argsArray[i] : null;
                 if(argument.IsNullOrWhiteSpace() && effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
                     argument = "1";
-                if(argument == null && (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.FilterOptional))
+                if(argument == null &&
+                   (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultBlank and not EffectParameterType.FilterOptional))
                 {
                     Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                         $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
@@ -182,6 +183,10 @@ namespace SVESimulator.SveScript
                         break;
                     case EffectParameterType.AmountDefaultNull:
                         effectData.Add("amount", argument);
+                        break;
+                    case EffectParameterType.Amount2DefaultBlank:
+                        if(!argument.IsNullOrWhiteSpace())
+                            effectData.Add("amount2", argument);
                         break;
                     case EffectParameterType.FilterOptional:
                         effectData.Add("filter", argument);
@@ -251,18 +256,45 @@ namespace SVESimulator.SveScript
         }
 
         #endregion
-        
+
         // ------------------------------
-        
-        #region Effect Parameters
-        
-        private enum EffectParameterType { Amount, Amount2, AmountDefaultNull, Keyword, StatType, SearchDeckAction, CheckCardActions, SingleEffect, ListOfEffects, CreateTokenOption, TokenName, Trait, Filter, FilterOptional, Function, PassiveDuration }
+
+        #region Effect Parameter Definitions
+
+        private enum EffectParameterType
+        {
+            // Standard parameters
+            Amount,
+            Amount2,
+            AmountDefaultNull,
+            Amount2DefaultBlank,
+            Keyword,
+            StatType,
+            Filter,
+            FilterOptional,
+
+            // Unique effect parameters
+            SearchDeckAction,
+            CheckCardActions,
+            CreateTokenOption,
+
+            // Effect names
+            SingleEffect,
+            ListOfEffects,
+
+            // Other
+            TokenName,
+            Trait,
+            Function,
+            PassiveDuration
+        }
+
         private readonly struct EffectParams
         {
             public readonly string ccgType;
             public readonly EffectParameterType[] parameters;
             public readonly bool hasTarget, hasFilter;
-            
+
             public EffectParams(string ccgType, params EffectParameterType[] parameters) : this(ccgType, true, true, parameters) { }
             public EffectParams(string ccgType, bool hasTarget, bool hasFilter, params EffectParameterType[] parameters)
             {
@@ -272,7 +304,34 @@ namespace SVESimulator.SveScript
                 this.hasFilter = hasFilter;
             }
         }
-        
+
+        private static Dictionary<string, string> StatTypeDictionary = new()
+        {
+            { "Atk", "Attack" },
+            { "Attack", "Attack" },
+            { "Def", "Defense" },
+            { "Defense", "Defense" },
+            { "AtkDef", "AttackDefense" },
+            { "AttackDefense", "AttackDefense" },
+            { "Cost", "Cost" },
+            { "EvolveCost", "EvolveCost" },
+
+            { "MaxPlayPoint", "MaxPlayPoint"},
+            { "MaxPlayPoints", "MaxPlayPoint"},
+            { "MaxPP", "MaxPlayPoint"},
+            { "PlayPoint", "PlayPoint"},
+            { "PlayPoints", "PlayPoint"},
+            { "PP", "PlayPoint"},
+            { "EvolvePoint", "EvolvePoint"},
+            { "EP", "EvolvePoint"},
+        };
+
+        #endregion
+
+        // ------------------------------
+
+        #region Effect Parameters List
+
         private static Dictionary<string, EffectParams> StandardEffectInfoDictionary = new()
         {
             // Movement - Deck to Zone
@@ -327,8 +386,8 @@ namespace SVESimulator.SveScript
             { "DealDamage", new EffectParams("DealDamageEffect",                            EffectParameterType.Amount) },
             { "Engage", new EffectParams("EngageCardEffect")                                },
             { "EngageCard", new EffectParams("EngageCardEffect")                            },
-            { "GiveStat", new EffectParams("GiveStatBoostEffect",                           EffectParameterType.StatType, EffectParameterType.Amount) },
-            { "GiveStatEndOfTurn", new EffectParams("GiveStatEndOfTurnEffect",              EffectParameterType.StatType, EffectParameterType.Amount) },
+            { "GiveStat", new EffectParams("GiveStatBoostEffect",                           EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.Amount2DefaultBlank) },
+            { "GiveStatEndOfTurn", new EffectParams("GiveStatEndOfTurnEffect",              EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.Amount2DefaultBlank) },
             { "Refresh", new EffectParams("ReserveCardEffect")                              },
             { "Reserve", new EffectParams("ReserveCardEffect")                              },
             { "ReserveCard", new EffectParams("ReserveCardEffect")                          },
@@ -392,29 +451,6 @@ namespace SVESimulator.SveScript
             { "GiveKeyword", new EffectParams("GiveKeywordPassive",                         false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
             { "MinusCostOther", new EffectParams("MinusCostOtherPassive",                   false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
-        };
-
-        // -----
-
-        private static Dictionary<string, string> StatTypeDictionary = new()
-        {
-            { "Atk", "Attack" },
-            { "Attack", "Attack" },
-            { "Def", "Defense" },
-            { "Defense", "Defense" },
-            { "AtkDef", "AttackDefense" },
-            { "AttackDefense", "AttackDefense" },
-            { "Cost", "Cost" },
-            { "EvolveCost", "EvolveCost" },
-
-            { "MaxPlayPoint", "MaxPlayPoint"},
-            { "MaxPlayPoints", "MaxPlayPoint"},
-            { "MaxPP", "MaxPlayPoint"},
-            { "PlayPoint", "PlayPoint"},
-            { "PlayPoints", "PlayPoint"},
-            { "PP", "PlayPoint"},
-            { "EvolvePoint", "EvolvePoint"},
-            { "EP", "EvolvePoint"},
         };
 
         #endregion
