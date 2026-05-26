@@ -79,7 +79,7 @@ namespace SVESimulator
 
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
-    public class SveOnPlaySpellTrigger : SveTrigger { }
+    public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
 
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
 

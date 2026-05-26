@@ -429,7 +429,7 @@ namespace SVESimulator
                 SVEEffectPool.Instance.TriggerPendingEffects<SveStartEndPhaseTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false,
                     triggerState: SVEEffectPool.EffectTriggerState.StartEndPhase);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlaySpellTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
-                    _ => true, false);
+                    x => x.MatchesFilter(card), false);
 
                 SVEEffectPool.Instance.TriggerSpellImmediate(gameState, card, player, onComplete);
             }
