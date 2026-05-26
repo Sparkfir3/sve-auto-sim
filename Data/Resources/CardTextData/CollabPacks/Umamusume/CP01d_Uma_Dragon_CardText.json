@@ -39,7 +39,7 @@
       {
         "key": "Fanfare",
         "trigger": "[fanfare]",
-        "cost": "Discard 2 cards:",
+        "cost": "Discard 2 cards",
         "body": "Give this follower Storm."
       },
       {
@@ -140,7 +140,7 @@
       {
         "key": "Fanfare",
         "trigger": "[fanfare]",
-        "cost": "Discard a card:",
+        "cost": "Discard a card",
         "body": "Deal 2 damage to each enemy leader."
       }
     ]
@@ -190,7 +190,7 @@
   },
   {
     "id": "CP01-052EN",
-    "name": "Super Creek",
+    "name": "Hishi Akebono",
     "trait": "Umamusume",
     "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Give your leader [defense]+10.",
     "effectText": [
