@@ -111,6 +111,11 @@ namespace SVESimulator
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
 
+                    // Condition check
+                    if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, null as RuntimeCard))
+                        break;
+
+                    // Add effect
                     SVEPendingEffect effect = new()
                     {
                         triggeringCardInstanceId = (triggeringCard ?? sourceCard).instanceId,

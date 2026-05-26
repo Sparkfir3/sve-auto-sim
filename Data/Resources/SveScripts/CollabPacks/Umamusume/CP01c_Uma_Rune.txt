@@ -65,7 +65,7 @@ ability Passive {
     effect MinusCostOther(1, WhileOnField) to AllPlayerCards St(Umamusume);
 }
 ability OnPlaySpell {
-    condition [#(spellsPlayed) = 3];
+    condition <<[#(spellsPlayed) = 3];
     effect Sequence(StormOther, StormSelf);
 }
 ability Spell name StormOther {

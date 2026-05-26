@@ -37888,7 +37888,7 @@
           },
           {
             "trigger": {
-              "condition": "[#(spellsPlayed) = 3]",
+              "condition": "<<[#(spellsPlayed) = 3]",
               "cost": null,
               "$type": "SVESimulator.SveOnPlaySpellTrigger"
             },
