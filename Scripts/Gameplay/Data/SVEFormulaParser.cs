@@ -381,7 +381,7 @@ namespace SVESimulator
             usedPlayerReference = false;
             switch(args[0])
             {
-                // Player
+                // Player Stats
                 case "destroyed":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDestroyedThisTurn, filter) : 0;
@@ -392,6 +392,11 @@ namespace SVESimulator
                 case "attacked":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
+                case "spellsPlayed":
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
+
+                // Player Zone
                 case "evolveDeckFaceUp":
                     usedPlayerReference = true;
                     return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)

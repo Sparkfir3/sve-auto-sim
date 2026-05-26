@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace SVESimulator
         public readonly SyncList<PlayedCardData> CardsDestroyedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDiscardedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsAttackedThisTurn = new();
+
+        public List<PlayedCardData> SpellsPlayedThisTurn => CardsPlayedThisTurn.Where(x =>
+            LibraryCardCache.GetCard(x.cardId).IsSpell()).ToList();
 
         private PlayerController player;
 

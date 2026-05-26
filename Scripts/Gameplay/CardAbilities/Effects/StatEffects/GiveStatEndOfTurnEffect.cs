@@ -11,6 +11,7 @@ namespace SVESimulator
         {
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
             {
+                // Atk and Def
                 if(targetStats != SVEProperties.StatBoostType.Cost)
                 {
                     foreach(CardObject card in targets)
@@ -33,6 +34,7 @@ namespace SVESimulator
                         SVEEffectPool.Instance.RegisterPassiveAbility(passive);
                     }
                 }
+                // Cost
                 else
                 {
                     foreach(CardObject card in targets)
