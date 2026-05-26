@@ -1,0 +1,343 @@
+name Maruzensky;
+id CP01-053;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      [feed][cost01]: Race this follower.
+      [fanfare] Necrocharge (10): Select an enemy follower on the field and give it [attack]-4/[defense]-4.";
+
+evolve 1;
+serve;
+ability Fanfare {
+    condition n(10);
+    effect GiveStat(AtkDef, -4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Maruzensky (Evolved);
+id CP01-054;
+class Abyss;
+universe Umamusume;
+type Evolved Follower;
+trait Umamusume;
+rarity L;
+stats 4/4;
+
+text "On Evolve: Select an enemy follower on the field and give it [attack]-2/[defense]-2.";
+
+ability OnEvolve {
+    effect GiveStat(AtkDef, -2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Rice Shower;
+id CP01-055;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 5;
+stats 3/5;
+
+text "[feed][cost01]: Race this follower.
+      Ward.
+      [fanfare] Select an enemy follower on the field. Deal it 3 damage and put the top 2 cards of your deck into your cemetery.
+      [lastwords] Select an Umamusume follower with a different name from this card in your cemetery and add it to your hand.";
+
+serve;
+keyword Ward;
+ability Fanfare {
+    condition p(#F);
+    effect Sequence(Damage, Mill);
+}
+ability Spell name Damage {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name Mill {
+    effect Mill(2);
+}
+ability LastWords {
+    effect Salvage(1, Ft(Umamusume)!n(Rice Shower));
+}
+
+// ------------------------------
+
+name Nice Nature;
+id CP01-056;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity G;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Select an enemy follower on the field and give it [attack]-1/[defense]-1.
+      [lastwords] Each opponent discards a card.";
+
+serve;
+ability Fanfare {
+    effect GiveStat(AtkDef, -1) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect OpponentPerformEffect(Discard);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name 7 More Centimeters;
+id CP01-057;
+class Abyss;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity G;
+cost 5;
+
+text "This card can only be played if there are at least 20 Umamusume cards in your cemetery.
+      Destroy each enemy follower on the field. Draw 3 cards. Each opponent discards 3 cards.";
+
+ability Spell {
+    condition y(t(Umamusume))>19;
+    effect Sequence(Destroy, Draw, OppDiscard);
+}
+ability Spell name Destroy {
+    effect Destroy() to AllOpponentCards F;
+}
+ability Spell name Draw {
+    effect Draw(3);
+}
+ability Spell name OppDiscard {
+    effect OpponentPerformEffect(Discard);
+}
+ability Spell name Discard {
+    effect Discard(3);
+}
+
+// ------------------------------
+
+name Fine Motion;
+id CP01-058;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2. Put the top 2 cards of your deck into your cemetery.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, Def, Mill);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Mill {
+    effect Mill(2);
+}
+
+// ------------------------------
+
+name Mayano Top Gun;
+id CP01-059;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 1;
+stats 2/1;
+
+text "[feed][cost01]: Race this follower.
+      Rush.
+      [fanfare] If there are 4 other Umamusume cards on your field, give this follower Storm.
+      [fanfare] If there are at least 5 Umamusume cards in your cemetery, give this follower [attack]+2.";
+
+serve;
+keyword Rush;
+ability Fanfare name Storm {
+    condition f(Xt(Umamusume))>3;
+    effect GiveKeyword(Storm) to Self;
+}
+ability Fanfare name Atk {
+    condition y(t(Umamusume));
+    effect GiveStat(Atk, 2) to Self;
+}
+
+// ------------------------------
+
+name My Solo Drawn to Raindrop Drums;
+id CP01-060;
+class Abyss;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity S;
+cost 4;
+
+text "[quick]
+      If there are at least 10 Umamusume cards in your cemetery, this card costs 2 less to play.
+      Select an enemy follower on the field and destroy it.";
+
+keyword Quick;
+ability ModifiedCost {
+    condition y(t(Umamusume))>9;
+    effect ReducedCost(2);
+}
+ability Spell {
+    condition p(#F);
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Curren Chan;
+id CP01-061;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 1;
+stats 1/1;
+
+text "[feed][cost01]: Race this follower.
+      [act][cost01], [engage]: Select an enemy follower on the field. Deal it 1 damage and put the top card of your deck into your cemetery.";
+
+serve;
+ability Act {
+    cost (PP, 1), (EngageSelf);
+    condition p(#F);
+    effect Sequence(Damage, Mill);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+ability Spell name Mill {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Twin Turbo;
+id CP01-062;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 3/1;
+
+text "[feed][cost01]: Race this follower.
+      Assail.
+      [fanfare] If there are at least 10 Umamusume cards in your cemetery, give this follower Storm.";
+
+serve;
+keyword Assail;
+ability Fanfare {
+    condition y(t(Umamusume));
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Sakura Chiyono O;
+id CP01-063;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Select up to 1 Umamusume card in your cemetery and add it to your hand.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, Salvage);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Salvage {
+    effect Salvage(m(0,1), t(Umamusume));
+}
+
+// ------------------------------
+
+name Seeking the Pearl;
+id CP01-064;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[feed][cost01]: Race this follower.
+      [lastwords] Put the top 2 cards of your deck into your cemetery.";
+
+serve;
+ability LastWords {
+    effect Mill(2);
+}
+
+// ------------------------------
+
+name Matikanetannhauser;
+id CP01-065;
+class Abyss;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Select an enemy amulet on the field and destroy it.";
+
+serve;
+ability Fanfare {
+    effect Destroy() to TargetOpponentCard A;
+}
+
+// ------------------------------
+
+name Twin Turbo [Turbo Booooost!];
+id CP01-LD06;
+class Abyss;
+universe Umamusume;
+type Leader;
+
+// ------------------------------
+
+name Manhattan Cafe [My Solo Spun in Spiraling Runs];
+id CP01-LD07;
+class Abyss;
+universe Umamusume;
+type Leader;
