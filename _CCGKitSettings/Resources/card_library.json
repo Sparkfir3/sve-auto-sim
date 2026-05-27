@@ -42529,6 +42529,1733 @@
         "id": 300011065
       },
       {
+        "cardTypeId": 0,
+        "name": "Mejiro McQueen",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume / Mejiro Family",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.\n[feed][cost01]: Race this follower.\nWard.\n[fanfare] Put an amulet from your field into its owner's cemetery: Select an enemy leader or enemy follower on the field and deal it 3 damage.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-066",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.SendToCemeteryCost\"\r\n  }\r\n]",
+              "condition": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCardOrLeader",
+              "filter": "F",
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011066
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Mejiro McQueen (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume / Mejiro Family",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\nOn Evolve: Select an amulet in your cemetery and add it to your hand.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-067",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "Amulet",
+              "$type": "SVESimulator.SalvageCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011067
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Gold Ship",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\n[fanfare] Reveal the top card of your deck. Deal X damage to each enemy leader and give your leader [defense]+X. X equals the revealed card's cost.\n[act][cost10]: Give this follower [attack]+10/[defense]+10.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-068",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 8,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 8,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 8,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 8,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 8,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 8,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "function": "let amt = revealTopDeck.getValue(P)\n        perform Damage { amount = amt }\n        perform Defense { amount = amt }",
+              "$type": "SVESimulator.ComplexEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "amount": "_",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Defense",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "_",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": null,
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "10",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 300011068
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Ikuno Dictus",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\nWard.\n[fanfare] Look at the top 3 cards of your deck. You may reveal an amulet or Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-069",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "checkAction1": "Hand",
+              "checkFilter1": "!St(Umamusume)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkFilter2": null,
+              "checkAmount2": null,
+              "checkAction3": "None",
+              "checkFilter3": null,
+              "checkAmount3": null,
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011069
+      },
+      {
+        "cardTypeId": 4,
+        "name": "The Will to Overtake",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Look at the top 3 cards of your deck. Put any number of cards from among them on the top of your deck in any order. Put any remaining cards on the bottom of your deck in any order.\n[act][cost02], [engage], put this card into its owner's cemetery: Draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-070",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "checkAction1": "TopDeckAnyOrder",
+              "checkFilter1": null,
+              "checkAmount1": "m(0,3)",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkFilter2": null,
+              "checkAmount2": null,
+              "checkAction3": "None",
+              "checkFilter3": null,
+              "checkAmount3": null,
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "2",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 300011070
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Meisho Doto",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Search your deck for an amulet that costs 1 play point and put it onto your field.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-071",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnRaceTrigger"
+            },
+            "name": "OnRace",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "AtkDef",
+              "effectName2": "Search",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Search",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "Ap(1)",
+              "searchDeckAction": "Field",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011071
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mejiro Ryan",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume / Mejiro Family",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\nWhen an amulet or Mejiro Family follower you control leaves the field, give this follower Storm.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-072",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "filter": "A",
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnOtherCardLeaveFieldTrigger"
+            },
+            "name": "Amulet",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "filter": "Ft(Mejiro Family)",
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnOtherCardLeaveFieldTrigger"
+            },
+            "name": "Mejiro",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011072
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Fate's Forecast",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Select an enemy follower on the field and destroy it.\n[act][engage], put this card into its owner's cemetery: Look at the top card of your deck. If it costs 7 play points, you may reveal it and add it to your hand.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-073",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "amount": "1",
+              "checkAction1": "Hand",
+              "checkFilter1": "p(7)",
+              "checkAmount1": "1",
+              "checkAction2": "TopDeckSameOrder",
+              "checkFilter2": null,
+              "checkAmount2": null,
+              "checkAction3": "None",
+              "checkFilter3": null,
+              "checkAmount3": null,
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 300011073
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Inari One",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\n[fanfare] Discard an amulet: Give this follower [attack]+2 and Rush.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-074",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "condition": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Atk",
+              "effectName2": "Rush",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Atk",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Rush",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 2,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011074
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mejiro Dober",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume / Mejiro Family",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-075",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnRaceTrigger"
+            },
+            "name": "OnRace",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "AtkDef",
+              "effectName2": "Leader",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leader",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011075
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mejiro Ardan",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume / Mejiro Family",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\nWard.\nAt the start of your main phase, if there are no Mejiro Family followers with a different name from this card on your field, return this card to its owner's hand.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-076",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(Ft(Mejiro Family)!n(Mejiro Ardan))",
+              "cost": null,
+              "$type": "SVESimulator.SveStartMainPhaseTrigger"
+            },
+            "name": "StartMainPhase",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "$type": "SVESimulator.ReturnToHandEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011076
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mejiro Palmer",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume / Mejiro Family",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\n[fanfare] Search your deck for a Mejiro Family follower and add it to your hand.\n[fanfare] If there is a Make! Some! NOISE! in your cemetery, give this follower [attack]+1/[defense]+1 and Rush.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-077",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Search",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "Ft(Mejiro Family)",
+              "searchDeckAction": "Hand",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "y(n(Make! Some! NOISE!))",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "GiveSelf",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "AtkDef",
+              "effectName2": "Rush",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Rush",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 2,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011077
+      },
+      {
+        "cardTypeId": 0,
+        "name": "T.M. Opera O",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[feed][cost01]: Race this follower.\n[fanfare] Select an enemy follower on the field. Banish it and draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-078",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 6,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 7,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Banish",
+              "effectName2": "Draw",
+              "effectName3": null,
+              "effectName4": null,
+              "effectName5": null,
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Banish",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.BanishCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 300011078
+      },
+      {
         "cardTypeId": 3,
         "name": "Carrot",
         "costs": [],
@@ -42755,6 +44482,32 @@
         "keywords": [],
         "abilities": [],
         "id": 300012007
+      },
+      {
+        "cardTypeId": 5,
+        "name": "Mejiro Palmer [Go Ahead and Laugh]",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Umamusume: Pretty Derby",
+            "name": "Universe",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "CP01-LD08",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [],
+        "id": 300012008
       }
     ]
   },
