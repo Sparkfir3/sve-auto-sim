@@ -26,9 +26,9 @@ namespace SVESimulator
             IEnumerator ResolveCoroutine()
             {
                 // delay makes sure "PlaySpell" messages send before this, allowing for the spell to hit resolution zone first (fix race condition error)
+                player.InputController.allowedInputs = PlayerInputController.InputTypes.None;
                 yield return new WaitForEndOfFrame();
-                yield return new WaitForEndOfFrame();
-                Debug.Assert(SVEEffectPool.Instance.IsResolvingEffect);
+                yield return new WaitUntil(() => SVEEffectPool.Instance.IsResolvingEffect);
 
                 CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                 ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
@@ -38,6 +38,7 @@ namespace SVESimulator
                 });
                 // Wait for PlayerEventControllerOpponent.TellPerformEffect to set IsResolvingEffect to false
                 yield return new WaitUntil(() => !SVEEffectPool.Instance.IsResolvingEffect);
+                player.InputController.allowedInputs = player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
                 onComplete?.Invoke();
             }
         }
