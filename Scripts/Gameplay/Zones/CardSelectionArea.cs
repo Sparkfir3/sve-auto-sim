@@ -18,7 +18,7 @@ namespace SVESimulator
     {
         #region Variables
 
-        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea,
+        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromDeckAndMove, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea,
             ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck, ViewCardsOppEvolveDeck, ViewCardsBanished, ViewCardsOppBanished }
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
@@ -144,6 +144,7 @@ namespace SVESimulator
                         zoneController.AddCardToHand(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.SelectCardsFromDeck:
+                case SelectionMode.SelectCardsFromDeckAndMove:
                     for(int i = 0; i < cardsToMove.Count; i++)
                         zoneController.SendCardToTopDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
@@ -212,6 +213,7 @@ namespace SVESimulator
                     zoneController.handZone.SetTargetSlotActive(true);
                     goto case SelectionMode.MoveSelectionArea;
                 case SelectionMode.MoveSelectionArea:
+                case SelectionMode.SelectCardsFromDeckAndMove:
                     Interactable = true;
                     InteractionType = ZoneInteractionType.MoveCard;
                     endInteractionType = TargetableSlot.InteractionType.MoveCard;
@@ -437,7 +439,8 @@ namespace SVESimulator
 
         private void Update()
         {
-            if(currentMode is not SelectionMode.SelectCardsFromDeck and not SelectionMode.SelectCardsFromCemetery and not SelectionMode.SelectCardsFromOppHand)
+            if(currentMode is not SelectionMode.SelectCardsFromDeck and not SelectionMode.SelectCardsFromCemetery and not SelectionMode.SelectCardsFromOppHand
+                and not SelectionMode.SelectCardsFromDeckAndMove)
                 return;
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
