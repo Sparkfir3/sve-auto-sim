@@ -77,6 +77,9 @@ namespace SVESimulator
                     case "performcostless":
                         yield return PerformEffect(variables, ignoreCosts: true);
                         break;
+                    case "performif":
+                        yield return PerformIfElse(variables);
+                        break;
 
                     // Other
                     default:
@@ -306,6 +309,30 @@ namespace SVESimulator
 
             yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
                 onComplete, overrideAmount: overrideAmount, ignoreCosts: ignoreCosts);
+            yield return new WaitForEndOfFrame();
+        }
+
+        private IEnumerator PerformIfElse(Dictionary<string, string> variables, bool ignoreCosts = false)
+        {
+            pointerR = function.IndexOf("\n", pointerL, StringComparison.Ordinal);
+            if(pointerR == -1)
+                pointerR = function.Length - 1;
+            string line = function[pointerL..pointerR];
+            string[] splitA = line.Split(" then ");
+            if(splitA.Length <= 1)
+                yield break;
+            string[] splitB = splitA[1].Split(" else ");
+
+            string variable = ReplaceWithVariableValues(splitA[0], variables).Trim();
+            string ifTrue = splitB[0].Trim();
+            string ifFalse = splitB.Length > 1 ? splitB[1].Trim() : null;
+            bool isTrue = SVEFormulaParser.ParseValueAsCondition(variable, player, null as RuntimeCard);
+            ComplexLog(LogMode.Perform, $"Condition = {splitA[0]} => {variable} => {isTrue}\nTrue = {ifTrue} // False = {ifFalse}\nPointers: {pointerL}, {pointerR}");
+
+            if(isTrue)
+                yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { ifTrue }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone, null);
+            else if(!ifFalse.IsNullOrWhiteSpace())
+                yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { ifFalse }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone, null);
             yield return new WaitForEndOfFrame();
         }
 
