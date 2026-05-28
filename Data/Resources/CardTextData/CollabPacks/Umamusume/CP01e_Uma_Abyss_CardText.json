@@ -1,0 +1,208 @@
+[
+  {
+    "id": "CP01-053EN",
+    "name": "Maruzensky",
+    "trait": "Umamusume",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[feed][cost01]: Race this follower.\n[fanfare] Necrocharge (10): Select an enemy follower on the field and give it [attack]-4/[defense]-4.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Necrocharge (10): Select an enemy follower on the field and give it [attack]-4/[defense]-4."
+      }
+    ]
+  },
+  {
+    "id": "CP01-054EN",
+    "name": "Maruzensky (Evolved)",
+    "trait": "Umamusume",
+    "cardText": "On Evolve: Select an enemy follower on the field and give it [attack]-2/[defense]-2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and give it [attack]-2/[defense]-2."
+      }
+    ]
+  },
+  {
+    "id": "CP01-055EN",
+    "name": "Rice Shower",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nWard.\n[fanfare] Select an enemy follower on the field. Deal it 3 damage and put the top 2 cards of your deck into your cemetery.\n[lastwords] Select an Umamusume follower with a different name from this card in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. Deal it 3 damage and put the top 2 cards of your deck into your cemetery."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 3 damage and put the top 2 cards of your deck into your cemetery."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select an Umamusume follower with a different name from this card in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-056EN",
+    "name": "Nice Nature",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Select an enemy follower on the field and give it [attack]-1/[defense]-1.\n[lastwords] Each opponent discards a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and give it [attack]-1/[defense]-1."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Each opponent discards a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Each opponent discards a card."
+      }
+    ]
+  },
+  {
+    "id": "CP01-057EN",
+    "name": "7 More Centimeters",
+    "trait": "Umamusume",
+    "cardText": "This card can only be played if there are at least 20 Umamusume cards in your cemetery.\nDestroy each enemy follower on the field. Draw 3 cards. Each opponent discards 3 cards.",
+    "effectText": [
+      {
+        "key": "Discard",
+        "body": "Each opponent discards 3 cards."
+      }
+    ]
+  },
+  {
+    "id": "CP01-058EN",
+    "name": "Fine Motion",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2. Put the top 2 cards of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2. Put the top 2 cards of your deck into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "CP01-059EN",
+    "name": "Mayano Top Gun",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nRush.\n[fanfare] If there are 4 other Umamusume cards on your field, give this follower Storm.\n[fanfare] If there are at least 5 Umamusume cards in your cemetery, give this follower [attack]+2.",
+    "effectText": [
+      {
+        "key": "Storm",
+        "body": "If there are 4 other Umamusume cards on your field, give this follower Storm."
+      },
+      {
+        "key": "Atk",
+        "body": "If there are at least 5 Umamusume cards in your cemetery, give this follower [attack]+2."
+      }
+    ]
+  },
+  {
+    "id": "CP01-060EN",
+    "name": "My Solo Drawn to Raindrop Drums",
+    "trait": "Umamusume",
+    "cardText": "[quick]\nIf there are at least 10 Umamusume cards in your cemetery, this card costs 2 less to play.\nSelect an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "CP01-061EN",
+    "name": "Curren Chan",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[act][cost01], [engage]: Select an enemy follower on the field. Deal it 1 damage and put the top card of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage]",
+        "body": "Select an enemy follower on the field. Deal it 1 damage and put the top card of your deck into your cemetery."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 1 damage and put the top card of your deck into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "CP01-062EN",
+    "name": "Twin Turbo",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nAssail.\n[fanfare] If there are at least 10 Umamusume cards in your cemetery, give this follower Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 10 Umamusume cards in your cemetery, give this follower Storm."
+      }
+    ]
+  },
+  {
+    "id": "CP01-063EN",
+    "name": "Sakura Chiyono O",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Select up to 1 Umamusume card in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Select up to 1 Umamusume card in your cemetery and add it to your hand."
+      },
+      {
+        "key": "Salvage",
+        "body": "Select up to 1 Umamusume card in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-064EN",
+    "name": "Seeking the Pearl",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[lastwords] Put the top 2 cards of your deck into your cemetery.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put the top 2 cards of your deck into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "CP01-065EN",
+    "name": "Matikanetannhauser",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Select an enemy amulet on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy amulet on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "CP01-LD06EN",
+    "name": "Twin Turbo [Turbo Booooost!]"
+  },
+  {
+    "id": "CP01-LD07EN",
+    "name": "Manhattan Cafe [My Solo Spun in Spiraling Runs]"
+  }
+]

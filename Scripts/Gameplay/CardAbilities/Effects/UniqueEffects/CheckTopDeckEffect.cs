@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using CCGKit;
 using Sparkfire.Utility;
@@ -215,6 +216,25 @@ namespace SVESimulator
                     return true;
 
                 // Rearrange
+                case CheckCardAction.TopDeckAnyOrder:
+                    actionText = "Send to Top Deck";
+                    confirmAction = selectedCards =>
+                    {
+                        List<CardObject> cardsToMove = selectionArea.GetAllPrimaryCards().Where(selectedCards.Contains).Reverse().ToList();
+                        foreach(CardObject card in cardsToMove)
+                            player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
+                    };
+                    if(minSelect == 0 && maxSelect == 0)
+                    {
+                        minSelect = 1; // don't allow selecting cards, only allow moving cards
+                        maxSelect = 0;
+                        selectionArea.SwitchMode(CardSelectionArea.SelectionMode.MoveSelectionArea);
+                    }
+                    else
+                    {
+                        selectionArea.SwitchMode(CardSelectionArea.SelectionMode.SelectCardsFromDeckAndMove);
+                    }
+                    return true;
                 case CheckCardAction.BottomDeckAnyOrder:
                     actionText = "Send All to Bottom Deck";
                     confirmAction = _ =>

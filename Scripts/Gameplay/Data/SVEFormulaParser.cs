@@ -40,6 +40,7 @@ namespace SVESimulator
             Advanced,
             InstanceID,
             ExcludeSelf,
+            FilterOr,
             MinMaxCount,
         }
 
@@ -487,7 +488,7 @@ namespace SVESimulator
 
                 // ---
 
-                // Card Property/Stat Check
+                // Card Property/Stat Check/Filter with Parameters
                 filterSetting = formula[nextIndex++] switch
                 {
                     'n' => CardFilterSetting.Name,
@@ -500,6 +501,7 @@ namespace SVESimulator
                     'e' => CardFilterSetting.EvolveCost,
                     'p' => CardFilterSetting.PlayPointCost,
                     '#' => CardFilterSetting.Advanced,
+                    '|' => CardFilterSetting.FilterOr,
                     'm' => CardFilterSetting.MinMaxCount,
                     'i' => CardFilterSetting.InstanceID,
                     _ => null

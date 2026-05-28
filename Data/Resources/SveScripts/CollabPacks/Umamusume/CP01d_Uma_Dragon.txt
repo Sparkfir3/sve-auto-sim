@@ -1,0 +1,316 @@
+name Special Week;
+id CP01-040;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [feed][cost01]: Race this follower.
+      [fanfare] Look at the top card of your deck. If it's an Umamusume card, you may reveal it and add it to your hand.";
+
+evolve 1;
+serve;
+ability Fanfare {
+    effect CheckTop(1, (Hand, t(Umamusume), 1), (TopDeckSameOrder));
+}
+
+// ------------------------------
+
+name Special Week (Evolved);
+id CP01-041;
+class Dragon;
+universe Umamusume;
+type Evolved Follower;
+trait Umamusume;
+rarity L;
+stats 3/3;
+
+text "On Evolve: If Overflow is active for you, give each other Umamusume follower on your field [attack]+1/[defense]+1.";
+
+ability OnEvolve {
+    condition o;
+    effect GiveStat(AtkDef, 1) to AllPlayerCards FXt(Umamusume);
+}
+
+// ------------------------------
+
+name Oguri Cap;
+id CP01-042;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 6;
+stats 4/4;
+
+text "[feed][cost01]: Race this follower.
+      [feed][feed][cost02]: Race this follower 2 times.
+      [feed][feed][feed][cost03]: Race this follower 3 times.
+      On Race: Give this follower [attack]+2/[defense]+1.
+      [fanfare] Discard 2 cards: Give this follower Storm.
+      Strike: Deal 3 damage to each enemy follower on the field.";
+
+serve1, serve2, serve3;
+ability OnRace {
+    effect GiveStat(AtkDef, 2, 1) to Self;
+}
+ability Fanfare {
+    cost (Discard, 2);
+    effect GiveKeyword(Storm) to Self;
+}
+ability Strike {
+    effect DealDamage(3) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Seiun Sky;
+id CP01-043;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity G;
+cost 3;
+stats 1/3;
+
+text "[feed][cost01]: Race this follower.
+      Storm. Intimidate.
+      Strike: Give this follower [attack]+1.";
+
+serve;
+keywords Storm, Intimidate;
+ability Strike {
+    effect GiveStat(Atk, 1) to Self;
+}
+
+// ------------------------------
+
+name Champion's Passion;
+id CP01-044;
+class Dragon;
+universe Umamusume;
+type Amulet;
+trait Umamusume;
+rarity G;
+cost 7;
+
+text "[fanfare] If there is another Umamusume card on your field, select an enemy follower on the field and deal it 4 damage.
+      At the start of your main phase, select an enemy leader or enemy follower on the field and deal it 4 damage.";
+
+ability Fanfare {
+    condition f(XFt(Umamusume));
+    effect DealDamage(6) to TargetOpponentCard F;
+}
+ability StartMainPhase {
+    effect DealDamage(4) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name King Halo;
+id CP01-045;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 6;
+stats 4/4;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Choose one of the following. (1) Put the top card of your deck into your EX area. Do this 3 times. (2) Search your deck for a Kawakami Princess and put it onto your field.";
+
+serve;
+ability Fanfare {
+    effect ChooseFromList(ExArea, Search);
+}
+ability Spell name ExArea {
+    effect TopDeckToEx(3);
+}
+ability Spell name Search {
+    effect Search(1, n(Kawakami Princess), Field);
+}
+
+// ------------------------------
+
+name Tamamo Cross;
+id CP01-046;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity S;
+cost 2;
+stats 2/1;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Select up to 1 enemy follower on the field and deal it 2 damage.";
+
+serve;
+ability OnRace {
+    effect Sequence(AtkDef, Damage);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Damage {
+    effect DealDamage(2) to TargetOpponentCard Fm(0,1);
+}
+
+// ------------------------------
+
+name Flowers for You;
+id CP01-047;
+class Dragon;
+universe Umamusume;
+type Spell;
+trait Umamusume;
+rarity S;
+cost 1;
+
+text "Select an Umamusume follower on your field. Give it [attack]+1 and draw a card. If the selected follower is a Seiun Sky, give it [attack]+1/[defense]+1 more.";
+
+ability Spell {
+    condition f(Ft(Umamusume));
+    effect TargetForSequence(Atk, Draw, Atk Seiun) to TargetPlayerCard Ft(Umamusume);
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to AllPlayerCards;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Atk Seiun {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards n(Seiun Sky);
+}
+
+// ------------------------------
+
+name Bamboo Memory;
+id CP01-048;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Discard a card: Deal 2 damage to each enemy leader.";
+
+serve;
+ability Fanfare {
+    cost (Discard, 1);
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Yaeno Muteki;
+id CP01-049;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[feed][cost01]: Race this follower.
+      On Race: Give this follower [attack]+1/[defense]+1. Select up to 1 other follower on your field and give it [attack]+1/[defense]+1.";
+
+serve;
+ability OnRace {
+    effect Sequence(Self, Other);
+}
+ability Spell name Self {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Other {
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard XFm(0,1);
+}
+
+// ------------------------------
+
+name Grass Wonder;
+id CP01-050;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 5;
+stats 5/5;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Deal 2 damage to each enemy follower on the field.";
+
+serve;
+ability Fanfare {
+    effect DealDamage(2) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Super Creek;
+id CP01-051;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 6;
+stats 5/5;
+
+text "[feed][cost01]: Race this follower.
+      Ward.
+      [fanfare] Give your leader [defense]+5.";
+
+serve;
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(Def, 5) to Leader;
+}
+
+// ------------------------------
+
+name Hishi Akebono;
+id CP01-052;
+class Dragon;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity B;
+cost 10;
+stats 10/10;
+
+text "[feed][cost01]: Race this follower.
+      [fanfare] Give your leader [defense]+10.";
+
+serve;
+ability Fanfare {
+    effect GiveStat(Defense, 10) to Leader;
+}
+
+// ------------------------------
+
+name Yaeno Muteki [Fiery Discipline];
+id CP01-LD04;
+class Dragon;
+universe Umamusume;
+type Leader;
+
+// ------------------------------
+
+name Grass Wonder [Fairest Fleur];
+id CP01-LD05;
+class Dragon;
+universe Umamusume;
+type Leader;

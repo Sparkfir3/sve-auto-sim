@@ -1,0 +1,208 @@
+[
+  {
+    "id": "CP01-066EN",
+    "name": "Mejiro McQueen",
+    "trait": "Umamusume / Mejiro Family",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[feed][cost01]: Race this follower.\nWard.\n[fanfare] Put an amulet from your field into its owner's cemetery: Select an enemy leader or enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Put an amulet from your field into its owner's cemetery",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-067EN",
+    "name": "Mejiro McQueen (Evolved)",
+    "trait": "Umamusume / Mejiro Family",
+    "cardText": "Ward.\nOn Evolve: Select an amulet in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an amulet in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-068EN",
+    "name": "Gold Ship",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Reveal the top card of your deck. Deal X damage to each enemy leader and give your leader [defense]+X. X equals the revealed card's cost.\n[act][cost10]: Give this follower [attack]+10/[defense]+10.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Reveal the top card of your deck. Deal X damage to each enemy leader and give your leader [defense]+X. X equals the revealed card's cost."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost10]",
+        "body": "Give this follower [attack]+10/[defense]+10."
+      }
+    ]
+  },
+  {
+    "id": "CP01-069EN",
+    "name": "Ikuno Dictus",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nWard.\n[fanfare] Look at the top 3 cards of your deck. You may reveal an amulet or Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. You may reveal an amulet or Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "CP01-070EN",
+    "name": "The Will to Overtake",
+    "trait": "Umamusume",
+    "cardText": "[fanfare] Look at the top 3 cards of your deck. Put any number of cards from among them on the top of your deck in any order. Put any remaining cards on the bottom of your deck in any order.\n[act][cost02], [engage], put this card into its owner's cemetery: Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. Put any number of cards from among them on the top of your deck in any order. Put any remaining cards on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02], [engage], put this card into its owner's cemetery",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "CP01-071EN",
+    "name": "Meisho Doto",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Search your deck for an amulet that costs 1 play point and put it onto your field.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Search your deck for an amulet that costs 1 play point and put it onto your field."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for an amulet that costs 1 play point and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "CP01-072EN",
+    "name": "Mejiro Ryan",
+    "trait": "Umamusume / Mejiro Family",
+    "cardText": "[feed][cost01]: Race this follower.\nWhen an amulet or Mejiro Family follower you control leaves the field, give this follower Storm.",
+    "effectText": [
+      {
+        "key": "OnOtherLeaveField",
+        "body": "When an amulet or Mejiro Family follower you control leaves the field, give this follower Storm."
+      }
+    ]
+  },
+  {
+    "id": "CP01-073EN",
+    "name": "Fate's Forecast",
+    "trait": "Umamusume",
+    "cardText": "[fanfare] Select an enemy follower on the field and destroy it.\n[act][engage], put this card into its owner's cemetery: Look at the top card of your deck. If it costs 7 play points, you may reveal it and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and destroy it."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Look at the top card of your deck. If it costs 7 play points, you may reveal it and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-074EN",
+    "name": "Inari One",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Discard an amulet: Give this follower [attack]+2 and Rush.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard an amulet",
+        "body": "Give this follower [attack]+2 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "CP01-075EN",
+    "name": "Mejiro Dober",
+    "trait": "Umamusume / Mejiro Family",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "CP01-076EN",
+    "name": "Mejiro Ardan",
+    "trait": "Umamusume / Mejiro Family",
+    "cardText": "[feed][cost01]: Race this follower.\nWard.\nAt the start of your main phase, if there are no Mejiro Family followers with a different name from this card on your field, return this card to its owner's hand.",
+    "effectText": [
+      {
+        "key": "StartMainPhase",
+        "text": "At the start of your main phase, if there are no Mejiro Family followers with a different name from this card on your field, return this card to its owner's hand.",
+        "trigger": "At the start of your main phase, if there are no Mejiro Family followers with a different name from this card on your field",
+        "body": "Return this card to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-077EN",
+    "name": "Mejiro Palmer",
+    "trait": "Umamusume / Mejiro Family",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Search your deck for a Mejiro Family follower and add it to your hand.\n[fanfare] If there is a Make! Some! NOISE! in your cemetery, give this follower [attack]+1/[defense]+1 and Rush.",
+    "effectText": [
+      {
+        "key": "Search",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Mejiro Family follower and add it to your hand."
+      },
+      {
+        "key": "GiveSelf",
+        "trigger": "[fanfare]",
+        "body": "If there is a Make! Some! NOISE! in your cemetery, give this follower [attack]+1/[defense]+1 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "CP01-078EN",
+    "name": "T.M. Opera O",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[fanfare] Select an enemy follower on the field. Banish it and draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. Banish it and draw a card."
+      },
+      {
+        "key": "Banish",
+        "body": "Select an enemy follower on the field. Banish it and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "CP01-LD08EN",
+    "name": "Mejiro Palmer [Go Ahead and Laugh]"
+  }
+]
