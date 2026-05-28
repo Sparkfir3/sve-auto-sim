@@ -42896,7 +42896,12 @@
           },
           {
             "zoneId": 0,
-            "costs": null,
+            "costs": [
+              {
+                "amount": "10",
+                "$type": "SVESimulator.PlayPointCost"
+              }
+            ],
             "name": "Act",
             "type": "Activated",
             "effect": {
@@ -43770,7 +43775,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -43919,6 +43929,10 @@
         ],
         "keywords": [
           {
+            "keywordId": 1,
+            "valueId": 7
+          },
+          {
             "keywordId": 0,
             "valueId": 0
           }
@@ -43926,7 +43940,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "f(Ft(Mejiro Family)!n(Mejiro Ardan))",
+              "condition": "f(Ft(Mejiro Family)!n(Mejiro Ardan))=0",
               "cost": null,
               "$type": "SVESimulator.SveStartMainPhaseTrigger"
             },
@@ -44199,7 +44213,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 7
+          }
+        ],
         "abilities": [
           {
             "trigger": {

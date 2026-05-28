@@ -71,6 +71,7 @@ ability Spell name Defense {
     effect GiveStat(Def, _) to Leader;
 }
 ability Act {
+    cost (PP, 10);
     effect GiveStat(AtkDef, 10) to Self;
 }
 
@@ -233,7 +234,7 @@ stats 2/2;
 text "[feed][cost01]: Race this follower.
       On Race: Give this follower [attack]+1/[defense]+1. Give your leader [defense]+2.";
 
-race;
+serve;
 ability OnRace {
     effect Sequence(AtkDef, Leader);
 }
@@ -260,10 +261,10 @@ text "[feed][cost01]: Race this follower.
       Ward.
       At the start of your main phase, if there are no Mejiro Family followers with a different name from this card on your field, return this card to its owner's hand.";
 
-race;
+serve;
 keyword Ward;
 ability StartMainPhase {
-    condition f(Ft(Mejiro Family)!n(Mejiro Ardan));
+    condition f(Ft(Mejiro Family)!n(Mejiro Ardan))=0;
     effect ReturnToHand() to Self;
 }
 
@@ -313,7 +314,7 @@ stats 6/6;
 text "[feed][cost01]: Race this follower.
       [fanfare] Select an enemy follower on the field. Banish it and draw a card.";
 
-race;
+serve;
 ability Fanfare {
     effect Sequence(Banish, Draw);
 }

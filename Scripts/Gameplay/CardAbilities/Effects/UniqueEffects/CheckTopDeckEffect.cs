@@ -220,7 +220,7 @@ namespace SVESimulator
                     actionText = "Send to Top Deck";
                     confirmAction = selectedCards =>
                     {
-                        List<CardObject> cardsToMove = selectionArea.GetAllPrimaryCards().Where(selectedCards.Contains).ToList();
+                        List<CardObject> cardsToMove = selectionArea.GetAllPrimaryCards().Where(selectedCards.Contains).Reverse().ToList();
                         foreach(CardObject card in cardsToMove)
                             player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
                     };
