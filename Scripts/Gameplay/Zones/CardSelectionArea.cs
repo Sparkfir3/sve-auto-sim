@@ -14,12 +14,9 @@ using MultipleChoiceEntryData = SVESimulator.UI.MultipleChoiceWindow.MultipleCho
 namespace SVESimulator
 {
     // Internal zone for selecting effect targets from a zone other than the field or EX area
-    public class CardSelectionArea : CardPositionedZone
+    public partial class CardSelectionArea : CardPositionedZone
     {
         #region Variables
-
-        public enum SelectionMode { PlaceCardsFromHand, SelectCardsFromDeck, SelectCardsFromDeckAndMove, SelectCardsFromCemetery, SelectCardsFromOppHand, MoveSelectionArea,
-            ViewCardsCemetery, ViewCardsOppCemetery, ViewCardsEvolveDeck, ViewCardsOppEvolveDeck, ViewCardsBanished, ViewCardsOppBanished }
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private SelectionMode currentMode;
