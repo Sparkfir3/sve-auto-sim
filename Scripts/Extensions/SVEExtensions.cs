@@ -22,6 +22,12 @@ namespace SVESimulator
             if(card == null)
                 return false;
 
+            if(filters.TryGetValue(CardFilterSetting.FilterOr, out string otherFilterRaw) && !otherFilterRaw.IsNullOrWhiteSpace())
+            {
+                if(SVEFormulaParser.ParseCardFilterFormula(otherFilterRaw, card).MatchesCard(card))
+                    return true;
+            }
+
             Card libraryCard = null;
             foreach(KeyValuePair<CardFilterSetting, string> filter in filters)
             {

@@ -43026,7 +43026,7 @@
             "effect": {
               "amount": "3",
               "checkAction1": "Hand",
-              "checkFilter1": "!St(Umamusume)",
+              "checkFilter1": "A|(t(Umamusume))",
               "checkAmount1": "1",
               "checkAction2": "BottomDeckAnyOrder",
               "checkFilter2": null,
@@ -43395,31 +43395,12 @@
         "abilities": [
           {
             "trigger": {
-              "filter": "A",
+              "filter": "A|(Ft(Mejiro Family))",
               "condition": null,
               "cost": null,
               "$type": "SVESimulator.SveOnOtherCardLeaveFieldTrigger"
             },
-            "name": "Amulet",
-            "type": "Triggered",
-            "effect": {
-              "target": "Self",
-              "filter": null,
-              "keywordType": 0,
-              "keywordValue": 1,
-              "$type": "SVESimulator.GiveKeywordEffect"
-            },
-            "target": null,
-            "$type": "CCGKit.TriggeredAbility"
-          },
-          {
-            "trigger": {
-              "filter": "Ft(Mejiro Family)",
-              "condition": null,
-              "cost": null,
-              "$type": "SVESimulator.SveOnOtherCardLeaveFieldTrigger"
-            },
-            "name": "Mejiro",
+            "name": "OnOtherLeaveField",
             "type": "Triggered",
             "effect": {
               "target": "Self",

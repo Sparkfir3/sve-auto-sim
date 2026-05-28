@@ -94,7 +94,7 @@ text "[feed][cost01]: Race this follower.
 serve;
 keyword Ward;
 ability Fanfare {
-    effect CheckTop(3, (Hand, !St(Umamusume), 1), (BottomDeckAnyOrder));
+    effect CheckTop(3, (Hand, A|(t(Umamusume)), 1), (BottomDeckAnyOrder));
 }
 
 // ------------------------------
@@ -161,12 +161,8 @@ text "[feed][cost01]: Race this follower.
       When an amulet or Mejiro Family follower you control leaves the field, give this follower Storm.";
 
 serve;
-ability OnOtherLeaveField name Amulet {
-    filter A;
-    effect GiveKeyword(Storm) to Self;
-}
-ability OnOtherLeaveField name Mejiro {
-    filter Ft(Mejiro Family);
+ability OnOtherLeaveField {
+    filter A|(Ft(Mejiro Family));
     effect GiveKeyword(Storm) to Self;
 }
 

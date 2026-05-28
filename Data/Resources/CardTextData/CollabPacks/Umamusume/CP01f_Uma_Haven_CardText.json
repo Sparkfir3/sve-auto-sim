@@ -101,11 +101,7 @@
     "cardText": "[feed][cost01]: Race this follower.\nWhen an amulet or Mejiro Family follower you control leaves the field, give this follower Storm.",
     "effectText": [
       {
-        "key": "Amulet",
-        "body": "When an amulet or Mejiro Family follower you control leaves the field, give this follower Storm."
-      },
-      {
-        "key": "Mejiro",
+        "key": "OnOtherLeaveField",
         "body": "When an amulet or Mejiro Family follower you control leaves the field, give this follower Storm."
       }
     ]
