@@ -116,6 +116,7 @@ namespace SVESimulator
             public const string Text = "Text";
             public const string Trait = "Trait";
             public const string Rarity = "Rarity";
+            public const string Universe = "Universe";
         }
 
         public static class CardClass
@@ -136,6 +137,11 @@ namespace SVESimulator
             public const string Silver = "Silver";
             public const string Bronze = "Bronze";
             public const string Token = "Token";
+        }
+
+        public static class CardUniverse
+        {
+            public const string Umamusume = "Umamusume: Pretty Derby";
         }
 
         public static class Keywords
