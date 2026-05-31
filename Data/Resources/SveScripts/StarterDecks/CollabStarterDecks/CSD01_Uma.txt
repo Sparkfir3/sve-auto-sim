@@ -1,0 +1,71 @@
+name Tazuna Hayakawa [Tracen Reception];
+id CSD01-007;
+class Neutral;
+universe Umamusume;
+type Follower;
+trait Umamusume;
+rarity L;
+cost 6;
+stats 3/5;
+
+text "Ward.
+      [fanfare] Select an Umamusume follower or Umamusume amulet that costs 4 play points or less in your cemetery and put it onto your field.";
+
+keyword Ward;
+ability Fanfare {
+    effect CemeteryToField(1, !St(Umamusume)p(m(0,4)));
+}
+
+// ------------------------------
+
+name Riko Kashimoto;
+id CSD01-030;
+class Neutral;
+universe Umamusume;
+type Follower;
+trait Tracen Academy;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "[act][engage]: Select an Umamusume follower on your field and give it [attack]+1. If it's a racing follower, give it [attack]+2 instead.";
+
+ability Act {
+    cost (EngageSelf);
+    condition f(Ft(Umamusume));
+    effect TargetForSequenceWithTargetAmount(1~(C)2, Atk) to TargetPlayerCard Ft(Umamusume);
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, _) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Aoi Kiryuin;
+id CSD01-031;
+class Neutral;
+universe Umamusume;
+type Follower;
+trait Tracen Academy;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[act][engage]: Select an Umamusume follower on your field and give it [defense]+1. If it's a racing follower, give it [defense]+2 instead.";
+
+ability Act {
+    cost (EngageSelf);
+    condition f(Ft(Umamusume));
+    effect TargetForSequenceWithTargetAmount(1~(C)2, Def) to TargetPlayerCard Ft(Umamusume);
+}
+ability Spell name Def {
+    effect GiveStat(Def, _) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Special Week [The Brightest Star in Japan!];
+id CSD01-LD01;
+class Dragon;
+universe Umamusume;
+type Leader;
