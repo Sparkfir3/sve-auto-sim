@@ -76,6 +76,7 @@ namespace SVESimulator.DeckBuilder
             FilterByName(ref _filteredCardList);
             FilterByCardType(ref _filteredCardList);
             FilterByClass(ref _filteredCardList);
+            FilterByUniverse(ref _filteredCardList);
             if(Filters.useCost)
                 FilterByStat(ref _filteredCardList, Filters.minCost, Filters.maxCost, SVEProperties.CardStats.Cost, 8);
             if(Filters.useAttack)
@@ -157,6 +158,26 @@ namespace SVESimulator.DeckBuilder
             {
                 string cardClass = x.GetStringProperty(SVEProperties.CardStats.Class);
                 return classNames.Any(y => cardClass.Equals(y));
+            }).ToList();
+        }
+
+        private void FilterByUniverse(ref List<Card> cardList)
+        {
+            if(Filters.universe <= 0)
+                return;
+
+            List<string> universesList = new();
+            if(Filters.universe.HasFlag(UniverseFilter.None)) // No Universe
+                universesList.Add(null);
+            if(Filters.universe.HasFlag(UniverseFilter.Umamusume)) // Umamusume
+                universesList.Add(SVEProperties.CardUniverse.Umamusume);
+            if(universesList.Count == 0)
+                return;
+
+            cardList = cardList.Where(x =>
+            {
+                string universe = x.TryGetStringProperty(SVEProperties.CardStats.Universe);
+                return universesList.Any(y => universe == null ? y == null : universe.Equals(y));
             }).ToList();
         }
 
