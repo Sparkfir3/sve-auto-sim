@@ -433,6 +433,8 @@ namespace SVESimulator.SveScript
             // Other Effects
             { "Evolve", new EffectParams("EvolveEffect")                                    },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                              EffectParameterType.Trait) },
+            { "Shuffle", new EffectParams("ShuffleDeckEffect",                              true, false) },
+            { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                          true, false) },
             { "CheckTop", new EffectParams("CheckTopDeckEffect",                            false, false, EffectParameterType.CheckCardActions) },
             { "Complex", new EffectParams("ComplexEffect",                                  false, false, EffectParameterType.Function) },
             { "ComplexEffect", new EffectParams("ComplexEffect",                            false, false, EffectParameterType.Function) },
