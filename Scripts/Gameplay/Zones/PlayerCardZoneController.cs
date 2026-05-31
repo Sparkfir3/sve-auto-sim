@@ -111,7 +111,7 @@ namespace SVESimulator
             Debug.Assert(deckZone.Runtime.cards != null);
             Debug.Assert(deckZone.Runtime.cards.All(x => x.cardType != null));
             Debug.Assert(deckZone.Runtime.cards.All(x => x.cardType.name != null));
-            List<RuntimeCard> evolveCards = deckZone.Runtime.cards.Where(x => x.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower)).ToList();
+            List<RuntimeCard> evolveCards = deckZone.Runtime.cards.Where(x => x.IsEvolvedType()).ToList();
             evolveDeckZone.SetStackHeight(evolveCards.Count);
             return evolveCards;
         }
@@ -403,6 +403,15 @@ namespace SVESimulator
             evolvedCard.SetStatOverlayActive(true);
         }
 
+        public void ServeCard(CardObject card, CardObject carrotCard)
+        {
+            int slotNumber = fieldZone.GetSlotNumber(card);
+            carrotCard.AttachToCard(card);
+            carrotCard.transform.SetPositionAndRotation(evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation);
+            MoveCardZone(carrotCard, evolveDeckZone, fieldZone);
+            MoveCardTransform(carrotCard, fieldZone.GetSlotPosition(slotNumber) - (Vector3.up * 0.1f), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.FlipFromDeck);
+        }
+
         public void AddAndPlaceToken(CardObject token, CardPositionedZone zone, int slotNumber)
         {
             token.CurrentZone = zone;
@@ -444,6 +453,12 @@ namespace SVESimulator
             evolvedCard = evolveDeckZone.Runtime.cards.FirstOrDefault(x => LibraryCardCache.GetCard(x.cardId).IsEvolvedVersionOf(baseLibraryCard)
                 && (!faceDownOnly || (x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.baseValue == 0)));
             return evolvedCard != null;
+        }
+
+        public int EvolveDeckCarrotCount()
+        {
+            return evolveDeckZone.Runtime.cards.Count(x => x.cardId == UmaUtilities.CarrotCardId
+                && x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.baseValue == 0);
         }
 
         #endregion

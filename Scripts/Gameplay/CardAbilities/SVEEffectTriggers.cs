@@ -67,6 +67,10 @@ namespace SVESimulator
 
     public class SveOnOtherEvolveTrigger : SveTriggerWithFilter { }
 
+    public class SveOnRaceTrigger : SveTrigger { }
+
+    public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }
+
     public class SveOnAttackTrigger : SveTrigger { }
 
     public class SveOnAttackFollowerTrigger : SveTrigger { }
@@ -75,7 +79,7 @@ namespace SVESimulator
 
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
-    public class SveOnPlaySpellTrigger : SveTrigger { }
+    public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
 
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
 

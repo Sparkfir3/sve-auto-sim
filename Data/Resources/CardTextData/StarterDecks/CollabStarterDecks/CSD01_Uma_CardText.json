@@ -1,0 +1,47 @@
+[
+  {
+    "id": "CSD01-007EN",
+    "name": "Tazuna Hayakawa [Tracen Reception]",
+    "trait": "Tracen Academy",
+    "cardText": "Ward.\n[fanfare] Select an Umamusume follower or Umamusume amulet that costs 4 play points or less in your cemetery and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an Umamusume follower or Umamusume amulet that costs 4 play points or less in your cemetery and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "CSD01-030EN",
+    "name": "Riko Kashimoto",
+    "trait": "Tracen Academy",
+    "cardText": "[act][engage]: Select an Umamusume follower on your field and give it [attack]+1. If it's a racing follower, give it [attack]+2 instead.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select an Umamusume follower on your field and give it [attack]+1. If it's a racing follower, give it [attack]+2 instead."
+      }
+    ]
+  },
+  {
+    "id": "CSD01-031EN",
+    "name": "Aoi Kiryuin",
+    "trait": "Tracen Academy",
+    "cardText": "[act][engage]: Select an Umamusume follower on your field and give it [defense]+1. If it's a racing follower, give it [defense]+2 instead.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select an Umamusume follower on your field and give it [defense]+1. If it's a racing follower, give it [defense]+2 instead."
+      }
+    ]
+  },
+  {
+    "id": "CSD01-LD01EN",
+    "name": "Special Week [The Brightest Star in Japan!]"
+  }
+]

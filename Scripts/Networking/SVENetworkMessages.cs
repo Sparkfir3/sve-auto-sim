@@ -336,7 +336,7 @@ namespace SVESimulator
 
     // ------------------------------
 
-    #region Evolve
+    #region Evolve & Serve/Race
 
     public struct LocalEvolveCardMessage : NetworkMessage
     {
@@ -356,6 +356,24 @@ namespace SVESimulator
         public int fieldSlotId;
         public bool useEvolvePoint;
         public bool useEvolveCost;
+    }
+
+    public struct LocalServeAndRaceMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int cardInstanceId;
+        public int[] carrotInstanceIds;
+        public bool useEvolvePoint;
+        public int count;
+    }
+
+    public struct OpponentServeAndRaceMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int cardInstanceId;
+        public NetCard[] carrots;
+        public bool useEvolvePoint;
+        public int count;
     }
 
     #endregion
@@ -632,6 +650,18 @@ namespace SVESimulator
     // ------------------------------
 
     #region Other
+
+    public struct LocalAdvanceRngMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int rngAdvanceCount;
+    }
+
+    public struct OpponentAdvanceRngMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int rngAdvanceCount;
+    }
 
     public struct LocalTellOpponentPerformEffectMessage : NetworkMessage
     {

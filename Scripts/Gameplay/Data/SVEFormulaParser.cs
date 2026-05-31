@@ -34,11 +34,13 @@ namespace SVESimulator
             PlayPointCost,
             Reserved,
             Engaged,
+            Racing,
 
             // Other
             Advanced,
             InstanceID,
             ExcludeSelf,
+            FilterOr,
             MinMaxCount,
         }
 
@@ -380,7 +382,7 @@ namespace SVESimulator
             usedPlayerReference = false;
             switch(args[0])
             {
-                // Player
+                // Player Stats
                 case "destroyed":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDestroyedThisTurn, filter) : 0;
@@ -391,6 +393,11 @@ namespace SVESimulator
                 case "attacked":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
+                case "spellsPlayed":
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
+
+                // Player Zone
                 case "evolveDeckFaceUp":
                     usedPlayerReference = true;
                     return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
@@ -466,6 +473,7 @@ namespace SVESimulator
                     'X' => CardFilterSetting.ExcludeSelf,
                     'R' => CardFilterSetting.Reserved,
                     'N' => CardFilterSetting.Engaged,
+                    'C' => CardFilterSetting.Racing,
                     _ => null
                 };
                 if(filterSetting.HasValue)
@@ -480,7 +488,7 @@ namespace SVESimulator
 
                 // ---
 
-                // Card Property/Stat Check
+                // Card Property/Stat Check/Filter with Parameters
                 filterSetting = formula[nextIndex++] switch
                 {
                     'n' => CardFilterSetting.Name,
@@ -493,6 +501,7 @@ namespace SVESimulator
                     'e' => CardFilterSetting.EvolveCost,
                     'p' => CardFilterSetting.PlayPointCost,
                     '#' => CardFilterSetting.Advanced,
+                    '|' => CardFilterSetting.FilterOr,
                     'm' => CardFilterSetting.MinMaxCount,
                     'i' => CardFilterSetting.InstanceID,
                     _ => null

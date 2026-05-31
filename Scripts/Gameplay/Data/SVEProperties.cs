@@ -93,6 +93,7 @@ namespace SVESimulator
             public const string Follower = "Follower";
             public const string EvolvedFollower = "Evolved Follower";
             public const string Spell = "Spell";
+            public const string EvolvedSpell = "Evolved Spell";
             public const string Amulet = "Amulet";
             public const string Token = "Token";
             public const string Leader = "Leader";
@@ -152,6 +153,13 @@ namespace SVESimulator
 
         public static class PassiveAbilities
         {
+            // Evolve / Racing
+            public const string Evolve = "Evolve";
+            public const string Serve1 = "Serve1";
+            public const string Serve2 = "Serve2";
+            public const string Serve3 = "Serve3";
+            public const string IsRacing = "IsRacing";
+
             // Passive Abilities
             public const string IgnoreWard = "IgnoreWard";
             public const string PutOnFieldEngaged = "PutOnFieldEngaged";

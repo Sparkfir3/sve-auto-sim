@@ -1,6 +1,7 @@
 using System;
 using CCGKit;
 using UnityEngine;
+using Sparkfire.Utility;
 using StatBoostType = SVESimulator.SVEProperties.StatBoostType;
 
 namespace SVESimulator
@@ -19,11 +20,15 @@ namespace SVESimulator
         [StringField("Amount", width = 100), Order(4)]
         public string amount;
 
+        [StringField("Amount 2", width = 100), Order(5)]
+        public string amount2;
+
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
             int boostAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
+            int? secondaryBoostAmount = amount2.IsNullOrWhiteSpace() ? null : SVEFormulaParser.ParseValue(amount2, player, sourceCardInstanceId, sourceCardZone);
 
             // Target leader
             bool isLeaderOnlyStat = targetStats is StatBoostType.MaxPlayPoint or StatBoostType.PlayPoint or StatBoostType.EvolvePoint;
@@ -78,9 +83,19 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    foreach(string stat in targetStats.AsNamedStatArray())
+                    if(secondaryBoostAmount == null) // Standard add
                     {
-                        player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, boostAmount, true);
+                        foreach(string stat in targetStats.AsNamedStatArray())
+                            player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, boostAmount, true);
+                    }
+                    else // Add with different secondary stat value (AtkDef)
+                    {
+                        string[] statArray = targetStats.AsNamedStatArray();
+                        for(int i = 0; i < statArray.Length; i++)
+                        {
+                            player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[statArray[i]].statId,
+                                i == 0 ? boostAmount : secondaryBoostAmount.Value, true);
+                        }
                     }
                 }
                 onComplete?.Invoke();

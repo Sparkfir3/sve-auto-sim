@@ -70,7 +70,7 @@ namespace SVESimulator
                     onSelect = () =>
                     {
                         // no need for CanPayCost check, this button should be disabled if cost check above failed
-                        player.LocalEvents.PayAbilityCosts(cardObject, trigger?.Costs, effect, effectName, () =>
+                        player.LocalEvents.PayAbilityCosts(cardObject, trigger?.Costs, effectName, () =>
                         {
                             effect.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () =>
                             {

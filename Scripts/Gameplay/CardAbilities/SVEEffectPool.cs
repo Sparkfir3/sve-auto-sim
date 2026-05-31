@@ -111,6 +111,11 @@ namespace SVESimulator
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
 
+                    // Condition check
+                    if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, null as RuntimeCard))
+                        break;
+
+                    // Add effect
                     SVEPendingEffect effect = new()
                     {
                         triggeringCardInstanceId = (triggeringCard ?? sourceCard).instanceId,
@@ -428,7 +433,7 @@ namespace SVESimulator
             void ResolveWithCost()
             {
                 localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
-                localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.effect, pendingEffect.abilityName, Resolve);
+                localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.abilityName, Resolve);
             }
         }
 

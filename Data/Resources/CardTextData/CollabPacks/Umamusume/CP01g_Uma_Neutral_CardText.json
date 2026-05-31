@@ -1,0 +1,96 @@
+[
+  {
+    "id": "CP01-079EN",
+    "name": "Riko Kashimoto [Planned Perfection]",
+    "trait": "Tracen Academy",
+    "cardText": "Rush.\nStrike: If there are no other followers on your field, select an enemy follower on the field. Destroy it and deal 3 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "If there are no other followers on your field, select an enemy follower on the field. Destroy it and deal 3 damage to its leader."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select an enemy follower on the field. Destroy it and deal 3 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "CP01-080EN",
+    "name": "Close-Knit Ambitions",
+    "trait": "Umamusume",
+    "cardText": "Shuffle your deck, then reveal the top 6 cards. You may put any number of Umamusume followers or Umamusume amulets from among them onto your field. Add the remaining cards to your hand.",
+    "effectText": [
+      {
+        "key": "Reveal",
+        "body": "Reveal the top 6 cards. You may put any number of Umamusume followers or Umamusume amulets from among them onto your field. Add the remaining cards to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-081EN",
+    "name": "Take a Jab!",
+    "trait": "Tracen Academy",
+    "cardText": "At the start of your main phase, roll a 6-sided die. If you roll a 1, deal 5 damage to your leader. If you roll a 2, 3, 4, or 5, draw a card. If you roll a 6, give your leader [defense]+3 and destroy this card.",
+    "effectText": [
+      {
+        "key": "StartMainPhase",
+        "body": "At the start of your main phase, roll a 6-sided die. If you roll a 1, deal 5 damage to your leader. If you roll a 2, 3, 4, or 5, draw a card. If you roll a 6, give your leader [defense]+3 and destroy this card."
+      }
+    ]
+  },
+  {
+    "id": "CP01-082EN",
+    "name": "Aoi Kiryuin [Trainers' Teamwork]",
+    "trait": "Tracen Academy",
+    "cardText": "Ward.\n[fanfare] Select a faceup Carrot in your evolve deck. Turn it facedown and draw a card.\nWhenever one of your followers races, give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a faceup Carrot in your evolve deck. Turn it facedown and draw a card."
+      },
+      {
+        "key": "FlipCarrot",
+        "body": "Select a faceup Carrot in your evolve deck. Turn it facedown and draw a card."
+      },
+      {
+        "key": "OnOtherRace",
+        "body": "Whenever one of your followers races, give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-083EN",
+    "name": "Sasami Anshinzawa",
+    "trait": "Tracen Academy",
+    "cardText": "[fanfare] Reveal the top card of your deck. If it costs an odd number of play points, deal 2 damage to each enemy leader. If it costs an even number of play points, deal 2 damage to your leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Reveal the top card of your deck. If it costs an odd number of play points, deal 2 damage to each enemy leader. If it costs an even number of play points, deal 2 damage to your leader."
+      }
+    ]
+  },
+  {
+    "id": "CP01-084EN",
+    "name": "Tazuna Hayakawa",
+    "trait": "Tracen Academy",
+    "cardText": "Ward.\n[fanfare] Select an Umamusume follower on your field and give it [attack]+1/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an Umamusume follower on your field and give it [attack]+1/[defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "CP01-085EN",
+    "name": "Carrot",
+    "trait": "",
+    "cardText": "You can serve a Carrot to an Umamusume follower to race it. (Racing followers have Rush.)\n----------\nYou can put up to 10 of this card into your evolve deck."
+  }
+]

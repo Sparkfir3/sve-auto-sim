@@ -73,6 +73,8 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
 
             // Other
+            NetworkClient.RegisterHandler<OpponentServeAndRaceMessage>(OnOpponentServeAndRace);
+            NetworkClient.RegisterHandler<OpponentAdvanceRngMessage>(OnOpponentAdvanceRng);
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
         }
 
@@ -138,6 +140,8 @@ namespace SVESimulator
             NetworkServer.UnregisterHandler<OpponentAddEvolvePointsMessage>();
 
             // Other
+            NetworkClient.UnregisterHandler<OpponentServeAndRaceMessage>();
+            NetworkClient.UnregisterHandler<OpponentAdvanceRngMessage>();
             NetworkClient.UnregisterHandler<OpponentTellOpponentPerformEffectMessage>();
 
             base.UnregisterNetworkHandlers();
@@ -548,6 +552,24 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        private void OnOpponentServeAndRace(OpponentServeAndRaceMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.ServeAndRaceCard(msg);
+        }
+
+        private void OnOpponentAdvanceRng(OpponentAdvanceRngMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.AdvanceRng(msg.rngAdvanceCount);
+        }
 
         private void OnOpponentTellOpponentPerformEffect(OpponentTellOpponentPerformEffectMessage msg)
         {

@@ -52,6 +52,12 @@ namespace SVESimulator.SveScript
             { "Aura",                       new Keyword(0, 7) },
             { "Quick",                      new Keyword(0, 8) },
 
+            // Racing (TODO: Evolve)
+            { "serve",                      new Keyword(1, 7) },
+            { "serve1",                     new Keyword(1, 7) },
+            { "serve2",                     new Keyword(1, 8) },
+            { "serve3",                     new Keyword(1, 9) },
+
             // Passive Abilities
             { "IgnoreWard",                 new Keyword(1, 0) },
             { "PutOnFieldEngaged",          new Keyword(1, 1) },

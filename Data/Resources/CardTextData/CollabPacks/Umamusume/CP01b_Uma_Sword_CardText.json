@@ -1,0 +1,167 @@
+[
+  {
+    "id": "CP01-014EN",
+    "name": "Tokai Teio",
+    "trait": "Umamusume",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[feed][cost01]: Race this follower.\n[fanfare] Select an enemy follower on the field and deal it X damage. X equals 2 times the number of followers on your field, including this one.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals 2 times the number of followers on your field, including this one."
+      }
+    ]
+  },
+  {
+    "id": "CP01-015EN",
+    "name": "Tokai Teio (Evolved)",
+    "trait": "Umamusume",
+    "cardText": "Storm."
+  },
+  {
+    "id": "CP01-016EN",
+    "name": "Narita Brian",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nBane. Ward. Aura.\n[act][engage]: Select an enemy leader or enemy follower on the field and deal it 5 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-017EN",
+    "name": "Winning Ticket",
+    "trait": "Umamusume / BNW",
+    "cardText": "[feed][cost01]: Race this follower.\nStorm.\n[fanfare] If there is a Trial Initiation and Narita Taishin in your cemetery, give this follower [attack]+3/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is a Trial Initiation and Narita Taishin in your cemetery, give this follower [attack]+3/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-018EN",
+    "name": "Outrunning the Encroaching Heat",
+    "trait": "Umamusume",
+    "cardText": "Select a follower on your field. Give it Storm and, if it's an Umamusume follower, [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a follower on your field. Give it Storm and, if it's an Umamusume follower, [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "CP01-019EN",
+    "name": "Air Groove",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Give this follower [attack]+1/[defense]+1. Select up to 1 other follower on your field and refresh it. For the rest of this turn, that follower can't attack enemies.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Give this follower [attack]+1/[defense]+1. Select up to 1 other follower on your field and refresh it. For the rest of this turn, that follower can't attack enemies."
+      },
+      {
+        "key": "Target",
+        "body": "Select up to 1 other follower on your field and refresh it. For the rest of this turn, that follower can't attack enemies."
+      }
+    ]
+  },
+  {
+    "id": "CP01-020EN",
+    "name": "Hishi Amazon",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nRush.\n[fanfare][cost03]: Search your deck for an Umamusume follower that costs 3 play points and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost03]",
+        "body": "Search your deck for an Umamusume follower that costs 3 play points and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "CP01-021EN",
+    "name": "Trial Initiation",
+    "trait": "Umamusume / BNW",
+    "cardText": "Choose one of the following. (1) Look at the top 2 cards of your deck. You may reveal an Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order. (2) Select a BNW follower in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following. (1) Look at the top 2 cards of your deck. You may reveal an Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order. (2) Select a BNW follower in your cemetery and add it to your hand."
+      },
+      {
+        "key": "TopDeck",
+        "body": "Look at the top 2 cards of your deck. You may reveal an Umamusume card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      },
+      {
+        "key": "Cemetery",
+        "body": "Select a BNW follower in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-022EN",
+    "name": "Sirius Symboli",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nBane."
+  },
+  {
+    "id": "CP01-023EN",
+    "name": "Narita Taishin",
+    "trait": "Umamusume / BNW",
+    "cardText": "[feed][cost01]: Race this follower.\nRush."
+  },
+  {
+    "id": "CP01-024EN",
+    "name": "Symboli Rudolf",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[lastwords] Search your deck for a Tokai Teio, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Search your deck for a Tokai Teio, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "CP01-025EN",
+    "name": "Biko Pegasus",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\nOn Race: Select an enemy follower on the field and engage it.",
+    "effectText": [
+      {
+        "key": "OnRace",
+        "trigger": "On Race:",
+        "body": "Select an enemy follower on the field and engage it."
+      }
+    ]
+  },
+  {
+    "id": "CP01-026EN",
+    "name": "Fuji Kiseki",
+    "trait": "Umamusume",
+    "cardText": "[feed][cost01]: Race this follower.\n[act][cost03], [engage]: Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost03], [engage]",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "CP01-LD02EN",
+    "name": "Narita Taishin [A Bazaar Outing]"
+  }
+]

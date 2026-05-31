@@ -22,6 +22,12 @@ namespace SVESimulator
             if(card == null)
                 return false;
 
+            if(filters.TryGetValue(CardFilterSetting.FilterOr, out string otherFilterRaw) && !otherFilterRaw.IsNullOrWhiteSpace())
+            {
+                if(SVEFormulaParser.ParseCardFilterFormula(otherFilterRaw, card).MatchesCard(card))
+                    return true;
+            }
+
             Card libraryCard = null;
             foreach(KeyValuePair<CardFilterSetting, string> filter in filters)
             {
@@ -121,6 +127,10 @@ namespace SVESimulator
                         SVEFormulaParser.ParseValueAsMinMax(value, null, out int minEvolveCost, out int maxEvolveCost);
                         int evolveCost = card.EvolveCost();
                         if((evolveCost < minEvolveCost || evolveCost > maxEvolveCost) ^ inverse)
+                            return false;
+                        break;
+                    case CardFilterSetting.Racing:
+                        if(!card.HasKeyword(SVEProperties.PassiveAbilities.IsRacing) ^ inverse)
                             return false;
                         break;
 
@@ -265,6 +275,46 @@ namespace SVESimulator
                 Debug.LogError($"{e}\nAn error occurred while parsing cost list {input}");
                 return null;
             }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Attached Cards
+
+        public static RuntimeCard GetAttachedCard(this RuntimeCard card, RuntimeZone cardZone, bool clearAttachedCard)
+        {
+            if(cardZone == null)
+                return null;
+            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+            {
+                int attachedCardID = attachedCardInfo.baseValue;
+                if(attachedCardID >= 0)
+                {
+                    RuntimeCard attachedCard = cardZone.cards.FirstOrDefault(x => x.instanceId == attachedCardID);
+                    if(attachedCard != null)
+                        return attachedCard;
+                    else
+                        Debug.LogError($"Failed to find attached card with instance ID {attachedCardID}");
+                    if(clearAttachedCard)
+                        attachedCardInfo.baseValue = -1;
+                }
+            }
+            return null;
+        }
+
+        public static List<RuntimeCard> GetAllAttachedCards(this RuntimeCard card, RuntimeZone cardZone, bool clearAttachedCard)
+        {
+            List<RuntimeCard> cardList = new();
+            RuntimeCard targetCard = card;
+            while(targetCard != null)
+            {
+                targetCard = targetCard.GetAttachedCard(cardZone, clearAttachedCard);
+                if(targetCard != null)
+                    cardList.Add(targetCard);
+            }
+            return cardList;
         }
 
         #endregion
