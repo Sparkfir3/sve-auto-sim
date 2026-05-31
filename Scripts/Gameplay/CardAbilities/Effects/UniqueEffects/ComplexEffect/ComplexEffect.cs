@@ -316,7 +316,7 @@ namespace SVESimulator
         {
             pointerR = function.IndexOf("\n", pointerL, StringComparison.Ordinal);
             if(pointerR == -1)
-                pointerR = function.Length - 1;
+                pointerR = function.Length;
             string line = function[pointerL..pointerR];
             string[] splitA = line.Split(" then ");
             if(splitA.Length <= 1)
