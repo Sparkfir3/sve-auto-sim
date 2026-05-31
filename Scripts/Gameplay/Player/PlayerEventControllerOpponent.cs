@@ -64,7 +64,7 @@ namespace SVESimulator
 
         public void ShuffleDeck(OpponentShuffleDeckMessage msg)
         {
-            sveEffectSolver.AdvanceRNG(msg.rngAdvances);
+            AdvanceRng(msg.rngAdvances);
         }
 
         public void DiscardRandomCards(OpponentDiscardRandomCardsMessage msg)
@@ -632,6 +632,11 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        public void AdvanceRng(int rngAdvanceCount)
+        {
+            sveEffectSolver.AdvanceRNG(rngAdvanceCount);
+        }
 
         public void TellPerformEffect(OpponentTellOpponentPerformEffectMessage msg)
         {

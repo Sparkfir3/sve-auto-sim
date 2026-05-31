@@ -651,6 +651,18 @@ namespace SVESimulator
 
     #region Other
 
+    public struct LocalAdvanceRngMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int rngAdvanceCount;
+    }
+
+    public struct OpponentAdvanceRngMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int rngAdvanceCount;
+    }
+
     public struct LocalTellOpponentPerformEffectMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;

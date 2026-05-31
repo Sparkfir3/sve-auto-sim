@@ -54,6 +54,7 @@ namespace SVESimulator
 
             // Other
             NetworkServer.RegisterHandler<LocalServeAndRaceMessage>(OnServeAndRace);
+            NetworkServer.RegisterHandler<LocalAdvanceRngMessage>(OnAdvanceRng);
             NetworkServer.RegisterHandler<LocalTellOpponentPerformEffectMessage>(OnTellOpponentPerformEffect);
         }
 
@@ -99,6 +100,7 @@ namespace SVESimulator
 
             // Other
             NetworkServer.UnregisterHandler<LocalServeAndRaceMessage>();
+            NetworkServer.UnregisterHandler<LocalAdvanceRngMessage>();
             NetworkServer.UnregisterHandler<LocalTellOpponentPerformEffectMessage>();
         }
 
@@ -620,6 +622,17 @@ namespace SVESimulator
             server.SafeSendToClient(server.gameState.currentOpponent, serveAndRaceMessage);
             (server.effectSolver as SVEEffectSolver).ServeCard(msg.playerNetId, card, carrots, msg.useEvolvePoint, msg.count);
             (server.effectSolver as SVEEffectSolver).RaceCard(msg.playerNetId, card, msg.count);
+        }
+
+        private void OnAdvanceRng(NetworkConnection conn, LocalAdvanceRngMessage msg)
+        {
+            OpponentAdvanceRngMessage rngMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                rngAdvanceCount = msg.rngAdvanceCount
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, rngMsg);
+            (server.effectSolver as SVEEffectSolver).AdvanceRNG(msg.rngAdvanceCount);
         }
 
         private void OnTellOpponentPerformEffect(NetworkConnection conn, LocalTellOpponentPerformEffectMessage msg)

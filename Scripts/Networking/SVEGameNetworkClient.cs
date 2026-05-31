@@ -74,6 +74,7 @@ namespace SVESimulator
 
             // Other
             NetworkClient.RegisterHandler<OpponentServeAndRaceMessage>(OnOpponentServeAndRace);
+            NetworkClient.RegisterHandler<OpponentAdvanceRngMessage>(OnOpponentAdvanceRng);
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
         }
 
@@ -140,6 +141,7 @@ namespace SVESimulator
 
             // Other
             NetworkClient.UnregisterHandler<OpponentServeAndRaceMessage>();
+            NetworkClient.UnregisterHandler<OpponentAdvanceRngMessage>();
             NetworkClient.UnregisterHandler<OpponentTellOpponentPerformEffectMessage>();
 
             base.UnregisterNetworkHandlers();
@@ -558,6 +560,15 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.ServeAndRaceCard(msg);
+        }
+
+        private void OnOpponentAdvanceRng(OpponentAdvanceRngMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.AdvanceRng(msg.rngAdvanceCount);
         }
 
         private void OnOpponentTellOpponentPerformEffect(OpponentTellOpponentPerformEffectMessage msg)

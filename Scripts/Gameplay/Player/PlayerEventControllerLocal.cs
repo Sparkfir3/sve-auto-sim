@@ -1260,6 +1260,18 @@ namespace SVESimulator
 
         #region Other
 
+        public int GetRandomNumber(int min, int max)
+        {
+            int output = sveEffectSolver.GetRandomNumber(min, max);
+            LocalAdvanceRngMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                rngAdvanceCount = 1
+            };
+            NetworkClient.Send(msg);
+            return output;
+        }
+
         public void TellOpponentToPerformEffect(CardObject card, string effectName, int[] targetInstanceIds = null)
         {
             LocalTellOpponentPerformEffectMessage msg = new()
