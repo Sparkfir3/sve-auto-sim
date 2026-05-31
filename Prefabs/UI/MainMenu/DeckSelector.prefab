@@ -1380,6 +1380,9 @@ MonoBehaviour:
   - name: Havencraft SD
     data: {fileID: 4900000, guid: 7b90a5fc2eda11948b930975577a7fc6, type: 3}
     deckClass: Havencraft
+  - name: Umamusume SD
+    data: {fileID: 4900000, guid: 954a9ba7ff70a6e4fa66b6fe51a8ec6d, type: 3}
+    deckClass: Umamusume
   <LoadedDecks>k__BackingField: []
   deckEntries:
   - {fileID: 4760998293433255459}
