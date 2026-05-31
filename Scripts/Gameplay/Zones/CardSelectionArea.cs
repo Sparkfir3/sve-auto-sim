@@ -375,13 +375,13 @@ namespace SVESimulator
         public void AddEvolveDeck(bool faceDown = true, bool faceUp = true)
         {
             Debug.Assert(faceDown || faceUp);
-            Debug.Assert(minSlotCount >= zoneController.evolveDeckZone.Runtime.cards.Count);
 
             List<RuntimeCard> cardsInZone = (faceDown && faceUp
                 ? zoneController.evolveDeckZone.Runtime.cards
                 : zoneController.evolveDeckZone.Runtime.cards.Where(x =>
                     x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.effectiveValue == (faceUp ? 1 : 0)))
                 .OrderByDescending(x => x.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue).ThenBy(x => x.cardId).ToList();
+            Debug.Assert(minSlotCount >= cardsInZone.Count);
 
             MoveCardsToSelectionAreaWithInstantiate(cardsInZone, runtimeCard =>
             {

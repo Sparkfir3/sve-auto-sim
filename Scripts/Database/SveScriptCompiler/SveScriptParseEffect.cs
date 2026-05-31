@@ -214,6 +214,7 @@ namespace SVESimulator.SveScript
                         ParseCheckTopArgsArray(argsArray[i..], ref effectData);
                         return;
                     case EffectParameterType.ListOfEffects:
+                    case EffectParameterType.ListOfEffects6:
                         int listAmount = effectParams.parameters[i] == EffectParameterType.ListOfEffects6 ? 6 : 5;
                         for(int j = 0; j < listAmount; j++)
                             effectData.Add($"effectName{j + 1}", (i + j) < argsArray.Length ? argsArray[i + j] : null);

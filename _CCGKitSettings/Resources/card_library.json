@@ -44572,6 +44572,12 @@
             "name": "StartMainPhase",
             "type": "Triggered",
             "effect": {
+              "effectName1": "DamageSelf",
+              "effectName2": "Draw",
+              "effectName3": "Draw",
+              "effectName4": "Draw",
+              "effectName5": "Draw",
+              "effectName6": "DefenseAndDestroy",
               "$type": "SVESimulator.RollDiceEffect"
             },
             "target": null,
@@ -45364,7 +45370,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Umamusume",
+            "value": "Tracen Academy",
             "name": "Trait",
             "$type": "CCGKit.StringProperty"
           },
