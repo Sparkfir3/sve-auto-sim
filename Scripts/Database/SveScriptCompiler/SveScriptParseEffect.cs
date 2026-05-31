@@ -214,7 +214,9 @@ namespace SVESimulator.SveScript
                         ParseCheckTopArgsArray(argsArray[i..], ref effectData);
                         return;
                     case EffectParameterType.ListOfEffects:
-                        for(int j = 0; j < 5; j++)
+                    case EffectParameterType.ListOfEffects6:
+                        int listAmount = effectParams.parameters[i] == EffectParameterType.ListOfEffects6 ? 6 : 5;
+                        for(int j = 0; j < listAmount; j++)
                             effectData.Add($"effectName{j + 1}", (i + j) < argsArray.Length ? argsArray[i + j] : null);
                         return;
                 }
@@ -281,6 +283,7 @@ namespace SVESimulator.SveScript
             // Effect names
             SingleEffect,
             ListOfEffects,
+            ListOfEffects6,
 
             // Other
             TokenName,
@@ -427,17 +430,20 @@ namespace SVESimulator.SveScript
             // Effect Sequencing - Choose From List
             { "ChooseAmountFromList", new EffectParams("ChooseAmountFromList",                              false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "ChooseFromList", new EffectParams("ChooseEffectFromList",                                    false, false, EffectParameterType.ListOfEffects) },
+            { "RollDice", new EffectParams("RollDiceEffect",                                                false, false, EffectParameterType.ListOfEffects6) },
 
             // ------------------------------
 
             // Other Effects
             { "Evolve", new EffectParams("EvolveEffect")                                    },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                              EffectParameterType.Trait) },
+            { "Shuffle", new EffectParams("ShuffleDeckEffect",                              true, false) },
+            { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                          true, false) },
             { "CheckTop", new EffectParams("CheckTopDeckEffect",                            false, false, EffectParameterType.CheckCardActions) },
             { "Complex", new EffectParams("ComplexEffect",                                  false, false, EffectParameterType.Function) },
             { "ComplexEffect", new EffectParams("ComplexEffect",                            false, false, EffectParameterType.Function) },
             { "ExtraTurn", new EffectParams("ExtraTurnEffect",                              false, false) },
-            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional) },
+            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
 
             // ------------------------------
 

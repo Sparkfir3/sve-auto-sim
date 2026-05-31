@@ -769,5 +769,13 @@ namespace SVESimulator
         }
 
         #endregion
+
+        // ------------------------------
+
+        #region Other
+
+        public int GetRandomNumber(int min, int max) => rng.Next(min, max);
+
+        #endregion
     }
 }

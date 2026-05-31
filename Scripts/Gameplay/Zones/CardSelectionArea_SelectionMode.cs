@@ -12,6 +12,7 @@ namespace SVESimulator
             SelectCardsFromDeck = 1,
             SelectCardsFromCemetery = 2,
             SelectCardsFromOppHand = 3,
+            SelectCardsFromEvolveDeck = 12,
 
             // Select cards & move
             SelectCardsFromDeckAndMove = 11,
@@ -24,5 +25,8 @@ namespace SVESimulator
             ViewCardsBanished = 9,
             ViewCardsOppBanished = 10,
         }
+
+        public static bool IsModeSelectCards(SelectionMode mode) => mode is SelectionMode.SelectCardsFromDeck or SelectionMode.SelectCardsFromCemetery
+            or SelectionMode.SelectCardsFromOppHand or SelectionMode.SelectCardsFromEvolveDeck or SelectionMode.SelectCardsFromDeckAndMove;
     }
 }
