@@ -214,7 +214,8 @@ namespace SVESimulator.SveScript
                         ParseCheckTopArgsArray(argsArray[i..], ref effectData);
                         return;
                     case EffectParameterType.ListOfEffects:
-                        for(int j = 0; j < 5; j++)
+                        int listAmount = effectParams.parameters[i] == EffectParameterType.ListOfEffects6 ? 6 : 5;
+                        for(int j = 0; j < listAmount; j++)
                             effectData.Add($"effectName{j + 1}", (i + j) < argsArray.Length ? argsArray[i + j] : null);
                         return;
                 }
@@ -281,6 +282,7 @@ namespace SVESimulator.SveScript
             // Effect names
             SingleEffect,
             ListOfEffects,
+            ListOfEffects6,
 
             // Other
             TokenName,
@@ -427,6 +429,7 @@ namespace SVESimulator.SveScript
             // Effect Sequencing - Choose From List
             { "ChooseAmountFromList", new EffectParams("ChooseAmountFromList",                              false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "ChooseFromList", new EffectParams("ChooseEffectFromList",                                    false, false, EffectParameterType.ListOfEffects) },
+            { "RollDice", new EffectParams("RollDiceEffect",                                                false, false, EffectParameterType.ListOfEffects6) },
 
             // ------------------------------
 
