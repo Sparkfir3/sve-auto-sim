@@ -150,6 +150,7 @@ namespace SVESimulator
                     for(int i = 0; i < cardsToMove.Count; i++)
                         zoneController.SendCardToCemetery(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
+                case SelectionMode.SelectCardsFromEvolveDeck:
                 case SelectionMode.ViewCardsEvolveDeck:
                     for(int i = 0; i < cardsToMove.Count; i++)
                         zoneController.SendCardToEvolveDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
@@ -221,6 +222,7 @@ namespace SVESimulator
                 case SelectionMode.SelectCardsFromDeck:
                 case SelectionMode.SelectCardsFromCemetery:
                 case SelectionMode.SelectCardsFromOppHand:
+                case SelectionMode.SelectCardsFromEvolveDeck:
                 case SelectionMode.ViewCardsCemetery:
                 case SelectionMode.ViewCardsOppCemetery:
                 case SelectionMode.ViewCardsEvolveDeck:
@@ -370,11 +372,17 @@ namespace SVESimulator
             SetScrollViewTintActive(true);
         }
 
-        public void AddEvolveDeck()
+        public void AddEvolveDeck(bool faceDown = true, bool faceUp = true)
         {
+            Debug.Assert(faceDown || faceUp);
             Debug.Assert(minSlotCount >= zoneController.evolveDeckZone.Runtime.cards.Count);
-            List<RuntimeCard> cardsInZone = zoneController.evolveDeckZone.Runtime.cards.OrderByDescending(x => x.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue)
-                .ThenBy(x => x.cardId).ToList();
+
+            List<RuntimeCard> cardsInZone = (faceDown && faceUp
+                ? zoneController.evolveDeckZone.Runtime.cards
+                : zoneController.evolveDeckZone.Runtime.cards.Where(x =>
+                    x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat) && faceUpStat.effectiveValue == (faceUp ? 1 : 0)))
+                .OrderByDescending(x => x.namedStats[SVEProperties.CardStats.FaceUp].effectiveValue).ThenBy(x => x.cardId).ToList();
+
             MoveCardsToSelectionAreaWithInstantiate(cardsInZone, runtimeCard =>
             {
                 CardObject cardObject = CardManager.Instance.RequestCard(runtimeCard);
@@ -436,8 +444,7 @@ namespace SVESimulator
 
         private void Update()
         {
-            if(currentMode is not SelectionMode.SelectCardsFromDeck and not SelectionMode.SelectCardsFromCemetery and not SelectionMode.SelectCardsFromOppHand
-                and not SelectionMode.SelectCardsFromDeckAndMove)
+            if(!IsModeSelectCards(currentMode))
                 return;
 
             if(Input.GetKeyDown(KeyCode.Mouse0))

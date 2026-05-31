@@ -437,7 +437,7 @@ namespace SVESimulator.SveScript
             { "Complex", new EffectParams("ComplexEffect",                                  false, false, EffectParameterType.Function) },
             { "ComplexEffect", new EffectParams("ComplexEffect",                            false, false, EffectParameterType.Function) },
             { "ExtraTurn", new EffectParams("ExtraTurnEffect",                              false, false) },
-            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional) },
+            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
 
             // ------------------------------
 
