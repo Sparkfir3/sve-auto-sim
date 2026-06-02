@@ -326,9 +326,17 @@ namespace SVESimulator.DeckBuilder
 
         public string DeckAsString()
         {
-            string leaderClass = !DeckClass.IsNullOrWhiteSpace()
-                ? DeckClass
-                : CurrentLeader == null ? "Neutral" : CurrentLeader.GetStringProperty(SVEProperties.CardStats.Class);
+            string leaderClass;
+            if(CurrentLeader == null)
+                leaderClass = "Neutral";
+            else
+            {
+                string universe = CurrentLeader.TryGetStringProperty(SVEProperties.CardStats.Universe);
+                if(!universe.IsNullOrWhiteSpace() && DeckIsClass(CurrentMainDeck.Keys, universe) && DeckIsClass(CurrentEvolveDeck.Keys, universe))
+                    leaderClass = universe.Split()[0].Replace(":", "");
+                else
+                    leaderClass = CurrentLeader.GetStringProperty(SVEProperties.CardStats.Class);
+            }
             string data = $"{leaderClass} v1\n\n" +
 
             "# Leader\n" +
@@ -386,6 +394,15 @@ namespace SVESimulator.DeckBuilder
             {
                 string cardClass = x.GetStringProperty(SVEProperties.CardStats.Class);
                 return cardClass.IsNullOrWhiteSpace() || (cardClass.Equals(SVEProperties.CardClass.Neutral) || cardClass.Equals(deckClass));
+            });
+        }
+
+        private bool DeckIsUniverse(IEnumerable<Card> cardList, string deckUniverse)
+        {
+            return cardList.All(x =>
+            {
+                string universe = x.TryGetStringProperty(SVEProperties.CardStats.Universe);
+                return !universe.IsNullOrWhiteSpace() && universe.Equals(deckUniverse);
             });
         }
 

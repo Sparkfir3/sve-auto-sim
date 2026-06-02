@@ -116,8 +116,18 @@ namespace SVESimulator.DeckBuilder
             int splitIndex = DeckDataToLoad.IndexOf(" ", StringComparison.Ordinal);
             if(splitIndex < 1)
                 return;
-
             string deckClass = DeckDataToLoad[..splitIndex].Trim().ToLower().Replace("craft", "");
+
+            // Universe check
+            model.Filters.universe = deckClass switch
+            {
+                "umamusume" => UniverseFilter.Umamusume,
+                _ => UniverseFilter.All
+            };
+            if(model.Filters.universe != UniverseFilter.All)
+                return;
+
+            // Class check
             model.Filters.cardClass = deckClass switch
             {
                 "forest" => ClassFilter.Forest,
