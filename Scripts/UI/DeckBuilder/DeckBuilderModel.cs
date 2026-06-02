@@ -381,9 +381,18 @@ namespace SVESimulator.DeckBuilder
             if(evolveDeckCount > 10)
                 errors |= DeckConstructionErrors.TooMuchEvolveDeck;
 
-            string leaderClass = CurrentLeader?.GetStringProperty(SVEProperties.CardStats.Class);
-            if(!leaderClass.IsNullOrWhiteSpace() && !(DeckIsClass(CurrentMainDeck.Keys, leaderClass) && DeckIsClass(CurrentEvolveDeck.Keys, leaderClass)))
-                errors |= DeckConstructionErrors.NonStandard;
+            errors |= DeckConstructionErrors.NonStandard;
+            // Universe
+            string universe = CurrentLeader?.TryGetStringProperty(SVEProperties.CardStats.Universe);
+            if(!universe.IsNullOrWhiteSpace() && DeckIsUniverse(CurrentMainDeck.Keys, universe) && DeckIsUniverse(CurrentEvolveDeck.Keys, universe))
+                errors ^= DeckConstructionErrors.NonStandard;
+            // Class
+            if(errors.HasFlag(DeckConstructionErrors.NonStandard))
+            {
+                string leaderClass = CurrentLeader?.GetStringProperty(SVEProperties.CardStats.Class);
+                if(!leaderClass.IsNullOrWhiteSpace() && DeckIsClass(CurrentMainDeck.Keys, leaderClass) && DeckIsClass(CurrentEvolveDeck.Keys, leaderClass))
+                    errors ^= DeckConstructionErrors.NonStandard;
+            }
 
             return errors == DeckConstructionErrors.None;
         }
