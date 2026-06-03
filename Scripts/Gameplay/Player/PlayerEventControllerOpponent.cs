@@ -606,13 +606,6 @@ namespace SVESimulator
 
             sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove);
 
-            foreach(Cost cost in costList)
-            {
-                if(cost is EngageSelfCost)
-                {
-                    CardManager.Animator.RotateCard(card, SVEProperties.CardEngagedRotation);
-                }
-            }
             for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
             {
                 CardObject cardToMove = CardManager.Instance.GetCardByInstanceId(msg.cardsMoveToZoneData[i].cardInstanceId);
