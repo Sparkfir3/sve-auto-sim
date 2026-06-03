@@ -13,6 +13,7 @@ namespace SVESimulator.DeckBuilder
         public CardTypeFilter cardType;
         [LabelText("Class")]
         public ClassFilter cardClass;
+        public UniverseFilter universe;
 
         [HorizontalGroup("Cost"), LabelWidth(100)]
         public bool useCost = true;
@@ -59,6 +60,14 @@ namespace SVESimulator.DeckBuilder
         Abyss = 16,
         Haven = 32,
         Neutral = 64,
+    }
+
+    [Flags]
+    public enum UniverseFilter
+    {
+        All = 0,
+        None = 1,
+        Umamusume = 2,
     }
 
     [Flags]

@@ -17,6 +17,7 @@ namespace SVESimulator.DeckBuilder
         [SerializeField]
         protected SerializedDictionary<Toggle, T> filterButtons = new();
 
+        [Space(20)]
         public UnityEvent onValueChanged;
 
         // ------------------------------
@@ -37,9 +38,9 @@ namespace SVESimulator.DeckBuilder
             foreach(var kvPair in filterButtons)
             {
                 (Toggle toggle, T filterValue) = (kvPair.Key, kvPair.Value);
-                toggle.onValueChanged.AddListener(x =>
+                toggle.onValueChanged.AddListener(isOn =>
                 {
-                    if(x)
+                    if(isOn)
                     {
                         EnableFilter(filterValue);
                         onValueChanged?.Invoke();

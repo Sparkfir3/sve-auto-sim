@@ -76,6 +76,7 @@ namespace SVESimulator.DeckBuilder
             FilterByName(ref _filteredCardList);
             FilterByCardType(ref _filteredCardList);
             FilterByClass(ref _filteredCardList);
+            FilterByUniverse(ref _filteredCardList);
             if(Filters.useCost)
                 FilterByStat(ref _filteredCardList, Filters.minCost, Filters.maxCost, SVEProperties.CardStats.Cost, 8);
             if(Filters.useAttack)
@@ -157,6 +158,26 @@ namespace SVESimulator.DeckBuilder
             {
                 string cardClass = x.GetStringProperty(SVEProperties.CardStats.Class);
                 return classNames.Any(y => cardClass.Equals(y));
+            }).ToList();
+        }
+
+        private void FilterByUniverse(ref List<Card> cardList)
+        {
+            if(Filters.universe <= 0)
+                return;
+
+            List<string> universesList = new();
+            if(Filters.universe.HasFlag(UniverseFilter.None)) // No Universe
+                universesList.Add(null);
+            if(Filters.universe.HasFlag(UniverseFilter.Umamusume)) // Umamusume
+                universesList.Add(SVEProperties.CardUniverse.Umamusume);
+            if(universesList.Count == 0)
+                return;
+
+            cardList = cardList.Where(x =>
+            {
+                string universe = x.TryGetStringProperty(SVEProperties.CardStats.Universe);
+                return universesList.Any(y => universe == null ? y == null : universe.Equals(y));
             }).ToList();
         }
 
@@ -305,9 +326,17 @@ namespace SVESimulator.DeckBuilder
 
         public string DeckAsString()
         {
-            string leaderClass = !DeckClass.IsNullOrWhiteSpace()
-                ? DeckClass
-                : CurrentLeader == null ? "Neutral" : CurrentLeader.GetStringProperty(SVEProperties.CardStats.Class);
+            string leaderClass;
+            if(CurrentLeader == null)
+                leaderClass = "Neutral";
+            else
+            {
+                string universe = CurrentLeader.TryGetStringProperty(SVEProperties.CardStats.Universe);
+                if(!universe.IsNullOrWhiteSpace() && DeckIsClass(CurrentMainDeck.Keys, universe) && DeckIsClass(CurrentEvolveDeck.Keys, universe))
+                    leaderClass = universe.Split()[0].Replace(":", "");
+                else
+                    leaderClass = CurrentLeader.GetStringProperty(SVEProperties.CardStats.Class);
+            }
             string data = $"{leaderClass} v1\n\n" +
 
             "# Leader\n" +
@@ -352,9 +381,18 @@ namespace SVESimulator.DeckBuilder
             if(evolveDeckCount > 10)
                 errors |= DeckConstructionErrors.TooMuchEvolveDeck;
 
-            string leaderClass = CurrentLeader?.GetStringProperty(SVEProperties.CardStats.Class);
-            if(!leaderClass.IsNullOrWhiteSpace() && !(DeckIsClass(CurrentMainDeck.Keys, leaderClass) && DeckIsClass(CurrentEvolveDeck.Keys, leaderClass)))
-                errors |= DeckConstructionErrors.NonStandard;
+            errors |= DeckConstructionErrors.NonStandard;
+            // Universe
+            string universe = CurrentLeader?.TryGetStringProperty(SVEProperties.CardStats.Universe);
+            if(!universe.IsNullOrWhiteSpace() && DeckIsUniverse(CurrentMainDeck.Keys, universe) && DeckIsUniverse(CurrentEvolveDeck.Keys, universe))
+                errors ^= DeckConstructionErrors.NonStandard;
+            // Class
+            if(errors.HasFlag(DeckConstructionErrors.NonStandard))
+            {
+                string leaderClass = CurrentLeader?.GetStringProperty(SVEProperties.CardStats.Class);
+                if(!leaderClass.IsNullOrWhiteSpace() && DeckIsClass(CurrentMainDeck.Keys, leaderClass) && DeckIsClass(CurrentEvolveDeck.Keys, leaderClass))
+                    errors ^= DeckConstructionErrors.NonStandard;
+            }
 
             return errors == DeckConstructionErrors.None;
         }
@@ -365,6 +403,15 @@ namespace SVESimulator.DeckBuilder
             {
                 string cardClass = x.GetStringProperty(SVEProperties.CardStats.Class);
                 return cardClass.IsNullOrWhiteSpace() || (cardClass.Equals(SVEProperties.CardClass.Neutral) || cardClass.Equals(deckClass));
+            });
+        }
+
+        private bool DeckIsUniverse(IEnumerable<Card> cardList, string deckUniverse)
+        {
+            return cardList.All(x =>
+            {
+                string universe = x.TryGetStringProperty(SVEProperties.CardStats.Universe);
+                return !universe.IsNullOrWhiteSpace() && universe.Equals(deckUniverse);
             });
         }
 

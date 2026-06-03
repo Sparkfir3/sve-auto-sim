@@ -1413,6 +1413,8 @@ MonoBehaviour:
       value: {fileID: 1522015641, guid: 2b549563585079845b83503c64361c7e, type: 3}
     - key: Neutral
       value: {fileID: -1850164692, guid: 2b549563585079845b83503c64361c7e, type: 3}
+    - key: Umamusume
+      value: {fileID: 21300000, guid: 6689b6041d31b3f489e37c4445829f8c, type: 3}
   defaultClassIcon: {fileID: -1850164692, guid: 2b549563585079845b83503c64361c7e, type: 3}
 --- !u!114 &4249121586703080123
 MonoBehaviour:
