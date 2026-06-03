@@ -444,12 +444,13 @@ namespace SVESimulator
                     // Discard
                     bool waiting = true;
                     int handSize = ZoneController.handZone.AllCards.Count;
-                    ZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, handSize - SVEProperties.MaxHandSize, handSize - SVEProperties.MaxHandSize);
+                    int discardCount = handSize - SVEProperties.MaxHandSize;
+                    ZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.PlaceCardsFromHand, discardCount, discardCount);
                     ZoneController.selectionArea.SetFilter(null);
                     ZoneController.selectionArea.SetConfirmAction(null,
                         "Discard",
                         "Discard for Hand Size",
-                        1, handSize - SVEProperties.MaxHandSize,
+                        discardCount, discardCount,
                         targets =>
                         {
                             foreach(CardObject target in targets)
