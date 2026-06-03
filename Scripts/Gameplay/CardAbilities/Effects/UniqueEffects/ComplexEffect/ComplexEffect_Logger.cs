@@ -17,7 +17,6 @@ namespace SVESimulator
             Perform = 4,
         }
 
-        public LogMode LOG_MODE { get; set; } = LogMode.All;
         private readonly Dictionary<LogMode, Color32> logModeColors = new()
         {
             { LogMode.Main,     Color.cyan },
@@ -25,9 +24,13 @@ namespace SVESimulator
             { LogMode.Perform,  new Color32(189, 34, 237, 255) }, // ourple
         };
 
+        public static LogMode CurrentLogMode { get; set; } = LogMode.None;
+
+        // ------------------------------
+
         private void ComplexLog(LogMode mode, string message)
         {
-            if(LOG_MODE.HasFlag(mode))
+            if(CurrentLogMode.HasFlag(mode))
             {
                 string modePrefix = $"[CE/{mode.ToString()}]";
                 if(logModeColors.TryGetValue(mode, out Color32 color))
