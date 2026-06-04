@@ -97,6 +97,40 @@ namespace SVESimulator
                 oppZoneController.FlipCardToFaceDown(cardObject);
         }
 
+        public void RevealOpponentTopDeck(OpponentRevealTopDeckMessage msg)
+        {
+            CardSelectionArea selectionArea = localZoneController.selectionArea;
+            if(selectionArea.IsActive)
+            {
+                Debug.LogError($"Selection area was open while opponent is revealing top deck!" +
+                    $"\nThis should never happen unless a debug effect is going on. Errors may occur.");
+                selectionArea.Disable();
+            }
+
+            List<RuntimeCard> cards = new();
+            foreach(NetCard card in msg.cards)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                if(cardObject)
+                {
+                    cards.Add(cardObject.RuntimeCard);
+                }
+                else
+                {
+                    RuntimeCard runtimeCard = new RuntimeCard();
+                    InitRuntimeCard(ref runtimeCard, card);
+                    cards.Add(runtimeCard);
+                }
+            }
+            selectionArea.Enable(CardSelectionArea.SelectionMode.ViewCardsOppDeck, msg.cards.Length, msg.cards.Length);
+            selectionArea.AddFromOpponentDeck(cards);
+        }
+
+        public void CloseRevealOpponentTopDeck(OpponentCloseRevealTopDeckMessage msg)
+        {
+            localZoneController.selectionArea.Disable();
+        }
+
         public void FlipEvolveDeckCards(OpponentFlipEvolveDeckCardsMessage msg)
         {
             List<CardObject> cardsToFlip = new();

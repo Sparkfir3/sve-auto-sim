@@ -229,6 +229,25 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
+        public void RevealTopDeck(List<CardObject> cards)
+        {
+            LocalRevealTopDeckMessage msg = new()
+            {
+                playerNetId = playerInfo.netId,
+                cardInstanceIds = cards.Select(x => x.RuntimeCard.instanceId).ToArray()
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void CloseRevealTopDeck()
+        {
+            LocalCloseRevealTopDeckMessage msg = new()
+            {
+                playerNetId = playerInfo.netId
+            };
+            NetworkClient.Send(msg);
+        }
+
         public void FlipEvolveDeckCards(bool toFaceDown, List<RuntimeCard> targetCards = null)
         {
             targetCards ??= localZoneController.evolveDeckZone.Runtime.cards.Where(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)

@@ -89,7 +89,7 @@ namespace SVESimulator
             player.StartCoroutine(ResolveOverTime(player, sourceCardInstanceId, sourceCardZone, onComplete));
         }
 
-        private IEnumerator ResolveOverTime(PlayerController player, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
+        protected IEnumerator ResolveOverTime(PlayerController player, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
             // Init
             SVEFormulaParser.ParseValueAsMinMax(amount, player, out int minCheck, out int maxCheck);
@@ -99,11 +99,7 @@ namespace SVESimulator
 
             // Reveal initial
             selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, minCheck, maxCheck);
-            for(int i = 0; i < minCheck; i++)
-            {
-                selectionArea.AddCardFromTopDeck();
-                yield return new WaitForSeconds(selectionArea.AddRemoveCardDelay);
-            }
+            yield return player.StartCoroutine(AddCardsFromDeck(player, selectionArea, minCheck, maxCheck));
 
             // Perform actions
             foreach(CheckActionParameters action in allActions)
@@ -150,8 +146,20 @@ namespace SVESimulator
             selectionArea.Disable();
             player.InputController.allowedInputs = player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             player.ZoneController.handZone.SetAllCardsInteractable(player.isActivePlayer);
+            OnCompleteInternal(player);
             onComplete?.Invoke();
         }
+
+        protected virtual IEnumerator AddCardsFromDeck(PlayerController player, CardSelectionArea selectionArea, int minCheck, int maxCheck)
+        {
+            for(int i = 0; i < minCheck; i++)
+            {
+                selectionArea.AddCardFromTopDeck();
+                yield return new WaitForSeconds(selectionArea.AddRemoveCardDelay);
+            }
+        }
+
+        protected virtual void OnCompleteInternal(PlayerController player) { }
 
         #endregion
 
