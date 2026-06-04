@@ -205,7 +205,7 @@ namespace SVESimulator
                             player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
                         }
                     };
-                    maxSelect = Mathf.Min(maxSelect, 5 - player.ZoneController.fieldZone.OpenSlotCount());
+                    maxSelect = Mathf.Min(maxSelect, player.ZoneController.fieldZone.OpenSlotCount());
                     return true;
                 case CheckCardAction.BottomDeck:
                     actionText = "Send to Bottom Deck";
