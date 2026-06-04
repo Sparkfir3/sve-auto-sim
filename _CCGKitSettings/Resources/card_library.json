@@ -44502,7 +44502,7 @@
               "checkAction3": "None",
               "checkFilter3": null,
               "checkAmount3": null,
-              "$type": "SVESimulator.CheckTopDeckEffect"
+              "$type": "SVESimulator.RevealTopDeckEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
