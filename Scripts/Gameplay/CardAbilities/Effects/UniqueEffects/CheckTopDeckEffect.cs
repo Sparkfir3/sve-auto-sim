@@ -78,6 +78,8 @@ namespace SVESimulator
         private CheckActionParameters action3 => new CheckActionParameters(checkAction3, checkFilter3, checkAmount3);
         private List<CheckActionParameters> allActions => new() { action1, action2, action3 };
 
+        protected virtual bool ShowTargetingToOpponent => true;
+
         #endregion
 
         // ------------------------------
@@ -127,7 +129,7 @@ namespace SVESimulator
                 {
                     confirmAction?.Invoke(selectedCards);
                     waiting = false;
-                }, cancelAction: _ => waiting = false );
+                }, cancelAction: _ => waiting = false, showTargetingToOpponent: ShowTargetingToOpponent );
                 if(hasSecondaryActions)
                 {
                     for(int i = 0; i < secondaryActionTexts.Count && i < secondaryConfirmActions.Count; i++)

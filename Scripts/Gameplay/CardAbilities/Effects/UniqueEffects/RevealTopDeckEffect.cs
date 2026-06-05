@@ -7,6 +7,10 @@ namespace SVESimulator
 {
     public class RevealTopDeckEffect : CheckTopDeckEffect
     {
+        protected override bool ShowTargetingToOpponent => false;
+
+        // ------------------------------
+
         protected override IEnumerator AddCardsFromDeck(PlayerController player, CardSelectionArea selectionArea, int minCheck, int maxCheck)
         {
             List<CardObject> cards = new();
