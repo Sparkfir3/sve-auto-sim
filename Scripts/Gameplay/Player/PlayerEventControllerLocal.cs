@@ -194,7 +194,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void RevealTopDeck(Action<CardObject> onComplete)
+        public void FlipTopDeckToFaceUp(Action<CardObject> onComplete)
         {
             RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
             CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);

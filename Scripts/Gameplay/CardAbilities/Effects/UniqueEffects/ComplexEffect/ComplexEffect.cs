@@ -194,7 +194,7 @@ namespace SVESimulator
         {
             bool waiting = true;
             RuntimeCard card = null;
-            player.LocalEvents.RevealTopDeck(async revealedCard =>
+            player.LocalEvents.FlipTopDeckToFaceUp(async revealedCard =>
             {
                 await Task.Delay(400);
                 player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
