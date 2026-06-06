@@ -229,12 +229,14 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void RevealTopDeck(List<CardObject> cards)
+        public void RevealTopDeck(CardObject sourceCard, string abilityName, List<CardObject> cards)
         {
             LocalRevealTopDeckMessage msg = new()
             {
                 playerNetId = playerInfo.netId,
-                cardInstanceIds = cards.Select(x => x.RuntimeCard.instanceId).ToArray()
+                cardInstanceIds = cards.Select(x => x.RuntimeCard.instanceId).ToArray(),
+                sourceCardId = sourceCard.RuntimeCard.cardId,
+                sourceAbilityName = abilityName
             };
             NetworkClient.Send(msg);
         }

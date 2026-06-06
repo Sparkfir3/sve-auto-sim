@@ -101,7 +101,7 @@ namespace SVESimulator
 
             // Reveal initial
             selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, minCheck, maxCheck);
-            yield return player.StartCoroutine(AddCardsFromDeck(player, selectionArea, minCheck, maxCheck));
+            yield return player.StartCoroutine(AddCardsFromDeck(player, selectionArea, sourceCardInstanceId, minCheck, maxCheck));
 
             // Perform actions
             foreach(CheckActionParameters action in allActions)
@@ -152,7 +152,7 @@ namespace SVESimulator
             onComplete?.Invoke();
         }
 
-        protected virtual IEnumerator AddCardsFromDeck(PlayerController player, CardSelectionArea selectionArea, int minCheck, int maxCheck)
+        protected virtual IEnumerator AddCardsFromDeck(PlayerController player, CardSelectionArea selectionArea, int sourceCardInstanceId, int minCheck, int maxCheck)
         {
             for(int i = 0; i < minCheck; i++)
             {

@@ -259,7 +259,9 @@ namespace SVESimulator
             OpponentRevealTopDeckMessage revealMsg = new()
             {
                 playerNetId = msg.playerNetId,
-                cards = msg.cardInstanceIds.Select(x => NetworkingUtils.GetNetCard(deckZone.cards.Find(y => y.instanceId == x))).ToArray()
+                cards = msg.cardInstanceIds.Select(x => NetworkingUtils.GetNetCard(deckZone.cards.Find(y => y.instanceId == x))).ToArray(),
+                sourceCardId = msg.sourceCardId,
+                sourceAbilityName = msg.sourceAbilityName
             };
             server.SafeSendToClient(server.gameState.currentOpponent, revealMsg);
         }

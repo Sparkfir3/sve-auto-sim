@@ -124,7 +124,7 @@ namespace SVESimulator
             }
             selectionArea.Enable(CardSelectionArea.SelectionMode.ViewCardsOppDeck, msg.cards.Length, msg.cards.Length);
             selectionArea.AddFromOpponentDeck(cards);
-            GameUIManager.EffectTargeting.OpenOpponentIsTargeting("test", "test");
+            GameUIManager.EffectTargeting.OpenOpponentIsTargeting(LibraryCardCache.GetName(msg.sourceCardId), LibraryCardCache.GetEffectText(msg.sourceCardId, msg.sourceAbilityName));
         }
 
         public void CloseRevealOpponentTopDeck(OpponentCloseRevealTopDeckMessage msg)

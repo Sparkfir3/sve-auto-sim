@@ -109,12 +109,16 @@ namespace SVESimulator
     {
         public NetworkIdentity playerNetId;
         public int[] cardInstanceIds;
+        public int sourceCardId;
+        public string sourceAbilityName;
     }
 
     public struct OpponentRevealTopDeckMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
         public NetCard[] cards;
+        public int sourceCardId;
+        public string sourceAbilityName;
     }
 
     public struct LocalCloseRevealTopDeckMessage : NetworkMessage
