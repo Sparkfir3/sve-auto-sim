@@ -55,6 +55,8 @@ namespace SVESimulator.UI
 
         // ---
 
+        public bool IsActive { get; private set; }
+
         private Camera cam;
         private PlayerController player;
         private PlayerInputController mainInputController;
@@ -74,6 +76,7 @@ namespace SVESimulator.UI
 
         public void Initialize(ButtonDisplayPosition position = ButtonDisplayPosition.Center)
         {
+            IsActive = false;
             mainInputController = FindObjectOfType<PlayerInputController>();
             cam = Camera.main;
             confirmButton.onClick.AddListener(ConfirmSelection);
@@ -91,6 +94,7 @@ namespace SVESimulator.UI
         public void Open(PlayerController player, int sourceCardInstanceId, string filterFormula, List<string> validLocalZones, List<string> validOppZones, SelectMode mode = SelectMode.Single, ButtonDisplayPosition position = ButtonDisplayPosition.Center)
         {
             // Init
+            IsActive = true;
             this.player = player;
             currentMode = mode;
             mainInputController.allowedInputs = PlayerInputController.InputTypes.None;
@@ -152,6 +156,7 @@ namespace SVESimulator.UI
 
         public void Close()
         {
+            IsActive = false;
             if(!gameObject.activeSelf)
                 return;
 

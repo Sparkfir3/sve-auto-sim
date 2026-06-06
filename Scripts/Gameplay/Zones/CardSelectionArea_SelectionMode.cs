@@ -18,6 +18,7 @@ namespace SVESimulator
             SelectCardsFromDeckAndMove = 11,
 
             // View zone
+            ViewCardsOppDeck = 13,
             ViewCardsCemetery = 5,
             ViewCardsOppCemetery = 6,
             ViewCardsEvolveDeck = 7,

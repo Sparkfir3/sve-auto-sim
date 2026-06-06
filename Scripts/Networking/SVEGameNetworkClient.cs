@@ -74,6 +74,8 @@ namespace SVESimulator
 
             // Other
             NetworkClient.RegisterHandler<OpponentServeAndRaceMessage>(OnOpponentServeAndRace);
+            NetworkClient.RegisterHandler<OpponentRevealTopDeckMessage>(OnOpponentRevealTopDeck);
+            NetworkClient.RegisterHandler<OpponentCloseRevealTopDeckMessage>(OnOpponentCloseRevealTopDeck);
             NetworkClient.RegisterHandler<OpponentAdvanceRngMessage>(OnOpponentAdvanceRng);
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
         }
@@ -95,6 +97,8 @@ namespace SVESimulator
             NetworkClient.UnregisterHandler<OpponentShuffleDeckMessage>();
             NetworkClient.UnregisterHandler<OpponentDiscardRandomCardsMessage>();
             NetworkClient.UnregisterHandler<OpponentFlipTopDeckMessage>();
+            NetworkClient.UnregisterHandler<OpponentRevealTopDeckMessage>();
+            NetworkClient.UnregisterHandler<OpponentCloseRevealTopDeckMessage>();
             NetworkClient.UnregisterHandler<OpponentFlipEvolveDeckCardsMessage>();
 
             // Deck movement
@@ -253,6 +257,24 @@ namespace SVESimulator
                 return;
 
             player.OpponentEvents.FlipTopDeck(msg);
+        }
+
+        private void OnOpponentRevealTopDeck(OpponentRevealTopDeckMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.RevealOpponentTopDeck(msg);
+        }
+
+        private void OnOpponentCloseRevealTopDeck(OpponentCloseRevealTopDeckMessage msg)
+        {
+            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            if(!player)
+                return;
+
+            player.OpponentEvents.CloseRevealOpponentTopDeck(msg);
         }
 
         private void OnOpponentFlipEvolveDeck(OpponentFlipEvolveDeckCardsMessage msg)

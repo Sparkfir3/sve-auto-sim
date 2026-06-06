@@ -194,7 +194,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void RevealTopDeck(Action<CardObject> onComplete)
+        public void FlipTopDeckToFaceUp(Action<CardObject> onComplete)
         {
             RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
             CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
@@ -225,6 +225,27 @@ namespace SVESimulator
                 playerNetId = netIdentity,
                 cardInstanceId = card.RuntimeCard.instanceId,
                 toFaceUp = false
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void RevealTopDeck(CardObject sourceCard, string abilityName, List<CardObject> cards)
+        {
+            LocalRevealTopDeckMessage msg = new()
+            {
+                playerNetId = playerInfo.netId,
+                cardInstanceIds = cards.Select(x => x.RuntimeCard.instanceId).ToArray(),
+                sourceCardId = sourceCard.RuntimeCard.cardId,
+                sourceAbilityName = abilityName
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void CloseRevealTopDeck()
+        {
+            LocalCloseRevealTopDeckMessage msg = new()
+            {
+                playerNetId = playerInfo.netId
             };
             NetworkClient.Send(msg);
         }

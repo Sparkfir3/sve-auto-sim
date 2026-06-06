@@ -78,6 +78,8 @@ namespace SVESimulator
         private CheckActionParameters action3 => new CheckActionParameters(checkAction3, checkFilter3, checkAmount3);
         private List<CheckActionParameters> allActions => new() { action1, action2, action3 };
 
+        protected virtual bool ShowTargetingToOpponent => true;
+
         #endregion
 
         // ------------------------------
@@ -89,7 +91,7 @@ namespace SVESimulator
             player.StartCoroutine(ResolveOverTime(player, sourceCardInstanceId, sourceCardZone, onComplete));
         }
 
-        private IEnumerator ResolveOverTime(PlayerController player, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
+        protected IEnumerator ResolveOverTime(PlayerController player, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
             // Init
             SVEFormulaParser.ParseValueAsMinMax(amount, player, out int minCheck, out int maxCheck);
@@ -99,11 +101,7 @@ namespace SVESimulator
 
             // Reveal initial
             selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, minCheck, maxCheck);
-            for(int i = 0; i < minCheck; i++)
-            {
-                selectionArea.AddCardFromTopDeck();
-                yield return new WaitForSeconds(selectionArea.AddRemoveCardDelay);
-            }
+            yield return player.StartCoroutine(AddCardsFromDeck(player, selectionArea, sourceCardInstanceId, minCheck, maxCheck));
 
             // Perform actions
             foreach(CheckActionParameters action in allActions)
@@ -131,7 +129,7 @@ namespace SVESimulator
                 {
                     confirmAction?.Invoke(selectedCards);
                     waiting = false;
-                }, cancelAction: _ => waiting = false );
+                }, cancelAction: _ => waiting = false, showTargetingToOpponent: ShowTargetingToOpponent );
                 if(hasSecondaryActions)
                 {
                     for(int i = 0; i < secondaryActionTexts.Count && i < secondaryConfirmActions.Count; i++)
@@ -150,8 +148,20 @@ namespace SVESimulator
             selectionArea.Disable();
             player.InputController.allowedInputs = player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             player.ZoneController.handZone.SetAllCardsInteractable(player.isActivePlayer);
+            OnCompleteInternal(player);
             onComplete?.Invoke();
         }
+
+        protected virtual IEnumerator AddCardsFromDeck(PlayerController player, CardSelectionArea selectionArea, int sourceCardInstanceId, int minCheck, int maxCheck)
+        {
+            for(int i = 0; i < minCheck; i++)
+            {
+                selectionArea.AddCardFromTopDeck();
+                yield return new WaitForSeconds(selectionArea.AddRemoveCardDelay);
+            }
+        }
+
+        protected virtual void OnCompleteInternal(PlayerController player) { }
 
         #endregion
 
@@ -197,7 +207,7 @@ namespace SVESimulator
                             player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
                         }
                     };
-                    maxSelect = Mathf.Min(maxSelect, 5 - player.ZoneController.fieldZone.OpenSlotCount());
+                    maxSelect = Mathf.Min(maxSelect, player.ZoneController.fieldZone.OpenSlotCount());
                     return true;
                 case CheckCardAction.BottomDeck:
                     actionText = "Send to Bottom Deck";

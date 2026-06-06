@@ -61,7 +61,7 @@ namespace SVESimulator
                 }
 
                 string token = function.NextWord(pointerL, out pointerR).ToLower();
-                ComplexLog(LogMode.Main, $"Token: {token}\nPointers: {pointerL}, {pointerR}");
+                ComplexLog(LogMode.Main, $"Token: {token}");
                 pointerL = pointerR;
                 switch(token)
                 {
@@ -109,7 +109,7 @@ namespace SVESimulator
         private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
         {
             string variableName = function.NextWord(pointerL, out pointerL);
-            ComplexLog(LogMode.Value, $"Variable Name = {variableName}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"Variable Name = {variableName}");
             if(!function.NextWord(pointerL, out pointerL).Trim().Equals("="))
             {
                 pointerR = pointerL;
@@ -120,14 +120,14 @@ namespace SVESimulator
             if(pointerR < pointerL)
                 pointerR = function.Length - 1;
             string line = function[pointerL..pointerR].Trim();
-            ComplexLog(LogMode.Value, $"Line = {line}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"Line = {line}");
 
             Task<string> task = ParseValue(line, variables);
             yield return new WaitUntil(() => task.IsCompleted);
             string value = task.Result;
 
             variables[variableName] = value;
-            ComplexLog(LogMode.Value, $"var {variableName} = {value}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Value, $"var {variableName} = {value}");
         }
 
         private async Task<string> ParseValue(string line, Dictionary<string, string> variables)
@@ -194,7 +194,7 @@ namespace SVESimulator
         {
             bool waiting = true;
             RuntimeCard card = null;
-            player.LocalEvents.RevealTopDeck(async revealedCard =>
+            player.LocalEvents.FlipTopDeckToFaceUp(async revealedCard =>
             {
                 await Task.Delay(400);
                 player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
@@ -283,24 +283,24 @@ namespace SVESimulator
         private IEnumerator PerformEffect(Dictionary<string, string> variables, bool ignoreCosts = false, Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
-            ComplexLog(LogMode.Perform, $"Effect Name = {effectName}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Perform, $"Effect Name = {effectName}");
 
             string arguments = function[pointerR..].TextInsideBraces(out _, out int pointerEffectR);
             pointerR += pointerEffectR;
-            ComplexLog(LogMode.Perform, $"Args: {arguments}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Perform, $"Args: {arguments}");
             pointerL = pointerR;
 
             string overrideAmount = null;
             if(!arguments.IsNullOrWhiteSpace())
             {
                 string token = arguments.NextWord(0, out int argPointer);
-                ComplexLog(LogMode.Perform, $"Token: {token}\nPointers: {pointerL}, {pointerR}");
+                ComplexLog(LogMode.Perform, $"Token: {token}");
                 switch(token)
                 {
                     case "amount":
                         arguments.NextWord(argPointer, out argPointer); // move past '='
                         overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim(), variables);
-                        ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}\nPointers: {pointerL}, {pointerR}");
+                        ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}");
                         break;
                     default:
                         break;
@@ -327,7 +327,7 @@ namespace SVESimulator
             string ifTrue = splitB[0].Trim();
             string ifFalse = splitB.Length > 1 ? splitB[1].Trim() : null;
             bool isTrue = SVEFormulaParser.ParseValueAsCondition(variable, player, null as RuntimeCard);
-            ComplexLog(LogMode.Perform, $"Condition = {splitA[0]} => {variable} => {isTrue}\nTrue = {ifTrue} // False = {ifFalse}\nPointers: {pointerL}, {pointerR}");
+            ComplexLog(LogMode.Perform, $"Condition = {splitA[0]} => {variable} => {isTrue}\nTrue = {ifTrue} // False = {ifFalse}");
 
             if(isTrue)
                 yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { ifTrue }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone, null);

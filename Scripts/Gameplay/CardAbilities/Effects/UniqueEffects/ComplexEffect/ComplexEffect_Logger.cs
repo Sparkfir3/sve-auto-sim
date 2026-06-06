@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Sparkfire.Utility;
 using UnityEngine;
 
 namespace SVESimulator
@@ -6,7 +8,7 @@ namespace SVESimulator
     public partial class ComplexEffect
     {
         [Flags]
-        private enum LogMode
+        public enum LogMode
         {
             All = ~0,
             None = 0,
@@ -15,12 +17,26 @@ namespace SVESimulator
             Perform = 4,
         }
 
-        private const LogMode LOG_MODE = LogMode.None;
+        private readonly Dictionary<LogMode, Color32> logModeColors = new()
+        {
+            { LogMode.Main,     Color.cyan },
+            { LogMode.Value,    Color.blue },
+            { LogMode.Perform,  new Color32(189, 34, 237, 255) }, // ourple
+        };
+
+        public static LogMode CurrentLogMode { get; set; } = LogMode.None;
+
+        // ------------------------------
 
         private void ComplexLog(LogMode mode, string message)
         {
-            if(LOG_MODE.HasFlag(mode))
-                Debug.Log($"[CE/{mode.ToString()}] {message}");
+            if(CurrentLogMode.HasFlag(mode))
+            {
+                string modePrefix = $"[CE/{mode.ToString()}]";
+                if(logModeColors.TryGetValue(mode, out Color32 color))
+                    modePrefix = $"<color={color.ToHex()}>{modePrefix}</color>";
+                Debug.Log($"{modePrefix} {message}\nPointers: {pointerL}, {pointerR}");
+            }
         }
     }
 }

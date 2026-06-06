@@ -97,6 +97,42 @@ namespace SVESimulator
                 oppZoneController.FlipCardToFaceDown(cardObject);
         }
 
+        public void RevealOpponentTopDeck(OpponentRevealTopDeckMessage msg)
+        {
+            CardSelectionArea selectionArea = localZoneController.selectionArea;
+            if(selectionArea.IsActive)
+            {
+                Debug.LogError($"Selection area was open while opponent is revealing top deck!" +
+                    $"\nThis should never happen unless a debug effect is going on. Errors may occur.");
+                selectionArea.Disable();
+            }
+
+            List<RuntimeCard> cards = new();
+            foreach(NetCard card in msg.cards)
+            {
+                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                if(cardObject)
+                {
+                    cards.Add(cardObject.RuntimeCard);
+                }
+                else
+                {
+                    RuntimeCard runtimeCard = new RuntimeCard();
+                    InitRuntimeCard(ref runtimeCard, card);
+                    cards.Add(runtimeCard);
+                }
+            }
+            selectionArea.Enable(CardSelectionArea.SelectionMode.ViewCardsOppDeck, msg.cards.Length, msg.cards.Length);
+            selectionArea.AddFromOpponentDeck(cards);
+            EffectTargetingUI.OpponentTargeting.OpenOpponentIsTargeting(LibraryCardCache.GetName(msg.sourceCardId), LibraryCardCache.GetEffectText(msg.sourceCardId, msg.sourceAbilityName),
+                displayPosition: ButtonDisplayPosition.Top);
+        }
+
+        public void CloseRevealOpponentTopDeck(OpponentCloseRevealTopDeckMessage msg)
+        {
+            localZoneController.selectionArea.Disable();
+        }
+
         public void FlipEvolveDeckCards(OpponentFlipEvolveDeckCardsMessage msg)
         {
             List<CardObject> cardsToFlip = new();
@@ -606,13 +642,6 @@ namespace SVESimulator
 
             sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove);
 
-            foreach(Cost cost in costList)
-            {
-                if(cost is EngageSelfCost)
-                {
-                    CardManager.Animator.RotateCard(card, SVEProperties.CardEngagedRotation);
-                }
-            }
             for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
             {
                 CardObject cardToMove = CardManager.Instance.GetCardByInstanceId(msg.cardsMoveToZoneData[i].cardInstanceId);

@@ -277,7 +277,7 @@ namespace SVESimulator.SveScript
 
             // Unique effect parameters
             SearchDeckAction,
-            CheckCardActions,
+            CheckCardActions, // parser includes "amount" field as part of this
             CreateTokenOption,
 
             // Effect names
@@ -444,6 +444,7 @@ namespace SVESimulator.SveScript
             { "ComplexEffect", new EffectParams("ComplexEffect",                            false, false, EffectParameterType.Function) },
             { "ExtraTurn", new EffectParams("ExtraTurnEffect",                              false, false) },
             { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
+            { "RevealTop", new EffectParams("RevealTopDeckEffect",                          false, false, EffectParameterType.CheckCardActions) },
 
             // ------------------------------
 

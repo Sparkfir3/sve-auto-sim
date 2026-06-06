@@ -744,8 +744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetZoneScreen: {fileID: 9096927613071231459}
   targetCardScreen: {fileID: 9077631353669023569}
-  opponentTargetingPopup: {fileID: 6218453549178529619}
-  opponentCardTextbox: {fileID: 2994652358032020715}
+  opponentTargetingScreen: {fileID: 7736819554914193153}
 --- !u!1 &3634839372541592928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1440,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 949.45, y: 106.92}
+  m_SizeDelta: {x: 949.45, y: 106.91998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1640394874331033202
 MonoBehaviour:
@@ -2156,8 +2155,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5370709577786715239}
+  - component: {fileID: 7736819554914193153}
   m_Layer: 5
-  m_Name: WaitingOnOpponentPopup
+  m_Name: OpponentTargeting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2183,6 +2183,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7736819554914193153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218453549178529619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a3f01786dd21e84dba6f0b17781f500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDisplayPosition: 0
+  displayPositions:
+    serializedPairs:
+    - key: 0
+      value:
+        textPosition: 0
+        textAnchor: {x: 0.5, y: 0.5}
+        textPivot: {x: 0.5, y: 0.5}
+        buttonPosition: 0
+        buttonAnchor: {x: 0.5, y: 0.5}
+        buttonPivot: {x: 0.5, y: 0.5}
+    - key: 1
+      value:
+        textPosition: -175
+        textAnchor: {x: 0.5, y: 1}
+        textPivot: {x: 0.5, y: 1}
+        buttonPosition: 0
+        buttonAnchor: {x: 0.5, y: 0.5}
+        buttonPivot: {x: 0.5, y: 0.5}
+  opponentTargetingPopup: {fileID: 7695258596762600710}
+  opponentCardTextbox: {fileID: 2994652358032020715}
 --- !u!1 &6390172392019620824
 GameObject:
   m_ObjectHideFlags: 0

@@ -161,6 +161,10 @@ namespace SVESimulator
                     break;
 
                 // Opponent zone modes
+                case SelectionMode.ViewCardsOppDeck:
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        Player.OppZoneController.SendCardToTopDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
+                    break;
                 case SelectionMode.SelectCardsFromOppHand:
                     for(int i = 0; i < cardsToMove.Count; i++)
                         Player.OppZoneController.AddCardToHand(cardsToMove[i], delay: i * AddRemoveCardDelay);
@@ -223,6 +227,7 @@ namespace SVESimulator
                 case SelectionMode.SelectCardsFromCemetery:
                 case SelectionMode.SelectCardsFromOppHand:
                 case SelectionMode.SelectCardsFromEvolveDeck:
+                case SelectionMode.ViewCardsOppDeck:
                 case SelectionMode.ViewCardsCemetery:
                 case SelectionMode.ViewCardsOppCemetery:
                 case SelectionMode.ViewCardsEvolveDeck:
@@ -332,11 +337,15 @@ namespace SVESimulator
             MoveCardsToSelectionArea(cardsToMove);
         }
 
-        public void AddCardFromTopDeck()
+        public void AddCardFromTopDeck() => AddCardFromTopDeck(out _);
+        public void AddCardFromTopDeck(out CardObject card)
         {
             int currentCount = FilledSlotCount();
             if(currentCount >= maxSlotCount)
+            {
+                card = null;
                 return;
+            }
             if(currentCount >= minSlotCount)
             {
                 if(currentCount < cardSlots.Count)
@@ -347,21 +356,15 @@ namespace SVESimulator
             }
 
             RuntimeCard runtimeCard = zoneController.deckZone.Runtime.cards[FilledSlotCount()];
-            CardObject cardObject = zoneController.CreateNewCardObjectTopDeck(runtimeCard);
-            MoveCardToSelectionArea(cardObject);
+            card = zoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            MoveCardToSelectionArea(card);
         }
 
         public void AddAllCardsInDeck()
         {
             Debug.Assert(minSlotCount >= zoneController.deckZone.Runtime.cards.Count);
             List<RuntimeCard> cardsInZone = new(zoneController.deckZone.Runtime.cards);
-            MoveCardsToSelectionAreaWithInstantiate(cardsInZone, runtimeCard =>
-            {
-                CardObject cardObject = CardManager.Instance.RequestCard(runtimeCard);
-                cardObject.transform.SetPositionAndRotation(zoneController.deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation);
-                cardObject.CurrentZone = zoneController.deckZone;
-                return cardObject;
-            });
+            MoveCardsToSelectionAreaWithInstantiate(cardsInZone, runtimeCard => zoneController.CreateNewCardObjectTopDeck(runtimeCard));
             SetScrollViewTintActive(true);
         }
 
@@ -408,6 +411,12 @@ namespace SVESimulator
         {
             List<CardObject> cardsToMove = new(Player.OppZoneController.handZone.AllCards);
             MoveCardsToSelectionArea(cardsToMove);
+        }
+
+        public void AddFromOpponentDeck(List<RuntimeCard> cardsToMove)
+        {
+            MoveCardsToSelectionAreaWithInstantiate(cardsToMove, runtimeCard => Player.OppZoneController.CreateNewCardObjectTopDeck(runtimeCard));
+            SetScrollViewTintActive(true);
         }
 
         public void AddOpponentCemetery()
@@ -551,7 +560,7 @@ namespace SVESimulator
         {
             zoneController.MoveCardToSelectionArea(card, delay: delay, rearrangeHand: false);
         }
-        
+
         private void SetScrollViewTintActive(bool active)
         {
             scrollViewTint.alpha = active ? 1f : 0f;

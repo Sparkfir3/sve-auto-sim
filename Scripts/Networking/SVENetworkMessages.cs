@@ -105,6 +105,32 @@ namespace SVESimulator
         public bool toFaceUp;
     }
 
+    public struct LocalRevealTopDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+        public int sourceCardId;
+        public string sourceAbilityName;
+    }
+
+    public struct OpponentRevealTopDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetCard[] cards;
+        public int sourceCardId;
+        public string sourceAbilityName;
+    }
+
+    public struct LocalCloseRevealTopDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+    }
+
+    public struct OpponentCloseRevealTopDeckMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+    }
+
     public struct LocalFlipEvolveDeckCardsMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;

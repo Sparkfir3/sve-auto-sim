@@ -25,12 +25,15 @@ namespace SVESimulator
         [SerializeField, Required]
         private SVEEffectPool effectPool;
 
-        [Title("Data"), SerializeField, ReadOnly]
+        [TitleGroup("Data"), SerializeField, ReadOnly]
         private List<SerializedPassive> registeredPassives = new();
+
+        [TitleGroup("Debugging"), ShowInInspector, ReadOnly, HideInEditorMode]
+        private ComplexEffect.LogMode complexEffectLogMode => ComplexEffect.CurrentLogMode;
 
         // ------------------------------
 
-        [Title("Buttons"), Button, DisableInEditorMode]
+        [TitleGroup("Controls"), Button, DisableInEditorMode]
         public void ConfirmationTiming()
         {
             effectPool.CmdExecuteConfirmationTiming();
@@ -53,13 +56,19 @@ namespace SVESimulator
         }
 
 #if UNITY_EDITOR
-        [Button("Update Passives"), DisableInEditorMode]
+        [TitleGroup("Controls"), Button("Update Passives"), DisableInEditorMode]
         private void OnValidate()
         {
             if(!effectPool)
                 effectPool = GetComponent<SVEEffectPool>();
             if(Application.isPlaying)
                 UpdatePassives();
+        }
+
+        [TitleGroup("Debugging"), Button]
+        private void ToggleComplexEffectLogs()
+        {
+            ComplexEffect.CurrentLogMode = ComplexEffect.CurrentLogMode == ComplexEffect.LogMode.None ? ComplexEffect.LogMode.All : ComplexEffect.LogMode.None;
         }
 #endif
     }

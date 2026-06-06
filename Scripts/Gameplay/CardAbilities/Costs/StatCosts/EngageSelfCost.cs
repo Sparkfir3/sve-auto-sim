@@ -19,7 +19,7 @@ namespace SVESimulator
 
         public override IEnumerator PayCost(PlayerController player, CardObject card, string abilityName, List<MoveCardToZoneData> cardsToMove)
         {
-            CardManager.Animator.RotateCard(card, SVEProperties.CardEngagedRotation);
+            card.SetEngaged();
             yield return null;
         }
     }

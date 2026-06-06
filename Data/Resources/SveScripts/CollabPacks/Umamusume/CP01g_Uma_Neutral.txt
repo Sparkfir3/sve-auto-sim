@@ -43,7 +43,7 @@ ability Spell name Shuffle {
     effect ShuffleDeck();
 }
 ability Spell name Reveal {
-    effect CheckTop(6, (Field, !St(Umamusume), m(0,5)), (Hand));
+    effect RevealTop(6, (Field, !St(Umamusume), m(0,5)), (Hand));
 }
 
 // ------------------------------

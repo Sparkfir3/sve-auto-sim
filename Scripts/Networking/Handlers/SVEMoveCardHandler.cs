@@ -26,6 +26,8 @@ namespace SVESimulator
             NetworkServer.RegisterHandler<LocalShuffleDeckMessage>(OnShuffleDeck);
             NetworkServer.RegisterHandler<LocalDiscardRandomCardsMessage>(OnDiscardRandomCards);
             NetworkServer.RegisterHandler<LocalFlipTopDeckMessage>(OnFlipTopDeck);
+            NetworkServer.RegisterHandler<LocalRevealTopDeckMessage>(OnRevealTopDeck);
+            NetworkServer.RegisterHandler<LocalCloseRevealTopDeckMessage>(OnCloseRevealTopDeck);
             NetworkServer.RegisterHandler<LocalFlipEvolveDeckCardsMessage>(OnFlipEvolveDeck);
 
             // Deck movement
@@ -72,6 +74,8 @@ namespace SVESimulator
             NetworkServer.UnregisterHandler<LocalShuffleDeckMessage>();
             NetworkServer.UnregisterHandler<LocalDiscardRandomCardsMessage>();
             NetworkServer.UnregisterHandler<LocalFlipTopDeckMessage>();
+            NetworkServer.UnregisterHandler<LocalRevealTopDeckMessage>();
+            NetworkServer.UnregisterHandler<LocalCloseRevealTopDeckMessage>();
             NetworkServer.UnregisterHandler<LocalFlipEvolveDeckCardsMessage>();
 
             // Deck movement
@@ -245,6 +249,30 @@ namespace SVESimulator
                 toFaceUp = msg.toFaceUp
             };
             server.SafeSendToClient(server.gameState.currentOpponent, flipMsg);
+        }
+
+        private void OnRevealTopDeck(NetworkConnection conn, LocalRevealTopDeckMessage msg)
+        {
+            PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
+            RuntimeZone deckZone = player.namedZones[SVEProperties.Zones.Deck];
+
+            OpponentRevealTopDeckMessage revealMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                cards = msg.cardInstanceIds.Select(x => NetworkingUtils.GetNetCard(deckZone.cards.Find(y => y.instanceId == x))).ToArray(),
+                sourceCardId = msg.sourceCardId,
+                sourceAbilityName = msg.sourceAbilityName
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, revealMsg);
+        }
+
+        private void OnCloseRevealTopDeck(NetworkConnection conn, LocalCloseRevealTopDeckMessage msg)
+        {
+            OpponentCloseRevealTopDeckMessage closeMsg = new()
+            {
+                playerNetId = msg.playerNetId
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, closeMsg);
         }
 
         private void OnFlipEvolveDeck(NetworkConnection conn, LocalFlipEvolveDeckCardsMessage msg)
