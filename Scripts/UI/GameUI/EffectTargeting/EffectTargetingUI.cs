@@ -12,14 +12,12 @@ namespace SVESimulator.UI
         private EffectTargetZoneScreen targetZoneScreen;
         [SerializeField]
         private EffectTargetCardScreen targetCardScreen;
-
-        [Title("Opponent Targeting"), SerializeField]
-        private GameObject opponentTargetingPopup;
         [SerializeField]
-        private TextMeshProUGUI opponentCardTextbox;
+        private OpponentTargetingScreen opponentTargetingScreen;
 
         public static EffectTargetZoneScreen TargetZone => GameUIManager.EffectTargeting.targetZoneScreen;
         public static EffectTargetCardScreen TargetCard => GameUIManager.EffectTargeting.targetCardScreen;
+        public static OpponentTargetingScreen OpponentTargeting => GameUIManager.EffectTargeting.opponentTargetingScreen;
 
         // ------------------------------
 
@@ -29,21 +27,8 @@ namespace SVESimulator.UI
             targetZoneScreen.Close();
             targetCardScreen.Initialize();
             targetCardScreen.Close();
-        }
-
-        public void OpenOpponentIsTargeting(string cardName, string effectText)
-        {
-            opponentTargetingPopup.SetActive(true);
-            opponentCardTextbox.text = $"{(string.IsNullOrWhiteSpace(cardName) ? "" : $"<b>{cardName}</b>")}" +
-                $"{(string.IsNullOrWhiteSpace(effectText) || string.IsNullOrWhiteSpace(cardName) ? "" : $" - ")}" +
-                $"{effectText}";
-            GameUIManager.QuickTiming.SetAlpha(0f); // TODO - better solution for overlapping popups
-        }
-
-        public void CloseOpponentIsTargeting()
-        {
-            opponentTargetingPopup.SetActive(false);
-            GameUIManager.QuickTiming.SetAlpha(1f);
+            opponentTargetingScreen.Initialize();
+            opponentTargetingScreen.gameObject.SetActive(false);
         }
     }
 }

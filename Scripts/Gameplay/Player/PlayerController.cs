@@ -207,7 +207,7 @@ namespace SVESimulator
             LocalEvents.SetGamePhase(SVEProperties.GamePhase.Main); // TODO - start phase
 
             // Failsafe Calls
-            GameUIManager.EffectTargeting.CloseOpponentIsTargeting();
+            EffectTargetingUI.OpponentTargeting.CloseOpponentIsTargeting();
             LocalEvents.OnFinishSpell = null;
 
             // Start turn

@@ -40,7 +40,7 @@ namespace SVESimulator.UI
         [TargetRpc]
         private void TargetRpcShowOpponentTargeting(NetworkConnectionToClient networkConnection, string cardName, string effectText)
         {
-            GameUIManager.EffectTargeting.OpenOpponentIsTargeting(cardName, effectText);
+            EffectTargetingUI.OpponentTargeting.OpenOpponentIsTargeting(cardName, effectText);
         }
 
         [Command(requiresAuthority = false)]
@@ -52,7 +52,7 @@ namespace SVESimulator.UI
         [TargetRpc]
         private void TargetRpcCloseOpponentTargeting(NetworkConnectionToClient networkConnection)
         {
-            GameUIManager.EffectTargeting.CloseOpponentIsTargeting();
+            EffectTargetingUI.OpponentTargeting.CloseOpponentIsTargeting();
         }
     }
 }
