@@ -27,12 +27,6 @@ namespace SVESimulator
             networkManager.ServerChangeScene(gameplayScene);
         }
 
-        [TitleGroup("Debug"), Button, HideInEditorMode]
-        public void AddLocalPlayer()
-        {
-            NetworkClient.AddPlayer();
-        }
-
         // ------------------------------
 
 #if UNITY_EDITOR
