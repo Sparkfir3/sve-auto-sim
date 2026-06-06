@@ -1,15 +1,17 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
-using System.Collections;
 using CCGKit;
 using Mirror;
 
 namespace SVESimulator
 {
+    [RequireComponent(typeof(NetworkSceneManager))]
     public class SVEGameNetworkManager : NetworkManager
     {
         public static SVEGameNetworkManager Instance { get; private set; }
         public static SteamLobby SteamLobby { get; private set; }
+        public static NetworkSceneManager SceneManager { get; private set; }
+
+        // ------------------------------
 
         public override void Awake()
         {
@@ -21,6 +23,7 @@ namespace SVESimulator
             }
             Instance = this;
             SteamLobby = GetComponent<SteamLobby>();
+            SceneManager = GetComponent<NetworkSceneManager>();
         }
 
         public override void OnDestroy()
@@ -32,6 +35,8 @@ namespace SVESimulator
                 SteamLobby = null;
             }
         }
+
+        // ------------------------------
 
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
