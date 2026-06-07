@@ -56,6 +56,15 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
+        public void PerformAction(MainMenuAction action)
+        {
+            if(transitions.TryGetValue(action, out MainMenuTransition transition))
+            {
+                StopAllCoroutines();
+                StartCoroutine(ExecuteTransition(transition));
+            }
+        }
+
         [TitleGroup("Debug"), Button, DisableInEditorMode]
         private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)
         {
@@ -69,11 +78,7 @@ namespace SVESimulator.UI
                 }
             }
 
-            if(transitions.TryGetValue(action, out MainMenuTransition transition))
-            {
-                StopAllCoroutines();
-                StartCoroutine(ExecuteTransition(transition));
-            }
+            PerformAction(action);
             OnButtonClicked?.Invoke(button);
         }
 

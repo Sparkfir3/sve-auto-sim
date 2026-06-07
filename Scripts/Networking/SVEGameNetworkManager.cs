@@ -11,6 +11,8 @@ namespace SVESimulator
         public static SteamLobby SteamLobby { get; private set; }
         public static NetworkSceneManager SceneManager { get; private set; }
 
+        public static bool IsSteam => SteamLobby != null;
+
         // ------------------------------
 
         public override void Awake()

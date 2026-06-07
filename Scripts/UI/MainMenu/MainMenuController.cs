@@ -11,6 +11,8 @@ namespace SVESimulator.UI
         [SerializeField]
         private MainMenuView mainMenuView;
         [SerializeField]
+        private GameObject networkManagerSteam;
+        [SerializeField]
         private GameObject networkManagerKcp;
         [SerializeField]
         private DeckSelectionController deckSelectionController;
@@ -43,6 +45,10 @@ namespace SVESimulator.UI
                 case MainMenuButton.PlayLocalJoin:
                     StartLocalClient();
                     break;
+                case MainMenuButton.BackToMain:
+                    if(SVEGameNetworkManager.Instance.isNetworkActive)
+                        SVEGameNetworkManager.Instance.StopHost();
+                    break;
                 case MainMenuButton.Quit:
                     QuitGame();
                     break;
@@ -62,12 +68,13 @@ namespace SVESimulator.UI
             StartCoroutine(StartHostCoroutine());
             IEnumerator StartHostCoroutine()
             {
-                if(SVEGameNetworkManager.Instance)
+                if(SVEGameNetworkManager.IsSteam)
                 {
                     Destroy(SVEGameNetworkManager.Instance.gameObject);
                     yield return null;
+                    Instantiate(networkManagerKcp);
+                    yield return null;
                 }
-                Instantiate(networkManagerKcp);
                 SVEGameNetworkManager.Instance.StartHost();
             }
         }
@@ -78,15 +85,16 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             StopAllCoroutines();
-            StartCoroutine(StartHostCoroutine());
-            IEnumerator StartHostCoroutine()
+            StartCoroutine(StartClientCoroutine());
+            IEnumerator StartClientCoroutine()
             {
-                if(SVEGameNetworkManager.Instance)
+                if(SVEGameNetworkManager.IsSteam)
                 {
                     Destroy(SVEGameNetworkManager.Instance.gameObject);
                     yield return null;
+                    Instantiate(networkManagerKcp);
+                    yield return null;
                 }
-                Instantiate(networkManagerKcp);
                 SVEGameNetworkManager.Instance.StartClient();
             }
         }
@@ -99,21 +107,44 @@ namespace SVESimulator.UI
 
         public void HostSteamLobby()
         {
-            if(!SVEGameNetworkManager.SteamLobby.IsSteamConnected || !TryLoadSelectedDeck())
+            if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
+            StartCoroutine(StartHostCoroutine());
+            IEnumerator StartHostCoroutine()
+            {
+                if(!SVEGameNetworkManager.IsSteam)
+                {
+                    Destroy(SVEGameNetworkManager.Instance.gameObject);
+                    yield return null;
+                    Instantiate(networkManagerSteam);
+                    yield return null;
+                }
+                SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
+            }
         }
 
         public void JoinSteamLobby()
         {
-            if(!SVEGameNetworkManager.SteamLobby.IsSteamConnected || !TryLoadSelectedDeck())
+            if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
+            StartCoroutine(StartClientCoroutine());
+            IEnumerator StartClientCoroutine()
             {
-                SteamMatchmaking.JoinLobby(lobbyID);
-            });
+                if(!SVEGameNetworkManager.IsSteam)
+                {
+                    Destroy(SVEGameNetworkManager.Instance.gameObject);
+                    yield return null;
+                    Instantiate(networkManagerSteam);
+                    yield return null;
+                }
+                SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
+                {
+                    SteamMatchmaking.JoinLobby(lobbyID);
+                });
+            }
+
         }
 
         #endregion
