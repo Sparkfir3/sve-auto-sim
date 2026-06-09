@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using CCGKit;
 using Mirror;
@@ -11,7 +12,10 @@ namespace SVESimulator
         public static SteamLobby SteamLobby { get; private set; }
         public static NetworkSceneManager SceneManager { get; private set; }
 
+        public static int ConnectedPlayerCount => NetworkServer.connections.Count;
         public static bool IsSteam => SteamLobby != null;
+
+        public static event Action OnPlayerConnected;
 
         // ------------------------------
 
@@ -46,6 +50,7 @@ namespace SVESimulator
             Server server = FindObjectOfType<Server>();
             if(server)
                 server.OnPlayerConnected(conn.connectionId);
+            OnPlayerConnected?.Invoke();
         }
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
@@ -54,6 +59,11 @@ namespace SVESimulator
             Server server = FindObjectOfType<Server>();
             if(server)
                 server.OnPlayerDisconnected(conn.connectionId);
+        }
+
+        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        {
+            base.OnServerAddPlayer(conn);
         }
     }
 }

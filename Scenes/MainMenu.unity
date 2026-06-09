@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28af64f4682f06a49b21812bea78613b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  <CurrentState>k__BackingField: 0
   transitions:
     serializedPairs:
     - key: 0

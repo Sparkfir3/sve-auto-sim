@@ -9,8 +9,8 @@ namespace SVESimulator.UI
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Title("Runtime Data"), SerializeField]
-        private MainMenuViewState currentState;
+        [field: Title("Runtime Data"), SerializeField]
+        public MainMenuViewState CurrentState { get; private set; }
 
         [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
@@ -70,7 +70,7 @@ namespace SVESimulator.UI
         {
             if(action == MainMenuAction.Back)
             {
-                MainMenuAction newAction = currentState.BackAction();
+                MainMenuAction newAction = CurrentState.BackAction();
                 if(newAction != MainMenuAction.Back)
                 {
                     OnButtonClickedInternal(button, newAction);
@@ -98,7 +98,7 @@ namespace SVESimulator.UI
 
         private IEnumerator ExecuteTransition(MainMenuTransition transition)
         {
-            OnStateExit?.Invoke(currentState);
+            OnStateExit?.Invoke(CurrentState);
             transition.OnStartTransition?.Invoke();
             foreach(MainMenuTransitionCardStartPosition startData in transition.StartPositions)
             {
@@ -115,8 +115,8 @@ namespace SVESimulator.UI
             if(transition.MoveActionsSecondary.Count > 0)
                 yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActionsSecondary));
 
-            currentState = transition.TargetMenuState;
-            OnStateEnter?.Invoke(currentState);
+            CurrentState = transition.TargetMenuState;
+            OnStateEnter?.Invoke(CurrentState);
             transition.OnEndTransition?.Invoke();
 
             IEnumerator ExecuteMoveActionSequence(List<MainMenuTransitionMoveCardAction> actions)
