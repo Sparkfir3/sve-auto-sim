@@ -73,6 +73,12 @@ MonoBehaviour:
     moveType: 0
     toFaceUp: 1
     isActive: 0
+  - <TargetButton>k__BackingField: 9
+    <TargetPosition>k__BackingField: 11
+    <PostDelay>k__BackingField: 0
+    moveType: 0
+    toFaceUp: 1
+    isActive: 0
   <TargetMenuState>k__BackingField: 0
   <OnEndTransition>k__BackingField:
     m_PersistentCalls:

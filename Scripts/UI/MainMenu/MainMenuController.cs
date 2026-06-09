@@ -49,6 +49,9 @@ namespace SVESimulator.UI
                     if(SVEGameNetworkManager.Instance.isNetworkActive)
                         SVEGameNetworkManager.Instance.StopHost();
                     break;
+                case MainMenuButton.StartGame:
+                    SVEGameNetworkManager.SceneManager.LoadGameplay();
+                    break;
                 case MainMenuButton.Quit:
                     QuitGame();
                     break;
