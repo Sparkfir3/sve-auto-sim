@@ -68,6 +68,7 @@ namespace SVESimulator.UI
                 MainMenuViewState.PlayOnline => MainMenuAction.PlayOnlineBack,
                 MainMenuViewState.PlayLocal => MainMenuAction.PlayLocalBack,
                 MainMenuViewState.ConnectingLocal => MainMenuAction.Disconnect,
+                MainMenuViewState.ReadyLocal => MainMenuAction.Disconnect,
                 _ => MainMenuAction.Other
             };
         }

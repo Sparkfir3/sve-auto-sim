@@ -1,5 +1,6 @@
 using System.Collections;
 using CCGKit;
+using Mirror;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Steamworks;
@@ -27,12 +28,16 @@ namespace SVESimulator.UI
             deckSelectionController.Initialize();
             deckSelectionController.OnSelectDeck += () => selectDeckError.SetActive(false);
             mainMenuView.OnButtonClicked += HandleButtonClicked;
-            SVEGameNetworkManager.OnPlayerConnected += HandlePlayerConnected;
+            SVEGameNetworkManager.OnPlayerConnected += HandlePlayerConnectedToServer;
+            SVEGameNetworkManager.OnPlayerDisconnected += HandlePlayerDisconnectedFromServer;
+            SVEGameNetworkManager.OnLocalDisconnect += HandleLocalPlayerDisconnected;
         }
 
         private void OnDestroy()
         {
-            SVEGameNetworkManager.OnPlayerConnected -= HandlePlayerConnected;
+            SVEGameNetworkManager.OnPlayerConnected -= HandlePlayerConnectedToServer;
+            SVEGameNetworkManager.OnPlayerDisconnected -= HandlePlayerDisconnectedFromServer;
+            SVEGameNetworkManager.OnLocalDisconnect -= HandleLocalPlayerDisconnected;
         }
 
         private void HandleButtonClicked(MainMenuButton button)
@@ -68,10 +73,22 @@ namespace SVESimulator.UI
 
         #region General Networking
 
-        private void HandlePlayerConnected()
+        private void HandlePlayerConnectedToServer(NetworkConnectionToClient conn)
         {
             if(SVEGameNetworkManager.ConnectedPlayerCount >= 2 && mainMenuView.CurrentState == MainMenuViewState.ConnectingLocal)
                 mainMenuView.PerformAction(MainMenuAction.ReadyLocal);
+        }
+
+        private void HandlePlayerDisconnectedFromServer(NetworkConnectionToClient conn)
+        {
+            if(mainMenuView.CurrentState == MainMenuViewState.ReadyLocal && conn.connectionId != 0) // other user disconnect
+                mainMenuView.PerformAction(MainMenuAction.Back);
+        }
+
+        private void HandleLocalPlayerDisconnected()
+        {
+            if(mainMenuView.CurrentState is MainMenuViewState.ConnectingLocal or MainMenuViewState.ReadyLocal)
+                mainMenuView.PerformAction(MainMenuAction.Back);
         }
 
         #endregion

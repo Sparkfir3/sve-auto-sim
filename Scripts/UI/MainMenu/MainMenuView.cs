@@ -58,6 +58,15 @@ namespace SVESimulator.UI
 
         public void PerformAction(MainMenuAction action)
         {
+            if(action == MainMenuAction.Back)
+            {
+                MainMenuAction newAction = CurrentState.BackAction();
+                if(newAction != MainMenuAction.Back)
+                {
+                    PerformAction(newAction);
+                    return;
+                }
+            }
             if(transitions.TryGetValue(action, out MainMenuTransition transition))
             {
                 StopAllCoroutines();

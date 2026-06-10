@@ -15,7 +15,9 @@ namespace SVESimulator
         public static int ConnectedPlayerCount => NetworkServer.connections.Count;
         public static bool IsSteam => SteamLobby != null;
 
-        public static event Action OnPlayerConnected;
+        public static event Action<NetworkConnectionToClient> OnPlayerConnected;
+        public static event Action<NetworkConnectionToClient> OnPlayerDisconnected;
+        public static event Action OnLocalDisconnect;
 
         // ------------------------------
 
@@ -50,7 +52,7 @@ namespace SVESimulator
             Server server = FindObjectOfType<Server>();
             if(server)
                 server.OnPlayerConnected(conn.connectionId);
-            OnPlayerConnected?.Invoke();
+            OnPlayerConnected?.Invoke(conn);
         }
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
@@ -59,11 +61,13 @@ namespace SVESimulator
             Server server = FindObjectOfType<Server>();
             if(server)
                 server.OnPlayerDisconnected(conn.connectionId);
+            OnPlayerDisconnected?.Invoke(conn);
         }
 
-        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        public override void OnClientDisconnect()
         {
-            base.OnServerAddPlayer(conn);
+            base.OnClientDisconnect();
+            OnLocalDisconnect?.Invoke();
         }
     }
 }
