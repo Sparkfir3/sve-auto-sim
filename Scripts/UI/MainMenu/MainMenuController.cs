@@ -82,7 +82,7 @@ namespace SVESimulator.UI
         private void HandlePlayerDisconnectedFromServer(NetworkConnectionToClient conn)
         {
             if(mainMenuView.CurrentState == MainMenuViewState.ReadyLocal && conn.connectionId != 0) // other user disconnect
-                mainMenuView.PerformAction(MainMenuAction.Back);
+                mainMenuView.PerformAction(MainMenuAction.OppDisconnected);
         }
 
         private void HandleLocalPlayerDisconnected()

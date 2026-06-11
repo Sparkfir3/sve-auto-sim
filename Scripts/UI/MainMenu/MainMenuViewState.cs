@@ -35,6 +35,7 @@ namespace SVESimulator.UI
         Disconnect          = 5,
         ConnectingLocal     = 6,
         ReadyLocal          = 7,
+        OppDisconnected     = 8,
     }
 
     public enum MainMenuCardPosition
