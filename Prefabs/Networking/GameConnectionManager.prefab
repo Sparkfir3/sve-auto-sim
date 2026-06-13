@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6337af2410f821946a837eb752dc5d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsConnected>k__BackingField: 0
+  <IsHost>k__BackingField: 0
