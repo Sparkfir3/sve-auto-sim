@@ -23,14 +23,14 @@ namespace SVESimulator.UI
                 onClose?.Invoke();
                 Close();
             });
-            GameUIManager.Instance.SetPrimaryMenusVisible(false);
+            GameUIManager.Instance.SetMainGameplayMenusVisible(false);
             gameObject.SetActive(true);
         }
 
         public void Close()
         {
             gameObject.SetActive(false);
-            GameUIManager.Instance.SetPrimaryMenusVisible(true);
+            GameUIManager.Instance.SetMainGameplayMenusVisible(true);
             button.ResetButton();
         }
     }

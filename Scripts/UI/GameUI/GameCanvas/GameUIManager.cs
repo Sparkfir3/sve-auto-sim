@@ -7,61 +7,73 @@ namespace SVESimulator.UI
     [DefaultExecutionOrder(-5000)]
     public class GameUIManager : Singleton<GameUIManager>
     {
-        [Title("Core Game UI"), SerializeField]
+        [Title("Main Controls"), SerializeField]
+        private GameControlsUI gameControlsUI;
+
+        [Title("Setup Menus"), SerializeField]
+        private CanvasGroup setupMenuGroup;
+        [SerializeField]
         private SelectGoingFirstScreen goingFirstScreen;
         [SerializeField]
         private MulliganScreen mulliganScreen;
-        [SerializeField]
-        private CardInfoDisplay cardInfoDisplay;
-        [SerializeField]
-        private WinLoseDisplay winLoseDisplay;
-        [SerializeField]
-        private GameControlsUI gameControlsUI;
-        [SerializeField]
-        private PauseMenuController pauseMenu;
 
-        [Title("Primary Menus"), SerializeField]
-        private CanvasGroup primaryMenusCanvasGroup;
-        [SerializeField]
-        private ActivateEffectWindow activateEffectWindow;
+        [Title("Main Game Info"), SerializeField]
+        private CardInfoDisplay cardInfoDisplay;
+
+        [Title("Gameplay Menus"), SerializeField]
+        private CanvasGroup mainGameplayMenuGroup;
         [SerializeField]
         private QuickTimingDisplay quickTimingDisplay;
+        [SerializeField]
+        private ActivateEffectWindow activateEffectWindow;
         [SerializeField]
         private MultipleChoiceWindow multipleChoiceWindow;
         [SerializeField]
         private EffectTargetingUI effectTargetingUI;
 
-        [Title("Other"), SerializeField]
+        [Title("Other Game Info"), SerializeField]
         private ViewingZoneWindow viewingZoneWindow;
         [SerializeField]
         private MouseTooltip mouseTooltip;
-        [SerializeField]
+
+        [Title("App State"), SerializeField]
         private DisconnectScreen disconnectScreen;
+        [SerializeField]
+        private PauseMenuController pauseMenu;
+        [SerializeField]
+        private WinLoseDisplay winLoseDisplay;
 
         [Title("Networking Objects"), SerializeField]
         private NetworkedUICalls networkedCalls;
 
         // ------------------------------
 
-        // Core
+        // Controls
+        public static GameControlsUI GameControlsUI => Instance.gameControlsUI;
+
+        // Setup
         public static SelectGoingFirstScreen GoingFirstScreen => Instance.goingFirstScreen;
         public static MulliganScreen MulliganScreen => Instance.mulliganScreen;
-        public static CardInfoDisplay CardInfoDisplay => Instance.cardInfoDisplay;
-        public static WinLoseDisplay WinLoseDisplay => Instance.winLoseDisplay;
-        public static GameControlsUI GameControlsUI => Instance.gameControlsUI;
-        public static PauseMenuController PauseMenu => Instance.pauseMenu;
 
-        // Primary menus
-        public static ActivateEffectWindow ActivateEffect => Instance.activateEffectWindow;
+        // Main Game Info
+        public static CardInfoDisplay CardInfoDisplay => Instance.cardInfoDisplay;
+
+        // Gameplay menus
         public static QuickTimingDisplay QuickTiming => Instance.quickTimingDisplay;
+        public static ActivateEffectWindow ActivateEffect => Instance.activateEffectWindow;
         public static MultipleChoiceWindow MultipleChoice => Instance.multipleChoiceWindow;
         public static EffectTargetingUI EffectTargeting => Instance.effectTargetingUI;
 
-        // Other
+        // Other Game Info
         public static ViewingZoneWindow ViewingZone => Instance.viewingZoneWindow;
         public static MouseTooltip MouseTooltip => Instance.mouseTooltip;
-        public static DisconnectScreen DisconnectScreen => Instance.disconnectScreen;
 
+        // App State
+        public static PauseMenuController PauseMenu => Instance.pauseMenu;
+        public static DisconnectScreen DisconnectScreen => Instance.disconnectScreen;
+        public static WinLoseDisplay WinLoseDisplay => Instance.winLoseDisplay;
+
+        // Other
         public static NetworkedUICalls NetworkedCalls
         {
             get
@@ -78,40 +90,56 @@ namespace SVESimulator.UI
         {
             base.Awake();
 
-            // Core
+            // Controls
+            gameControlsUI.gameObject.SetActive(true);
+
+            // Setup
+            SetSetupMenusVisible(true);
             goingFirstScreen.gameObject.SetActive(false);
             mulliganScreen.Close();
+
+            // Main Game Info
             cardInfoDisplay.Hide();
-            winLoseDisplay.gameObject.SetActive(false);
-            gameControlsUI.gameObject.SetActive(true);
+
+            // Gameplay Menus
+            SetMainGameplayMenusVisible(true);
+            quickTimingDisplay.gameObject.SetActive(false);
+            activateEffectWindow.Close();
+            multipleChoiceWindow.Close();
+            effectTargetingUI.gameObject.SetActive(true);
+
+            // Other Game Info
+            viewingZoneWindow.gameObject.SetActive(false);
+            mouseTooltip.Disable();
+
+            // App State
+            disconnectScreen.gameObject.SetActive(false);
             pauseMenu.gameObject.SetActive(true);
             pauseMenu.ClosePauseMenu();
-
-            // Primary menus
-            SetPrimaryMenusVisible(true);
-            activateEffectWindow.Initialize();
-            activateEffectWindow.Close();
-            quickTimingDisplay.gameObject.SetActive(false);
-            multipleChoiceWindow.Initialize();
-            multipleChoiceWindow.Close();
-            effectTargetingUI.Initialize();
-            effectTargetingUI.gameObject.SetActive(true);
-            viewingZoneWindow.gameObject.SetActive(false);
-
-            // Other
-            mouseTooltip.Disable();
+            winLoseDisplay.gameObject.SetActive(false);
         }
 
         public void Initialize(PlayerController player)
         {
             gameControlsUI.Initialize(player);
+            activateEffectWindow.Initialize();
+            multipleChoiceWindow.Initialize();
+            effectTargetingUI.Initialize();
         }
 
-        public void SetPrimaryMenusVisible(bool visible)
+        // ------------------------------
+
+        public void SetSetupMenusVisible(bool visible)
         {
-            primaryMenusCanvasGroup.alpha = visible ? 1f : 0f;
-            primaryMenusCanvasGroup.blocksRaycasts = visible;
-            primaryMenusCanvasGroup.interactable = visible;
+            setupMenuGroup.alpha = visible ? 1f : 0f;
+            setupMenuGroup.ignoreParentGroups = visible;
+        }
+
+        public void SetMainGameplayMenusVisible(bool visible)
+        {
+            mainGameplayMenuGroup.alpha = visible ? 1f : 0f;
+            mainGameplayMenuGroup.blocksRaycasts = visible;
+            mainGameplayMenuGroup.interactable = visible;
         }
     }
 }
