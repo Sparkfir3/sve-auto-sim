@@ -28,7 +28,7 @@ namespace SVESimulator.UI
             OpenInternal();
         }
 
-        public void Disable()
+        public void SetNotVisible()
         {
             canvasGroup.alpha = 0f;
         }

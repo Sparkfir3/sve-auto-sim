@@ -13,7 +13,7 @@ namespace SVESimulator.UI
 
         public void WinGame()
         {
-            GameUIManager.DisconnectScreen.Disable();
+            GameUIManager.DisconnectScreen.SetNotVisible();
             gameObject.SetActive(true);
             winDisplay.SetActive(true);
             loseDisplay.SetActive(false);
@@ -21,7 +21,7 @@ namespace SVESimulator.UI
 
         public void LoseGame()
         {
-            GameUIManager.DisconnectScreen.Disable();
+            GameUIManager.DisconnectScreen.SetNotVisible();
             gameObject.SetActive(true);
             winDisplay.SetActive(false);
             loseDisplay.SetActive(true);
