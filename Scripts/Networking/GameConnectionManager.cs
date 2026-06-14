@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Mirror;
+using SVESimulator.UI;
 
 namespace SVESimulator
 {
@@ -77,7 +78,7 @@ namespace SVESimulator
         private void HandleLocalDisconnected()
         {
             Debug.Log("Local Disconnected");
-            // TODO - UI
+            GameUIManager.DisconnectScreen.OpenLocalDisconnect();
         }
 
         private void HandleOpponentDisconnected()
@@ -85,7 +86,7 @@ namespace SVESimulator
             if(!NetworkClient.isConnected)
                 return;
             Debug.Log("Opponent Disconnected");
-            // TODO - UI
+            GameUIManager.DisconnectScreen.OpenOpponentDisconnect();
         }
 
         #endregion

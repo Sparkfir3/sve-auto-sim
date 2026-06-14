@@ -17,6 +17,8 @@ namespace SVESimulator.UI
         private WinLoseDisplay winLoseDisplay;
         [SerializeField]
         private GameControlsUI gameControlsUI;
+        [SerializeField]
+        private PauseMenuController pauseMenu;
 
         [Title("Primary Menus"), SerializeField]
         private CanvasGroup primaryMenusCanvasGroup;
@@ -33,6 +35,8 @@ namespace SVESimulator.UI
         private ViewingZoneWindow viewingZoneWindow;
         [SerializeField]
         private MouseTooltip mouseTooltip;
+        [SerializeField]
+        private DisconnectScreen disconnectScreen;
 
         [Title("Networking Objects"), SerializeField]
         private NetworkedUICalls networkedCalls;
@@ -45,6 +49,7 @@ namespace SVESimulator.UI
         public static CardInfoDisplay CardInfoDisplay => Instance.cardInfoDisplay;
         public static WinLoseDisplay WinLoseDisplay => Instance.winLoseDisplay;
         public static GameControlsUI GameControlsUI => Instance.gameControlsUI;
+        public static PauseMenuController PauseMenu => Instance.pauseMenu;
 
         // Primary menus
         public static ActivateEffectWindow ActivateEffect => Instance.activateEffectWindow;
@@ -55,6 +60,7 @@ namespace SVESimulator.UI
         // Other
         public static ViewingZoneWindow ViewingZone => Instance.viewingZoneWindow;
         public static MouseTooltip MouseTooltip => Instance.mouseTooltip;
+        public static DisconnectScreen DisconnectScreen => Instance.disconnectScreen;
 
         public static NetworkedUICalls NetworkedCalls
         {
@@ -78,6 +84,8 @@ namespace SVESimulator.UI
             cardInfoDisplay.Hide();
             winLoseDisplay.gameObject.SetActive(false);
             gameControlsUI.gameObject.SetActive(true);
+            pauseMenu.gameObject.SetActive(true);
+            pauseMenu.ClosePauseMenu();
 
             // Primary menus
             SetPrimaryMenusVisible(true);

@@ -62,13 +62,14 @@ namespace SVESimulator
             pauseContainer.SetActive(false);
         }
 
-        private void ReturnToMainMenu()
+        public void ReturnToMainMenu()
         {
             GameConnectionManager connectionManager = FindObjectOfType<GameConnectionManager>(); // TODO - singleton/static reference or better Find logic
             if(connectionManager)
                 connectionManager.DisableDisconnectEvents();
 
             NetworkManager.singleton.StopHost();
+            NetworkManager.singleton.StopServer();
             SteamMatchmaking.LeaveLobby(new CSteamID(SteamLobby.CurrentLobbyID));
             quitTransition.Transition();
         }
