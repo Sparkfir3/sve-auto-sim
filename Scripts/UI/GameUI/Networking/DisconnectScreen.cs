@@ -19,13 +19,13 @@ namespace SVESimulator.UI
         public void OpenLocalDisconnect()
         {
             textBox.text = localDisconnectText;
-            gameObject.SetActive(true);
+            OpenInternal();
         }
 
         public void OpenOpponentDisconnect()
         {
             textBox.text = oppDisconnectText;
-            gameObject.SetActive(true);
+            OpenInternal();
         }
 
         public void Disable()
@@ -36,6 +36,16 @@ namespace SVESimulator.UI
         public void ReturnToMainMenu()
         {
             GameUIManager.PauseMenu.ReturnToMainMenu();
+        }
+
+        // ------------------------------
+
+        private void OpenInternal()
+        {
+            GameUIManager.Instance.SetSetupMenusVisible(false);
+            GameUIManager.Instance.SetMainGameplayMenusVisible(false);
+            GameUIManager.ViewingZone.gameObject.SetActive(false);
+            gameObject.SetActive(true);
         }
     }
 }
