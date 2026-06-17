@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Net.Sockets;
 using CCGKit;
 using Mirror;
 using UnityEngine;
@@ -51,7 +53,7 @@ namespace SVESimulator.UI
                     JoinSteamLobby();
                     break;
                 case MainMenuButton.PlayLocalHost:
-                    StartLocalHost();
+                    StartLocalHost(onStartSuccess: () => mainMenuView.PerformAction(MainMenuAction.Connecting));
                     break;
                 case MainMenuButton.PlayLocalJoin:
                     StartLocalClient();
@@ -97,24 +99,25 @@ namespace SVESimulator.UI
 
         #region Local Networking
 
-        public void StartLocalHost()
+        public void StartLocalHost(Action onStartSuccess = null, Action onStartFail = null)
         {
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            StopAllCoroutines();
-            StartCoroutine(StartHostCoroutine());
-            IEnumerator StartHostCoroutine()
+            InitKcpNetworkManager(() =>
             {
-                if(SVEGameNetworkManager.IsSteam)
+                try
                 {
-                    Destroy(SVEGameNetworkManager.Instance.gameObject);
-                    yield return null;
-                    Instantiate(networkManagerKcp);
-                    yield return null;
+                    SVEGameNetworkManager.Instance.StartHost();
                 }
-                SVEGameNetworkManager.Instance.StartHost();
-            }
+                catch(SocketException e)
+                {
+                    Debug.Log($"Attempted to start new a LAN connection instance when one is already active.\n{e.ToString()}");
+                    onStartFail?.Invoke();
+                    return;
+                }
+                onStartSuccess?.Invoke();
+            });
         }
 
         public void StartLocalClient()
@@ -122,18 +125,28 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            StopAllCoroutines();
-            StartCoroutine(StartClientCoroutine());
-            IEnumerator StartClientCoroutine()
+            InitKcpNetworkManager(() =>
             {
-                if(SVEGameNetworkManager.IsSteam)
-                {
-                    Destroy(SVEGameNetworkManager.Instance.gameObject);
-                    yield return null;
-                    Instantiate(networkManagerKcp);
-                    yield return null;
-                }
                 SVEGameNetworkManager.Instance.StartClient();
+            });
+        }
+
+        private void InitKcpNetworkManager(Action onComplete)
+        {
+            if(!SVEGameNetworkManager.IsSteam)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+            StopAllCoroutines();
+            StartCoroutine(ClientCoroutine());
+            IEnumerator ClientCoroutine()
+            {
+                Destroy(SVEGameNetworkManager.Instance.gameObject);
+                yield return null;
+                Instantiate(networkManagerKcp);
+                yield return null;
+                onComplete?.Invoke();
             }
         }
 
