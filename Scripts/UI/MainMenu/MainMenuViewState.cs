@@ -2,12 +2,12 @@ namespace SVESimulator.UI
 {
     public enum MainMenuViewState
     {
-        Main = 0,
-        PlayOnline = 1,
-        PlayLocal = 2,
-        Disconnect = 3,
-        ConnectingLocal = 4,
-        ReadyLocal = 5,
+        Main            = 0,
+        PlayOnline      = 1,
+        PlayLocal       = 2,
+        Disconnect      = 3,
+        Connecting      = 4,
+        ReadyToStart    = 5,
     }
 
     public enum MainMenuButton
@@ -33,8 +33,8 @@ namespace SVESimulator.UI
         PlayOnlineBack      = 3,
         PlayLocalBack       = 4,
         Disconnect          = 5,
-        ConnectingLocal     = 6,
-        ReadyLocal          = 7,
+        Connecting          = 6,
+        ReadyToStart        = 7,
         OppDisconnected     = 8,
     }
 
@@ -68,8 +68,8 @@ namespace SVESimulator.UI
             {
                 MainMenuViewState.PlayOnline => MainMenuAction.PlayOnlineBack,
                 MainMenuViewState.PlayLocal => MainMenuAction.PlayLocalBack,
-                MainMenuViewState.ConnectingLocal => MainMenuAction.Disconnect,
-                MainMenuViewState.ReadyLocal => MainMenuAction.Disconnect,
+                MainMenuViewState.Connecting => MainMenuAction.Disconnect,
+                MainMenuViewState.ReadyToStart => MainMenuAction.Disconnect,
                 _ => MainMenuAction.Other
             };
         }

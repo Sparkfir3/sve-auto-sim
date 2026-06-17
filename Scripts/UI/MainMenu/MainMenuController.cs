@@ -75,19 +75,19 @@ namespace SVESimulator.UI
 
         private void HandlePlayerConnectedToServer(NetworkConnectionToClient conn)
         {
-            if(SVEGameNetworkManager.ConnectedPlayerCount >= 2 && mainMenuView.CurrentState == MainMenuViewState.ConnectingLocal)
-                mainMenuView.PerformAction(MainMenuAction.ReadyLocal);
+            if(SVEGameNetworkManager.ConnectedPlayerCount >= 2 && mainMenuView.CurrentState == MainMenuViewState.Connecting)
+                mainMenuView.PerformAction(MainMenuAction.ReadyToStart);
         }
 
         private void HandlePlayerDisconnectedFromServer(NetworkConnectionToClient conn)
         {
-            if(mainMenuView.CurrentState == MainMenuViewState.ReadyLocal && conn.connectionId != 0) // other user disconnect
+            if(mainMenuView.CurrentState == MainMenuViewState.ReadyToStart && conn.connectionId != 0) // other user disconnect
                 mainMenuView.PerformAction(MainMenuAction.OppDisconnected);
         }
 
         private void HandleLocalPlayerDisconnected()
         {
-            if(mainMenuView.CurrentState is MainMenuViewState.ConnectingLocal or MainMenuViewState.ReadyLocal)
+            if(mainMenuView.CurrentState is MainMenuViewState.Connecting or MainMenuViewState.ReadyToStart)
                 mainMenuView.PerformAction(MainMenuAction.Back);
         }
 
