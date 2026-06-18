@@ -17,6 +17,7 @@ namespace SVESimulator
 
         public static event Action<NetworkConnectionToClient> OnPlayerConnected;
         public static event Action<NetworkConnectionToClient> OnPlayerDisconnected;
+        public static event Action OnLocalConnect;
         public static event Action OnLocalDisconnect;
 
         // ------------------------------
@@ -62,6 +63,12 @@ namespace SVESimulator
             if(server)
                 server.OnPlayerDisconnected(conn.connectionId);
             OnPlayerDisconnected?.Invoke(conn);
+        }
+
+        public override void OnClientConnect()
+        {
+            base.OnClientConnect();
+            OnLocalConnect?.Invoke();
         }
 
         public override void OnClientDisconnect()

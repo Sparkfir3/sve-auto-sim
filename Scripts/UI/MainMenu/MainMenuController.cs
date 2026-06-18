@@ -11,6 +11,8 @@ namespace SVESimulator.UI
 {
     public class MainMenuController : MonoBehaviour
     {
+        [field: SerializeField]
+        public bool IsConnecting { get; private set; }
         [SerializeField]
         private MainMenuView mainMenuView;
         [SerializeField]
@@ -22,6 +24,8 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject selectDeckError;
 
+        private Action onNextConnectionToServer;
+
         // ------------------------------
 
         private void Start()
@@ -32,6 +36,7 @@ namespace SVESimulator.UI
             mainMenuView.OnButtonClicked += HandleButtonClicked;
             SVEGameNetworkManager.OnPlayerConnected += HandlePlayerConnectedToServer;
             SVEGameNetworkManager.OnPlayerDisconnected += HandlePlayerDisconnectedFromServer;
+            SVEGameNetworkManager.OnLocalConnect += HandleLocalPlayerConnected;
             SVEGameNetworkManager.OnLocalDisconnect += HandleLocalPlayerDisconnected;
         }
 
@@ -39,6 +44,7 @@ namespace SVESimulator.UI
         {
             SVEGameNetworkManager.OnPlayerConnected -= HandlePlayerConnectedToServer;
             SVEGameNetworkManager.OnPlayerDisconnected -= HandlePlayerDisconnectedFromServer;
+            SVEGameNetworkManager.OnLocalConnect -= HandleLocalPlayerConnected;
             SVEGameNetworkManager.OnLocalDisconnect -= HandleLocalPlayerDisconnected;
         }
 
@@ -46,21 +52,40 @@ namespace SVESimulator.UI
         {
             switch(button)
             {
+                // Connecting
                 case MainMenuButton.PlayOnlineHost:
+                    if(IsConnecting)
+                        return;
+                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     HostSteamLobby();
                     break;
                 case MainMenuButton.PlayOnlineJoin:
+                    if(IsConnecting)
+                        return;
+                    // TODO - loading icon
+                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     JoinSteamLobby();
                     break;
                 case MainMenuButton.PlayLocalHost:
+                    if(IsConnecting)
+                        return;
+                    onNextConnectionToServer = null;
                     StartLocalHost(onStartSuccess: () => mainMenuView.PerformAction(MainMenuAction.Connecting));
                     break;
                 case MainMenuButton.PlayLocalJoin:
+                    if(IsConnecting)
+                        return;
+                    // TODO - loading icon
+                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     StartLocalClient();
                     break;
+
+                // Other
                 case MainMenuButton.BackToMain:
                     if(SVEGameNetworkManager.Instance.isNetworkActive)
                         SVEGameNetworkManager.Instance.StopHost();
+                    onNextConnectionToServer = null;
+                    IsConnecting = false;
                     break;
                 case MainMenuButton.StartGame:
                     SVEGameNetworkManager.SceneManager.LoadGameplay();
@@ -73,7 +98,7 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        #region General Networking
+        #region Networking Events
 
         private void HandlePlayerConnectedToServer(NetworkConnectionToClient conn)
         {
@@ -83,12 +108,20 @@ namespace SVESimulator.UI
 
         private void HandlePlayerDisconnectedFromServer(NetworkConnectionToClient conn)
         {
-            if(mainMenuView.CurrentState == MainMenuViewState.ReadyToStart && conn.connectionId != 0) // other user disconnect
+            if(NetworkClient.active && mainMenuView.CurrentState == MainMenuViewState.ReadyToStart && conn.connectionId != 0) // other user disconnect
                 mainMenuView.PerformAction(MainMenuAction.OppDisconnected);
+        }
+
+        private void HandleLocalPlayerConnected()
+        {
+            IsConnecting = false;
+            onNextConnectionToServer?.Invoke();
+            onNextConnectionToServer = null;
         }
 
         private void HandleLocalPlayerDisconnected()
         {
+            IsConnecting = false;
             if(mainMenuView.CurrentState is MainMenuViewState.Connecting or MainMenuViewState.ReadyToStart)
                 mainMenuView.PerformAction(MainMenuAction.Back);
         }
@@ -104,6 +137,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
+            IsConnecting = false;
             InitKcpNetworkManager(() =>
             {
                 try
@@ -125,6 +159,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
+            IsConnecting = false;
             InitKcpNetworkManager(() =>
             {
                 SVEGameNetworkManager.Instance.StartClient();
@@ -161,6 +196,7 @@ namespace SVESimulator.UI
             if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
+            IsConnecting = false;
             StartCoroutine(StartHostCoroutine());
             IEnumerator StartHostCoroutine()
             {
@@ -180,6 +216,7 @@ namespace SVESimulator.UI
             if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
+            IsConnecting = false;
             StartCoroutine(StartClientCoroutine());
             IEnumerator StartClientCoroutine()
             {
