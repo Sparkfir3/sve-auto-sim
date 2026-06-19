@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static SVESimulator.SveScript.SveScriptData;
 
 namespace SVESimulator.SveScript
@@ -11,7 +12,9 @@ namespace SVESimulator.SveScript
             string[] words = text.Trim().Split(new string[] {", ", " "}, StringSplitOptions.RemoveEmptyEntries);
             foreach(string word in words)
             {
-                cardInfo.keywords.Add(GetKeyword(word));
+                Keyword keyword = GetKeyword(word);
+                if(!cardInfo.keywords.Any(x => x.Equals(keyword)))
+                    cardInfo.keywords.Add(keyword);
             }
         }
 
@@ -22,7 +25,7 @@ namespace SVESimulator.SveScript
 
         // ------------------------------
 
-        public readonly struct Keyword
+        public readonly struct Keyword : IEquatable<Keyword>
         {
             public readonly int keywordId;
             public readonly int valueId;
@@ -31,6 +34,11 @@ namespace SVESimulator.SveScript
             {
                 this.keywordId = keywordId;
                 this.valueId = valueId;
+            }
+
+            public bool Equals(Keyword other)
+            {
+                return keywordId == other.keywordId && valueId == other.valueId;
             }
 
             public override string ToString()
