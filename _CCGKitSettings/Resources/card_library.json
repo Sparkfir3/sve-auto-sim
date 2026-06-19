@@ -5383,7 +5383,16 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -5747,7 +5756,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -6077,7 +6091,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -6658,7 +6677,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -7028,6 +7052,10 @@
           {
             "keywordId": 0,
             "valueId": 0
+          },
+          {
+            "keywordId": 0,
+            "valueId": 9
           }
         ],
         "abilities": [
@@ -24143,7 +24171,16 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -24808,7 +24845,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {
@@ -24931,7 +24973,12 @@
             "modifiers": []
           }
         ],
-        "keywords": [],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
         "abilities": [
           {
             "trigger": {

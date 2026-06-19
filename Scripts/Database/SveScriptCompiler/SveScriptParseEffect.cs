@@ -11,9 +11,10 @@ namespace SVESimulator.SveScript
     {
         #region Parse Effect
 
-        public static JObject ParseAbilityEffect(in string text, out string effectCcgType)
+        public static JObject ParseAbilityEffect(in string text, out string effectCcgType, out string keywords)
         {
             JObject effectData = new();
+            keywords = null;
 
             // Get args
             int rightPointer = text.IndexOf('(');
@@ -58,6 +59,10 @@ namespace SVESimulator.SveScript
                 effectData.TryAdd("target", "Self");
             if(effectParams.hasFilter)
                 effectData.TryAdd("filter", null);
+
+            // Get Evolve keyword
+            if(effectType.Equals("Evolve") && effectData.TryGetValue("target", out JToken target) && target.ToString().Equals("Self"))
+                keywords = "Evolve";
 
             // Init parse main args
             string[] argsArray = SplitArgsArray(mainEffectArgs);

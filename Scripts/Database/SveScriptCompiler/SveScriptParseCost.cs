@@ -9,9 +9,10 @@ namespace SVESimulator.SveScript
 {
     internal static partial class SveScriptAbilityCompiler
     {
-        private static List<JObject> ParseAbilityCosts(in string text)
+        private static List<JObject> ParseAbilityCosts(in string text, out string keywords)
         {
             List<JObject> costs = new();
+            keywords = null;
             int leftPointer = text.IndexOf('(');
             if(leftPointer == -1)
                 return costs;
@@ -52,6 +53,7 @@ namespace SVESimulator.SveScript
                         newCost.Add("target",        "TargetPlayerCard");
                         newCost.Add("filter",        "A");
                         newCost.Add("$type",         "SVESimulator.RemoveCountersCost");
+                        keywords = "EarthRite";
                         break;
 
                     // Stat Costs

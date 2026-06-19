@@ -51,12 +51,14 @@ namespace SVESimulator.SveScript
             { "Bane",                       new Keyword(0, 6) },
             { "Aura",                       new Keyword(0, 7) },
             { "Quick",                      new Keyword(0, 8) },
+            { "EarthRite",                  new Keyword(0, 9) },
 
-            // Racing (TODO: Evolve)
+            // Racing
             { "serve",                      new Keyword(1, 7) },
             { "serve1",                     new Keyword(1, 7) },
             { "serve2",                     new Keyword(1, 8) },
-            { "serve3",                     new Keyword(1, 9) },
+            { "serve3",                     new Keyword(1, 9) }, // 10 = IsRacing
+            { "Evolve",                     new Keyword(1, 11) },
 
             // Passive Abilities
             { "IgnoreWard",                 new Keyword(1, 0) },
