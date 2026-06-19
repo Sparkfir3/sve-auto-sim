@@ -532,9 +532,6 @@
             "effect": {
               "effectName1": "Storm",
               "effectName2": "Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -823,9 +820,6 @@
             "effect": {
               "effectName1": "Single",
               "effectName2": "All",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -1409,9 +1403,6 @@
             "effect": {
               "effectName1": "Defense",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -1554,9 +1545,6 @@
             "effect": {
               "effectName1": "Destroy",
               "effectName2": "Opponent Summon",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -1665,9 +1653,6 @@
             "effect": {
               "effectName1": "Return to Hand",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -2203,9 +2188,6 @@
             "effect": {
               "effectName1": "Field",
               "effectName2": "EX",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -2980,9 +2962,6 @@
             "effect": {
               "effectName1": "Stats",
               "effectName2": "Aura",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -3327,9 +3306,6 @@
               "amount": "2",
               "effectName1": "Ward",
               "effectName2": "Engage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
@@ -3423,8 +3399,6 @@
               "effectName1": "Viking",
               "effectName2": "Steelclad Knight",
               "effectName3": "Knight",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -4367,10 +4341,6 @@
               "createTokenOption": "Field",
               "amount": "1",
               "effectName1": "Storm",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
@@ -5197,9 +5167,6 @@
             "effect": {
               "effectName1": "Give +1/+1",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5292,9 +5259,6 @@
             "effect": {
               "effectName1": "Deal Damage",
               "effectName2": "Knight",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5432,9 +5396,6 @@
             "effect": {
               "effectName1": "Damage Follower",
               "effectName2": "Damage Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -5464,9 +5425,6 @@
             "effect": {
               "effectName1": "Damage Follower",
               "effectName2": "Damage Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -6132,9 +6090,6 @@
             "effect": {
               "effectName1": "Guardform Golem",
               "effectName2": "Strikeform Golem",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -6178,9 +6133,6 @@
             "effect": {
               "effectName1": "Guardform Golem",
               "effectName2": "Strikeform Golem",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -6719,9 +6671,6 @@
             "effect": {
               "effectName1": "Tokens",
               "effectName2": "Earth Rite",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -6879,9 +6828,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Play Point",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7096,9 +7042,6 @@
             "effect": {
               "effectName1": "Earth Rite",
               "effectName2": "Token",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -7115,9 +7058,6 @@
             "effect": {
               "effectName1": "Attack",
               "effectName2": "Defense",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7369,9 +7309,6 @@
             "effect": {
               "effectName1": "Token",
               "effectName2": "Stack",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7511,9 +7448,6 @@
             "effect": {
               "effectName1": "Damage Follower",
               "effectName2": "Damage Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -7741,9 +7675,6 @@
             "effect": {
               "effectName1": "Destroy Follower",
               "effectName2": "Damage Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -8228,9 +8159,6 @@
             "effect": {
               "effectName1": "Play Dragon",
               "effectName2": "Play Points",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -8249,9 +8177,6 @@
               "filter": null,
               "effectName1": "Kn(Dragon)",
               "effectName2": "Give Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.PutExToFieldAndTargetEffect"
             },
             "target": null,
@@ -8875,10 +8800,6 @@
             "effect": {
               "amount": "1",
               "effectName1": "Minus Cost",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TopDeckToExAndTargetEffect"
             },
             "target": null,
@@ -9005,9 +8926,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -9148,9 +9066,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -9501,9 +9416,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -10544,9 +10456,6 @@
             "effect": {
               "effectName1": "Single",
               "effectName2": "Double",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -10563,9 +10472,6 @@
             "effect": {
               "effectName1": "Mimi",
               "effectName2": "Coco",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -10582,9 +10488,6 @@
             "effect": {
               "effectName1": "Mimi",
               "effectName2": "Coco",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -10713,9 +10616,6 @@
             "effect": {
               "effectName1": "Mimi",
               "effectName2": "Coco",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11222,9 +11122,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Defense",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11431,9 +11328,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11460,9 +11354,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11785,9 +11676,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -11924,9 +11812,6 @@
             "effect": {
               "effectName1": "Stat",
               "effectName2": "Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -12187,10 +12072,6 @@
               "amount": "1",
               "filter": "Fp(m(0,8))",
               "effectName1": "Ward",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.CemeteryToFieldAndTargetEffect"
             },
             "target": null,
@@ -12272,9 +12153,6 @@
             "effect": {
               "effectName1": "Destroy",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -12624,9 +12502,6 @@
             "effect": {
               "effectName1": "Rush",
               "effectName2": "Mill",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -13212,9 +13087,6 @@
             "effect": {
               "effectName1": "Self Damage",
               "effectName2": "Opponent Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -13575,9 +13447,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Defense",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -14659,8 +14528,6 @@
               "effectName1": "Destroy",
               "effectName2": "Defense",
               "effectName3": "Draw",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -14781,10 +14648,6 @@
               "createTokenOption": "Field",
               "amount": "1",
               "effectName1": "Ward",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
@@ -15379,9 +15242,6 @@
             "effect": {
               "effectName1": "Defense",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -15781,8 +15641,6 @@
               "effectName1": "Atk",
               "effectName2": "Def",
               "effectName3": "Assail",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -16850,8 +16708,6 @@
               "effectName1": "Redraw",
               "effectName2": "OpponentRedraw",
               "effectName3": "DrawMore",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -16967,9 +16823,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -17521,9 +17374,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Bottom Deck",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -18894,9 +18744,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -20479,9 +20326,6 @@
               "filter": "Kn(Crystalia Eve)",
               "effectName1": "AtkDef",
               "effectName2": "Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -20848,9 +20692,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Tokens",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -21391,9 +21232,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Search",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -22543,9 +22381,6 @@
             "effect": {
               "effectName1": "Field",
               "effectName2": "Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -22759,9 +22594,6 @@
             "effect": {
               "effectName1": "DamageEnemy",
               "effectName2": "DamageSelf",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -23295,9 +23127,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Token",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -23542,9 +23371,6 @@
             "effect": {
               "effectName1": "Storm",
               "effectName2": "Bane",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -24078,9 +23904,6 @@
             "effect": {
               "effectName1": "Discard",
               "effectName2": "ExArea",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -24786,9 +24609,6 @@
             "effect": {
               "effectName1": "Hand",
               "effectName2": "TopDeck",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -25003,10 +24823,6 @@
               "createTokenOption": "Field",
               "amount": "1",
               "effectName1": "EarthRite",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.SummonTokenAndTargetEffect"
             },
             "target": null,
@@ -25188,8 +25004,6 @@
               "effectName1": "Damage",
               "effectName2": "Golem",
               "effectName3": "Draw",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseAmountFromList"
             },
             "target": null,
@@ -25343,9 +25157,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -25472,9 +25283,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -25676,9 +25484,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -25947,9 +25752,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -26160,9 +25962,6 @@
             "effect": {
               "effectName1": "Summon",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -26529,8 +26328,6 @@
               "effectName1": "PlayPoints",
               "effectName2": "Defense",
               "effectName3": "Draw",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -27350,9 +27147,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -27785,9 +27579,6 @@
               "filter": "F",
               "effectName1": "DamageFollower",
               "effectName2": "DamageLeader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -28042,9 +27833,6 @@
               "filter": "F",
               "effectName1": "TargetForDef",
               "effectName2": "Destroy",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -28079,10 +27867,6 @@
               "filter": null,
               "amount": "A",
               "effectName1": "Defense",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.PerformWithTargetAmountEffect"
             },
             "target": null,
@@ -28216,9 +28000,6 @@
               "filter": "F",
               "effectName1": "TargetForDef",
               "effectName2": "Destroy",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -28253,10 +28034,6 @@
               "filter": null,
               "amount": "A",
               "effectName1": "Defense",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.PerformWithTargetAmountEffect"
             },
             "target": null,
@@ -29014,9 +28791,6 @@
             "effect": {
               "effectName1": "Summon",
               "effectName2": "AtkDef",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -29269,9 +29043,6 @@
             "effect": {
               "effectName1": "Defense",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -29414,9 +29185,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -29565,9 +29333,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -29809,9 +29574,6 @@
               "amount": "1n(10)2",
               "effectName1": "Cemetery",
               "effectName2": "Tokens",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseAmountFromList"
             },
             "target": null,
@@ -30153,9 +29915,6 @@
             "effect": {
               "effectName1": "Counter",
               "effectName2": "Sequence",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -30192,8 +29951,6 @@
               "effectName1": "Cemetery",
               "effectName2": "Defense",
               "effectName3": "Search",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -30246,10 +30003,6 @@
               "filter": "",
               "searchDeckAction": "ExArea",
               "effectName1": "SetCost",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.SearchDeckAndTargetEffect"
             },
             "target": null,
@@ -30395,10 +30148,6 @@
               "filter": null,
               "amount": "P",
               "effectName1": "Damage",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.PerformWithTargetAmountEffect"
             },
             "target": null,
@@ -30515,9 +30264,6 @@
             "effect": {
               "effectName1": "Token",
               "effectName2": "Defense",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -30572,10 +30318,6 @@
               "filter": null,
               "amount": "P",
               "effectName1": "Damage",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.PerformWithTargetAmountEffect"
             },
             "target": null,
@@ -31970,7 +31712,6 @@
               "effectName2": "Defense",
               "effectName3": "Draw",
               "effectName4": "OppDiscard",
-              "effectName5": null,
               "$type": "SVESimulator.ChooseAmountFromList"
             },
             "target": null,
@@ -32409,9 +32150,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -32645,9 +32383,6 @@
             "effect": {
               "effectName1": "PP",
               "effectName2": "Facedown",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -32681,7 +32416,6 @@
             "type": "Triggered",
             "effect": {
               "filter": "F",
-              "amount": null,
               "$type": "SVESimulator.FlipEvolveDeckFaceDownEffect"
             },
             "target": null,
@@ -32752,10 +32486,6 @@
               "filter": "F",
               "amount": "3~(EF)4",
               "effectName1": "Damage",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequenceWithTargetAmount"
             },
             "target": null,
@@ -33179,9 +32909,6 @@
             "effect": {
               "effectName1": "Destroy",
               "effectName2": "Search",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -33581,9 +33308,6 @@
             "effect": {
               "effectName1": "Follower",
               "effectName2": "Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -33907,9 +33631,6 @@
               "filter": null,
               "effectName1": "AtkDef",
               "effectName2": "Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -34288,9 +34009,6 @@
               "filter": "Fc(Dragon)",
               "effectName1": "Defense",
               "effectName2": "Armed",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -34947,9 +34665,6 @@
             "effect": {
               "effectName1": "Search",
               "effectName2": "Attack",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -35219,9 +34934,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Return",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -35928,9 +35640,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "NoDamage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -36412,9 +36121,6 @@
             "effect": {
               "effectName1": "Atk",
               "effectName2": "Def",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -36516,9 +36222,6 @@
               "filter": "F",
               "effectName1": "Storm",
               "effectName2": "AtkDef",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -36668,9 +36371,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Target",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -36707,9 +36407,6 @@
               "filter": "FXNm(0,1)",
               "effectName1": "Refresh",
               "effectName2": "CantAttack",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -36925,9 +36622,6 @@
             "effect": {
               "effectName1": "TopDeck",
               "effectName2": "Cemetery",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -37898,9 +37592,6 @@
             "effect": {
               "effectName1": "StormOther",
               "effectName2": "StormSelf",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -38065,9 +37756,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -38407,9 +38095,6 @@
             "effect": {
               "effectName1": "Draw",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -38630,10 +38315,6 @@
               "amount": "1",
               "filter": "Sp(m(0,2))",
               "effectName1": "SetCost",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.HandToExAreaAndTargetEffect"
             },
             "target": null,
@@ -38879,9 +38560,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Discard",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -39141,8 +38819,6 @@
               "effectName1": "AtkDef",
               "effectName2": "Draw",
               "effectName3": "Discard",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -39900,9 +39576,6 @@
             "effect": {
               "effectName1": "ExArea",
               "effectName2": "Search",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -40048,9 +39721,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -40152,8 +39822,6 @@
               "effectName1": "Atk",
               "effectName2": "Draw",
               "effectName3": "Atk Seiun",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequence"
             },
             "target": null,
@@ -40433,9 +40101,6 @@
             "effect": {
               "effectName1": "Self",
               "effectName2": "Other",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -41153,9 +40818,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Mill",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -41416,8 +41078,6 @@
               "effectName1": "Destroy",
               "effectName2": "Draw",
               "effectName3": "OppDiscard",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -41597,8 +41257,6 @@
               "effectName1": "AtkDef",
               "effectName2": "Def",
               "effectName3": "Mill",
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -41992,9 +41650,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Mill",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -42259,9 +41914,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Salvage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -43254,9 +42906,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Search",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -43623,9 +43272,6 @@
             "effect": {
               "effectName1": "Atk",
               "effectName2": "Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -43775,9 +43421,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -44061,9 +43704,6 @@
             "effect": {
               "effectName1": "AtkDef",
               "effectName2": "Rush",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -44213,9 +43853,6 @@
             "effect": {
               "effectName1": "Banish",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -44361,9 +43998,6 @@
             "effect": {
               "effectName1": "Destroy",
               "effectName2": "Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -44460,9 +44094,6 @@
             "effect": {
               "effectName1": "Shuffle",
               "effectName2": "Reveal",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -44627,9 +44258,6 @@
             "effect": {
               "effectName1": "Defense",
               "effectName2": "Destroy",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -44777,9 +44405,6 @@
             "effect": {
               "effectName1": "FlipCarrot",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -45575,10 +45200,6 @@
               "filter": "Ft(Umamusume)",
               "amount": "1~(C)2",
               "effectName1": "Atk",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequenceWithTargetAmount"
             },
             "target": null,
@@ -45712,10 +45333,6 @@
               "filter": "Ft(Umamusume)",
               "amount": "1~(C)2",
               "effectName1": "Def",
-              "effectName2": null,
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.TargetForEffectSequenceWithTargetAmount"
             },
             "target": null,
@@ -46180,9 +45797,6 @@
             "effect": {
               "effectName1": "Return Enemy to Hand",
               "effectName2": "Combo 3 - Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -46996,9 +46610,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Token",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -47141,9 +46752,6 @@
             "effect": {
               "effectName1": "Destroy Enemy",
               "effectName2": "Give Storm",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -47444,9 +47052,6 @@
             "effect": {
               "effectName1": "Steelclad Knight",
               "effectName2": "Knight",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -48334,9 +47939,6 @@
             "effect": {
               "effectName1": "Damage Followers",
               "effectName2": "Damage Leader",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -48474,9 +48076,6 @@
             "effect": {
               "effectName1": "Gain Stat",
               "effectName2": "Gain Storm",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -49313,9 +48912,6 @@
             "effect": {
               "effectName1": "Damage Follower",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -49412,9 +49008,6 @@
             "effect": {
               "effectName1": "Guardform Golem",
               "effectName2": "Strikeform Golem",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -49616,9 +49209,6 @@
             "effect": {
               "effectName1": "Increase PP",
               "effectName2": "Draw",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "target": null,
@@ -50807,9 +50397,6 @@
             "effect": {
               "effectName1": "GiveStat",
               "effectName2": "GiveKeyword",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -50972,9 +50559,6 @@
             "effect": {
               "effectName1": "Deal Damage",
               "effectName2": "Leader Defense",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -51372,9 +50956,6 @@
             "effect": {
               "effectName1": "Summon",
               "effectName2": "Damage",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -51872,9 +51453,6 @@
             "effect": {
               "effectName1": "Damage",
               "effectName2": "Mill",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -51965,9 +51543,6 @@
             "effect": {
               "effectName1": "Summon Field",
               "effectName2": "Summon EX",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -52135,9 +51710,6 @@
             "effect": {
               "effectName1": "Damage Leader",
               "effectName2": "Damage Followers",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -52518,9 +52090,6 @@
             "effect": {
               "effectName1": "Banish",
               "effectName2": "Defense",
-              "effectName3": null,
-              "effectName4": null,
-              "effectName5": null,
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
