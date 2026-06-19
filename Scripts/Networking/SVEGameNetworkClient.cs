@@ -155,14 +155,25 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Get Info
+
+        private PlayerController GetPlayer(NetworkIdentity netId)
+            => localPlayers.Find(x => x.netIdentity == netId) as PlayerController;
+
+        private PlayerController GetPlayerOpponent(NetworkIdentity netId)
+            => localPlayers.Find(x => x.netIdentity != netId) as PlayerController;
+
+        #endregion
+
+        // ------------------------------
+
         #region Game Initialization
 
         private void OnOpponentInitDeckAndLeader(OpponentInitDeckAndLeaderMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.InitializeDeckAndLeader(msg);
         }
 
@@ -193,34 +204,31 @@ namespace SVESimulator
 
         private void DoOpponentMulligan(OpponentPerformMulliganMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.Mulligan(msg);
         }
 
         private void OnOpponentUpdateMaxPlayPoints(SetMaxPlayPointsMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SetMaxPlayPoints(msg.maxPlayPoints, msg.updateCurrentPoints, false);
         }
 
         private void OnOpponentUpdateCurrentPlayPoints(SetCurrentPlayPointsMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SetCurrentPlayPoints(msg.currentPlayPoints, false);
         }
 
         private void OnSetGamePhase(SetGamePhaseMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
             player.OpponentEvents.SetGamePhase(msg.phase);
@@ -234,55 +242,49 @@ namespace SVESimulator
 
         private void OnOpponentShuffleDeck(OpponentShuffleDeckMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.ShuffleDeck(msg);
         }
 
         private void OnOpponentDiscardRandomCards(OpponentDiscardRandomCardsMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.DiscardRandomCards(msg);
         }
 
         private void OnOpponentFlipTopDeck(OpponentFlipTopDeckMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.FlipTopDeck(msg);
         }
 
         private void OnOpponentRevealTopDeck(OpponentRevealTopDeckMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.RevealOpponentTopDeck(msg);
         }
 
         private void OnOpponentCloseRevealTopDeck(OpponentCloseRevealTopDeckMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.CloseRevealOpponentTopDeck(msg);
         }
 
         private void OnOpponentFlipEvolveDeck(OpponentFlipEvolveDeckCardsMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.FlipEvolveDeckCards(msg);
         }
 
@@ -294,19 +296,17 @@ namespace SVESimulator
 
         private void OnOpponentDrawCard(OpponentDrawCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.DrawCard(msg);
         }
 
         private void OnOpponentTellOppDrawCard(OpponentTellOppDrawCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             for(int i = 0; i < msg.count; i++)
                 player.LocalEvents.DrawCard();
         }
@@ -319,37 +319,33 @@ namespace SVESimulator
 
         private void OnOpponentPlayCard(OpponentPlayCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.PlayCardToField(msg);
         }
 
         private void OnOpponentCreateToken(OpponentCreateTokenMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.CreateToken(msg);
         }
 
         private void OnOpponentTransformCard(OpponentTransformCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.TransformCard(msg);
         }
 
         private void OnOpponentEvolveCard(OpponentEvolveCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.EvolveCard(msg);
         }
 
@@ -361,64 +357,57 @@ namespace SVESimulator
 
         private void OnOpponentSendCardToCemetery(OpponentSendCardToCemeteryMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SendToCemetery(msg);
         }
 
         private void OnOpponentBanishCard(OpponentBanishCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.BanishCard(msg);
         }
 
         private void OnOpponentDestroyOpponentCard(OpponentDestroyOpponentCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.DestroyOpponentCard(msg);
         }
 
         private void OnOpponentReturnCardToHand(OpponentReturnToHandMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.ReturnCardToHand(msg);
         }
 
         private void OnOpponentSendCardToBottomDeck(OpponentSendToBottomDeckMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SendToBottomDeck(msg);
         }
 
         private void OnOpponentSendCardToTopDeck(OpponentSendToTopDeckMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SendToTopDeck(msg);
         }
 
         private void OnOpponentSendCardToExArea(OpponentSendToExAreaMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SendToExArea(msg);
         }
 
@@ -430,28 +419,25 @@ namespace SVESimulator
 
         private void OnOpponentPlaySpell(OpponentPlaySpellMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.PlaySpell(msg);
         }
 
         private void OnOpponentFinishSpell(OpponentFinishSpellMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.FinishSpell(msg);
         }
 
         private void OnOpponentPayEffectCost(OpponentPayEffectCostMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.PayCostForEffect(msg);
         }
 
@@ -463,28 +449,25 @@ namespace SVESimulator
 
         private void OnOpponentDeclareAttack(OpponentDeclareAttackMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.DeclareAttack(msg);
         }
 
         private void OnOpponentAttackFollower(OpponentAttackFollowerMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.attackingPlayerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.attackingPlayerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.AttackFollower(msg);
         }
 
         private void OnOpponentAttackLeader(OpponentAttackLeaderMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.AttackLeader(msg);
         }
 
@@ -496,37 +479,33 @@ namespace SVESimulator
 
         private void OnOpponentReserveCard(OpponentReserveCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.ReserveCard(msg);
         }
 
         private void OnOpponentEngageCard(OpponentEngageCardMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.EngageCard(msg);
         }
 
         private void OnOpponentSetCardStat(OpponentSetCardStatMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.SetCardStat(msg);
         }
 
         private void OnOpponentApplyCardStatModifier(OpponentCardStatModifierMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.ApplyModifierToCard(msg);
         }
 
@@ -538,10 +517,9 @@ namespace SVESimulator
 
         private void OnOpponentApplyKeyword(OpponentApplyKeywordMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.ApplyKeywordToCard(msg);
         }
 
@@ -553,19 +531,17 @@ namespace SVESimulator
 
         protected void OnOpponentAddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.AddLeaderDefense(msg);
         }
 
         private void OnOpponentAddEvolvePoints(OpponentAddEvolvePointsMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.AddEvolvePoints(msg);
         }
 
@@ -577,28 +553,25 @@ namespace SVESimulator
 
         private void OnOpponentServeAndRace(OpponentServeAndRaceMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.ServeAndRaceCard(msg);
         }
 
         private void OnOpponentAdvanceRng(OpponentAdvanceRngMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.AdvanceRng(msg.rngAdvanceCount);
         }
 
         private void OnOpponentTellOpponentPerformEffect(OpponentTellOpponentPerformEffectMessage msg)
         {
-            PlayerController player = localPlayers.Find(x => x.netIdentity != msg.playerNetId) as PlayerController;
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
             if(!player)
                 return;
-
             player.OpponentEvents.TellPerformEffect(msg);
         }
 
