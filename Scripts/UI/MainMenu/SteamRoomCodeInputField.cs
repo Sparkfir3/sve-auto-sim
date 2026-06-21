@@ -21,6 +21,18 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
+        private void Start()
+        {
+            SVEGameNetworkManager.SteamLobby.OnStartHostLobby += OnStartLobby;
+        }
+
+        private void OnDestroy()
+        {
+            SVEGameNetworkManager.SteamLobby.OnStartHostLobby -= OnStartLobby;
+        }
+
+        // ------------------------------
+
         public void Show(bool clearText = true)
         {
             if(clearText)
@@ -38,6 +50,11 @@ namespace SVESimulator.UI
         public void Clear()
         {
             inputField.text = "";
+        }
+
+        private void OnStartLobby(string lobbyName)
+        {
+            inputField.SetTextWithoutNotify(lobbyName);
         }
     }
 }

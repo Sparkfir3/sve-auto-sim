@@ -16,7 +16,7 @@ namespace SVESimulator
         public static ulong CurrentLobbyID;
         public static string CurrentLobbyName;
 
-        private const int RandomLobbyCodeLength = 16;
+        private const int RandomLobbyCodeLength = 8;
         private const string HostAddressKey = "SveHostAddress";
         private const string LobbyNameKey = "SveLobbyName";
         
@@ -39,6 +39,8 @@ namespace SVESimulator
         private Action<LobbyDataUpdate_t> OnLobbyDataFound;
 
         public bool IsSteamConnected => appStateConnected.IsStateActive;
+
+        public event Action<string> OnStartHostLobby;
 
         #endregion
 
@@ -88,6 +90,7 @@ namespace SVESimulator
         {
             CurrentLobbyName = string.IsNullOrWhiteSpace(lobbyName) ? GeneralUtility.RandomAlphaString(RandomLobbyCodeLength) : lobbyName;
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, networkManager.maxConnections);
+            OnStartHostLobby?.Invoke(CurrentLobbyName);
         }
 
         public void GetLobby(string lobbyName, Action<CSteamID> onLobbyFound)
