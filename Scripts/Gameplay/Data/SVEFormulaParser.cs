@@ -449,7 +449,7 @@ namespace SVESimulator
             formula = formula
                 .Replace("#F", "F!k(Aura)")
                 .Replace("#a", "!k(Aura)")
-                .Replace("#e", "e(m(0,99))");
+                .Replace("#e", "k(Evolve)");
 
             while(nextIndex < formula.Length)
             {
