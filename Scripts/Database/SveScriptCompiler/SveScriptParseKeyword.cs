@@ -58,15 +58,17 @@ namespace SVESimulator.SveScript
             { "Drain",                      new Keyword(0, 5) },
             { "Bane",                       new Keyword(0, 6) },
             { "Aura",                       new Keyword(0, 7) },
+
+            // Ability Keywords
             { "Quick",                      new Keyword(0, 8) },
-            { "EarthRite",                  new Keyword(0, 9) },
+            { "Evolve",                     new Keyword(0, 9) },
+            { "EarthRite",                  new Keyword(0, 10) },
 
             // Racing
             { "serve",                      new Keyword(1, 7) },
             { "serve1",                     new Keyword(1, 7) },
             { "serve2",                     new Keyword(1, 8) },
-            { "serve3",                     new Keyword(1, 9) }, // 10 = IsRacing
-            { "Evolve",                     new Keyword(1, 11) },
+            { "serve3",                     new Keyword(1, 9) },
 
             // Passive Abilities
             { "IgnoreWard",                 new Keyword(1, 0) },

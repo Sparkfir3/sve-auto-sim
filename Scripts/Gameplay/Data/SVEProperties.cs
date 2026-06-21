@@ -154,13 +154,15 @@ namespace SVESimulator
             public const string Drain = "Drain";
             public const string Bane = "Bane";
             public const string Aura = "Aura";
+
             public const string Quick = "Quick";
+            public const string Evolve = "Evolve";
+            public const string EarthRite = "EarthRite";
         }
 
         public static class PassiveAbilities
         {
-            // Evolve / Racing
-            public const string Evolve = "Evolve";
+            // Serve/Racing
             public const string Serve1 = "Serve1";
             public const string Serve2 = "Serve2";
             public const string Serve3 = "Serve3";
