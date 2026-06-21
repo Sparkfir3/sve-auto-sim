@@ -13,6 +13,11 @@ namespace SVESimulator.UI
         private CanvasGroup canvasGroup;
 
         public string Text => inputField.text;
+        public bool Interactable
+        {
+            get => inputField.interactable;
+            set => inputField.interactable = value;
+        }
 
         // ------------------------------
 

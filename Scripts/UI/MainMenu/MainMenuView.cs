@@ -93,14 +93,27 @@ namespace SVESimulator.UI
 
         private void HandleStateEnter(MainMenuViewState newState)
         {
-            if(newState == MainMenuViewState.PlayOnline)
-                steamRoomCodeInputField.Show();
+            switch(newState)
+            {
+                case MainMenuViewState.PlayOnline:
+                    steamRoomCodeInputField.Interactable = true;
+                    steamRoomCodeInputField.Show();
+                    break;
+                case MainMenuViewState.Connecting:
+                case MainMenuViewState.ReadyToStart:
+                    steamRoomCodeInputField.Interactable = false;
+                    break;
+                default:
+                    steamRoomCodeInputField.Hide();
+                    break;
+            }
         }
 
-        private void HandleStateExit(MainMenuViewState oldState)
+        private void HandleStateExit(MainMenuViewState oldState) { }
+
+        public void OnStartConnecting()
         {
-            if(oldState == MainMenuViewState.PlayOnline)
-                steamRoomCodeInputField.Hide();
+            steamRoomCodeInputField.Interactable = false;
         }
 
         // ------------------------------

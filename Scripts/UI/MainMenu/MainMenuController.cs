@@ -11,8 +11,8 @@ namespace SVESimulator.UI
 {
     public class MainMenuController : MonoBehaviour
     {
-        [field: SerializeField]
-        public bool IsConnecting { get; private set; }
+        [SerializeField]
+        private bool _isConnecting;
         [SerializeField]
         private MainMenuView mainMenuView;
         [SerializeField]
@@ -52,7 +52,7 @@ namespace SVESimulator.UI
         {
             switch(button)
             {
-                // Connecting
+                // Play Online
                 case MainMenuButton.PlayOnlineHost:
                     if(IsConnecting)
                         return;
@@ -66,6 +66,8 @@ namespace SVESimulator.UI
                     onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     JoinSteamLobby();
                     break;
+
+                // Play LAN
                 case MainMenuButton.PlayLocalHost:
                     if(IsConnecting)
                         return;
@@ -137,7 +139,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            IsConnecting = false;
+            IsConnecting = true;
             InitKcpNetworkManager(() =>
             {
                 try
@@ -159,7 +161,7 @@ namespace SVESimulator.UI
             if(!TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            IsConnecting = false;
+            IsConnecting = true;
             InitKcpNetworkManager(() =>
             {
                 SVEGameNetworkManager.Instance.StartClient();
@@ -196,7 +198,7 @@ namespace SVESimulator.UI
             if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            IsConnecting = false;
+            IsConnecting = true;
             StartCoroutine(StartHostCoroutine());
             IEnumerator StartHostCoroutine()
             {
@@ -216,7 +218,7 @@ namespace SVESimulator.UI
             if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
-            IsConnecting = false;
+            IsConnecting = true;
             StartCoroutine(StartClientCoroutine());
             IEnumerator StartClientCoroutine()
             {
@@ -232,7 +234,6 @@ namespace SVESimulator.UI
                     SteamMatchmaking.JoinLobby(lobbyID);
                 });
             }
-
         }
 
         #endregion
@@ -240,6 +241,28 @@ namespace SVESimulator.UI
         // ------------------------------
 
         #region Other
+
+        public bool IsConnecting
+        {
+            get => _isConnecting;
+            set
+            {
+                if(value == _isConnecting)
+                    return;
+                _isConnecting = value;
+                if(_isConnecting)
+                    mainMenuView.OnStartConnecting();
+            }
+        }
+
+        public void SetIsConnecting(bool isConnecting)
+        {
+            IsConnecting = isConnecting;
+            if(isConnecting)
+            {
+                mainMenuView.OnStartConnecting();
+            }
+        }
 
         private bool TryLoadSelectedDeck()
         {
