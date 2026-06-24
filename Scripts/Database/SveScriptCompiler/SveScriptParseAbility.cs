@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sparkfire.Utility;
 using Newtonsoft.Json.Linq;
 using static SVESimulator.SveScript.SveScriptData;
 using static SVESimulator.SveScript.SveScriptEffectCompiler;
+using static SVESimulator.SveScript.SveScriptKeywordCompiler;
 
 namespace SVESimulator.SveScript
 {
@@ -74,8 +76,10 @@ namespace SVESimulator.SveScript
             };
 
             string[] args = text.Replace("\r", "").Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
-            ParseAbilityArgs(args, newAbility, null);
+            ParseAbilityArgs(args, newAbility, null, out string newKeywords);
             cardInfo.abilities.Add(newAbility);
+            if(!newKeywords.IsNullOrWhiteSpace())
+                ParseAndAddKeywords(newKeywords, ref cardInfo);
         }
 
         private static void ParseAndAddPassiveAbility(in string text, ref CardInfo cardInfo, in string name, in string triggerType)
@@ -86,8 +90,10 @@ namespace SVESimulator.SveScript
             };
 
             string[] args = text.Replace("\r", "").Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
-            ParseAbilityArgs(args, newAbility, triggerType);
+            ParseAbilityArgs(args, newAbility, triggerType, out string newKeywords);
             cardInfo.abilities.Add(newAbility);
+            if(!newKeywords.IsNullOrWhiteSpace())
+                ParseAndAddKeywords(newKeywords, ref cardInfo);
         }
 
         private static void ParseAndAddTriggeredAbility(in string text, ref CardInfo cardInfo, in string name, in string triggerType)
@@ -98,8 +104,10 @@ namespace SVESimulator.SveScript
             };
 
             string[] args = text.Replace("\r", "").Split(';').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
-            ParseAbilityArgs(args, newAbility, triggerType);
+            ParseAbilityArgs(args, newAbility, triggerType, out string newKeywords);
             cardInfo.abilities.Add(newAbility);
+            if(!newKeywords.IsNullOrWhiteSpace())
+                ParseAndAddKeywords(newKeywords, ref cardInfo);
         }
 
         #endregion
@@ -108,10 +116,11 @@ namespace SVESimulator.SveScript
 
         #region Args
 
-        private static void ParseAbilityArgs(in string[] args, Ability ability, in string triggerType)
+        private static void ParseAbilityArgs(in string[] args, Ability ability, in string triggerType, out string newKeywords)
         {
             string effectCcgType = "";
             JObject triggerData = ability is TriggeredAbility ? new JObject() : null;
+            newKeywords = null;
 
             for(int i = 0; i < args.Length; i++)
             {
@@ -125,7 +134,7 @@ namespace SVESimulator.SveScript
                 {
                     case "cost":
                     case "costs":
-                        List<JObject> costs = ParseAbilityCosts(args[i][args[i].IndexOf(' ')..].Trim());
+                        List<JObject> costs = ParseAbilityCosts(args[i][args[i].IndexOf(' ')..].Trim(), out string costKeywords);
                         if(ability is ActivatedAbility activatedAbilityCost)
                         {
                             activatedAbilityCost.costs ??= new List<JObject>();
@@ -133,11 +142,16 @@ namespace SVESimulator.SveScript
                         }
                         else if(ability is TriggeredAbility)
                             triggerData?.Add("cost", (new JArray(costs)).ToString());
+                        if(!costKeywords.IsNullOrWhiteSpace())
+                            newKeywords = $"{newKeywords} {costKeywords}";
                         break;
                     case "effect":
+                        string effectKeywords = null;
                         ability.effect = ability is not PassiveAbility
-                            ? ParseAbilityEffect(args[i][6..].Trim(), out effectCcgType) // 6 = length of "effect"
+                            ? ParseAbilityEffect(args[i][6..].Trim(), out effectCcgType, out effectKeywords) // 6 = length of "effect"
                             : ParsePassiveAbilityEffect(args[i][6..].Trim(), out effectCcgType, triggerData);
+                        if(!effectKeywords.IsNullOrWhiteSpace())
+                            newKeywords = $"{newKeywords} {effectKeywords}";
                         break;
                     case "condition":
                         if(ability is ActivatedAbility activatedAbilityCond)

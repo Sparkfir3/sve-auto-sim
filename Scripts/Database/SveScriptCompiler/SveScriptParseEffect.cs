@@ -11,9 +11,10 @@ namespace SVESimulator.SveScript
     {
         #region Parse Effect
 
-        public static JObject ParseAbilityEffect(in string text, out string effectCcgType)
+        public static JObject ParseAbilityEffect(in string text, out string effectCcgType, out string keywords)
         {
             JObject effectData = new();
+            keywords = null;
 
             // Get args
             int rightPointer = text.IndexOf('(');
@@ -58,6 +59,10 @@ namespace SVESimulator.SveScript
                 effectData.TryAdd("target", "Self");
             if(effectParams.hasFilter)
                 effectData.TryAdd("filter", null);
+
+            // Get Evolve keyword
+            if(effectType.Equals("Evolve") && effectData.TryGetValue("target", out JToken target) && target.ToString().Equals("Self"))
+                keywords = "Evolve";
 
             // Init parse main args
             string[] argsArray = SplitArgsArray(mainEffectArgs);
@@ -161,7 +166,7 @@ namespace SVESimulator.SveScript
                 if(argument.IsNullOrWhiteSpace() && effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
                     argument = "1";
                 if(argument == null &&
-                   (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultBlank and not EffectParameterType.FilterOptional))
+                   (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull and not EffectParameterType.FilterOptional))
                 {
                     Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                         $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
@@ -182,9 +187,10 @@ namespace SVESimulator.SveScript
                         effectData.Add(keyName, argument);
                         break;
                     case EffectParameterType.AmountDefaultNull:
-                        effectData.Add("amount", argument);
+                        if(!argument.IsNullOrWhiteSpace())
+                            effectData.Add("amount", argument);
                         break;
-                    case EffectParameterType.Amount2DefaultBlank:
+                    case EffectParameterType.Amount2DefaultNull:
                         if(!argument.IsNullOrWhiteSpace())
                             effectData.Add("amount2", argument);
                         break;
@@ -216,6 +222,7 @@ namespace SVESimulator.SveScript
                     case EffectParameterType.ListOfEffects:
                     case EffectParameterType.ListOfEffects6:
                         int listAmount = effectParams.parameters[i] == EffectParameterType.ListOfEffects6 ? 6 : 5;
+                        listAmount = Mathf.Min(listAmount, argsArray.Length - i);
                         for(int j = 0; j < listAmount; j++)
                             effectData.Add($"effectName{j + 1}", (i + j) < argsArray.Length ? argsArray[i + j] : null);
                         return;
@@ -269,7 +276,7 @@ namespace SVESimulator.SveScript
             Amount,
             Amount2,
             AmountDefaultNull,
-            Amount2DefaultBlank,
+            Amount2DefaultNull,
             Keyword,
             StatType,
             Filter,
@@ -389,8 +396,8 @@ namespace SVESimulator.SveScript
             { "DealDamage", new EffectParams("DealDamageEffect",                            EffectParameterType.Amount) },
             { "Engage", new EffectParams("EngageCardEffect")                                },
             { "EngageCard", new EffectParams("EngageCardEffect")                            },
-            { "GiveStat", new EffectParams("GiveStatBoostEffect",                           EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.Amount2DefaultBlank) },
-            { "GiveStatEndOfTurn", new EffectParams("GiveStatEndOfTurnEffect",              EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.Amount2DefaultBlank) },
+            { "GiveStat", new EffectParams("GiveStatBoostEffect",                           EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.Amount2DefaultNull) },
+            { "GiveStatEndOfTurn", new EffectParams("GiveStatEndOfTurnEffect",              EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.Amount2DefaultNull) },
             { "Refresh", new EffectParams("ReserveCardEffect")                              },
             { "Reserve", new EffectParams("ReserveCardEffect")                              },
             { "ReserveCard", new EffectParams("ReserveCardEffect")                          },

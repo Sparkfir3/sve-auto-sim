@@ -15,6 +15,11 @@ namespace SVESimulator
         {
             public string value;
 
+            public CE_Value(string value)
+            {
+                this.value = value;
+            }
+
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters) => Task.FromResult<CE_Object>(this);
         }
 
@@ -27,10 +32,7 @@ namespace SVESimulator
                 switch(token)
                 {
                     case "getValue":
-                        return Task.FromResult<CE_Object>(new CE_Value()
-                        {
-                            value = parameters.Length > 0 ? SVEFormulaParser.ParseValue(parameters[0], player, card).ToString() : ""
-                        });
+                        return Task.FromResult<CE_Object>(new CE_Value(parameters.Length > 0 ? SVEFormulaParser.ParseValue(parameters[0], player, card).ToString() : ""));
                     default:
                         return Task.FromResult<CE_Object>(null);
                 }
@@ -47,10 +49,7 @@ namespace SVESimulator
                 switch(token)
                 {
                     case "movedCardsCount":
-                        return Task.FromResult<CE_Object>(new CE_Value()
-                        {
-                            value = movedCardsData.Count.ToString()
-                        });
+                        return Task.FromResult<CE_Object>(new CE_Value(movedCardsData.Count.ToString()));
                     default:
                         return Task.FromResult<CE_Object>(null);
                 }

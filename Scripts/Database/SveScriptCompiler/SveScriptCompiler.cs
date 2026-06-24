@@ -161,6 +161,7 @@ namespace SVESimulator.SveScript
                         if(nextIndex <= pointer)
                             throw new Exception();
                         cardInfo.evolveCost = int.Parse(text[(pointer + scriptKeyword.Length)..nextIndex].Trim());
+                        ParseAndAddKeywords("Evolve", ref cardInfo);
                         break;
 
                     // ------------------------------
