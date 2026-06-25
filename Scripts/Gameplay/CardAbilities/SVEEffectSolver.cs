@@ -182,6 +182,11 @@ namespace SVESimulator
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
 
+                    if(originZone.Equals(SVEProperties.Zones.Hand))
+                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
+                    else
+                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+
                     if(executeConfirmationTiming)
                         SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                 }
@@ -290,6 +295,10 @@ namespace SVESimulator
             {
                 SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardReturnToHandFromField>(gameState, card, player, _ => true, false);
+                if(cardZone.Equals(SVEProperties.Zones.Field))
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardReturnToHandFromField>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                        x => x.MatchesFilter(card), false);
+
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
