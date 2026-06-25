@@ -100,6 +100,7 @@ namespace SVESimulator.SveScript
             { "Stack",                      new Keyword(6, 1) },
             { "Spell",                      new Keyword(7, 1) },
             { "Prayer",                     new Keyword(8, 1) },
+            { "Fable",                      new Keyword(9, 1) },
         };
     }
 }

@@ -196,5 +196,20 @@
             }
         ],
         "id": 8
+    },
+    {
+        "name": "FableCounter",
+        "values": [
+            {
+                "value": "Fable0"
+            },
+            {
+                "value": "Fable1"
+            },
+            {
+                "value": "Fable2"
+            }
+        ],
+        "id": 8
     }
 ]
