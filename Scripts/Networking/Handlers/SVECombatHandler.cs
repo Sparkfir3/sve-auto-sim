@@ -60,17 +60,22 @@ namespace SVESimulator
 
         private void OnDeclareAttack(NetworkConnection conn, LocalDeclareAttackMessage msg)
         {
-            PlayerInfo player = server.gameState.players.Find(x => x.netId == msg.playerNetId);
-            RuntimeCard card = player.namedZones[SVEProperties.Zones.Field].cards.Find(x => x.instanceId == msg.cardInstanceId);
-            Debug.Assert(card != null);
+            PlayerInfo attackingPlayer = server.gameState.players.Find(x => x.netId == msg.playerNetId);
+            PlayerInfo defendingPlayer = server.gameState.players.Find(x => x.netId != msg.playerNetId);
+            RuntimeCard attacker = attackingPlayer.namedZones[SVEProperties.Zones.Field].cards.Find(x => x.instanceId == msg.attackerInstanceId);
+            RuntimeCard defender = msg.defenderInstanceId > -1
+                ? defendingPlayer.namedZones[SVEProperties.Zones.Field].cards.Find(x => x.instanceId == msg.defenderInstanceId)
+                : null;
+            Debug.Assert(attacker != null);
 
             OpponentDeclareAttackMessage oppAtkMsg = new()
             {
                 playerNetId = msg.playerNetId,
-                cardInstanceId = msg.cardInstanceId
+                attackerInstanceId = msg.attackerInstanceId,
+                defenderInstanceId = msg.defenderInstanceId
             };
             server.SafeSendToClient(server.gameState.currentOpponent, oppAtkMsg);
-            (server.effectSolver as SVEEffectSolver).DeclareAttack(player.netId, card, msg.isAttackingLeader);
+            (server.effectSolver as SVEEffectSolver).DeclareAttack(attackingPlayer.netId, attacker, defender, msg.isAttackingLeader);
         }
 
         private void OnAttackFollower(NetworkConnection conn, LocalAttackFollowerMessage msg)

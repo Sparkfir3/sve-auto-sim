@@ -451,7 +451,7 @@ namespace SVESimulator
 
         public void DeclareAttack(OpponentDeclareAttackMessage msg)
         {
-            if(!oppZoneController.fieldZone.TryGetCard(msg.cardInstanceId, out CardObject attacker))
+            if(!oppZoneController.fieldZone.TryGetCard(msg.attackerInstanceId, out CardObject attacker))
             {
                 Debug.LogError($"Failed to find card to attack/defend with");
                 return;

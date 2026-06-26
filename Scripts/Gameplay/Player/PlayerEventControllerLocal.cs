@@ -866,14 +866,15 @@ namespace SVESimulator
 
         #region Combat & Attack Handling
 
-        private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
+        private void DeclareAttack(CardObject attackingCard, CardObject defendingCard, bool isAttackingLeader)
         {
             playerController.AdditionalStats.CardsAttackedThisTurn.Add(new PlayedCardData(attackingCard.RuntimeCard.instanceId, attackingCard.RuntimeCard.cardId));
-            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, isAttackingLeader);
+            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, defendingCard.RuntimeCard, isAttackingLeader);
             LocalDeclareAttackMessage msg = new()
             {
                 playerNetId = netIdentity,
-                cardInstanceId = attackingCard.RuntimeCard.instanceId,
+                attackerInstanceId = attackingCard.RuntimeCard.instanceId,
+                defenderInstanceId = defendingCard ? defendingCard.RuntimeCard.instanceId : -1,
                 isAttackingLeader = isAttackingLeader
             };
             NetworkClient.Send(msg);
@@ -884,7 +885,7 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null || defendingCard == null)
                 return;
 
-            DeclareAttack(attackingCard, isAttackingLeader: false);
+            DeclareAttack(attackingCard, defendingCard, isAttackingLeader: false);
             SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
@@ -920,7 +921,7 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null)
                 return;
 
-            DeclareAttack(attackingCard, isAttackingLeader: true);
+            DeclareAttack(attackingCard, null, isAttackingLeader: true);
             SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.LeaderCardObject);

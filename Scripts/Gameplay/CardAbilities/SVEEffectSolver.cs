@@ -466,20 +466,26 @@ namespace SVESimulator
 
         #region Combat
 
-        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card, bool isAttackingLeader)
+        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard attackingCard, RuntimeCard defendingCard, bool isAttackingLeader)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            EngageCard(card);
+            EngageCard(attackingCard);
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false);
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, attackingCard, player, _ => true, executeConfirmationTiming: false,
+                    triggeringCard: defendingCard, triggeringCardZone: defendingCard != null ? SVEProperties.Zones.Field : null);
                 if(isAttackingLeader)
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackLeaderTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false);
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackLeaderTrigger>(gameState, attackingCard, player, _ => true, executeConfirmationTiming: false);
+                }
                 else
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false);
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, attackingCard, player, _ => true, executeConfirmationTiming: false,
+                        triggeringCard: defendingCard, triggeringCardZone: SVEProperties.Zones.Field);
+                }
 
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
-                    x => x.MatchesFilter(card), executeConfirmationTiming: true);
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, attackingCard, player.namedZones[SVEProperties.Zones.Field], player,
+                    x => x.MatchesFilter(attackingCard), executeConfirmationTiming: true);
             }
         }
 
