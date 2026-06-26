@@ -396,6 +396,9 @@ namespace SVESimulator
                 case "spellsPlayed":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
+                case "returnedToHandFromField":
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsReturnedToHandFromField, filter) : 0;
 
                 // Player Zone
                 case "evolveDeckFaceUp":

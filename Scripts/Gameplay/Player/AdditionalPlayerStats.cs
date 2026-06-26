@@ -14,6 +14,7 @@ namespace SVESimulator
         public readonly SyncList<PlayedCardData> CardsDestroyedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDiscardedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsAttackedThisTurn = new();
+        public readonly SyncList<PlayedCardData> CardsReturnedToHandFromField = new();
 
         public List<PlayedCardData> SpellsPlayedThisTurn => CardsPlayedThisTurn.Where(x =>
             LibraryCardCache.GetCard(x.cardId).IsSpell()).ToList();
@@ -36,6 +37,7 @@ namespace SVESimulator
             CardsDestroyedThisTurn.Clear();
             CardsDiscardedThisTurn.Clear();
             CardsAttackedThisTurn.Clear();
+            CardsReturnedToHandFromField.Clear();
         }
 
         // ------------------------------
