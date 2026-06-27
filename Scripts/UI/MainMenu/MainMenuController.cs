@@ -54,13 +54,13 @@ namespace SVESimulator.UI
             {
                 // Play Online
                 case MainMenuButton.PlayOnlineHost:
-                    if(IsConnecting)
+                    if(IsConnecting || !SVEGameNetworkManager.SteamLobby.IsSteamConnected)
                         return;
                     onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     HostSteamLobby();
                     break;
                 case MainMenuButton.PlayOnlineJoin:
-                    if(IsConnecting)
+                    if(IsConnecting || !SVEGameNetworkManager.SteamLobby.IsSteamConnected)
                         return;
                     // TODO - loading icon
                     onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
