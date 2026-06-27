@@ -133,12 +133,14 @@ namespace SVESimulator
 
         private void OnLobbyEntered(LobbyEnter_t callback)
         {
-            if(NetworkServer.active)
+            if(NetworkServer.active || networkManager.isNetworkActive)
                 return;
 
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             networkManager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), HostAddressKey);
             CurrentLobbyName = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), LobbyNameKey);
+
+            networkManager.StartClient();
         }
 
         private void OnGetLobbyList(LobbyMatchList_t result)
@@ -156,6 +158,7 @@ namespace SVESimulator
         private void OnGetLobbyData(LobbyDataUpdate_t result)
         {
             OnLobbyDataFound?.Invoke(result);
+            OnLobbyDataFound = null;
         }
 
         #endregion
