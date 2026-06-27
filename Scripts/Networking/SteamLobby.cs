@@ -139,8 +139,6 @@ namespace SVESimulator
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             networkManager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), HostAddressKey);
             CurrentLobbyName = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), LobbyNameKey);
-
-            networkManager.StartClient();
         }
 
         private void OnGetLobbyList(LobbyMatchList_t result)
