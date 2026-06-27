@@ -28,7 +28,8 @@ namespace SVESimulator.UI
 
         private void OnDestroy()
         {
-            SVEGameNetworkManager.SteamLobby.OnStartHostLobby -= OnStartLobby;
+            if(SVEGameNetworkManager.SteamLobby)
+                SVEGameNetworkManager.SteamLobby.OnStartHostLobby -= OnStartLobby;
         }
 
         // ------------------------------

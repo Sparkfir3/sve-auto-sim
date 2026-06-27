@@ -5,6 +5,7 @@ using CCGKit;
 using Mirror;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Sparkfire.Utility;
 using Steamworks;
 
 namespace SVESimulator.UI
@@ -60,7 +61,7 @@ namespace SVESimulator.UI
                     HostSteamLobby();
                     break;
                 case MainMenuButton.PlayOnlineJoin:
-                    if(IsConnecting || !SVEGameNetworkManager.SteamLobby.IsSteamConnected)
+                    if(IsConnecting || !SVEGameNetworkManager.SteamLobby.IsSteamConnected || mainMenuView.RoomCode.IsNullOrWhiteSpace())
                         return;
                     // TODO - loading icon
                     onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
