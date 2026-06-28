@@ -1339,6 +1339,7 @@ MonoBehaviour:
     - key: 7
       value: {fileID: 1088239494}
   steamRoomCodeInputField: {fileID: 4901654163943796787}
+  connectingIndicator: {fileID: 4901654163943796788}
   animationController: {fileID: 1126685908}
   inputController: {fileID: 1887145433}
 --- !u!4 &1126685910
@@ -3028,6 +3029,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79002eb873116a646aa4faf2be7eeb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4901654163943796788 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4659909276592035481, guid: d6f4815513817fa4396487ebb56e4880, type: 3}
+  m_PrefabInstance: {fileID: 4901654163943796786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8098666747419215156
 PrefabInstance:
   m_ObjectHideFlags: 0

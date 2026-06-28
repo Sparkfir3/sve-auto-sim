@@ -253,15 +253,8 @@ namespace SVESimulator.UI
                 _isConnecting = value;
                 if(_isConnecting)
                     mainMenuView.OnStartConnecting();
-            }
-        }
-
-        public void SetIsConnecting(bool isConnecting)
-        {
-            IsConnecting = isConnecting;
-            if(isConnecting)
-            {
-                mainMenuView.OnStartConnecting();
+                else
+                    mainMenuView.OnEndConnecting();
             }
         }
 

@@ -21,6 +21,8 @@ namespace SVESimulator.UI
         private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
         [SerializeField]
         private SteamRoomCodeInputField steamRoomCodeInputField;
+        [SerializeField]
+        private GameObject connectingIndicator;
         [FoldoutGroup("Controllers"), SerializeField]
         private CardAnimationController animationController;
         [FoldoutGroup("Controllers"), SerializeField]
@@ -47,6 +49,8 @@ namespace SVESimulator.UI
             }
             OnStateEnter += HandleStateEnter;
             OnStateExit += HandleStateExit;
+
+            connectingIndicator.SetActive(false);
         }
 
         private void Update()
@@ -114,6 +118,12 @@ namespace SVESimulator.UI
         public void OnStartConnecting()
         {
             steamRoomCodeInputField.Interactable = false;
+            connectingIndicator.SetActive(true);
+        }
+
+        public void OnEndConnecting()
+        {
+            connectingIndicator.SetActive(false);
         }
 
         // ------------------------------
