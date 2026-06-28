@@ -37,11 +37,12 @@ namespace SVESimulator
             onComplete?.Invoke();
         }
 
-        protected virtual void PerformSearchDeckAction(PlayerController player, List<CardObject> selectedCards)
+        protected void PerformSearchDeckAction(PlayerController player, List<CardObject> selectedCards) => PerformSearchDeckAction(player, searchDeckAction, selectedCards);
+        protected void PerformSearchDeckAction(PlayerController player, SearchDeckAction searchAction, List<CardObject> selectedCards)
         {
             foreach(CardObject card in selectedCards)
             {
-                switch(searchDeckAction)
+                switch(searchAction)
                 {
                     case SearchDeckAction.Hand:
                         card.Interactable = player.isActivePlayer;

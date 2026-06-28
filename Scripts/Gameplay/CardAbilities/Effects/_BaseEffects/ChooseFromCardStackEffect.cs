@@ -36,11 +36,7 @@ namespace SVESimulator
             bool waiting = true;
             if(player.ZoneController.selectionArea.ValidTargetsCount == 0)
                 minSelect = 0;
-            selectionArea.SetConfirmAction(cardName, "Confirm Selection", text, minSelect, maxSelect, selectedCards =>
-            {
-                selectionArea.Disable();
-                ConfirmationAction(player, selectedCards, () => waiting = false);
-            });
+            SetSelectionAreaAction(player, selectionArea, cardName, minSelect, maxSelect, () => waiting = false);
             yield return new WaitUntil(() => !waiting);
 
             player.InputController.allowedInputs = player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
@@ -52,6 +48,15 @@ namespace SVESimulator
         protected virtual void GetMinMax(PlayerController player, out int min, out int max)
         {
             SVEFormulaParser.ParseValueAsMinMax(amount, player, out min, out max);
+        }
+
+        protected virtual void SetSelectionAreaAction(PlayerController player, CardSelectionArea selectionArea, in string cardName, in int minSelect, in int maxSelect, Action onSelect)
+        {
+            selectionArea.SetConfirmAction(cardName, "Confirm Selection", text, minSelect, maxSelect, selectedCards =>
+            {
+                selectionArea.Disable();
+                ConfirmationAction(player, selectedCards, onSelect);
+            });
         }
 
         protected abstract void InitializeSelectionArea(PlayerController player, CardSelectionArea selectionArea);
