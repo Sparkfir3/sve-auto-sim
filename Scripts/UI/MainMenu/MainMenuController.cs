@@ -55,13 +55,13 @@ namespace SVESimulator.UI
             {
                 // Play Online
                 case MainMenuButton.PlayOnlineHost:
-                    if(IsConnecting || !SVEGameNetworkManager.SteamLobby.IsSteamConnected)
+                    if(IsConnecting || !SVEGameNetworkManager.IsSteamConnected)
                         return;
                     onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     HostSteamLobby();
                     break;
                 case MainMenuButton.PlayOnlineJoin:
-                    if(IsConnecting || !SVEGameNetworkManager.SteamLobby.IsSteamConnected || mainMenuView.RoomCode.IsNullOrWhiteSpace())
+                    if(IsConnecting || !SVEGameNetworkManager.IsSteamConnected || mainMenuView.RoomCode.IsNullOrWhiteSpace())
                         return;
                     // TODO - loading icon
                     onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
@@ -171,7 +171,7 @@ namespace SVESimulator.UI
 
         private void InitKcpNetworkManager(Action onComplete)
         {
-            if(!SVEGameNetworkManager.IsSteam)
+            if(!SVEGameNetworkManager.IsSteamManager)
             {
                 onComplete?.Invoke();
                 return;
@@ -196,14 +196,14 @@ namespace SVESimulator.UI
 
         public void HostSteamLobby()
         {
-            if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
+            if(!SVEGameNetworkManager.IsSteamConnected || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
             StartCoroutine(StartHostCoroutine());
             IEnumerator StartHostCoroutine()
             {
-                if(!SVEGameNetworkManager.IsSteam)
+                if(!SVEGameNetworkManager.IsSteamManager)
                 {
                     Destroy(SVEGameNetworkManager.Instance.gameObject);
                     yield return null;
@@ -216,14 +216,14 @@ namespace SVESimulator.UI
 
         public void JoinSteamLobby()
         {
-            if((SVEGameNetworkManager.IsSteam && !SVEGameNetworkManager.SteamLobby.IsSteamConnected) || !TryLoadSelectedDeck())
+            if(!SVEGameNetworkManager.IsSteamConnected || !TryLoadSelectedDeck())
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
             StartCoroutine(StartClientCoroutine());
             IEnumerator StartClientCoroutine()
             {
-                if(!SVEGameNetworkManager.IsSteam)
+                if(!SVEGameNetworkManager.IsSteamManager)
                 {
                     Destroy(SVEGameNetworkManager.Instance.gameObject);
                     yield return null;

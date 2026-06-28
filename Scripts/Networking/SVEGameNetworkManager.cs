@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using CCGKit;
 using Mirror;
+using Steamworks;
 
 namespace SVESimulator
 {
@@ -13,12 +14,15 @@ namespace SVESimulator
         public static NetworkSceneManager SceneManager { get; private set; }
 
         public static int ConnectedPlayerCount => NetworkServer.connections.Count;
-        public static bool IsSteam => SteamLobby != null;
+        public static bool IsSteamConnected => SteamManager.Initialized && SteamAPI.IsSteamRunning();
+        public static bool IsSteamManager => SteamLobby != null;
+        public static bool IsSteamManagerAndConnected => IsSteamManager && IsSteamConnected;
 
         public static event Action<NetworkConnectionToClient> OnPlayerConnected;
         public static event Action<NetworkConnectionToClient> OnPlayerDisconnected;
         public static event Action OnLocalConnect;
         public static event Action OnLocalDisconnect;
+        public static Action<string> OnStartHostSteamLobby;
 
         // ------------------------------
 

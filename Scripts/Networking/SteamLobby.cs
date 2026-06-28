@@ -38,10 +38,6 @@ namespace SVESimulator
 
         private Action<LobbyDataUpdate_t> OnLobbyDataFound;
 
-        public bool IsSteamConnected => appStateConnected.IsStateActive;
-
-        public event Action<string> OnStartHostLobby;
-
         #endregion
 
         // ------------------------------
@@ -51,7 +47,7 @@ namespace SVESimulator
         private void Start()
         {
             networkManager = GetComponent<NetworkManager>();
-            if(!SteamManager.Initialized || !SteamAPI.IsSteamRunning())
+            if(!SVEGameNetworkManager.IsSteamConnected)
             {
                 appStateConnected.SetStateInactive();
                 appStateDisconnected.SetStateActive();
@@ -90,7 +86,7 @@ namespace SVESimulator
         {
             CurrentLobbyName = string.IsNullOrWhiteSpace(lobbyName) ? GeneralUtility.RandomAlphaString(RandomLobbyCodeLength) : lobbyName;
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, networkManager.maxConnections);
-            OnStartHostLobby?.Invoke(CurrentLobbyName);
+            SVEGameNetworkManager.OnStartHostSteamLobby?.Invoke(CurrentLobbyName);
         }
 
         public void GetLobby(string lobbyName, Action<CSteamID> onLobbyFound)
