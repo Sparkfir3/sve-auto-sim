@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using System.Collections;
 using Mirror;
 using Sparkfire.AppStateSystem;
 using Sparkfire.Utility;
@@ -22,9 +21,9 @@ namespace SVESimulator
         
         // ---
 
-        [Title("App States"), SerializeField]
+        [FoldoutGroup("Steam App States"), SerializeField]
         private ApplicationState appStateConnected;
-        [SerializeField]
+        [FoldoutGroup("Steam App States"), SerializeField]
         private ApplicationState appStateDisconnected;
 
         private bool initialized;

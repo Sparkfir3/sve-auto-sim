@@ -9,6 +9,8 @@ namespace SVESimulator.UI
 {
     public class MainMenuView : MonoBehaviour
     {
+        #region Variables
+
         [field: Title("Runtime Data"), SerializeField]
         public MainMenuViewState CurrentState { get; private set; }
 
@@ -35,7 +37,11 @@ namespace SVESimulator.UI
         public event Action<MainMenuViewState> OnStateExit;
         public event Action<MainMenuButton> OnButtonClicked;
 
+        #endregion
+
         // ------------------------------
+
+        #region Unity Functions
 
         private void Awake()
         {
@@ -58,7 +64,11 @@ namespace SVESimulator.UI
             inputController.AllowInputs = AllowInputs;
         }
 
+        #endregion
+
         // ------------------------------
+
+        #region Menu Actions/Transitions
 
         public void PerformAction(MainMenuAction action)
         {
@@ -77,56 +87,6 @@ namespace SVESimulator.UI
                 StartCoroutine(ExecuteTransition(transition));
             }
         }
-
-        [TitleGroup("Debug"), Button, DisableInEditorMode]
-        private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)
-        {
-            if(action == MainMenuAction.Back)
-            {
-                MainMenuAction newAction = CurrentState.BackAction();
-                if(newAction != MainMenuAction.Back)
-                {
-                    OnButtonClickedInternal(button, newAction);
-                    return;
-                }
-            }
-
-            PerformAction(action);
-            OnButtonClicked?.Invoke(button);
-        }
-
-        private void HandleStateEnter(MainMenuViewState newState)
-        {
-            switch(newState)
-            {
-                case MainMenuViewState.PlayOnline:
-                    steamRoomCodeInputField.Interactable = true;
-                    steamRoomCodeInputField.Show();
-                    break;
-                case MainMenuViewState.Connecting:
-                case MainMenuViewState.ReadyToStart:
-                    steamRoomCodeInputField.Interactable = false;
-                    break;
-                default:
-                    steamRoomCodeInputField.Hide();
-                    break;
-            }
-        }
-
-        private void HandleStateExit(MainMenuViewState oldState) { }
-
-        public void OnStartConnecting()
-        {
-            steamRoomCodeInputField.Interactable = false;
-            connectingIndicator.SetActive(true);
-        }
-
-        public void OnEndConnecting()
-        {
-            connectingIndicator.SetActive(false);
-        }
-
-        // ------------------------------
 
         private IEnumerator ExecuteTransition(MainMenuTransition transition)
         {
@@ -166,5 +126,67 @@ namespace SVESimulator.UI
                 }
             }
         }
+
+        #endregion
+
+        // ------------------------------
+
+        #region UI Events
+
+        [TitleGroup("Debug"), Button, DisableInEditorMode]
+        private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)
+        {
+            if(action == MainMenuAction.Back)
+            {
+                MainMenuAction newAction = CurrentState.BackAction();
+                if(newAction != MainMenuAction.Back)
+                {
+                    OnButtonClickedInternal(button, newAction);
+                    return;
+                }
+            }
+
+            PerformAction(action);
+            OnButtonClicked?.Invoke(button);
+        }
+
+        private void HandleStateEnter(MainMenuViewState newState)
+        {
+            switch(newState)
+            {
+                case MainMenuViewState.PlayOnline:
+                    steamRoomCodeInputField.Interactable = true;
+                    steamRoomCodeInputField.Show();
+                    break;
+                case MainMenuViewState.Connecting:
+                case MainMenuViewState.ReadyToStart:
+                    steamRoomCodeInputField.Interactable = false;
+                    break;
+                default:
+                    steamRoomCodeInputField.Hide();
+                    break;
+            }
+        }
+
+        private void HandleStateExit(MainMenuViewState oldState) { }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Networking Events
+
+        public void OnStartConnecting()
+        {
+            steamRoomCodeInputField.Interactable = false;
+            connectingIndicator.SetActive(true);
+        }
+
+        public void OnEndConnecting()
+        {
+            connectingIndicator.SetActive(false);
+        }
+
+        #endregion
     }
 }

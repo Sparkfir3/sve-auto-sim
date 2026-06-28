@@ -9,6 +9,8 @@ namespace SVESimulator
     [RequireComponent(typeof(NetworkSceneManager))]
     public class SVEGameNetworkManager : NetworkManager
     {
+        #region Variables
+
         public static SVEGameNetworkManager Instance { get; private set; }
         public static SteamLobby SteamLobby { get; private set; }
         public static NetworkSceneManager SceneManager { get; private set; }
@@ -24,7 +26,11 @@ namespace SVESimulator
         public static event Action OnLocalDisconnect;
         public static Action<string> OnStartHostSteamLobby;
 
+        #endregion
+
         // ------------------------------
+
+        #region Unity Functions
 
         public override void Awake()
         {
@@ -49,7 +55,11 @@ namespace SVESimulator
             }
         }
 
+        #endregion
+
         // ------------------------------
+
+        #region Network Events
 
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
@@ -80,5 +90,7 @@ namespace SVESimulator
             base.OnClientDisconnect();
             OnLocalDisconnect?.Invoke();
         }
+
+        #endregion
     }
 }

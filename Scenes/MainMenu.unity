@@ -1372,10 +1372,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isConnecting: 0
   mainMenuView: {fileID: 1126685909}
-  networkManagerSteam: {fileID: 3691630640573521397, guid: 229c207ab490a8046b2d8035105ff82c, type: 3}
-  networkManagerKcp: {fileID: 3691630640573521397, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
   deckSelectionController: {fileID: 1917708188}
   selectDeckError: {fileID: 2143401943}
+  networkManagerSteam: {fileID: 3691630640573521397, guid: 229c207ab490a8046b2d8035105ff82c, type: 3}
+  networkManagerKcp: {fileID: 3691630640573521397, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
 --- !u!1001 &1156806607
 PrefabInstance:
   m_ObjectHideFlags: 0

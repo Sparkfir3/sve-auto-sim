@@ -12,22 +12,30 @@ namespace SVESimulator.UI
 {
     public class MainMenuController : MonoBehaviour
     {
-        [SerializeField]
+        #region Variables
+
+        [Title("Runtime Data"), SerializeField]
         private bool _isConnecting;
-        [SerializeField]
+
+        [Title("Object References"), SerializeField]
         private MainMenuView mainMenuView;
-        [SerializeField]
-        private GameObject networkManagerSteam;
-        [SerializeField]
-        private GameObject networkManagerKcp;
         [SerializeField]
         private DeckSelectionController deckSelectionController;
         [SerializeField]
         private GameObject selectDeckError;
 
+        [FoldoutGroup("Network Manager Prefabs"), SerializeField, AssetsOnly]
+        private GameObject networkManagerSteam;
+        [FoldoutGroup("Network Manager Prefabs"), SerializeField, AssetsOnly]
+        private GameObject networkManagerKcp;
+
         private Action onNextConnectionToServer;
 
+        #endregion
+
         // ------------------------------
+
+        #region Unity Functions
 
         private void Start()
         {
@@ -48,6 +56,12 @@ namespace SVESimulator.UI
             SVEGameNetworkManager.OnLocalConnect -= HandleLocalPlayerConnected;
             SVEGameNetworkManager.OnLocalDisconnect -= HandleLocalPlayerDisconnected;
         }
+
+        #endregion
+
+        // ------------------------------
+
+        #region UI Event Handling
 
         private void HandleButtonClicked(MainMenuButton button)
         {
@@ -99,9 +113,11 @@ namespace SVESimulator.UI
             }
         }
 
+        #endregion
+
         // ------------------------------
 
-        #region Networking Events
+        #region Network Event Handling
 
         private void HandlePlayerConnectedToServer(NetworkConnectionToClient conn)
         {
@@ -133,7 +149,7 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        #region Local Networking
+        #region Local Networking Controls
 
         public void StartLocalHost(Action onStartSuccess = null, Action onStartFail = null)
         {
@@ -192,7 +208,7 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        #region Steam Networking
+        #region Steam Networking Controls
 
         public void HostSteamLobby()
         {

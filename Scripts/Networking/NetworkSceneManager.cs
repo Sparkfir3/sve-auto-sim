@@ -1,6 +1,5 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Mirror;
 
 namespace SVESimulator
 {
@@ -8,9 +7,9 @@ namespace SVESimulator
     {
         [SerializeField]
         private SVEGameNetworkManager networkManager;
-        [SerializeField]
+        [FoldoutGroup("Scene Names"), SerializeField]
         private string mainMenuScene = "MainMenu";
-        [SerializeField]
+        [FoldoutGroup("Scene Names"), SerializeField]
         private string gameplayScene = "Gameplay";
 
         // ------------------------------
