@@ -320,7 +320,7 @@ namespace SVESimulator
                 DeselectAllCards();
                 GameUIManager.MultipleChoice.Close();
             });
-            if(minSelectCount == 0) // move "Skip" button to end if applicable
+            if(minSelectCount == 0) // move "Skip" button to end if it exists
                 GameUIManager.MultipleChoice.MoveButtonToEnd(GameUIManager.MultipleChoice.ActiveButtonCount - 1);
             UpdateActionButton();
         }
