@@ -1,10 +1,6 @@
-using System;
-using Mirror;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Steamworks;
 using TMPro;
-using UnityEngine.UI;
 
 namespace SVESimulator.UI
 {
@@ -14,8 +10,6 @@ namespace SVESimulator.UI
         private TurnInformationContainer turnInfoContainer;
         [SerializeField]
         private GameDebugControls debugButtonContainer;
-        [SerializeField]
-        private Button quitGameButton;
 
         [Title("Start Turn Animation"), SerializeField]
         private Animator startTurnAnimator;
@@ -29,7 +23,6 @@ namespace SVESimulator.UI
         private void Awake()
         {
             SetTurnDisplayActive(false);
-            quitGameButton.onClick.AddListener(ReturnToMainMenu);
         }
 
         public void Initialize(PlayerController player)
@@ -56,12 +49,6 @@ namespace SVESimulator.UI
         {
             startTurnTextBox.text = isLocalPlayer ? "Your Turn" : "Opponent's Turn";
             startTurnAnimator.SetTrigger(startTurnAnimTrigger);
-        }
-
-        private void ReturnToMainMenu()
-        {
-            NetworkManager.singleton.StopHost();
-            SteamMatchmaking.LeaveLobby(new CSteamID(SteamLobby.CurrentLobbyID));
         }
     }
 }

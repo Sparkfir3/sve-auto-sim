@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using System.Collections;
 using Mirror;
 using Sparkfire.AppStateSystem;
 using Sparkfire.Utility;
@@ -16,15 +15,15 @@ namespace SVESimulator
         public static ulong CurrentLobbyID;
         public static string CurrentLobbyName;
 
-        private const int RandomLobbyCodeLength = 16;
+        private const int RandomLobbyCodeLength = 8;
         private const string HostAddressKey = "SveHostAddress";
         private const string LobbyNameKey = "SveLobbyName";
         
         // ---
 
-        [Title("App States"), SerializeField]
+        [FoldoutGroup("Steam App States"), SerializeField]
         private ApplicationState appStateConnected;
-        [SerializeField]
+        [FoldoutGroup("Steam App States"), SerializeField]
         private ApplicationState appStateDisconnected;
 
         private bool initialized;
@@ -38,8 +37,6 @@ namespace SVESimulator
 
         private Action<LobbyDataUpdate_t> OnLobbyDataFound;
 
-        public bool IsSteamConnected => appStateConnected.IsStateActive;
-
         #endregion
 
         // ------------------------------
@@ -49,7 +46,7 @@ namespace SVESimulator
         private void Start()
         {
             networkManager = GetComponent<NetworkManager>();
-            if(!SteamManager.Initialized || !SteamAPI.IsSteamRunning())
+            if(!SVEGameNetworkManager.IsSteamConnected)
             {
                 appStateConnected.SetStateInactive();
                 appStateDisconnected.SetStateActive();
@@ -88,6 +85,7 @@ namespace SVESimulator
         {
             CurrentLobbyName = string.IsNullOrWhiteSpace(lobbyName) ? GeneralUtility.RandomAlphaString(RandomLobbyCodeLength) : lobbyName;
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, networkManager.maxConnections);
+            SVEGameNetworkManager.OnStartHostSteamLobby?.Invoke(CurrentLobbyName);
         }
 
         public void GetLobby(string lobbyName, Action<CSteamID> onLobbyFound)
@@ -130,7 +128,7 @@ namespace SVESimulator
 
         private void OnLobbyEntered(LobbyEnter_t callback)
         {
-            if(NetworkServer.active)
+            if(NetworkServer.active || networkManager.isNetworkActive)
                 return;
 
             CurrentLobbyID = callback.m_ulSteamIDLobby;
@@ -155,6 +153,7 @@ namespace SVESimulator
         private void OnGetLobbyData(LobbyDataUpdate_t result)
         {
             OnLobbyDataFound?.Invoke(result);
+            OnLobbyDataFound = null;
         }
 
         #endregion

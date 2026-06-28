@@ -9,8 +9,10 @@ namespace SVESimulator.UI
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Title("Runtime Data"), SerializeField]
-        private MainMenuViewState currentState;
+        #region Variables
+
+        [field: Title("Runtime Data"), SerializeField]
+        public MainMenuViewState CurrentState { get; private set; }
 
         [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
@@ -21,6 +23,8 @@ namespace SVESimulator.UI
         private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
         [SerializeField]
         private SteamRoomCodeInputField steamRoomCodeInputField;
+        [SerializeField]
+        private GameObject connectingIndicator;
         [FoldoutGroup("Controllers"), SerializeField]
         private CardAnimationController animationController;
         [FoldoutGroup("Controllers"), SerializeField]
@@ -33,7 +37,11 @@ namespace SVESimulator.UI
         public event Action<MainMenuViewState> OnStateExit;
         public event Action<MainMenuButton> OnButtonClicked;
 
+        #endregion
+
         // ------------------------------
+
+        #region Unity Functions
 
         private void Awake()
         {
@@ -47,6 +55,8 @@ namespace SVESimulator.UI
             }
             OnStateEnter += HandleStateEnter;
             OnStateExit += HandleStateExit;
+
+            connectingIndicator.SetActive(false);
         }
 
         private void Update()
@@ -54,46 +64,33 @@ namespace SVESimulator.UI
             inputController.AllowInputs = AllowInputs;
         }
 
+        #endregion
+
         // ------------------------------
 
-        [TitleGroup("Debug"), Button, DisableInEditorMode]
-        private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)
+        #region Menu Actions/Transitions
+
+        public void PerformAction(MainMenuAction action)
         {
             if(action == MainMenuAction.Back)
             {
-                MainMenuAction newAction = currentState.BackAction();
+                MainMenuAction newAction = CurrentState.BackAction();
                 if(newAction != MainMenuAction.Back)
                 {
-                    OnButtonClickedInternal(button, newAction);
+                    PerformAction(newAction);
                     return;
                 }
             }
-
             if(transitions.TryGetValue(action, out MainMenuTransition transition))
             {
                 StopAllCoroutines();
                 StartCoroutine(ExecuteTransition(transition));
             }
-            OnButtonClicked?.Invoke(button);
         }
-
-        private void HandleStateEnter(MainMenuViewState newState)
-        {
-            if(newState == MainMenuViewState.PlayOnline)
-                steamRoomCodeInputField.Show();
-        }
-
-        private void HandleStateExit(MainMenuViewState oldState)
-        {
-            if(oldState == MainMenuViewState.PlayOnline)
-                steamRoomCodeInputField.Hide();
-        }
-
-        // ------------------------------
 
         private IEnumerator ExecuteTransition(MainMenuTransition transition)
         {
-            OnStateExit?.Invoke(currentState);
+            OnStateExit?.Invoke(CurrentState);
             transition.OnStartTransition?.Invoke();
             foreach(MainMenuTransitionCardStartPosition startData in transition.StartPositions)
             {
@@ -110,8 +107,8 @@ namespace SVESimulator.UI
             if(transition.MoveActionsSecondary.Count > 0)
                 yield return StartCoroutine(ExecuteMoveActionSequence(transition.MoveActionsSecondary));
 
-            currentState = transition.TargetMenuState;
-            OnStateEnter?.Invoke(currentState);
+            CurrentState = transition.TargetMenuState;
+            OnStateEnter?.Invoke(CurrentState);
             transition.OnEndTransition?.Invoke();
 
             IEnumerator ExecuteMoveActionSequence(List<MainMenuTransitionMoveCardAction> actions)
@@ -129,5 +126,67 @@ namespace SVESimulator.UI
                 }
             }
         }
+
+        #endregion
+
+        // ------------------------------
+
+        #region UI Events
+
+        [TitleGroup("Debug"), Button, DisableInEditorMode]
+        private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)
+        {
+            if(action == MainMenuAction.Back)
+            {
+                MainMenuAction newAction = CurrentState.BackAction();
+                if(newAction != MainMenuAction.Back)
+                {
+                    OnButtonClickedInternal(button, newAction);
+                    return;
+                }
+            }
+
+            PerformAction(action);
+            OnButtonClicked?.Invoke(button);
+        }
+
+        private void HandleStateEnter(MainMenuViewState newState)
+        {
+            switch(newState)
+            {
+                case MainMenuViewState.PlayOnline:
+                    steamRoomCodeInputField.Interactable = true;
+                    steamRoomCodeInputField.Show();
+                    break;
+                case MainMenuViewState.Connecting:
+                case MainMenuViewState.ReadyToStart:
+                    steamRoomCodeInputField.Interactable = false;
+                    break;
+                default:
+                    steamRoomCodeInputField.Hide();
+                    break;
+            }
+        }
+
+        private void HandleStateExit(MainMenuViewState oldState) { }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Networking Events
+
+        public void OnStartConnecting()
+        {
+            steamRoomCodeInputField.Interactable = false;
+            connectingIndicator.SetActive(true);
+        }
+
+        public void OnEndConnecting()
+        {
+            connectingIndicator.SetActive(false);
+        }
+
+        #endregion
     }
 }

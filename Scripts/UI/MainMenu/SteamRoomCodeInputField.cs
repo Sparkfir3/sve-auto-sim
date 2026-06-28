@@ -13,6 +13,24 @@ namespace SVESimulator.UI
         private CanvasGroup canvasGroup;
 
         public string Text => inputField.text;
+        public bool Interactable
+        {
+            get => inputField.interactable;
+            set => inputField.interactable = value;
+        }
+
+        // ------------------------------
+
+        private void Start()
+        {
+            SVEGameNetworkManager.OnStartHostSteamLobby += OnStartLobby;
+        }
+
+        private void OnDestroy()
+        {
+            if(SVEGameNetworkManager.Instance)
+                SVEGameNetworkManager.OnStartHostSteamLobby -= OnStartLobby;
+        }
 
         // ------------------------------
 
@@ -33,6 +51,11 @@ namespace SVESimulator.UI
         public void Clear()
         {
             inputField.text = "";
+        }
+
+        private void OnStartLobby(string lobbyName)
+        {
+            inputField.SetTextWithoutNotify(lobbyName);
         }
     }
 }

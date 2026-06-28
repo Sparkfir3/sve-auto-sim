@@ -1,7 +1,4 @@
-using Mirror;
 using UnityEngine;
-using Sirenix.OdinInspector;
-using UnityEngine.SceneManagement;
 
 namespace SVESimulator.UI
 {
@@ -16,6 +13,7 @@ namespace SVESimulator.UI
 
         public void WinGame()
         {
+            GameUIManager.DisconnectScreen.SetNotVisible();
             gameObject.SetActive(true);
             winDisplay.SetActive(true);
             loseDisplay.SetActive(false);
@@ -23,6 +21,7 @@ namespace SVESimulator.UI
 
         public void LoseGame()
         {
+            GameUIManager.DisconnectScreen.SetNotVisible();
             gameObject.SetActive(true);
             winDisplay.SetActive(false);
             loseDisplay.SetActive(true);
@@ -32,9 +31,7 @@ namespace SVESimulator.UI
 
         public void ReturnToMainMenu()
         {
-            NetworkManager.singleton.StopHost();
-            NetworkManager.singleton.StopServer();
-            SceneManager.LoadScene("MainMenu");
+            GameUIManager.PauseMenu.ReturnToMainMenu();
         }
     }
 }
