@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using CCGKit;
 using Sparkfire.Utility;
+using SVESimulator.UI;
 
 namespace SVESimulator
 {
@@ -34,7 +35,9 @@ namespace SVESimulator
         public override bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName)
         {
             var cardFilter = SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId);
-            int requiredAmount = amount.IsNullOrWhiteSpace() ? 1 : SVEFormulaParser.ParseValue(amount, player, card);
+            int requiredAmount = 1;
+            if(!amount.IsNullOrWhiteSpace())
+                SVEFormulaParser.ParseValueAsMinMax(amount, player, card, out requiredAmount, out _);
 
             switch(target)
             {
@@ -57,11 +60,33 @@ namespace SVESimulator
             {
                 foreach(CardObject targetCard in targets)
                 {
-                    int removeAmount = amount.IsNullOrWhiteSpace()
-                        ? targetCard.CountOfCounter(keywordType)
-                        : SVEFormulaParser.ParseValue(amount, player, card);
+                    // Get amounts
+                    int removeAmountMin, removeAmountMax;
+                    if(amount.IsNullOrWhiteSpace())
+                    {
+                        removeAmountMin = targetCard.CountOfCounter(keywordType);
+                        removeAmountMax = removeAmountMin;
+                    }
+                    else
+                        SVEFormulaParser.ParseValueAsMinMax(amount, player, card.RuntimeCard, out removeAmountMin, out removeAmountMax);
+
+                    // Dynamic remove count
+                    if(removeAmountMax > removeAmountMin)
+                    {
+                        if(targets.Count > 1)
+                            Debug.LogError($"{nameof(RemoveCountersCost)} does not support removing a dynamic number of counters {amount} with multiple targeted cards!");
+                        GameUIManager.SelectAmount.Open(removeAmountMin, removeAmountMax, "Select number of counters to remove", null, selectedAmount =>
+                        {
+                            countersToRemove.Add(new RemoveCounterData(targetCard.RuntimeCard.instanceId, targetCard.CurrentZone.Runtime.name,
+                                keywordType, targetCard.CountOfCounter(keywordType), selectedAmount));
+                            waiting = false;
+                        });
+                        return;
+                    }
+
+                    // Standard remove
                     countersToRemove.Add(new RemoveCounterData(targetCard.RuntimeCard.instanceId, targetCard.CurrentZone.Runtime.name,
-                        keywordType, targetCard.CountOfCounter(keywordType), removeAmount));
+                        keywordType, targetCard.CountOfCounter(keywordType), removeAmountMin));
                 }
                 waiting = false;
             });
