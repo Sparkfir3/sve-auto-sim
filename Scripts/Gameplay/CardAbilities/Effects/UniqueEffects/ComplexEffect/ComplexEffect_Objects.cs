@@ -50,6 +50,8 @@ namespace SVESimulator
                 {
                     case "movedCardsCount":
                         return Task.FromResult<CE_Object>(new CE_Value(movedCardsData.Count.ToString()));
+                    case "removedCountersCount":
+                        return Task.FromResult<CE_Object>(new CE_Value(removedCountersData.Count.ToString()));
                     default:
                         return Task.FromResult<CE_Object>(null);
                 }
