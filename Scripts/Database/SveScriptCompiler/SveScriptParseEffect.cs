@@ -216,6 +216,9 @@ namespace SVESimulator.SveScript
                         break;
 
                     // Dynamic length arguments - must always be the last argument in the list
+                    case EffectParameterType.FilteredSearchDeckActionsList:
+                        ParseFilteredSearchDeckActionsList(argsArray[i..], ref effectData);
+                        return;
                     case EffectParameterType.CheckCardActions:
                         ParseCheckTopArgsArray(argsArray[i..], ref effectData);
                         return;
@@ -227,6 +230,39 @@ namespace SVESimulator.SveScript
                             effectData.Add($"effectName{j + 1}", (i + j) < argsArray.Length ? argsArray[i + j] : null);
                         return;
                 }
+            }
+        }
+
+        #endregion
+
+        // -----
+
+        #region Parse Special Args
+
+        private static void ParseFilteredSearchDeckActionsList(in string[] argsArray, ref JObject effectData)
+        {
+            if(argsArray.Length > 6)
+                throw new ArgumentException($"Invalid argument array: received ({string.Join(",", argsArray)}) with {argsArray.Length} parameters, but no more than 6 are supported for SearchDeckFilteredOptions effect");
+
+            for(int i = 0; i < 3; i++)
+            {
+                string filter, action;
+                int filterIndex = i;
+                int actionIndex = i + 1;
+                if(actionIndex > argsArray.Length)
+                {
+                    filter = null;
+                    action = "None";
+                }
+                else
+                {
+                    filter = argsArray[filterIndex];
+                    action = argsArray[actionIndex];
+                }
+
+                if(!filter.IsNullOrWhiteSpace())
+                    effectData.Add($"filter{(i == 0 ? "" : (i + 1).ToString())}", filter);
+                effectData.Add($"searchAction{(i == 0 ? "" : (i + 1).ToString())}", action);
             }
         }
 
@@ -286,6 +322,7 @@ namespace SVESimulator.SveScript
 
             // Unique effect parameters
             SearchDeckAction,
+            FilteredSearchDeckActionsList,
             CheckCardActions, // parser includes "amount" field as part of this
             CreateTokenOption,
 
@@ -353,6 +390,7 @@ namespace SVESimulator.SveScript
             { "Mill", new EffectParams("MillDeckEffect",                                    false, false, EffectParameterType.Amount) },
             { "RedrawHand", new EffectParams("RedrawHandEffect",                            false, false, EffectParameterType.AmountDefaultNull) },
             { "Search", new EffectParams("SearchDeckEffect",                                false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
+            { "SearchFilteredOptions", new EffectParams("SearchDeckFilteredOptionsEffect",  false, false, EffectParameterType.Amount, EffectParameterType.FilteredSearchDeckActionsList) },
             { "SearchAndTarget", new EffectParams("SearchDeckAndTargetEffect",              false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction, EffectParameterType.ListOfEffects) },
             { "TopDeckToEx", new EffectParams("TopDeckToExEffect",                          false, false, EffectParameterType.Amount) },
             { "TopDeckToExArea", new EffectParams("TopDeckToExEffect",                      false, false, EffectParameterType.Amount) },
@@ -464,6 +502,7 @@ namespace SVESimulator.SveScript
 
         private static Dictionary<string, EffectParams> PassiveEffectInfoDictionary = new()
         {
+            { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect) },
             { "GiveKeyword", new EffectParams("GiveKeywordPassive",                         false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
             { "MinusCostOther", new EffectParams("MinusCostOtherPassive",                   false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
