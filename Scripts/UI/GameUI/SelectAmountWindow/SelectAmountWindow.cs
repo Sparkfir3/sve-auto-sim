@@ -3,6 +3,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine.UI;
+using Sparkfire.Utility;
 
 namespace SVESimulator.UI
 {
@@ -25,6 +26,10 @@ namespace SVESimulator.UI
         private Button decrementButton;
         [SerializeField]
         private Button incrementButton;
+        [SerializeField]
+        private TextMeshProUGUI mainTextBox;
+        [SerializeField]
+        private TextMeshProUGUI subTextBox;
 
         // ------------------------------
 
@@ -41,8 +46,17 @@ namespace SVESimulator.UI
             currentAmount = min;
             currentMin = min;
             currentMax = max;
-            OnChangeAmount();
 
+            mainTextBox.text = text;
+            if(!subtext.IsNullOrWhiteSpace())
+            {
+                subTextBox.text = subtext;
+                subTextBox.gameObject.SetActive(true);
+            }
+            else
+                subTextBox.gameObject.SetActive(false);
+
+            OnChangeAmount();
             gameObject.SetActive(true);
         }
 
