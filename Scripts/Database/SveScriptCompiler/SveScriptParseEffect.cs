@@ -259,8 +259,10 @@ namespace SVESimulator.SveScript
                 }
 
                 effectData.Add($"checkAction{i}", action);
-                effectData.Add($"checkFilter{i}", filter);
-                effectData.Add($"checkAmount{i}", amount);
+                if(!filter.IsNullOrWhiteSpace())
+                    effectData.Add($"checkFilter{i}", filter);
+                if(!amount.IsNullOrWhiteSpace())
+                    effectData.Add($"checkAmount{i}", amount);
             }
         }
 
