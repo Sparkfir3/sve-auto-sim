@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using CCGKit;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -334,6 +336,32 @@ namespace SVESimulator
                 valueId = keyword.valueId
             };
             return newKeyword;
+        }
+
+        public static Ability Copy(this Ability ability)
+        {
+            Type type = ability.GetType();
+            Ability newAbility = Activator.CreateInstance(type) as Ability;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "effect":
+                        fields[i].SetValue(newAbility, ability.effect is SveEffect sveEffect ? sveEffect.CopyWithAddFilters() : ability.effect);
+                        break;
+                    case "trigger":
+                        fields[i].SetValue(newAbility, ability is TriggeredAbility triggeredAbility ? triggeredAbility.trigger : null); // TODO - create new instance
+                        break;
+                    case "costs":
+                        fields[i].SetValue(newAbility, ability is ActivatedAbility actAbility ? new List<Cost>(actAbility.costs) : new List<Cost>()); // TODO - create new instance
+                        break;
+                    default:
+                        fields[i].SetValue(newAbility, fields[i].GetValue(ability));
+                        break;
+                }
+            }
+            return newAbility;
         }
 
         #endregion

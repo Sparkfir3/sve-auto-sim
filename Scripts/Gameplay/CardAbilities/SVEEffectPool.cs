@@ -101,7 +101,7 @@ namespace SVESimulator
         public void TriggerPendingEffects<T>(Card libraryCard, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
             RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate) where T : SveTrigger
         {
-            List<Ability> triggeredAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
+            List<Ability> triggeredAbilities = GetCardTriggeredAbilities(libraryCard, sourceCard);
             foreach(Ability ability in triggeredAbilities)
             {
                 TriggeredAbility triggeredAbility = ability as TriggeredAbility;
@@ -193,6 +193,7 @@ namespace SVESimulator
                     RegisteredPassiveAbility newPassive = new()
                     {
                         sourceCardInstanceId = sourceCard.instanceId,
+                        sourceCardId = sourceCard.cardId,
                         targetsFormula = filterFormula,
                         filters = SVEFormulaParser.ParseCardFilterFormula(filterFormula, sourceCard.instanceId),
                         effect = passiveEffect,
@@ -670,6 +671,20 @@ namespace SVESimulator
             return localPlayer.isActivePlayer ? opponentPlayer : localPlayer;
         }
 
+        private List<Ability> GetCardTriggeredAbilities(Card libraryCard, RuntimeCard card)
+        {
+            List<Ability> abilityList = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
+            foreach(RegisteredPassiveAbility passive in registeredPassives)
+            {
+                if(passive.effect is not GiveAbilityPassive giveAbilityPassive || !passive.filters.MatchesCard(card) /*|| !passive.MeetsCondition(player) TODO*/)
+                    continue;
+                Ability ability = giveAbilityPassive.GetAbility(passive.sourceCardId);
+                if(ability is TriggeredAbility)
+                    abilityList.Add(ability);
+            }
+            return abilityList;
+        }
+
         #endregion
     }
 
@@ -704,6 +719,7 @@ namespace SVESimulator
     public class RegisteredPassiveAbility : IEquatable<RegisteredPassiveAbility>
     {
         public int sourceCardInstanceId;
+        public int sourceCardId;
         public string targetsFormula;
         public Dictionary<CardFilterSetting, string> filters;
         public SvePassiveEffect effect;
