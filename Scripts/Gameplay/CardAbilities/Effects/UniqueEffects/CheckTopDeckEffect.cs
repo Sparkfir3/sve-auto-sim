@@ -22,6 +22,7 @@ namespace SVESimulator
             Field,
             BottomDeck,
             TopOrBottomDeck,
+            ExArea,
 
             // Rearrange and send
             TopDeckAnyOrder,
@@ -223,6 +224,14 @@ namespace SVESimulator
                     {
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
+                    };
+                    return true;
+                case CheckCardAction.ExArea:
+                    actionText = "Send to EX Area";
+                    confirmAction = selectedCards =>
+                    {
+                        foreach(CardObject card in selectedCards)
+                            player.LocalEvents.SendToExArea(card, SVEProperties.Zones.Deck);
                     };
                     return true;
 
