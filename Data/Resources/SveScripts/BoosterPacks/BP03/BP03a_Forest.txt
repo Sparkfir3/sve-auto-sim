@@ -72,7 +72,7 @@ ability OnEvolve {
 ability Spell name Hand {
     effect ReturnToHand() to AllOpponentCards !E;
 }
-ability Spell name Hand {
+ability Spell name Destroy {
     effect Destroy() to AllOpponentCards E;
 }
 
