@@ -338,7 +338,7 @@ namespace SVESimulator
             return newKeyword;
         }
 
-        public static Ability Copy(this Ability ability)
+        public static Ability CopyWithRemoveCostOfType<T>(this Ability ability) where T : Cost
         {
             Type type = ability.GetType();
             Ability newAbility = Activator.CreateInstance(type) as Ability;
@@ -351,10 +351,15 @@ namespace SVESimulator
                         fields[i].SetValue(newAbility, ability.effect is SveEffect sveEffect ? sveEffect.CopyWithAddFilters() : ability.effect);
                         break;
                     case "trigger":
-                        fields[i].SetValue(newAbility, ability is TriggeredAbility triggeredAbility ? triggeredAbility.trigger : null); // TODO - create new instance
+                        fields[i].SetValue(newAbility, ability is TriggeredAbility triggeredAbility && triggeredAbility.trigger is SveTrigger sveTrigger
+                            ? sveTrigger.CopyWithRemoveCostOfType<T>() : null);
                         break;
                     case "costs":
-                        fields[i].SetValue(newAbility, ability is ActivatedAbility actAbility ? new List<Cost>(actAbility.costs) : new List<Cost>()); // TODO - create new instance
+                        List<Cost> newCostList = ability is ActivatedAbility actAbility ? new(actAbility.costs) : new();
+                        for(int j = 0; j < newCostList.Count; j++)
+                            if(newCostList[i] is T)
+                                newCostList.RemoveAt(i--);
+                        fields[i].SetValue(newAbility, newCostList); // TODO - create new instance of each cost
                         break;
                     default:
                         fields[i].SetValue(newAbility, fields[i].GetValue(ability));

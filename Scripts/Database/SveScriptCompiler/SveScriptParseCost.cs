@@ -100,6 +100,9 @@ namespace SVESimulator.SveScript
                     case "Quick":
                         newCost.Add("$type", $"SVESimulator.QuickEffectAsCost");
                         break;
+                    case "GivenAbility":
+                        newCost.Add("$type", $"SVESimulator.GivenAbilityAsCost");
+                        break;
 
                     default:
                         Debug.LogError($"Invalid cost arg {args[0]} found in line: {text}");

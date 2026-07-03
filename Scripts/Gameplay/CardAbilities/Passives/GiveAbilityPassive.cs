@@ -25,7 +25,7 @@ namespace SVESimulator
                 return ability;
 
             Card libraryCard = LibraryCardCache.GetCard(sourceCardId);
-            ability = libraryCard.abilities.FirstOrDefault(x => x.name.Equals(effectName))?.Copy();
+            ability = libraryCard.abilities.FirstOrDefault(x => x.name.Equals(effectName))?.CopyWithRemoveCostOfType<GivenAbilityAsCost>();
             if((ability as TriggeredAbility)?.trigger is SveTrigger sveTrigger)
             {
                 // TODO - remove internal cost from trigger
