@@ -262,7 +262,7 @@
     "cardText": "Select a card on your field. Return it to its owner's hand and give your leader [defense]+1.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "ReturnToHand",
         "body": "Select a card on your field. Return it to its owner's hand and give your leader [defense]+1."
       }
     ]
