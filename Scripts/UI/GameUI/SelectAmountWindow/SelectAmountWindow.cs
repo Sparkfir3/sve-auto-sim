@@ -9,12 +9,15 @@ namespace SVESimulator.UI
 {
     public class SelectAmountWindow : MonoBehaviour
     {
-        [Title("Runtime Data"), SerializeField]
+        [Title("Runtime Data"), SerializeField, DisableInEditorMode]
         private int currentAmount;
-        [SerializeField]
+        [SerializeField, DisableInEditorMode]
         private int currentMin;
-        [SerializeField]
+        [SerializeField, DisableInEditorMode]
         private int currentMax;
+
+        [Title("Settings"), SerializeField]
+        private string defaultText = "Select a Number";
 
         [Title("Object References"), SerializeField]
         private TextMeshProUGUI currentAmountTextBox;
@@ -47,7 +50,7 @@ namespace SVESimulator.UI
             currentMin = min;
             currentMax = max;
 
-            mainTextBox.text = text;
+            mainTextBox.text = text.IsNullOrWhiteSpace() ? defaultText : text;
             if(!subtext.IsNullOrWhiteSpace())
             {
                 subTextBox.text = subtext;
