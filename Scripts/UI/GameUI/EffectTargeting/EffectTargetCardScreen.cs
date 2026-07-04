@@ -313,11 +313,12 @@ namespace SVESimulator.UI
             else
             {
                 box = Instantiate(multiSelectInfoPrefab, transform);
+                box.Initialize();
             }
 
             multiSelectBoxes.Add(card, box);
             box.gameObject.SetActive(true);
-            box.SetAnchoredPosition(Camera.main.WorldToScreenPoint(card.transform.position));
+            box.SetAnchoredViewportPosition(Camera.main.WorldToViewportPoint(card.transform.position));
             return box;
         }
 

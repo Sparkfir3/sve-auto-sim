@@ -12,16 +12,26 @@ namespace SVESimulator
         [SerializeField]
         private TextMeshProUGUI textBox;
 
+        private RectTransform canvasRectTransform;
+
         // ------------------------------
+
+        public void Initialize()
+        {
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.zero;
+            rectTransform.pivot = Vector2.one * 0.5f;
+            canvasRectTransform = transform.root.GetComponent<RectTransform>();
+        }
 
         public void SetText(string text)
         {
             textBox.text = text;
         }
 
-        public void SetAnchoredPosition(Vector2 position)
+        public void SetAnchoredViewportPosition(Vector2 position)
         {
-            rectTransform.anchoredPosition = position;
+            rectTransform.anchoredPosition = new Vector2(canvasRectTransform.rect.width * position.x, canvasRectTransform.rect.height * position.y);
         }
 
 #if UNITY_EDITOR
