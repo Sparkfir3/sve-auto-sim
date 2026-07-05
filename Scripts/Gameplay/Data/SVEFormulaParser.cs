@@ -244,12 +244,21 @@ namespace SVESimulator
             else if(formula.Trim().StartsWith("m("))
             {
                 var minMaxFormula = ParseCardFilterFormula(formula);
-                ParseMinMaxCount(minMaxFormula[CardFilterSetting.MinMaxCount], out min, out max);
+                ParseMinMaxCount(minMaxFormula[CardFilterSetting.MinMaxCount], player, card, out min, out max);
             }
             else
             {
                 min = max = ParseValue(formula, player, card);
             }
+        }
+
+        public static void ParseMinMaxCount(in string formula, out int min, out int max) => ParseMinMaxCount(formula, null, null, out min, out max);
+        public static void ParseMinMaxCount(in string formula, PlayerController player, RuntimeCard card, out int min, out int max)
+        {
+            string[] substrings = formula.Split(',');
+            Debug.Assert(substrings.Length == 2, $"Tried to parse invalid min max formula: {formula}");
+            min = ParseFormulaInt(substrings[0].Trim(), 0, out _, player, card);
+            max = ParseFormulaInt(substrings[1].Trim(), 0, out _, player, card);
         }
 
         #endregion
@@ -543,16 +552,8 @@ namespace SVESimulator
             return card != null ? ParseCardFilterFormula(formula, card.instanceId) : ParseCardFilterFormula(formula);
         }
 
-        public static void ParseMinMaxCount(in string formula, out int min, out int max)
-        {
-            string[] substrings = formula.Split(',');
-            Debug.Assert(substrings.Length == 2, $"Tried to parse invalid min max formula: {formula}");
-            min = ParseFormulaInt(substrings[0], 0, out _);
-            max = ParseFormulaInt(substrings[1], 0, out _);
-        }
-
         // -----
-        
+
         private static string ParseFilterFormulaSubstring(in string formula, int startIndex, out int endIndex)
         {
             endIndex = startIndex;

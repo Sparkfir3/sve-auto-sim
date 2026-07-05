@@ -68,7 +68,7 @@ namespace SVESimulator
                         removeAmountMax = removeAmountMin;
                     }
                     else
-                        SVEFormulaParser.ParseValueAsMinMax(amount, player, card.RuntimeCard, out removeAmountMin, out removeAmountMax);
+                        SVEFormulaParser.ParseValueAsMinMax(amount, player, targetCard.RuntimeCard, out removeAmountMin, out removeAmountMax);
 
                     // Dynamic remove count
                     if(removeAmountMax > removeAmountMin)
