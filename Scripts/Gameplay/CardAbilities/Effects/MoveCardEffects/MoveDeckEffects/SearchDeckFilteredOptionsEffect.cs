@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using CCGKit;
 using Sparkfire.Utility;
+using SVESimulator.UI;
 
 namespace SVESimulator
 {
@@ -37,7 +39,7 @@ namespace SVESimulator
                 selectionArea.Disable();
                 ConfirmationAction(player, selectedCards, onSelect);
             });
-            if(!filter2.IsNullOrWhiteSpace())
+            if(searchDeckAction2 != SearchDeckAction.None)
             {
                 selectionArea.AddAdditionalConfirmAction(searchDeckAction2.ToString(), selectedCards =>
                 {
@@ -45,7 +47,7 @@ namespace SVESimulator
                     ConfirmationAction2(player, selectedCards, onSelect);
                 });
             }
-            if(!filter3.IsNullOrWhiteSpace())
+            if(searchDeckAction3 != SearchDeckAction.None)
             {
                 selectionArea.AddAdditionalConfirmAction(searchDeckAction3.ToString(), selectedCards =>
                 {
@@ -53,6 +55,8 @@ namespace SVESimulator
                     ConfirmationAction3(player, selectedCards, onSelect);
                 });
             }
+            selectionArea.UpdateActionButtonOverride = UpdateActionButton;
+            UpdateActionButton(selectionArea);
         }
 
         // ------------------------------
@@ -67,6 +71,38 @@ namespace SVESimulator
         {
             PerformSearchDeckAction(player, searchDeckAction3, selectedCards);
             onComplete?.Invoke();
+        }
+
+        protected void UpdateActionButton(CardSelectionArea selectionArea)
+        {
+            // TODO - cache filter dictionaries and/or manual iterate instead of linq if it becomes problematic
+            int i = 0;
+            if(selectionArea.CurrentSelectedCards.Count == 0)
+            {
+                if(searchDeckAction != SearchDeckAction.None)
+                    GameUIManager.MultipleChoice.SetButtonActive(i++, false);
+                if(searchDeckAction2 != SearchDeckAction.None)
+                    GameUIManager.MultipleChoice.SetButtonActive(i++, false);
+                if(searchDeckAction3 != SearchDeckAction.None)
+                    GameUIManager.MultipleChoice.SetButtonActive(i, false);
+                return;
+            }
+
+            if(searchDeckAction != SearchDeckAction.None)
+            {
+                var filterDict = SVEFormulaParser.ParseCardFilterFormula(filter);
+                GameUIManager.MultipleChoice.SetButtonActive(i++, selectionArea.CurrentSelectedCards.All(x => filterDict.MatchesCard(x)));
+            }
+            if(searchDeckAction2 != SearchDeckAction.None)
+            {
+                var filterDict = SVEFormulaParser.ParseCardFilterFormula(filter2);
+                GameUIManager.MultipleChoice.SetButtonActive(i++, selectionArea.CurrentSelectedCards.All(x => filterDict.MatchesCard(x)));
+            }
+            if(searchDeckAction3 != SearchDeckAction.None)
+            {
+                var filterDict = SVEFormulaParser.ParseCardFilterFormula(filter3);
+                GameUIManager.MultipleChoice.SetButtonActive(i, selectionArea.CurrentSelectedCards.All(x => filterDict.MatchesCard(x)));
+            }
         }
     }
 }
