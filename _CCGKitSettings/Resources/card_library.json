@@ -34722,11 +34722,10 @@
             "effect": {
               "amount": "1",
               "filter": "Ft(Beast)",
-              "searchAction": "Hand",
-              "filter2": "Hand",
-              "searchAction2": "Ft(Beast)p(2)",
-              "filter3": "Ft(Beast)p(2)",
-              "searchAction3": "Field",
+              "searchDeckAction": "Hand",
+              "filter2": "Ft(Beast)p(2)",
+              "searchDeckAction2": "Field",
+              "searchDeckAction3": "None",
               "$type": "SVESimulator.SearchDeckFilteredOptionsEffect"
             },
             "target": null,
@@ -34850,7 +34849,7 @@
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Hand",
+            "name": "Destroy",
             "type": "Triggered",
             "effect": {
               "target": "AllOpponentCards",

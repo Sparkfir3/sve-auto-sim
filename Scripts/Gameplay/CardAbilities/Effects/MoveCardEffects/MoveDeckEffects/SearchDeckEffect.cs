@@ -8,7 +8,7 @@ namespace SVESimulator
 {
     public class SearchDeckEffect : ChooseFromCardStackEffect
     {
-        public enum SearchDeckAction { Hand, Cemetery, Field, ExArea }
+        public enum SearchDeckAction { None, Hand, Cemetery, Field, ExArea }
 
         [StringField("Action", width = 100), Order(10)]
         public SearchDeckAction searchDeckAction;

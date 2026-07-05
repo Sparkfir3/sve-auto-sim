@@ -247,8 +247,8 @@ namespace SVESimulator.SveScript
             for(int i = 0; i < 3; i++)
             {
                 string filter, action;
-                int filterIndex = i;
-                int actionIndex = i + 1;
+                int filterIndex = i * 2;
+                int actionIndex = filterIndex + 1;
                 if(actionIndex > argsArray.Length)
                 {
                     filter = null;
@@ -262,7 +262,7 @@ namespace SVESimulator.SveScript
 
                 if(!filter.IsNullOrWhiteSpace())
                     effectData.Add($"filter{(i == 0 ? "" : (i + 1).ToString())}", filter);
-                effectData.Add($"searchAction{(i == 0 ? "" : (i + 1).ToString())}", action);
+                effectData.Add($"searchDeckAction{(i == 0 ? "" : (i + 1).ToString())}", action);
             }
         }
 
