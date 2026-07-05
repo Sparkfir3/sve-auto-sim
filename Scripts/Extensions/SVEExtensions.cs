@@ -145,7 +145,7 @@ namespace SVESimulator
                             return false;
                         break;
                     case CardFilterSetting.InstanceID:
-                        int[] instanceIds = value.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
+                        int[] instanceIds = value.IsNullOrWhiteSpace() ? new int[0] : value.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
                         if(!instanceIds.Contains(card.instanceId) ^ inverse)
                             return false;
                         break;
