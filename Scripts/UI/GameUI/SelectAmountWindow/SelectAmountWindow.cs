@@ -18,6 +18,10 @@ namespace SVESimulator.UI
 
         [Title("Settings"), SerializeField]
         private string defaultText = "Select a Number";
+        [SerializeField]
+        private string minTextTemplate = "Min {0}";
+        [SerializeField]
+        private string maxTextTemplate = "Max {0}";
 
         [Title("Object References"), SerializeField]
         private TextMeshProUGUI currentAmountTextBox;
@@ -33,6 +37,8 @@ namespace SVESimulator.UI
         private TextMeshProUGUI mainTextBox;
         [SerializeField]
         private TextMeshProUGUI subTextBox;
+        [SerializeField]
+        private Button confirmButton;
 
         // ------------------------------
 
@@ -46,7 +52,7 @@ namespace SVESimulator.UI
 
         public void Open(int min, int max, string text, string subtext, Action<int> onConfirm)
         {
-            currentAmount = min;
+            currentAmount = max;
             currentMin = min;
             currentMax = max;
 
@@ -58,13 +64,21 @@ namespace SVESimulator.UI
             }
             else
                 subTextBox.gameObject.SetActive(false);
+            minTextBox.text = string.Format(minTextTemplate, min);
+            maxTextBox.text = string.Format(maxTextTemplate, max);
 
             OnChangeAmount();
+            confirmButton.onClick.AddListener(() =>
+            {
+                onConfirm?.Invoke(currentAmount);
+                Close();
+            });
             gameObject.SetActive(true);
         }
 
         public void Close()
         {
+            confirmButton.onClick.RemoveAllListeners();
             gameObject.SetActive(false);
         }
 
