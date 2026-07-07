@@ -77,8 +77,9 @@ namespace SVESimulator
                             Debug.LogError($"{nameof(RemoveCountersCost)} does not support removing a dynamic number of counters {amount} with multiple targeted cards!");
                         GameUIManager.SelectAmount.Open(removeAmountMin, removeAmountMax, "Select number of counters to remove", null, selectedAmount =>
                         {
-                            countersToRemove.Add(new RemoveCounterData(targetCard.RuntimeCard.instanceId, targetCard.CurrentZone.Runtime.name,
-                                keywordType, targetCard.CountOfCounter(keywordType), selectedAmount));
+                            if(selectedAmount > 0)
+                                countersToRemove.Add(new RemoveCounterData(targetCard.RuntimeCard.instanceId, targetCard.CurrentZone.Runtime.name,
+                                    keywordType, targetCard.CountOfCounter(keywordType), selectedAmount));
                             waiting = false;
                         });
                         return;
