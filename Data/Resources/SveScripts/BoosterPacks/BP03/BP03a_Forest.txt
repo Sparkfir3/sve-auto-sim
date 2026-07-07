@@ -28,7 +28,7 @@ ability Act {
     );
 }
 ability Spell name AtkDef {
-    cost (PP, 1), (RemoveCounters, Fable, m(0, r(Fable)));
+    cost (IgnorePrompt), (PP, 1), (RemoveCounters, Fable, m(0, r(Fable)));
     effect GiveStat(AtkDef, _) to Self;
 }
 
