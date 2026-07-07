@@ -20,6 +20,12 @@
         "trigger": "[act]",
         "cost": "[cost01], remove any number of Fable counters from this card",
         "body": "Give this follower [attack]+X/[defense]+X. X equals the number of counters removed."
+      },
+      {
+        "key": "AtkDef",
+        "text": "Remove any number of Fable counters from this card: Give this follower [attack]+X/[defense]+X. X equals the number of counters removed.",
+        "cost": "[cost01], remove any number of Fable counters from this card",
+        "body": "Give this follower [attack]+X/[defense]+X. X equals the number of counters removed."
       }
     ]
   },

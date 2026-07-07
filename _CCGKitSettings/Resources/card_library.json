@@ -34568,7 +34568,16 @@
           },
           {
             "zoneId": 0,
-            "costs": null,
+            "costs": [
+              {
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "condition": "r(Fable)",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
             "name": "Act",
             "type": "Activated",
             "effect": {
@@ -34580,7 +34589,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  },\r\n  {\r\n    \"amount\": \"1\",\r\n    \"$type\": \"SVESimulator.PlayPointCost\"\r\n  },\r\n  {\r\n    \"keywordType\": 9,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"m(0, r(Fable))\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  },\r\n  {\r\n    \"keywordType\": 9,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"m(0, r(Fable))\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },

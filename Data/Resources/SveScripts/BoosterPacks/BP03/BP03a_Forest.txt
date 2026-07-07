@@ -22,13 +22,15 @@ ability Spell name Storm {
     effect GiveKeyword(Storm) to Self;
 }
 ability Act {
+    cost (PP, 1);
+    condition r(Fable);
     effect ComplexEffect(
         let amt = payCost(AtkDef).removedCountersCount
         performCostless AtkDef { amount = amt }
     );
 }
 ability Spell name AtkDef {
-    cost (IgnorePrompt), (PP, 1), (RemoveCounters, Fable, m(0, r(Fable)));
+    cost (IgnorePrompt), (RemoveCounters, Fable, m(0, r(Fable)));
     effect GiveStat(AtkDef, _) to Self;
 }
 
