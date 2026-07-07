@@ -102,6 +102,8 @@ namespace SVESimulator.UI
 
         private void OnChangeAmount()
         {
+            decrementButton.interactable = currentAmount > currentMin;
+            incrementButton.interactable = currentAmount < currentMax;
             currentAmountTextBox.text = currentAmount.ToString();
         }
     }
