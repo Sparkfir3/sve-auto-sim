@@ -81,6 +81,8 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  networkManagerSteamPrefab: {fileID: 3691630640573521396}
+  networkManagerKcpPrefab: {fileID: 3691630640573521396, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
 --- !u!114 &7188883768917122881
 MonoBehaviour:
   m_ObjectHideFlags: 0

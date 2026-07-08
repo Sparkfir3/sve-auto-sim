@@ -43,18 +43,24 @@ namespace SVESimulator
 
         #region Unity Functions
 
-        private void Start()
+        private void Awake()
         {
             networkManager = GetComponent<NetworkManager>();
+        }
+
+        private void Start()
+        {
             if(!SVEGameNetworkManager.IsSteamConnected)
             {
                 appStateConnected.SetStateInactive();
                 appStateDisconnected.SetStateActive();
                 return;
             }
-
             appStateDisconnected.SetStateInactive();
             appStateConnected.SetStateActive();
+
+            if(initialized)
+                return;
             lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
             gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
             lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
@@ -80,6 +86,11 @@ namespace SVESimulator
         // ------------------------------
 
         #region Public Data Calls
+
+        public void CheckSteamConnection()
+        {
+            Start();
+        }
 
         public void HostLobby(string lobbyName)
         {

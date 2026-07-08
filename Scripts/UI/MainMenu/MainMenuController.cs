@@ -24,11 +24,6 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject selectDeckError;
 
-        [FoldoutGroup("Network Manager Prefabs"), SerializeField, AssetsOnly]
-        private GameObject networkManagerSteam;
-        [FoldoutGroup("Network Manager Prefabs"), SerializeField, AssetsOnly]
-        private GameObject networkManagerKcp;
-
         private Action onNextConnectionToServer;
 
         #endregion
@@ -157,7 +152,7 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            InitKcpNetworkManager(() =>
+            SVEGameNetworkManager.Instance.InitKcpNetworkManager(() =>
             {
                 try
                 {
@@ -179,29 +174,10 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            InitKcpNetworkManager(() =>
+            SVEGameNetworkManager.Instance.InitKcpNetworkManager(() =>
             {
                 SVEGameNetworkManager.Instance.StartClient();
             });
-        }
-
-        private void InitKcpNetworkManager(Action onComplete)
-        {
-            if(!SVEGameNetworkManager.IsSteamManager)
-            {
-                onComplete?.Invoke();
-                return;
-            }
-            StopAllCoroutines();
-            StartCoroutine(ClientCoroutine());
-            IEnumerator ClientCoroutine()
-            {
-                Destroy(SVEGameNetworkManager.Instance.gameObject);
-                yield return null;
-                Instantiate(networkManagerKcp);
-                yield return null;
-                onComplete?.Invoke();
-            }
         }
 
         #endregion
@@ -216,18 +192,10 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            StartCoroutine(StartHostCoroutine());
-            IEnumerator StartHostCoroutine()
+            SVEGameNetworkManager.Instance.InitSteamNetworkManager(() =>
             {
-                if(!SVEGameNetworkManager.IsSteamManager)
-                {
-                    Destroy(SVEGameNetworkManager.Instance.gameObject);
-                    yield return null;
-                    Instantiate(networkManagerSteam);
-                    yield return null;
-                }
                 SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
-            }
+            });
         }
 
         public void JoinSteamLobby()
@@ -236,21 +204,23 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            StartCoroutine(StartClientCoroutine());
-            IEnumerator StartClientCoroutine()
+            SVEGameNetworkManager.Instance.InitSteamNetworkManager(() =>
             {
-                if(!SVEGameNetworkManager.IsSteamManager)
-                {
-                    Destroy(SVEGameNetworkManager.Instance.gameObject);
-                    yield return null;
-                    Instantiate(networkManagerSteam);
-                    yield return null;
-                }
                 SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
                 {
                     SteamMatchmaking.JoinLobby(lobbyID);
                 });
+            });
+        }
+
+        public void RetrySteamConnection()
+        {
+            if(SVEGameNetworkManager.IsSteamManager)
+            {
+                SVEGameNetworkManager.SteamLobby.CheckSteamConnection();
+                return;
             }
+            SVEGameNetworkManager.Instance.InitSteamNetworkManager(null);
         }
 
         #endregion

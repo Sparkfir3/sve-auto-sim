@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using CCGKit;
 using Mirror;
 using Steamworks;
+using Sparkfire.AppStateSystem;
 
 namespace SVESimulator
 {
@@ -10,6 +12,13 @@ namespace SVESimulator
     public class SVEGameNetworkManager : NetworkManager
     {
         #region Variables
+
+        [Header("Network Manager Prefabs"), SerializeField]
+        private SVEGameNetworkManager networkManagerSteamPrefab;
+        [SerializeField]
+        private SVEGameNetworkManager networkManagerKcpPrefab;
+
+        // ---
 
         public static SVEGameNetworkManager Instance { get; private set; }
         public static SteamLobby SteamLobby { get; private set; }
@@ -19,6 +28,7 @@ namespace SVESimulator
         public static bool IsSteamConnected => SteamManager.Initialized && SteamAPI.IsSteamRunning();
         public static bool IsSteamManager => SteamLobby != null;
         public static bool IsSteamManagerAndConnected => IsSteamManager && IsSteamConnected;
+        public static bool IsKcpManager => SteamLobby == null;
 
         public static event Action<NetworkConnectionToClient> OnPlayerConnected;
         public static event Action<NetworkConnectionToClient> OnPlayerDisconnected;
@@ -53,6 +63,43 @@ namespace SVESimulator
                 Instance = null;
                 SteamLobby = null;
             }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Network Management
+
+        public void InitSteamNetworkManager(Action onComplete)
+        {
+            if(IsSteamManager)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+            ApplicationStateManager.Instance.StartCoroutine(RebootNetworkManager(networkManagerSteamPrefab, onComplete));
+        }
+
+        public void InitKcpNetworkManager(Action onComplete)
+        {
+            if(IsKcpManager)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+            ApplicationStateManager.Instance.StartCoroutine(RebootNetworkManager(networkManagerKcpPrefab, onComplete));
+        }
+
+        private static IEnumerator RebootNetworkManager(SVEGameNetworkManager newNetworkManager, Action onComplete)
+        {
+            Destroy(SVEGameNetworkManager.Instance.gameObject);
+            yield return null;
+            Instantiate(newNetworkManager.gameObject);
+            yield return null;
+            yield return new WaitUntil(() => SVEGameNetworkManager.Instance);
+            yield return null;
+            onComplete?.Invoke();
         }
 
         #endregion
