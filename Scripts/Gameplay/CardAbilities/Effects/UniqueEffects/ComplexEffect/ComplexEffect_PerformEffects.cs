@@ -89,30 +89,33 @@ namespace SVESimulator
             List<RemoveCounterData> removedCountersData = null;
 
             // Select pay or decline
-            bool waiting = true;
-            bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, effectName);
-            List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
+            bool waiting = false;
+            if(costs != null && !costs.Any(x => x is IgnorePromptAsCost))
             {
-                new MultipleChoiceWindow.MultipleChoiceEntryData
+                waiting = true;
+                bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, effectName);
+                List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
                 {
-                    text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
-                    onSelect = canPayCost ? () => waiting = false : null
-                },
-                new MultipleChoiceWindow.MultipleChoiceEntryData
-                {
-                    text = "Decline",
-                    onSelect = () =>
+                    new MultipleChoiceWindow.MultipleChoiceEntryData
                     {
-                        forceExit = true;
-                        waiting = false;
-                    }
-                },
-            };
-            GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, effectName));
-            GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
-
-            while(waiting && !BreakCondition)
-                await Task.Yield();
+                        text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
+                        onSelect = canPayCost ? () => waiting = false : null
+                    },
+                    new MultipleChoiceWindow.MultipleChoiceEntryData
+                    {
+                        text = "Decline",
+                        onSelect = () =>
+                        {
+                            forceExit = true;
+                            waiting = false;
+                        }
+                    },
+                };
+                GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, effectName));
+                GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
+                while(waiting && !BreakCondition)
+                    await Task.Yield();
+            }
             if(forceExit)
                 return null;
 

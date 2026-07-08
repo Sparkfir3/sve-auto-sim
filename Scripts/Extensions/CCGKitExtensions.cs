@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using CCGKit;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -334,6 +336,37 @@ namespace SVESimulator
                 valueId = keyword.valueId
             };
             return newKeyword;
+        }
+
+        public static Ability CopyWithRemoveCostOfType<T>(this Ability ability) where T : Cost
+        {
+            Type type = ability.GetType();
+            Ability newAbility = Activator.CreateInstance(type) as Ability;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "effect":
+                        fields[i].SetValue(newAbility, ability.effect is SveEffect sveEffect ? sveEffect.CopyWithAddFilters() : ability.effect);
+                        break;
+                    case "trigger":
+                        fields[i].SetValue(newAbility, ability is TriggeredAbility triggeredAbility && triggeredAbility.trigger is SveTrigger sveTrigger
+                            ? sveTrigger.CopyWithRemoveCostOfType<T>() : null);
+                        break;
+                    case "costs":
+                        List<Cost> newCostList = ability is ActivatedAbility actAbility ? new(actAbility.costs) : new();
+                        for(int j = 0; j < newCostList.Count; j++)
+                            if(newCostList[i] is T)
+                                newCostList.RemoveAt(i--);
+                        fields[i].SetValue(newAbility, newCostList); // TODO - create new instance of each cost
+                        break;
+                    default:
+                        fields[i].SetValue(newAbility, fields[i].GetValue(ability));
+                        break;
+                }
+            }
+            return newAbility;
         }
 
         #endregion

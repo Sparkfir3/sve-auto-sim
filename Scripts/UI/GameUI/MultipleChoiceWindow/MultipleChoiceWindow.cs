@@ -191,7 +191,7 @@ namespace SVESimulator.UI
         {
             // TODO
             int endIndex = ActiveButtonCount - 1;
-            if(index <= endIndex || index < 0)
+            if(index >= endIndex || index < 0)
                 return;
 
             MultipleChoiceButton button = buttons[index];

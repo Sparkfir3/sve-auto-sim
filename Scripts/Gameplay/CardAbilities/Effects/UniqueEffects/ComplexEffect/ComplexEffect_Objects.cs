@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CCGKit;
 
@@ -50,6 +51,8 @@ namespace SVESimulator
                 {
                     case "movedCardsCount":
                         return Task.FromResult<CE_Object>(new CE_Value(movedCardsData.Count.ToString()));
+                    case "removedCountersCount":
+                        return Task.FromResult<CE_Object>(new CE_Value(removedCountersData.Sum(x => x.amount).ToString()));
                     default:
                         return Task.FromResult<CE_Object>(null);
                 }

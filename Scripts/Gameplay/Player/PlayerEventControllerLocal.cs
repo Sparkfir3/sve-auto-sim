@@ -561,6 +561,9 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
+            if(sourceZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsReturnedToHandFromField.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+
             // Show if adding from cemetery, otherwise normal move logic
             if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
                 StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
@@ -863,14 +866,15 @@ namespace SVESimulator
 
         #region Combat & Attack Handling
 
-        private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
+        private void DeclareAttack(CardObject attackingCard, CardObject defendingCard, bool isAttackingLeader)
         {
             playerController.AdditionalStats.CardsAttackedThisTurn.Add(new PlayedCardData(attackingCard.RuntimeCard.instanceId, attackingCard.RuntimeCard.cardId));
-            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, isAttackingLeader);
+            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, defendingCard ? defendingCard.RuntimeCard : null, isAttackingLeader);
             LocalDeclareAttackMessage msg = new()
             {
                 playerNetId = netIdentity,
-                cardInstanceId = attackingCard.RuntimeCard.instanceId,
+                attackerInstanceId = attackingCard.RuntimeCard.instanceId,
+                defenderInstanceId = defendingCard ? defendingCard.RuntimeCard.instanceId : -1,
                 isAttackingLeader = isAttackingLeader
             };
             NetworkClient.Send(msg);
@@ -881,15 +885,23 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null || defendingCard == null)
                 return;
 
-            DeclareAttack(attackingCard, isAttackingLeader: false);
+            int defenderSlotNumber = defendingCard.CurrentZone == oppZoneController.fieldZone ? oppZoneController.fieldZone.GetSlotNumber(defendingCard) : -1;
+            DeclareAttack(attackingCard, defendingCard, isAttackingLeader: false);
             SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
-                CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
-                SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, defendingCard, () =>
+                if(defendingCard.CurrentZone == oppZoneController.fieldZone) // defender is still on field
+                    CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
+                else // if defender is no longer on the field, aim towards its old position instead
+                    CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.fieldZone.GetSlotPosition(defenderSlotNumber));
+
+                SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, defendingCard, defenderSlotNumber, () =>
                 {
                     CardManager.Animator.EndAttackPreview();
-                    if(attackingCard.CurrentZone != localZoneController.fieldZone) // cancel attack if attacking card is no longer on field
+                    if(attackingCard.CurrentZone != localZoneController.fieldZone || defendingCard.CurrentZone != oppZoneController.fieldZone) // cancel attack if attacking card or defending is no longer on field
+                    {
+                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                         return;
+                    }
 
                     CardManager.Animator.PlayAttackAnimation(attackingCard, defendingCard, () =>
                     {
@@ -917,7 +929,7 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null)
                 return;
 
-            DeclareAttack(attackingCard, isAttackingLeader: true);
+            DeclareAttack(attackingCard, null, isAttackingLeader: true);
             SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.LeaderCardObject);
@@ -925,7 +937,10 @@ namespace SVESimulator
                 {
                     CardManager.Animator.EndAttackPreview();
                     if(attackingCard.CurrentZone != localZoneController.fieldZone) // cancel attack if attacking card is no longer on field
+                    {
+                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                         return;
+                    }
 
                     CardManager.Animator.PlayAttackAnimation(attackingCard, oppZoneController.LeaderCardObject, () => { sveEffectSolver.FightLeader(playerInfo.netId, attackingCard.RuntimeCard, opponentInfo); });
                     LocalAttackLeaderMessage msg = new()

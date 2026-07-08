@@ -28,6 +28,8 @@ namespace SVESimulator.UI
         private MultipleChoiceWindow multipleChoiceWindow;
         [SerializeField]
         private EffectTargetingUI effectTargetingUI;
+        [SerializeField]
+        private SelectAmountWindow selectAmountWindow;
 
         [Title("Other"), SerializeField]
         private ViewingZoneWindow viewingZoneWindow;
@@ -51,6 +53,7 @@ namespace SVESimulator.UI
         public static QuickTimingDisplay QuickTiming => Instance.quickTimingDisplay;
         public static MultipleChoiceWindow MultipleChoice => Instance.multipleChoiceWindow;
         public static EffectTargetingUI EffectTargeting => Instance.effectTargetingUI;
+        public static SelectAmountWindow SelectAmount => Instance.selectAmountWindow;
 
         // Other
         public static ViewingZoneWindow ViewingZone => Instance.viewingZoneWindow;
@@ -89,6 +92,7 @@ namespace SVESimulator.UI
             effectTargetingUI.Initialize();
             effectTargetingUI.gameObject.SetActive(true);
             viewingZoneWindow.gameObject.SetActive(false);
+            selectAmountWindow.Close();
 
             // Other
             mouseTooltip.Disable();

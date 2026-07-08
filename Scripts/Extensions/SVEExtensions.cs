@@ -145,7 +145,7 @@ namespace SVESimulator
                             return false;
                         break;
                     case CardFilterSetting.InstanceID:
-                        int[] instanceIds = value.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
+                        int[] instanceIds = value.IsNullOrWhiteSpace() ? new int[0] : value.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
                         if(!instanceIds.Contains(card.instanceId) ^ inverse)
                             return false;
                         break;
@@ -383,6 +383,30 @@ namespace SVESimulator
                 }
             }
             return newEffect;
+        }
+
+        public static SveTrigger CopyWithRemoveCostOfType<T>(this SveTrigger trigger) where T : Cost
+        {
+            Type type = trigger.GetType();
+            SveTrigger newTrigger = Activator.CreateInstance(type) as SveTrigger;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "_costList":
+                        List<Cost> newCostList = new(trigger.Costs);
+                        for(int j = 0; j < newCostList.Count; j++)
+                            if(newCostList[i] is T)
+                                newCostList.RemoveAt(i--);
+                        fields[i].SetValue(newTrigger, newCostList);
+                        continue;
+                    default:
+                        fields[i].SetValue(newTrigger, fields[i].GetValue(trigger));
+                        continue;
+                }
+            }
+            return newTrigger;
         }
 
         #endregion

@@ -322,14 +322,16 @@ namespace SVESimulator
     public struct LocalDeclareAttackMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
-        public int cardInstanceId;
+        public int attackerInstanceId;
+        public int defenderInstanceId;
         public bool isAttackingLeader;
     }
 
     public struct OpponentDeclareAttackMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
-        public int cardInstanceId;
+        public int attackerInstanceId;
+        public int defenderInstanceId;
     }
 
     public struct LocalAttackFollowerMessage : NetworkMessage

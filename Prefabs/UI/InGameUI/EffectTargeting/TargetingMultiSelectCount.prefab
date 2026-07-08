@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 317436373700176027}
   - component: {fileID: 4844459895454383882}
   m_Layer: 5
-  m_Name: TagetingMultiSelectCount
+  m_Name: TargetingMultiSelectCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -8,7 +8,7 @@ namespace SVESimulator
 {
     public class SearchDeckEffect : ChooseFromCardStackEffect
     {
-        public enum SearchDeckAction { Hand, Cemetery, Field, ExArea }
+        public enum SearchDeckAction { None, Hand, Cemetery, Field, ExArea }
 
         [StringField("Action", width = 100), Order(10)]
         public SearchDeckAction searchDeckAction;
@@ -37,11 +37,12 @@ namespace SVESimulator
             onComplete?.Invoke();
         }
 
-        protected virtual void PerformSearchDeckAction(PlayerController player, List<CardObject> selectedCards)
+        protected void PerformSearchDeckAction(PlayerController player, List<CardObject> selectedCards) => PerformSearchDeckAction(player, searchDeckAction, selectedCards);
+        protected void PerformSearchDeckAction(PlayerController player, SearchDeckAction searchAction, List<CardObject> selectedCards)
         {
             foreach(CardObject card in selectedCards)
             {
-                switch(searchDeckAction)
+                switch(searchAction)
                 {
                     case SearchDeckAction.Hand:
                         card.Interactable = player.isActivePlayer;

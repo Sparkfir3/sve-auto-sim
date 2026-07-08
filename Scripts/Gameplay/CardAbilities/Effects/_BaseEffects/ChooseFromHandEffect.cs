@@ -26,6 +26,7 @@ namespace SVESimulator
 
         protected virtual IEnumerator ResolveCoroutine(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            yield return new WaitForEndOfFrame(); // delay waits for confirmation timing SyncVar on client users to update TODO - find a better solution
             bool waiting = true;
             int minTargets, maxTargets;
             if(amount.IsNullOrWhiteSpace())

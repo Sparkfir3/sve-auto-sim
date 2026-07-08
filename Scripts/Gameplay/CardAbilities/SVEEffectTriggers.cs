@@ -40,10 +40,14 @@ namespace SVESimulator
     #region Card Movement
 
     public class SveOnCardEnterFieldTrigger : SveTrigger { }
+    public class SveOnCardEnterFieldFromHandTrigger : SveTrigger { }
+    public class SveOnCardEnterFieldFromNotHandTrigger : SveTrigger { }
 
     public class SveLastWordsTrigger : SveTrigger { }
 
     public class SveOnCardReturnToHandFromField : SveTrigger { }
+
+    public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
 
     public class SveOnCardLeaveFieldTrigger : SveTrigger { }
 

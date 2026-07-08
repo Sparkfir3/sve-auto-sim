@@ -133,6 +133,21 @@ MonoBehaviour:
     startIndex: 1
     endIndex: 1
     language: 1
+  - setCode: BP03
+    cardType: 0
+    startIndex: 1
+    endIndex: 121
+    language: 1
+  - setCode: BP03
+    cardType: 1
+    startIndex: 1
+    endIndex: 1
+    language: 1
+  - setCode: BP03
+    cardType: 2
+    startIndex: 1
+    endIndex: 5
+    language: 1
   cardBackURL: 
   evolvePointURL: https://tcgplayer-cdn.tcgplayer.com/product/509622_in_1000x1000.jpg
   maxConcurrentDownloads: 10

@@ -11,6 +11,7 @@ namespace SVESimulator
             Stack = 6,
             Spell = 7,
             Prayer = 8,
+            Fable = 9,
         }
 
         public enum SVEEffectTarget
