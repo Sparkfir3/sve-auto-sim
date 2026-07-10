@@ -19,15 +19,8 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-
             int playPointCost = SVEFormulaParser.ParseValue(amount2, player);
-            bool spellPlayed = player.LocalEvents.PlaySpell(selectedCards[0], SVEProperties.Zones.Cemetery, fixedCost: playPointCost);
-            if(!spellPlayed)
-            {
-                onComplete?.Invoke();
-                return;
-            }
-            player.LocalEvents.OnFinishSpell += onComplete;
+            PlaySpell(player, selectedCards[0], onComplete, fixedCost: playPointCost);
         }
     }
 }

@@ -426,6 +426,7 @@ namespace SVESimulator.SveScript
             // Movement - Cemetery to Zone
             { "CemeteryToField", new EffectParams("CemeteryToFieldEffect",                              true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("CemeteryToFieldAndTargetEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
+            { "PlayCardFromCemeterySetCost", new EffectParams("PlayCardFromCemeterySetCostEffect",      false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "PlaySpellFromCemetery", new EffectParams("PlaySpellFromCemeteryEffect",                  false, false, EffectParameterType.Filter) },
             { "PlaySpellFromCemeterySetCost", new EffectParams("PlaySpellFromCemeterySetCostEffect",    false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "Salvage", new EffectParams("SalvageCardEffect",                                          false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
