@@ -106,6 +106,9 @@ namespace SVESimulator.SveScript
                     case "IgnorePrompt":
                         newCost.Add("$type", $"SVESimulator.IgnorePromptAsCost");
                         break;
+                    case "Optional":
+                        newCost.Add("$type", $"SVESimulator.OptionalEffectAsCost");
+                        break;
 
                     default:
                         Debug.LogError($"Invalid cost arg {args[0]} found in line: {text}");

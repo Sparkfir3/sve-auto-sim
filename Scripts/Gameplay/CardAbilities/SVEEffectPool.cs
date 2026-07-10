@@ -382,9 +382,10 @@ namespace SVESimulator
             {
                 Debug.Assert(cardObject, $"Failed to find card with instance ID {pendingEffect.sourceCardInstanceId} in zone {pendingEffect.sourceCardZone} for ability {pendingEffect.abilityName}");
                 bool canPayCost = localPlayer.LocalEvents.CanPayCosts(cardObject.RuntimeCard, pendingEffect.costs, pendingEffect.abilityName);
+                bool isOptionalEffect = pendingEffect.costs.Any(x => x is OptionalEffectAsCost);
 
                 // Skip prompt if all costs are internal
-                if(pendingEffect.costs.All(x => x is SveCost { IsInternalCost: true }))
+                if(!isOptionalEffect && pendingEffect.costs.All(x => x is SveCost { IsInternalCost: true }))
                 {
                     if(canPayCost)
                         ResolveWithCost();
@@ -398,12 +399,13 @@ namespace SVESimulator
                 {
                     new MultipleChoiceWindow.MultipleChoiceEntryData
                     {
-                        text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
+                        text = canPayCost ? (isOptionalEffect ? "Perform Effect" : "Pay Cost") : "Cannot Pay Cost",
                         onSelect = () =>
                         {
                             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(localPlayer.GetOpponentInfo().netId);
                             ResolveWithCost();
-                        }
+                        },
+                        disabled = canPayCost
                     },
                     new MultipleChoiceWindow.MultipleChoiceEntryData
                     {
@@ -416,7 +418,6 @@ namespace SVESimulator
                     },
                 };
                 GameUIManager.MultipleChoice.Open(localPlayer, cardObject.LibraryCard.name, costOptions, pendingEffect.effect.text);
-                GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
             }
 
             // ---
