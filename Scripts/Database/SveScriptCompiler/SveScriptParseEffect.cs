@@ -422,6 +422,7 @@ namespace SVESimulator.SveScript
             { "HandToExAndTarget", new EffectParams("HandToExAreaAndTargetEffect",                      false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "HandToExAreaAndTarget", new EffectParams("HandToExAreaAndTargetEffect",                  false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "HandToField", new EffectParams("HandToFieldEffect",                                      false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "HandToFieldAndTarget", new EffectParams("HandToFieldAndTargetEffect",                    false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
 
             // Movement - Cemetery to Zone
             { "CemeteryToField", new EffectParams("CemeteryToFieldEffect",                              true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
