@@ -16,6 +16,8 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            if(target != SVEProperties.SVEEffectTarget.Self && !filter.Contains("#(hasEvolveDeckTarget)"))
+                filter += "#(hasEvolveDeckTarget)";
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
             {
                 foreach(CardObject card in targets)
@@ -24,7 +26,7 @@ namespace SVESimulator
                     {
                         continue;
                     }
-                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, useEvolveCost: false);
+                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, useEvolveCost: false, useEvolveForTurn: target == SVEProperties.SVEEffectTarget.Self);
                 }
                 onComplete?.Invoke();
             });

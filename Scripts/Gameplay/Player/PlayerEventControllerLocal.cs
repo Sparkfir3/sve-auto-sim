@@ -412,7 +412,7 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true, bool useEvolveForTurn = true)
         {
             // Condition checks
             if(!isActivePlayer || playerController.EvolvedThisTurn)
@@ -442,7 +442,7 @@ namespace SVESimulator
 
             baseCard.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.fieldZone.HighlightCardsCanAttack();
-            playerController.EvolvedThisTurn = true;
+            playerController.EvolvedThisTurn |= useEvolveForTurn;
 
             // Networking
             LocalEvolveCardMessage msg = new()

@@ -165,6 +165,7 @@ namespace SVESimulator
                 return true;
 
             args[0] = args[0].Trim().ToLower();
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
             switch(args[0])
             {
                 case "turnsonfield":
@@ -172,9 +173,10 @@ namespace SVESimulator
                     int maxTurnsOnField = 0;
                     if(args.Length > 1)
                         SVEFormulaParser.ParseValueAsMinMax(args[1].Trim(), null, out minTurnsOnField, out maxTurnsOnField);
-                    CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
                     int actualTurnsOnField = cardObject ? cardObject.NumberOfTurnsOnBoard : -1;
                     return actualTurnsOnField >= minTurnsOnField && actualTurnsOnField <= maxTurnsOnField;
+                case "hasevolvedecktarget":
+                    return cardObject.CurrentZone.ZoneController.EvolveDeckHasEvolvedVersionOf(card);
                 default:
                     Debug.LogWarning($"Attempted to parse invalid advanced card filter \"{value}\" with invalid field {args[0]}");
                     return true;
