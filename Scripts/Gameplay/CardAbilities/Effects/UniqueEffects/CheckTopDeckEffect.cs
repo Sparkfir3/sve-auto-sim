@@ -111,8 +111,9 @@ namespace SVESimulator
                     continue;
 
                 // Get actions
+                bool waiting = true;
                 SVEFormulaParser.ParseValueAsMinMax(action.amount, player, out int minSelect, out int maxSelect);
-                if(!GetActionInfo(action, player, ref minSelect, ref maxSelect, out string actionText, out Action<List<CardObject>> confirmAction))
+                if(!GetActionInfo(action, player, ref minSelect, ref maxSelect, out string actionText, out Action<List<CardObject>> confirmAction, () => waiting = false))
                     continue;
                 bool hasSecondaryActions = GetSecondaryActionsInfo(action, player, out List<string> secondaryActionTexts, out List<Action<List<CardObject>>> secondaryConfirmActions);
 
@@ -124,12 +125,10 @@ namespace SVESimulator
                 }
 
                 // Select targets and perform effect
-                bool waiting = true;
                 selectionArea.SetFilter(action.filter);
                 selectionArea.SetConfirmAction(cardName, actionText, text, minSelect, maxSelect, selectedCards =>
                 {
                     confirmAction?.Invoke(selectedCards);
-                    waiting = false;
                 }, cancelAction: _ => waiting = false, showTargetingToOpponent: ShowTargetingToOpponent );
                 if(hasSecondaryActions)
                 {
@@ -172,7 +171,7 @@ namespace SVESimulator
 
         private bool ActionCanAutoComplete(CheckCardAction action) => action is CheckCardAction.Hand or CheckCardAction.Cemetery;
 
-        private bool GetActionInfo(CheckActionParameters action, PlayerController player, ref int minSelect, ref int maxSelect, out string actionText, out Action<List<CardObject>> confirmAction)
+        private bool GetActionInfo(CheckActionParameters action, PlayerController player, ref int minSelect, ref int maxSelect, out string actionText, out Action<List<CardObject>> confirmAction, Action onComplete)
         {
             CardSelectionArea selectionArea = player.ZoneController.selectionArea;
             minSelect = 0;
@@ -188,6 +187,7 @@ namespace SVESimulator
                             card.Interactable = player.isActivePlayer; // TODO - this might cause problems later
                             player.LocalEvents.DrawCard(card, reveal: !action.filter.IsNullOrWhiteSpace());
                         }
+                        onComplete?.Invoke();
                     };
                     return true;
                 case CheckCardAction.Cemetery:
@@ -196,6 +196,7 @@ namespace SVESimulator
                     {
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToCemetery(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
                     };
                     return true;
                 case CheckCardAction.Field:
@@ -207,6 +208,7 @@ namespace SVESimulator
                             card.Interactable = player.isActivePlayer;
                             player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
                         }
+                        onComplete?.Invoke();
                     };
                     maxSelect = Mathf.Min(maxSelect, player.ZoneController.fieldZone.OpenSlotCount());
                     return true;
@@ -216,6 +218,7 @@ namespace SVESimulator
                     {
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
                     };
                     return true;
                 case CheckCardAction.TopOrBottomDeck:
@@ -224,6 +227,7 @@ namespace SVESimulator
                     {
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
                     };
                     return true;
                 case CheckCardAction.ExArea:
@@ -232,6 +236,7 @@ namespace SVESimulator
                     {
                         foreach(CardObject card in selectedCards)
                             player.LocalEvents.SendToExArea(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
                     };
                     return true;
 
@@ -243,6 +248,7 @@ namespace SVESimulator
                         List<CardObject> cardsToMove = selectionArea.GetAllPrimaryCards().Where(selectedCards.Contains).Reverse().ToList();
                         foreach(CardObject card in cardsToMove)
                             player.LocalEvents.SendToTopDeck(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
                     };
                     if(minSelect == 0 && maxSelect == 0)
                     {
@@ -262,6 +268,7 @@ namespace SVESimulator
                         List<CardObject> cardsToMove = new(selectionArea.GetAllPrimaryCards());
                         foreach(CardObject card in cardsToMove)
                             player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
                     };
                     minSelect = 1; // don't allow selecting cards, only allow moving cards
                     maxSelect = 0;
@@ -271,7 +278,7 @@ namespace SVESimulator
                 // Other
                 default:
                     actionText = null;
-                    confirmAction = null;
+                    confirmAction = _ => onComplete?.Invoke();
                     return false;
             }
         }
