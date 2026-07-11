@@ -75,9 +75,9 @@ namespace SVESimulator
 
     public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }
 
-    public class SveOnAttackTrigger : SveTrigger { }
+    public class SveOnAttackTrigger : SveTriggerWithFilter { }
 
-    public class SveOnAttackFollowerTrigger : SveTrigger { }
+    public class SveOnAttackFollowerTrigger : SveTriggerWithFilter { }
 
     public class SveOnAttackLeaderTrigger : SveTrigger { }
 
