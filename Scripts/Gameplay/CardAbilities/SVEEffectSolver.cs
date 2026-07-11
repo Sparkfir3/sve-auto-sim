@@ -262,6 +262,9 @@ namespace SVESimulator
                     PlayerInfo localPlayer = gameState.players.Find(x => x.netId.isLocalPlayer);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardLeaveFieldTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field], localPlayer,
                         x => x.MatchesFilter(card), false);
+                    if(isDestroy)
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardDestroyedTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field],
+                            localPlayer, x => x.MatchesFilter(card), false);
                 }
             }
             else if(cardZone.Equals(SVEProperties.Zones.Hand) && isPlayerEffectSolver && player.netId.isLocalPlayer)
