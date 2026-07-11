@@ -24,6 +24,9 @@ namespace SVESimulator
             TopOrBottomDeck,
             ExArea,
 
+            // Send to zone and target
+            FieldAndTarget,
+
             // Rearrange and send
             TopDeckAnyOrder,
             TopDeckSameOrder,
@@ -35,12 +38,14 @@ namespace SVESimulator
             public CheckCardAction action;
             public string filter;
             public string amount;
+            public string parameters;
 
-            public CheckActionParameters(CheckCardAction action, string filter, string amount)
+            public CheckActionParameters(CheckCardAction action, string filter, string amount, string parameters)
             {
                 this.action = action;
                 this.filter = filter;
                 this.amount = amount;
+                this.parameters = parameters;
             }
         }
 
@@ -59,6 +64,8 @@ namespace SVESimulator
         public string checkFilter1;
         [StringField("A1 Amount", width = 100), Order(12)]
         public string checkAmount1;
+        [StringField("A1 Params", width = 100), Order(13)]
+        public string checkParams1;
 
         [EnumField("Action 2", width = 200), Order(21)]
         public CheckCardAction checkAction2;
@@ -66,6 +73,8 @@ namespace SVESimulator
         public string checkFilter2;
         [StringField("A2 Amount", width = 100), Order(22)]
         public string checkAmount2;
+        [StringField("A2 Params", width = 100), Order(23)]
+        public string checkParams2;
 
         [EnumField("Action 3", width = 200), Order(31)]
         public CheckCardAction checkAction3;
@@ -73,13 +82,20 @@ namespace SVESimulator
         public string checkFilter3;
         [StringField("A3 Amount", width = 100), Order(32)]
         public string checkAmount3;
+        [StringField("A3 Params", width = 100), Order(33)]
+        public string checkParams3;
 
-        private CheckActionParameters action1 => new CheckActionParameters(checkAction1, checkFilter1, checkAmount1);
-        private CheckActionParameters action2 => new CheckActionParameters(checkAction2, checkFilter2, checkAmount2);
-        private CheckActionParameters action3 => new CheckActionParameters(checkAction3, checkFilter3, checkAmount3);
+        private CheckActionParameters action1 => new CheckActionParameters(checkAction1, checkFilter1, checkAmount1, checkParams1);
+        private CheckActionParameters action2 => new CheckActionParameters(checkAction2, checkFilter2, checkAmount2, checkParams2);
+        private CheckActionParameters action3 => new CheckActionParameters(checkAction3, checkFilter3, checkAmount3, checkParams3);
         private List<CheckActionParameters> allActions => new() { action1, action2, action3 };
 
         protected virtual bool ShowTargetingToOpponent => true;
+
+        [NonSerialized]
+        private int triggerInstanceId, sourceInstanceId;
+        [NonSerialized]
+        private string triggerZone, sourceZone;
 
         #endregion
 
@@ -89,6 +105,10 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            triggerInstanceId = triggeringCardInstanceId;
+            triggerZone = triggeringCardZone;
+            sourceInstanceId = sourceCardInstanceId;
+            sourceZone = sourceCardZone;
             player.StartCoroutine(ResolveOverTime(player, sourceCardInstanceId, sourceCardZone, onComplete));
         }
 
@@ -240,6 +260,30 @@ namespace SVESimulator
                     };
                     return true;
 
+                // ------------------------------
+
+                // Send to zone and target
+                case CheckCardAction.FieldAndTarget:
+                    actionText = "Place on Field";
+                    confirmAction = selectedCards =>
+                    {
+                        foreach(CardObject card in selectedCards)
+                        {
+                            card.Interactable = player.isActivePlayer;
+                            player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Deck, payCost: false);
+                        }
+                        if(action.parameters.IsNullOrWhiteSpace())
+                            onComplete?.Invoke();
+                        else
+                            SVEEffectPool.Instance.StartCoroutine(EffectSequence.ResolveEffectsAsSequence(new List<string>() { action.parameters },
+                                player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone, onComplete,
+                                additionalFilters: $"i({string.Join(",", selectedCards.Select(x => x.RuntimeCard.instanceId))})"));
+                    };
+                    maxSelect = Mathf.Min(maxSelect, player.ZoneController.fieldZone.OpenSlotCount());
+                    return true;
+
+                // ------------------------------
+
                 // Rearrange
                 case CheckCardAction.TopDeckAnyOrder:
                     actionText = "Send to Top Deck";
@@ -274,6 +318,8 @@ namespace SVESimulator
                     maxSelect = 0;
                     selectionArea.SwitchMode(CardSelectionArea.SelectionMode.MoveSelectionArea);
                     return true;
+
+                // ------------------------------
 
                 // Other
                 default:

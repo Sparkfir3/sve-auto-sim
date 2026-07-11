@@ -275,12 +275,13 @@ namespace SVESimulator.SveScript
             effectData.Add("amount", argsArray[0]);
             for(int i = 1; i <= 3; i++)
             {
-                string action, filter, amount;
+                string action, filter, amount, parameters;
                 if(i >= argsArray.Length)
                 {
                     action = "None";
                     filter = null;
                     amount = null;
+                    parameters = null;
                 }
                 else
                 {
@@ -292,6 +293,7 @@ namespace SVESimulator.SveScript
                     filter = subArgsArray.Length >= 3 ? subArgsArray[1] : null;
                     amount = subArgsArray.Length >= 3 ? subArgsArray[2]
                         : (subArgsArray.Length == 2 ? subArgsArray[1] : null);
+                    parameters = subArgsArray.Length >= 4 ? subArgsArray[3] : null;
                 }
 
                 effectData.Add($"checkAction{i}", action);
@@ -299,6 +301,8 @@ namespace SVESimulator.SveScript
                     effectData.Add($"checkFilter{i}", filter);
                 if(!amount.IsNullOrWhiteSpace())
                     effectData.Add($"checkAmount{i}", amount);
+                if(!parameters.IsNullOrWhiteSpace())
+                    effectData.Add($"checkParams{i}", parameters);
             }
         }
 
