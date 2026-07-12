@@ -100,7 +100,7 @@ namespace SVESimulator
                     {
                         player.LocalEvents.PayAbilityCosts(card, trigger.Costs, effectName, onSelect);
                     },
-                    disabled = canPayCost
+                    disabled = !canPayCost
                 },
                 new MultipleChoiceWindow.MultipleChoiceEntryData
                 {

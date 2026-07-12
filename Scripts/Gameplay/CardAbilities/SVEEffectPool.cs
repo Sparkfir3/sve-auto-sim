@@ -405,7 +405,7 @@ namespace SVESimulator
                             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(localPlayer.GetOpponentInfo().netId);
                             ResolveWithCost();
                         },
-                        disabled = canPayCost
+                        disabled = !canPayCost
                     },
                     new MultipleChoiceWindow.MultipleChoiceEntryData
                     {
