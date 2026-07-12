@@ -36465,6 +36465,2120 @@
         "id": 100031017
       },
       {
+        "cardTypeId": 0,
+        "name": "Cinderella",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Princess / fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Storm.\n[fanfare] If there is another Fable follower on your field, put a Fable counter on this card.\nStrike, remove a Fable counter from this card: Look at the top 4 cards of your deck. You may put a follower that costs 5 play points or less from among them onto your field. Put the remaining cards into your cemetery.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-018",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 7,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 1
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "Ft(Fable)X",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 9,
+              "keywordValue": 1,
+              "amount": "1",
+              "$type": "SVESimulator.GiveCounterEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"keywordType\": 9,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "condition": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "amount": "4",
+              "checkAction1": "Field",
+              "checkFilter1": "Fp(m(0,5))",
+              "checkAmount1": "1",
+              "checkAction2": "Cemetery",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031018
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Valiant Fencer",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Commander / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower. This ability can be activated if there are 2 cards or less in your hand.\n[fanfare] Search your deck for a Heroic card with a different name from this card, reveal it, and add it to your hand.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-020",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-19EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "condition": "H<3",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "$type": "SVESimulator.EvolveEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "t(Heroic)!n(Valiant Fencer)",
+              "searchDeckAction": "Hand",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031020
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Valiant Fencer (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Commander / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Select a Heroic follower with [evolve] on your field and evolve it.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-021",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-20EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "Ft(Heroic)k(Evolve)",
+              "$type": "SVESimulator.EvolveEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031021
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Maisy, Red Riding Hood",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Assassin / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If there is another Fable follower on your field, put a Fable counter on this card.\n[act][cost01], [engage], remove a Fable counter from this card: Select an enemy follower on the field and destroy it.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-022",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-021EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(Ft(Fable)X)",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 9,
+              "keywordValue": 1,
+              "amount": "1",
+              "$type": "SVESimulator.GiveCounterEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "condition": "p(#F)",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "keywordType": 9,
+                "keywordValue": 1,
+                "amount": "1",
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.RemoveCountersCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100031022
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Amerro, Spear Knight",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost03]: Evolve this follower.\nStrike: If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-023",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-022EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(FXt(Heroic))",
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031023
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Amerro, Spear Knight (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Select a Heroic card in your cemetery and play it for 0 play points.\nStrike: If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-024",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-023EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "filter": "t(Heroic)",
+              "amount2": "0",
+              "$type": "SVESimulator.PlayCardFromCemeterySetCostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "f(FXt(Heroic))",
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031024
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Castle in the Sky",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Commander",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Search your deck for a follower with Storm, reveal it, and add it to your hand.\n[act][engage], put this card into its owner's cemetery: Select a follower with Storm on your field and give it [attack]+1.\n[act][cost10], [engage], put this card into its owner's cemetery: You may put any number of followers with Storm from your hand onto your field. Give them [attack]+2/[defense]+2.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-025",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-024EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "Fk(Storm)",
+              "searchDeckAction": "Hand",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "condition": "f(Fk(Storm))",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              }
+            ],
+            "name": "Atk",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "Fk(Storm)",
+              "targetStats": "Attack",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "10",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              }
+            ],
+            "name": "HandToField",
+            "type": "Activated",
+            "effect": {
+              "amount": "m(0,5)",
+              "filter": "Fk(Storm)",
+              "effectName1": "AtkDef",
+              "$type": "SVESimulator.HandToFieldAndTargetEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031025
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Young Ogrehunter Momo",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Assail.\n[fanfare] If there is another Fable follower on your field, give this follower Rush.\nFollower Strike: If the enemy follower has 5 defense or less, draw a card, then discard a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-027",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-025EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 3
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(FXt(Fable))",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 2,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "filter": "d(m(0,5))",
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackFollowerTrigger"
+            },
+            "name": "FollowerStrike",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Draw",
+              "effectName2": "Discard",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": null,
+              "$type": "SVESimulator.DiscardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031027
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mach Knight",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] If this card was put onto the field from anywhere other than your hand, give it Storm.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-028",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-026EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldFromNotHandTrigger"
+            },
+            "name": "FanfareNotHand",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031028
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Mach Knight (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Noble / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Select an enemy follower on the field and deal it 2 damage. If there are at least 2 Heroic cards in your cemetery, deal 4 damage instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-029",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-027EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "2?(y(t(Heroic))>1)4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031029
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Kiss of the Princess",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Princess / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "If there is a Princess follower on your field, this card costs 1 less to play.\nChoose one of the following. (1) Select a follower on your field and give it [attack]+1. You may put a Fable counter on it. (2) Select up to 3 [swordcraft] followers in your cemetery. Return them to your deck, shuffle it, and draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-030",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-028EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(Ft(Princess))",
+              "cost": null,
+              "$type": "SVESimulator.ModifiedCostTrigger"
+            },
+            "name": "ModifiedCost",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "$type": "SVESimulator.ReducedCostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "AtkCounter",
+              "effectName2": "ShuffleBack",
+              "$type": "SVESimulator.ChooseEffectFromList"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "f(F)",
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkCounter",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "F",
+              "effectName1": "Atk",
+              "effectName2": "Counter",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Atk",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OptionalEffectAsCost\"\r\n  }\r\n]",
+              "condition": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Counter",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": null,
+              "keywordType": 9,
+              "keywordValue": 1,
+              "amount": "1",
+              "$type": "SVESimulator.GiveCounterEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "ShuffleBack",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "TargetForShuffle",
+              "effectName2": "Draw",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "TargetForShuffle",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "m(0,3)",
+              "filter": "Fc(Sword)",
+              "$type": "SVESimulator.CemeteryToDeckAndShuffleEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031030
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Rabbit Ear Attendant",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If there is another Fable follower on your field, draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-032",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-029EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(FXt(Fable))",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031032
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Old Man and Old Woman",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Bane.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-033",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-030EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 6
+          }
+        ],
+        "abilities": [],
+        "id": 100031033
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Bladed Hedgehog",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Beast / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost02]: Evolve this follower.\nDuring your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-034",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-031EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "t",
+              "filter": "F",
+              "cost": null,
+              "$type": "SVESimulator.SveOnOpponentCardDestroyedTrigger"
+            },
+            "name": "OnOpponentCardDestroyed",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031034
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Bladed Hedgehog (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Beast / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Select an enemy follower on the field and deal it 2 damage.\nDuring your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-035",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-032EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "t",
+              "filter": "F",
+              "cost": null,
+              "$type": "SVESimulator.SveOnOpponentCardDestroyedTrigger"
+            },
+            "name": "OnOpponentCardDestroyed",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031035
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Ironwrought Defender",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If there are at least 2 Heroic cards in your cemetery, give this follower [defense]+1 and Ward.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-036",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-033EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "y(t(Heroic))>1",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Def",
+              "effectName2": "Ward",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Ward",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 0,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031036
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Heroic Entry",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Heroic",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Look at the top 4 cards of your deck. You may put a [swordcraft] follower that costs 3 play points or less from among them onto your field. If it's a Heroic follower, give it [attack]+1/[defense]+1. Put the remaining cards on the bottom of your deck in any order.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-037",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-034EN",
+            "name": "ID EN",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "amount": "4",
+              "checkAction1": "FieldAndTarget",
+              "checkFilter1": "Fc(Sword)p(m(0,3))",
+              "checkAmount1": "1",
+              "checkParams1": "AtkDef",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": "Ft(Heroic)",
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031037
+      },
+      {
         "cardTypeId": 5,
         "name": "Itsuki Mitsutagawa",
         "costs": [],
@@ -36484,6 +38598,27 @@
         "keywords": [],
         "abilities": [],
         "id": 100032001
+      },
+      {
+        "cardTypeId": 5,
+        "name": "Prim, Adventuring Princess",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-LD02",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [],
+        "id": 100032002
       }
     ]
   },

@@ -1,0 +1,408 @@
+name Cinderella;
+id BP03-018;
+class Sword;
+type Follower;
+trait Princess / fable;
+rarity L;
+cost 7;
+stats 5/5;
+
+text "Storm.
+      [fanfare] If there is another Fable follower on your field, put a Fable counter on this card.
+      Strike, remove a Fable counter from this card: Look at the top 4 cards of your deck. You may put a follower that costs 5 play points or less from among them onto your field. Put the remaining cards into your cemetery.";
+
+keyword Storm;
+ability Fanfare {
+    condition Ft(Fable)X;
+    effect GiveCounter(Fable, 1) to Self;
+}
+ability Strike {
+    cost (RemoveCounters, Fable, 1);
+    effect CheckTop(4, (Field, Fp(m(0,5)), 1), (Cemetery));
+}
+
+// ------------------------------
+
+name Valiant Fencer;
+id BP03-020;
+id-en BP03-19EN;
+class Sword;
+type Follower;
+trait Commander / Heroic;
+rarity L;
+cost 3;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower. This ability can be activated if there are 2 cards or less in your hand.
+      [fanfare] Search your deck for a Heroic card with a different name from this card, reveal it, and add it to your hand.";
+
+ability Act {
+    condition H<3;
+    effect Evolve();
+}
+ability Fanfare {
+    effect Search(1, t(Heroic)!n(Valiant Fencer), Hand);
+}
+
+// ------------------------------
+
+name Valiant Fencer (Evolved);
+id BP03-021;
+id-en BP03-20EN;
+class Sword;
+type Evolved Follower;
+trait Commander / Heroic;
+rarity L;
+stats 5/5;
+
+text "On Evolve: Select a Heroic follower with [evolve] on your field and evolve it.";
+
+ability OnEvolve {
+    effect Evolve() to TargetPlayerCard Ft(Heroic)k(Evolve);
+}
+
+// ------------------------------
+
+name Maisy, Red Riding Hood;
+id BP03-022;
+id-en BP03-021EN;
+class Sword;
+type Follower;
+trait Assassin / Fable;
+rarity G;
+cost 2;
+stats 1/1;
+
+text "[fanfare] If there is another Fable follower on your field, put a Fable counter on this card.
+      [act][cost01], [engage], remove a Fable counter from this card: Select an enemy follower on the field and destroy it.";
+
+ability Fanfare {
+    condition f(Ft(Fable)X);
+    effect GiveCounter(Fable, 1) to Self;
+}
+ability Act {
+    condition p(#F);
+    cost (PP, 1), (EngageSelf), (RemoveCounters, Fable, 1);
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Amerro, Spear Knight;
+id BP03-023;
+id-en BP03-022;
+class Sword;
+type Follower;
+trait Officer / Heroic;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost03]: Evolve this follower.
+      Strike: If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1.";
+
+evolve 3;
+ability Strike {
+    condition f(FXt(Heroic));
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Amerro, Spear Knight (Evolved);
+id BP03-024;
+id-en BP03-023;
+class Sword;
+type Evolved Follower;
+trait Officer / Heroic;
+rarity G;
+stats 3/3;
+
+text "On Evolve: Select a Heroic card in your cemetery and play it for 0 play points.
+      Strike: If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1.";
+
+ability OnEvolve {
+    effect PlayCardFromCemeterySetCost(t(Heroic), 0);
+}
+ability Strike {
+    condition f(FXt(Heroic));
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Castle in the Sky;
+id BP03-025;
+id-en BP03-024;
+class Sword;
+type Amulet;
+trait Commander;
+rarity G;
+cost 2;
+
+text "[fanfare] Search your deck for a follower with Storm, reveal it, and add it to your hand.
+      [act][engage], put this card into its owner's cemetery: Select a follower with Storm on your field and give it [attack]+1.
+      [act][cost10], [engage], put this card into its owner's cemetery: You may put any number of followers with Storm from your hand onto your field. Give them [attack]+2/[defense]+2.";
+
+ability Fanfare {
+    effect Search(1, Fk(Storm), Hand);
+}
+ability Act name Atk {
+    condition f(Fk(Storm));
+    cost (EngageSelf), (SendToCemetery, Self);
+    effect GiveStat(Atk, 1) to TargetPlayerCard Fk(Storm);
+}
+ability Act name HandToField {
+    cost (PP, 10), (EngageSelf), (SendToCemetery, Self);
+    effect HandToFieldAndTarget(m(0,5), Fk(Storm), AtkDef);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 2) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Young Ogrehunter Momo;
+id BP03-027;
+id-en BP03-025;
+class Sword;
+type Follower;
+trait Officer / Fable;
+rarity S;
+cost 4;
+stats 5/5;
+
+text "Assail.
+      [fanfare] If there is another Fable follower on your field, give this follower Rush.
+      Follower Strike: If the enemy follower has 5 defense or less, draw a card, then discard a card.";
+
+keyword Assail;
+ability Fanfare {
+    condition f(FXt(Fable));
+    effect GiveKeyword(Rush) to Self;
+}
+ability FollowerStrike {
+    filter d(m(0,5));
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Mach Knight;
+id BP03-028;
+id-en BP03-026;
+class Sword;
+type Follower;
+trait Officer / Heroic;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] If this card was put onto the field from anywhere other than your hand, give it Storm.";
+
+evolve 1;
+ability FanfareNotHand {
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Mach Knight (Evolved);
+id BP03-029;
+id-en BP03-027;
+class Sword;
+type Evolved Follower;
+trait Noble / Heroic;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Select an enemy follower on the field and deal it 2 damage. If there are at least 2 Heroic cards in your cemetery, deal 4 damage instead.";
+
+ability OnEvolve {
+    effect DealDamage(2?(y(t(Heroic))>1)4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Kiss of the Princess;
+id BP03-030;
+id-en BP03-028;
+class Sword;
+type Spell;
+trait Princess / Fable;
+rarity S;
+cost 1;
+
+text "If there is a Princess follower on your field, this card costs 1 less to play.
+      Choose one of the following. (1) Select a follower on your field and give it [attack]+1. You may put a Fable counter on it. (2) Select up to 3 [swordcraft] followers in your cemetery. Return them to your deck, shuffle it, and draw a card.";
+
+ability ModifiedCost {
+    condition f(Ft(Princess));
+    effect ReducedCost(1);
+}
+ability Spell {
+    effect ChooseFromList(AtkCounter, ShuffleBack);
+}
+
+ability Spell name AtkCounter {
+    condition f(F);
+    effect TargetForSequence(Atk, Counter) to TargetPlayerCard F;
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to AllPlayerCards;
+}
+ability Spell name Counter {
+    cost (Optional);
+    effect GiveCounter(Fable, 1) to AllPlayerCards;
+}
+
+ability Spell name ShuffleBack {
+    effect Sequence(TargetForShuffle, Draw);
+}
+ability Spell name TargetForShuffle {
+    effect CemeteryToDeckAndShuffle(m(0,3), Fc(Sword));
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Rabbit Ear Attendant;
+id BP03-032;
+id-en BP03-029;
+class Sword;
+type Follower;
+trait Fable;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "[fanfare] If there is another Fable follower on your field, draw a card.";
+
+ability Fanfare {
+    condition f(FXt(Fable));
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Old Man and Old Woman;
+id BP03-033;
+id-en BP03-030;
+class Sword;
+type Follower;
+trait Officer / Fable;
+rarity B;
+cost 1;
+stats 1/2;
+
+text "Bane.";
+
+keyword Bane;
+
+// ------------------------------
+
+name Bladed Hedgehog;
+id BP03-034;
+id-en BP03-031;
+class Sword;
+type Follower;
+trait Beast / Fable;
+rarity B;
+cost 2;
+stats 1/3;
+
+text "[evolve][cost02]: Evolve this follower.
+      During your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.";
+
+evolve 2;
+ability OnOpponentCardDestroyed {
+    condition t;
+    filter F;
+    effect GiveStat(Atk, 1) to Self;
+}
+
+// ------------------------------
+
+name Bladed Hedgehog (Evolved);
+id BP03-035;
+id-en BP03-032;
+class Sword;
+type Evolved Follower;
+trait Beast / Fable;
+rarity B;
+stats 2/4;
+
+text "On Evolve: Select an enemy follower on the field and deal it 2 damage.
+      During your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.";
+
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability OnOpponentCardDestroyed {
+    condition t;
+    filter F;
+    effect GiveStat(Atk, 1) to Self;
+}
+
+// ------------------------------
+
+name Ironwrought Defender;
+id BP03-036;
+id-en BP03-033;
+class Sword;
+type Follower;
+trait Officer / Heroic;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[fanfare] If there are at least 2 Heroic cards in your cemetery, give this follower [defense]+1 and Ward.";
+
+ability Fanfare {
+    condition y(t(Heroic))>1;
+    effect Sequence(Def, Ward);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Self;
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to Self;
+}
+
+// ------------------------------
+
+name Heroic Entry;
+id BP03-037;
+id-en BP03-034;
+class Sword;
+type Spell;
+trait Officer / Heroic;
+rarity B;
+cost 3;
+
+text "Look at the top 4 cards of your deck. You may put a [swordcraft] follower that costs 3 play points or less from among them onto your field. If it's a Heroic follower, give it [attack]+1/[defense]+1. Put the remaining cards on the bottom of your deck in any order.";
+
+ability Spell {
+    effect CheckTop(4, (FieldAndTarget, Fc(Sword)p(m(0,3)), 1, AtkDef), (BottomDeckAnyOrder));
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Heroic);
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Prim, Adventuring Princess;
+id BP03-LD02;
+class Sword;
+type Leader;

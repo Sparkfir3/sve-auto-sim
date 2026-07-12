@@ -1,0 +1,289 @@
+[
+  {
+    "id": "BP03-018EN",
+    "name": "Cinderella",
+    "trait": "Princess / fable",
+    "cardText": "Storm.\n[fanfare] If there is another Fable follower on your field, put a Fable counter on this card.\nStrike, remove a Fable counter from this card: Look at the top 4 cards of your deck. You may put a follower that costs 5 play points or less from among them onto your field. Put the remaining cards into your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is another Fable follower on your field, put a Fable counter on this card."
+      },
+      {
+        "key": "Strike",
+        "text": "Strike, remove a Fable counter from this card: Look at the top 4 cards of your deck. You may put a follower that costs 5 play points or less from among them onto your field. Put the remaining cards into your cemetery.",
+        "trigger": "Strike:",
+        "cost": "Remove a Fable counter from this card",
+        "body": "Look at the top 4 cards of your deck. You may put a follower that costs 5 play points or less from among them onto your field. Put the remaining cards into your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP03-19EN",
+    "name": "Valiant Fencer",
+    "trait": "Commander / Heroic",
+    "cardText": "[evolve][cost01]: Evolve this follower. This ability can be activated if there are 2 cards or less in your hand.\n[fanfare] Search your deck for a Heroic card with a different name from this card, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[evolve]",
+        "cost": "[cost01]",
+        "body": "Evolve this follower. This ability can be activated if there are 2 cards or less in your hand."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Heroic card with a different name from this card, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP03-20EN",
+    "name": "Valiant Fencer (Evolved)",
+    "trait": "Commander / Heroic",
+    "cardText": "On Evolve: Select a Heroic follower with [evolve] on your field and evolve it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a Heroic follower with [evolve] on your field and evolve it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-021EN",
+    "name": "Maisy, Red Riding Hood",
+    "trait": "Assassin / Fable",
+    "cardText": "[fanfare] If there is another Fable follower on your field, put a Fable counter on this card.\n[act][cost01], [engage], remove a Fable counter from this card: Select an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is another Fable follower on your field, put a Fable counter on this card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], remove a Fable counter from this card",
+        "body": "Select an enemy follower on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-022EN",
+    "name": "Amerro, Spear Knight",
+    "trait": "Officer / Heroic",
+    "cardText": "[evolve][cost03]: Evolve this follower.\nStrike: If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-023EN",
+    "name": "Amerro, Spear Knight (Evolved)",
+    "trait": "Officer / Heroic",
+    "cardText": "On Evolve: Select a Heroic card in your cemetery and play it for 0 play points.\nStrike: If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a Heroic card in your cemetery and play it for 0 play points."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "If there is another Heroic follower on your field, give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-024EN",
+    "name": "Castle in the Sky",
+    "trait": "Commander",
+    "cardText": "[fanfare] Search your deck for a follower with Storm, reveal it, and add it to your hand.\n[act][engage], put this card into its owner's cemetery: Select a follower with Storm on your field and give it [attack]+1.\n[act][cost10], [engage], put this card into its owner's cemetery: You may put any number of followers with Storm from your hand onto your field. Give them [attack]+2/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a follower with Storm, reveal it, and add it to your hand."
+      },
+      {
+        "key": "Atk",
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Select a follower with Storm on your field and give it [attack]+1."
+      },
+      {
+        "key": "HandToField",
+        "trigger": "[act]",
+        "cost": "[cost10], [engage], put this card into its owner's cemetery",
+        "body": "You may put any number of followers with Storm from your hand onto your field. Give them [attack]+2/[defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP03-025EN",
+    "name": "Young Ogrehunter Momo",
+    "trait": "Officer / Fable",
+    "cardText": "Assail.\n[fanfare] If there is another Fable follower on your field, give this follower Rush.\nFollower Strike: If the enemy follower has 5 defense or less, draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is another Fable follower on your field, give this follower Rush."
+      },
+      {
+        "key": "FollowerStrike",
+        "trigger": "Follower Strike:",
+        "body": "If the enemy follower has 5 defense or less, draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-026EN",
+    "name": "Mach Knight",
+    "trait": "Officer / Heroic",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] If this card was put onto the field from anywhere other than your hand, give it Storm.",
+    "effectText": [
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "If this card was put onto the field from anywhere other than your hand, give it Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP03-027EN",
+    "name": "Mach Knight (Evolved)",
+    "trait": "Noble / Heroic",
+    "cardText": "On Evolve: Select an enemy follower on the field and deal it 2 damage. If there are at least 2 Heroic cards in your cemetery, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it 2 damage. If there are at least 2 Heroic cards in your cemetery, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP03-028EN",
+    "name": "Kiss of the Princess",
+    "trait": "Princess / Fable",
+    "cardText": "If there is a Princess follower on your field, this card costs 1 less to play.\nChoose one of the following. (1) Select a follower on your field and give it [attack]+1. You may put a Fable counter on it. (2) Select up to 3 [swordcraft] followers in your cemetery. Return them to your deck, shuffle it, and draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following. (1) Select a follower on your field and give it [attack]+1. You may put a Fable counter on it. (2) Select up to 3 [swordcraft] followers in your cemetery. Return them to your deck, shuffle it, and draw a card."
+      },
+      {
+        "key": "AtkCounter",
+        "body": "Select a follower on your field and give it [attack]+1. You may put a Fable counter on it."
+      },
+      {
+        "key": "Counter",
+        "body": "Put a Fable counter on the selected follower."
+      },
+      {
+        "key": "ShuffleBack",
+        "body": "Select up to 3 [swordcraft] followers in your cemetery. Return them to your deck, shuffle it, and draw a card."
+      },
+      {
+        "key": "TargetForShuffle",
+        "body": "Select up to 3 [swordcraft] followers in your cemetery. Return them to your deck, shuffle it, and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-029EN",
+    "name": "Rabbit Ear Attendant",
+    "trait": "Fable",
+    "cardText": "[fanfare] If there is another Fable follower on your field, draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is another Fable follower on your field, draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-030EN",
+    "name": "Old Man and Old Woman",
+    "trait": "Officer / Fable",
+    "cardText": "Bane."
+  },
+  {
+    "id": "BP03-031EN",
+    "name": "Bladed Hedgehog",
+    "trait": "Beast / Fable",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nDuring your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnOpponentCardDestroyed",
+        "text": "During your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.",
+        "trigger": "During your turn, whenever an enemy follower is destroyed",
+        "body": "Give this follower [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-032EN",
+    "name": "Bladed Hedgehog (Evolved)",
+    "trait": "Beast / Fable",
+    "cardText": "On Evolve: Select an enemy follower on the field and deal it 2 damage.\nDuring your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "OnOpponentCardDestroyed",
+        "text": "During your turn, whenever an enemy follower is destroyed, give this follower [attack]+1.",
+        "trigger": "During your turn, whenever an enemy follower is destroyed",
+        "body": "Give this follower [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-033EN",
+    "name": "Ironwrought Defender",
+    "trait": "Officer / Heroic",
+    "cardText": "[fanfare] If there are at least 2 Heroic cards in your cemetery, give this follower [defense]+1 and Ward.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 2 Heroic cards in your cemetery, give this follower [defense]+1 and Ward."
+      }
+    ]
+  },
+  {
+    "id": "BP03-034EN",
+    "name": "Heroic Entry",
+    "trait": "Officer / Heroic",
+    "cardText": "Look at the top 4 cards of your deck. You may put a [swordcraft] follower that costs 3 play points or less from among them onto your field. If it's a Heroic follower, give it [attack]+1/[defense]+1. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": "Look at the top 4 cards of your deck. You may put a [swordcraft] follower that costs 3 play points or less from among them onto your field. If it's a Heroic follower, give it [attack]+1/[defense]+1. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP03-LD02EN",
+    "name": "Prim, Adventuring Princess"
+  }
+]
