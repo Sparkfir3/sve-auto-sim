@@ -415,7 +415,7 @@ namespace SVESimulator
         public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true, bool useEvolveForTurn = true)
         {
             // Condition checks
-            if(!isActivePlayer || playerController.EvolvedThisTurn)
+            if(playerController.EvolvedThisTurn && useEvolveForTurn)
                 return false;
             if(useEvolveCost)
             {
