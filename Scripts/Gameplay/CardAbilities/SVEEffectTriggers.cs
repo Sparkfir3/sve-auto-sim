@@ -31,7 +31,7 @@ namespace SVESimulator
 
         public bool MatchesFilter(RuntimeCard card)
         {
-            return SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId).MatchesCard(card);
+            return filter.IsNullOrWhiteSpace() || SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId).MatchesCard(card);
         }
     }
 

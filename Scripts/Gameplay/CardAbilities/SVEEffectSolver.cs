@@ -475,7 +475,9 @@ namespace SVESimulator
             EngageCard(attackingCard);
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, attackingCard, player, _ => true, executeConfirmationTiming: false,
+                // Strike triggers
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, attackingCard, player,
+                    x => x.MatchesFilter(defendingCard), executeConfirmationTiming: false,
                     triggeringCard: defendingCard, triggeringCardZone: defendingCard != null ? SVEProperties.Zones.Field : null);
                 if(isAttackingLeader)
                 {
@@ -483,10 +485,12 @@ namespace SVESimulator
                 }
                 else
                 {
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, attackingCard, player, _ => true, executeConfirmationTiming: false,
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, attackingCard, player,
+                        x => x.MatchesFilter(defendingCard), executeConfirmationTiming: false,
                         triggeringCard: defendingCard, triggeringCardZone: SVEProperties.Zones.Field);
                 }
 
+                // On other attack trigger
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, attackingCard, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(attackingCard), executeConfirmationTiming: true);
             }
