@@ -2,7 +2,7 @@
   {
     "id": "BP03-018EN",
     "name": "Cinderella",
-    "trait": "Princess / fable",
+    "trait": "Princess / Fable",
     "cardText": "Storm.\n[fanfare] If there is another Fable follower on your field, put a Fable counter on this card.\nStrike, remove a Fable counter from this card: Look at the top 4 cards of your deck. You may put a follower that costs 5 play points or less from among them onto your field. Put the remaining cards into your cemetery.",
     "effectText": [
       {
@@ -20,7 +20,7 @@
     ]
   },
   {
-    "id": "BP03-19EN",
+    "id": "BP03-019EN",
     "name": "Valiant Fencer",
     "trait": "Commander / Heroic",
     "cardText": "[evolve][cost01]: Evolve this follower. This ability can be activated if there are 2 cards or less in your hand.\n[fanfare] Search your deck for a Heroic card with a different name from this card, reveal it, and add it to your hand.",
@@ -39,7 +39,7 @@
     ]
   },
   {
-    "id": "BP03-20EN",
+    "id": "BP03-020EN",
     "name": "Valiant Fencer (Evolved)",
     "trait": "Commander / Heroic",
     "cardText": "On Evolve: Select a Heroic follower with [evolve] on your field and evolve it.",

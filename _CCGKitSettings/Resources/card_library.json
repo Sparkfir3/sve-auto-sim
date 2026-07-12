@@ -36475,7 +36475,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Princess / fable",
+            "value": "Princess / Fable",
             "name": "Trait",
             "$type": "CCGKit.StringProperty"
           },
@@ -36555,7 +36555,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "Ft(Fable)X",
+              "condition": "f(Ft(Fable)X)",
               "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
@@ -36621,7 +36621,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "BP03-19EN",
+            "value": "BP03-019EN",
             "name": "ID EN",
             "$type": "CCGKit.StringProperty"
           }
@@ -36753,7 +36753,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "BP03-20EN",
+            "value": "BP03-020EN",
             "name": "ID EN",
             "$type": "CCGKit.StringProperty"
           }
@@ -38598,27 +38598,6 @@
         "keywords": [],
         "abilities": [],
         "id": 100032001
-      },
-      {
-        "cardTypeId": 5,
-        "name": "Prim, Adventuring Princess",
-        "costs": [],
-        "properties": [
-          {
-            "value": "Swordcraft",
-            "name": "Class",
-            "$type": "CCGKit.StringProperty"
-          },
-          {
-            "value": "BP03-LD02",
-            "name": "ID",
-            "$type": "CCGKit.StringProperty"
-          }
-        ],
-        "stats": [],
-        "keywords": [],
-        "abilities": [],
-        "id": 100032002
       }
     ]
   },

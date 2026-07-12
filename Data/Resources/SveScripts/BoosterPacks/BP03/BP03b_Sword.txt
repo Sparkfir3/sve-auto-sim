@@ -2,7 +2,7 @@ name Cinderella;
 id BP03-018;
 class Sword;
 type Follower;
-trait Princess / fable;
+trait Princess / Fable;
 rarity L;
 cost 7;
 stats 5/5;
@@ -13,7 +13,7 @@ text "Storm.
 
 keyword Storm;
 ability Fanfare {
-    condition Ft(Fable)X;
+    condition f(Ft(Fable)X);
     effect GiveCounter(Fable, 1) to Self;
 }
 ability Strike {
@@ -25,7 +25,7 @@ ability Strike {
 
 name Valiant Fencer;
 id BP03-020;
-id-en BP03-19EN;
+id-en BP03-019EN;
 class Sword;
 type Follower;
 trait Commander / Heroic;
@@ -48,7 +48,7 @@ ability Fanfare {
 
 name Valiant Fencer (Evolved);
 id BP03-021;
-id-en BP03-20EN;
+id-en BP03-020EN;
 class Sword;
 type Evolved Follower;
 trait Commander / Heroic;
@@ -397,12 +397,3 @@ ability Spell {
 ability Spell name AtkDef {
     effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Heroic);
 }
-
-// ------------------------------
-// ------------------------------
-// ------------------------------
-
-name Prim, Adventuring Princess;
-id BP03-LD02;
-class Sword;
-type Leader;
