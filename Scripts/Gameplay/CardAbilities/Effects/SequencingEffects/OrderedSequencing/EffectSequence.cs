@@ -83,22 +83,24 @@ namespace SVESimulator
 
         private static void SelectPayCostOrDecline(PlayerController player, CardObject card, SveTrigger trigger, SveEffect effect, string effectName, Action onSelect, Action onDecline)
         {
-            if(trigger.Costs == null || trigger.Costs.Count == 0)
+            if(trigger.Costs == null || trigger.Costs.Count == 0 || trigger.Costs.All(x => x is SveCost { IsInternalCost: true }))
             {
                 onSelect?.Invoke();
                 return;
             }
 
             bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, trigger.Costs, effectName);
+            bool isOptionalEffect = trigger.Costs.Any(x => x is OptionalEffectAsCost);
             List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
             {
                 new MultipleChoiceWindow.MultipleChoiceEntryData
                 {
-                    text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
+                    text = canPayCost ? (isOptionalEffect ? "Perform Effect" : "Pay Cost") : "Cannot Pay Cost",
                     onSelect = () =>
                     {
                         player.LocalEvents.PayAbilityCosts(card, trigger.Costs, effectName, onSelect);
-                    }
+                    },
+                    disabled = !canPayCost
                 },
                 new MultipleChoiceWindow.MultipleChoiceEntryData
                 {
@@ -107,7 +109,6 @@ namespace SVESimulator
                 },
             };
             GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, effect.text);
-            GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace SVESimulator.SveScript
             { "OnOtherEnterField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardLeaveFieldTrigger", TriggerParameterType.Filter) },
+            { "OnOpponentCardDestroyed", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardDestroyedTrigger", TriggerParameterType.Filter) },
             { "OnDiscarded", new EffectTriggerInfo("SVESimulator.SveOnDiscardedTrigger") },
 
             // Card/Player Actions
@@ -38,8 +39,8 @@ namespace SVESimulator.SveScript
             { "OnOtherEvolve", new EffectTriggerInfo("SVESimulator.SveOnOtherEvolveTrigger", TriggerParameterType.Filter) },
             { "OnRace", new EffectTriggerInfo("SVESimulator.SveOnRaceTrigger") },
             { "OnOtherRace", new EffectTriggerInfo("SVESimulator.SveOnOtherRaceTrigger", TriggerParameterType.Filter) },
-            { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger") },
-            { "FollowerStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackFollowerTrigger") },
+            { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger", TriggerParameterType.Filter) },
+            { "FollowerStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackFollowerTrigger", TriggerParameterType.Filter) },
             { "LeaderStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackLeaderTrigger") },
             { "OnOtherAttack", new EffectTriggerInfo("SVESimulator.SveOnOtherCardAttackTrigger", TriggerParameterType.Filter) },
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },

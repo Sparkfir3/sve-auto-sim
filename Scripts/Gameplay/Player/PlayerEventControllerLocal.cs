@@ -355,9 +355,9 @@ namespace SVESimulator
             }
         }
 
-        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true) =>
-            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost);
-        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false)
+        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null) =>
+            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, fixedCost);
+        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -370,7 +370,7 @@ namespace SVESimulator
             int playPointCost = 0;
             if(payCost)
             {
-                playPointCost = card.RuntimeCard.PlayPointCost(playerController);
+                playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
                 if(!ignoreAltCosts && card.RuntimeCard.HasAvailableAlternateCost(playerController, out List<TriggeredAbility> alternateCostAbilities))
                 {
                     if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
@@ -412,10 +412,10 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true, bool useEvolveForTurn = true)
         {
             // Condition checks
-            if(!isActivePlayer || playerController.EvolvedThisTurn)
+            if(playerController.EvolvedThisTurn && useEvolveForTurn)
                 return false;
             if(useEvolveCost)
             {
@@ -442,7 +442,7 @@ namespace SVESimulator
 
             baseCard.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.fieldZone.HighlightCardsCanAttack();
-            playerController.EvolvedThisTurn = true;
+            playerController.EvolvedThisTurn |= useEvolveForTurn;
 
             // Networking
             LocalEvolveCardMessage msg = new()

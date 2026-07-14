@@ -31,7 +31,7 @@ namespace SVESimulator
 
         public bool MatchesFilter(RuntimeCard card)
         {
-            return SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId).MatchesCard(card);
+            return filter.IsNullOrWhiteSpace() || SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId).MatchesCard(card);
         }
     }
 
@@ -56,6 +56,7 @@ namespace SVESimulator
     public class SveOnOtherCardLeaveFieldTrigger : SveTriggerWithFilter { }
 
     public class SveOnOpponentCardLeaveFieldTrigger : SveTriggerWithFilter { }
+    public class SveOnOpponentCardDestroyedTrigger : SveTriggerWithFilter { }
 
     // -----
 
@@ -75,9 +76,9 @@ namespace SVESimulator
 
     public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }
 
-    public class SveOnAttackTrigger : SveTrigger { }
+    public class SveOnAttackTrigger : SveTriggerWithFilter { }
 
-    public class SveOnAttackFollowerTrigger : SveTrigger { }
+    public class SveOnAttackFollowerTrigger : SveTriggerWithFilter { }
 
     public class SveOnAttackLeaderTrigger : SveTrigger { }
 
