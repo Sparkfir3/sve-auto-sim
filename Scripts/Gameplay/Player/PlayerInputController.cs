@@ -379,10 +379,12 @@ namespace SVESimulator
             if(!card.CurrentZone.IsLocalPlayerZone || !allowedInputs.HasFlag(InputTypes.ActivateAbilities))
                 return false;
             bool onlyQuicks = allowedInputs.HasFlag(InputTypes.OnlyQuicks);
+            if(onlyQuicks && card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotUseAct))
+                return false;
             List<ActivatedAbility> activatedAbilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility && x.effect is SveEffect).Select(x => x as ActivatedAbility).ToList();
-
             if(onlyQuicks && !activatedAbilities.Any(x => x.costs.Any(y => y is QuickEffectAsCost)))
                 return false;
+
             if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack) || card.CanServe())
             {
                 GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, onlyQuicks: onlyQuicks);

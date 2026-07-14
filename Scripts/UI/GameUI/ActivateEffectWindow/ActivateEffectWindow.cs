@@ -61,6 +61,7 @@ namespace SVESimulator
         public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities, bool onlyQuicks = false)
         {
             int i = 0;
+            bool canUseAct = !card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotUseAct);
 
             // Effects
             for(; i < abilities.Count; i++)
@@ -70,7 +71,7 @@ namespace SVESimulator
 
                 button.gameObject.SetActive(true);
                 button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
-                button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
+                button.Interactable = canUseAct && player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
                     && (ability.effect is not EvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
                 if(onlyQuicks)
                     button.Interactable &= ability.IsQuickAbility();
@@ -96,7 +97,7 @@ namespace SVESimulator
 
                 button.gameObject.SetActive(true);
                 button.Text = (ability.effect as SveEffect)?.text;
-                button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name);
+                button.Interactable = canUseAct && player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name);
                 button.OnClickEffect.AddListener(() =>
                 {
                     player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
