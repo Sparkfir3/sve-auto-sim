@@ -103,6 +103,17 @@ namespace SVESimulator
                         if(!libraryCard.name.Replace("(Evolved)", "").Trim().Equals(value) ^ inverse)
                             return false;
                         break;
+                    case CardFilterSetting.NameXor:
+                        libraryCard ??= LibraryCardCache.GetCard(card.cardId);
+                        if(libraryCard == null)
+                            throw new Exception($"Card not found in cache: {card.cardId}");
+                        Debug.Assert(!inverse, "Filter type \"Name - Exclusive OR\" does not support using inverse");
+
+                        string cardName = libraryCard.name.Replace("(Evolved)", "").Trim();
+                        string[] currentNames = value?.Split('\n');
+                        if(currentNames != null && currentNames.Any(x => x.Equals(cardName)))
+                            return false;
+                        break;
 
                     // Card Stats
                     case CardFilterSetting.Reserved:
@@ -155,6 +166,8 @@ namespace SVESimulator
         }
 
         public static bool HasExcludeSelf(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.ExcludeSelf);
+
+        public static bool HasNameExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.NameXor);
 
         private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value)
         {

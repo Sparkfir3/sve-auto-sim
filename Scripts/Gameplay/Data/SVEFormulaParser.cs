@@ -25,6 +25,7 @@ namespace SVESimulator
             Keyword,
             Counter,
             Name,
+            NameXor,
             Class,
 
             // Card Stats
@@ -504,6 +505,7 @@ namespace SVESimulator
                 filterSetting = formula[nextIndex++] switch
                 {
                     'n' => CardFilterSetting.Name,
+                    '^' => CardFilterSetting.NameXor,
                     't' => CardFilterSetting.Trait,
                     'k' => CardFilterSetting.Keyword,
                     'r' => CardFilterSetting.Counter,
@@ -522,6 +524,18 @@ namespace SVESimulator
                 if(!filterSetting.HasValue)
                     continue;
 
+                // Special Filter Case - Name XOR
+                if(filterSetting == CardFilterSetting.NameXor)
+                {
+                    if(formula[nextIndex] == 'n')
+                    {
+                        filters.Add(CardFilterSetting.NameXor, currentFilterData);
+                        nextIndex++;
+                    }
+                    continue;
+                }
+
+                // Regular Filters
                 nextIndex++; // move past open parentheses TODO - actually check for a parentheses
                 if(filterSetting == CardFilterSetting.Name)
                 {
