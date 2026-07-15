@@ -630,12 +630,14 @@ namespace SVESimulator
                 {
                     currentSelectedCards.Add(card);
                     card.SetHighlightMode(CardObject.HighlightMode.Selected);
+                    OnUpdateSelectedCards();
                 }
             }
             else
             {
                 currentSelectedCards.Remove(card);
                 card.SetHighlightMode(CardObject.HighlightMode.None);
+                OnUpdateSelectedCards();
             }
             UpdateActionButton();
         }
@@ -657,6 +659,16 @@ namespace SVESimulator
             foreach(CardObject card in currentSelectedCards)
                 card.SetHighlightMode(CardObject.HighlightMode.None);
             currentSelectedCards.Clear();
+            OnUpdateSelectedCards();
+        }
+
+        private void OnUpdateSelectedCards()
+        {
+            if(currentFilter.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor))
+            {
+                currentFilter[SVEFormulaParser.CardFilterSetting.NameXor] = string.Join("\n",
+                    currentSelectedCards.Select(x => LibraryCardCache.GetName(x.RuntimeCard.cardId)).Distinct());
+            }
         }
 
         #endregion
