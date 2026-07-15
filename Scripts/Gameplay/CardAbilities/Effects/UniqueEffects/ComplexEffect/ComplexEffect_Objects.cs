@@ -40,6 +40,25 @@ namespace SVESimulator
             }
         }
 
+        private class CE_CardList : CE_Object
+        {
+            public List<RuntimeCard> cardList;
+
+            public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
+            {
+                switch(token)
+                {
+                    case "filterCount":
+                        if(parameters.Length == 0)
+                            return Task.FromResult<CE_Object>(new CE_Value(cardList.Count.ToString()));
+                        var filter = SVEFormulaParser.ParseCardFilterFormula(parameters[0]);
+                        return Task.FromResult<CE_Object>(new CE_Value(cardList.Count(x => filter.MatchesCard(x)).ToString()));
+                    default:
+                        return Task.FromResult<CE_Object>(null);
+                }
+            }
+        }
+
         private class CE_EffectCost : CE_Object
         {
             public List<MoveCardToZoneData> movedCardsData;

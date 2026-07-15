@@ -149,6 +149,8 @@ namespace SVESimulator
             CE_Object obj = token switch
             {
                 "revealTopDeck" => await RevealTopDeck(),
+                "mill" => await MillDeck(args),
+                "millDeck" => await MillDeck(args),
                 "payCost" => await PayEffectCost(args),
                 _ => null
             };
@@ -161,6 +163,7 @@ namespace SVESimulator
                 switch(obj)
                 {
                     case CE_Card:
+                    case CE_CardList:
                     case CE_EffectCost:
                         string[] parameters = line[pointer..].TextInsideParentheses(out int paramsPointerL, out int paramsPointerR).Split();
                         if(paramsPointerL == -1 && paramsPointerR == -1)
