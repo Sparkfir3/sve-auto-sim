@@ -1,0 +1,272 @@
+[
+  {
+    "id": "BP03-035EN",
+    "name": "Wizardess of Oz",
+    "trait": "Mage / Fable",
+    "cardText": "[fanfare] Summon a Magic Sediment token. Add 1 to a Stack on your field. Draw a card.\n[q][act] Earth Rite: The next spell you play this turn costs 4 less. This ability can be activated once per turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Magic Sediment token. Add 1 to a Stack on your field. Draw a card."
+      },
+      {
+        "key": "Stack",
+        "body": "Add 1 to a Stack on your field."
+      },
+      {
+        "key": "Act",
+        "trigger": "[q][act]",
+        "cost": "Earth Rite",
+        "body": "The next spell you play this turn costs 4 less. This ability can be activated once per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP03-037EN",
+    "name": "Mystic King",
+    "trait": "Chess",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[act] Put another Chess follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities except [evolve] can't be activated.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Put another Chess follower from your field into its owner's cemetery",
+        "body": "Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities except [evolve] can't be activated."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-038EN",
+    "name": "Mystic King (Evolved)",
+    "trait": "Chess",
+    "cardText": "On Evolve: Select up to 4 Chess followers with different names that cost 4 play points or less in your cemetery and put them onto your field.\n[act] Put another Chess follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities can't be activated.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select up to 4 Chess followers with different names that cost 4 play points or less in your cemetery and put them onto your field."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Put another Chess follower from your field into its owner's cemetery",
+        "body": "Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities except [evolve] can't be activated."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-039EN",
+    "name": "Falise, Leonardian Mage",
+    "trait": "Mage / Academic",
+    "cardText": "[fanfare] Earth Rite: Give this follower Storm.\n[fanfare] Spellchain (7): Deal 4 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "EarthRite",
+        "trigger": "[fanfare]",
+        "cost": "Earth Rite",
+        "body": "Give this follower Storm."
+      },
+      {
+        "key": "Damage",
+        "trigger": "[fanfare] Spellchain (7):",
+        "body": "Deal 4 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-040EN",
+    "name": "Milady, Mystic Queen",
+    "trait": "Chess",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Summon a Magical Pawn token. Put a Magical Pawn token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Magical Pawn token. Put a Magical Pawn token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP03-041EN",
+    "name": "Milady, Mystic Queen (Evolved)",
+    "trait": "Chess",
+    "cardText": "On Evolve: Select an enemy follower on the field and deal it X damage. X equals the number of Chess followers on your field.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the number of Chess followers on your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-042EN",
+    "name": "Check",
+    "trait": "Chess",
+    "cardText": "Select an enemy follower on the field. Deal it 4 damage and look at the top 3 cards of your deck. You may reveal a Chess card with a different name from this card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 4 damage."
+      },
+      {
+        "key": "TopDeck",
+        "body": "Look at the top 3 cards of your deck. You may reveal a Chess card with a different name from this card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP03-043EN",
+    "name": "Mr. Heinlein, Shadow Mage",
+    "trait": "Mage / Academic",
+    "cardText": "[fanfare] Put the top 4 cards of your deck into your cemetery. Recover X play points. X equals the number of spells put into your cemetery by this ability.\n[act][engage], discard a spell: Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put the top 4 cards of your deck into your cemetery. Recover X play points. X equals the number of spells put into your cemetery by this ability."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], discard a spell",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-044EN",
+    "name": "Magical Knight",
+    "trait": "Chess",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWhenever another Chess follower is put onto your field, give it [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever another Chess follower is put onto your field, give it [attack]+1.",
+        "trigger": "Whenever another Chess follower is put onto your field",
+        "body": "Whenever another Chess follower is put onto your field, give it [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-045EN",
+    "name": "Magical Knight (Evolved)",
+    "trait": "Chess",
+    "cardText": "On Evolve: Summon a Magical Pawn token.\nWhenever another Chess follower is put onto your field, give it [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Summon a Magical Pawn token."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever another Chess follower is put onto your field, give it [attack]+1.",
+        "trigger": "Whenever another Chess follower is put onto your field",
+        "body": "Whenever another Chess follower is put onto your field, give it [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-046EN",
+    "name": "Gingerbread House",
+    "trait": "Earth Sigil / Fable",
+    "cardText": "Stack.\n[fanfare] Give your leader [defense]+3.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+3."
+      }
+    ]
+  },
+  {
+    "id": "BP03-048EN",
+    "name": "Witch of Sweets",
+    "trait": "Mage / Fable",
+    "cardText": "[evolve][cost00]: Evolve this follower."
+  },
+  {
+    "id": "BP03-049EN",
+    "name": "Witch of Sweets (Evolved)",
+    "trait": "Mage / Fable",
+    "cardText": "On Evolve: Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-050EN",
+    "name": "Magical Rook",
+    "trait": "Chess",
+    "cardText": "[fanfare] If there is a Magical Pawn in your EX area, give this follower [defense]+1 and Ward.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is a Magical Pawn in your EX area, give this follower [defense]+1 and Ward."
+      }
+    ]
+  },
+  {
+    "id": "BP03-051EN",
+    "name": "Magical Bishop",
+    "trait": "Chess",
+    "cardText": "[fanfare] Put a Magical Pawn token into your EX area.\nAt the start of your end phase, if there is another Chess follower on your field, deal 1 damage to each enemy leader and give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Magical Pawn token into your EX area."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if there is another Chess follower on your field, deal 1 damage to each enemy leader and give your leader [defense]+1.",
+        "trigger": "At the start of your end phase",
+        "body": "Deal 1 damage to each enemy leader and give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-052EN",
+    "name": "Blitz",
+    "trait": "Chess",
+    "cardText": "Select an enemy follower on the field and deal it X damage. X equals the number of cards named Magical Pawn on your field plus 2.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the number of cards named Magical Pawn on your field plus 2."
+      }
+    ]
+  },
+  {
+    "id": "BP03-053EN",
+    "name": "Witch's Cauldron",
+    "trait": "Mage / Earth Sigil",
+    "cardText": "Stack.\n[fanfare] Look at the top 4 cards of your deck. You may reveal a card with Earth Rite from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 4 cards of your deck. You may reveal a card with Earth Rite from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP03-LD02EN",
+    "name": "Daria, Dimensional Drifter"
+  }
+]
