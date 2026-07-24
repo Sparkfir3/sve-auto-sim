@@ -23,8 +23,12 @@ namespace SVESimulator.UI
         private DeckSelectionController deckSelectionController;
         [SerializeField]
         private GameObject selectDeckError;
-
-        private Action onNextConnectionToServer;
+        
+        public event Action<bool> OnTryConnection;
+        public event Action<string> OnConnectionFailed;
+        
+        private Action onNextConnectionToServerSuccess;
+        private Action onNextConnectionToServerFailed;
 
         #endregion
 
@@ -66,14 +70,14 @@ namespace SVESimulator.UI
                 case MainMenuButton.PlayOnlineHost:
                     if(IsConnecting || !SVEGameNetworkManager.IsSteamConnected)
                         return;
-                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
+                    onNextConnectionToServerSuccess = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     HostSteamLobby();
                     break;
                 case MainMenuButton.PlayOnlineJoin:
                     if(IsConnecting || !SVEGameNetworkManager.IsSteamConnected || mainMenuView.RoomCode.IsNullOrWhiteSpace())
                         return;
                     // TODO - loading icon
-                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
+                    onNextConnectionToServerSuccess = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     JoinSteamLobby();
                     break;
 
@@ -81,25 +85,25 @@ namespace SVESimulator.UI
                 case MainMenuButton.PlayLocalHost:
                     if(IsConnecting)
                         return;
-                    onNextConnectionToServer = null;
+                    onNextConnectionToServerSuccess = null;
                     StartLocalHost(onStartSuccess: () => mainMenuView.PerformAction(MainMenuAction.Connecting));
                     break;
                 case MainMenuButton.PlayLocalJoin:
                     if(IsConnecting)
                         return;
                     // TODO - loading icon
-                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
+                    onNextConnectionToServerSuccess = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     StartLocalClient();
                     break;
 
                 // Other
                 case MainMenuButton.BackToMain:
-                    if(SVEGameNetworkManager.Instance.isNetworkActive)
-                        SVEGameNetworkManager.Instance.StopHost();
-                    onNextConnectionToServer = null;
+                    SVEGameNetworkManager.Instance.Disconnect();
+                    onNextConnectionToServerSuccess = null;
                     IsConnecting = false;
                     break;
                 case MainMenuButton.StartGame:
+                    TryLoadSelectedDeck();
                     SVEGameNetworkManager.SceneManager.LoadGameplay();
                     break;
                 case MainMenuButton.Quit:
@@ -129,13 +133,17 @@ namespace SVESimulator.UI
         private void HandleLocalPlayerConnected()
         {
             IsConnecting = false;
-            onNextConnectionToServer?.Invoke();
-            onNextConnectionToServer = null;
+            onNextConnectionToServerSuccess?.Invoke();
+            onNextConnectionToServerSuccess = null;
+            onNextConnectionToServerFailed = null;
         }
 
         private void HandleLocalPlayerDisconnected()
         {
             IsConnecting = false;
+            onNextConnectionToServerFailed?.Invoke();
+            onNextConnectionToServerSuccess = null;
+            onNextConnectionToServerFailed = null;
             if(mainMenuView.CurrentState is MainMenuViewState.Connecting or MainMenuViewState.ReadyToStart)
                 mainMenuView.PerformAction(MainMenuAction.Back);
         }
@@ -161,6 +169,7 @@ namespace SVESimulator.UI
                 catch(SocketException e)
                 {
                     Debug.Log($"Attempted to start new a LAN connection instance when one is already active.\n{e.ToString()}");
+                    OnConnectionFailed?.Invoke("An active LAN connection was found, but a second one cannot be started on the same network.");
                     onStartFail?.Invoke();
                     return;
                 }
@@ -174,6 +183,7 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
+            onNextConnectionToServerFailed = () => OnConnectionFailed?.Invoke("Failed to find an active LAN connection.");
             SVEGameNetworkManager.Instance.InitKcpNetworkManager(() =>
             {
                 SVEGameNetworkManager.Instance.StartClient();
@@ -237,10 +247,7 @@ namespace SVESimulator.UI
                 if(value == _isConnecting)
                     return;
                 _isConnecting = value;
-                if(_isConnecting)
-                    mainMenuView.OnStartConnecting();
-                else
-                    mainMenuView.OnEndConnecting();
+                OnTryConnection?.Invoke(_isConnecting);
             }
         }
 

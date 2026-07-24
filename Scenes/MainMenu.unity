@@ -472,6 +472,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &474598432 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3512296685114196151, guid: d6f4815513817fa4396487ebb56e4880, type: 3}
+  m_PrefabInstance: {fileID: 4901654163943796786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &544690148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1295,10 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: b17ca81b748071e44a8fb7f10d38e444, type: 2}
     - key: 8
       value: {fileID: 11400000, guid: e82aa50398bff6b45b53c6c1a0bf2bed, type: 2}
+  mainMenuController: {fileID: 1126685911}
+  steamRoomCodeInputField: {fileID: 4901654163943796787}
+  connectingIndicator: {fileID: 4901654163943796788}
+  errorTextBox: {fileID: 474598432}
   buttonCards:
     serializedPairs:
     - key: 0
@@ -1338,8 +1353,6 @@ MonoBehaviour:
       value: {fileID: 1700354648}
     - key: 7
       value: {fileID: 1088239494}
-  steamRoomCodeInputField: {fileID: 4901654163943796787}
-  connectingIndicator: {fileID: 4901654163943796788}
   animationController: {fileID: 1126685908}
   inputController: {fileID: 1887145433}
 --- !u!4 &1126685910
@@ -1374,8 +1387,6 @@ MonoBehaviour:
   mainMenuView: {fileID: 1126685909}
   deckSelectionController: {fileID: 1917708188}
   selectDeckError: {fileID: 2143401943}
-  networkManagerSteam: {fileID: 3691630640573521397, guid: 229c207ab490a8046b2d8035105ff82c, type: 3}
-  networkManagerKcp: {fileID: 3691630640573521397, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
 --- !u!1001 &1156806607
 PrefabInstance:
   m_ObjectHideFlags: 0
