@@ -69,7 +69,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Network Management
+        #region Init Network Managers
 
         public void InitSteamNetworkManager(Action onComplete)
         {
@@ -100,6 +100,22 @@ namespace SVESimulator
             yield return new WaitUntil(() => SVEGameNetworkManager.Instance);
             yield return null;
             onComplete?.Invoke();
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Network Management
+
+        public void Disconnect()
+        {
+            if(!SVEGameNetworkManager.Instance.isNetworkActive)
+                return;
+            if(IsSteamManager)
+                SteamMatchmaking.LeaveLobby(new CSteamID(SteamLobby.CurrentLobbyID));
+            NetworkManager.singleton.StopHost();
+            NetworkManager.singleton.StopServer();
         }
 
         #endregion
