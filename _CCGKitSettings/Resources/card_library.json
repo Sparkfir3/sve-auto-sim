@@ -33963,7 +33963,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Officer / Token",
+            "value": "Chess / Token",
             "name": "Trait",
             "$type": "CCGKit.StringProperty"
           },
@@ -38716,7 +38716,7 @@
             "type": "Triggered",
             "effect": {
               "target": "TargetPlayerCard",
-              "filter": "k(Stack)",
+              "filter": "r(Stack)",
               "keywordType": 6,
               "keywordValue": 1,
               "amount": "1",
@@ -38874,7 +38874,7 @@
               },
               {
                 "target": "TargetPlayerCard",
-                "filter": "Ft(Chess)",
+                "filter": "Ft(Chess)X",
                 "$type": "SVESimulator.SendToCemeteryCost"
               }
             ],
@@ -39516,7 +39516,7 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
-              "effectName1": "Hand",
+              "effectName1": "Damage",
               "effectName2": "TopDeck",
               "$type": "SVESimulator.EffectSequence"
             },

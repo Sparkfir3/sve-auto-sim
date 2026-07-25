@@ -18,7 +18,7 @@ ability Spell name Token {
     effect SummonToken(Magic Sediment, Field, 1);
 }
 ability Spell name Stack {
-    effect GiveCounter(Stack, 1) to TargetPlayerCard k(Stack);
+    effect GiveCounter(Stack, 1) to TargetPlayerCard r(Stack);
 }
 ability Spell name Draw {
     effect Draw();
@@ -46,7 +46,7 @@ text "[evolve][cost02]: Evolve this follower.
 evolve 2;
 ability Act {
     condition p(#F);
-    cost (SendToCemetery, TargetPlayerCard, Ft(Chess));
+    cost (SendToCemetery, TargetPlayerCard, Ft(Chess)X);
     effect Sequence(Damage, CantAct);
 }
 ability Spell name Damage {
@@ -167,7 +167,7 @@ text "Select an enemy follower on the field. Deal it 4 damage and look at the to
 
 ability Spell {
     condition p(#F);
-    effect Sequence(Hand, TopDeck);
+    effect Sequence(Damage, TopDeck);
 }
 ability Spell name Damage {
     effect DealDamage(4) to TargetOpponentCard F;
