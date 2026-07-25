@@ -686,6 +686,19 @@ namespace SVESimulator
             return abilityList;
         }
 
+        public bool TryGetAdditionalCardTraits(RuntimeCard card, out List<string> additionalTraits)
+        {
+            additionalTraits = null;
+            for(int i = 0; i < registeredPassives.Count; i++)
+            {
+                if(registeredPassives[i].effect is not AddTraitPassive addTraitPassive || !registeredPassives[i].affectedCards.Any(x => x.instanceId == card.instanceId))
+                    continue;
+                additionalTraits ??= new List<string>();
+                additionalTraits.Add(addTraitPassive.trait);
+            }
+            return additionalTraits != null;
+        }
+
         #endregion
     }
 

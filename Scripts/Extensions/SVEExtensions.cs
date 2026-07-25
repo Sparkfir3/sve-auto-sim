@@ -65,8 +65,11 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        string[] traitList = value.Split(',');
-                        if(!libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').Any(x => traitList.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
+                        string[] traitListToMatch = value.Split(',');
+                        List<string> cardTraitList = libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').ToList();
+                        if(SVEEffectPool.Instance.TryGetAdditionalCardTraits(card, out List<string> additionalTraits))
+                            cardTraitList.AddRange(additionalTraits);
+                        if(!cardTraitList.Any(x => traitListToMatch.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.Keyword:
