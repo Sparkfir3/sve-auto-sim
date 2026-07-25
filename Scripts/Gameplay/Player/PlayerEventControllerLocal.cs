@@ -1300,6 +1300,20 @@ namespace SVESimulator
 
         #region Other
 
+        public void OnCardsSelectedForAbility(List<CardObject> cards)
+        {
+            sveEffectSolver.OnCardsSelectedForAbility(playerInfo, cards.Where(x => x.RuntimeCard.ownerPlayer.netId.isLocalPlayer).Select(x => x.RuntimeCard).ToList());
+            List<RuntimeCard> opponentCards = cards.Where(x => !x.RuntimeCard.ownerPlayer.netId.isLocalPlayer).Select(x => x.RuntimeCard).ToList();
+            if(opponentCards is not { Count: > 0 })
+                return;
+            LocalSelectedOppCardsForAbility msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceIds = opponentCards.Select(x => x.instanceId).ToArray()
+            };
+            NetworkClient.Send(msg);
+        }
+
         public int GetRandomNumber(int min, int max)
         {
             int output = sveEffectSolver.GetRandomNumber(min, max);

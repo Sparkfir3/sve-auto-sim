@@ -90,6 +90,8 @@ namespace SVESimulator
 
     public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
 
+    public class SveOnSelectedForAbilityTrigger : SveTrigger { }
+
     #endregion
 
     // ------------------------------

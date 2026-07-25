@@ -662,6 +662,22 @@ namespace SVESimulator
 
         #region Other
 
+        public void OnCardsSelectedForAbility(OpponentSelectedOppCardsForAbility msg)
+        {
+            CardZone targetZone = localZoneController.fieldZone;
+            List<RuntimeCard> cards = new();
+            foreach(int instanceId in msg.cardInstanceIds)
+            {
+                if(!targetZone.TryGetCard(instanceId, out CardObject card))
+                {
+                    Debug.LogError($"Failed to find card with id {instanceId} on the field for {nameof(OnCardsSelectedForAbility)}");
+                    continue;
+                }
+                cards.Add(card.RuntimeCard);
+            }
+            sveEffectSolver.OnCardsSelectedForAbility(playerInfo, cards);
+        }
+
         public void AdvanceRng(int rngAdvanceCount)
         {
             sveEffectSolver.AdvanceRNG(rngAdvanceCount);

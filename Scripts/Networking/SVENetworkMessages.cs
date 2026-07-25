@@ -679,6 +679,18 @@ namespace SVESimulator
 
     #region Other
 
+    public struct LocalSelectedOppCardsForAbility : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+    }
+
+    public struct OpponentSelectedOppCardsForAbility : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+    }
+
     public struct LocalAdvanceRngMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;

@@ -134,6 +134,7 @@ namespace SVESimulator
 
                 EffectTargetingUI.TargetCard.OnSelectionComplete.AddListener(cards =>
                 {
+                    player.LocalEvents.OnCardsSelectedForAbility(cards);
                     onTargetFound?.Invoke(cards);
                     EffectTargetingUI.TargetCard.Close();
                     GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(player.GetOpponentInfo().netId);
