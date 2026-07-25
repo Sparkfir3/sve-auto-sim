@@ -223,16 +223,6 @@ namespace SVESimulator.UI
             });
         }
 
-        public void RetrySteamConnection()
-        {
-            if(SVEGameNetworkManager.IsSteamManager)
-            {
-                SVEGameNetworkManager.SteamLobby.CheckSteamConnection();
-                return;
-            }
-            SVEGameNetworkManager.Instance.InitSteamNetworkManager(null);
-        }
-
         #endregion
 
         // ------------------------------

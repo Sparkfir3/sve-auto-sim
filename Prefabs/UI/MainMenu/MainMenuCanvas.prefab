@@ -2295,7 +2295,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Steam connection not found
 
-    Steam is required to play online'
+    Steam is required to play online
+
+    Restart
+    the game to retry connection'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
   m_sharedMaterial: {fileID: 984527217393061494, guid: 848f0d04af91d6d4781b27e7b3b2d614, type: 2}
@@ -2338,7 +2341,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

@@ -71,7 +71,7 @@ namespace SVESimulator
 
         #region Init Network Managers
 
-        public void InitSteamNetworkManager(Action onComplete)
+        public void InitSteamNetworkManager(Action onComplete = null)
         {
             if(IsSteamManager)
             {
@@ -81,7 +81,7 @@ namespace SVESimulator
             ApplicationStateManager.Instance.StartCoroutine(RebootNetworkManager(networkManagerSteamPrefab, onComplete));
         }
 
-        public void InitKcpNetworkManager(Action onComplete)
+        public void InitKcpNetworkManager(Action onComplete = null)
         {
             if(IsKcpManager)
             {
@@ -93,11 +93,11 @@ namespace SVESimulator
 
         private static IEnumerator RebootNetworkManager(SVEGameNetworkManager newNetworkManager, Action onComplete)
         {
-            Destroy(SVEGameNetworkManager.Instance.gameObject);
+            Destroy(Instance.gameObject);
             yield return null;
             Instantiate(newNetworkManager.gameObject);
             yield return null;
-            yield return new WaitUntil(() => SVEGameNetworkManager.Instance);
+            yield return new WaitUntil(() => Instance);
             yield return null;
             onComplete?.Invoke();
         }
@@ -110,12 +110,12 @@ namespace SVESimulator
 
         public void Disconnect()
         {
-            if(!SVEGameNetworkManager.Instance.isNetworkActive)
+            if(!Instance.isNetworkActive)
                 return;
             if(IsSteamManager)
                 SteamMatchmaking.LeaveLobby(new CSteamID(SteamLobby.CurrentLobbyID));
-            NetworkManager.singleton.StopHost();
-            NetworkManager.singleton.StopServer();
+            Instance.StopHost();
+            Instance.StopServer();
         }
 
         #endregion

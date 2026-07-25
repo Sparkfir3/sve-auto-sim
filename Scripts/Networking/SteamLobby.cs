@@ -87,11 +87,6 @@ namespace SVESimulator
 
         #region Public Data Calls
 
-        public void CheckSteamConnection()
-        {
-            Start();
-        }
-
         public void HostLobby(string lobbyName)
         {
             CurrentLobbyName = string.IsNullOrWhiteSpace(lobbyName) ? GeneralUtility.RandomAlphaString(RandomLobbyCodeLength) : lobbyName;
