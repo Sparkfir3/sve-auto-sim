@@ -496,6 +496,7 @@ namespace SVESimulator.SveScript
             { "CheckTop", new EffectParams("CheckTopDeckEffect",                                    false, false, EffectParameterType.CheckCardActions) },
             { "Complex", new EffectParams("ComplexEffect",                                          false, false, EffectParameterType.Function) },
             { "ComplexEffect", new EffectParams("ComplexEffect",                                    false, false, EffectParameterType.Function) },
+            { "EvolveSelectTarget", new EffectParams("EvolveSelectTargetEffect",                    false, false, EffectParameterType.Filter) },
             { "ExtraTurn", new EffectParams("ExtraTurnEffect",                                      false, false) },
             { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",            false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
             { "MinusCostNextSpellEndOfTurn", new EffectParams("MinusCostNextSpellEndOfTurnEffect",  false, false, EffectParameterType.Amount) },

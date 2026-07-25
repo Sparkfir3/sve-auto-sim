@@ -415,7 +415,7 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true, bool useEvolveForTurn = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true)
         {
             // Condition checks
             if(playerController.EvolvedThisTurn && useEvolveForTurn)
@@ -432,7 +432,8 @@ namespace SVESimulator
                 Debug.LogError($"Failed to find a corresponding slot for card {baseCard.name} on the player's field!");
                 return false;
             }
-            CardObject evolvedCard = GetEvolvedCardOf(baseCard.RuntimeCard);
+            if(!evolvedCard)
+                evolvedCard = GetEvolvedCardOf(baseCard.RuntimeCard);
             if(!evolvedCard)
                 return false;
 

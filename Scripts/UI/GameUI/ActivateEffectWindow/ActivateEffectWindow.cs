@@ -72,7 +72,7 @@ namespace SVESimulator
                 button.gameObject.SetActive(true);
                 button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = canUseAct && player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
-                    && (ability.effect is not EvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
+                    && (ability.effect is not IEvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
                 if(onlyQuicks)
                     button.Interactable &= ability.IsQuickAbility();
                 button.OnClickEffect.AddListener(() =>
