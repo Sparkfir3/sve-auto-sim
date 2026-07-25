@@ -18,7 +18,7 @@ namespace SVESimulator
             {
                 sourceCardInstanceId = sourceCardInstanceId,
                 targetsFormula = null,
-                filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
+                filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string> { { SVEFormulaParser.CardFilterSetting.Spell, null } },
                 effect = new MinusCostOtherPassive
                 {
                     duration = SVEProperties.PassiveDuration.EndOfTurn,
