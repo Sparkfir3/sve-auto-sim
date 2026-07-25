@@ -46,6 +46,7 @@ namespace SVESimulator.SveScript
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
             { "OnDealCombatDamage", new EffectTriggerInfo("SVESimulator.SveOnDealCombatDamageTrigger") },
             { "OnLeaderGainDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderGainDefenseTrigger") },
+            { "OnSelectedForAbility", new EffectTriggerInfo("SVESimulator.SveOnSelectedForAbilityTrigger") },
 
             // Game Phases
             { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },
