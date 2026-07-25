@@ -169,6 +169,38 @@ namespace SVESimulator
             } : null;
         }
 
+        private async Task<CE_Object> MillDeck(string millCountRaw)
+        {
+            bool waiting = true;
+            List<RuntimeCard> cardList = null;
+            int millCount;
+            try
+            {
+                millCount = int.Parse(millCountRaw);
+            }
+            catch
+            {
+                millCount = 0;
+            }
+
+            player.LocalEvents.MillDeck(true, millCount, async milledCards =>
+            {
+                await Task.Delay(400);
+                cardList = milledCards;
+                waiting = false;
+            });
+
+            // Wait
+            while(waiting && !BreakCondition)
+                await Task.Yield();
+            await Task.Delay(200);
+            ComplexLog(LogMode.Value, $"[Mill Deck] Milled {cardList.Count} cards, Instance IDs {string.Join(",", cardList.Select(x => x.instanceId))}");
+            return cardList != null ? new CE_CardList
+            {
+                cardList = cardList
+            } : null;
+        }
+
         #endregion
     }
 }

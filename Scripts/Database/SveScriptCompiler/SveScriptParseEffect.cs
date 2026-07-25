@@ -489,16 +489,17 @@ namespace SVESimulator.SveScript
             // ------------------------------
 
             // Other Effects
-            { "Evolve", new EffectParams("EvolveEffect")                                    },
-            { "GiveTrait", new EffectParams("GiveTraitEffect",                              EffectParameterType.Trait) },
-            { "Shuffle", new EffectParams("ShuffleDeckEffect",                              true, false) },
-            { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                          true, false) },
-            { "CheckTop", new EffectParams("CheckTopDeckEffect",                            false, false, EffectParameterType.CheckCardActions) },
-            { "Complex", new EffectParams("ComplexEffect",                                  false, false, EffectParameterType.Function) },
-            { "ComplexEffect", new EffectParams("ComplexEffect",                            false, false, EffectParameterType.Function) },
-            { "ExtraTurn", new EffectParams("ExtraTurnEffect",                              false, false) },
-            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
-            { "RevealTop", new EffectParams("RevealTopDeckEffect",                          false, false, EffectParameterType.CheckCardActions) },
+            { "Evolve", new EffectParams("EvolveEffect")                                            },
+            { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
+            { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
+            { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },
+            { "CheckTop", new EffectParams("CheckTopDeckEffect",                                    false, false, EffectParameterType.CheckCardActions) },
+            { "Complex", new EffectParams("ComplexEffect",                                          false, false, EffectParameterType.Function) },
+            { "ComplexEffect", new EffectParams("ComplexEffect",                                    false, false, EffectParameterType.Function) },
+            { "ExtraTurn", new EffectParams("ExtraTurnEffect",                                      false, false) },
+            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",            false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
+            { "MinusCostNextSpellEndOfTurn", new EffectParams("MinusCostNextSpellEndOfTurnEffect",  false, false, EffectParameterType.Amount) },
+            { "RevealTop", new EffectParams("RevealTopDeckEffect",                                  false, false, EffectParameterType.CheckCardActions) },
 
             // ------------------------------
 

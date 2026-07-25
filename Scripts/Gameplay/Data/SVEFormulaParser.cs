@@ -25,6 +25,7 @@ namespace SVESimulator
             Keyword,
             Counter,
             Name,
+            NameXor,
             Class,
 
             // Card Stats
@@ -522,18 +523,32 @@ namespace SVESimulator
                 if(!filterSetting.HasValue)
                     continue;
 
-                nextIndex++; // move past open parentheses TODO - actually check for a parentheses
+                // Name Filters
                 if(filterSetting == CardFilterSetting.Name)
                 {
-                    string name = ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex).Trim();
-                    if(name.StartsWith('\"') && name.EndsWith('\"'))
-                        name = name[1..^1];
-                    filters.Add(CardFilterSetting.Name, $"{currentFilterData}{name.Trim()}");
+                    if(nextIndex >= formula.Length)
+                        continue;
+                    switch(formula[nextIndex++])
+                    {
+                        case '^': // XOR
+                            filters.Add(CardFilterSetting.NameXor, currentFilterData);
+                            continue;
+                        case '(': // Regular Name Filter
+                            string name = ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex).Trim();
+                            if(name.StartsWith('\"') && name.EndsWith('\"'))
+                                name = name[1..^1];
+                            filters.Add(CardFilterSetting.Name, $"{currentFilterData}{name.Trim()}");
+                            nextIndex++; // move past close parentheses
+                            continue;
+                        default: // Invalid
+                            nextIndex--;
+                            continue;
+                    }
                 }
-                else
-                {
-                    filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
-                }
+
+                // Regular Filters
+                nextIndex++; // move past open parentheses TODO - actually check for a parentheses
+                filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
                 nextIndex++; // move past close parentheses
             }
             return filters;

@@ -78,6 +78,7 @@ namespace SVESimulator.SveScript
             { "CannotDestroyByAbilities",   new Keyword(1, 4) },
             { "CannotAttack",               new Keyword(1, 5) },
             { "CannotAttackLeaders",        new Keyword(1, 6) },
+            { "CannotAct",                  new Keyword(1, 11) },
 
             // Plus Damage
             { "Plus1Damage",                new Keyword(2, 0) },

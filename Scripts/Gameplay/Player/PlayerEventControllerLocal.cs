@@ -326,17 +326,20 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void MillDeck(bool targetLocalPlayer, int count, Action onComplete)
+        public void MillDeck(bool targetLocalPlayer, int count, Action onComplete = null) => MillDeck(targetLocalPlayer, count, _ => onComplete?.Invoke());
+        public void MillDeck(bool targetLocalPlayer, int count, Action<List<RuntimeCard>> onComplete)
         {
             StartCoroutine(MillCoroutine());
             IEnumerator MillCoroutine() // Use delay to prevents cards from moving all at once
             {
                 int movedCount = 0;
                 PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
+                List<RuntimeCard> cardList = new();
                 for(int i = 0; i < count; i++)
                 {
                     RuntimeCard runtimeCard = targetZoneController.deckZone.Runtime.cards[0];
                     CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+                    cardList.Add(runtimeCard);
 
                     targetZoneController.SendCardToCemetery(cardObject, onComplete: () => { movedCount++; });
                     sveEffectSolver.SendToCemetery(targetLocalPlayer ? netIdentity : opponentInfo.netId, runtimeCard, SVEProperties.Zones.Deck);
@@ -351,7 +354,7 @@ namespace SVESimulator
                     yield return new WaitForSeconds(0.15f);
                 }
                 yield return new WaitUntil(() => movedCount >= count);
-                onComplete?.Invoke();
+                onComplete?.Invoke(cardList);
             }
         }
 
