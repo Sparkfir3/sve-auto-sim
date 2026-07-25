@@ -103,7 +103,22 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        if(!libraryCard.name.Replace("(Evolved)", "").Trim().Equals(value) ^ inverse)
+                        List<string> cardNames = new() { libraryCard.name.Replace("(Evolved)", "") };
+                        string extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                        if(!extraNames.IsNullOrWhiteSpace())
+                            cardNames.AddRange(extraNames.Split('\n').ToList());
+                        if(!cardNames.Any(x => x.Trim().Equals(value)) ^ inverse)
+                            return false;
+                        break;
+                    case CardFilterSetting.NameContains:
+                        libraryCard ??= LibraryCardCache.GetCard(card.cardId);
+                        if(libraryCard == null)
+                            throw new Exception($"Card not found in cache: {card.cardId}");
+                        cardNames = new List<string> { libraryCard.name };
+                        extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                        if(!extraNames.IsNullOrWhiteSpace())
+                            cardNames.AddRange(extraNames.Split('\n').ToList());
+                        if(!cardNames.Any(x => x.Contains(value)) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.NameXor:

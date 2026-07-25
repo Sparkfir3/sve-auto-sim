@@ -25,6 +25,7 @@ namespace SVESimulator
             Keyword,
             Counter,
             Name,
+            NameContains,
             NameXor,
             Class,
 
@@ -528,22 +529,29 @@ namespace SVESimulator
                 {
                     if(nextIndex >= formula.Length)
                         continue;
+
                     switch(formula[nextIndex++])
                     {
+                        case 'E': // Contains
+                            filterSetting = CardFilterSetting.NameContains;
+                            nextIndex++; // move past open parentheses
+                            goto case '(';
                         case '^': // XOR
-                            filters.Add(CardFilterSetting.NameXor, currentFilterData);
-                            continue;
+                            filterSetting = CardFilterSetting.NameXor;
+                            break;
                         case '(': // Regular Name Filter
                             string name = ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex).Trim();
                             if(name.StartsWith('\"') && name.EndsWith('\"'))
-                                name = name[1..^1];
-                            filters.Add(CardFilterSetting.Name, $"{currentFilterData}{name.Trim()}");
+                                name = name[1..^1].Trim();
+                            currentFilterData = $"{currentFilterData}{name}";
                             nextIndex++; // move past close parentheses
-                            continue;
+                            break;
                         default: // Invalid
                             nextIndex--;
                             continue;
                     }
+                    filters.Add(filterSetting.Value, currentFilterData);
+                    continue;
                 }
 
                 // Regular Filters
