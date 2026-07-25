@@ -664,7 +664,7 @@ namespace SVESimulator
 
         private void OnUpdateSelectedCards()
         {
-            if(currentFilter.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor))
+            if(currentFilter?.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor) ?? false)
             {
                 currentFilter[SVEFormulaParser.CardFilterSetting.NameXor] = string.Join("\n",
                     currentSelectedCards.Select(x => LibraryCardCache.GetName(x.RuntimeCard.cardId)).Distinct());
