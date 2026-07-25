@@ -80,6 +80,12 @@ namespace SVESimulator.SveScript
                             throw new Exception();
                         cardInfo.name = text[(pointer + scriptKeyword.Length)..nextIndex].Trim();
                         break;
+                    case "name-alt":
+                        nextIndex = text.IndexOf(';', pointer);
+                        if(nextIndex <= pointer)
+                            throw new Exception();
+                        cardInfo.nameAlts = text[(pointer + scriptKeyword.Length)..nextIndex].Trim();
+                        break;
 
                     case "id":
                         nextIndex = text.IndexOf(';', pointer);
