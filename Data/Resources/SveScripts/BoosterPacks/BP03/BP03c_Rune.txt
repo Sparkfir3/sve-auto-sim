@@ -71,7 +71,7 @@ text "On Evolve: Select up to 4 Chess followers with different names that cost 4
       [act] Put another Chess follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities can't be activated.";
 
 ability OnEvolve {
-    effect CemeteryToField(m(0,4), Ft(Chess)n^);
+    effect CemeteryToField(m(0,4), Ft(Chess)p(m(0,4))n^);
 }
 ability Act {
     condition p(#F);

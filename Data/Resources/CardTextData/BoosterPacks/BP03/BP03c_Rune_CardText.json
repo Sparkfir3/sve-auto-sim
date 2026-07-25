@@ -55,7 +55,7 @@
         "key": "Act",
         "trigger": "[act]",
         "cost": "Put another Chess follower from your field into its owner's cemetery",
-        "body": "Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities except [evolve] can't be activated."
+        "body": "Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities can't be activated."
       },
       {
         "key": "Damage",

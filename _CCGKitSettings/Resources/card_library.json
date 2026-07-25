@@ -39017,7 +39017,7 @@
             "effect": {
               "target": "Self",
               "amount": "m(0,4)",
-              "filter": "Ft(Chess)n^",
+              "filter": "Ft(Chess)p(m(0,4))n^",
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,
