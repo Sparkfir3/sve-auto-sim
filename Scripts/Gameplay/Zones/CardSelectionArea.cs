@@ -266,12 +266,7 @@ namespace SVESimulator
             {
                 Player.ZoneController.handZone.SetAllCardsInteractable(filter);
             }
-
-#if UNITY_EDITOR
-            debug_SerializedFilter.Clear();
-            foreach(var kvPair in currentFilter)
-                debug_SerializedFilter.Add(kvPair.Key, kvPair.Value);
-#endif
+            OnUpdateFilter();
         }
 
         public void SetConfirmAction(string cardName, string actionText, string effectText, int minSelectionCount, int maxSelectionCount, Action<List<CardObject>> action,
@@ -470,9 +465,14 @@ namespace SVESimulator
             else if(Input.GetKeyUp(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
                     inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer) && Vector3.Distance(raycastHitPos, hit.point) < 5f)
             {
-                if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card) && currentFilter.MatchesCard(card))
+                if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card))
                 {
-                    ToggleCardSelection(card);
+                    // deselect for XOR filter - bypass filter (it fails filter because it checks against itself inside the filter)
+                    if((currentFilter?.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor) ?? false) && currentSelectedCards.Contains(card))
+                        ToggleCardSelection(card);
+                    // regular toggle selection
+                    else if(currentFilter.MatchesCard(card))
+                        ToggleCardSelection(card);
                 }
             }
         }
@@ -668,7 +668,23 @@ namespace SVESimulator
             {
                 currentFilter[SVEFormulaParser.CardFilterSetting.NameXor] = string.Join("\n",
                     currentSelectedCards.Select(x => LibraryCardCache.GetName(x.RuntimeCard.cardId)).Distinct());
+                OnUpdateFilter();
             }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Other
+
+        private void OnUpdateFilter()
+        {
+#if UNITY_EDITOR
+            debug_SerializedFilter.Clear();
+            foreach(var kvPair in currentFilter)
+                debug_SerializedFilter.Add(kvPair.Key, kvPair.Value?.Replace("\n", " / "));
+#endif
         }
 
         #endregion
