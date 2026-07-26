@@ -476,6 +476,7 @@ namespace SVESimulator.SveScript
             { "DestroyAndControllerPerformEffect", new EffectParams("DestroyAndControllerPerformEffect",        EffectParameterType.SingleEffect) },
             { "OpponentPerformEffect", new EffectParams("OpponentPerformEffect",                                EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("PerformAsEachTargetEffect",                              EffectParameterType.SingleEffect) },
+            { "OrderedTargetForSequence", new EffectParams("OrderedTargetForEffectSequence",                    EffectParameterType.ListOfEffects) },
             { "PerformWithTargetAmount", new EffectParams("PerformWithTargetAmountEffect",                      EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "TargetForEffectSequence", new EffectParams("TargetForEffectSequence",                            EffectParameterType.ListOfEffects) },
             { "TargetForSequence", new EffectParams("TargetForEffectSequence",                                  EffectParameterType.ListOfEffects) },

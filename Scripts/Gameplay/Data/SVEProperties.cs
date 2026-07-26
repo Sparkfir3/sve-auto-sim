@@ -40,6 +40,7 @@ namespace SVESimulator
             AllCards,
             TargetCard,
             TargetCardEx,
+            MultiTargetMode,
 
             AllPlayers,
             AllLeaders
