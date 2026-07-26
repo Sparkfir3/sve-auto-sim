@@ -15,21 +15,21 @@
   },
   {
     "id": "BP03-056EN",
-    "name": "Laevateinn Dragon",
+    "name": "Lævateinn Dragon",
     "trait": "Wyrmkin / Armed",
-    "cardText": "[evolve][cost01]: Evolve this follower into an evolved follower with \"Laevateinn Dragon\" in its name.",
+    "cardText": "[evolve][cost01]: Evolve this follower into an evolved follower with \"Lævateinn Dragon\" in its name.",
     "effectText": [
       {
         "key": "Act",
         "trigger": "[act]",
         "cost": "[cost01]",
-        "body": "Evolve this follower into an evolved follower with \"Laevateinn Dragon\" in its name."
+        "body": "Evolve this follower into an evolved follower with \"Lævateinn Dragon\" in its name."
       }
     ]
   },
   {
     "id": "BP03-057EN",
-    "name": "Laevateinn Dragon (Evolved)",
+    "name": "Lævateinn Dragon (Evolved)",
     "trait": "Wyrmkin / Armed",
     "cardText": "Assail.\nOn Evolve: Summon a Draconic Weapon token. Recover 2 play points.",
     "effectText": [
@@ -42,9 +42,9 @@
   },
   {
     "id": "BP03-058EN",
-    "name": "Laevateinn Dragon, Attack Form (Evolved)",
+    "name": "Lævateinn Dragon, Attack Form",
     "trait": "Wyrmkin / Armed",
-    "cardText": "Strike: Select an enemy follower on the field. Deal 4 damage to it and 3 damage to its leader.\nThis follower's name is also Laevateinn Dragon.",
+    "cardText": "Strike: Select an enemy follower on the field. Deal 4 damage to it and 3 damage to its leader.\nThis follower's name is also Lævateinn Dragon.",
     "effectText": [
       {
         "key": "Strike",
