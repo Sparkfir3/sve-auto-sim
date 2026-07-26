@@ -1,0 +1,245 @@
+[
+  {
+    "id": "BP03-055EN",
+    "name": "Jabberwock",
+    "trait": "Wyrmkin / Fable",
+    "cardText": "[fanfare] Put another follower from your field into its owner's cemetery: Reveal the top card of your deck. Repeat until you reveal a follower that costs more than the follower you put into the cemetery and put it onto your field. Shuffle the remaining cards and put them on the bottom of your deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Put another follower from your field into its owner's cemetery",
+        "body": "Reveal the top card of your deck. Repeat until you reveal a follower that costs more than the follower you put into the cemetery and put it onto your field. Shuffle the remaining cards and put them on the bottom of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP03-056EN",
+    "name": "Laevateinn Dragon",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "[evolve][cost01]: Evolve this follower into an evolved follower with \"Laevateinn Dragon\" in its name.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01]",
+        "body": "Evolve this follower into an evolved follower with \"Laevateinn Dragon\" in its name."
+      }
+    ]
+  },
+  {
+    "id": "BP03-057EN",
+    "name": "Laevateinn Dragon (Evolved)",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "Assail.\nOn Evolve: Summon a Draconic Weapon token. Recover 2 play points.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Summon a Draconic Weapon token. Recover 2 play points."
+      }
+    ]
+  },
+  {
+    "id": "BP03-058EN",
+    "name": "Laevateinn Dragon, Attack Form (Evolved)",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "Strike: Select an enemy follower on the field. Deal 4 damage to it and 3 damage to its leader.\nThis follower's name is also Laevateinn Dragon.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Select an enemy follower on the field. Deal 4 damage to it and 3 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-059EN",
+    "name": "Red Ragewyrm",
+    "trait": "Wyrmkin / Fable",
+    "cardText": "[act][engage]: Give this follower [attack]+5. If Overflow is active for you, give [attack]+10 instead.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Give this follower [attack]+5. If Overflow is active for you, give [attack]+10 instead."
+      }
+    ]
+  },
+  {
+    "id": "BP03-060EN",
+    "name": "Draconir, Knuckle Dragon",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Summon a Draconic Weapon token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Draconic Weapon token."
+      }
+    ]
+  },
+  {
+    "id": "BP03-061EN",
+    "name": "Draconir, Knuckle Dragon (Evolved)",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "On Evolve: Select an enemy follower on the field and deal it 2 damage. If there is another Armed follower on your field, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": " Select an enemy follower on the field and deal it 2 damage. If there is another Armed follower on your field, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP03-062EN",
+    "name": "Tilting at Windmills",
+    "trait": "Fable",
+    "cardText": "[act][cost03], [engage]: You may put a follower from your hand onto your field and give it \"At the start of your end phase, destroy this card.\"",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost03], [engage]",
+        "body": "You may put a follower from your hand onto your field and give it \"At the start of your end phase, destroy this card.\""
+      },
+      {
+        "key": "Effect",
+        "body": "Put a follower from your hand onto your field and give it \"At the start of your end phase, destroy this card.\""
+      },
+      {
+        "key": "Destroy",
+        "text": "At the start of your end phase, destroy this card.",
+        "trigger": "At the start of your end phase",
+        "body": "Destroy this card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-063EN",
+    "name": "Master of Draconic Arts",
+    "trait": "Dragonheart",
+    "cardText": "Assail. Ward.\n[fanfare] If Overflow is active for you, give this follower [attack]+4 and Rush.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Overflow is active for you, give this follower [attack]+4 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "BP03-064EN",
+    "name": "Hammer Dragonewt",
+    "trait": "Dragonewt / Wyrmkin / Armed",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Look at the top 4 cards of your deck. You may reveal an Armed spell from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 4 cards of your deck. You may reveal an Armed spell from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP03-065EN",
+    "name": "Hammer Dragonewt (Evolved)",
+    "trait": "Dragonewt / Wyrmkin / Armed",
+    "cardText": "On Evolve: Deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-066EN",
+    "name": "Draconic Smash",
+    "trait": "Dragonewt / Wyrmkin / Armed",
+    "cardText": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and summon a Draconic Weapon token.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 3 damage and summon a Draconic Weapon token."
+      }
+    ]
+  },
+  {
+    "id": "BP03-067EN",
+    "name": "Elder Tortoise",
+    "trait": "Marine",
+    "cardText": "[fanfare] Gain 1 Evolution Point. If Overflow is active for you, give this follower [attack]+2/[defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Gain 1 Evolution Point. If Overflow is active for you, give this follower [attack]+2/[defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP03-068EN",
+    "name": "Trinity Dragon",
+    "trait": "Wyrmkin",
+    "cardText": "Intimidate."
+  },
+  {
+    "id": "BP03-069EN",
+    "name": "Dragon Summoner",
+    "trait": "Dragonheart / Dragonewt",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP03-070EN",
+    "name": "Dragon Summoner (Evolved)",
+    "trait": "Dragonheart / Dragonewt",
+    "cardText": "On Evolve: Look at the top 3 cards of your deck. You may reveal a [dragoncraft] follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Look at the top 3 cards of your deck. You may reveal a [dragoncraft] follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP03-071EN",
+    "name": "Lance Lizard",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "[fanfare] If Overflow is active for you, summon a Draconic Weapon token.\nOnce on each of your turns, when this follower is selected for an ability, give it [attack]+1 and deal 1 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If Overflow is active for you, summon a Draconic Weapon token."
+      },
+      {
+        "key": "OnSelectedForAbility",
+        "text": "Once on each of your turns, when this follower is selected for an ability, give it [attack]+1 and deal 1 damage to each enemy leader.",
+        "trigger": "When this follower is selected for an ability",
+        "cost": "",
+        "body": "Give this [attack]+1 and deal 1 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-072EN",
+    "name": "Armor Burst",
+    "trait": "Wyrmkin / Armed",
+    "cardText": "Select an Armed follower on your field and an enemy follower on the field. Put the first follower into its owner's EX area, deal 3 damage to the second, and summon a Draconic Weapon token.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an Armed follower on your field and an enemy follower on the field. Put the first follower into its owner's EX area, deal 3 damage to the second, and summon a Draconic Weapon token."
+      }
+    ]
+  },
+  {
+    "id": "BP03-LD03EN",
+    "name": "Light Tenryu"
+  }
+]
