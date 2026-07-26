@@ -42151,7 +42151,7 @@
           },
           {
             "trigger": {
-              "condition": null,
+              "condition": "o",
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -42325,10 +42325,10 @@
             "modifiers": []
           },
           {
-            "baseValue": -1,
+            "baseValue": 2,
             "statId": 4,
             "name": "Cost",
-            "originalValue": -1,
+            "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -42438,7 +42438,7 @@
             "effect": {
               "amount": "3",
               "checkAction1": "Hand",
-              "checkFilter1": "c(Dragon)",
+              "checkFilter1": "Fc(Dragon)",
               "checkAmount1": "1",
               "checkAction2": "BottomDeckAnyOrder",
               "checkAction3": "None",

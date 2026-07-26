@@ -271,6 +271,7 @@ ability Spell name EP {
     effect GiveStat(EP, 1) to Self;
 }
 ability Spell name AtkDef {
+    condition o;
     effect GiveStat(AtkDef, 2) to Self;
 }
 
@@ -297,7 +298,7 @@ class Dragon;
 type Follower;
 trait Dragonheart / Dragonewt;
 rarity B;
-csot 2;
+cost 2;
 stats 1/3;
 
 text "[evolve][cost01]: Evolve this follower.";
@@ -317,7 +318,7 @@ stats 2/4;
 text "On Evolve: Look at the top 3 cards of your deck. You may reveal a [dragoncraft] follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
 
 ability OnEvolve {
-    effect CheckTop(3, (Hand, c(Dragon), 1), (BottomDeckAnyOrder));
+    effect CheckTop(3, (Hand, Fc(Dragon), 1), (BottomDeckAnyOrder));
 }
 
 // ------------------------------

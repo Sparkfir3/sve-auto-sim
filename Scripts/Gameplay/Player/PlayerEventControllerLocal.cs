@@ -1311,7 +1311,8 @@ namespace SVESimulator
                 playerNetId = netIdentity,
                 cardInstanceIds = opponentCards.Select(x => x.instanceId).ToArray()
             };
-            NetworkClient.Send(msg);
+            // TODO - Temporary disable, currently crashes the game
+            // NetworkClient.Send(msg);
         }
 
         public int GetRandomNumber(int min, int max)
