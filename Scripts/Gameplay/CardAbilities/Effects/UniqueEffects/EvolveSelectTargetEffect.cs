@@ -43,15 +43,7 @@ namespace SVESimulator
                     onComplete?.Invoke();
                     return;
                 }
-                player.LocalEvents.EvolveCard(targets[0], useEvolvePoint: false, useEvolveCost: false);
-                foreach(CardObject card in targets)
-                {
-                    if(!player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard))
-                    {
-                        continue;
-                    }
-                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, evolvedCard: selectedCards[0], useEvolveCost: false);
-                }
+                player.LocalEvents.EvolveCard(targets[0], evolvedCard: selectedCards[0], useEvolvePoint: false, useEvolveCost: false);
                 onComplete?.Invoke();
             });
         }
