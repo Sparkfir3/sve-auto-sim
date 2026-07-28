@@ -96,6 +96,10 @@ namespace SVESimulator
             {
                 switch(token)
                 {
+                    case "firstMovedCard":
+                        return movedCardsData is { Count: > 0 }
+                            ? Task.FromResult<CE_Object>(new CE_Card(player, movedCardsData[0].cardInstanceId, movedCardsData[0].endZone))
+                            : Task.FromResult<CE_Object>(null);
                     case "movedCardsCount":
                         return Task.FromResult<CE_Object>(new CE_Value(movedCardsData.Count.ToString()));
                     case "removedCountersCount":
