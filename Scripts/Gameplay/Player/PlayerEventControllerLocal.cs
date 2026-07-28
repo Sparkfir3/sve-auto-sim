@@ -194,10 +194,18 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void FlipTopDeckToFaceUp(Action<CardObject> onComplete)
+        public void FlipTopDeckToFaceUp(CardObject card = null, Action<CardObject> onComplete = null)
         {
-            RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
-            CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            RuntimeCard runtimeCard;
+            if(!card)
+            {
+                runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+                card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            }
+            else
+            {
+                runtimeCard = card.RuntimeCard;
+            }
             localZoneController.FlipCardToFaceUp(card, onComplete: () => onComplete?.Invoke(card));
 
             LocalFlipTopDeckMessage msg = new()
@@ -209,7 +217,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void FlipTopDeckToFaceDown(CardObject card = null)
+        public void FlipTopDeckToFaceDown(CardObject card = null, Action onComplete = null)
         {
             if(!card)
             {
@@ -218,7 +226,7 @@ namespace SVESimulator
             }
             if(!card)
                 return;
-            localZoneController.FlipCardToFaceDown(card);
+            localZoneController.FlipCardToFaceDown(card, onComplete: onComplete);
 
             LocalFlipTopDeckMessage msg = new()
             {

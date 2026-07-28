@@ -167,7 +167,7 @@ namespace SVESimulator
         {
             bool waiting = true;
             RuntimeCard card = null;
-            player.LocalEvents.FlipTopDeckToFaceUp(async revealedCard =>
+            player.LocalEvents.FlipTopDeckToFaceUp(onComplete: async revealedCard =>
             {
                 await Task.Delay(400);
                 player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
@@ -180,10 +180,35 @@ namespace SVESimulator
                 await Task.Yield();
             await Task.Delay(200);
             ComplexLog(LogMode.Value, $"[Reveal Top Deck] Instance ID {(card != null ? card.instanceId : "null")}");
-            return card != null ? new CE_Card
+            return card != null ? new CE_Card(card) : null;
+        }
+
+        private async Task<CE_Object> RevealTopDeckUntilValue(string valueFormula)
+        {
+            RuntimeCard card = null;
+            valueFormula = ReplaceWithVariableValues(valueFormula).Trim();
+            for(int i = 0; i < player.ZoneController.deckZone.Runtime.cards.Count; i++)
             {
-                card = card
-            } : null;
+                bool waiting = true;
+                card = player.ZoneController.deckZone.Runtime.cards[i];
+                CardObject cardObject = player.ZoneController.CreateNewCardObjectTopDeck(card);
+                player.LocalEvents.FlipTopDeckToFaceUp(cardObject, onComplete: async _ =>
+                {
+                    await Task.Delay(300);
+                    player.LocalEvents.FlipTopDeckToFaceDown(cardObject, onComplete: () => waiting = false);
+                });
+                while(waiting && !BreakCondition)
+                    await Task.Yield();
+                ComplexLog(LogMode.Value, $"{valueFormula} => {SVEFormulaParser.ParseValueAsCondition(valueFormula, player, card)}");
+                if(BreakCondition || SVEFormulaParser.ParseValueAsCondition(valueFormula, player, card))
+                    break;
+            }
+
+            // Wait
+            await Task.Delay(200);
+            ComplexLog(LogMode.Value, $"[Reveal Top Deck Until Value] Instance ID {(card != null ? card.instanceId : "null")}" +
+                $"\n with value {valueFormula}");
+            return card != null ? new CE_Card(card) : null;
         }
 
         private async Task<CE_Object> MillDeck(string millCountRaw)
