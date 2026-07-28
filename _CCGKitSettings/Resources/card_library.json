@@ -40766,7 +40766,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let cost = payCost(Effect).movedCard.getValue(P)\n        let card = revealTopDeckUntil(getValue(-1 ~(F) P))\n        performCostless Effect { trigger = card }",
+              "function": "let cost = payCost(Effect).firstMovedCard.getValue(P)\n        let card = revealTopDeckUntilValue(-1 ~(F) [P > cost])\n        performCostless SendToField { trigger = card }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -40778,7 +40778,7 @@
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Effect",
+            "name": "SendToField",
             "type": "Triggered",
             "effect": {
               "target": "TriggerCard",

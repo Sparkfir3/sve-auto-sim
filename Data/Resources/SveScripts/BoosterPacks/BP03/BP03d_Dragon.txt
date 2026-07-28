@@ -11,12 +11,12 @@ text "[fanfare] Put another follower from your field into its owner's cemetery: 
 
 ability Fanfare {
     effect ComplexEffect(
-        let cost = payCost(Effect).movedCard.getValue(P)
-        let card = revealTopDeckUntil(getValue(-1 ~(F) P))
-        performCostless Effect { trigger = card }
+        let cost = payCost(Effect).firstMovedCard.getValue(P)
+        let card = revealTopDeckUntilValue(-1 ~(F) [P > cost])
+        performCostless SendToField { trigger = card }
     );
 }
-ability Spell name Effect {
+ability Spell name SendToField {
     cost (SendToCemetery, TargetPlayerCard, FX);
     effect DeckToField() to TriggerCard;
 }

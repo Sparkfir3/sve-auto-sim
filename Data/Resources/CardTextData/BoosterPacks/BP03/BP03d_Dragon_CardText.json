@@ -10,6 +10,11 @@
         "trigger": "[fanfare]",
         "cost": "Put another follower from your field into its owner's cemetery",
         "body": "Reveal the top card of your deck. Repeat until you reveal a follower that costs more than the follower you put into the cemetery and put it onto your field. Shuffle the remaining cards and put them on the bottom of your deck."
+      },
+      {
+        "key": "SendToField",
+        "cost": "Put another follower from your field into its owner's cemetery",
+        "body": "Reveal the top card of your deck. Repeat until you reveal a follower that costs more than the follower you put into the cemetery and put it onto your field. Shuffle the remaining cards and put them on the bottom of your deck."
       }
     ]
   },
