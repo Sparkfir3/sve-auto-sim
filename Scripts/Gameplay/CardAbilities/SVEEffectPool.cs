@@ -677,6 +677,8 @@ namespace SVESimulator
             List<Ability> abilityList = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
             foreach(RegisteredPassiveAbility passive in registeredPassives)
             {
+                if(passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId)
+                    continue;
                 if(passive.effect is not GiveAbilityPassive giveAbilityPassive || !passive.filters.MatchesCard(card) /*|| !passive.MeetsCondition(player) TODO*/)
                     continue;
                 Ability ability = giveAbilityPassive.GetAbility(passive.sourceCardId);

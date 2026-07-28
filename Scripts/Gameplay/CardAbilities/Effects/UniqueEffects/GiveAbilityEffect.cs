@@ -29,7 +29,7 @@ namespace SVESimulator
                         duration = SVEProperties.PassiveDuration.WhileOnField,
                         effectName = effectName
                     };
-                    effect.GetAbility(sourceCardInstanceId); // cache ability data by fetching
+                    effect.GetAbility(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).id); // cache ability data by fetching
 
                     RegisteredPassiveAbility passive = new()
                     {

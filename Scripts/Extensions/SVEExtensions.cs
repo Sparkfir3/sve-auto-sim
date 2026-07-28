@@ -422,7 +422,7 @@ namespace SVESimulator
         {
             Type type = trigger.GetType();
             SveTrigger newTrigger = Activator.CreateInstance(type) as SveTrigger;
-            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             for(int i = 0; i < fields.Length; i++)
             {
                 switch(fields[i].Name)
@@ -430,9 +430,11 @@ namespace SVESimulator
                     case "_costList":
                         List<Cost> newCostList = new(trigger.Costs);
                         for(int j = 0; j < newCostList.Count; j++)
-                            if(newCostList[i] is T)
-                                newCostList.RemoveAt(i--);
+                            if(newCostList[j] is T)
+                                newCostList.RemoveAt(j--);
                         fields[i].SetValue(newTrigger, newCostList);
+                        continue;
+                    case "cost":
                         continue;
                     default:
                         fields[i].SetValue(newTrigger, fields[i].GetValue(trigger));
