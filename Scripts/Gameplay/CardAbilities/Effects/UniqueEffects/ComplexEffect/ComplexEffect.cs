@@ -136,9 +136,10 @@ namespace SVESimulator
             // Init
             int pointer = line.IndexOf('.'); // TODO - better token reading
             if(pointer < 0)
-                pointer = line.Length - 1;
+                pointer = line.Length;
+            else
+                pointer++;
             string token = line[..pointer].Trim();
-            pointer++;
 
             string args = null;
             if(token.Contains('('))
