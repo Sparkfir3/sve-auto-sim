@@ -25,6 +25,8 @@ namespace SVESimulator
             pointerL = pointerR;
 
             string overrideAmount = null;
+            int? overrideTriggerInstanceId = null;
+            string overrideTriggerZone = null;
             if(!arguments.IsNullOrWhiteSpace())
             {
                 string token = arguments.NextWord(0, out int argPointer);
@@ -36,12 +38,27 @@ namespace SVESimulator
                         overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim());
                         ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}");
                         break;
+                    case "trigger":
+                        arguments.NextWord(argPointer, out argPointer); // move past '='
+                        RuntimeCard overrideTriggerCard = (variables.GetValueOrDefault(arguments[argPointer..].Trim(), null) as CE_Card)?.card;
+                        if(overrideTriggerCard != null)
+                        {
+                            overrideTriggerInstanceId = overrideTriggerCard.instanceId;
+                            // assuming if the card doesn't exist anywhere on the board, it is currently in the deck
+                            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(overrideTriggerCard.instanceId);
+                            overrideTriggerZone = cardObject && cardObject.CurrentZone ? cardObject.CurrentZone.Runtime.name : SVEProperties.Zones.Deck;
+                        }
+                        ComplexLog(LogMode.Perform, $"Override Trigger: {arguments[argPointer..].Trim()} => " +
+                            $"Instance ID {overrideTriggerInstanceId} in zone {overrideTriggerZone}");
+                        break;
                     default:
                         break;
                 }
             }
 
-            yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
+            yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player,
+                overrideTriggerInstanceId ?? triggerInstanceId, overrideTriggerZone ?? triggerZone,
+                sourceInstanceId, sourceZone,
                 onComplete, overrideAmount: overrideAmount, ignoreCosts: ignoreCosts);
             yield return new WaitForEndOfFrame();
         }
