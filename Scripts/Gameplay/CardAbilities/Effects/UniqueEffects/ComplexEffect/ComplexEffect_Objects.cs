@@ -2,15 +2,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CCGKit;
+using UnityEngine;
 
 namespace SVESimulator
 {
     public partial class ComplexEffect
     {
+        #region Base/Standard
+
         private abstract class CE_Object
         {
             public abstract Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters);
         }
+
+        // -----
 
         private class CE_Value : CE_Object
         {
@@ -24,9 +29,26 @@ namespace SVESimulator
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters) => Task.FromResult<CE_Object>(this);
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Cards
+
         private class CE_Card : CE_Object
         {
             public RuntimeCard card;
+
+            public CE_Card(RuntimeCard card)
+            {
+                this.card = card;
+            }
+
+            public CE_Card(PlayerController player, int instanceId, string zone)
+            {
+                card = player.GetPlayerInfo().namedZones[zone].cards.FirstOrDefault(x => x.instanceId == instanceId);
+                Debug.Assert(card != null);
+            }
 
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
             {
@@ -59,6 +81,12 @@ namespace SVESimulator
             }
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Other
+
         private class CE_EffectCost : CE_Object
         {
             public List<MoveCardToZoneData> movedCardsData;
@@ -77,5 +105,7 @@ namespace SVESimulator
                 }
             }
         }
+
+        #endregion
     }
 }

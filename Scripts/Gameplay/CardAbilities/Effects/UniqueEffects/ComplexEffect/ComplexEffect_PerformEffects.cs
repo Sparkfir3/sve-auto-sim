@@ -14,7 +14,7 @@ namespace SVESimulator
     {
         #region Perform Effect
 
-        private IEnumerator PerformEffect(Dictionary<string, string> variables, bool ignoreCosts = false, Action onComplete = null)
+        private IEnumerator PerformEffect(bool ignoreCosts = false, Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
             ComplexLog(LogMode.Perform, $"Effect Name = {effectName}");
@@ -33,7 +33,7 @@ namespace SVESimulator
                 {
                     case "amount":
                         arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim(), variables);
+                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim());
                         ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}");
                         break;
                     default:
@@ -46,7 +46,7 @@ namespace SVESimulator
             yield return new WaitForEndOfFrame();
         }
 
-        private IEnumerator PerformIfElse(Dictionary<string, string> variables, bool ignoreCosts = false)
+        private IEnumerator PerformIfElse(bool ignoreCosts = false)
         {
             pointerR = function.IndexOf("\n", pointerL, StringComparison.Ordinal);
             if(pointerR == -1)
@@ -57,7 +57,7 @@ namespace SVESimulator
                 yield break;
             string[] splitB = splitA[1].Split(" else ");
 
-            string variable = ReplaceWithVariableValues(splitA[0], variables).Trim();
+            string variable = ReplaceWithVariableValues(splitA[0]).Trim();
             string ifTrue = splitB[0].Trim();
             string ifFalse = splitB.Length > 1 ? splitB[1].Trim() : null;
             bool isTrue = SVEFormulaParser.ParseValueAsCondition(variable, player, null as RuntimeCard);

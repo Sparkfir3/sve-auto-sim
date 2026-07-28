@@ -25,6 +25,8 @@ namespace SVESimulator
         private string triggerZone, sourceZone;
         [NonSerialized]
         private bool forceExit;
+        
+        private Dictionary<string, CE_Object> variables = new();
 
         #endregion
 
@@ -46,7 +48,7 @@ namespace SVESimulator
 
         private IEnumerator ResolveOverTime(Action onComplete)
         {
-            Dictionary<string, string> variables = new();
+            variables.Clear();
             pointerL = 0;
             pointerR = 0;
 
@@ -65,18 +67,18 @@ namespace SVESimulator
                 {
                     // Variables
                     case "let":
-                        yield return ParseNewVariable(variables);
+                        yield return ParseNewVariable();
                         break;
 
                     // Perform effect
                     case "perform":
-                        yield return PerformEffect(variables);
+                        yield return PerformEffect();
                         break;
                     case "performcostless":
-                        yield return PerformEffect(variables, ignoreCosts: true);
+                        yield return PerformEffect(ignoreCosts: true);
                         break;
                     case "performif":
-                        yield return PerformIfElse(variables);
+                        yield return PerformIfElse();
                         break;
 
                     // Other
@@ -104,7 +106,7 @@ namespace SVESimulator
 
         #region Variable Parsing
 
-        private IEnumerator ParseNewVariable(Dictionary<string, string> variables)
+        private IEnumerator ParseNewVariable()
         {
             string variableName = function.NextWord(pointerL, out pointerL);
             ComplexLog(LogMode.Value, $"Variable Name = {variableName}");
@@ -120,23 +122,23 @@ namespace SVESimulator
             string line = function[pointerL..pointerR].Trim();
             ComplexLog(LogMode.Value, $"Line = {line}");
 
-            Task<string> task = ParseValue(line, variables);
+            Task<CE_Object> task = ParseValue(line);
             yield return new WaitUntil(() => task.IsCompleted);
-            string value = task.Result;
+            CE_Object value = task.Result;
 
             variables[variableName] = value;
-            ComplexLog(LogMode.Value, $"var {variableName} = {value}");
+            ComplexLog(LogMode.Value, $"var {variableName} = {(value is CE_Value ce_value ? ce_value?.value : value.GetType())}");
         }
 
-        private async Task<string> ParseValue(string line, Dictionary<string, string> variables)
+        // this function fucking sucks, who wrote this garbage? ...me? fuck
+        private async Task<CE_Object> ParseValue(string line)
         {
             // Init
-            int pointer = line.IndexOf('.');
+            int pointer = line.IndexOf('.'); // TODO - better token reading
             if(pointer < 0)
                 pointer = line.Length - 1;
             string token = line[..pointer].Trim();
-            if(line[pointer] == '.')
-                pointer++;
+            pointer++;
 
             string args = null;
             if(token.Contains('('))
@@ -148,41 +150,59 @@ namespace SVESimulator
             // Get root object
             CE_Object obj = token switch
             {
-                "revealTopDeck" => await RevealTopDeck(),
-                "mill" => await MillDeck(args),
-                "millDeck" => await MillDeck(args),
-                "payCost" => await PayEffectCost(args),
+                "revealTopDeck" =>              await RevealTopDeck(),
+                "revealTopDeckUntilValue" =>    await RevealTopDeckUntilValue(args),
+                "mill" =>                       await MillDeck(args),
+                "millDeck" =>                   await MillDeck(args),
+                "payCost" =>                    await PayEffectCost(args),
                 _ => null
             };
             if(obj == null)
-                return ReplaceWithVariableValues(line, variables);
+                return new CE_Value(ReplaceWithVariableValues(line));
 
             // Handle object properties/functions
-            while(obj != null && obj is not CE_Value && !forceExit)
+            while(obj != null && obj is not CE_Value && !forceExit && pointer < line.Length)
             {
                 switch(obj)
                 {
                     case CE_Card:
                     case CE_CardList:
                     case CE_EffectCost:
-                        string[] parameters = line[pointer..].TextInsideParentheses(out int paramsPointerL, out int paramsPointerR).Split();
-                        if(paramsPointerL == -1 && paramsPointerR == -1)
+                        token = null;
+                        string[] parameters = null;
+                        for(int i = pointer; token == null && i < line.Length; i++)
                         {
-                            paramsPointerL = line.Length - pointer;
-                            paramsPointerR = paramsPointerL;
+                            switch(line[i])
+                            {
+                                case '.':
+                                    token = line[pointer..i];
+                                    pointer = i + 1;
+                                    break;
+                                case '(':
+                                    token = line[pointer..i];
+                                    parameters = line[i..].TextInsideParentheses(out _, out int length).Split();
+                                    pointer = i + length + 1;
+                                    break;
+                                default:
+                                    continue;
+                            }
                         }
-                        token = line[pointer..(pointer + paramsPointerL)];
-                        pointer += paramsPointerR;
+                        if(token == null)
+                        {
+                            token = line[pointer..];
+                            pointer = line.Length;
+                        }
+                        ComplexLog(LogMode.Value, $"Line = {line}" +
+                            $"\nToken = {token} // Parameters = {(parameters != null ? string.Join(" ", parameters) : null)}" +
+                            $"\nLine Pointer at {pointer}");
                         obj = await obj.GetValue(player, token, parameters);
                         break;
 
-                    case CE_Value:
-                        break;
                     default:
-                        return "";
+                        break;
                 }
             }
-            return (obj as CE_Value)?.value ?? "";
+            return obj ?? new CE_Value("");
         }
 
         #endregion
