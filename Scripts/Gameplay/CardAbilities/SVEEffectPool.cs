@@ -111,8 +111,11 @@ namespace SVESimulator
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
 
-                    // Condition check
+                    // Condition & cost checks
                     if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, null as RuntimeCard))
+                        break;
+                    if(trigger.Costs is { Count: > 0 } &&
+                       trigger.Costs.All(x => x is SveCost { IsInternalCost: true } sveCost && !sveCost.CanPayCost(localPlayer, sourceCard, triggeredAbility.name)))
                         break;
 
                     // Add effect
