@@ -66,6 +66,8 @@ namespace SVESimulator.UI
         private int maxMultiSelectTargets;
 
         [HideInInspector]
+        public UnityEvent<List<CardObject>> OnSelectionUpdated;
+        [HideInInspector]
         public UnityEvent<List<CardObject>> OnSelectionComplete;
 
         #endregion
@@ -173,6 +175,7 @@ namespace SVESimulator.UI
                 box.gameObject.SetActive(false);
             }
             multiSelectBoxes.Clear();
+            OnSelectionUpdated.RemoveAllListeners();
             OnSelectionComplete.RemoveAllListeners();
             gameObject.SetActive(false);
         }
@@ -213,10 +216,10 @@ namespace SVESimulator.UI
         }
 
         #endregion
-        
+
         // ------------------------------
 
-        #region Unity Functions/Core Logic
+        #region Unity Functions
 
         private void Update()
         {
@@ -245,6 +248,21 @@ namespace SVESimulator.UI
 
         #region Selection Handling
 
+        public void OverrideAvailableTargetsList(List<CardObject> newCardList)
+        {
+            foreach(CardObject card in availableTargets.Where(x => !newCardList.Contains(x)))
+            {
+                card.SetHighlightMode(CardObject.HighlightMode.None);
+            }
+            for(int i = 0; i < newCardList.Count; i++)
+            {
+                if(!newCardList[i] || availableTargets.Contains(newCardList[i]))
+                    continue;
+                availableTargets.Add(newCardList[i]);
+                newCardList[i].SetHighlightMode(CardObject.HighlightMode.ValidTarget);
+            }
+        }
+
         private void ToggleCardSelection(CardObject card)
         {
             if(!currentSelectedCards.Contains(card))
@@ -260,6 +278,7 @@ namespace SVESimulator.UI
                 card.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
             }
             confirmButton.gameObject.SetActive(currentSelectedCards.Count >= minTargetAmount || currentSelectedCards.Count == availableTargets.Count);
+            OnSelectionUpdated?.Invoke(currentSelectedCards);
         }
 
         private void AddCardToMultiSelect(CardObject card)
@@ -280,6 +299,7 @@ namespace SVESimulator.UI
                 GetMultiSelectBox(card).SetText(currentSelectedCards.Count(x => x == card).ToString());
             }
             confirmButton.gameObject.SetActive(currentSelectedCards.Count >= maxMultiSelectTargets);
+            OnSelectionUpdated?.Invoke(currentSelectedCards);
         }
 
         private void RemoveCardFromMultiSelect(CardObject card)

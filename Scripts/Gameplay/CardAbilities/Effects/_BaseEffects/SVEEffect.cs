@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
+using Sparkfire.Utility;
 using SVESimulator.UI;
 using UnityEngine;
 
@@ -116,6 +117,17 @@ namespace SVESimulator
 
                 // ------------------------------
 
+                case SVEProperties.SVEEffectTarget.MultiTargetMode:
+                    var targetingData = GetMultiTargetModeFilterSettings(rawFilter, sourceCardInstanceId);
+                    EffectTargetingUI.TargetCard.OnSelectionUpdated.AddListener(cards => UpdateTargetsForMultiTargetMode(player, cards, targetingData));
+                    int targetAmount = targetingData.Sum(x => x.Item1);
+                    rawFilter = $"m({targetAmount},{targetAmount})"; // clear to prevent EffectTargetingUI from trying to parse it, only keep min/max
+                    SelectTargetCardsToResolve(null, null);
+                    UpdateTargetsForMultiTargetMode(player, null, targetingData);
+                    break;
+
+                // ------------------------------
+
                 default:
                     Debug.LogError($"SVEEffectTarget mode {targetMode} is not implemented yet.");
                     onTargetFound?.Invoke(targets);
@@ -163,5 +175,68 @@ namespace SVESimulator
             });
             EffectTargetingUI.TargetZone.SetCloseButtonActive(actionCount >= minActionCount);
         }
+
+        // ------------------------------
+
+        #region Multi Target Mode (Targeting with Multiple Target-Filter Pairs)
+
+        // Triplet of type <amount, target, filter>
+        private List<(int, SVEProperties.SVEEffectTarget, Dictionary<SVEFormulaParser.CardFilterSetting, string>)> GetMultiTargetModeFilterSettings(string filter, int sourceCardInstanceId)
+        {
+            List<string> rawTargetData = new();
+            for(int pointer = 0; pointer < filter.Length; pointer++)
+            {
+                string newRawFilter = filter[pointer..].TextInsideParentheses(out _, out int length);
+                pointer += length;
+                rawTargetData.Add(newRawFilter);
+            }
+            Debug.LogError("TEST\n" + string.Join("\n", rawTargetData));
+
+            List<(int, SVEProperties.SVEEffectTarget, Dictionary<SVEFormulaParser.CardFilterSetting, string>)> targetingData = new();
+            for(int i = 0; i < rawTargetData.Count; i++)
+            {
+                // TODO - support min/max amount, don't rely on split by comma
+                string[] split = rawTargetData[i].Split(",");
+                int amount = int.Parse(split[0]);
+                SVEProperties.SVEEffectTarget target = (SVEProperties.SVEEffectTarget)Enum.Parse(typeof(SVEProperties.SVEEffectTarget), split[1]);
+                string rawFilter = split.Length > 2 ? split[2] : null;
+                var filterDict = SVEFormulaParser.ParseCardFilterFormula(rawFilter, sourceCardInstanceId);
+                targetingData.Add((amount, target, filterDict));
+            }
+            return targetingData;
+        }
+
+        // Triplet of type <amount, target, filter>
+        private void UpdateTargetsForMultiTargetMode(PlayerController player, List<CardObject> selectedCards, List<(int, SVEProperties.SVEEffectTarget, Dictionary<SVEFormulaParser.CardFilterSetting, string>)> targetingData)
+        {
+            List<CardObject> newTargetsList = selectedCards != null ? new(selectedCards) : new();
+            for(int i = 0; i < targetingData.Count; i++)
+            {
+                try
+                {
+                    CardZone zone = targetingData[i].Item2 switch
+                    {
+                        SVEProperties.SVEEffectTarget.TargetPlayerCard      => player.ZoneController.fieldZone,
+                        SVEProperties.SVEEffectTarget.TargetOpponentCard    => player.OppZoneController.fieldZone,
+                        _                                                   => null
+                    };
+                    if(!zone)
+                        continue;
+
+                    List<CardObject> validTargets = ((zone is CardPositionedZone posZone) ? posZone.GetAllPrimaryCards() : zone.AllCards)
+                        .Where(x => targetingData[i].Item3.MatchesCard(x.RuntimeCard)).ToList();
+                    if(selectedCards != null && selectedCards.Count(x => validTargets.Contains(x)) >= targetingData[i].Item1)
+                        continue;
+                    newTargetsList.AddRange(validTargets);
+                }
+                catch(Exception e)
+                {
+                    Debug.LogError($"An error occurred when trying to update targets for MultiTargetMode at data index {i}: {e.ToString()}");
+                }
+            }
+            EffectTargetingUI.TargetCard.OverrideAvailableTargetsList(newTargetsList);
+        }
+
+        #endregion
     }
 }
