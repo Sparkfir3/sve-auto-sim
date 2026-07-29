@@ -238,7 +238,7 @@
     "cardText": "Select an Armed follower on your field and an enemy follower on the field. Put the first follower into its owner's EX area, deal 3 damage to the second, and summon a Draconic Weapon token.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "Target",
         "body": "Select an Armed follower on your field and an enemy follower on the field. Put the first follower into its owner's EX area, deal 3 damage to the second, and summon a Draconic Weapon token."
       }
     ]

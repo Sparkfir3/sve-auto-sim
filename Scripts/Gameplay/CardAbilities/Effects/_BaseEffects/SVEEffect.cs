@@ -190,7 +190,6 @@ namespace SVESimulator
                 pointer += length;
                 rawTargetData.Add(newRawFilter);
             }
-            Debug.LogError("TEST\n" + string.Join("\n", rawTargetData));
 
             List<(int, SVEProperties.SVEEffectTarget, Dictionary<SVEFormulaParser.CardFilterSetting, string>)> targetingData = new();
             for(int i = 0; i < rawTargetData.Count; i++)

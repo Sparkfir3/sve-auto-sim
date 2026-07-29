@@ -248,19 +248,24 @@ namespace SVESimulator.UI
 
         #region Selection Handling
 
-        public void OverrideAvailableTargetsList(List<CardObject> newCardList)
+        public void OverrideAvailableTargetsList(List<CardObject> newCardList, bool updateConfirmButton = true)
         {
-            foreach(CardObject card in availableTargets.Where(x => !newCardList.Contains(x)))
+            List<CardObject> toRemove = availableTargets.Where(x => !newCardList.Contains(x)).ToList();
+            foreach(CardObject card in toRemove)
             {
                 card.SetHighlightMode(CardObject.HighlightMode.None);
+                availableTargets.Remove(card);
             }
             for(int i = 0; i < newCardList.Count; i++)
             {
                 if(!newCardList[i] || availableTargets.Contains(newCardList[i]))
                     continue;
-                availableTargets.Add(newCardList[i]);
                 newCardList[i].SetHighlightMode(CardObject.HighlightMode.ValidTarget);
+                availableTargets.Add(newCardList[i]);
             }
+
+            if(updateConfirmButton)
+                confirmButton.gameObject.SetActive(currentSelectedCards.Count >= minTargetAmount || currentSelectedCards.Count == availableTargets.Count);
         }
 
         private void ToggleCardSelection(CardObject card)
