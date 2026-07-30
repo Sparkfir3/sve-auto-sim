@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sparkfire.Utility;
 using CCGKit;
+using SVESimulator.CardTextData;
 
 namespace SVESimulator
 {
@@ -87,6 +88,9 @@ namespace SVESimulator
                     });
                     Close();
                 });
+
+                if(!onlyQuicks && ability.effect is IEvolveEffect)
+                    AddEvolveWithEPFromAbility(player, card, ability, ref i);
             }
 
             // Stack
@@ -117,7 +121,7 @@ namespace SVESimulator
             // Evolve/Serve
             if(!onlyQuicks)
             {
-                AddEvolveEffects(player, card, ref i);
+                AddEvolveEffectsFromEvolveCost(player, card, ref i);
                 AddServeEffects(player, card, ref i);
             }
 
@@ -147,7 +151,44 @@ namespace SVESimulator
 
         #region Generic Acts
 
-        private void AddEvolveEffects(PlayerController player, CardObject card, ref int buttonsIndex)
+        private void AddEvolveWithEPFromAbility(PlayerController player, CardObject card, ActivatedAbility ability, ref int buttonsIndex)
+        {
+            // Cost checks
+            if(!player.LocalEvents.HasEvolvePoint())
+                return;
+            int playPointCost = SVEFormulaParser.ParseValue((ability.costs.FirstOrDefault(x => x is PlayPointCost) as PlayPointCost)?.amount, player, card);
+            if(playPointCost <= 0)
+                return;
+            List<Cost> costs = new(ability.costs);
+            if(!player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, ability.name))
+                return;
+
+            // Get formatted text
+            string text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
+            text = text.Replace(TextFormatting.FormatCardText($"[cost{playPointCost:D2}]"),
+                TextFormatting.FormatCardText($"[cost{(playPointCost - 1):D2}] + {evolvePointFormatting}"));
+
+            // Create button
+            buttonsIndex++;
+            MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+            button.gameObject.SetActive(true);
+            button.Text = text;
+            button.Interactable = true;
+            button.OnClickEffect.AddListener(() =>
+            {
+                player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
+                player.LocalEvents.PayAbilityCosts(card, costs, ability.name, () =>
+                {
+                    SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
+                    {
+                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                    });
+                });
+                Close();
+            });
+        }
+
+        private void AddEvolveEffectsFromEvolveCost(PlayerController player, CardObject card, ref int buttonsIndex)
         {
             // Evolve without evolve point
             int evolveCost = card.GetEvolveCost();
