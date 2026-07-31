@@ -756,6 +756,9 @@ namespace SVESimulator
                     case PlayPointCost ppCost:
                         player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= SVEFormulaParser.ParseValue(ppCost.amount);
                         break;
+                    case EvolvePointCost epCost:
+                        player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= SVEFormulaParser.ParseValue(epCost.amount);
+                        break;
                     case EngageSelfCost:
                         EngageCard(card);
                         break;
