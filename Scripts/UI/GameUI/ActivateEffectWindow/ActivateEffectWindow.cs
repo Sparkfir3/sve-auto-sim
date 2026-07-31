@@ -153,20 +153,29 @@ namespace SVESimulator
 
         private void AddEvolveWithEPFromAbility(PlayerController player, CardObject card, ActivatedAbility ability, ref int buttonsIndex)
         {
-            // Cost checks
+            // Should add check
             if(!player.LocalEvents.HasEvolvePoint())
                 return;
-            int playPointCost = SVEFormulaParser.ParseValue((ability.costs.FirstOrDefault(x => x is PlayPointCost) as PlayPointCost)?.amount, player, card);
-            if(playPointCost <= 0)
+            int playPointCostAmount = SVEFormulaParser.ParseValue((ability.costs.FirstOrDefault(x => x is PlayPointCost) as PlayPointCost)?.amount, player, card);
+            if(playPointCostAmount <= 0)
                 return;
+
+            // Cost check
             List<Cost> costs = new(ability.costs);
+            for(int i = 0; i < costs.Count; i++)
+            {
+                if(costs[i] is not PlayPointCost playPointCost)
+                    continue;
+                costs[i] = playPointCost.CopyWithOverrideAmount(playPointCostAmount - 1);
+                costs.Insert(++i, new EvolvePointCost() { amount = "1" });
+            }
             if(!player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, ability.name))
                 return;
 
             // Get formatted text
             string text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
-            text = text.Replace(TextFormatting.FormatCardText($"[cost{playPointCost:D2}]"),
-                TextFormatting.FormatCardText($"[cost{(playPointCost - 1):D2}] + {evolvePointFormatting}"));
+            text = text.Replace(TextFormatting.FormatCardText($"[cost{playPointCostAmount:D2}]"),
+                TextFormatting.FormatCardText($"[cost{(playPointCostAmount - 1):D2}] + {evolvePointFormatting}"));
 
             // Create button
             buttonsIndex++;
