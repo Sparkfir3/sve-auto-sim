@@ -1,0 +1,406 @@
+name Dark Alice;
+id BP03-073;
+class Abyss;
+type Follower;
+trait Demon / Fable;
+rarity L;
+cost 6;
+stats 6/6;
+
+text "Rush.
+      Strike: Each opponent discards a card.
+      [lastwords] Banish the top 10 cards of your deck: Put this follower onto its owner's field. Discard a card.";
+
+keyword Rush;
+ability Strike {
+    effect OpponentPerformEffect(Discard);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+ability LastWords {
+    cost (BanishTopDeck, 10);
+    effect Sequence(CemeteryToField, Discard);
+}
+ability Spell name CemeteryToField {
+    effect CemeteryToField() to TriggerCard;
+}
+
+// ------------------------------
+
+name Masquerade Ghost;
+id BP03-074;
+class Abyss;
+type Follower;
+trait Departed;
+rarity L;
+cost 4;
+stats 4/4;
+
+text "[evolve][cost01]: Evolve this follower.
+      Whenever a Ghost is put onto your field, give it [attack]+1.";
+
+evolve 1;
+ability OnOtherEnterField {
+    filter n(Ghost);
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Masquerade Ghost (Evolved);
+id BP03-075;
+class Abyss;
+type Evolved Follower;
+trait Departed;
+rarity L;
+stats 5/5;
+
+text "Whenever a Ghost is put onto your field, give it [attack]+1.
+      Whenever a Ghost you control leaves the field, summon a Gargantuan Ghost token.
+      [lastwords] Put this card into its owner's EX area.";
+
+ability OnOtherEnterField {
+    filter n(Ghost);
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+ability OnOtherLeaveField {
+    filter n(Ghost);
+    effect SummonToken(Gargantuan Ghost, Field, 1);
+}
+ability LastWords {
+    effect CemeteryToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Odile, Black Swan;
+id BP03-076;
+class Abyss;
+type Follower;
+trait Fable;
+rarity G;
+cost 5;
+stats 6/4;
+
+text "[fanfare] Deal 2 damage to each enemy leader and enemy follower on the field. Necrocharge (20): Give this follower Storm.
+      Strike: Deal 2 damage to each enemy leader and enemy follower on the field.";
+
+ability Fanfare {
+    effect Sequence(Damage, Storm);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to AllOpponentCardsAndLeader F;
+}
+ability Spell name Storm {
+    condition n(20);
+    effect GiveKeyword(Storm) to Self;
+}
+ability Strike {
+    effect DealDamage(2) to AllOpponentCardsAndLeader F;
+}
+
+// ------------------------------
+
+name Demonium, Punk Devil;
+id BP03-077;
+class Abyss;
+type Follower;
+trait Demon;
+rarity G;
+cost 2;
+stats 2/3;
+
+text "Ward.
+      [act] Give your leader [defense]-2: Give this follower Bane. This ability can be activated once per turn.
+      [lastwords] Give your leader [defense]+2.";
+
+keyword Ward;
+ability Act {
+    cost (LeaderDefense, 2), (OncePerTurn);
+    effect GiveKeyword(Bane) to Self;
+}
+ability LastWords {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Baccherus, Peppy Ghostie;
+name-alt Ghost;
+id BP03-078;
+class Abyss;
+type Follower;
+trait Departed;
+rarity G;
+cost 1;
+stats 1/1;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] If there is a Gargantuan Ghost on your field, draw a card.
+      This follower's name is also Ghost.";
+
+evolve 1;
+ability Fanfare {
+    condition f(n(Gargantuan Ghost));
+    effect Draw();
+}
+
+// ------------------------------
+
+name Baccherus, Peppy Ghostie (Evolved);
+name-alt Ghost;
+id BP03-079;
+class Abyss;
+type Evolved Follower;
+trait Departed;
+rarity G;
+stats 2/2;
+
+text "This follower's name is also Ghost.
+      [lastwords] Put this card into its owner's EX area.";
+
+ability LastWords {
+    effect CemeteryToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Demon Maestro;
+id BP03-080;
+class Abyss;
+type Follower;
+trait Demon;
+rarity S;
+cost 2;
+stats 1/1;
+
+text "[act] Give your leader [defense]-2: Draw a card. This ability can be activated once per turn.";
+
+ability Act {
+    cost (LeaderDefense, 2), (OncePerTurn);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Trombone Devil;
+id BP03-081;
+class Abyss;
+type Follower;
+trait Demon;
+rarity S;
+cost 5;
+stats 4/4;
+
+text "[evolve][cost01]: Evolve this follower.
+      At the start of your end phase, if Sanguine is active for you, select an enemy leader or enemy follower on the field and deal it 3 damage.";
+
+evolve 1;
+ability StartEndPhase {
+    condition g;
+    effect DealDamage(3) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Trombone Devil (Evolved);
+id BP03-082;
+class Abyss;
+type Evolved Follower;
+trait Demon;
+rarity S;
+stats 5/5;
+
+text "On Evolve: Deal 1 damage to each leader.
+      At the start of your end phase, if Sanguine is active for you, select an enemy leader or enemy follower on the field and deal it 3 damage.";
+
+ability OnEvolve {
+    effect DealDamage(1) to AllLeaders;
+}
+ability StartEndPhase {
+    condition g;
+    effect DealDamage(3) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Furtive Fangs;
+id BP03-083;
+class Abyss;
+type Spell;
+trait Beast / Fable;
+rarity S;
+cost 1;
+
+text "Select a follower on your field. For the rest of this turn, it has "Strike: Select an enemy follower on the field and deal it X damage. X equals this follower's attack."";
+
+ability Spell {
+    condition f(F);
+    effect GiveAbilityEndOfTurn(Strike) to TargetPlayerCard F;
+}
+ability Strike {
+    cost (GivenAbility);
+    effect DealDamage(A) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Pumpkin Necromancer;
+id BP03-084;
+class Abyss;
+type Follower;
+trait Departed/;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Put a Gargantuan Ghost token into your EX area.";
+
+ability Fanfare {
+    effect SummonToken(Gargantuan Ghost, ExArea, 1);
+}
+
+// ------------------------------
+
+name Parade Raven;
+id BP03-085;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 7;
+stats 6/6;
+
+text "[fanfare] Put another follower from your field into its owner's cemetery: Select a follower that costs 5 play points or less in your cemetery and put it onto your field.";
+
+ability Fanfare {
+    cost (SendToCemetery, TargetPlayerCard, FX);
+    effect CemeteryToField(1, Fp(m(0,5)));
+}
+
+// ------------------------------
+
+name Mischievous Zombie;
+id BP03-086;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost02]: Evolve this follower.
+      [fanfare] Discard a card: Summon a Ghost token. If you discarded a Departed card, draw a card.";
+
+evolve 2;
+ability Fanfare {
+    effect ComplexEffect(
+        let draw = payCost(Draw).firstMovedCard.getValue(0~(t(Departed))1)
+        perform Token
+        performIf draw Draw
+    );
+}
+ability Spell name Token {
+    effect SummonToken(Ghost, Field, 1);
+}
+ability Spell name Draw {
+    cost (Discard, 1);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Mischievous Zombie (Evolved);
+id BP03-087;
+class Abyss;
+type Evolved Follower;
+trait Departed;
+rarity B;
+stats 3/3;
+
+text "On Evolve: Select a Ghost on your field and give it Bane.";
+
+ability OnEvolve {
+    effect GiveKeyword(Bane) to TargetPlayerCard n(Ghost);
+}
+
+// ------------------------------
+
+name Devilish Flautist;
+id BP03-088;
+class Abyss;
+type Follower;
+trait Departed;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "Rush.
+      [fanfare] Discard a random card: Give this follower [attack]+1 and Drain.";
+
+keyword Rush;
+ability Fanfare {
+    cost (DiscardRandom, 1);
+    effect Sequence(Atk, Drain);
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to Self;
+}
+ability Spell name Drawin {
+    effect GiveKeyword(Drain) to Self;
+}
+
+// ------------------------------
+
+name Infernal Orchestration;
+id BP03-089;
+class Abyss;
+type Spell;
+trait Demon;
+rarity B;
+cost 1;
+
+text "Deal 1 damage to your leader. The next time you put a follower onto your field this turn by playing it, give it [attack]+1/[defense]+1.";
+
+ability Spell {
+    effect Sequence(Damage, Effect);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Effect {
+    effect GiveAbilityEndOfTurn(AtkDef) to Leader;
+}
+ability OnOtherEnterField name AtkDef {
+    cost (OncePerTurn);
+    filter F;
+    effect GiveStat(AtkDef, 1) to TriggerCard;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Subaru Makabe;
+id BP03-LD04;
+class Abyss;
+type Leader;
+
+// ------------------------------
+
+name Gargantuan Ghost;
+id BP03-T06;
+class Abyss;
+type Follower;
+trait Departed / Token;
+cost 1;
+stats 3/3;
+
+text "Ward.
+      At the start of your main phase, banish this card.";
+
+keyword Ward;
+ability StartMainPhase {
+    effect Banish() to Self;
+}
