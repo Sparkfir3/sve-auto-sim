@@ -10,6 +10,8 @@ namespace SVESimulator
         [EnumField("Target", width = 100), Order(3)]
         public SVEProperties.SVEEffectTarget target;
 
+        protected virtual string debugName => "CemeteryToField";
+
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
@@ -20,7 +22,7 @@ namespace SVESimulator
                 CardObject targetCard = CardManager.Instance.GetCardByInstanceId(triggeringCardInstanceId);
                 if(!targetCard.CurrentZone.Runtime.name.Equals(SVEProperties.Zones.Cemetery))
                 {
-                    Debug.LogError($"Attempted to resolve CemeteryToField effect with mode TriggerCard on card with instance ID {triggeringCardInstanceId}, " +
+                    Debug.LogError($"Attempted to resolve {debugName} effect with mode TriggerCard on card with instance ID {triggeringCardInstanceId}, " +
                         $"but target card is not in the cemetery" +
                         $"\nTrigger card zone: {targetCard.CurrentZone.Runtime.name}" +
                         $"\nEffect source: instance ID {sourceCardInstanceId} in zone {sourceCardZone}");
@@ -41,7 +43,7 @@ namespace SVESimulator
             {
                 if(!player.LocalEvents.PlayCardToField(card, SVEProperties.Zones.Cemetery, payCost: false))
                 {
-                    Debug.LogError($"CemeteryToField Effect - Failed to play target card with instance ID {card.RuntimeCard.instanceId}");
+                    Debug.LogError($"{debugName} Effect - Failed to play target card with instance ID {card.RuntimeCard.instanceId}");
                     continue;
                 }
                 card.Interactable = player.isActivePlayer;
