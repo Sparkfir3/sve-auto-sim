@@ -366,6 +366,42 @@ namespace SVESimulator
             }
         }
 
+        public void MillDeckToBanished(bool targetLocalPlayer, int count, Action onComplete = null, bool onlyMoveObjects = false) =>
+            MillDeckToBanished(targetLocalPlayer, count, _ => onComplete?.Invoke(), onlyMoveObjects);
+        public void MillDeckToBanished(bool targetLocalPlayer, int count, Action<List<RuntimeCard>> onComplete, bool onlyMoveObjects = false)
+        {
+            StartCoroutine(MillCoroutine());
+            IEnumerator MillCoroutine() // Use delay to prevents cards from moving all at once
+            {
+                int movedCount = 0;
+                PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
+                List<RuntimeCard> cardList = new();
+                for(int i = 0; i < count; i++)
+                {
+                    RuntimeCard runtimeCard = targetZoneController.deckZone.Runtime.cards[0];
+                    CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+                    cardList.Add(runtimeCard);
+
+                    targetZoneController.SendCardToBanishedZone(cardObject, onComplete: () => { movedCount++; });
+                    yield return new WaitForSeconds(0.15f);
+
+                    if(onlyMoveObjects)
+                        continue;
+                    sveEffectSolver.BanishCard(targetLocalPlayer ? netIdentity : opponentInfo.netId, runtimeCard, SVEProperties.Zones.Deck);
+                    LocalBanishCardMessage msg = new()
+                    {
+                        playerNetId = netIdentity,
+                        cardInstanceId = runtimeCard.instanceId,
+                        isOpponentCard = !targetLocalPlayer,
+                        originZone = SVEProperties.Zones.Deck
+                    };
+                    NetworkClient.Send(msg);
+                }
+                yield return new WaitUntil(() => movedCount >= count);
+                onComplete?.Invoke(cardList);
+            }
+        }
+
         public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null) =>
             PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, fixedCost);
         public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
