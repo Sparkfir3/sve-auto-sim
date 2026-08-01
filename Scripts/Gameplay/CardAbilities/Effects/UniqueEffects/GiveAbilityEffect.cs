@@ -16,6 +16,8 @@ namespace SVESimulator
         [StringField("Effect Name", width = 200), Order(3)]
         public string effectName;
 
+        protected virtual SVEProperties.PassiveDuration duration => SVEProperties.PassiveDuration.WhileOnField;
+
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
@@ -26,7 +28,7 @@ namespace SVESimulator
                 {
                     GiveAbilityPassive effect = new()
                     {
-                        duration = SVEProperties.PassiveDuration.WhileOnField,
+                        duration = duration,
                         effectName = effectName
                     };
                     effect.GetAbility(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).id); // cache ability data by fetching
@@ -39,7 +41,7 @@ namespace SVESimulator
                         effect = effect,
                         affectedCards = new List<RuntimeCard>(),
                         target = SVEProperties.SVEEffectTarget.Self,
-                        duration = SVEProperties.PassiveDuration.WhileOnField
+                        duration = duration
                     };
                     SVEEffectPool.Instance.RegisterPassiveAbility(passive);
                 }

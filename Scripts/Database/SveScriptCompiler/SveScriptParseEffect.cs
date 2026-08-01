@@ -494,6 +494,7 @@ namespace SVESimulator.SveScript
             // Other Effects
             { "Evolve", new EffectParams("EvolveEffect")                                            },
             { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
+            { "GiveAbilityEndOfTurn", new EffectParams("GiveAbilityEndOfTurnEffect",                EffectParameterType.SingleEffect) },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
             { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
             { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },

@@ -91,17 +91,19 @@ namespace SVESimulator
         #region Add/Pool Effects
 
         public void TriggerPendingEffects<T>(GameState gameState, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
-            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate) where T : SveTrigger
+            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate,
+            List<Ability> abilityList = null) where T : SveTrigger
         {
             Card libraryCard = LibraryCardCache.GetCard(sourceCard.cardId, gameState.config);
-            TriggerPendingEffects(libraryCard, sourceCard, resolvingPlayer, predicate, executeConfirmationTiming, triggeringCard, triggeringCardZone, triggerState);
+            TriggerPendingEffects(libraryCard, sourceCard, resolvingPlayer, predicate, executeConfirmationTiming, triggeringCard, triggeringCardZone, triggerState, abilityList);
         }
 
         // might need to add delays in here
         public void TriggerPendingEffects<T>(Card libraryCard, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
-            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate) where T : SveTrigger
+            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate,
+            List<Ability> abilityList = null) where T : SveTrigger
         {
-            List<Ability> triggeredAbilities = GetCardTriggeredAbilities(libraryCard, sourceCard);
+            List<Ability> triggeredAbilities = abilityList ?? GetCardTriggeredAbilities(libraryCard, sourceCard);
             foreach(Ability ability in triggeredAbilities)
             {
                 TriggeredAbility triggeredAbility = ability as TriggeredAbility;
@@ -165,7 +167,22 @@ namespace SVESimulator
                 TriggerPendingEffects(gameState, card.RuntimeCard, resolvingPlayer, predicate, false, sourceCard, sourceZoneName);
             }
 
-            // Trigger floating effects
+            // Trigger floating effects (handled internally as abilities given to the player's leader)
+            List<RegisteredPassiveAbility> floatingAbilitiesPassives = GetFloatingAbilityPassives();
+            if(floatingAbilitiesPassives is { Count: > 0 })
+            {
+                for(int i = 0; i < floatingAbilitiesPassives.Count; i++)
+                {
+                    // TODO - more efficient find (probably need a generic GetRuntimeCardFromInstanceId function at some point)
+                    RuntimeCard floatingAbilitySourceCard = localPlayer.GetPlayerInfo().namedZones.First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId))
+                        .Value.cards.First(x => x.instanceId == floatingAbilitiesPassives[i].sourceCardInstanceId);
+                    Ability abilityToTrigger = (floatingAbilitiesPassives[i].effect as GiveAbilityPassive)?.GetAbility(floatingAbilitiesPassives[i].sourceCardInstanceId);
+                    TriggerPendingEffects(gameState, floatingAbilitySourceCard, resolvingPlayer, predicate, false,
+                        triggeringCard: sourceCard, triggeringCardZone: sourceZoneName, abilityList: new List<Ability>() { abilityToTrigger });
+                }
+            }
+
+            // Trigger floating effects - Obsolete
             EffectTriggerState stateToUpdate = TriggerStateTypeMap.GetValueOrDefault(typeof(T), EffectTriggerState.Immediate);
             if(stateToUpdate != EffectTriggerState.Immediate)
             {
@@ -699,6 +716,13 @@ namespace SVESimulator
                     abilityList.Add(ability);
             }
             return abilityList;
+        }
+
+        private List<RegisteredPassiveAbility> GetFloatingAbilityPassives()
+        {
+            // Floating effects are handled internally as abilities given to the player's leader
+            // Floating abilities (generally) come from spells that have abilities that active after they are played (i.e. start end phase)
+            return registeredPassives.Where(x => x.target == SVEProperties.SVEEffectTarget.Leader).ToList();
         }
 
         public bool TryGetAdditionalCardTraits(RuntimeCard card, out List<string> additionalTraits)
