@@ -76,6 +76,7 @@ namespace SVESimulator
             NetworkClient.RegisterHandler<OpponentServeAndRaceMessage>(OnOpponentServeAndRace);
             NetworkClient.RegisterHandler<OpponentRevealTopDeckMessage>(OnOpponentRevealTopDeck);
             NetworkClient.RegisterHandler<OpponentCloseRevealTopDeckMessage>(OnOpponentCloseRevealTopDeck);
+            NetworkClient.RegisterHandler<OpponentSelectedOppCardsForAbility>(OnOpponentSelectedOppCardsForAbility);
             NetworkClient.RegisterHandler<OpponentAdvanceRngMessage>(OnOpponentAdvanceRng);
             NetworkClient.RegisterHandler<OpponentTellOpponentPerformEffectMessage>(OnOpponentTellOpponentPerformEffect);
         }
@@ -145,6 +146,7 @@ namespace SVESimulator
 
             // Other
             NetworkClient.UnregisterHandler<OpponentServeAndRaceMessage>();
+            NetworkClient.UnregisterHandler<OpponentSelectedOppCardsForAbility>();
             NetworkClient.UnregisterHandler<OpponentAdvanceRngMessage>();
             NetworkClient.UnregisterHandler<OpponentTellOpponentPerformEffectMessage>();
 
@@ -557,6 +559,14 @@ namespace SVESimulator
             if(!player)
                 return;
             player.OpponentEvents.ServeAndRaceCard(msg);
+        }
+
+        private void OnOpponentSelectedOppCardsForAbility(OpponentSelectedOppCardsForAbility msg)
+        {
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
+            if(!player)
+                return;
+            player.OpponentEvents.OnCardsSelectedForAbility(msg);
         }
 
         private void OnOpponentAdvanceRng(OpponentAdvanceRngMessage msg)

@@ -40,6 +40,7 @@ namespace SVESimulator
             AllCards,
             TargetCard,
             TargetCardEx,
+            MultiTargetMode,
 
             AllPlayers,
             AllLeaders
@@ -114,6 +115,7 @@ namespace SVESimulator
             public const string ID_EN = "ID EN";
             public const string Class = "Class";
             public const string Name = "Name";
+            public const string NameAlts = "Alternate Names";
             public const string Text = "Text";
             public const string Trait = "Trait";
             public const string Rarity = "Rarity";

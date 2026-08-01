@@ -338,6 +338,27 @@ namespace SVESimulator
             return newKeyword;
         }
 
+        public static Cost CopyWithOverrideAmount(this Cost baseCost, int newAmount) => baseCost?.CopyWithOverrideAmount(newAmount.ToString());
+        public static Cost CopyWithOverrideAmount(this Cost baseCost, string newAmount)
+        {
+            Type type = baseCost.GetType();
+            Cost newCost = Activator.CreateInstance(type) as Cost;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "amount":
+                        fields[i].SetValue(newCost, newAmount);
+                        break;
+                    default:
+                        fields[i].SetValue(newCost, fields[i].GetValue(baseCost));
+                        break;
+                }
+            }
+            return newCost;
+        }
+
         public static Ability CopyWithRemoveCostOfType<T>(this Ability ability) where T : Cost
         {
             Type type = ability.GetType();

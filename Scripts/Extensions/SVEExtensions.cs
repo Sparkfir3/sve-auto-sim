@@ -65,8 +65,11 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        string[] traitList = value.Split(',');
-                        if(!libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').Any(x => traitList.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
+                        string[] traitListToMatch = value.Split(',');
+                        List<string> cardTraitList = libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').ToList();
+                        if(SVEEffectPool.Instance.TryGetAdditionalCardTraits(card, out List<string> additionalTraits))
+                            cardTraitList.AddRange(additionalTraits);
+                        if(!cardTraitList.Any(x => traitListToMatch.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.Keyword:
@@ -100,7 +103,22 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        if(!libraryCard.name.Replace("(Evolved)", "").Trim().Equals(value) ^ inverse)
+                        List<string> cardNames = new() { libraryCard.name.Replace("(Evolved)", "") };
+                        string extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                        if(!extraNames.IsNullOrWhiteSpace())
+                            cardNames.AddRange(extraNames.Split('\n').ToList());
+                        if(!cardNames.Any(x => x.Trim().Equals(value)) ^ inverse)
+                            return false;
+                        break;
+                    case CardFilterSetting.NameContains:
+                        libraryCard ??= LibraryCardCache.GetCard(card.cardId);
+                        if(libraryCard == null)
+                            throw new Exception($"Card not found in cache: {card.cardId}");
+                        cardNames = new List<string> { libraryCard.name };
+                        extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                        if(!extraNames.IsNullOrWhiteSpace())
+                            cardNames.AddRange(extraNames.Split('\n').ToList());
+                        if(!cardNames.Any(x => x.Contains(value)) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.NameXor:
@@ -404,7 +422,7 @@ namespace SVESimulator
         {
             Type type = trigger.GetType();
             SveTrigger newTrigger = Activator.CreateInstance(type) as SveTrigger;
-            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             for(int i = 0; i < fields.Length; i++)
             {
                 switch(fields[i].Name)
@@ -412,9 +430,11 @@ namespace SVESimulator
                     case "_costList":
                         List<Cost> newCostList = new(trigger.Costs);
                         for(int j = 0; j < newCostList.Count; j++)
-                            if(newCostList[i] is T)
-                                newCostList.RemoveAt(i--);
+                            if(newCostList[j] is T)
+                                newCostList.RemoveAt(j--);
                         fields[i].SetValue(newTrigger, newCostList);
+                        continue;
+                    case "cost":
                         continue;
                     default:
                         fields[i].SetValue(newTrigger, fields[i].GetValue(trigger));

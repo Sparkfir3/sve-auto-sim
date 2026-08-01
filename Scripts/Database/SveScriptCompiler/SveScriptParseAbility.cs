@@ -129,7 +129,9 @@ namespace SVESimulator.SveScript
 
                 int splitIndex = args[i].Trim().IndexOf(' ');
                 if(splitIndex == -1)
-                    throw new Exception();
+                    throw new Exception($"Received invalid ability argument: {args[i]}" +
+                        $"\nTrigger Type: {triggerType}" +
+                        $"\nFull argument list: {string.Join(" ", args)}");
                 switch(args[i].Trim().Split()[0])
                 {
                     case "cost":

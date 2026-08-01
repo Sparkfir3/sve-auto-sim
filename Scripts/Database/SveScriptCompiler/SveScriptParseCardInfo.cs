@@ -78,6 +78,8 @@ namespace SVESimulator.SveScript
 					enID += "EN";
 				cardInfo.properties.Add(new CardPropertyString(enID, "ID EN"));
 			}
+			if(!cardInfo.nameAlts.IsNullOrWhiteSpace())
+				cardInfo.properties.Add(new CardPropertyString(cardInfo.nameAlts, "Alternate Names"));
 			cardInfo.ccgID = CardIDConversion.CardIdToCCGKitId(cardInfo.cardID);
 
 			if(cardInfo.ccgCardTypeId == CardTypeIDs["evolved follower"] && !cardInfo.name.EndsWith("(Evolved)"))

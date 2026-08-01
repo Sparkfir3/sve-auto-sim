@@ -111,8 +111,11 @@ namespace SVESimulator
                     string sourceZone = (isCardLocalPlayer ? localPlayer : opponentPlayer).GetPlayerInfo().namedZones
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
 
-                    // Condition check
+                    // Condition & cost checks
                     if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, null as RuntimeCard))
+                        break;
+                    if(trigger.Costs is { Count: > 0 } &&
+                       trigger.Costs.All(x => x is SveCost { IsInternalCost: true } sveCost && !sveCost.CanPayCost(localPlayer, sourceCard, triggeredAbility.name)))
                         break;
 
                     // Add effect
@@ -677,6 +680,8 @@ namespace SVESimulator
             List<Ability> abilityList = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
             foreach(RegisteredPassiveAbility passive in registeredPassives)
             {
+                if(passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId)
+                    continue;
                 if(passive.effect is not GiveAbilityPassive giveAbilityPassive || !passive.filters.MatchesCard(card) /*|| !passive.MeetsCondition(player) TODO*/)
                     continue;
                 Ability ability = giveAbilityPassive.GetAbility(passive.sourceCardId);
@@ -684,6 +689,19 @@ namespace SVESimulator
                     abilityList.Add(ability);
             }
             return abilityList;
+        }
+
+        public bool TryGetAdditionalCardTraits(RuntimeCard card, out List<string> additionalTraits)
+        {
+            additionalTraits = null;
+            for(int i = 0; i < registeredPassives.Count; i++)
+            {
+                if(registeredPassives[i].effect is not AddTraitPassive addTraitPassive || !registeredPassives[i].affectedCards.Any(x => x.instanceId == card.instanceId))
+                    continue;
+                additionalTraits ??= new List<string>();
+                additionalTraits.Add(addTraitPassive.trait);
+            }
+            return additionalTraits != null;
         }
 
         #endregion

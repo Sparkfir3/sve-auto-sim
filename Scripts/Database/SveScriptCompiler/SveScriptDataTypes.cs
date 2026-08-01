@@ -32,6 +32,7 @@ namespace SVESimulator.SveScript
             [JsonIgnore] public string text;
             [JsonIgnore] public string cardID;
             [JsonIgnore] public string cardID_EN;
+            [JsonIgnore] public string nameAlts;
 
             // Card Stats
             [JsonIgnore] public int attack = -1;

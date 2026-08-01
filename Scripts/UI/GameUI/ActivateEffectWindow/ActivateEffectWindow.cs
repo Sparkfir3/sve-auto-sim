@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sparkfire.Utility;
 using CCGKit;
+using SVESimulator.CardTextData;
 
 namespace SVESimulator
 {
@@ -72,7 +73,7 @@ namespace SVESimulator
                 button.gameObject.SetActive(true);
                 button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = canUseAct && player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
-                    && (ability.effect is not EvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
+                    && (ability.effect is not IEvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
                 if(onlyQuicks)
                     button.Interactable &= ability.IsQuickAbility();
                 button.OnClickEffect.AddListener(() =>
@@ -87,6 +88,9 @@ namespace SVESimulator
                     });
                     Close();
                 });
+
+                if(!onlyQuicks && ability.effect is IEvolveEffect)
+                    AddEvolveWithEPFromAbility(player, card, ability, ref i);
             }
 
             // Stack
@@ -117,7 +121,7 @@ namespace SVESimulator
             // Evolve/Serve
             if(!onlyQuicks)
             {
-                AddEvolveEffects(player, card, ref i);
+                AddEvolveEffectsFromEvolveCost(player, card, ref i);
                 AddServeEffects(player, card, ref i);
             }
 
@@ -147,7 +151,53 @@ namespace SVESimulator
 
         #region Generic Acts
 
-        private void AddEvolveEffects(PlayerController player, CardObject card, ref int buttonsIndex)
+        private void AddEvolveWithEPFromAbility(PlayerController player, CardObject card, ActivatedAbility ability, ref int buttonsIndex)
+        {
+            // Should add check
+            if(!player.LocalEvents.HasEvolvePoint())
+                return;
+            int playPointCostAmount = SVEFormulaParser.ParseValue((ability.costs.FirstOrDefault(x => x is PlayPointCost) as PlayPointCost)?.amount, player, card);
+            if(playPointCostAmount <= 0)
+                return;
+
+            // Cost check
+            List<Cost> costs = new(ability.costs);
+            for(int i = 0; i < costs.Count; i++)
+            {
+                if(costs[i] is not PlayPointCost playPointCost)
+                    continue;
+                costs[i] = playPointCost.CopyWithOverrideAmount(playPointCostAmount - 1);
+                costs.Insert(++i, new EvolvePointCost() { amount = "1" });
+            }
+            if(!player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, ability.name))
+                return;
+
+            // Get formatted text
+            string text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
+            text = text.Replace(TextFormatting.FormatCardText($"[cost{playPointCostAmount:D2}]"),
+                TextFormatting.FormatCardText($"[cost{(playPointCostAmount - 1):D2}] + {evolvePointFormatting}"));
+
+            // Create button
+            buttonsIndex++;
+            MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+            button.gameObject.SetActive(true);
+            button.Text = text;
+            button.Interactable = true;
+            button.OnClickEffect.AddListener(() =>
+            {
+                player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
+                player.LocalEvents.PayAbilityCosts(card, costs, ability.name, () =>
+                {
+                    SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
+                    {
+                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                    });
+                });
+                Close();
+            });
+        }
+
+        private void AddEvolveEffectsFromEvolveCost(PlayerController player, CardObject card, ref int buttonsIndex)
         {
             // Evolve without evolve point
             int evolveCost = card.GetEvolveCost();

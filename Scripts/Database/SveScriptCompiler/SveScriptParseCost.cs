@@ -71,6 +71,11 @@ namespace SVESimulator.SveScript
                         newCost.Add("amount", pointCost);
                         newCost.Add("$type", "SVESimulator.PlayPointCost");
                         break;
+                    case "EP":
+                        string evolvePointCost = string.Join("", args[1..]).Trim();
+                        newCost.Add("amount", evolvePointCost);
+                        newCost.Add("$type", "SVESimulator.EvolvePointCost");
+                        break;
 
                     // Move Card Costs
                     case "BanishFromCemetery":

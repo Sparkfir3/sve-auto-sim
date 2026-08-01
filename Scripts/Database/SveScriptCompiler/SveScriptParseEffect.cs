@@ -389,6 +389,7 @@ namespace SVESimulator.SveScript
         {
             // Movement - Deck to Zone
             { "DrawThenDamage", new EffectParams("DrawThenDamageEffect",                    EffectParameterType.Amount, EffectParameterType.Amount2) },
+            { "DeckToField", new EffectParams("DeckToFieldEffect",                          true, false) },
             { "Draw", new EffectParams("DrawCardEffect",                                    true, false, EffectParameterType.Amount) },
             { "DrawCard", new EffectParams("DrawCardEffect",                                true, false, EffectParameterType.Amount) },
             { "Mill", new EffectParams("MillDeckEffect",                                    false, false, EffectParameterType.Amount) },
@@ -475,6 +476,7 @@ namespace SVESimulator.SveScript
             { "DestroyAndControllerPerformEffect", new EffectParams("DestroyAndControllerPerformEffect",        EffectParameterType.SingleEffect) },
             { "OpponentPerformEffect", new EffectParams("OpponentPerformEffect",                                EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("PerformAsEachTargetEffect",                              EffectParameterType.SingleEffect) },
+            { "OrderedTargetForSequence", new EffectParams("OrderedTargetForEffectSequence",                    EffectParameterType.ListOfEffects) },
             { "PerformWithTargetAmount", new EffectParams("PerformWithTargetAmountEffect",                      EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "TargetForEffectSequence", new EffectParams("TargetForEffectSequence",                            EffectParameterType.ListOfEffects) },
             { "TargetForSequence", new EffectParams("TargetForEffectSequence",                                  EffectParameterType.ListOfEffects) },
@@ -490,12 +492,14 @@ namespace SVESimulator.SveScript
 
             // Other Effects
             { "Evolve", new EffectParams("EvolveEffect")                                            },
+            { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
             { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
             { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },
             { "CheckTop", new EffectParams("CheckTopDeckEffect",                                    false, false, EffectParameterType.CheckCardActions) },
             { "Complex", new EffectParams("ComplexEffect",                                          false, false, EffectParameterType.Function) },
             { "ComplexEffect", new EffectParams("ComplexEffect",                                    false, false, EffectParameterType.Function) },
+            { "EvolveSelectTarget", new EffectParams("EvolveSelectTargetEffect",                    false, false, EffectParameterType.Filter) },
             { "ExtraTurn", new EffectParams("ExtraTurnEffect",                                      false, false) },
             { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",            false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
             { "MinusCostNextSpellEndOfTurn", new EffectParams("MinusCostNextSpellEndOfTurnEffect",  false, false, EffectParameterType.Amount) },

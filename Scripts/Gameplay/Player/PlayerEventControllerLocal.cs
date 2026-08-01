@@ -194,10 +194,18 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void FlipTopDeckToFaceUp(Action<CardObject> onComplete)
+        public void FlipTopDeckToFaceUp(CardObject card = null, Action<CardObject> onComplete = null)
         {
-            RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
-            CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            RuntimeCard runtimeCard;
+            if(!card)
+            {
+                runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+                card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            }
+            else
+            {
+                runtimeCard = card.RuntimeCard;
+            }
             localZoneController.FlipCardToFaceUp(card, onComplete: () => onComplete?.Invoke(card));
 
             LocalFlipTopDeckMessage msg = new()
@@ -209,7 +217,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void FlipTopDeckToFaceDown(CardObject card = null)
+        public void FlipTopDeckToFaceDown(CardObject card = null, Action onComplete = null)
         {
             if(!card)
             {
@@ -218,7 +226,7 @@ namespace SVESimulator
             }
             if(!card)
                 return;
-            localZoneController.FlipCardToFaceDown(card);
+            localZoneController.FlipCardToFaceDown(card, onComplete: onComplete);
 
             LocalFlipTopDeckMessage msg = new()
             {
@@ -415,7 +423,7 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true, bool useEvolveForTurn = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true)
         {
             // Condition checks
             if(playerController.EvolvedThisTurn && useEvolveForTurn)
@@ -432,7 +440,8 @@ namespace SVESimulator
                 Debug.LogError($"Failed to find a corresponding slot for card {baseCard.name} on the player's field!");
                 return false;
             }
-            CardObject evolvedCard = GetEvolvedCardOf(baseCard.RuntimeCard);
+            if(!evolvedCard)
+                evolvedCard = GetEvolvedCardOf(baseCard.RuntimeCard);
             if(!evolvedCard)
                 return false;
 
@@ -1298,6 +1307,21 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        public void OnCardsSelectedForAbility(List<CardObject> cards)
+        {
+            sveEffectSolver.OnCardsSelectedForAbility(playerInfo, cards.Where(x => x.RuntimeCard.ownerPlayer.netId.isLocalPlayer).Select(x => x.RuntimeCard).ToList());
+            List<RuntimeCard> opponentCards = cards.Where(x => !x.RuntimeCard.ownerPlayer.netId.isLocalPlayer).Select(x => x.RuntimeCard).ToList();
+            if(opponentCards is not { Count: > 0 })
+                return;
+            LocalSelectedOppCardsForAbility msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceIds = opponentCards.Select(x => x.instanceId).ToArray()
+            };
+            // TODO - Temporary disable, currently crashes the game
+            // NetworkClient.Send(msg);
+        }
 
         public int GetRandomNumber(int min, int max)
         {

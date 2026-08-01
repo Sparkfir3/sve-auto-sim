@@ -756,6 +756,9 @@ namespace SVESimulator
                     case PlayPointCost ppCost:
                         player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= SVEFormulaParser.ParseValue(ppCost.amount);
                         break;
+                    case EvolvePointCost epCost:
+                        player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= SVEFormulaParser.ParseValue(epCost.amount);
+                        break;
                     case EngageSelfCost:
                         EngageCard(card);
                         break;
@@ -795,6 +798,15 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        public void OnCardsSelectedForAbility(PlayerInfo player, List<RuntimeCard> cards, bool executeConfirmationTiming = true)
+        {
+            if(isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                foreach(RuntimeCard card in cards)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnSelectedForAbilityTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: executeConfirmationTiming);
+            }
+        }
 
         public int GetRandomNumber(int min, int max) => rng.Next(min, max);
 

@@ -5,7 +5,7 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class GiveTraitEffect : SveEffect
+    public class GiveAbilityEffect : SveEffect
     {
         [EnumField("Target", width = 200), Order(1)]
         public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
@@ -13,8 +13,8 @@ namespace SVESimulator
         [StringField("Target Filter", width = 100), Order(2)]
         public string filter;
 
-        [StringField("Trait", width = 200), Order(3)]
-        public string trait;
+        [StringField("Effect Name", width = 200), Order(3)]
+        public string effectName;
 
         // ------------------------------
 
@@ -24,16 +24,19 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
+                    GiveAbilityPassive effect = new()
+                    {
+                        duration = SVEProperties.PassiveDuration.WhileOnField,
+                        effectName = effectName
+                    };
+                    effect.GetAbility(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).id); // cache ability data by fetching
+
                     RegisteredPassiveAbility passive = new()
                     {
                         sourceCardInstanceId = card.RuntimeCard.instanceId,
                         targetsFormula = null,
                         filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
-                        effect = new AddTraitPassive
-                        {
-                            duration = SVEProperties.PassiveDuration.WhileOnField,
-                            trait = trait
-                        },
+                        effect = effect,
                         affectedCards = new List<RuntimeCard>(),
                         target = SVEProperties.SVEEffectTarget.Self,
                         duration = SVEProperties.PassiveDuration.WhileOnField

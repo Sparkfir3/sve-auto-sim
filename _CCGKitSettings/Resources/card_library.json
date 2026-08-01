@@ -40674,6 +40674,2064 @@
         "id": 100031054
       },
       {
+        "cardTypeId": 0,
+        "name": "Jabberwock",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Put another follower from your field into its owner's cemetery: Reveal the top card of your deck. Repeat until you reveal a follower that costs more than the follower you put into the cemetery and put it onto your field. Shuffle the remaining cards and put them on the bottom of your deck.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-055",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 7,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 7,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 7,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "function": "let cost = payCost(Effect).firstMovedCard.getValue(P)\n        let card = revealTopDeckUntilValue(-1 ~(F) [P > cost])\n        performCostless SendToField { trigger = card }",
+              "$type": "SVESimulator.ComplexEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"FX\",\r\n    \"$type\": \"SVESimulator.SendToCemeteryCost\"\r\n  }\r\n]",
+              "condition": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "SendToField",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.DeckToFieldEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031055
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Laevateinn Dragon",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower into an evolved follower with \"Laevateinn Dragon\" in its name.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-056",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "filter": "nE(Laevateinn Dragon)",
+              "$type": "SVESimulator.EvolveSelectTargetEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100031056
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Laevateinn Dragon (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Assail.\nOn Evolve: Summon a Draconic Weapon token. Recover 2 play points.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-057",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 6,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 3
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Token",
+              "effectName2": "PlayPoints",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Draconic Weapon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "PlayPoints",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "PlayPoint",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031057
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Laevateinn Dragon, Attack Form (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Strike: Select an enemy follower on the field. Deal 4 damage to it and 3 damage to its leader.\nThis follower's name is also Laevateinn Dragon.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-058",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Laevateinn Dragon",
+            "name": "Alternate Names",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 7,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "cost": null,
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "effectName1": "Target",
+              "effectName2": "Leader",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Target",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": null,
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leader",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031058
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Red Ragewyrm",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act][engage]: Give this follower [attack]+5. If Overflow is active for you, give [attack]+10 instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-059",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "5o10",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100031059
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Draconir, Knuckle Dragon",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] Summon a Draconic Weapon token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-060",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Draconic Weapon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031060
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Draconir, Knuckle Dragon (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Select an enemy follower on the field and deal it 2 damage. If there is another Armed follower on your field, deal 4 damage instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-061",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "2?(f(FXt(Armed)))4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031061
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Tilting at Windmills",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Fable",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act][cost03], [engage]: You may put a follower from your hand onto your field and give it \"At the start of your end phase, destroy this card.\"",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-062",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "3",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "amount": "1",
+              "filter": "F",
+              "effectName1": "Effect",
+              "$type": "SVESimulator.HandToFieldAndTargetEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Effect",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": null,
+              "effectName": "Destroy",
+              "$type": "SVESimulator.GiveAbilityEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.GivenAbilityAsCost\"\r\n  }\r\n]",
+              "condition": null,
+              "$type": "SVESimulator.SveStartEndPhaseTrigger"
+            },
+            "name": "Destroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031062
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Master of Draconic Arts",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonheart",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Assail. Ward.\n[fanfare] If Overflow is active for you, give this follower [attack]+4 and Rush.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-063",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 3
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "o",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Atk",
+              "effectName2": "Rush",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Atk",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "4",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Rush",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "keywordType": 0,
+              "keywordValue": 2,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031063
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Hammer Dragonewt",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt / Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.\n[fanfare] Look at the top 4 cards of your deck. You may reveal an Armed spell from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-064",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "4",
+              "checkAction1": "Hand",
+              "checkFilter1": "St(Armed)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031064
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Hammer Dragonewt (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt / Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Deal 2 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-065",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031065
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Draconic Smash",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt / Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[quick]\nSelect an enemy follower on the field. Deal it 3 damage and summon a Draconic Weapon token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-066",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 8
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Damage",
+              "effectName2": "Token",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Draconic Weapon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031066
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Elder Tortoise",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Gain 1 Evolution Point. If Overflow is active for you, give this follower [attack]+2/[defense]+2.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-067",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "EP",
+              "effectName2": "AtkDef",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "EP",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "EvolvePoint",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "AttackDefense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031067
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Trinity Dragon",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Intimidate.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-068",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 4
+          }
+        ],
+        "abilities": [],
+        "id": 100031068
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Dragon Summoner",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonheart / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve][cost01]: Evolve this follower.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-069",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [],
+        "id": 100031069
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Dragon Summoner (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonheart / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve: Look at the top 3 cards of your deck. You may reveal a [dragoncraft] follower from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-070",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "checkAction1": "Hand",
+              "checkFilter1": "Fc(Dragon)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031070
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Lance Lizard",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If Overflow is active for you, summon a Draconic Weapon token.\nOnce on each of your turns, when this follower is selected for an ability, give it [attack]+1 and deal 1 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-071",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "o",
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Draconic Weapon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "t",
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OncePerTurnCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnSelectedForAbilityTrigger"
+            },
+            "name": "OnSelectedForAbility",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Atk",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Atk",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "filter": null,
+              "targetStats": "Attack",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "filter": null,
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031071
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Armor Burst",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin / Armed",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select an Armed follower on your field and an enemy follower on the field. Put the first follower into its owner's EX area, deal 3 damage to the second, and summon a Draconic Weapon token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-072",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(Ft(Armed)) & p(#F)",
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Target",
+              "effectName2": "Token",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Target",
+            "type": "Triggered",
+            "effect": {
+              "target": "MultiTargetMode",
+              "filter": "(1, TargetPlayerCard, Ft(Armed)), (1, TargetOpponentCard, F)",
+              "effectName1": "ExArea",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.OrderedTargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "ExArea",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": null,
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": null,
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Draconic Weapon",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100031072
+      },
+      {
         "cardTypeId": 5,
         "name": "Itsuki Mitsutagawa",
         "costs": [],
@@ -40714,6 +42772,27 @@
         "keywords": [],
         "abilities": [],
         "id": 100032002
+      },
+      {
+        "cardTypeId": 5,
+        "name": "Light Tenryu",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP03-LD03",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [],
+        "id": 100032003
       }
     ]
   },
