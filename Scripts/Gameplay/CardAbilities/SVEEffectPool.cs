@@ -141,6 +141,8 @@ namespace SVESimulator
                 CmdExecuteConfirmationTiming();
         }
 
+        // -----
+
         public void TriggerPendingEffectsForOtherCardsInZone<T>(GameState gameState, RuntimeCard sourceCard, RuntimeZone targetZone,
             PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming) where T : SveTrigger
         {
@@ -176,7 +178,11 @@ namespace SVESimulator
                 CmdExecuteConfirmationTiming();
         }
 
-        // ---
+        #endregion
+
+        // ------------------------------
+
+        #region Register Passives
 
         public void RegisterPassiveAbilities(GameState gameState, RuntimeCard sourceCard)
         {
@@ -233,7 +239,11 @@ namespace SVESimulator
             registeredPassives.Remove(passive);
         }
 
-        // ---
+        #endregion
+
+        // ------------------------------
+
+        #region Trigger Spell
 
         public void TriggerSpellImmediate(GameState gameState, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Action onComplete)
         {
@@ -677,7 +687,7 @@ namespace SVESimulator
 
         private List<Ability> GetCardTriggeredAbilities(Card libraryCard, RuntimeCard card)
         {
-            List<Ability> abilityList = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
+            List<Ability> abilityList = libraryCard?.abilities?.FindAll(x => x is TriggeredAbility) ?? new();
             foreach(RegisteredPassiveAbility passive in registeredPassives)
             {
                 if(passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId)
