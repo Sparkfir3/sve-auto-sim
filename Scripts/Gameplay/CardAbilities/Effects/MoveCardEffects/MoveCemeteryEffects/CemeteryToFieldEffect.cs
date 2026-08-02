@@ -20,6 +20,13 @@ namespace SVESimulator
             if(target == SVEProperties.SVEEffectTarget.TriggerCard)
             {
                 CardObject targetCard = CardManager.Instance.GetCardByInstanceId(triggeringCardInstanceId);
+                if(targetCard.IsEvolvedType())
+                {
+                    if(targetCard.GetAttachedCards().Count == 0)
+                        Debug.LogError($"Attempted to resolve {debugName} on evolved card with instance ID {triggeringCardInstanceId}, but no attached card was found.");
+                    else
+                        targetCard = targetCard.GetAttachedCards()[0];
+                }
                 if(!targetCard.CurrentZone.Runtime.name.Equals(SVEProperties.Zones.Cemetery))
                 {
                     Debug.LogError($"Attempted to resolve {debugName} effect with mode TriggerCard on card with instance ID {triggeringCardInstanceId}, " +

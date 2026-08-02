@@ -15,6 +15,8 @@ namespace SVESimulator
         {
             foreach(CardObject card in selectedCards)
             {
+                if(!player.ZoneController.exAreaZone.HasOpenSlot())
+                    break;
                 player.LocalEvents.SendToExArea(card, SVEProperties.Zones.Cemetery);
                 card.Interactable = player.isActivePlayer;
             }
