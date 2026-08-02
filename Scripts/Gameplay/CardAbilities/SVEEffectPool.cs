@@ -22,7 +22,6 @@ namespace SVESimulator
 
         public static SVEEffectPool Instance;
 
-        public enum EffectTriggerState { Immediate, StartEndPhase }
         private enum ConfirmationTimingState { Idle, ResolvingTurnPlayer, FinishedTurnPlayer,
             ResolvingNonTurnPlayer, FinishedNonTurnPlayer }
 
@@ -50,11 +49,6 @@ namespace SVESimulator
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
         public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
-
-        private Dictionary<System.Type, EffectTriggerState> TriggerStateTypeMap = new()
-        {
-            { typeof(SveStartEndPhaseTrigger), EffectTriggerState.StartEndPhase }
-        };
 
         #endregion
 
@@ -91,17 +85,15 @@ namespace SVESimulator
         #region Add/Pool Effects
 
         public void TriggerPendingEffects<T>(GameState gameState, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
-            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate,
-            List<Ability> abilityList = null) where T : SveTrigger
+            RuntimeCard triggeringCard = null, string triggeringCardZone = null, List<Ability> abilityList = null) where T : SveTrigger
         {
             Card libraryCard = LibraryCardCache.GetCard(sourceCard.cardId, gameState.config);
-            TriggerPendingEffects(libraryCard, sourceCard, resolvingPlayer, predicate, executeConfirmationTiming, triggeringCard, triggeringCardZone, triggerState, abilityList);
+            TriggerPendingEffects(libraryCard, sourceCard, resolvingPlayer, predicate, executeConfirmationTiming, triggeringCard, triggeringCardZone, abilityList);
         }
 
         // might need to add delays in here
         public void TriggerPendingEffects<T>(Card libraryCard, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
-            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate,
-            List<Ability> abilityList = null) where T : SveTrigger
+            RuntimeCard triggeringCard = null, string triggeringCardZone = null, List<Ability> abilityList = null) where T : SveTrigger
         {
             List<Ability> triggeredAbilities = abilityList ?? GetCardTriggeredAbilities(libraryCard, sourceCard);
             foreach(Ability ability in triggeredAbilities)
@@ -132,8 +124,7 @@ namespace SVESimulator
                         costs = trigger.Costs,
                         cardId = libraryCard.id,
                         abilityName = triggeredAbility.name,
-                        condition = trigger.condition,
-                        triggerState = triggerState
+                        condition = trigger.condition
                     };
                     pendingEffects.Add(effect);
                 }
@@ -180,14 +171,6 @@ namespace SVESimulator
                     TriggerPendingEffects(gameState, floatingAbilitySourceCard, resolvingPlayer, predicate, false,
                         triggeringCard: sourceCard, triggeringCardZone: sourceZoneName, abilityList: new List<Ability>() { abilityToTrigger });
                 }
-            }
-
-            // Trigger floating effects - Obsolete
-            EffectTriggerState stateToUpdate = TriggerStateTypeMap.GetValueOrDefault(typeof(T), EffectTriggerState.Immediate);
-            if(stateToUpdate != EffectTriggerState.Immediate)
-            {
-                foreach(SVEPendingEffect pendingEffect in pendingEffects.Where(x => x.triggerState == stateToUpdate))
-                    pendingEffect.triggerState = EffectTriggerState.Immediate;
             }
 
             // Confirmation timing
@@ -329,8 +312,7 @@ namespace SVESimulator
             IEnumerator ResolveOverTime()
             {
                 // Skip prompt if all effects fail condition
-                if(pendingEffects.Where(x => x.triggerState == EffectTriggerState.Immediate)
-                   .All(x =>
+                if(pendingEffects.All(x =>
                    {
                        if(x.condition.IsNullOrWhiteSpace())
                            return false;
@@ -342,27 +324,23 @@ namespace SVESimulator
                 }
 
                 // Resolve single effect
-                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
+                while(pendingEffects.Count == 1)
                 {
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
-                        if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
-                            continue;
                         yield return ResolveEffectAtIndex(i);
                         break;
                     }
                 }
 
                 // Resolve multiple effects (choose from list)
-                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) > 0)
+                while(pendingEffects.Count > 0)
                 {
                     yield return null;
                     bool effectDone = false;
                     List<MultipleChoiceWindow.MultipleChoiceEntryData> multipleChoiceEntries = new();
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
-                        if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
-                            continue;
                         int index = i;
                         multipleChoiceEntries.Add(pendingEffects[i].AsMultipleChoiceEntry(() =>
                         {
@@ -377,7 +355,7 @@ namespace SVESimulator
                 // Complete
                 exit:
                 yield return null;
-                pendingEffects = pendingEffects.Where(x => x.triggerState != EffectTriggerState.Immediate).ToList();
+                pendingEffects.Clear();
                 CmdSetConfirmationTimingState(isTurnPlayer ? ConfirmationTimingState.FinishedTurnPlayer : ConfirmationTimingState.FinishedNonTurnPlayer);
             }
 
@@ -757,7 +735,6 @@ namespace SVESimulator
         public int cardId;
         public string abilityName;
         public string condition;
-        public SVEEffectPool.EffectTriggerState triggerState;
 
         public MultipleChoiceWindow.MultipleChoiceEntryData AsMultipleChoiceEntry(Action onSelect)
         {

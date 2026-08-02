@@ -5986,11 +5986,44 @@
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Fill EX",
+              "effectName2": "GiveBanish",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
             "name": "Fill EX",
             "type": "Triggered",
             "effect": {
               "amount": "5-x()",
               "$type": "SVESimulator.TopDeckToExEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "GiveBanish",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "filter": null,
+              "effectName": "Banish",
+              "$type": "SVESimulator.GiveAbilityEndOfTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"

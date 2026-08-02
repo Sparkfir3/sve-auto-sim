@@ -438,8 +438,6 @@ namespace SVESimulator
 
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveStartEndPhaseTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false,
-                    triggerState: SVEEffectPool.EffectTriggerState.StartEndPhase);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlaySpellTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
 

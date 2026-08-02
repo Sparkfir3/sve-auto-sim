@@ -26,10 +26,6 @@ namespace SVESimulator
 
             Card libraryCard = LibraryCardCache.GetCard(sourceCardId);
             ability = libraryCard.abilities.FirstOrDefault(x => x.name.Equals(effectName))?.CopyWithRemoveCostOfType<GivenAbilityAsCost>();
-            if((ability as TriggeredAbility)?.trigger is SveTrigger sveTrigger)
-            {
-                // TODO - remove internal cost from trigger
-            }
             if(ability is ActivatedAbility)
                 Debug.LogError($"{nameof(GiveAbilityPassive)} does not currently support giving Act abilities.\nTarget effect name: {effectName}");
             return ability;
