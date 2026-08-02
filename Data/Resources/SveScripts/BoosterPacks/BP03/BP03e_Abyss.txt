@@ -296,16 +296,16 @@ text "[evolve][cost02]: Evolve this follower.
 evolve 2;
 ability Fanfare {
     effect ComplexEffect(
-        let draw = payCost(Draw).firstMovedCard.getValue(0~(t(Departed))1)
-        perform Token
-        performIf draw Draw
+        let draw = payCost(Token).firstMovedCard.getValue(0~(t(Departed))1)
+        performCostless Token
+        performIf draw then Draw
     );
 }
 ability Spell name Token {
+    cost (Discard, 1);
     effect SummonToken(Ghost, Field, 1);
 }
 ability Spell name Draw {
-    cost (Discard, 1);
     effect Draw(1);
 }
 
@@ -347,7 +347,7 @@ ability Fanfare {
 ability Spell name Atk {
     effect GiveStat(Atk, 1) to Self;
 }
-ability Spell name Drawin {
+ability Spell name Drain {
     effect GiveKeyword(Drain) to Self;
 }
 
@@ -390,7 +390,7 @@ type Leader;
 // ------------------------------
 
 name Gargantuan Ghost;
-id BP03-T06;
+id BP03-T01;
 class Abyss;
 type Follower;
 trait Departed / Token;

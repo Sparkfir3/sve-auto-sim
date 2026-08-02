@@ -12,7 +12,7 @@
       },
       {
         "key": "Discard",
-        "body": "Discard a card."
+        "body": "Each opponent discards a card."
       },
       {
         "key": "LastWords",
@@ -221,6 +221,11 @@
         "trigger": "[fanfare]",
         "cost": "Discard a card",
         "body": "Summon a Ghost token. If you discarded a Departed card, draw a card."
+      },
+      {
+        "key": "Token",
+        "cost": "Discard a card",
+        "body": "Summon a Ghost token. If you discarded a Departed card, draw a card."
       }
     ]
   },
@@ -270,7 +275,7 @@
     "name": "Subaru Makabe"
   },
   {
-    "id": "BP03-T06EN",
+    "id": "BP03-T01EN",
     "name": "Gargantuan Ghost",
     "trait": "Departed / Token",
     "cardText": "Ward.\nAt the start of your main phase, banish this card.",
