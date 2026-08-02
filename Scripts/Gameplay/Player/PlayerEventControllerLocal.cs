@@ -375,12 +375,12 @@ namespace SVESimulator
             {
                 int movedCount = 0;
                 PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
-                List<RuntimeCard> cardList = new();
-                for(int i = 0; i < count; i++)
+                List<RuntimeCard> cardList = targetZoneController.deckZone.Runtime.cards
+                    .GetRange(0, Mathf.Min(count, targetZoneController.deckZone.Runtime.cards.Count));
+                for(int i = 0; i < cardList.Count; i++)
                 {
-                    RuntimeCard runtimeCard = targetZoneController.deckZone.Runtime.cards[0];
+                    RuntimeCard runtimeCard = cardList[i];
                     CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
-                    cardList.Add(runtimeCard);
 
                     targetZoneController.SendCardToBanishedZone(cardObject, onComplete: () => { movedCount++; });
                     yield return new WaitForSeconds(0.15f);

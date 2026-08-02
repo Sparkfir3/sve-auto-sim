@@ -42831,7 +42831,7 @@
             "effect": {
               "target": "Self",
               "filter": null,
-              "effectName": "Discard",
+              "effectName": "OppDiscard",
               "$type": "SVESimulator.OpponentPerformEffect"
             },
             "target": null,
@@ -42843,7 +42843,7 @@
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Discard",
+            "name": "OppDiscard",
             "type": "Triggered",
             "effect": {
               "amount": "1",
@@ -42863,8 +42863,24 @@
             "type": "Triggered",
             "effect": {
               "effectName1": "CemeteryToField",
-              "effectName2": "Discard",
+              "effectName2": "SelfDiscard",
               "$type": "SVESimulator.EffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "SelfDiscard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": null,
+              "$type": "SVESimulator.DiscardEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"

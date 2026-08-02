@@ -13,14 +13,17 @@ text "Rush.
 
 keyword Rush;
 ability Strike {
-    effect OpponentPerformEffect(Discard);
+    effect OpponentPerformEffect(OppDiscard);
 }
-ability Spell name Discard {
+ability Spell name OppDiscard {
     effect Discard(1);
 }
 ability LastWords {
     cost (BanishTopDeck, 10);
-    effect Sequence(CemeteryToField, Discard);
+    effect Sequence(CemeteryToField, SelfDiscard);
+}
+ability Spell name SelfDiscard {
+    effect Discard(1);
 }
 ability Spell name CemeteryToField {
     effect CemeteryToField() to TriggerCard;

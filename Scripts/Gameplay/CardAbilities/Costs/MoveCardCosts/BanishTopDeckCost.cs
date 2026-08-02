@@ -32,7 +32,7 @@ namespace SVESimulator
                 foreach(RuntimeCard movedCard in movedCards)
                     cardsToMove.Add(new MoveCardToZoneData(movedCard.instanceId, SVEProperties.Zones.Deck, SVEProperties.Zones.Banished));
                 waiting = false;
-            }, onlyMoveObjects: false);
+            }, onlyMoveObjects: true);
             yield return new WaitUntil(() => !waiting);
         }
     }

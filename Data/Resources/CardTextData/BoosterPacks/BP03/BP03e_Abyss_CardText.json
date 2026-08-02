@@ -11,13 +11,17 @@
         "body": "Each opponent discards a card."
       },
       {
-        "key": "Discard",
+        "key": "OppDiscard",
         "body": "Each opponent discards a card."
       },
       {
         "key": "LastWords",
         "trigger": "[lastwords]",
         "cost": "Banish the top 10 cards of your deck",
+        "body": "Put this follower onto its owner's field. Discard a card."
+      },
+      {
+        "key": "SelfDiscard",
         "body": "Put this follower onto its owner's field. Discard a card."
       }
     ]
