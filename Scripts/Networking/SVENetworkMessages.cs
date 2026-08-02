@@ -639,6 +639,7 @@ namespace SVESimulator
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
         public RemoveCounterData[] countersToRemove;
+        public NetCard[] additionalNetCardData; // extra data needed to initialize cards from non-public zones like the deck
     }
 
     public readonly struct MoveCardToZoneData

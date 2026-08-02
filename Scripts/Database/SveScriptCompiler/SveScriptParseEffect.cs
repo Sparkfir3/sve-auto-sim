@@ -431,6 +431,7 @@ namespace SVESimulator.SveScript
 
             // Movement - Cemetery to Zone
             { "CemeteryToDeckAndShuffle", new EffectParams("CemeteryToDeckAndShuffleEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "CemeteryToExArea", new EffectParams("CemeteryToExAreaEffect",                            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToField", new EffectParams("CemeteryToFieldEffect",                              true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("CemeteryToFieldAndTargetEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "PlayCardFromCemeterySetCost", new EffectParams("PlayCardFromCemeterySetCostEffect",      false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
@@ -493,6 +494,7 @@ namespace SVESimulator.SveScript
             // Other Effects
             { "Evolve", new EffectParams("EvolveEffect")                                            },
             { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
+            { "GiveAbilityEndOfTurn", new EffectParams("GiveAbilityEndOfTurnEffect",                EffectParameterType.SingleEffect) },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
             { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
             { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },

@@ -428,7 +428,7 @@ namespace SVESimulator
                 switch(fields[i].Name)
                 {
                     case "_costList":
-                        List<Cost> newCostList = new(trigger.Costs);
+                        List<Cost> newCostList = trigger.Costs is not { Count: > 0 } ? new List<Cost>() : new List<Cost>(trigger.Costs);
                         for(int j = 0; j < newCostList.Count; j++)
                             if(newCostList[j] is T)
                                 newCostList.RemoveAt(j--);

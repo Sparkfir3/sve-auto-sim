@@ -83,10 +83,19 @@ namespace SVESimulator.SveScript
                         newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
                         newCost.Add("$type", "SVESimulator.BanishFromCemeteryCost");
                         break;
+                    case "BanishTopDeck":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("$type", "SVESimulator.BanishTopDeckCost");
+                        break;
                     case "Discard":
                         newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
                         newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
                         newCost.Add("$type", "SVESimulator.DiscardCardCost");
+                        break;
+                    case "DiscardRandom":
+                    case "DiscardRandomCard":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("$type", "SVESimulator.DiscardRandomCardCost");
                         break;
                     case "SendToCemetery":
                     case "ReturnToHand":

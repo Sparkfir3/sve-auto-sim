@@ -22,7 +22,6 @@ namespace SVESimulator
 
         public static SVEEffectPool Instance;
 
-        public enum EffectTriggerState { Immediate, StartEndPhase }
         private enum ConfirmationTimingState { Idle, ResolvingTurnPlayer, FinishedTurnPlayer,
             ResolvingNonTurnPlayer, FinishedNonTurnPlayer }
 
@@ -50,11 +49,6 @@ namespace SVESimulator
 
         public List<RegisteredPassiveAbility> RegisteredPassives => new(registeredPassives);
         public bool IsActive => confirmationTimingState != ConfirmationTimingState.Idle;
-
-        private Dictionary<System.Type, EffectTriggerState> TriggerStateTypeMap = new()
-        {
-            { typeof(SveStartEndPhaseTrigger), EffectTriggerState.StartEndPhase }
-        };
 
         #endregion
 
@@ -91,17 +85,17 @@ namespace SVESimulator
         #region Add/Pool Effects
 
         public void TriggerPendingEffects<T>(GameState gameState, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
-            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate) where T : SveTrigger
+            RuntimeCard triggeringCard = null, string triggeringCardZone = null, List<Ability> abilityList = null) where T : SveTrigger
         {
             Card libraryCard = LibraryCardCache.GetCard(sourceCard.cardId, gameState.config);
-            TriggerPendingEffects(libraryCard, sourceCard, resolvingPlayer, predicate, executeConfirmationTiming, triggeringCard, triggeringCardZone, triggerState);
+            TriggerPendingEffects(libraryCard, sourceCard, resolvingPlayer, predicate, executeConfirmationTiming, triggeringCard, triggeringCardZone, abilityList);
         }
 
         // might need to add delays in here
         public void TriggerPendingEffects<T>(Card libraryCard, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming,
-            RuntimeCard triggeringCard = null, string triggeringCardZone = null, EffectTriggerState triggerState = EffectTriggerState.Immediate) where T : SveTrigger
+            RuntimeCard triggeringCard = null, string triggeringCardZone = null, List<Ability> abilityList = null) where T : SveTrigger
         {
-            List<Ability> triggeredAbilities = GetCardTriggeredAbilities(libraryCard, sourceCard);
+            List<Ability> triggeredAbilities = abilityList ?? GetCardTriggeredAbilities(libraryCard, sourceCard);
             foreach(Ability ability in triggeredAbilities)
             {
                 TriggeredAbility triggeredAbility = ability as TriggeredAbility;
@@ -130,8 +124,7 @@ namespace SVESimulator
                         costs = trigger.Costs,
                         cardId = libraryCard.id,
                         abilityName = triggeredAbility.name,
-                        condition = trigger.condition,
-                        triggerState = triggerState
+                        condition = trigger.condition
                     };
                     pendingEffects.Add(effect);
                 }
@@ -140,6 +133,8 @@ namespace SVESimulator
             if(executeConfirmationTiming)
                 CmdExecuteConfirmationTiming();
         }
+
+        // -----
 
         public void TriggerPendingEffectsForOtherCardsInZone<T>(GameState gameState, RuntimeCard sourceCard, RuntimeZone targetZone,
             PlayerInfo resolvingPlayer, Predicate<T> predicate, bool executeConfirmationTiming) where T : SveTrigger
@@ -163,12 +158,19 @@ namespace SVESimulator
                 TriggerPendingEffects(gameState, card.RuntimeCard, resolvingPlayer, predicate, false, sourceCard, sourceZoneName);
             }
 
-            // Trigger floating effects
-            EffectTriggerState stateToUpdate = TriggerStateTypeMap.GetValueOrDefault(typeof(T), EffectTriggerState.Immediate);
-            if(stateToUpdate != EffectTriggerState.Immediate)
+            // Trigger floating effects (handled internally as abilities given to the player's leader)
+            List<RegisteredPassiveAbility> floatingAbilitiesPassives = GetFloatingAbilityPassives();
+            if(floatingAbilitiesPassives is { Count: > 0 })
             {
-                foreach(SVEPendingEffect pendingEffect in pendingEffects.Where(x => x.triggerState == stateToUpdate))
-                    pendingEffect.triggerState = EffectTriggerState.Immediate;
+                for(int i = 0; i < floatingAbilitiesPassives.Count; i++)
+                {
+                    // TODO - more efficient find (probably need a generic GetRuntimeCardFromInstanceId function at some point)
+                    RuntimeCard floatingAbilitySourceCard = localPlayer.GetPlayerInfo().namedZones.FirstOrDefault(x => x.Value.cards.Any(y => y.instanceId == floatingAbilitiesPassives[i].sourceCardInstanceId))
+                        .Value?.cards?.FirstOrDefault(x => x.instanceId == floatingAbilitiesPassives[i].sourceCardInstanceId);
+                    Ability abilityToTrigger = (floatingAbilitiesPassives[i].effect as GiveAbilityPassive)?.GetAbility(floatingAbilitiesPassives[i].sourceCardInstanceId);
+                    TriggerPendingEffects(gameState, floatingAbilitySourceCard, resolvingPlayer, predicate, false,
+                        triggeringCard: sourceCard, triggeringCardZone: sourceZoneName, abilityList: new List<Ability>() { abilityToTrigger });
+                }
             }
 
             // Confirmation timing
@@ -176,7 +178,11 @@ namespace SVESimulator
                 CmdExecuteConfirmationTiming();
         }
 
-        // ---
+        #endregion
+
+        // ------------------------------
+
+        #region Register Passives
 
         public void RegisterPassiveAbilities(GameState gameState, RuntimeCard sourceCard)
         {
@@ -233,7 +239,11 @@ namespace SVESimulator
             registeredPassives.Remove(passive);
         }
 
-        // ---
+        #endregion
+
+        // ------------------------------
+
+        #region Trigger Spell
 
         public void TriggerSpellImmediate(GameState gameState, RuntimeCard sourceCard, PlayerInfo resolvingPlayer, Action onComplete)
         {
@@ -302,8 +312,7 @@ namespace SVESimulator
             IEnumerator ResolveOverTime()
             {
                 // Skip prompt if all effects fail condition
-                if(pendingEffects.Where(x => x.triggerState == EffectTriggerState.Immediate)
-                   .All(x =>
+                if(pendingEffects.All(x =>
                    {
                        if(x.condition.IsNullOrWhiteSpace())
                            return false;
@@ -315,27 +324,23 @@ namespace SVESimulator
                 }
 
                 // Resolve single effect
-                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) == 1)
+                while(pendingEffects.Count == 1)
                 {
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
-                        if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
-                            continue;
                         yield return ResolveEffectAtIndex(i);
                         break;
                     }
                 }
 
                 // Resolve multiple effects (choose from list)
-                while(pendingEffects.Count(x => x.triggerState == EffectTriggerState.Immediate) > 0)
+                while(pendingEffects.Count > 0)
                 {
                     yield return null;
                     bool effectDone = false;
                     List<MultipleChoiceWindow.MultipleChoiceEntryData> multipleChoiceEntries = new();
                     for(int i = 0; i < pendingEffects.Count; i++)
                     {
-                        if(pendingEffects[i].triggerState != EffectTriggerState.Immediate)
-                            continue;
                         int index = i;
                         multipleChoiceEntries.Add(pendingEffects[i].AsMultipleChoiceEntry(() =>
                         {
@@ -350,7 +355,7 @@ namespace SVESimulator
                 // Complete
                 exit:
                 yield return null;
-                pendingEffects = pendingEffects.Where(x => x.triggerState != EffectTriggerState.Immediate).ToList();
+                pendingEffects.Clear();
                 CmdSetConfirmationTimingState(isTurnPlayer ? ConfirmationTimingState.FinishedTurnPlayer : ConfirmationTimingState.FinishedNonTurnPlayer);
             }
 
@@ -677,10 +682,11 @@ namespace SVESimulator
 
         private List<Ability> GetCardTriggeredAbilities(Card libraryCard, RuntimeCard card)
         {
-            List<Ability> abilityList = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
+            List<Ability> abilityList = libraryCard?.abilities?.FindAll(x => x is TriggeredAbility) ?? new();
             foreach(RegisteredPassiveAbility passive in registeredPassives)
             {
-                if(passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId)
+                if(passive.target == SVEProperties.SVEEffectTarget.Leader ||
+                   (passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId))
                     continue;
                 if(passive.effect is not GiveAbilityPassive giveAbilityPassive || !passive.filters.MatchesCard(card) /*|| !passive.MeetsCondition(player) TODO*/)
                     continue;
@@ -689,6 +695,13 @@ namespace SVESimulator
                     abilityList.Add(ability);
             }
             return abilityList;
+        }
+
+        private List<RegisteredPassiveAbility> GetFloatingAbilityPassives()
+        {
+            // Floating effects are handled internally as abilities given to the player's leader
+            // Floating abilities (generally) come from spells that have abilities that active after they are played (i.e. start end phase)
+            return registeredPassives.Where(x => x.target == SVEProperties.SVEEffectTarget.Leader).ToList();
         }
 
         public bool TryGetAdditionalCardTraits(RuntimeCard card, out List<string> additionalTraits)
@@ -722,7 +735,6 @@ namespace SVESimulator
         public int cardId;
         public string abilityName;
         public string condition;
-        public SVEEffectPool.EffectTriggerState triggerState;
 
         public MultipleChoiceWindow.MultipleChoiceEntryData AsMultipleChoiceEntry(Action onSelect)
         {
