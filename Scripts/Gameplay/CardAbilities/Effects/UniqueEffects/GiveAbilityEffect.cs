@@ -22,23 +22,35 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            // Resolve on leader (floating ability)
+            if(target == SVEProperties.SVEEffectTarget.Leader)
+            {
+                RegisteredPassiveAbility passive = new()
+                {
+                    sourceCardInstanceId = sourceCardInstanceId,
+                    targetsFormula = null,
+                    filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
+                    effect = GetPassive(sourceCardInstanceId),
+                    affectedCards = new List<RuntimeCard>(),
+                    target = SVEProperties.SVEEffectTarget.Leader,
+                    duration = duration
+                };
+                SVEEffectPool.Instance.RegisterPassiveAbility(passive);
+                onComplete?.Invoke();
+                return;
+            }
+
+            // Normal resolve
             ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
             {
                 foreach(CardObject card in targets)
                 {
-                    GiveAbilityPassive effect = new()
-                    {
-                        duration = duration,
-                        effectName = effectName
-                    };
-                    effect.GetAbility(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).id); // cache ability data by fetching
-
                     RegisteredPassiveAbility passive = new()
                     {
                         sourceCardInstanceId = card.RuntimeCard.instanceId,
                         targetsFormula = null,
                         filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
-                        effect = effect,
+                        effect = GetPassive(sourceCardInstanceId),
                         affectedCards = new List<RuntimeCard>(),
                         target = SVEProperties.SVEEffectTarget.Self,
                         duration = duration
@@ -47,6 +59,17 @@ namespace SVESimulator
                 }
                 onComplete?.Invoke();
             });
+        }
+
+        protected GiveAbilityPassive GetPassive(int sourceCardInstanceId)
+        {
+            GiveAbilityPassive passive = new()
+            {
+                duration = duration,
+                effectName = effectName
+            };
+            passive.GetAbility(LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId).id); // cache ability data by fetching
+            return passive;
         }
     }
 }

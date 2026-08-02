@@ -174,8 +174,8 @@ namespace SVESimulator
                 for(int i = 0; i < floatingAbilitiesPassives.Count; i++)
                 {
                     // TODO - more efficient find (probably need a generic GetRuntimeCardFromInstanceId function at some point)
-                    RuntimeCard floatingAbilitySourceCard = localPlayer.GetPlayerInfo().namedZones.First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId))
-                        .Value.cards.First(x => x.instanceId == floatingAbilitiesPassives[i].sourceCardInstanceId);
+                    RuntimeCard floatingAbilitySourceCard = localPlayer.GetPlayerInfo().namedZones.FirstOrDefault(x => x.Value.cards.Any(y => y.instanceId == floatingAbilitiesPassives[i].sourceCardInstanceId))
+                        .Value?.cards?.FirstOrDefault(x => x.instanceId == floatingAbilitiesPassives[i].sourceCardInstanceId);
                     Ability abilityToTrigger = (floatingAbilitiesPassives[i].effect as GiveAbilityPassive)?.GetAbility(floatingAbilitiesPassives[i].sourceCardInstanceId);
                     TriggerPendingEffects(gameState, floatingAbilitySourceCard, resolvingPlayer, predicate, false,
                         triggeringCard: sourceCard, triggeringCardZone: sourceZoneName, abilityList: new List<Ability>() { abilityToTrigger });
@@ -707,7 +707,8 @@ namespace SVESimulator
             List<Ability> abilityList = libraryCard?.abilities?.FindAll(x => x is TriggeredAbility) ?? new();
             foreach(RegisteredPassiveAbility passive in registeredPassives)
             {
-                if(passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId)
+                if(passive.target == SVEProperties.SVEEffectTarget.Leader ||
+                   (passive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != passive.sourceCardInstanceId))
                     continue;
                 if(passive.effect is not GiveAbilityPassive giveAbilityPassive || !passive.filters.MatchesCard(card) /*|| !passive.MeetsCondition(player) TODO*/)
                     continue;
