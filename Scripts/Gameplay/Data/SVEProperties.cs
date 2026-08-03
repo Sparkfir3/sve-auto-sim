@@ -21,6 +21,7 @@ namespace SVESimulator
             AllPlayerCards,
             AllPlayerCardsEx,
             AllPlayerCardsFieldAndEx,
+            AllPlayerCardsAndLeader,
             TargetPlayerCard,
             TargetPlayerCardOrLeader,
             TargetPlayerCardEx,
