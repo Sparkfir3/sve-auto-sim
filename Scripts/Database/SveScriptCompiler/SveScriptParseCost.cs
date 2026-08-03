@@ -60,6 +60,12 @@ namespace SVESimulator.SveScript
                     case "EngageSelf":
                         newCost.Add("$type", "SVESimulator.EngageSelfCost");
                         break;
+                    case "Engage":
+                    case "EngageCard":
+                        newCost.Add("target", args[1].Trim());
+                        newCost.Add("filter", args.Length > 2 ? args[2] : "");
+                        newCost.Add("$type", "SVESimulator.EngageCardCost");
+                        break;
                     case "LeaderDefense":
                     case "LeaderDef":
                         string defCost = string.Join("", args[1..]).Trim();

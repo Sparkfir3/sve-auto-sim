@@ -1275,8 +1275,9 @@ namespace SVESimulator
                 IsPayingCosts = true;
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
                 string cardOriginZone = card.CurrentZone.Runtime.name;
-                List<MoveCardToZoneData> cardsToMove = new();
+                List<MoveCardToZoneData> cardsToMove = new(); // TODO - compress these lists into a container class
                 List<RemoveCounterData> countersToRemove = new();
+                List<int> cardInstanceIdsToEngage = new();
                 foreach(Cost cost in costs)
                 {
                     if(cost is not SveCost sveCost)
@@ -1284,6 +1285,8 @@ namespace SVESimulator
 
                     if(sveCost is RemoveCountersCost removeCounterCost)
                         yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, abilityName, countersToRemove));
+                    else if(sveCost is EngageCardCost engageCardCost)
+                        yield return StartCoroutine(engageCardCost.PayCost(playerController, card, abilityName, cardInstanceIdsToEngage));
                     else
                         yield return StartCoroutine(sveCost.PayCost(playerController, card, abilityName, cardsToMove));
                 }
@@ -1306,7 +1309,7 @@ namespace SVESimulator
                 }
 
                 // Resolve paying cost
-                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray());
+                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
 
                 LocalPayEffectCostMessage msg = new()
                 {
@@ -1316,6 +1319,7 @@ namespace SVESimulator
                     abilityName = abilityName,
                     cardsMoveToZoneData = cardsToMove.ToArray(),
                     countersToRemove = countersToRemove.ToArray(),
+                    cardInstanceIdsToEngage = cardInstanceIdsToEngage.ToArray()
                 };
                 NetworkClient.Send(msg);
 

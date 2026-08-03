@@ -746,7 +746,7 @@ namespace SVESimulator
         #region Effect Costs
 
         public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, RemoveCounterData[] countersToRemove,
-            List<RuntimeCard> additionalRuntimeCardData = null)
+            int[] cardInstanceIdsToEngage, List<RuntimeCard> additionalRuntimeCardData = null)
         {
             foreach(Cost cost in costs)
             {
@@ -790,6 +790,12 @@ namespace SVESimulator
                 RuntimeCard targetCard = player.namedZones[countersToRemove[i].cardZone].cards.FirstOrDefault(x => x.instanceId == countersToRemove[i].cardInstanceId);
                 int targetAmount = countersToRemove[i].keywordValue - countersToRemove[i].amount;
                 targetCard.SetCounterAmount((SVEProperties.Counters)countersToRemove[i].keywordType, targetAmount);
+            }
+
+            for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
+            {
+                RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
+                EngageCard(targetCard);
             }
         }
 
