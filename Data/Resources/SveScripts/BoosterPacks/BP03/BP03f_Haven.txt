@@ -1,0 +1,374 @@
+name Princess Snow White;
+id BP03-090;
+class Haven;
+type Follower;
+trait Faith / Fable / Princess;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "Ward.
+      [fanfare] If this card was put onto the field from your hand, put a Fable counter on it. If not, give it [attack]+1/[defense]+1.
+      [lastwords] If this card had a Fable counter, put this card into its owner's EX area.";
+
+keyword Ward;
+ability FanfareHand {
+    effect GiveCounter(Fable, 1) to Self;
+}
+ability FanfareNotHand {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability LastWords {
+    condition r(Fable);
+    effect CemeteryToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Diamond Master;
+id BP03-091;
+class Haven;
+type Follower;
+trait Faith;
+rarity L;
+cost 4;
+stats 2/5;
+
+text "[evolve][cost03]: Evolve this follower.
+      [fanfare] Choose one of the following. (1) Give this follower Storm. (2) Give this follower Ward.
+      Whenever an opponent is selecting cards for an ability, if they can select this card, they must select it.";
+
+evolve 3;
+keyword OpponentMustSelectAsTarget;
+ability Fanfare {
+    effect ChooseFromList(Storm, Ward);
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to Self;
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to Self;
+}
+
+// ------------------------------
+
+name Diamond Master (Evolved);
+id BP03-092;
+class Haven;
+type Follower;
+trait Faith;
+rarity L;
+stats 4/7;
+
+text "On Evolve: Select a follower with Storm or Ward that costs 3 play points or less in your cemetery and put it onto your field.
+      Whenever an opponent is selecting cards for an ability, if they can select this card, they must select it.";
+
+keyword OpponentMustSelectAsTarget;
+ability OnEvolve {
+    effect CemeteryToField(Fp(m(0,3))k(Storm)|(Fp(m(0,3))k(Ward)));
+}
+
+// ------------------------------
+
+name Odette, White Swan;
+id BP03-093;
+class Haven;
+type Follower;
+trait Faith / Fable;
+rarity G;
+cost 5;
+stats 4/6;
+
+text "[fanfare] Give [defense]+2 to your leader and each other follower on your field.
+      [lastwords] Give [defense]+2 to your leader and each follower on your field.";
+
+ability Fanfare {
+    effect GiveStat(Def, 2) to AllPlayerCardsAndLeader FX;
+}
+ability LastWords {
+    effect GiveStat(Def, 2) to AllPlayerCardsAndLeader F;
+}
+
+// ------------------------------
+
+name Wingy, Chirpy Gemstone;
+id BP03-094;
+class Haven;
+type Follower;
+trait Faith / Avian;
+rarity G;
+cost 1;
+stats 1/1;
+
+text "[evolve][cost02]: Evolve this follower.
+      Ward.";
+
+evolve 2;
+keyword Ward;
+
+// ------------------------------
+
+name Wingy, Chirpy Gemstone (Evolved);
+id BP03-095;
+class Haven;
+type Evolved Follower;
+trait Faith / Avian;
+rarity G;
+cost 5;
+
+text "Ward.
+      On Evolve: Search your deck for a follower with 2 attack or less, reveal it, and add it to your hand.";
+
+keyword Ward;
+ability OnEvolve {
+    effect Search(1, Fa(m(0,2)), Hand);
+}
+
+// ------------------------------
+
+name Alice's Adventure;
+id BP03-096;
+class Haven;
+type Amulet;
+trait Fable;
+rarity G;
+cost 2;
+
+text "[fanfare] Search your deck for a Fable card, reveal it, and add it to your hand.
+      [act][cost01], [engage], put this card into its owner's cemetery: Select a Fable follower on your field and give it Rush and Assail.";
+
+ability Fanfare {
+    effect Search(1, t(Fable), Hand);
+}
+ability Act {
+    condition f(Ft(Fable));
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
+    effect TargetForSequence(Rush, Assail) to TargetPlayerCard Ft(Fable);
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+ability Spell name Assail {
+    effect GiveKeyword(Assail) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name White Knight;
+id BP03-097;
+class Haven;
+type Follower;
+trait Faith;
+rarity S;
+cost 6;
+stats 6/6;
+
+text "If your leader's [defense] is 5 or less, this card costs 5 less to play.
+      Rush. Ward.";
+
+keywords Rush, Ward;
+ability ModifiedCost {
+    condition L<6;
+    effect ReducedCost(5);
+}
+
+// ------------------------------
+
+name Ruby Falcon;
+id BP03-098;
+class Haven;
+type Follower;
+trait Faith / Avian;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      Ward.
+      [act][cost02]: Give this follower Storm.
+      Whenever another follower you control with Storm or Ward attacks, deal 1 damage to each enemy leader.";
+
+evolve 1;
+keyword Ward;
+ability Act {
+    cost (PP, 2);
+    effect GiveKeyword(Storm) to Self;
+}
+ability OnOtherAttack {
+    filter k(Storm)|(k(Ward));
+    effect DealDamage(1) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Ruby Falcon (Evolved);
+id BP03-099;
+class Haven;
+type Evolved Follower;
+trait Faith / Avian;
+rarity S;
+stats 4/4;
+
+text "Ward.
+      On Evolve: Select an enemy follower on the field and deal it 2 damage.
+      [act][cost02]: Give this follower Storm.
+      Whenever another follower you control with Storm or Ward attacks, deal 1 damage to each enemy leader.";
+
+keyword Ward;
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Act {
+    cost (PP, 2);
+    effect GiveKeyword(Storm) to Self;
+}
+ability OnOtherAttack {
+    filter k(Storm)|(k(Ward));
+    effect DealDamage(1) to OpponentLeader;
+}
+
+// ------------------------------
+
+name March Hare's Teatime;
+id BP03-100;
+class Haven;
+type Amulet;
+trait Faith / Fable;
+rarity S;
+cost 4;
+
+text "[fanfare] Look at the top 5 cards of your deck. You may put a Fable follower that costs 5 play points or less from among them onto your field. Put the remaining cards on the bottom of your deck in any order.
+      [act][cost02], [engage], put this card into its owner's cemetery: Select a Fable follower that costs 3 play points or less in your cemetery and put it onto your field.";
+
+ability Fanfare {
+    effect CheckTop(5, (Field, Ft(Fable)p(m(0,5)), 1), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (PP, 2), (EngageSelf), (SendToCemetery, Self);
+    condition y(Ft(Fable)p(m(0,3)));
+    effect CemeteryToField(1, Ft(Fable)p(m(0,3)));
+}
+
+// ------------------------------
+
+name Tin Soldier;
+id BP03-101;
+class Haven;
+type Follower;
+trait Eidolon / Fable;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "[fanfare] If this card was put onto the field from anywhere other than your hand, put a Fable counter on it.
+      [act] Remove a Fable counter from this card: Select an enemy leader or enemy follower on the field and deal it 2 damage.";
+
+ability FanfareNotHand {
+    effect GiveCounter(Fable, 1) to Self;
+}
+ability Act {
+    cost (RemoveCounters, Fable, 1);
+    effect DealDamage(2) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Pinion Prince;
+id BP03-102;
+class Haven;
+type Follower;
+trait Avian / Fable;
+rarity B;
+cost 5;
+stats 4/5;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Select a Fable card in your cemetery and put it into your EX area. You may put a Fable counter on it.";
+
+evolve 1;
+ability Fanfare {
+    effect CemeteryToExAreaAndTarget(1, t(Fable)!S, Counter);
+}
+ability Spell name Counter {
+    cost (Optional);
+    effect GiveCounter(Fable, 1) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Pinion Prince (Evolved);
+id BP03-103;
+class Haven;
+type Evolved Follower;
+trait Avian / Fable;
+rarity B;
+stats 5/6;
+
+text "Assail.";
+
+keyword Assail;
+
+// ------------------------------
+
+name Birdkeeping Disciple;
+id BP03-104;
+class Haven;
+type Follower;
+trait Faith / Avian;
+rarity B;
+cost 4;
+stats 5/4;
+
+text "Ward.
+      [fanfare][engage] an amulet on your field: Summon a Holy Falcon token.";
+
+keyword Ward;
+ability Fanfare {
+    cost (EngageCard, TargetPlayerCard, A);
+    effect SummonToken(Holy Falcon, Field, 1);
+}
+
+// ------------------------------
+
+name Amethyst Lion;
+id BP03-105;
+class Haven;
+type Follower;
+trait Faith / Beast;
+rarity S;
+cost 2;
+stats 2/1;
+
+text "Storm.
+      [fanfare] Select another follower with Storm or Ward on your field and give it [attack]+1.";
+
+keyword Storm;
+ability Fanfare {
+    effect GiveStat(Atk, 1) to TargetPlayerCard XFk(Storm)|(XFk(Ward));
+}
+
+// ------------------------------
+
+name Bejeweled Shrine;
+id BP03-106;
+class Haven;
+type Amulet;
+trait Faith;
+rarity B;
+cost 1;
+
+text "[act][cost01], [engage]: Select a follower with Storm or Ward on your field and give it [attack]+1/[defense]+1.";
+
+ability Act {
+    cost (PP, 1), (EngageSelf);
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard Fk(Storm)|(Fk(Ward));
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Yuti, Meus Princess;
+id BP03-LD05;
+class Haven;
+type Leader;
