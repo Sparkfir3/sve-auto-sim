@@ -139,7 +139,6 @@ namespace SVESimulator.UI
                     CardObject leaderCard = zone.AllCards?[0];
                     Debug.Assert(leaderCard);
 
-                    leaderCard.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
                     allValidTargets.Add(leaderCard);
                     continue;
                 }
@@ -153,7 +152,7 @@ namespace SVESimulator.UI
                     if(filter.MatchesCard(card.RuntimeCard))
                     {
                         allValidTargets.Add(card);
-                        if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.OpponentMustSelectAsTarget))
+                        if(!card.CurrentZone.IsLocalPlayerZone && card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.OpponentMustSelectAsTarget))
                             requiredTargets.Add(card);
                     }
                 }
@@ -286,7 +285,7 @@ namespace SVESimulator.UI
 
         private void UpdateAvailableTargetsByRequired(bool updateConfirmButton = true)
         {
-            if(requiredTargets.Count == 0)
+            if(requiredTargets.Count == 0 || requiredTargets.Count >= maxTargetAmount)
             {
                 if(updateConfirmButton)
                     UpdateConfirmButton();
