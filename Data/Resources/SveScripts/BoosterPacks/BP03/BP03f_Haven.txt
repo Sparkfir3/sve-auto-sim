@@ -114,7 +114,7 @@ class Haven;
 type Evolved Follower;
 trait Faith / Avian;
 rarity G;
-cost 5;
+stats 2/2;
 
 text "Ward.
       On Evolve: Search your deck for a follower with 2 attack or less, reveal it, and add it to your hand.";
@@ -291,7 +291,7 @@ ability Fanfare {
 }
 ability Spell name Counter {
     cost (Optional);
-    effect GiveCounter(Fable, 1) to AllPlayerCards;
+    effect GiveCounter(Fable, 1) to AllPlayerCardsEx;
 }
 
 // ------------------------------
@@ -360,6 +360,7 @@ cost 1;
 text "[act][cost01], [engage]: Select a follower with Storm or Ward on your field and give it [attack]+1/[defense]+1.";
 
 ability Act {
+    condition f(Fk(Storm)|(Fk(Ward)));
     cost (PP, 1), (EngageSelf);
     effect GiveStat(AtkDef, 1) to TargetPlayerCard Fk(Storm)|(Fk(Ward));
 }

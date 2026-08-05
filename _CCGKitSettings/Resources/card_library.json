@@ -45426,19 +45426,19 @@
         ],
         "stats": [
           {
-            "baseValue": -1,
+            "baseValue": 2,
             "statId": 0,
             "name": "Attack",
-            "originalValue": -1,
+            "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
           },
           {
-            "baseValue": -1,
+            "baseValue": 2,
             "statId": 1,
             "name": "Defense",
-            "originalValue": -1,
+            "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -46364,7 +46364,7 @@
             "name": "Counter",
             "type": "Triggered",
             "effect": {
-              "target": "AllPlayerCards",
+              "target": "AllPlayerCardsEx",
               "filter": null,
               "keywordType": 9,
               "keywordValue": 1,
@@ -46729,6 +46729,10 @@
           {
             "zoneId": 0,
             "costs": [
+              {
+                "condition": "f(Fk(Storm)|(Fk(Ward)))",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
               {
                 "amount": "1",
                 "$type": "SVESimulator.PlayPointCost"
