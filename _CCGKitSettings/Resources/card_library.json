@@ -45170,8 +45170,8 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "amount": "Fp(m(0,3))k(Storm)|(Fp(m(0,3))k(Ward))",
-              "filter": null,
+              "amount": "1",
+              "filter": "Fp(m(0,3))k(Storm)|(Fp(m(0,3))k(Ward))",
               "$type": "SVESimulator.CemeteryToFieldEffect"
             },
             "target": null,

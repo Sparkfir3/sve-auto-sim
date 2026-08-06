@@ -65,7 +65,7 @@ text "On Evolve: Select a follower with Storm or Ward that costs 3 play points o
 
 keyword OpponentMustSelectAsTarget;
 ability OnEvolve {
-    effect CemeteryToField(Fp(m(0,3))k(Storm)|(Fp(m(0,3))k(Ward)));
+    effect CemeteryToField(1, Fp(m(0,3))k(Storm)|(Fp(m(0,3))k(Ward)));
 }
 
 // ------------------------------

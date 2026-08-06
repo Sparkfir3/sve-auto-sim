@@ -24,7 +24,10 @@ namespace SVESimulator
 
             if(filters.TryGetValue(CardFilterSetting.FilterOr, out string otherFilterRaw) && !otherFilterRaw.IsNullOrWhiteSpace())
             {
-                if(SVEFormulaParser.ParseCardFilterFormula(otherFilterRaw, card).MatchesCard(card))
+                var otherFilter = SVEFormulaParser.ParseCardFilterFormula(otherFilterRaw);
+                if(otherFilter.ContainsKey(CardFilterSetting.ExcludeSelf) && filters.TryGetValue(CardFilterSetting.ExcludeSelf, out string selfInstanceId))
+                    otherFilter[CardFilterSetting.ExcludeSelf] = selfInstanceId;
+                if(otherFilter.MatchesCard(card))
                     return true;
             }
 
