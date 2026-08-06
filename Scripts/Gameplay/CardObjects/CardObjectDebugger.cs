@@ -43,6 +43,12 @@ namespace SVESimulator
         // ------------------------------
 
 #if UNITY_EDITOR
+        [Title("Debug Buttons"), Button]
+        private void TestFormulaIntParser(string formula, PlayerController player)
+        {
+            Debug.Log(SVEFormulaParser.ParseValue(formula, player, card.RuntimeCard));
+        }
+
         private void OnValidate()
         {
             if(!card)
