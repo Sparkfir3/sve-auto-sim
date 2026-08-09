@@ -19,7 +19,7 @@ ability FanfareNotHand {
     effect GiveStat(AtkDef, 1) to Self;
 }
 ability LastWords {
-    condition r(Fable);
+    filter r(Fable);
     effect CemeteryToExArea() to TriggerCard;
 }
 

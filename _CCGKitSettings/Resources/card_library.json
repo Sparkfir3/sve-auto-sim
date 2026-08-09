@@ -44914,7 +44914,8 @@
           },
           {
             "trigger": {
-              "condition": "r(Fable)",
+              "filter": "r(Fable)",
+              "condition": null,
               "cost": null,
               "$type": "SVESimulator.SveLastWordsTrigger"
             },

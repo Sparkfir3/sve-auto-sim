@@ -244,15 +244,13 @@ namespace SVESimulator
         public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone, bool isDestroy = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
-            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
                 if(player.netId.isLocalPlayer)
                 {
                     SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, x => x.MatchesFilter(card), false);
                     SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                         x => x.MatchesFilter(card), false);
@@ -271,6 +269,10 @@ namespace SVESimulator
             {
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardedTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
             }
+
+            // Move cards after triggering effects so that LastWords can use properly use it's filter
+            StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
+            card.RemoveAllModifiersWithoutNotify();
         }
 
         public void BanishCard(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
