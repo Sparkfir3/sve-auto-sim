@@ -497,6 +497,8 @@ namespace SVESimulator.SveScript
             { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
             { "GiveAbilityEndOfTurn", new EffectParams("GiveAbilityEndOfTurnEffect",                EffectParameterType.SingleEffect) },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
+            { "Steal", new EffectParams("StealCardEffect")                                          },
+            { "StealAndTarget", new EffectParams("StealCardAndTargetEffect",                        EffectParameterType.ListOfEffects) },
             { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
             { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },
             { "CheckTop", new EffectParams("CheckTopDeckEffect",                                    false, false, EffectParameterType.CheckCardActions) },
