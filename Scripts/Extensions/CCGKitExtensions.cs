@@ -220,15 +220,18 @@ namespace SVESimulator
                 card.stats[stat.statId].onValueChanged?.Invoke(stat.baseValue, stat.baseValue); // resets atk/def/cost stat displays
             }
 
-            card.keywords.Clear();
-            foreach(RuntimeKeyword keyword in baseCard.keywords)
+            List<RuntimeKeyword> currentKeywords = new(card.keywords);
+            for(int i = 0; i < currentKeywords.Count; i++)
             {
-                RuntimeKeyword newKeyword = new()
-                {
-                    keywordId = keyword.keywordId,
-                    valueId = keyword.valueId
-                };
-                card.keywords.Add(newKeyword); // not using RuntimeCard's native AddKeyword() to avoid calling the onKeywordAdded event multiple times
+                if(baseCard.keywords.Exists(x => x.keywordId == currentKeywords[i].keywordId && x.valueId == currentKeywords[i].valueId))
+                    continue;
+                card.RemoveKeyword(currentKeywords[i].keywordId, currentKeywords[i].valueId);
+            }
+            for(int i = 0; i < baseCard.keywords.Count; i++)
+            {
+                if(card.keywords.Exists(x => x.keywordId == baseCard.keywords[i].keywordId && x.valueId == baseCard.keywords[i].valueId))
+                    continue;
+                card.AddKeyword(baseCard.keywords[i].keywordId, baseCard.keywords[i].valueId);
             }
         }
 

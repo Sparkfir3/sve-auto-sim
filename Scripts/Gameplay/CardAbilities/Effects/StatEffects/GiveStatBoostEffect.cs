@@ -32,38 +32,11 @@ namespace SVESimulator
 
             // Target leader
             bool isLeaderOnlyStat = targetStats is StatBoostType.MaxPlayPoint or StatBoostType.PlayPoint or StatBoostType.EvolvePoint;
-            if(target.IsLeader(out bool local, out bool opponent) || isLeaderOnlyStat)
+            if((target.IsLeader(out bool local, out bool opponent) || isLeaderOnlyStat) && !target.IsFieldCard())
             {
                 local |= target == SVEProperties.SVEEffectTarget.Self;
                 opponent |= target == SVEProperties.SVEEffectTarget.Opponent;
-                switch(targetStats)
-                {
-                    case StatBoostType.Defense:
-                    case StatBoostType.AttackDefense:
-                        if(local)
-                            player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), boostAmount);
-                        if(opponent)
-                            player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), boostAmount);
-                        break;
-                    case StatBoostType.MaxPlayPoint:
-                        if(boostAmount <= 0)
-                            Debug.LogError("Decreasing max play points via GiveStat effect is not supported.");
-                        else
-                            player.LocalEvents.IncrementMaxPlayPoints(amount: boostAmount);
-                        break;
-                    case StatBoostType.PlayPoint:
-                        player.LocalEvents.IncrementCurrentPlayPoints(boostAmount);
-                        break;
-                    case StatBoostType.EvolvePoint:
-                        if(local)
-                            player.LocalEvents.AddEvolvePoints(player.GetPlayerInfo(), boostAmount);
-                        if(opponent)
-                            player.LocalEvents.AddEvolvePoints(player.GetOpponentInfo(), boostAmount);
-                        break;
-                    default:
-                        Debug.LogError($"Attempted to apply invalid stat boost {targetStats} to {target}!");
-                        break;
-                }
+                ResolveOnLeader(player, local, opponent, boostAmount);
                 if(!target.IsFieldCard())
                 {
                     onComplete?.Invoke();
@@ -83,7 +56,11 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    if(secondaryBoostAmount == null) // Standard add
+                    if(card.IsCardType(SVEProperties.CardTypes.Leader)) // Handle leader
+                    {
+                        ResolveOnLeader(player, card.CurrentZone.IsLocalPlayerZone, !card.CurrentZone.IsLocalPlayerZone, boostAmount);
+                    }
+                    else if(secondaryBoostAmount == null) // Standard add
                     {
                         foreach(string stat in targetStats.AsNamedStatArray())
                             player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, boostAmount, true);
@@ -100,6 +77,38 @@ namespace SVESimulator
                 }
                 onComplete?.Invoke();
             });
+        }
+
+        private void ResolveOnLeader(PlayerController player, bool localLeader, bool opponentLeader, int boostAmount)
+        {
+            switch(targetStats)
+            {
+                case StatBoostType.Defense:
+                case StatBoostType.AttackDefense:
+                    if(localLeader)
+                        player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), boostAmount);
+                    if(opponentLeader)
+                        player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), boostAmount);
+                    break;
+                case StatBoostType.MaxPlayPoint:
+                    if(boostAmount <= 0)
+                        Debug.LogError("Decreasing max play points via GiveStat effect is not supported.");
+                    else
+                        player.LocalEvents.IncrementMaxPlayPoints(amount: boostAmount);
+                    break;
+                case StatBoostType.PlayPoint:
+                    player.LocalEvents.IncrementCurrentPlayPoints(boostAmount);
+                    break;
+                case StatBoostType.EvolvePoint:
+                    if(localLeader)
+                        player.LocalEvents.AddEvolvePoints(player.GetPlayerInfo(), boostAmount);
+                    if(opponentLeader)
+                        player.LocalEvents.AddEvolvePoints(player.GetOpponentInfo(), boostAmount);
+                    break;
+                default:
+                    Debug.LogError($"Attempted to apply invalid stat boost {targetStats} to {target}!");
+                    break;
+            }
         }
     }
 }

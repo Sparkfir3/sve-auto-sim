@@ -47,6 +47,12 @@ namespace SVESimulator
                     targets.AddRange(player.ZoneController.exAreaZone.GetAllPrimaryCards().Where(x => filter.MatchesCard(x)).ToList());
                     onTargetFound?.Invoke(targets);
                     return;
+                case SVEProperties.SVEEffectTarget.AllPlayerCardsAndLeader:
+                    filter = SVEFormulaParser.ParseCardFilterFormula(rawFilter, sourceCardInstanceId);
+                    targets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards().Where(x => filter.MatchesCard(x)).ToList());
+                    targets.AddRange(player.ZoneController.leaderZone.AllCards);
+                    onTargetFound?.Invoke(targets);
+                    return;
 
                 case SVEProperties.SVEEffectTarget.AllOpponentCards:
                     filter = SVEFormulaParser.ParseCardFilterFormula(rawFilter, sourceCardInstanceId);

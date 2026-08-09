@@ -209,6 +209,7 @@ namespace SVESimulator
         {
             PlayerInfo player = GetPlayerInfo(msg.playerNetId, msg.isOpponentCard);
             RuntimeCard card = player.namedZones[SVEProperties.Zones.Field].cards.Find(x => x.instanceId == msg.cardInstanceId);
+            card ??= player.namedZones[SVEProperties.Zones.ExArea].cards.Find(x => x.instanceId == msg.cardInstanceId);
             if(card == null && !msg.adding) // catch for if trying to remove a keyword from a card that has already left the field
                 return;
             Debug.Assert(card != null);

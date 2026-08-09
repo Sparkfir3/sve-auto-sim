@@ -629,6 +629,7 @@ namespace SVESimulator
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
         public RemoveCounterData[] countersToRemove;
+        public int[] cardInstanceIdsToEngage;
     }
 
     public struct OpponentPayEffectCostMessage : NetworkMessage
@@ -639,6 +640,7 @@ namespace SVESimulator
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
         public RemoveCounterData[] countersToRemove;
+        public int[] cardInstanceIdsToEngage;
         public NetCard[] additionalNetCardData; // extra data needed to initialize cards from non-public zones like the deck
     }
 

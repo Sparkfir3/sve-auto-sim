@@ -21,6 +21,7 @@ namespace SVESimulator
             AllPlayerCards,
             AllPlayerCardsEx,
             AllPlayerCardsFieldAndEx,
+            AllPlayerCardsAndLeader,
             TargetPlayerCard,
             TargetPlayerCardOrLeader,
             TargetPlayerCardEx,
@@ -180,6 +181,7 @@ namespace SVESimulator
             public const string CannotAttack = "CannotAttack";
             public const string CannotAttackLeaders = "CannotAttackLeaders";
             public const string CannotUseAct = "CannotUseAct";
+            public const string OpponentMustSelectAsTarget = "OpponentMustSelectAsTarget";
 
             // Plus Damage
             public const string Plus1Damage = "Plus1Damage";

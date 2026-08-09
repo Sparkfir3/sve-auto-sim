@@ -432,6 +432,7 @@ namespace SVESimulator.SveScript
             // Movement - Cemetery to Zone
             { "CemeteryToDeckAndShuffle", new EffectParams("CemeteryToDeckAndShuffleEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToExArea", new EffectParams("CemeteryToExAreaEffect",                            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "CemeteryToExAreaAndTarget", new EffectParams("CemeteryToExAreaAndTargetEffect",          true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "CemeteryToField", new EffectParams("CemeteryToFieldEffect",                              true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("CemeteryToFieldAndTargetEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "PlayCardFromCemeterySetCost", new EffectParams("PlayCardFromCemeterySetCostEffect",      false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },

@@ -244,15 +244,13 @@ namespace SVESimulator
         public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone, bool isDestroy = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
-            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
                 if(player.netId.isLocalPlayer)
                 {
                     SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, x => x.MatchesFilter(card), false);
                     SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                         x => x.MatchesFilter(card), false);
@@ -271,6 +269,10 @@ namespace SVESimulator
             {
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardedTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
             }
+
+            // Move cards after triggering effects so that LastWords can use properly use it's filter
+            StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
+            card.RemoveAllModifiersWithoutNotify();
         }
 
         public void BanishCard(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
@@ -746,7 +748,7 @@ namespace SVESimulator
         #region Effect Costs
 
         public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, RemoveCounterData[] countersToRemove,
-            List<RuntimeCard> additionalRuntimeCardData = null)
+            int[] cardInstanceIdsToEngage, List<RuntimeCard> additionalRuntimeCardData = null)
         {
             foreach(Cost cost in costs)
             {
@@ -790,6 +792,12 @@ namespace SVESimulator
                 RuntimeCard targetCard = player.namedZones[countersToRemove[i].cardZone].cards.FirstOrDefault(x => x.instanceId == countersToRemove[i].cardInstanceId);
                 int targetAmount = countersToRemove[i].keywordValue - countersToRemove[i].amount;
                 targetCard.SetCounterAmount((SVEProperties.Counters)countersToRemove[i].keywordType, targetAmount);
+            }
+
+            for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
+            {
+                RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
+                EngageCard(targetCard);
             }
         }
 

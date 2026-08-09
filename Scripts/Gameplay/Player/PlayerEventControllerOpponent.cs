@@ -676,7 +676,7 @@ namespace SVESimulator
             oppZoneController.RearrangeHand();
 
             // Pay cost in backend
-            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove, additionalRuntimeCardData);
+            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove, msg.cardInstanceIdsToEngage, additionalRuntimeCardData);
         }
 
         #endregion

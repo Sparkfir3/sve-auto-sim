@@ -23,6 +23,10 @@ namespace SVESimulator.UI
         [ShowInInspector, ReadOnly]
         private List<CardObject> availableTargets = new();
         [ShowInInspector, ReadOnly]
+        private List<CardObject> allValidTargets = new();
+        [ShowInInspector, ReadOnly]
+        private List<CardObject> requiredTargets = new();
+        [ShowInInspector, ReadOnly]
         private List<CardObject> currentSelectedCards = new();
         [ShowInInspector, ReadOnly]
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> filter = new();
@@ -105,6 +109,8 @@ namespace SVESimulator.UI
             player.OppZoneController.fieldZone.RemoveAllCardHighlights();
             player.OppZoneController.exAreaZone.RemoveAllCardHighlights();
             availableTargets.Clear();
+            allValidTargets.Clear();
+            requiredTargets.Clear();
             currentSelectedCards.Clear();
             currentZones.Clear();
             if(currentDisplayPosition != position)
@@ -133,8 +139,7 @@ namespace SVESimulator.UI
                     CardObject leaderCard = zone.AllCards?[0];
                     Debug.Assert(leaderCard);
 
-                    leaderCard.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
-                    availableTargets.Add(leaderCard);
+                    allValidTargets.Add(leaderCard);
                     continue;
                 }
 
@@ -146,12 +151,22 @@ namespace SVESimulator.UI
                         continue;
                     if(filter.MatchesCard(card.RuntimeCard))
                     {
-                        card.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
-                        availableTargets.Add(card);
+                        allValidTargets.Add(card);
+                        if(!card.CurrentZone.IsLocalPlayerZone && card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.OpponentMustSelectAsTarget))
+                            requiredTargets.Add(card);
                     }
                 }
             }
 
+            // Handle required targets
+            if(requiredTargets.Count > 0)
+                availableTargets.AddRange(requiredTargets);
+            else
+                availableTargets.AddRange(allValidTargets);
+            foreach(CardObject card in availableTargets)
+                card.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
+
+            // Enable object
             confirmButton.gameObject.SetActive(minTargetAmount == 0 || availableTargets.Count == 0);
             gameObject.SetActive(true);
         }
@@ -265,7 +280,22 @@ namespace SVESimulator.UI
             }
 
             if(updateConfirmButton)
-                confirmButton.gameObject.SetActive(currentSelectedCards.Count >= minTargetAmount || currentSelectedCards.Count == availableTargets.Count);
+                UpdateConfirmButton();
+        }
+
+        private void UpdateAvailableTargetsByRequired(bool updateConfirmButton = true)
+        {
+            if(requiredTargets.Count == 0 || requiredTargets.Count >= maxTargetAmount)
+            {
+                if(updateConfirmButton)
+                    UpdateConfirmButton();
+                return;
+            }
+
+            if(currentSelectedCards.Intersect(requiredTargets).Count() >= requiredTargets.Count)
+                OverrideAvailableTargetsList(allValidTargets, updateConfirmButton);
+            else
+                OverrideAvailableTargetsList(requiredTargets, updateConfirmButton);
         }
 
         private void ToggleCardSelection(CardObject card)
@@ -282,7 +312,8 @@ namespace SVESimulator.UI
                 currentSelectedCards.Remove(card);
                 card.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
             }
-            confirmButton.gameObject.SetActive(currentSelectedCards.Count >= minTargetAmount || currentSelectedCards.Count == availableTargets.Count);
+
+            UpdateAvailableTargetsByRequired(updateConfirmButton: true);
             OnSelectionUpdated?.Invoke(currentSelectedCards);
         }
 
@@ -290,6 +321,7 @@ namespace SVESimulator.UI
         {
             if(currentSelectedCards.Count >= maxMultiSelectTargets)
                 return;
+
             if(!currentSelectedCards.Contains(card))
             {
                 if(currentSelectedCards.Distinct().Count() >= maxTargetAmount)
@@ -303,7 +335,8 @@ namespace SVESimulator.UI
                 currentSelectedCards.Add(card);
                 GetMultiSelectBox(card).SetText(currentSelectedCards.Count(x => x == card).ToString());
             }
-            confirmButton.gameObject.SetActive(currentSelectedCards.Count >= maxMultiSelectTargets);
+
+            UpdateAvailableTargetsByRequired(updateConfirmButton: true);
             OnSelectionUpdated?.Invoke(currentSelectedCards);
         }
 
@@ -323,8 +356,23 @@ namespace SVESimulator.UI
                 GetMultiSelectBox(card).SetText(currentSelectedCards.Count(x => x == card).ToString());
             }
 
-            confirmButton.gameObject.SetActive(currentSelectedCards.Count >= maxMultiSelectTargets);
+            UpdateAvailableTargetsByRequired(updateConfirmButton: true);
+            OnSelectionUpdated?.Invoke(currentSelectedCards);
         }
+
+        private void UpdateConfirmButton()
+        {
+            if(currentMode == SelectMode.Single)
+                confirmButton.gameObject.SetActive(currentSelectedCards.Count >= minTargetAmount || currentSelectedCards.Count == availableTargets.Count);
+            else if(currentMode == SelectMode.MultiSelect)
+                confirmButton.gameObject.SetActive(currentSelectedCards.Count >= maxMultiSelectTargets);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Object Pooling - Multi Select Box
 
         private EffectTargetingMultiSelectInfo GetMultiSelectBox(CardObject card)
         {
