@@ -17,7 +17,7 @@ ability Fanfare {
 }
 ability Act {
     cost (RemoveCounter, Fable, 1);
-    effect GiveCounter(Fable, 4) to TargetPlayerCardFieldOrEx Ft(Fable);
+    effect GiveCounter(Fable, 1) to TargetPlayerCardFieldOrEx Ft(Fable);
 }
 
 // ------------------------------
@@ -34,11 +34,11 @@ text "On Evolve: Look at the top 4 cards of your deck. You may put up to 2 Fable
       [act] Remove a Fable counter from this card: Select a Fable follower on your field or in your EX area and put a Fable counter on it.";
 
 ability OnEvolve {
-    effect CheckTop(4, (ExArea, t(Fable)!S, m(0,2)), (BottomDeckAnyOrder));
+    effect CheckTop(4, (ExArea, t(Fable), m(0,2)), (BottomDeckAnyOrder));
 }
 ability Act {
     cost (RemoveCounter, Fable, 1);
-    effect GiveCounter(Fable, 4) to TargetPlayerCardFieldOrEx Ft(Fable);
+    effect GiveCounter(Fable, 1) to TargetPlayerCardFieldOrEx Ft(Fable);
 }
 
 // ------------------------------
@@ -57,8 +57,9 @@ text "Ward.
 
 keyword Ward;
 ability Act {
+    condition p(#F);
     cost (OncePerTurn), (BanishFromCemetery, 3, t(Fallen Angel));
-    effect StealAndTarget(Refresh) to TargetOpponentCard F;;
+    effect StealAndTarget(Refresh) to TargetOpponentCard F;
 }
 ability Spell name Refresh {
     effect Refresh() to AllPlayerCards;
@@ -121,7 +122,7 @@ text "[evolve][cost01]: Evolve this follower.
 
 evolve 1;
 ability Fanfare {
-    effect HandToFieldAndTarget(1, Fc(Neutral)p(m(0,#(maxPlayPoints))), GiveBottomDeck);
+    effect HandToFieldAndTarget(m(0,1), Fc(Neutral)p(m(0,#(maxPlayPoints))), GiveBottomDeck);
 }
 ability Spell name GiveBottomDeck {
     effect GiveAbility(BottomDeck) to AllPlayerCards;
@@ -219,20 +220,20 @@ cost 1;
 text "Choose one of the following. (1) Discard an Angel follower: Select an enemy follower on the field and destroy it. (2) Discard a Fallen Angel follower: Give your leader [defense]+3. Draw a card.";
 
 ability Spell {
-    condition H(Ft(FallenAngel));
+    condition [H(Ft(Angel)) & p(#F)] | H(Ft(Fallen Angel));
     effect ChooseFromList(Destroy, DefDraw);
 }
 ability Spell name Destroy {
     condition p(#F);
-    cost (Discard, 1, Ft(FallenAngel));
+    cost (Discard, 1, Ft(Angel));
     effect Destroy() to TargetOpponentCard F;
 }
 ability Spell name DefDraw {
-    cost (Discard, 1, Ft(FallenAngel));
+    cost (Discard, 1, Ft(Fallen Angel));
     effect Sequence(Def, Draw);
 }
 ability Spell name Def {
-    effect GiveStat(Def, 3) to Leader;;
+    effect GiveStat(Def, 3) to Leader;
 }
 ability Spell name Draw {
     effect DrawCard(1);
@@ -252,7 +253,7 @@ stats 3/4;
 text "[act][engage], put a Fallen Angel follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 4 damage.";
 
 ability Act {
-    condition p(#F);
+    condition p(#F)&f(t(Fallen Angel));
     cost (EngageSelf), (SendToCemetery, TargetPlayerCard, Ft(Fallen Angel));
     effect DealDamage(4) to TargetOpponentCard F;
 }
@@ -278,7 +279,7 @@ ability Fanfare {
 
 // ------------------------------
 
-name Harbinger of the Night (Evolved);
+name Harbinger of the Knight (Evolved);
 id BP03-120;
 class Neutral;
 type Evolved Follower;
@@ -297,7 +298,7 @@ ability OnEvolve {
 name Eggsplosion;
 id BP03-121;
 class Neutral;
-type Follower;
+type Spell;
 trait Fable;
 rarity B;
 cost 3;

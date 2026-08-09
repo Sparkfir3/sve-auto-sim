@@ -46884,7 +46884,7 @@
               "filter": "Ft(Fable)",
               "keywordType": 9,
               "keywordValue": 1,
-              "amount": "4",
+              "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
             },
             "target": null,
@@ -46979,7 +46979,7 @@
             "effect": {
               "amount": "4",
               "checkAction1": "ExArea",
-              "checkFilter1": "t(Fable)!S",
+              "checkFilter1": "t(Fable)",
               "checkAmount1": "m(0,2)",
               "checkAction2": "BottomDeckAnyOrder",
               "checkAction3": "None",
@@ -47007,7 +47007,7 @@
               "filter": "Ft(Fable)",
               "keywordType": 9,
               "keywordValue": 1,
-              "amount": "4",
+              "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
             },
             "target": null,
@@ -47108,6 +47108,10 @@
           {
             "zoneId": 0,
             "costs": [
+              {
+                "condition": "p(#F)",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
               {
                 "$type": "SVESimulator.OncePerTurnCost"
               },
@@ -47476,7 +47480,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "amount": "1",
+              "amount": "m(0,1)",
               "filter": "Fc(Neutral)p(m(0,#(maxPlayPoints)))",
               "effectName1": "GiveBottomDeck",
               "$type": "SVESimulator.HandToFieldAndTargetEffect"
@@ -48001,7 +48005,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "H(Ft(FallenAngel))",
+              "condition": "[H(Ft(Angel)) & p(#F)] | H(Ft(Fallen Angel))",
               "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -48018,7 +48022,7 @@
           {
             "trigger": {
               "condition": "p(#F)",
-              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"Ft(FallenAngel)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"Ft(Angel)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Destroy",
@@ -48033,7 +48037,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"Ft(FallenAngel)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"Ft(Fallen Angel)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
               "condition": null,
               "$type": "SVESimulator.SpellAbility"
             },
@@ -48172,7 +48176,7 @@
             "zoneId": 0,
             "costs": [
               {
-                "condition": "p(#F)",
+                "condition": "p(#F)&f(t(Fallen Angel))",
                 "$type": "SVESimulator.ConditionAsCost"
               },
               {
@@ -48309,7 +48313,7 @@
       },
       {
         "cardTypeId": 1,
-        "name": "Harbinger of the Night (Evolved)",
+        "name": "Harbinger of the Knight (Evolved)",
         "costs": [],
         "properties": [
           {
@@ -48403,7 +48407,7 @@
         "id": 100031120
       },
       {
-        "cardTypeId": 0,
+        "cardTypeId": 2,
         "name": "Eggsplosion",
         "costs": [],
         "properties": [
@@ -48430,57 +48434,12 @@
         ],
         "stats": [
           {
-            "baseValue": -1,
-            "statId": 0,
-            "name": "Attack",
-            "originalValue": -1,
-            "minValue": 0,
-            "maxValue": 99,
-            "modifiers": []
-          },
-          {
-            "baseValue": -1,
-            "statId": 1,
-            "name": "Defense",
-            "originalValue": -1,
-            "minValue": 0,
-            "maxValue": 99,
-            "modifiers": []
-          },
-          {
-            "baseValue": 0,
-            "statId": 2,
-            "name": "Engaged",
-            "originalValue": 0,
-            "minValue": 0,
-            "maxValue": 1,
-            "modifiers": []
-          },
-          {
-            "baseValue": -1,
-            "statId": 3,
-            "name": "Evolve Cost",
-            "originalValue": -1,
-            "minValue": 0,
-            "maxValue": 99,
-            "modifiers": []
-          },
-          {
             "baseValue": 3,
             "statId": 4,
             "name": "Cost",
             "originalValue": 3,
             "minValue": 0,
             "maxValue": 99,
-            "modifiers": []
-          },
-          {
-            "baseValue": -1,
-            "statId": 5,
-            "name": "Attached Instance IDs",
-            "originalValue": -1,
-            "minValue": -1,
-            "maxValue": 999999,
             "modifiers": []
           }
         ],
