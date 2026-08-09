@@ -388,7 +388,7 @@ namespace SVESimulator
             if(args.Length == 0)
                 return 0;
 
-            args[0] = args[0].Trim();
+            args[0] = args[0].Trim().Replace("PP", "PlayPoints");
             Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
             usedPlayerReference = false;
             switch(args[0])
@@ -410,6 +410,13 @@ namespace SVESimulator
                 case "returnedToHandFromField":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsReturnedToHandFromField, filter) : 0;
+                case "maxPlayPoints":
+                    usedPlayerReference = true;
+                    return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.MaxPlayPoints].effectiveValue : 0;
+                case "playPoints":
+                case "currentPlayPoints":
+                    usedPlayerReference = true;
+                    return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.PlayPoints].effectiveValue : 0;
 
                 // Player Zone
                 case "evolveDeckFaceUp":
