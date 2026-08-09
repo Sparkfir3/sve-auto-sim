@@ -1,0 +1,212 @@
+[
+  {
+    "id": "BP03-107EN",
+    "name": "Alice, Wonderland Explorer",
+    "trait": "Fable",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Put a Fable counter on this card.\n[act] Remove a Fable counter from this card: Select a Fable follower on your field or in your EX area and put a Fable counter on it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Fable counter on this card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Remove a Fable counter from this card",
+        "body": "Select a Fable follower on your field or in your EX area and put a Fable counter on it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-108EN",
+    "name": "Alice, Wonderland Explorer (Evolved)",
+    "trait": "Fable",
+    "cardText": "On Evolve: Look at the top 4 cards of your deck. You may put up to 2 Fable cards from among them into your EX area. Put the remaining cards on the bottom of your deck in any order.\n[act] Remove a Fable counter from this card: Select a Fable follower on your field or in your EX area and put a Fable counter on it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Look at the top 4 cards of your deck. You may put up to 2 Fable cards from among them into your EX area. Put the remaining cards on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Remove a Fable counter from this card",
+        "body": "Select a Fable follower on your field or in your EX area and put a Fable counter on it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-109EN",
+    "name": "Angel of Chaos",
+    "trait": "Angel / Fallen Angel",
+    "cardText": "Ward.\n[act] Banish 3 Fallen Angel cards in your cemetery: Select an enemy follower on the field. Steal it and refresh it. This ability can be activated once per turn. (Stolen followers are moved to your field. When they leave the field, they are put into their owner's corresponding zone.)",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "Banish 3 Fallen Angel cards in your cemetery",
+        "body": "Select an enemy follower on the field. Steal it and refresh it. This ability can be activated once per turn. [NOT IMPLEMENTED]"
+      }
+    ]
+  },
+  {
+    "id": "BP03-110EN",
+    "name": "Rapunzel",
+    "trait": "Princess / Fable",
+    "cardText": "Ward.\nIf this follower has no Fable counters, it can't attack enemies."
+  },
+  {
+    "id": "BP03-111EN",
+    "name": "Seraph of Sin",
+    "trait": "Fallen Angel",
+    "cardText": "[fanfare] Select an enemy leader or enemy follower on the field and deal it 2 damage.\n[lastwords] Select a Fallen Angel card that costs 3 play points or less in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select a Fallen Angel card that costs 3 play points or less in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP03-112EN",
+    "name": "Garuel, Seraphic Leo",
+    "trait": "Angel / Beast",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] You may put a [neutral] follower that costs X play points or less from your hand onto your field and give it \"At the start of your end phase, put this card on the bottom of its owner's deck.\" X equals your maximum play points.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "You may put a [neutral] follower that costs X play points or less from your hand onto your field and give it \"At the start of your end phase, put this card on the bottom of its owner's deck.\" X equals your maximum play points."
+      },
+      {
+        "key": "BottomDeck",
+        "text": "At the start of your end phase, put this card on the bottom of its owner's deck.",
+        "trigger": "At the start of your end phase",
+        "body": "Put this card on the bottom of its owner's deck."
+      }
+    ]
+  },
+  {
+    "id": "BP03-113EN",
+    "name": "Garuel, Seraphic Leo (Evolved)",
+    "trait": "Angel / Beast",
+    "cardText": "On Evolve: Select another [neutral] follower on your field and return it to its owner's hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select another [neutral] follower on your field and return it to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "BP03-114EN",
+    "name": "Actress Feria",
+    "trait": "Musical / Fable / Princess",
+    "cardText": "[act][engage]: Select another Fable follower on your field and put a Fable counter on it.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select another Fable follower on your field and put a Fable counter on it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-115EN",
+    "name": "Humpty Dumpty",
+    "trait": "Fable",
+    "cardText": "[evolve][cost00]: Evolve this follower."
+  },
+  {
+    "id": "BP03-116EN",
+    "name": "Humpty Dumpty (Evolved)",
+    "trait": "Fable",
+    "cardText": "On Evolve: Deal 5 damage to each follower on the field. Deal 3 damage to each enemy leader. Discard your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Deal 5 damage to each follower on the field. Deal 3 damage to each enemy leader. Discard your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP03-117EN",
+    "name": "Winged Inversion",
+    "trait": "Angel / Fallen Angel",
+    "cardText": "Choose one of the following. (1) Discard an Angel follower: Select an enemy follower on the field and destroy it. (2) Discard a Fallen Angel follower: Give your leader [defense]+3. Draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one of the following. (1) Discard an Angel follower: Select an enemy follower on the field and destroy it. (2) Discard a Fallen Angel follower: Give your leader [defense]+3. Draw a card."
+      },
+      {
+        "key": "Destroy",
+        "cost": "Discard an Angel follower",
+        "body": "Select an enemy follower on the field and destroy it."
+      },
+      {
+        "key": "DefDraw",
+        "cost": "Discard a Fallen Angel follower",
+        "body": "Give your leader [defense]+3. Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-118EN",
+    "name": "Angel of Darkness",
+    "trait": "Fallen Angel",
+    "cardText": "[act][engage], put a Fallen Angel follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], put a Fallen Angel follower from your field into its owner's cemetery",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-119EN",
+    "name": "Harbinger of the Knight",
+    "trait": "Fallen Angel",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-120EN",
+    "name": "Harbinger of the Night (Evolved)",
+    "trait": "Fallen Angel",
+    "cardText": "On Evolve: Deal 1 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Deal 1 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-121EN",
+    "name": "Eggsplosion",
+    "trait": "Fable",
+    "cardText": "Deal X damage to each follower on the field and each enemy leader. X equals the number of cards named Eggsplosion or Humpty Dumpty in your cemetery plus 1. (This card doesn't count.)"
+  }
+]
