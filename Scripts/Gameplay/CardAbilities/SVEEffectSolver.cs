@@ -807,7 +807,7 @@ namespace SVESimulator
 
         #region Other
 
-        public void OnCardsSelectedForAbility(PlayerInfo player, List<RuntimeCard> cards, bool executeConfirmationTiming = true)
+        public void OnCardsSelectedForAbility(PlayerInfo player, List<RuntimeCard> cards, bool executeConfirmationTiming = false)
         {
             if(isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
