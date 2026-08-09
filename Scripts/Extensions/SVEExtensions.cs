@@ -14,8 +14,9 @@ namespace SVESimulator
     {
 		#region Card Filters
 
-        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in CardObject card) => filters.MatchesCard(card ? card.RuntimeCard : null);
-        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in RuntimeCard card)
+        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in CardObject card, PlayerController player = null)
+            => filters.MatchesCard(card ? card.RuntimeCard : null, player);
+        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in RuntimeCard card, PlayerController player = null)
         {
             if(filters == null || filters.Count == 0)
                 return true;
@@ -85,7 +86,7 @@ namespace SVESimulator
                             string[] counterParams = value.Split(',');
                             string counterName = counterParams.Length > 0 ? counterParams[0].Replace("Counter", "").Trim() : null;
                             SVEProperties.Counters counterType = (SVEProperties.Counters)Enum.Parse(typeof(SVEProperties.Counters), counterName);
-                            int minCounters = SVEFormulaParser.ParseValue(counterParams.Length > 1 ? string.Join("", counterParams[1..]) : "1", null, card);
+                            int minCounters = SVEFormulaParser.ParseValue(counterParams.Length > 1 ? string.Join("", counterParams[1..]) : "1", player, card);
                             int currentCounterCount = card.CountOfCounter(counterType);
                             if(currentCounterCount < minCounters ^ inverse)
                                 return false;
@@ -145,7 +146,7 @@ namespace SVESimulator
                     case CardFilterSetting.Attack:
                     case CardFilterSetting.Defense:
                     case CardFilterSetting.PlayPointCost:
-                        SVEFormulaParser.ParseValueAsMinMax(value, null, out int min, out int max);
+                        SVEFormulaParser.ParseValueAsMinMax(value, player, out int min, out int max);
                         string targetStat = setting switch
                         {
                             CardFilterSetting.Attack => SVEProperties.CardStats.Attack,
@@ -156,7 +157,7 @@ namespace SVESimulator
                             return false;
                         break;
                     case CardFilterSetting.EvolveCost:
-                        SVEFormulaParser.ParseValueAsMinMax(value, null, out int minEvolveCost, out int maxEvolveCost);
+                        SVEFormulaParser.ParseValueAsMinMax(value, player, out int minEvolveCost, out int maxEvolveCost);
                         int evolveCost = card.EvolveCost();
                         if((evolveCost < minEvolveCost || evolveCost > maxEvolveCost) ^ inverse)
                             return false;
@@ -168,7 +169,7 @@ namespace SVESimulator
 
                     // Other
                     case CardFilterSetting.Advanced:
-                        bool advancedFilterPassed = CheckAdvancedCardFilter(card, value);
+                        bool advancedFilterPassed = CheckAdvancedCardFilter(card, value, player);
                         if(!advancedFilterPassed ^ inverse)
                             return false;
                         break;
@@ -190,7 +191,7 @@ namespace SVESimulator
 
         public static bool HasNameExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.NameXor);
 
-        private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value)
+        private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value, PlayerController player = null)
         {
             if(value.IsNullOrWhiteSpace())
                 return true;
@@ -206,7 +207,7 @@ namespace SVESimulator
                     int minTurnsOnField = 0;
                     int maxTurnsOnField = 0;
                     if(args.Length > 1)
-                        SVEFormulaParser.ParseValueAsMinMax(args[1].Trim(), null, out minTurnsOnField, out maxTurnsOnField);
+                        SVEFormulaParser.ParseValueAsMinMax(args[1].Trim(), player, out minTurnsOnField, out maxTurnsOnField);
                     int actualTurnsOnField = cardObject ? cardObject.NumberOfTurnsOnBoard : -1;
                     return actualTurnsOnField >= minTurnsOnField && actualTurnsOnField <= maxTurnsOnField;
                 case "hasevolvedecktarget":
