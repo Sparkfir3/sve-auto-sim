@@ -36,6 +36,7 @@ namespace SVESimulator
         public static IEnumerator ResolveEffectsAsSequence(List<string> effectList, PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone,
             Action onComplete, string additionalFilters = null, string overrideAmount = null, bool ignoreCosts = false)
         {
+            yield return new WaitForEndOfFrame();
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
             List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect });
