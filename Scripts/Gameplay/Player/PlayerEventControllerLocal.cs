@@ -504,7 +504,7 @@ namespace SVESimulator
             };
             NetworkClient.Send(msg);
 
-            // Transfer attack/defense modifiers to card
+            // Transfer attack/defense modifiers to card (transfer keywords is handled in effect solver)
             SVEEffectPool.Instance.RemovePassivesFromCard(baseCard.RuntimeCard, playerController);
             int atkDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].baseValue;
             int defDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].baseValue;
