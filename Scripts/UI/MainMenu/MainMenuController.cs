@@ -202,6 +202,12 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
+            SVEGameNetworkManager.OnFindLobbyTimeout += () =>
+            {
+                Debug.Log($"Connection to Steam lobby timed out.");
+                IsConnecting = false;
+                OnConnectionFailed?.Invoke("Connection timed out.");
+            };
             SVEGameNetworkManager.Instance.InitSteamNetworkManager(() =>
             {
                 SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
@@ -214,6 +220,12 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
+            SVEGameNetworkManager.OnFindLobbyTimeout += () =>
+            {
+                Debug.Log($"Failed to find lobby/Connection to Steam lobby timed out.");
+                IsConnecting = false;
+                OnConnectionFailed?.Invoke("Failed to find a game lobby.");
+            };
             SVEGameNetworkManager.Instance.InitSteamNetworkManager(() =>
             {
                 SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>

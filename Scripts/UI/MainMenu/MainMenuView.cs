@@ -207,6 +207,7 @@ namespace SVESimulator.UI
             }
             else
             {
+                steamRoomCodeInputField.Interactable = true;
                 connectingIndicator.SetActive(false);
             }
         }

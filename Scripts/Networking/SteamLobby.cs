@@ -92,6 +92,7 @@ namespace SVESimulator
             CurrentLobbyName = string.IsNullOrWhiteSpace(lobbyName) ? GeneralUtility.RandomAlphaString(RandomLobbyCodeLength) : lobbyName;
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, networkManager.maxConnections);
             SVEGameNetworkManager.OnStartHostSteamLobby?.Invoke(CurrentLobbyName);
+            SVEGameNetworkManager.Instance.StartConnectionTimeoutTimer();
         }
 
         public void GetLobby(string lobbyName, Action<CSteamID> onLobbyFound)
@@ -105,6 +106,7 @@ namespace SVESimulator
             SteamMatchmaking.AddRequestLobbyListResultCountFilter(1);
             SteamMatchmaking.AddRequestLobbyListStringFilter(LobbyNameKey, string.IsNullOrWhiteSpace(lobbyName) ? "" : lobbyName, ELobbyComparison.k_ELobbyComparisonEqual);
             SteamMatchmaking.RequestLobbyList();
+            SVEGameNetworkManager.Instance.StartConnectionTimeoutTimer();
         }
 
         #endregion

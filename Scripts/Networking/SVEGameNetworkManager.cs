@@ -18,6 +18,11 @@ namespace SVESimulator
         [SerializeField]
         private SVEGameNetworkManager networkManagerKcpPrefab;
 
+        [Header("Timeout"), SerializeField]
+        private float timeoutDuration = 10f;
+        [SerializeField]
+        private float timeoutTimer;
+
         // ---
 
         public static SVEGameNetworkManager Instance { get; private set; }
@@ -35,6 +40,7 @@ namespace SVESimulator
         public static event Action OnLocalConnect;
         public static event Action OnLocalDisconnect;
         public static Action<string> OnStartHostSteamLobby;
+        public static event Action OnFindLobbyTimeout;
 
         #endregion
 
@@ -53,6 +59,17 @@ namespace SVESimulator
             Instance = this;
             SteamLobby = GetComponent<SteamLobby>();
             SceneManager = GetComponent<NetworkSceneManager>();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if(timeoutTimer > 0f)
+            {
+                timeoutTimer -= Time.deltaTime;
+                if(timeoutTimer <= 0f)
+                    ConnectionTimeout();
+            }
         }
 
         public override void OnDestroy()
@@ -110,12 +127,14 @@ namespace SVESimulator
 
         public void Disconnect()
         {
-            if(!Instance.isNetworkActive)
-                return;
+            CancelConnectionTimeout();
             if(IsSteamManager)
                 SteamMatchmaking.LeaveLobby(new CSteamID(SteamLobby.CurrentLobbyID));
+            if(!Instance.isNetworkActive)
+                return;
             Instance.StopHost();
             Instance.StopServer();
+            CancelConnectionTimeout();
         }
 
         #endregion
@@ -145,6 +164,7 @@ namespace SVESimulator
         public override void OnClientConnect()
         {
             base.OnClientConnect();
+            CancelConnectionTimeout();
             OnLocalConnect?.Invoke();
         }
 
@@ -152,6 +172,29 @@ namespace SVESimulator
         {
             base.OnClientDisconnect();
             OnLocalDisconnect?.Invoke();
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Internal Controls
+
+        public void StartConnectionTimeoutTimer()
+        {
+            timeoutTimer = timeoutDuration;
+        }
+
+        public void CancelConnectionTimeout()
+        {
+            OnFindLobbyTimeout = null;
+            timeoutTimer = 0f;
+        }
+
+        private void ConnectionTimeout()
+        {
+            OnFindLobbyTimeout?.Invoke();
+            Disconnect(); // leads to CancelConnectionTimeout()
         }
 
         #endregion
