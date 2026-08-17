@@ -438,7 +438,7 @@ namespace SVESimulator
 
             if(originZone.IsNullOrWhiteSpace())
                 originZone = localZoneController.handZone.ContainsCard(card) ? SVEProperties.Zones.Hand : SVEProperties.Zones.ExArea;
-            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: !cardHasWard);
+            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
             localZoneController.PlayCardToField(card, slot);
 
             // Network message
@@ -455,6 +455,8 @@ namespace SVESimulator
             // Handle Ward
             if(cardHasWard)
                 GameUIManager.MultipleChoice.OpenEngageWardCardOptions(playerController, card);
+            else
+                SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
 
             return true;
         }
@@ -504,7 +506,7 @@ namespace SVESimulator
             };
             NetworkClient.Send(msg);
 
-            // Transfer attack/defense modifiers to card
+            // Transfer attack/defense modifiers to card (transfer keywords is handled in effect solver)
             SVEEffectPool.Instance.RemovePassivesFromCard(baseCard.RuntimeCard, playerController);
             int atkDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].baseValue;
             int defDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].baseValue;

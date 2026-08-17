@@ -221,12 +221,21 @@ namespace SVESimulator
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
             }
 
-            // Handle engage status
+            // Handle engage status & set face up
             if(baseCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0)
                 EngageCard(evolvedCard);
-
-            // Set face up
             evolvedCard.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
+
+            // Transfer keywords (transfer stats handled in PlayerEventControllerLocal)
+            if(baseCard.GetModifiedKeywords(out List<RuntimeKeyword> newKeywords, out List<RuntimeKeyword> removedKeywords))
+            {
+                if(newKeywords is { Count: > 0 })
+                    foreach(RuntimeKeyword keyword in newKeywords)
+                        ApplyKeywordToCard(evolvedCard, keyword.keywordId, keyword.valueId, adding: true);
+                if(removedKeywords is { Count: > 0 })
+                    foreach(RuntimeKeyword keyword in removedKeywords)
+                        ApplyKeywordToCard(evolvedCard, keyword.keywordId, keyword.valueId, adding: false);
+            }
 
             // Passive handling & effect triggers
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
@@ -807,7 +816,7 @@ namespace SVESimulator
 
         #region Other
 
-        public void OnCardsSelectedForAbility(PlayerInfo player, List<RuntimeCard> cards, bool executeConfirmationTiming = true)
+        public void OnCardsSelectedForAbility(PlayerInfo player, List<RuntimeCard> cards, bool executeConfirmationTiming = false)
         {
             if(isPlayerEffectSolver && player.netId.isLocalPlayer)
             {

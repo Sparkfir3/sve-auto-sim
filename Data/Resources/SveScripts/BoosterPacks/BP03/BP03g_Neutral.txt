@@ -1,0 +1,316 @@
+name Alice, Wonderland Explorer;
+id BP03-107;
+class Neutral;
+type Follower;
+trait Fable;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Put a Fable counter on this card.
+      [act] Remove a Fable counter from this card: Select a Fable follower on your field or in your EX area and put a Fable counter on it.";
+
+evolve 1;
+ability Fanfare {
+    effect GiveCounter(Fable, 1) to Self;
+}
+ability Act {
+    cost (RemoveCounter, Fable, 1);
+    effect GiveCounter(Fable, 1) to TargetPlayerCardFieldOrEx Ft(Fable);
+}
+
+// ------------------------------
+
+name Alice, Wonderland Explorer (Evolved);
+id BP03-108;
+class Neutral;
+type Evolved Follower;
+trait Fable;
+rarity L;
+stats 4/4;
+
+text "On Evolve: Look at the top 4 cards of your deck. You may put up to 2 Fable cards from among them into your EX area. Put the remaining cards on the bottom of your deck in any order.
+      [act] Remove a Fable counter from this card: Select a Fable follower on your field or in your EX area and put a Fable counter on it.";
+
+ability OnEvolve {
+    effect CheckTop(4, (ExArea, t(Fable), m(0,2)), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (RemoveCounter, Fable, 1);
+    effect GiveCounter(Fable, 1) to TargetPlayerCardFieldOrEx Ft(Fable);
+}
+
+// ------------------------------
+
+name Angel of Chaos;
+id BP03-109;
+class Neutral;
+type Follower;
+trait Angel / Fallen Angel;
+rarity L;
+cost 7;
+stats 5/5;
+
+text "Ward.
+      [act] Banish 3 Fallen Angel cards in your cemetery: Select an enemy follower on the field. Steal it and refresh it. This ability can be activated once per turn. (Stolen followers are moved to your field. When they leave the field, they are put into their owner's corresponding zone.)";
+
+keyword Ward;
+ability Act {
+    condition p(#F);
+    cost (OncePerTurn), (BanishFromCemetery, 3, t(Fallen Angel));
+    effect StealAndTarget(Refresh) to TargetOpponentCard F;
+}
+ability Spell name Refresh {
+    effect Refresh() to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Rapunzel;
+id BP03-110;
+class Neutral;
+type Follower;
+trait Princess / Fable;
+rarity G;
+cost 3;
+stats 4/5;
+
+text "Ward.
+      If this follower has no Fable counters, it can't attack enemies.";
+
+keyword Ward;
+ability Passive {
+    condition r(Fable)=0;
+    effect GiveKeyword(CannotAttack) to Self;
+}
+
+// ------------------------------
+
+name Seraph of Sin;
+id BP03-111;
+class Neutral;
+type Follower;
+trait Fallen Angel;
+rarity G;
+cost 4;
+stats 4/4;
+
+text "[fanfare] Select an enemy leader or enemy follower on the field and deal it 2 damage.
+      [lastwords] Select a Fallen Angel card that costs 3 play points or less in your cemetery and add it to your hand.";
+
+ability Fanfare {
+    effect DealDamage(2) to TargetOpponentCardOrLeader F;
+}
+ability LastWords {
+    effect Salvage(1, t(Fallen Angel)p(m(0,3)));
+}
+
+// ------------------------------
+
+name Garuel, Seraphic Leo;
+id BP03-112;
+class Neutral;
+type Follower;
+trait Angel / Beast;
+rarity G;
+cost 4;
+stats 2/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] You may put a [neutral] follower that costs X play points or less from your hand onto your field and give it "At the start of your end phase, put this card on the bottom of its owner's deck." X equals your maximum play points.";
+
+evolve 1;
+ability Fanfare {
+    effect HandToFieldAndTarget(m(0,1), Fc(Neutral)p(m(0,#(maxPlayPoints))), GiveBottomDeck);
+}
+ability Spell name GiveBottomDeck {
+    effect GiveAbility(BottomDeck) to AllPlayerCards;
+}
+ability StartEndPhase name BottomDeck {
+    cost (GivenAbility);
+    effect BottomDeck() to Self;
+}
+
+// ------------------------------
+
+name Garuel, Seraphic Leo (Evolved);
+id BP03-113;
+class Neutral;
+type Evolved Follower;
+trait Angel / Beast;
+rarity G;
+stats 3/4;
+
+text "On Evolve: Select another [neutral] follower on your field and return it to its owner's hand.";
+
+ability OnEvolve {
+    effect ReturnToHand() to TargetPlayerCard XFc(Neutral);
+}
+
+// ------------------------------
+
+name Actress Feria;
+id BP03-114;
+class Neutral;
+type Follower;
+trait Musical / Fable / Princess;
+rarity S;
+cost 1;
+stats 2/2;
+
+text "[act][engage]: Select another Fable follower on your field and put a Fable counter on it.";
+
+ability Act {
+    cost (EngageSelf);
+    condition f(FXt(Fable));
+    effect GiveCounter(Fable, 1) to TargetPlayerCard FXt(Fable);
+}
+
+// ------------------------------
+
+name Humpty Dumpty;
+id BP03-115;
+class Neutral;
+type Follower;
+trait Fable;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost00]: Evolve this follower.";
+
+evolve 0;
+
+// ------------------------------
+
+name Humpty Dumpty (Evolved);
+id BP03-116;
+class Neutral;
+type Evolved Follower;
+trait Fable;
+rarity G;
+stats 4/4;
+
+text "On Evolve: Deal 5 damage to each follower on the field. Deal 3 damage to each enemy leader. Discard your hand.";
+
+ability OnEvolve {
+    effect Sequence(DamageFollowers, DamageLeader, Discard);
+}
+ability Spell name DamageFollowers {
+    effect DealDamage(5) to AllCards F;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(3) to OpponentLeader;
+}
+ability Spell name Discard {
+    effect DiscardHand();
+}
+
+// ------------------------------
+
+name Winged Inversion;
+id BP03-117;
+class Neutral;
+type Spell;
+trait Angel / Fallen Angel;
+rarity S;
+cost 1;
+
+text "Choose one of the following. (1) Discard an Angel follower: Select an enemy follower on the field and destroy it. (2) Discard a Fallen Angel follower: Give your leader [defense]+3. Draw a card.";
+
+ability Spell {
+    condition [H(Ft(Angel)) & p(#F)] | H(Ft(Fallen Angel));
+    effect ChooseFromList(Destroy, DefDraw);
+}
+ability Spell name Destroy {
+    condition p(#F);
+    cost (Discard, 1, Ft(Angel));
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name DefDraw {
+    cost (Discard, 1, Ft(Fallen Angel));
+    effect Sequence(Def, Draw);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 3) to Leader;
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Angel of Darkness;
+id BP03-118;
+class Neutral;
+type Follower;
+trait Fallen Angel;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "[act][engage], put a Fallen Angel follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 4 damage.";
+
+ability Act {
+    condition p(#F)&f(t(Fallen Angel));
+    cost (EngageSelf), (SendToCemetery, TargetPlayerCard, Ft(Fallen Angel));
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Harbinger of the Knight;
+id BP03-119;
+class Neutral;
+type Follower;
+trait Fallen Angel;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Select an enemy follower on the field and deal it 1 damage.";
+
+evolve 1;
+ability Fanfare {
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Harbinger of the Knight (Evolved);
+id BP03-120;
+class Neutral;
+type Evolved Follower;
+trait Fallen Angel;
+rarity B;
+stats 3/3;
+
+text "On Evolve: Deal 1 damage to each enemy leader.";
+
+ability OnEvolve {
+    effect DealDamage(1) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Eggsplosion;
+id BP03-121;
+class Neutral;
+type Spell;
+trait Fable;
+rarity B;
+cost 3;
+
+text "Deal X damage to each follower on the field and each enemy leader. X equals the number of cards named Eggsplosion or Humpty Dumpty in your cemetery plus 1. (This card doesn't count.)";
+
+ability Spell {
+    effect Sequence(DamageLeader, DamageFollowers);
+}
+ability Spell name DamageFollowers {
+    effect DealDamage(y(n(Eggsplosion)|(n(Humpty Dumpty)))+1) to AllCards F;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(y(n(Eggsplosion)|(n(Humpty Dumpty)))+1) to OpponentLeader;
+}

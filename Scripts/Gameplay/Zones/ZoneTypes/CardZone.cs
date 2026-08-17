@@ -93,7 +93,7 @@ namespace SVESimulator
         {
             var filterDict = SVEFormulaParser.ParseCardFilterFormula(filter);
             foreach(CardObject card in cards)
-                card.Interactable = filterDict.MatchesCard(card);
+                card.Interactable = filterDict.MatchesCard(card, Player);
         }
 
         public void SetAllCardHighlights(CardObject.HighlightMode mode)

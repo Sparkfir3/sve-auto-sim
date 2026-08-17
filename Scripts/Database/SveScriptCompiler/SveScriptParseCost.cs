@@ -34,6 +34,7 @@ namespace SVESimulator.SveScript
                 switch(args[0].Trim())
                 {
                     // Counter Costs
+                    case "RemoveCounter":
                     case "RemoveCounters":
                         if(args.Length < 2)
                             throw new ArgumentException();

@@ -166,6 +166,29 @@ namespace SVESimulator
             // for SOME REASON, CCG kit clamps stats' min value to 0 (which only affects effectiveValue, and not baseValue) so we have to have an extra check for -1
         }
 
+        public static bool GetModifiedKeywords(this RuntimeCard card, out List<RuntimeKeyword> newKeywords, out List<RuntimeKeyword> removedKeywords)
+        {
+            Card baseCard = LibraryCardCache.GetCard(card.cardId);
+            newKeywords = null;
+            removedKeywords = null;
+
+            for(int i = 0; i < card.keywords.Count; i++)
+            {
+                if(baseCard.keywords.Exists(x => x.keywordId == card.keywords[i].keywordId && x.valueId == card.keywords[i].valueId))
+                    continue;
+                newKeywords ??= new List<RuntimeKeyword>();
+                newKeywords.Add(card.keywords[i].Copy());
+            }
+            for(int i = 0; i < baseCard.keywords.Count; i++)
+            {
+                if(card.keywords.Exists(x => x.keywordId == baseCard.keywords[i].keywordId && x.valueId == baseCard.keywords[i].valueId))
+                    continue;
+                removedKeywords ??= new List<RuntimeKeyword>();
+                removedKeywords.Add(baseCard.keywords[i].Copy());
+            }
+            return newKeywords != null || removedKeywords != null;
+        }
+
         public static bool HasQuickKeyword(this CardObject card) => card.RuntimeCard.HasQuickKeyword();
         public static bool HasQuickKeyword(this RuntimeCard card)
         {

@@ -25,6 +25,7 @@ namespace SVESimulator
             TargetPlayerCard,
             TargetPlayerCardOrLeader,
             TargetPlayerCardEx,
+            TargetPlayerCardFieldOrEx,
             TriggerCard,
 
             Opponent,

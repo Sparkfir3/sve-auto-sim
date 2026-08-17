@@ -100,6 +100,9 @@ namespace SVESimulator
                 case SVEProperties.SVEEffectTarget.TargetPlayerCardEx:
                     SelectTargetCardsToResolve(new List<string>() { SVEProperties.Zones.ExArea }, null);
                     break;
+                case SVEProperties.SVEEffectTarget.TargetPlayerCardFieldOrEx:
+                    SelectTargetCardsToResolve(new List<string>() { SVEProperties.Zones.Field, SVEProperties.Zones.ExArea }, null);
+                    break;
 
                 case SVEProperties.SVEEffectTarget.TargetOpponentCard:
                     SelectTargetCardsToResolve(null, new List<string>() { SVEProperties.Zones.Field });

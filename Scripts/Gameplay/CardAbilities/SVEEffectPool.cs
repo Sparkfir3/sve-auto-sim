@@ -221,7 +221,8 @@ namespace SVESimulator
             registeredPassives.Add(passive);
             if(passive.effect.duration == SVEProperties.PassiveDuration.OpponentTurn && localPlayer.isActivePlayer)
                 return;
-            EnablePassive(passive, localPlayer);
+            OnNextConfirmationTimingStartOrEnd += () => EnablePassive(passive, localPlayer);
+            // See TODO in ApplyAllActivePassivesToCard
         }
 
         public void UnregisterPassiveAbilities(RuntimeCard sourceCard)

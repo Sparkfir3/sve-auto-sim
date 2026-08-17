@@ -165,8 +165,8 @@ namespace SVESimulator.SveScript
                 string argument = i < argsArray.Length ? argsArray[i] : null;
                 if(argument.IsNullOrWhiteSpace() && effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
                     argument = "1";
-                if(argument == null &&
-                   (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull and not EffectParameterType.FilterOptional))
+                if(argument == null && effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull
+                   and not EffectParameterType.FilterOptional and not EffectParameterType.PassiveDuration)
                 {
                     Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                         $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
@@ -206,7 +206,7 @@ namespace SVESimulator.SveScript
                         effectData.Add("targetStats", StatTypeDictionary.GetValueOrDefault(argument, ""));
                         break;
                     case EffectParameterType.PassiveDuration:
-                        effectData.Add("duration", argument);
+                        effectData.Add("duration", argument ?? "WhileOnField");
                         break;
                     case EffectParameterType.SingleEffect:
                         effectData.Add("effectName", argument);
@@ -497,6 +497,8 @@ namespace SVESimulator.SveScript
             { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
             { "GiveAbilityEndOfTurn", new EffectParams("GiveAbilityEndOfTurnEffect",                EffectParameterType.SingleEffect) },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
+            { "Steal", new EffectParams("StealCardEffect")                                          },
+            { "StealAndTarget", new EffectParams("StealCardAndTargetEffect",                        EffectParameterType.ListOfEffects) },
             { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
             { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },
             { "CheckTop", new EffectParams("CheckTopDeckEffect",                                    false, false, EffectParameterType.CheckCardActions) },
