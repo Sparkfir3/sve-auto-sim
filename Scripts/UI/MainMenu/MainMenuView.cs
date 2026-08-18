@@ -28,6 +28,8 @@ namespace SVESimulator.UI
         private GameObject connectingIndicator;
         [SerializeField]
         private TextMeshProUGUI errorTextBox;
+        [SerializeField]
+        private SteamUserInfoDisplay userInfoDisplay;
         
         [FoldoutGroup("Cards"), SerializeField]
         private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
@@ -170,6 +172,10 @@ namespace SVESimulator.UI
                 case MainMenuViewState.PlayOnline:
                     steamRoomCodeInputField.Interactable = true;
                     steamRoomCodeInputField.Show();
+                    if(SteamLobby.TryGetUserProfileImage(out Texture2D profilePic, out string username))
+                        userInfoDisplay.ShowPlayerInfo(profilePic, username);
+                    else
+                        userInfoDisplay.HideAll();
                     break;
                 case MainMenuViewState.Connecting:
                 case MainMenuViewState.ReadyToStart:
@@ -179,6 +185,7 @@ namespace SVESimulator.UI
                 default:
                     steamRoomCodeInputField.Hide();
                     errorTextBox.gameObject.SetActive(false);
+                    userInfoDisplay.HideAll();
                     break;
             }
         }
@@ -210,6 +217,11 @@ namespace SVESimulator.UI
                 steamRoomCodeInputField.Interactable = true;
                 connectingIndicator.SetActive(false);
             }
+        }
+
+        public void OnOpponentConnected()
+        {
+            // TODO
         }
 
         #endregion

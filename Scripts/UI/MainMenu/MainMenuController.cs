@@ -23,10 +23,11 @@ namespace SVESimulator.UI
         private DeckSelectionController deckSelectionController;
         [SerializeField]
         private GameObject selectDeckError;
-        
+
+        public event Action OnOpponentConnected;
         public event Action<bool> OnTryConnection;
         public event Action<string> OnConnectionFailed;
-        
+
         private Action onNextConnectionToServerSuccess;
         private Action onNextConnectionToServerFailed;
 
