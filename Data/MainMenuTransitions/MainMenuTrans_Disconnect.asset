@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f604a2cd50c6a489ff793a67f540b6, type: 3}
+  m_Name: MainMenuTrans_Disconnect
+  m_EditorClassIdentifier: 
+  <OnStartTransition>k__BackingField:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f0934d09779d99d4f9ee29002f13ab51, type: 2}
+        m_TargetAssemblyTypeName: Sparkfire.AppStateSystem.ApplicationState, Assembly-CSharp
+        m_MethodName: SetStateInactive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  <StartPositions>k__BackingField:
+  - <TargetButton>k__BackingField: 0
+    <TargetPosition>k__BackingField: 42
+    <FaceUp>k__BackingField: 0
+    <IsActive>k__BackingField: 1
+  - <TargetButton>k__BackingField: 3
+    <TargetPosition>k__BackingField: 41
+    <FaceUp>k__BackingField: 0
+    <IsActive>k__BackingField: 1
+  - <TargetButton>k__BackingField: 7
+    <TargetPosition>k__BackingField: 4
+    <FaceUp>k__BackingField: 0
+    <IsActive>k__BackingField: 1
+  <MoveActions>k__BackingField:
+  - <TargetButton>k__BackingField: 0
+    <TargetPosition>k__BackingField: 1
+    <PostDelay>k__BackingField: 0.001
+    moveType: 7
+    toFaceUp: 1
+    isActive: 1
+  - <TargetButton>k__BackingField: 3
+    <TargetPosition>k__BackingField: 2
+    <PostDelay>k__BackingField: 0.001
+    moveType: 7
+    toFaceUp: 1
+    isActive: 1
+  - <TargetButton>k__BackingField: 7
+    <TargetPosition>k__BackingField: 3
+    <PostDelay>k__BackingField: 0
+    moveType: 7
+    toFaceUp: 1
+    isActive: 1
+  - <TargetButton>k__BackingField: 6
+    <TargetPosition>k__BackingField: 3
+    <PostDelay>k__BackingField: 0
+    moveType: 7
+    toFaceUp: 0
+    isActive: 0
+  <Delay>k__BackingField: 0.1
+  <MoveActionsSecondary>k__BackingField:
+  - <TargetButton>k__BackingField: 8
+    <TargetPosition>k__BackingField: 11
+    <PostDelay>k__BackingField: 0
+    moveType: 0
+    toFaceUp: 1
+    isActive: 0
+  - <TargetButton>k__BackingField: 9
+    <TargetPosition>k__BackingField: 11
+    <PostDelay>k__BackingField: 0
+    moveType: 0
+    toFaceUp: 1
+    isActive: 0
+  <TargetMenuState>k__BackingField: 0
+  <OnEndTransition>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []

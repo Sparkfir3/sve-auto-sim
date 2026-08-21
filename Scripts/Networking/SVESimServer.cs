@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 namespace SVESimulator
 {
