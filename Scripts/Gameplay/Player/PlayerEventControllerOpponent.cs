@@ -451,7 +451,7 @@ namespace SVESimulator
 
         public void DeclareAttack(OpponentDeclareAttackMessage msg)
         {
-            if(!oppZoneController.fieldZone.TryGetCard(msg.cardInstanceId, out CardObject attacker))
+            if(!oppZoneController.fieldZone.TryGetCard(msg.attackerInstanceId, out CardObject attacker))
             {
                 Debug.LogError($"Failed to find card to attack/defend with");
                 return;
@@ -624,6 +624,7 @@ namespace SVESimulator
 
         public void PayCostForEffect(OpponentPayEffectCostMessage msg)
         {
+            // Get data
             CardObject card = CardManager.Instance.GetCardByInstanceId(msg.cardInstanceId);
             if(!card)
             {
@@ -639,12 +640,31 @@ namespace SVESimulator
                 TriggeredAbility { trigger: SveTrigger sveTrigger } => sveTrigger.Costs,
                 _ => new List<Cost>()
             };
+            List<RuntimeCard> additionalRuntimeCardData = new();
 
-            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove);
-
+            // Move cards
             for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
             {
+                // Get card & init new RuntimeCard if necessary
                 CardObject cardToMove = CardManager.Instance.GetCardByInstanceId(msg.cardsMoveToZoneData[i].cardInstanceId);
+                if(!cardToMove)
+                {
+                    if(msg.cardsMoveToZoneData[i].startZone.Equals(SVEProperties.Zones.Deck))
+                    {
+                        RuntimeCard runtimeCard = new();
+                        NetCard netCard = msg.additionalNetCardData.FirstOrDefault(x => x.instanceId == msg.cardsMoveToZoneData[i].cardInstanceId);
+                        InitRuntimeCard(ref runtimeCard, netCard);
+                        cardToMove = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+                        additionalRuntimeCardData.Add(runtimeCard);
+                    }
+                    else
+                    {
+                        Debug.LogError($"Failed to find card with instance ID {msg.cardsMoveToZoneData[i].cardInstanceId} in zone {msg.cardsMoveToZoneData[i].startZone} " +
+                            $"to pay for ability {msg.abilityName} from card with instance ID {msg.cardInstanceId}");
+                        continue;
+                    }
+                }
+                // Actual move
                 StandardSendCardObjectToZone(cardToMove, oppZoneController, msg.cardsMoveToZoneData[i].endZone switch
                 {
                     SVEProperties.Zones.Cemetery => (x, onComplete) => oppZoneController.SendCardToCemetery(x, onComplete),
@@ -654,6 +674,9 @@ namespace SVESimulator
                 });
             }
             oppZoneController.RearrangeHand();
+
+            // Pay cost in backend
+            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove, msg.cardInstanceIdsToEngage, additionalRuntimeCardData);
         }
 
         #endregion
@@ -661,6 +684,22 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        public void OnCardsSelectedForAbility(OpponentSelectedOppCardsForAbility msg)
+        {
+            CardZone targetZone = localZoneController.fieldZone;
+            List<RuntimeCard> cards = new();
+            foreach(int instanceId in msg.cardInstanceIds)
+            {
+                if(!targetZone.TryGetCard(instanceId, out CardObject card))
+                {
+                    Debug.LogError($"Failed to find card with id {instanceId} on the field for {nameof(OnCardsSelectedForAbility)}");
+                    continue;
+                }
+                cards.Add(card.RuntimeCard);
+            }
+            sveEffectSolver.OnCardsSelectedForAbility(playerInfo, cards);
+        }
 
         public void AdvanceRng(int rngAdvanceCount)
         {

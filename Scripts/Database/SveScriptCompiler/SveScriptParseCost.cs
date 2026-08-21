@@ -34,6 +34,7 @@ namespace SVESimulator.SveScript
                 switch(args[0].Trim())
                 {
                     // Counter Costs
+                    case "RemoveCounter":
                     case "RemoveCounters":
                         if(args.Length < 2)
                             throw new ArgumentException();
@@ -60,6 +61,12 @@ namespace SVESimulator.SveScript
                     case "EngageSelf":
                         newCost.Add("$type", "SVESimulator.EngageSelfCost");
                         break;
+                    case "Engage":
+                    case "EngageCard":
+                        newCost.Add("target", args[1].Trim());
+                        newCost.Add("filter", args.Length > 2 ? args[2] : "");
+                        newCost.Add("$type", "SVESimulator.EngageCardCost");
+                        break;
                     case "LeaderDefense":
                     case "LeaderDef":
                         string defCost = string.Join("", args[1..]).Trim();
@@ -71,6 +78,11 @@ namespace SVESimulator.SveScript
                         newCost.Add("amount", pointCost);
                         newCost.Add("$type", "SVESimulator.PlayPointCost");
                         break;
+                    case "EP":
+                        string evolvePointCost = string.Join("", args[1..]).Trim();
+                        newCost.Add("amount", evolvePointCost);
+                        newCost.Add("$type", "SVESimulator.EvolvePointCost");
+                        break;
 
                     // Move Card Costs
                     case "BanishFromCemetery":
@@ -78,10 +90,19 @@ namespace SVESimulator.SveScript
                         newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
                         newCost.Add("$type", "SVESimulator.BanishFromCemeteryCost");
                         break;
+                    case "BanishTopDeck":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("$type", "SVESimulator.BanishTopDeckCost");
+                        break;
                     case "Discard":
                         newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
                         newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
                         newCost.Add("$type", "SVESimulator.DiscardCardCost");
+                        break;
+                    case "DiscardRandom":
+                    case "DiscardRandomCard":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("$type", "SVESimulator.DiscardRandomCardCost");
                         break;
                     case "SendToCemetery":
                     case "ReturnToHand":
@@ -99,6 +120,15 @@ namespace SVESimulator.SveScript
                         break;
                     case "Quick":
                         newCost.Add("$type", $"SVESimulator.QuickEffectAsCost");
+                        break;
+                    case "GivenAbility":
+                        newCost.Add("$type", $"SVESimulator.GivenAbilityAsCost");
+                        break;
+                    case "IgnorePrompt":
+                        newCost.Add("$type", $"SVESimulator.IgnorePromptAsCost");
+                        break;
+                    case "Optional":
+                        newCost.Add("$type", $"SVESimulator.OptionalEffectAsCost");
                         break;
 
                     default:

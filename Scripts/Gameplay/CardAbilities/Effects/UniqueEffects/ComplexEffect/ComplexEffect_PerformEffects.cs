@@ -14,7 +14,7 @@ namespace SVESimulator
     {
         #region Perform Effect
 
-        private IEnumerator PerformEffect(Dictionary<string, string> variables, bool ignoreCosts = false, Action onComplete = null)
+        private IEnumerator PerformEffect(bool ignoreCosts = false, Action onComplete = null)
         {
             string effectName = function.NextWord(pointerL, out pointerR);
             ComplexLog(LogMode.Perform, $"Effect Name = {effectName}");
@@ -25,6 +25,8 @@ namespace SVESimulator
             pointerL = pointerR;
 
             string overrideAmount = null;
+            int? overrideTriggerInstanceId = null;
+            string overrideTriggerZone = null;
             if(!arguments.IsNullOrWhiteSpace())
             {
                 string token = arguments.NextWord(0, out int argPointer);
@@ -33,20 +35,35 @@ namespace SVESimulator
                 {
                     case "amount":
                         arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim(), variables);
+                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim());
                         ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}");
+                        break;
+                    case "trigger":
+                        arguments.NextWord(argPointer, out argPointer); // move past '='
+                        RuntimeCard overrideTriggerCard = (variables.GetValueOrDefault(arguments[argPointer..].Trim(), null) as CE_Card)?.card;
+                        if(overrideTriggerCard != null)
+                        {
+                            overrideTriggerInstanceId = overrideTriggerCard.instanceId;
+                            // assuming if the card doesn't exist anywhere on the board, it is currently in the deck
+                            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(overrideTriggerCard.instanceId);
+                            overrideTriggerZone = cardObject && cardObject.CurrentZone ? cardObject.CurrentZone.Runtime.name : SVEProperties.Zones.Deck;
+                        }
+                        ComplexLog(LogMode.Perform, $"Override Trigger: {arguments[argPointer..].Trim()} => " +
+                            $"Instance ID {overrideTriggerInstanceId} in zone {overrideTriggerZone}");
                         break;
                     default:
                         break;
                 }
             }
 
-            yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone,
+            yield return EffectSequence.ResolveEffectsAsSequence(new List<string>() { effectName }, player,
+                overrideTriggerInstanceId ?? triggerInstanceId, overrideTriggerZone ?? triggerZone,
+                sourceInstanceId, sourceZone,
                 onComplete, overrideAmount: overrideAmount, ignoreCosts: ignoreCosts);
             yield return new WaitForEndOfFrame();
         }
 
-        private IEnumerator PerformIfElse(Dictionary<string, string> variables, bool ignoreCosts = false)
+        private IEnumerator PerformIfElse(bool ignoreCosts = false)
         {
             pointerR = function.IndexOf("\n", pointerL, StringComparison.Ordinal);
             if(pointerR == -1)
@@ -57,7 +74,7 @@ namespace SVESimulator
                 yield break;
             string[] splitB = splitA[1].Split(" else ");
 
-            string variable = ReplaceWithVariableValues(splitA[0], variables).Trim();
+            string variable = ReplaceWithVariableValues(splitA[0]).Trim();
             string ifTrue = splitB[0].Trim();
             string ifFalse = splitB.Length > 1 ? splitB[1].Trim() : null;
             bool isTrue = SVEFormulaParser.ParseValueAsCondition(variable, player, null as RuntimeCard);
@@ -89,30 +106,33 @@ namespace SVESimulator
             List<RemoveCounterData> removedCountersData = null;
 
             // Select pay or decline
-            bool waiting = true;
-            bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, effectName);
-            List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
+            bool waiting = false;
+            if(costs != null && !costs.Any(x => x is IgnorePromptAsCost))
             {
-                new MultipleChoiceWindow.MultipleChoiceEntryData
+                waiting = true;
+                bool canPayCost = player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, effectName);
+                List<MultipleChoiceWindow.MultipleChoiceEntryData> costOptions = new()
                 {
-                    text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
-                    onSelect = canPayCost ? () => waiting = false : null
-                },
-                new MultipleChoiceWindow.MultipleChoiceEntryData
-                {
-                    text = "Decline",
-                    onSelect = () =>
+                    new MultipleChoiceWindow.MultipleChoiceEntryData
                     {
-                        forceExit = true;
-                        waiting = false;
-                    }
-                },
-            };
-            GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, effectName));
-            GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
-
-            while(waiting && !BreakCondition)
-                await Task.Yield();
+                        text = canPayCost ? "Pay Cost" : "Cannot Pay Cost",
+                        onSelect = canPayCost ? () => waiting = false : null
+                    },
+                    new MultipleChoiceWindow.MultipleChoiceEntryData
+                    {
+                        text = "Decline",
+                        onSelect = () =>
+                        {
+                            forceExit = true;
+                            waiting = false;
+                        }
+                    },
+                };
+                GameUIManager.MultipleChoice.Open(player, card.LibraryCard.name, costOptions, LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, effectName));
+                GameUIManager.MultipleChoice.SetButtonActive(0, canPayCost);
+                while(waiting && !BreakCondition)
+                    await Task.Yield();
+            }
             if(forceExit)
                 return null;
 
@@ -147,7 +167,7 @@ namespace SVESimulator
         {
             bool waiting = true;
             RuntimeCard card = null;
-            player.LocalEvents.FlipTopDeckToFaceUp(async revealedCard =>
+            player.LocalEvents.FlipTopDeckToFaceUp(onComplete: async revealedCard =>
             {
                 await Task.Delay(400);
                 player.LocalEvents.FlipTopDeckToFaceDown(revealedCard);
@@ -160,9 +180,66 @@ namespace SVESimulator
                 await Task.Yield();
             await Task.Delay(200);
             ComplexLog(LogMode.Value, $"[Reveal Top Deck] Instance ID {(card != null ? card.instanceId : "null")}");
-            return card != null ? new CE_Card
+            return card != null ? new CE_Card(card) : null;
+        }
+
+        private async Task<CE_Object> RevealTopDeckUntilValue(string valueFormula)
+        {
+            RuntimeCard card = null;
+            valueFormula = ReplaceWithVariableValues(valueFormula).Trim();
+            for(int i = 0; i < player.ZoneController.deckZone.Runtime.cards.Count; i++)
             {
-                card = card
+                bool waiting = true;
+                card = player.ZoneController.deckZone.Runtime.cards[i];
+                CardObject cardObject = player.ZoneController.CreateNewCardObjectTopDeck(card);
+                player.LocalEvents.FlipTopDeckToFaceUp(cardObject, onComplete: async _ =>
+                {
+                    await Task.Delay(300);
+                    player.LocalEvents.FlipTopDeckToFaceDown(cardObject, onComplete: () => waiting = false);
+                });
+                while(waiting && !BreakCondition)
+                    await Task.Yield();
+                ComplexLog(LogMode.Value, $"{valueFormula} => {SVEFormulaParser.ParseValueAsCondition(valueFormula, player, card)}");
+                if(BreakCondition || SVEFormulaParser.ParseValueAsCondition(valueFormula, player, card))
+                    break;
+            }
+
+            // Wait
+            await Task.Delay(200);
+            ComplexLog(LogMode.Value, $"[Reveal Top Deck Until Value] Instance ID {(card != null ? card.instanceId : "null")}" +
+                $"\n with value {valueFormula}");
+            return card != null ? new CE_Card(card) : null;
+        }
+
+        private async Task<CE_Object> MillDeck(string millCountRaw)
+        {
+            bool waiting = true;
+            List<RuntimeCard> cardList = null;
+            int millCount;
+            try
+            {
+                millCount = int.Parse(millCountRaw);
+            }
+            catch
+            {
+                millCount = 0;
+            }
+
+            player.LocalEvents.MillDeck(true, millCount, async milledCards =>
+            {
+                await Task.Delay(400);
+                cardList = milledCards;
+                waiting = false;
+            });
+
+            // Wait
+            while(waiting && !BreakCondition)
+                await Task.Yield();
+            await Task.Delay(200);
+            ComplexLog(LogMode.Value, $"[Mill Deck] Milled {cardList.Count} cards, Instance IDs {string.Join(",", cardList.Select(x => x.instanceId))}");
+            return cardList != null ? new CE_CardList
+            {
+                cardList = cardList
             } : null;
         }
 

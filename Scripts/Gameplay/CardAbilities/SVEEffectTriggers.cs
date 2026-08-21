@@ -31,7 +31,7 @@ namespace SVESimulator
 
         public bool MatchesFilter(RuntimeCard card)
         {
-            return SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId).MatchesCard(card);
+            return filter.IsNullOrWhiteSpace() || SVEFormulaParser.ParseCardFilterFormula(filter, card.instanceId).MatchesCard(card);
         }
     }
 
@@ -40,10 +40,14 @@ namespace SVESimulator
     #region Card Movement
 
     public class SveOnCardEnterFieldTrigger : SveTrigger { }
+    public class SveOnCardEnterFieldFromHandTrigger : SveTrigger { }
+    public class SveOnCardEnterFieldFromNotHandTrigger : SveTrigger { }
 
-    public class SveLastWordsTrigger : SveTrigger { }
+    public class SveLastWordsTrigger : SveTriggerWithFilter { }
 
     public class SveOnCardReturnToHandFromField : SveTrigger { }
+
+    public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
 
     public class SveOnCardLeaveFieldTrigger : SveTrigger { }
 
@@ -52,6 +56,7 @@ namespace SVESimulator
     public class SveOnOtherCardLeaveFieldTrigger : SveTriggerWithFilter { }
 
     public class SveOnOpponentCardLeaveFieldTrigger : SveTriggerWithFilter { }
+    public class SveOnOpponentCardDestroyedTrigger : SveTriggerWithFilter { }
 
     // -----
 
@@ -71,9 +76,9 @@ namespace SVESimulator
 
     public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }
 
-    public class SveOnAttackTrigger : SveTrigger { }
+    public class SveOnAttackTrigger : SveTriggerWithFilter { }
 
-    public class SveOnAttackFollowerTrigger : SveTrigger { }
+    public class SveOnAttackFollowerTrigger : SveTriggerWithFilter { }
 
     public class SveOnAttackLeaderTrigger : SveTrigger { }
 
@@ -84,6 +89,8 @@ namespace SVESimulator
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
 
     public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
+
+    public class SveOnSelectedForAbilityTrigger : SveTrigger { }
 
     #endregion
 

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using CCGKit;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -164,6 +166,29 @@ namespace SVESimulator
             // for SOME REASON, CCG kit clamps stats' min value to 0 (which only affects effectiveValue, and not baseValue) so we have to have an extra check for -1
         }
 
+        public static bool GetModifiedKeywords(this RuntimeCard card, out List<RuntimeKeyword> newKeywords, out List<RuntimeKeyword> removedKeywords)
+        {
+            Card baseCard = LibraryCardCache.GetCard(card.cardId);
+            newKeywords = null;
+            removedKeywords = null;
+
+            for(int i = 0; i < card.keywords.Count; i++)
+            {
+                if(baseCard.keywords.Exists(x => x.keywordId == card.keywords[i].keywordId && x.valueId == card.keywords[i].valueId))
+                    continue;
+                newKeywords ??= new List<RuntimeKeyword>();
+                newKeywords.Add(card.keywords[i].Copy());
+            }
+            for(int i = 0; i < baseCard.keywords.Count; i++)
+            {
+                if(card.keywords.Exists(x => x.keywordId == baseCard.keywords[i].keywordId && x.valueId == baseCard.keywords[i].valueId))
+                    continue;
+                removedKeywords ??= new List<RuntimeKeyword>();
+                removedKeywords.Add(baseCard.keywords[i].Copy());
+            }
+            return newKeywords != null || removedKeywords != null;
+        }
+
         public static bool HasQuickKeyword(this CardObject card) => card.RuntimeCard.HasQuickKeyword();
         public static bool HasQuickKeyword(this RuntimeCard card)
         {
@@ -218,15 +243,18 @@ namespace SVESimulator
                 card.stats[stat.statId].onValueChanged?.Invoke(stat.baseValue, stat.baseValue); // resets atk/def/cost stat displays
             }
 
-            card.keywords.Clear();
-            foreach(RuntimeKeyword keyword in baseCard.keywords)
+            List<RuntimeKeyword> currentKeywords = new(card.keywords);
+            for(int i = 0; i < currentKeywords.Count; i++)
             {
-                RuntimeKeyword newKeyword = new()
-                {
-                    keywordId = keyword.keywordId,
-                    valueId = keyword.valueId
-                };
-                card.keywords.Add(newKeyword); // not using RuntimeCard's native AddKeyword() to avoid calling the onKeywordAdded event multiple times
+                if(baseCard.keywords.Exists(x => x.keywordId == currentKeywords[i].keywordId && x.valueId == currentKeywords[i].valueId))
+                    continue;
+                card.RemoveKeyword(currentKeywords[i].keywordId, currentKeywords[i].valueId);
+            }
+            for(int i = 0; i < baseCard.keywords.Count; i++)
+            {
+                if(card.keywords.Exists(x => x.keywordId == baseCard.keywords[i].keywordId && x.valueId == baseCard.keywords[i].valueId))
+                    continue;
+                card.AddKeyword(baseCard.keywords[i].keywordId, baseCard.keywords[i].valueId);
             }
         }
 
@@ -334,6 +362,58 @@ namespace SVESimulator
                 valueId = keyword.valueId
             };
             return newKeyword;
+        }
+
+        public static Cost CopyWithOverrideAmount(this Cost baseCost, int newAmount) => baseCost?.CopyWithOverrideAmount(newAmount.ToString());
+        public static Cost CopyWithOverrideAmount(this Cost baseCost, string newAmount)
+        {
+            Type type = baseCost.GetType();
+            Cost newCost = Activator.CreateInstance(type) as Cost;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "amount":
+                        fields[i].SetValue(newCost, newAmount);
+                        break;
+                    default:
+                        fields[i].SetValue(newCost, fields[i].GetValue(baseCost));
+                        break;
+                }
+            }
+            return newCost;
+        }
+
+        public static Ability CopyWithRemoveCostOfType<T>(this Ability ability) where T : Cost
+        {
+            Type type = ability.GetType();
+            Ability newAbility = Activator.CreateInstance(type) as Ability;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "effect":
+                        fields[i].SetValue(newAbility, ability.effect is SveEffect sveEffect ? sveEffect.CopyWithAddFilters() : ability.effect);
+                        break;
+                    case "trigger":
+                        fields[i].SetValue(newAbility, ability is TriggeredAbility triggeredAbility && triggeredAbility.trigger is SveTrigger sveTrigger
+                            ? sveTrigger.CopyWithRemoveCostOfType<T>() : null);
+                        break;
+                    case "costs":
+                        List<Cost> newCostList = ability is ActivatedAbility actAbility ? new(actAbility.costs) : new();
+                        for(int j = 0; j < newCostList.Count; j++)
+                            if(newCostList[i] is T)
+                                newCostList.RemoveAt(i--);
+                        fields[i].SetValue(newAbility, newCostList); // TODO - create new instance of each cost
+                        break;
+                    default:
+                        fields[i].SetValue(newAbility, fields[i].GetValue(ability));
+                        break;
+                }
+            }
+            return newAbility;
         }
 
         #endregion

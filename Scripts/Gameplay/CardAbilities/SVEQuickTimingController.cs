@@ -67,7 +67,8 @@ namespace SVESimulator
 
         #region Start Quick Timing
 
-        public void CallQuickTimingCombat(CardObject attackingCard, CardObject defendingCard, Action onComplete = null)
+        public void CallQuickTimingCombat(CardObject attackingCard, CardObject defendingCard, Action onComplete = null) => CallQuickTimingCombat(attackingCard, defendingCard, -1, onComplete);
+        public void CallQuickTimingCombat(CardObject attackingCard, CardObject defendingCard, int defenderSlotNumber, Action onComplete = null)
         {
             if(quickTimingState != QuickTimingState.Inactive)
             {
@@ -81,7 +82,7 @@ namespace SVESimulator
             }
 
             CmdExecuteQuickTiming(true);
-            CmdPlayAttackPreview(attackingCard.RuntimeCard.instanceId, defendingCard.RuntimeCard.instanceId);
+            CmdPlayAttackPreview(attackingCard.RuntimeCard.instanceId, defendingCard.RuntimeCard.instanceId, defenderSlotNumber);
             StartCoroutine(WaitForQuickTimingComplete(onComplete));
         }
 
@@ -236,9 +237,10 @@ namespace SVESimulator
         // -----
 
         [Command(requiresAuthority = false)]
-        private void CmdPlayAttackPreview(int attackerId, int defenderId) => TargetPlayAttackPreview(GetNonTurnPlayer().netIdentity.connectionToClient, attackerId, defenderId);
+        private void CmdPlayAttackPreview(int attackerId, int defenderId, int defenderSlotNumber)
+            => TargetPlayAttackPreview(GetNonTurnPlayer().netIdentity.connectionToClient, attackerId, defenderId, defenderSlotNumber);
         [TargetRpc]
-        private void TargetPlayAttackPreview(NetworkConnectionToClient networkConnection, int attackerId, int defenderId)
+        private void TargetPlayAttackPreview(NetworkConnectionToClient networkConnection, int attackerId, int defenderId, int defenderSlotNumber)
         {
             PlayerCardZoneController attackerZoneController = localPlayer.OppZoneController;
             CardObject attacker = attackerZoneController.fieldZone.GetAllPrimaryCards().FirstOrDefault(x => x.RuntimeCard.instanceId == attackerId);
@@ -248,9 +250,12 @@ namespace SVESimulator
             CardObject defender = defenderZoneController.fieldZone.GetAllPrimaryCards().FirstOrDefault(x => x.RuntimeCard.instanceId == defenderId);
             if(!defender)
                 defender = defenderZoneController.leaderZone.AllCards.FirstOrDefault(x => x.RuntimeCard.instanceId == defenderId);
-            Debug.Assert(defender, $"Attack Preview: Failed to finder defender with ID {defenderId}");
+            Debug.Assert(defender || defenderSlotNumber != -1, $"Attack Preview: Failed to finder defender with ID {defenderId} (defender slot number: {defenderSlotNumber})");
 
-            CardManager.Animator.PlayAttackPreview(attacker, defender);
+            if(defender)
+                CardManager.Animator.PlayAttackPreview(attacker, defender);
+            else
+                CardManager.Animator.PlayAttackPreview(attacker, defenderZoneController.fieldZone.GetSlotPosition(defenderSlotNumber));
         }
 
         [Command(requiresAuthority = false)]

@@ -78,6 +78,8 @@ namespace SVESimulator.SveScript
             { "CannotDestroyByAbilities",   new Keyword(1, 4) },
             { "CannotAttack",               new Keyword(1, 5) },
             { "CannotAttackLeaders",        new Keyword(1, 6) },
+            { "CannotAct",                  new Keyword(1, 11) },
+            { "OpponentMustSelectAsTarget", new Keyword(1, 12) },
 
             // Plus Damage
             { "Plus1Damage",                new Keyword(2, 0) },
@@ -100,6 +102,7 @@ namespace SVESimulator.SveScript
             { "Stack",                      new Keyword(6, 1) },
             { "Spell",                      new Keyword(7, 1) },
             { "Prayer",                     new Keyword(8, 1) },
+            { "Fable",                      new Keyword(9, 1) },
         };
     }
 }

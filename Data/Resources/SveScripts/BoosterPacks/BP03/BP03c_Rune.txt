@@ -1,0 +1,402 @@
+name Wizardess of Oz;
+id BP03-038;
+id-en BP03-035;
+class Rune;
+type Follower;
+trait Mage / Fable;
+rarity L;
+cost 6;
+stats 4/6;
+
+text "[fanfare] Summon a Magic Sediment token. Add 1 to a Stack on your field. Draw a card.
+      [q][act] Earth Rite: The next spell you play this turn costs 4 less. This ability can be activated once per turn.";
+
+ability Fanfare {
+    effect Sequence(Token, Stack, Draw);
+}
+ability Spell name Token {
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+ability Spell name Stack {
+    effect GiveCounter(Stack, 1) to TargetPlayerCard r(Stack);
+}
+ability Spell name Draw {
+    effect Draw();
+}
+ability Act {
+    cost (OncePerTurn), (Quick), (EarthRite);
+    effect MinusCostNextSpellEndOfTurn(4);
+}
+
+// ------------------------------
+
+name Mystic King;
+id BP03-039;
+id-en BP03-037;
+class Rune;
+type Follower;
+trait Chess;
+rarity L;
+cost 5;
+stats 5/5;
+
+text "[evolve][cost02]: Evolve this follower.
+      [act] Put another Chess follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities except [evolve] can't be activated.";
+
+evolve 2;
+ability Act {
+    condition p(#F);
+    cost (SendToCemetery, TargetPlayerCard, Ft(Chess)X);
+    effect Sequence(Damage, CantAct);
+}
+ability Spell name Damage {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name CantAct {
+    effect GiveKeywordEndOfTurn(CantAct) to Self;
+}
+
+// ------------------------------
+
+name Mystic King (Evolved);
+id BP03-040;
+id-en BP03-038;
+class Rune;
+type Evolved Follower;
+trait Chess;
+rarity L;
+stats 6/6;
+
+text "On Evolve: Select up to 4 Chess followers with different names that cost 4 play points or less in your cemetery and put them onto your field.
+      [act] Put another Chess follower from your field into its owner's cemetery: Select an enemy follower on the field and deal it 5 damage. For the rest of this turn, this card's [act] abilities can't be activated.";
+
+ability OnEvolve {
+    effect CemeteryToField(m(0,4), Ft(Chess)p(m(0,4))n^);
+}
+ability Act {
+    condition p(#F);
+    cost (SendToCemetery, TargetPlayerCard, Ft(Chess));
+    effect Sequence(Damage, CantAct);
+}
+ability Spell name Damage {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name CantAct {
+    effect GiveKeywordEndOfTurn(CantAct) to Self;
+}
+
+// ------------------------------
+
+name Falise, Leonardian Mage;
+id BP03-041;
+id-en BP03-039;
+class Rune;
+type Follower;
+trait Mage / Academic;
+rarity G;
+cost 4;
+stats 4/5;
+
+text "[fanfare] Earth Rite: Give this follower Storm.
+      [fanfare] Spellchain (7): Deal 4 damage to each enemy follower on the field.";
+
+ability Fanfare name EarthRite {
+    cost (EarthRite);
+    effect GiveKeyword(Storm) to Self;
+}
+ability Fanfare name Damage {
+    condition s(7);
+    effect DealDamage(4) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Milady, Mystic Queen;
+id BP03-042;
+id-en BP03-040;
+class Rune;
+type Follower;
+trait Chess;
+rarity G;
+cost 4;
+stats 2/2;
+
+text "[evolve][cost01]: Evolve this follower.
+      [fanfare] Summon a Magical Pawn token. Put a Magical Pawn token into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(Field, ExArea);
+}
+ability Spell name Field {
+    effect SummonToken(Magical Pawn, Field, 1);
+}
+ability Spell name ExArea {
+    effect SummonToken(Magical Pawn, ExArea, 1);
+}
+
+// ------------------------------
+
+name Milady, Mystic Queen (Evolved);
+id BP03-043;
+id-en BP03-041;
+class Rune;
+type Evolved Follower;
+trait Chess;
+rarity G;
+stats 3/3;
+
+text "On Evolve: Select an enemy follower on the field and deal it X damage. X equals the number of Chess followers on your field.";
+
+ability OnEvolve {
+    effect DealDamage(f(Ft(Chess))) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Check;
+id BP03-044;
+id-en BP03-042;
+class Rune;
+type Spell;
+trait Chess;
+rarity G;
+cost 3;
+
+text "Select an enemy follower on the field. Deal it 4 damage and look at the top 3 cards of your deck. You may reveal a Chess card with a different name from this card from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, TopDeck);
+}
+ability Spell name Damage {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability Spell name TopDeck {
+    effect CheckTop(3, (Hand, t(Chess)!n(Check), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Mr. Heinlein, Shadow Mage;
+id BP03-045;
+id-en BP03-043;
+class Rune;
+type Follower;
+trait Mage / Academic;
+rarity S;
+cost 5;
+stats 4/4;
+
+text "[fanfare] Put the top 4 cards of your deck into your cemetery. Recover X play points. X equals the number of spells put into your cemetery by this ability.
+      [act][engage], discard a spell: Select an enemy follower on the field and deal it 4 damage.";
+
+ability Fanfare {
+    effect ComplexEffect(
+        let amt = mill(4).filterCount(S)
+        perform PlayPoints { amount = amt }
+    );
+}
+ability Spell name PlayPoints {
+    effect GiveStat(PP, _) to Self;
+}
+ability Act {
+    cost (EngageSelf), (Discard, 1, S);
+    condition p(#F);
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Magical Knight;
+id BP03-046;
+id-en BP03-044;
+class Rune;
+type Follower;
+trait Chess;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve][cost01]: Evolve this follower.
+      Whenever another Chess follower is put onto your field, give it [attack]+1.";
+
+evolve 1;
+ability OnOtherEnterField {
+    filter Ft(Chess);
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Magical Knight (Evolved);
+id BP03-047;
+id-en BP03-045;
+class Rune;
+type Follower;
+trait Chess;
+rarity S;
+stats 4/4;
+
+text "On Evolve: Summon a Magical Pawn token.
+      Whenever another Chess follower is put onto your field, give it [attack]+1.";
+
+ability OnEvolve {
+    effect SummonToken(Magical Pawn, Field, 1);
+}
+ability OnOtherEnterField {
+    filter Ft(Chess);
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Gingerbread House;
+id BP03-048;
+id-en BP03-046;
+class Rune;
+type Amulet;
+trait Earth Sigil / Fable;
+rarity S;
+cost 1;
+
+text "Stack.
+      [fanfare] Give your leader [defense]+3.";
+
+keyword Stack;
+ability Fanfare {
+    effect GiveStat(Def, 3) to Leader;
+}
+
+// ------------------------------
+
+name Witch of Sweets;
+id BP03-049;
+id-en BP03-048;
+class Rune;
+type Follower;
+trait Mage / Fable;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve][cost00]: Evolve this follower.";
+
+evolve 0;
+
+// ------------------------------
+
+name Witch of Sweets (Evolved);
+id BP03-050;
+id-en BP03-049;
+class Rune;
+type Evolved Follower;
+trait Mage / Fable;
+rarity B;
+stats 2/2;
+
+text "On Evolve: Draw a card.";
+
+ability OnEvolve {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Magical Rook;
+id BP03-051;
+id-en BP03-050;
+class Rune;
+type Follower;
+trait Chess;
+rarity B;
+cost 1;
+stats 1/2;
+
+text "[fanfare] If there is a Magical Pawn in your EX area, give this follower [defense]+1 and Ward.";
+
+ability Fanfare {
+    condition x(n(Magical Pawn));
+    effect Sequence(Def, Ward);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Self;
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to Self;
+}
+
+// ------------------------------
+
+name Magical Bishop;
+id BP03-052;
+id-en BP03-051;
+class Rune;
+type Follower;
+trait Chess;
+rarity B;
+cost 2;
+stats 1/2;
+
+text "[fanfare] Put a Magical Pawn token into your EX area.
+      At the start of your end phase, if there is another Chess follower on your field, deal 1 damage to each enemy leader and give your leader [defense]+1.";
+
+ability Fanfare {
+    effect SummonToken(Magical Pawn, ExArea, 1);
+}
+ability StartEndPhase {
+    condition f(FXt(Chess));
+    effect Sequence(Damage, Def);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to OpponentLeader;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Blitz;
+id BP03-053;
+id-en BP03-052;
+class Rune;
+type Spell;
+trait Chess;
+rarity B;
+cost 1;
+
+text "Select an enemy follower on the field and deal it X damage. X equals the number of cards named Magical Pawn on your field plus 2.";
+
+ability Spell {
+    condition p(#F);
+    effect DealDamage(f(n(Magical Pawn))+2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Witch's Cauldron;
+id BP03-054;
+id-en BP03-053;
+class Rune;
+type Amulet;
+trait Mage / Earth Sigil;
+rarity B;
+cost 1;
+
+text "Stack.
+      [fanfare] Look at the top 4 cards of your deck. You may reveal a card with Earth Rite from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.";
+
+keyword Stack;
+ability Fanfare {
+    effect CheckTop(4, (Hand, k(EarthRite), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Daria, Dimensional Drifter;
+id BP03-LD02;
+class Rune;
+type Leader;

@@ -165,8 +165,8 @@ namespace SVESimulator.SveScript
                 string argument = i < argsArray.Length ? argsArray[i] : null;
                 if(argument.IsNullOrWhiteSpace() && effectParams.parameters[i] is EffectParameterType.Amount or EffectParameterType.Amount2)
                     argument = "1";
-                if(argument == null &&
-                   (effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull and not EffectParameterType.FilterOptional))
+                if(argument == null && effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull
+                   and not EffectParameterType.FilterOptional and not EffectParameterType.PassiveDuration)
                 {
                     Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                         $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
@@ -206,7 +206,7 @@ namespace SVESimulator.SveScript
                         effectData.Add("targetStats", StatTypeDictionary.GetValueOrDefault(argument, ""));
                         break;
                     case EffectParameterType.PassiveDuration:
-                        effectData.Add("duration", argument);
+                        effectData.Add("duration", argument ?? "WhileOnField");
                         break;
                     case EffectParameterType.SingleEffect:
                         effectData.Add("effectName", argument);
@@ -216,6 +216,9 @@ namespace SVESimulator.SveScript
                         break;
 
                     // Dynamic length arguments - must always be the last argument in the list
+                    case EffectParameterType.FilteredSearchDeckActionsList:
+                        ParseFilteredSearchDeckActionsList(argsArray[i..], ref effectData);
+                        return;
                     case EffectParameterType.CheckCardActions:
                         ParseCheckTopArgsArray(argsArray[i..], ref effectData);
                         return;
@@ -230,6 +233,39 @@ namespace SVESimulator.SveScript
             }
         }
 
+        #endregion
+
+        // -----
+
+        #region Parse Special Args
+
+        private static void ParseFilteredSearchDeckActionsList(in string[] argsArray, ref JObject effectData)
+        {
+            if(argsArray.Length > 6)
+                throw new ArgumentException($"Invalid argument array: received ({string.Join(",", argsArray)}) with {argsArray.Length} parameters, but no more than 6 are supported for SearchDeckFilteredOptions effect");
+
+            for(int i = 0; i < 3; i++)
+            {
+                string filter, action;
+                int filterIndex = i * 2;
+                int actionIndex = filterIndex + 1;
+                if(actionIndex > argsArray.Length)
+                {
+                    filter = null;
+                    action = "None";
+                }
+                else
+                {
+                    filter = argsArray[filterIndex];
+                    action = argsArray[actionIndex];
+                }
+
+                if(!filter.IsNullOrWhiteSpace())
+                    effectData.Add($"filter{(i == 0 ? "" : (i + 1).ToString())}", filter);
+                effectData.Add($"searchDeckAction{(i == 0 ? "" : (i + 1).ToString())}", action);
+            }
+        }
+
         private static void ParseCheckTopArgsArray(in string[] argsArray, ref JObject effectData)
         {
             if(argsArray.Length > 4)
@@ -239,12 +275,13 @@ namespace SVESimulator.SveScript
             effectData.Add("amount", argsArray[0]);
             for(int i = 1; i <= 3; i++)
             {
-                string action, filter, amount;
+                string action, filter, amount, parameters;
                 if(i >= argsArray.Length)
                 {
                     action = "None";
                     filter = null;
                     amount = null;
+                    parameters = null;
                 }
                 else
                 {
@@ -256,11 +293,16 @@ namespace SVESimulator.SveScript
                     filter = subArgsArray.Length >= 3 ? subArgsArray[1] : null;
                     amount = subArgsArray.Length >= 3 ? subArgsArray[2]
                         : (subArgsArray.Length == 2 ? subArgsArray[1] : null);
+                    parameters = subArgsArray.Length >= 4 ? subArgsArray[3] : null;
                 }
 
                 effectData.Add($"checkAction{i}", action);
-                effectData.Add($"checkFilter{i}", filter);
-                effectData.Add($"checkAmount{i}", amount);
+                if(!filter.IsNullOrWhiteSpace())
+                    effectData.Add($"checkFilter{i}", filter);
+                if(!amount.IsNullOrWhiteSpace())
+                    effectData.Add($"checkAmount{i}", amount);
+                if(!parameters.IsNullOrWhiteSpace())
+                    effectData.Add($"checkParams{i}", parameters);
             }
         }
 
@@ -284,6 +326,7 @@ namespace SVESimulator.SveScript
 
             // Unique effect parameters
             SearchDeckAction,
+            FilteredSearchDeckActionsList,
             CheckCardActions, // parser includes "amount" field as part of this
             CreateTokenOption,
 
@@ -346,11 +389,13 @@ namespace SVESimulator.SveScript
         {
             // Movement - Deck to Zone
             { "DrawThenDamage", new EffectParams("DrawThenDamageEffect",                    EffectParameterType.Amount, EffectParameterType.Amount2) },
+            { "DeckToField", new EffectParams("DeckToFieldEffect",                          true, false) },
             { "Draw", new EffectParams("DrawCardEffect",                                    true, false, EffectParameterType.Amount) },
             { "DrawCard", new EffectParams("DrawCardEffect",                                true, false, EffectParameterType.Amount) },
             { "Mill", new EffectParams("MillDeckEffect",                                    false, false, EffectParameterType.Amount) },
             { "RedrawHand", new EffectParams("RedrawHandEffect",                            false, false, EffectParameterType.AmountDefaultNull) },
             { "Search", new EffectParams("SearchDeckEffect",                                false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
+            { "SearchFilteredOptions", new EffectParams("SearchDeckFilteredOptionsEffect",  false, false, EffectParameterType.Amount, EffectParameterType.FilteredSearchDeckActionsList) },
             { "SearchAndTarget", new EffectParams("SearchDeckAndTargetEffect",              false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction, EffectParameterType.ListOfEffects) },
             { "TopDeckToEx", new EffectParams("TopDeckToExEffect",                          false, false, EffectParameterType.Amount) },
             { "TopDeckToExArea", new EffectParams("TopDeckToExEffect",                      false, false, EffectParameterType.Amount) },
@@ -382,10 +427,15 @@ namespace SVESimulator.SveScript
             { "HandToExAndTarget", new EffectParams("HandToExAreaAndTargetEffect",                      false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "HandToExAreaAndTarget", new EffectParams("HandToExAreaAndTargetEffect",                  false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "HandToField", new EffectParams("HandToFieldEffect",                                      false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "HandToFieldAndTarget", new EffectParams("HandToFieldAndTargetEffect",                    false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
 
             // Movement - Cemetery to Zone
+            { "CemeteryToDeckAndShuffle", new EffectParams("CemeteryToDeckAndShuffleEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "CemeteryToExArea", new EffectParams("CemeteryToExAreaEffect",                            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "CemeteryToExAreaAndTarget", new EffectParams("CemeteryToExAreaAndTargetEffect",          true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "CemeteryToField", new EffectParams("CemeteryToFieldEffect",                              true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("CemeteryToFieldAndTargetEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
+            { "PlayCardFromCemeterySetCost", new EffectParams("PlayCardFromCemeterySetCostEffect",      false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "PlaySpellFromCemetery", new EffectParams("PlaySpellFromCemeteryEffect",                  false, false, EffectParameterType.Filter) },
             { "PlaySpellFromCemeterySetCost", new EffectParams("PlaySpellFromCemeterySetCostEffect",    false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "Salvage", new EffectParams("SalvageCardEffect",                                          false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
@@ -428,6 +478,7 @@ namespace SVESimulator.SveScript
             { "DestroyAndControllerPerformEffect", new EffectParams("DestroyAndControllerPerformEffect",        EffectParameterType.SingleEffect) },
             { "OpponentPerformEffect", new EffectParams("OpponentPerformEffect",                                EffectParameterType.SingleEffect) },
             { "PerformAsEachTarget", new EffectParams("PerformAsEachTargetEffect",                              EffectParameterType.SingleEffect) },
+            { "OrderedTargetForSequence", new EffectParams("OrderedTargetForEffectSequence",                    EffectParameterType.ListOfEffects) },
             { "PerformWithTargetAmount", new EffectParams("PerformWithTargetAmountEffect",                      EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "TargetForEffectSequence", new EffectParams("TargetForEffectSequence",                            EffectParameterType.ListOfEffects) },
             { "TargetForSequence", new EffectParams("TargetForEffectSequence",                                  EffectParameterType.ListOfEffects) },
@@ -442,16 +493,22 @@ namespace SVESimulator.SveScript
             // ------------------------------
 
             // Other Effects
-            { "Evolve", new EffectParams("EvolveEffect")                                    },
-            { "GiveTrait", new EffectParams("GiveTraitEffect",                              EffectParameterType.Trait) },
-            { "Shuffle", new EffectParams("ShuffleDeckEffect",                              true, false) },
-            { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                          true, false) },
-            { "CheckTop", new EffectParams("CheckTopDeckEffect",                            false, false, EffectParameterType.CheckCardActions) },
-            { "Complex", new EffectParams("ComplexEffect",                                  false, false, EffectParameterType.Function) },
-            { "ComplexEffect", new EffectParams("ComplexEffect",                            false, false, EffectParameterType.Function) },
-            { "ExtraTurn", new EffectParams("ExtraTurnEffect",                              false, false) },
-            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",    false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
-            { "RevealTop", new EffectParams("RevealTopDeckEffect",                          false, false, EffectParameterType.CheckCardActions) },
+            { "Evolve", new EffectParams("EvolveEffect")                                            },
+            { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
+            { "GiveAbilityEndOfTurn", new EffectParams("GiveAbilityEndOfTurnEffect",                EffectParameterType.SingleEffect) },
+            { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },
+            { "Steal", new EffectParams("StealCardEffect")                                          },
+            { "StealAndTarget", new EffectParams("StealCardAndTargetEffect",                        EffectParameterType.ListOfEffects) },
+            { "Shuffle", new EffectParams("ShuffleDeckEffect",                                      true, false) },
+            { "ShuffleDeck", new EffectParams("ShuffleDeckEffect",                                  true, false) },
+            { "CheckTop", new EffectParams("CheckTopDeckEffect",                                    false, false, EffectParameterType.CheckCardActions) },
+            { "Complex", new EffectParams("ComplexEffect",                                          false, false, EffectParameterType.Function) },
+            { "ComplexEffect", new EffectParams("ComplexEffect",                                    false, false, EffectParameterType.Function) },
+            { "EvolveSelectTarget", new EffectParams("EvolveSelectTargetEffect",                    false, false, EffectParameterType.Filter) },
+            { "ExtraTurn", new EffectParams("ExtraTurnEffect",                                      false, false) },
+            { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",            false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
+            { "MinusCostNextSpellEndOfTurn", new EffectParams("MinusCostNextSpellEndOfTurnEffect",  false, false, EffectParameterType.Amount) },
+            { "RevealTop", new EffectParams("RevealTopDeckEffect",                                  false, false, EffectParameterType.CheckCardActions) },
 
             // ------------------------------
 
@@ -462,6 +519,7 @@ namespace SVESimulator.SveScript
 
         private static Dictionary<string, EffectParams> PassiveEffectInfoDictionary = new()
         {
+            { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect) },
             { "GiveKeyword", new EffectParams("GiveKeywordPassive",                         false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
             { "MinusCostOther", new EffectParams("MinusCostOtherPassive",                   false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },

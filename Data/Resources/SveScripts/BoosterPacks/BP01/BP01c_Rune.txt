@@ -117,8 +117,14 @@ text "[quick]
       At the start of your next end phase, banish each card in your EX area.";
 
 keyword Quick;
+ability Spell {
+    effect Sequence(Fill EX, GiveBanish);
+}
 ability Spell name "Fill EX" {
     effect TopDeckToEx(5-x());
+}
+ability Spell name GiveBanish {
+    effect GiveAbilityEndOfTurn(Banish) to Leader;
 }
 ability StartEndPhase name Banish {
     effect Banish() to AllPlayerCardsEx;

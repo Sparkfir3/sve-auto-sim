@@ -374,6 +374,6 @@ name Magical Pawn;
 id BP02-T04;
 class Rune;
 type Follower / Token;
-trait Officer;
+trait Chess;
 cost 1;
 stats 2/1;

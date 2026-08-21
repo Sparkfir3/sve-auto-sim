@@ -56,6 +56,7 @@ namespace SVESimulator
 
             // Other
             NetworkServer.RegisterHandler<LocalServeAndRaceMessage>(OnServeAndRace);
+            NetworkServer.RegisterHandler<LocalSelectedOppCardsForAbility>(OnSelectedOppCardsForAbility);
             NetworkServer.RegisterHandler<LocalAdvanceRngMessage>(OnAdvanceRng);
             NetworkServer.RegisterHandler<LocalTellOpponentPerformEffectMessage>(OnTellOpponentPerformEffect);
         }
@@ -104,6 +105,7 @@ namespace SVESimulator
 
             // Other
             NetworkServer.UnregisterHandler<LocalServeAndRaceMessage>();
+            NetworkServer.UnregisterHandler<LocalSelectedOppCardsForAbility>();
             NetworkServer.UnregisterHandler<LocalAdvanceRngMessage>();
             NetworkServer.UnregisterHandler<LocalTellOpponentPerformEffectMessage>();
         }
@@ -608,6 +610,19 @@ namespace SVESimulator
                 TriggeredAbility { trigger: SveTrigger sveTrigger } => sveTrigger.Costs,
                 _ => null
             };
+            List<NetCard> additionalNetCardData = new();
+            for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
+            {
+                if(!msg.cardsMoveToZoneData[i].startZone.Equals(SVEProperties.Zones.Deck))
+                    continue;
+                foreach(RuntimeCard zoneCard in player.namedZones[msg.cardsMoveToZoneData[i].startZone].cards)
+                {
+                    if(zoneCard.instanceId != msg.cardsMoveToZoneData[i].cardInstanceId)
+                        continue;
+                    additionalNetCardData.Add(NetworkingUtils.GetNetCard(zoneCard));
+                    break;
+                }
+            }
 
             OpponentPayEffectCostMessage payCostMsg = new()
             {
@@ -617,9 +632,11 @@ namespace SVESimulator
                 abilityName = msg.abilityName,
                 cardsMoveToZoneData = msg.cardsMoveToZoneData,
                 countersToRemove = msg.countersToRemove,
+                cardInstanceIdsToEngage = msg.cardInstanceIdsToEngage,
+                additionalNetCardData = additionalNetCardData.ToArray()
             };
             server.SafeSendToClient(server.gameState.currentOpponent, payCostMsg);
-            (server.effectSolver as SVEEffectSolver).PayAbilityCosts(player, card, costList, msg.cardsMoveToZoneData, msg.countersToRemove);
+            (server.effectSolver as SVEEffectSolver).PayAbilityCosts(player, card, costList, msg.cardsMoveToZoneData, msg.countersToRemove, msg.cardInstanceIdsToEngage);
         }
 
         #endregion
@@ -650,6 +667,16 @@ namespace SVESimulator
             server.SafeSendToClient(server.gameState.currentOpponent, serveAndRaceMessage);
             (server.effectSolver as SVEEffectSolver).ServeCard(msg.playerNetId, card, carrots, msg.useEvolvePoint, msg.count);
             (server.effectSolver as SVEEffectSolver).RaceCard(msg.playerNetId, card, msg.count);
+        }
+
+        private void OnSelectedOppCardsForAbility(NetworkConnection conn, LocalSelectedOppCardsForAbility msg)
+        {
+            LocalSelectedOppCardsForAbility selectedMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                cardInstanceIds = msg.cardInstanceIds
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, selectedMsg);
         }
 
         private void OnAdvanceRng(NetworkConnection conn, LocalAdvanceRngMessage msg)

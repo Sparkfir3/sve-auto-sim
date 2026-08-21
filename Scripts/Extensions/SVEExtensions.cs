@@ -14,8 +14,9 @@ namespace SVESimulator
     {
 		#region Card Filters
 
-        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in CardObject card) => filters.MatchesCard(card ? card.RuntimeCard : null);
-        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in RuntimeCard card)
+        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in CardObject card, PlayerController player = null)
+            => filters.MatchesCard(card ? card.RuntimeCard : null, player);
+        public static bool MatchesCard(this Dictionary<CardFilterSetting, string> filters, in RuntimeCard card, PlayerController player = null)
         {
             if(filters == null || filters.Count == 0)
                 return true;
@@ -24,7 +25,10 @@ namespace SVESimulator
 
             if(filters.TryGetValue(CardFilterSetting.FilterOr, out string otherFilterRaw) && !otherFilterRaw.IsNullOrWhiteSpace())
             {
-                if(SVEFormulaParser.ParseCardFilterFormula(otherFilterRaw, card).MatchesCard(card))
+                var otherFilter = SVEFormulaParser.ParseCardFilterFormula(otherFilterRaw);
+                if(otherFilter.ContainsKey(CardFilterSetting.ExcludeSelf) && filters.TryGetValue(CardFilterSetting.ExcludeSelf, out string selfInstanceId))
+                    otherFilter[CardFilterSetting.ExcludeSelf] = selfInstanceId;
+                if(otherFilter.MatchesCard(card))
                     return true;
             }
 
@@ -65,8 +69,11 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        string[] traitList = value.Split(',');
-                        if(!libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').Any(x => traitList.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
+                        string[] traitListToMatch = value.Split(',');
+                        List<string> cardTraitList = libraryCard.GetStringProperty(SVEProperties.CardStats.Trait).Split('/').ToList();
+                        if(SVEEffectPool.Instance.TryGetAdditionalCardTraits(card, out List<string> additionalTraits))
+                            cardTraitList.AddRange(additionalTraits);
+                        if(!cardTraitList.Any(x => traitListToMatch.Any(y => y.Trim().Equals(x.Trim()))) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.Keyword:
@@ -79,7 +86,7 @@ namespace SVESimulator
                             string[] counterParams = value.Split(',');
                             string counterName = counterParams.Length > 0 ? counterParams[0].Replace("Counter", "").Trim() : null;
                             SVEProperties.Counters counterType = (SVEProperties.Counters)Enum.Parse(typeof(SVEProperties.Counters), counterName);
-                            int minCounters = SVEFormulaParser.ParseValue(counterParams.Length > 1 ? string.Join("", counterParams[1..]) : "1", null, card);
+                            int minCounters = SVEFormulaParser.ParseValue(counterParams.Length > 1 ? string.Join("", counterParams[1..]) : "1", player, card);
                             int currentCounterCount = card.CountOfCounter(counterType);
                             if(currentCounterCount < minCounters ^ inverse)
                                 return false;
@@ -100,7 +107,33 @@ namespace SVESimulator
                         libraryCard ??= LibraryCardCache.GetCard(card.cardId);
                         if(libraryCard == null)
                             throw new Exception($"Card not found in cache: {card.cardId}");
-                        if(!libraryCard.name.Replace("(Evolved)", "").Trim().Equals(value) ^ inverse)
+                        List<string> cardNames = new() { libraryCard.name.Replace("(Evolved)", "") };
+                        string extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                        if(!extraNames.IsNullOrWhiteSpace())
+                            cardNames.AddRange(extraNames.Split('\n').ToList());
+                        if(!cardNames.Any(x => x.Trim().Equals(value)) ^ inverse)
+                            return false;
+                        break;
+                    case CardFilterSetting.NameContains:
+                        libraryCard ??= LibraryCardCache.GetCard(card.cardId);
+                        if(libraryCard == null)
+                            throw new Exception($"Card not found in cache: {card.cardId}");
+                        cardNames = new List<string> { libraryCard.name };
+                        extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                        if(!extraNames.IsNullOrWhiteSpace())
+                            cardNames.AddRange(extraNames.Split('\n').ToList());
+                        if(!cardNames.Any(x => x.Contains(value)) ^ inverse)
+                            return false;
+                        break;
+                    case CardFilterSetting.NameXor:
+                        libraryCard ??= LibraryCardCache.GetCard(card.cardId);
+                        if(libraryCard == null)
+                            throw new Exception($"Card not found in cache: {card.cardId}");
+                        Debug.Assert(!inverse, "Filter type \"Name - Exclusive OR\" does not support using inverse");
+
+                        string cardName = libraryCard.name.Replace("(Evolved)", "").Trim();
+                        string[] currentNames = value?.Split('\n');
+                        if(currentNames != null && currentNames.Any(x => x.Equals(cardName)))
                             return false;
                         break;
 
@@ -113,7 +146,7 @@ namespace SVESimulator
                     case CardFilterSetting.Attack:
                     case CardFilterSetting.Defense:
                     case CardFilterSetting.PlayPointCost:
-                        SVEFormulaParser.ParseValueAsMinMax(value, null, out int min, out int max);
+                        SVEFormulaParser.ParseValueAsMinMax(value, player, out int min, out int max);
                         string targetStat = setting switch
                         {
                             CardFilterSetting.Attack => SVEProperties.CardStats.Attack,
@@ -124,7 +157,7 @@ namespace SVESimulator
                             return false;
                         break;
                     case CardFilterSetting.EvolveCost:
-                        SVEFormulaParser.ParseValueAsMinMax(value, null, out int minEvolveCost, out int maxEvolveCost);
+                        SVEFormulaParser.ParseValueAsMinMax(value, player, out int minEvolveCost, out int maxEvolveCost);
                         int evolveCost = card.EvolveCost();
                         if((evolveCost < minEvolveCost || evolveCost > maxEvolveCost) ^ inverse)
                             return false;
@@ -136,7 +169,7 @@ namespace SVESimulator
 
                     // Other
                     case CardFilterSetting.Advanced:
-                        bool advancedFilterPassed = CheckAdvancedCardFilter(card, value);
+                        bool advancedFilterPassed = CheckAdvancedCardFilter(card, value, player);
                         if(!advancedFilterPassed ^ inverse)
                             return false;
                         break;
@@ -145,7 +178,7 @@ namespace SVESimulator
                             return false;
                         break;
                     case CardFilterSetting.InstanceID:
-                        int[] instanceIds = value.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
+                        int[] instanceIds = value.IsNullOrWhiteSpace() ? new int[0] : value.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
                         if(!instanceIds.Contains(card.instanceId) ^ inverse)
                             return false;
                         break;
@@ -156,7 +189,9 @@ namespace SVESimulator
 
         public static bool HasExcludeSelf(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.ExcludeSelf);
 
-        private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value)
+        public static bool HasNameExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.NameXor);
+
+        private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value, PlayerController player = null)
         {
             if(value.IsNullOrWhiteSpace())
                 return true;
@@ -165,16 +200,18 @@ namespace SVESimulator
                 return true;
 
             args[0] = args[0].Trim().ToLower();
+            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
             switch(args[0])
             {
                 case "turnsonfield":
                     int minTurnsOnField = 0;
                     int maxTurnsOnField = 0;
                     if(args.Length > 1)
-                        SVEFormulaParser.ParseValueAsMinMax(args[1].Trim(), null, out minTurnsOnField, out maxTurnsOnField);
-                    CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                        SVEFormulaParser.ParseValueAsMinMax(args[1].Trim(), player, out minTurnsOnField, out maxTurnsOnField);
                     int actualTurnsOnField = cardObject ? cardObject.NumberOfTurnsOnBoard : -1;
                     return actualTurnsOnField >= minTurnsOnField && actualTurnsOnField <= maxTurnsOnField;
+                case "hasevolvedecktarget":
+                    return cardObject.CurrentZone.ZoneController.EvolveDeckHasEvolvedVersionOf(card);
                 default:
                     Debug.LogWarning($"Attempted to parse invalid advanced card filter \"{value}\" with invalid field {args[0]}");
                     return true;
@@ -190,7 +227,8 @@ namespace SVESimulator
         public static bool IsLeader(this SVEProperties.SVEEffectTarget target) => target.IsLeader(out _, out _);
         public static bool IsLeader(this SVEProperties.SVEEffectTarget target, out bool localLeader, out bool opponentLeader)
         {
-            localLeader = target is SVEProperties.SVEEffectTarget.Leader or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader or SVEProperties.SVEEffectTarget.AllLeaders;
+            localLeader = target is SVEProperties.SVEEffectTarget.Leader or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader or SVEProperties.SVEEffectTarget.AllPlayerCardsAndLeader
+                or SVEProperties.SVEEffectTarget.AllLeaders;
             opponentLeader = target is SVEProperties.SVEEffectTarget.OpponentLeader or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader or SVEProperties.SVEEffectTarget.AllOpponentCardsAndLeader
                 or SVEProperties.SVEEffectTarget.AllLeaders;
             return localLeader || opponentLeader;
@@ -198,7 +236,8 @@ namespace SVESimulator
 
         public static bool IsFieldCard(this SVEProperties.SVEEffectTarget target)
         {
-            return target is SVEProperties.SVEEffectTarget.AllPlayerCards or SVEProperties.SVEEffectTarget.TargetPlayerCard or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader
+            return target is SVEProperties.SVEEffectTarget.AllPlayerCards or SVEProperties.SVEEffectTarget.TargetPlayerCard
+                or SVEProperties.SVEEffectTarget.TargetPlayerCardOrLeader or SVEProperties.SVEEffectTarget.AllPlayerCardsAndLeader
                 or SVEProperties.SVEEffectTarget.AllOpponentCards or SVEProperties.SVEEffectTarget.TargetOpponentCard
                 or SVEProperties.SVEEffectTarget.TargetOpponentCardsDivided or SVEProperties.SVEEffectTarget.TargetOpponentCardOrLeader
                 or SVEProperties.SVEEffectTarget.AllOpponentCardsAndLeader or SVEProperties.SVEEffectTarget.AllCards;
@@ -383,6 +422,32 @@ namespace SVESimulator
                 }
             }
             return newEffect;
+        }
+
+        public static SveTrigger CopyWithRemoveCostOfType<T>(this SveTrigger trigger) where T : Cost
+        {
+            Type type = trigger.GetType();
+            SveTrigger newTrigger = Activator.CreateInstance(type) as SveTrigger;
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                switch(fields[i].Name)
+                {
+                    case "_costList":
+                        List<Cost> newCostList = trigger.Costs is not { Count: > 0 } ? new List<Cost>() : new List<Cost>(trigger.Costs);
+                        for(int j = 0; j < newCostList.Count; j++)
+                            if(newCostList[j] is T)
+                                newCostList.RemoveAt(j--);
+                        fields[i].SetValue(newTrigger, newCostList);
+                        continue;
+                    case "cost":
+                        continue;
+                    default:
+                        fields[i].SetValue(newTrigger, fields[i].GetValue(trigger));
+                        continue;
+                }
+            }
+            return newTrigger;
         }
 
         #endregion
