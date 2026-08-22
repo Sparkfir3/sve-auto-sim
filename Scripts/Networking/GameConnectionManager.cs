@@ -24,17 +24,8 @@ namespace SVESimulator
         {
             yield return new WaitUntil(() => NetworkClient.ready);
             yield return new WaitForSeconds(0.1f);
-            while(!NetworkClient.activeHost)
-            {
-                yield return new WaitForSeconds(0.5f);
-                // TODO - better way of client user waiting for host user to spawn their player object first
-                if(FindObjectOfType<PlayerController>() != null)
-                    break;
-                yield return new WaitForSeconds(0.25f);
-            }
-            yield return new WaitForEndOfFrame();
             IsHost = NetworkClient.activeHost;
-            NetworkClient.AddPlayer();
+            NetworkClient.Send(new SpawnGameplayPlayerControllerMsg());
 
             SVEGameNetworkManager.OnPlayerDisconnected += HandleDisconnect;
             SVEGameNetworkManager.OnLocalDisconnect += HandleLocalDisconnected;

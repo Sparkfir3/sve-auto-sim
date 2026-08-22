@@ -62,10 +62,11 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 6822967676911451592, guid: 91f7eed528daa9647b3e2626da66fc02, type: 3}
-  autoCreatePlayer: 0
+  playerPrefab: {fileID: 8527185088710572267, guid: 2c4edd151fd3c73458bee1234ae20c51, type: 3}
+  autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 6822967676911451592, guid: 91f7eed528daa9647b3e2626da66fc02, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -83,6 +84,8 @@ MonoBehaviour:
   timeInterpolationGui: 0
   networkManagerSteamPrefab: {fileID: 3691630640573521396}
   networkManagerKcpPrefab: {fileID: 3691630640573521396, guid: 3cf54fbf43c983b4b956f497139f2907, type: 3}
+  dataManagerPrefab: {fileID: 4513902532281849499, guid: 18aff2bbe69b7424fa48af279bd1337b, type: 3}
+  gamePlayerPrefab: {fileID: 8478122686412345955, guid: 91f7eed528daa9647b3e2626da66fc02, type: 3}
   timeoutDuration: 20
   timeoutTimer: 0
 --- !u!114 &7188883768917122881

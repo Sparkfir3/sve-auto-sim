@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCGKit;
 using Mirror;
-using Mirror.FizzySteam;
 using Steamworks;
 using Sparkfire.AppStateSystem;
 
@@ -15,10 +14,14 @@ namespace SVESimulator
     {
         #region Variables
 
-        [Header("Network Manager Prefabs"), SerializeField]
+        [Header("Prefabs"), SerializeField]
         private SVEGameNetworkManager networkManagerSteamPrefab;
         [SerializeField]
         private SVEGameNetworkManager networkManagerKcpPrefab;
+        [SerializeField]
+        private NetworkSessionDataManager dataManagerPrefab;
+        [SerializeField]
+        private PlayerController gamePlayerPrefab;
 
         [Header("Timeout"), SerializeField]
         private float timeoutDuration = 10f;
@@ -84,6 +87,7 @@ namespace SVESimulator
                 Instance = null;
                 SteamLobby = null;
             }
+            NetworkServer.UnregisterHandler<SpawnGameplayPlayerControllerMsg>();
         }
 
         #endregion
@@ -147,6 +151,12 @@ namespace SVESimulator
 
         #region Network Events
 
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            NetworkServer.RegisterHandler<SpawnGameplayPlayerControllerMsg>(SpawnGameplayPlayerController);
+        }
+
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
             base.OnServerConnect(conn);
@@ -199,7 +209,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Internal Controls
+        #region Connection Timeout
 
         public void StartConnectionTimeoutTimer()
         {
@@ -216,6 +226,20 @@ namespace SVESimulator
         {
             OnFindLobbyTimeout?.Invoke();
             Disconnect(); // leads to CancelConnectionTimeout()
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Internal Controls
+
+        private void SpawnGameplayPlayerController(NetworkConnectionToClient conn, SpawnGameplayPlayerControllerMsg msg)
+        {
+            GameObject oldPlayer = conn.identity.gameObject;
+            GameObject newPlayer = Instantiate(gamePlayerPrefab).gameObject;
+            NetworkServer.ReplacePlayerForConnection(conn, newPlayer, true);
+            Destroy(oldPlayer, 0.1f);
         }
 
         #endregion

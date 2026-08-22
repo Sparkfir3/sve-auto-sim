@@ -94,6 +94,12 @@ namespace SVESimulator
             opponentPlayerZoneController = FieldManager.OpponentZones;
         }
 
+        protected override void Start()
+        {
+            base.Start();
+            gameObject.name = $"Player [{(authority ? "Local" : "Opponent")}]";
+        }
+
         #endregion
 
         // ------------------------------
