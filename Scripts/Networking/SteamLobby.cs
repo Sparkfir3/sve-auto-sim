@@ -125,6 +125,7 @@ namespace SVESimulator
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             SteamMatchmaking.SetLobbyData(new CSteamID(CurrentLobbyID), HostAddressKey, SteamUser.GetSteamID().ToString());
             SteamMatchmaking.SetLobbyData(new CSteamID(CurrentLobbyID), LobbyNameKey, string.IsNullOrWhiteSpace(CurrentLobbyName) ? SteamUser.GetSteamID().ToString() : CurrentLobbyName);
+            SVEGameNetworkManager.Instance.CacheUserSteamID(NetworkClient.connection.connectionId, SteamUser.GetSteamID());
 
             Debug.Log($"Created Steam lobby, name: {CurrentLobbyName}");
         }
@@ -142,6 +143,7 @@ namespace SVESimulator
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             networkManager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), HostAddressKey);
             CurrentLobbyName = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), LobbyNameKey);
+            SVEGameNetworkManager.Instance.CacheUserSteamID(NetworkClient.connection.connectionId, SteamUser.GetSteamID());
 
             networkManager.StartClient();
         }

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using CCGKit;
 using Mirror;
+using Mirror.FizzySteam;
 using Steamworks;
 using Sparkfire.AppStateSystem;
 
@@ -22,6 +24,8 @@ namespace SVESimulator
         private float timeoutDuration = 10f;
         [SerializeField]
         private float timeoutTimer;
+
+        private readonly Dictionary<int, CSteamID> ConnectionSteamIDs = new();
 
         // ---
 
@@ -172,6 +176,23 @@ namespace SVESimulator
         {
             base.OnClientDisconnect();
             OnLocalDisconnect?.Invoke();
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Steam User Info
+
+        public void CacheUserSteamID(int connectionId, CSteamID steamID)
+        {
+            Debug.Log($"Caching conn ID {connectionId} with CSteamID {steamID.m_SteamID}");
+            ConnectionSteamIDs.TryAdd(connectionId, steamID);
+        }
+
+        public CSteamID GetUserSteamID(int connectionId)
+        {
+            return ConnectionSteamIDs.GetValueOrDefault(connectionId, CSteamID.Nil);
         }
 
         #endregion
