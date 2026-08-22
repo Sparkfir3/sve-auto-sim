@@ -19,7 +19,7 @@ namespace SVESimulator
         [SerializeField]
         private SVEGameNetworkManager networkManagerKcpPrefab;
         [SerializeField]
-        private NetworkSessionDataManager dataManagerPrefab;
+        private NetworkDataManager dataManagerPrefab;
         [SerializeField]
         private PlayerController gamePlayerPrefab;
 
@@ -28,13 +28,12 @@ namespace SVESimulator
         [SerializeField]
         private float timeoutTimer;
 
-        private readonly Dictionary<int, CSteamID> ConnectionSteamIDs = new();
-
         // ---
 
         public static SVEGameNetworkManager Instance { get; private set; }
         public static SteamLobby SteamLobby { get; private set; }
         public static NetworkSceneManager SceneManager { get; private set; }
+        public static NetworkDataManager DataManager { get; set; }
 
         public static int ConnectedPlayerCount => NetworkServer.connections.Count;
         public static bool IsSteamConnected => SteamManager.Initialized && SteamAPI.IsSteamRunning();
@@ -155,6 +154,7 @@ namespace SVESimulator
         {
             base.OnStartServer();
             NetworkServer.RegisterHandler<SpawnGameplayPlayerControllerMsg>(SpawnGameplayPlayerController);
+            NetworkServer.Spawn(Instantiate(dataManagerPrefab).gameObject);
         }
 
         public override void OnServerConnect(NetworkConnectionToClient conn)
@@ -186,23 +186,6 @@ namespace SVESimulator
         {
             base.OnClientDisconnect();
             OnLocalDisconnect?.Invoke();
-        }
-
-        #endregion
-
-        // ------------------------------
-
-        #region Steam User Info
-
-        public void CacheUserSteamID(int connectionId, CSteamID steamID)
-        {
-            Debug.Log($"Caching conn ID {connectionId} with CSteamID {steamID.m_SteamID}");
-            ConnectionSteamIDs.TryAdd(connectionId, steamID);
-        }
-
-        public CSteamID GetUserSteamID(int connectionId)
-        {
-            return ConnectionSteamIDs.GetValueOrDefault(connectionId, CSteamID.Nil);
         }
 
         #endregion

@@ -178,10 +178,11 @@ namespace SVESimulator.UI
                 case MainMenuViewState.ReadyToStart:
                     steamRoomCodeInputField.Interactable = false;
                     errorTextBox.gameObject.SetActive(false);
-                    if(SVEGameNetworkManager.IsSteamManagerAndConnected && SteamLobby.TryGetUserProfileImage(out Texture2D profilePic, out string username))
-                        userInfoDisplay.ShowPlayerInfo(profilePic, username);
-                    else
-                        userInfoDisplay.HideAll();
+                    // if(SVEGameNetworkManager.IsSteamManagerAndConnected
+                    //    && SVEGameNetworkManager.DataManager.TryGetProfileInfo(Mirror.NetworkClient.connection.connectionId, out Texture2D profilePic, out string username))
+                    //     userInfoDisplay.ShowPlayerInfo(profilePic, username);
+                    // else
+                    //     userInfoDisplay.HideAll();
                     break;
                 default:
                     steamRoomCodeInputField.Hide();

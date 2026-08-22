@@ -125,7 +125,6 @@ namespace SVESimulator
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             SteamMatchmaking.SetLobbyData(new CSteamID(CurrentLobbyID), HostAddressKey, SteamUser.GetSteamID().ToString());
             SteamMatchmaking.SetLobbyData(new CSteamID(CurrentLobbyID), LobbyNameKey, string.IsNullOrWhiteSpace(CurrentLobbyName) ? SteamUser.GetSteamID().ToString() : CurrentLobbyName);
-            SVEGameNetworkManager.Instance.CacheUserSteamID(NetworkClient.connection.connectionId, SteamUser.GetSteamID());
 
             Debug.Log($"Created Steam lobby, name: {CurrentLobbyName}");
         }
@@ -143,7 +142,6 @@ namespace SVESimulator
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             networkManager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), HostAddressKey);
             CurrentLobbyName = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), LobbyNameKey);
-            SVEGameNetworkManager.Instance.CacheUserSteamID(NetworkClient.connection.connectionId, SteamUser.GetSteamID());
 
             networkManager.StartClient();
         }
@@ -164,65 +162,6 @@ namespace SVESimulator
         {
             OnLobbyDataFound?.Invoke(result);
             OnLobbyDataFound = null;
-        }
-
-        #endregion
-
-        // ------------------------------
-
-        #region Utils
-
-        public static bool TryGetUserProfileImage(out Texture2D profilePic, out string username)
-        {
-            if(!SVEGameNetworkManager.IsSteamManagerAndConnected)
-            {
-                profilePic = null;
-                username = null;
-                return false;
-            }
-
-            int iImage = SteamFriends.GetMediumFriendAvatar(SteamUser.GetSteamID());
-            profilePic = GetSteamImageAsTexture2D(iImage);
-            username = SteamFriends.GetFriendPersonaName(SteamUser.GetSteamID());
-            return true;
-        }
-
-        public static bool TryGetOpponentProfileImage(out Texture2D profilePic, out string username)
-        {
-            if(!SVEGameNetworkManager.IsSteamManagerAndConnected)
-            {
-                profilePic = null;
-                username = null;
-                return false;
-            }
-
-            int iImage = SteamFriends.GetMediumFriendAvatar(SteamUser.GetSteamID());
-            profilePic = GetSteamImageAsTexture2D(iImage);
-            username = SteamFriends.GetFriendPersonaName(SteamUser.GetSteamID());
-            return true;
-        }
-
-        // Taken from open source Steamworks.NET-Test repo - SteamUtilsTest.cs
-        private static Texture2D GetSteamImageAsTexture2D(int iImage)
-        {
-            Texture2D ret = null;
-            uint ImageWidth;
-            uint ImageHeight;
-            bool bIsValid = SteamUtils.GetImageSize(iImage, out ImageWidth, out ImageHeight);
-
-            if(bIsValid)
-            {
-                byte[] Image = new byte[ImageWidth * ImageHeight * 4];
-                bIsValid = SteamUtils.GetImageRGBA(iImage, Image, (int)(ImageWidth * ImageHeight * 4));
-                if(bIsValid)
-                {
-                    ret = new Texture2D((int)ImageWidth, (int)ImageHeight, TextureFormat.RGBA32, false, true);
-                    ret.LoadRawTextureData(Image);
-                    ret.Apply();
-                }
-            }
-
-            return ret;
         }
 
         #endregion
