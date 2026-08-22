@@ -1,0 +1,269 @@
+[
+  {
+    "id": "BP03-090EN",
+    "name": "Princess Snow White",
+    "trait": "Faith / Fable / Princess",
+    "cardText": "Ward.\n[fanfare] If this card was put onto the field from your hand, put a Fable counter on it. If not, give it [attack]+1/[defense]+1.\n[lastwords] If this card had a Fable counter, put this card into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "FanfareHand",
+        "trigger": "[fanfare]",
+        "body": "If this card was put onto the field from your hand, put a Fable counter on it. If not, give it [attack]+1/[defense]+1."
+      },
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "If this card was put onto the field from your hand, put a Fable counter on it. If not, give it [attack]+1/[defense]+1."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "If this card had a Fable counter, put this card into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP03-091EN",
+    "name": "Diamond Master",
+    "trait": "Faith",
+    "cardText": "[evolve][cost03]: Evolve this follower.\n[fanfare] Choose one of the following. (1) Give this follower Storm. (2) Give this follower Ward.\nWhenever an opponent is selecting cards for an ability, if they can select this card, they must select it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose one of the following. (1) Give this follower Storm. (2) Give this follower Ward."
+      },
+      {
+        "key": "Storm",
+        "body": "Give this follower Storm."
+      },
+      {
+        "key": "Ward",
+        "body": "Give this follower Ward."
+      }
+    ]
+  },
+  {
+    "id": "BP03-092EN",
+    "name": "Diamond Master (Evolved)",
+    "trait": "Faith",
+    "cardText": "On Evolve: Select a follower with Storm or Ward that costs 3 play points or less in your cemetery and put it onto your field.\nWhenever an opponent is selecting cards for an ability, if they can select this card, they must select it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a follower with Storm or Ward that costs 3 play points or less in your cemetery and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-093EN",
+    "name": "Odette, White Swan",
+    "trait": "Faith / Fable",
+    "cardText": "[fanfare] Give [defense]+2 to your leader and each other follower on your field.\n[lastwords] Give [defense]+2 to your leader and each follower on your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give [defense]+2 to your leader and each other follower on your field."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Give [defense]+2 to your leader and each follower on your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-094EN",
+    "name": "Wingy, Chirpy Gemstone",
+    "trait": "Faith / Avian",
+    "cardText": "[evolve][cost02]: Evolve this follower.\nWard."
+  },
+  {
+    "id": "BP03-095EN",
+    "name": "Wingy, Chirpy Gemstone (Evolved)",
+    "trait": "Faith / Avian",
+    "cardText": "Ward.\nOn Evolve: Search your deck for a follower with 2 attack or less, reveal it, and add it to your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Search your deck for a follower with 2 attack or less, reveal it, and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP03-096EN",
+    "name": "Alice's Adventure",
+    "trait": "Fable",
+    "cardText": "[fanfare] Search your deck for a Fable card, reveal it, and add it to your hand.\n[act][cost01], [engage], put this card into its owner's cemetery: Select a Fable follower on your field and give it Rush and Assail.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Fable card, reveal it, and add it to your hand."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], put this card into its owner's cemetery",
+        "body": "Select a Fable follower on your field and give it Rush and Assail."
+      }
+    ]
+  },
+  {
+    "id": "BP03-097EN",
+    "name": "White Knight",
+    "trait": "Faith",
+    "cardText": "If your leader's [defense] is 5 or less, this card costs 5 less to play.\nRush. Ward."
+  },
+  {
+    "id": "BP03-098EN",
+    "name": "Ruby Falcon",
+    "trait": "Faith / Avian",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWard.\n[act][cost02]: Give this follower Storm.\nWhenever another follower you control with Storm or Ward attacks, deal 1 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02]",
+        "body": "Give this follower Storm."
+      },
+      {
+        "key": "OnOtherAttack",
+        "body": "Whenever another follower you control with Storm or Ward attacks, deal 1 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-099EN",
+    "name": "Ruby Falcon (Evolved)",
+    "trait": "Faith / Avian",
+    "cardText": "Ward.\nOn Evolve: Select an enemy follower on the field and deal it 2 damage.\n[act][cost02]: Give this follower Storm.\nWhenever another follower you control with Storm or Ward attacks, deal 1 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02]",
+        "body": "Give this follower Storm."
+      },
+      {
+        "key": "OnOtherAttack",
+        "body": "Whenever another follower you control with Storm or Ward attacks, deal 1 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-100EN",
+    "name": "March Hare's Teatime",
+    "trait": "Faith / Fable",
+    "cardText": "[fanfare] Look at the top 5 cards of your deck. You may put a Fable follower that costs 5 play points or less from among them onto your field. Put the remaining cards on the bottom of your deck in any order.\n[act][cost02], [engage], put this card into its owner's cemetery: Select a Fable follower that costs 3 play points or less in your cemetery and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 5 cards of your deck. You may put a Fable follower that costs 5 play points or less from among them onto your field. Put the remaining cards on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost02], [engage], put this card into its owner's cemetery",
+        "body": "Select a Fable follower that costs 3 play points or less in your cemetery and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-101EN",
+    "name": "Tin Soldier",
+    "trait": "Eidolon / Fable",
+    "cardText": "[fanfare] If this card was put onto the field from anywhere other than your hand, put a Fable counter on it.\n[act] Remove a Fable counter from this card: Select an enemy leader or enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "If this card was put onto the field from anywhere other than your hand, put a Fable counter on it."
+      },
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "Remove a Fable counter from this card",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-102EN",
+    "name": "Pinion Prince",
+    "trait": "Avian / Fable",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] Select a Fable card in your cemetery and put it into your EX area. You may put a Fable counter on it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a Fable card in your cemetery and put it into your EX area. You may put a Fable counter on it."
+      },
+      {
+        "key": "Counter",
+        "body": "You may put a Fable counter on the selected card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-103EN",
+    "name": "Pinion Prince (Evolved)",
+    "trait": "Avian / Fable",
+    "cardText": "Assail."
+  },
+  {
+    "id": "BP03-104EN",
+    "name": "Birdkeeping Disciple",
+    "trait": "Faith / Avian",
+    "cardText": "Ward.\n[fanfare][engage] an amulet on your field: Summon a Holy Falcon token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[engage] an amulet on your field",
+        "body": "Summon a Holy Falcon token."
+      }
+    ]
+  },
+  {
+    "id": "BP03-105EN",
+    "name": "Amethyst Lion",
+    "trait": "Faith / Beast",
+    "cardText": "Storm.\n[fanfare] Select another follower with Storm or Ward on your field and give it [attack]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select another follower with Storm or Ward on your field and give it [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-106EN",
+    "name": "Bejeweled Shrine",
+    "trait": "Faith",
+    "cardText": "[act][cost01], [engage]: Select a follower with Storm or Ward on your field and give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage]",
+        "body": "Select a follower with Storm or Ward on your field and give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-LD05EN",
+    "name": "Yuti, Meus Princess"
+  }
+]

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using CCGKit;
 
@@ -23,7 +24,21 @@ namespace SVESimulator
             {
                 foreach(CardObject card in targets)
                 {
-                    // TODO
+                    RegisteredPassiveAbility passive = new()
+                    {
+                        sourceCardInstanceId = card.RuntimeCard.instanceId,
+                        targetsFormula = null,
+                        filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>(),
+                        effect = new AddTraitPassive
+                        {
+                            duration = SVEProperties.PassiveDuration.WhileOnField,
+                            trait = trait
+                        },
+                        affectedCards = new List<RuntimeCard>(),
+                        target = SVEProperties.SVEEffectTarget.Self,
+                        duration = SVEProperties.PassiveDuration.WhileOnField
+                    };
+                    SVEEffectPool.Instance.RegisterPassiveAbility(passive);
                 }
                 onComplete?.Invoke();
             });

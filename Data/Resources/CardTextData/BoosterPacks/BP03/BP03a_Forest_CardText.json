@@ -1,0 +1,299 @@
+[
+  {
+    "id": "BP03-001EN",
+    "name": "Beauty and the Beast",
+    "trait": "Beast / Fable / Princess",
+    "cardText": "Rush. Aura.\n[fanfare] Put a Fable counter on this card. If this card was put onto the field from anywhere other than your hand, give it Storm.\n[act][cost01], remove any number of Fable counters from this card: Give this follower [attack]+X/[defense]+X. X equals the number of counters removed.",
+    "effectText": [
+      {
+        "key": "FanfareHand",
+        "trigger": "[fanfare]",
+        "body": "Put a Fable counter on this card. If this card was put onto the field from anywhere other than your hand, give it Storm."
+      },
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "Put a Fable counter on this card. If this card was put onto the field from anywhere other than your hand, give it Storm."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], remove any number of Fable counters from this card",
+        "body": "Give this follower [attack]+X/[defense]+X. X equals the number of counters removed."
+      },
+      {
+        "key": "AtkDef",
+        "text": "Remove any number of Fable counters from this card: Give this follower [attack]+X/[defense]+X. X equals the number of counters removed.",
+        "cost": "[cost01], remove any number of Fable counters from this card",
+        "body": "Give this follower [attack]+X/[defense]+X. X equals the number of counters removed."
+      }
+    ]
+  },
+  {
+    "id": "BP03-002EN",
+    "name": "Cosmos Fang",
+    "trait": "Fae-Touched / Verdant / Beast",
+    "cardText": "[evolve][cost01], return another follower on your field to its owner's hand: Evolve this follower.\n[fanfare] Search your deck for a Beast follower, reveal it, and add it to your hand. If it costs 2 play points or less, you may put it onto your field instead.",
+    "effectText": [
+      {
+        "key": "Evolve",
+        "trigger": "[evolve]",
+        "cost": "[cost01], return another follower on your field to its owner's hand",
+        "body": "Evolve this follower."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Beast follower, reveal it, and add it to your hand. If it costs 2 play points or less, you may put it onto your field instead."
+      }
+    ]
+  },
+  {
+    "id": "BP03-003EN",
+    "name": "Cosmos Fang (Evolved)",
+    "trait": "Fae-Touched / Verdant /Beast",
+    "cardText": "On Evolve: Select an enemy follower on the field and return it to its owner's hand. If it's an evolved follower, destroy it instead.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower on the field and return it to its owner's hand. If it's an evolved follower, destroy it instead."
+      }
+    ]
+  },
+  {
+    "id": "BP03-004EN",
+    "name": "Magical Fairy, Lilac",
+    "trait": "Pixie / Fable",
+    "cardText": "[act][engage]: Put a Fable counter on this card.\n[act][cost01], remove a Fable counter from this card: Select an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "Token",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Put a Fable counter on this card."
+      },
+      {
+        "key": "Destroy",
+        "trigger": "[act]",
+        "cost": "[cost01], remove a Fable counter from this card",
+        "body": "Select an enemy follower on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-005EN",
+    "name": "Slade, Blossoming Wolf",
+    "trait": "Verdant / Beast",
+    "cardText": "[evolve][cost00]: Evolve this follower. This ability can be activated if a card on your field was returned to hand this turn.\nWhen this card is returned to hand from your field, you may put a [forestcraft] follower that costs 2 play points or less from your hand onto your field.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "",
+        "trigger": "[evolve]",
+        "cost": "[cost00]",
+        "body": "Evolve this follower. This ability can be activated if a card on your field was returned to hand this turn."
+      },
+      {
+        "key": "OnReturnToHandFromField",
+        "text": "When this card is returned to hand from your field, you may put a [forestcraft] follower that costs 2 play points or less from your hand onto your field.",
+        "trigger": "When this card is returned to hand from your field",
+        "body": "You may put a [forestcraft] follower that costs 2 play points or less from your hand onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-006EN",
+    "name": "Slade, Blossoming Wolf (Evolved)",
+    "trait": "Verdant / Beast",
+    "cardText": "On Evolve: Draw a card.\nWhen this card is returned to hand from your field, you may put a [forestcraft] follower that costs 2 play points or less from your hand onto your field.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Draw a card."
+      },
+      {
+        "key": "OnReturnToHandFromField",
+        "text": "When this card is returned to hand from your field, you may put a [forestcraft] follower that costs 2 play points or less from your hand onto your field.",
+        "trigger": "When this card is returned to hand from your field",
+        "body": "You may put a [forestcraft] follower that costs 2 play points or less from your hand onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-007EN",
+    "name": "Elf Twins' Assault",
+    "trait": "Elf",
+    "cardText": "[quick]\nSelect up to 2 enemy followers on the field and deal X damage divided between them. X equals the number of cards in your EX area.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 2 enemy followers on the field and deal X damage divided between them. X equals the number of cards in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP03-008EN",
+    "name": "Abby the Axe Girl",
+    "trait": "Hunter",
+    "cardText": "Strike: Give this follower [attack]+1. Then, if this follower has at least 5 attack, deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Give this follower [attack]+1. Then, if this follower has at least 5 attack, deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP03-009EN",
+    "name": "Gerbera Bear",
+    "trait": "Verdant / Beast",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWhenever a card on your field is returned to hand, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnOtherReturnToHandFromField",
+        "text": "Whenever a card on your field is returned to hand, give your leader [defense]+1.",
+        "trigger": "Whenever a card on your field is returned to hand",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-010EN",
+    "name": "Gerbera Bear (Evolved)",
+    "trait": "Verdant / Beast",
+    "cardText": "On Evolve: Search your deck for a Floral Breeze, reveal it, and add it to your hand.\nWhenever a card on your field is returned to hand, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Search your deck for a Floral Breeze, reveal it, and add it to your hand."
+      },
+      {
+        "key": "OnOtherReturnToHandFromField",
+        "text": "Whenever a card on your field is returned to hand, give your leader [defense]+1.",
+        "trigger": "Whenever a card on your field is returned to hand",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-011EN",
+    "name": "Wood of Brambles",
+    "trait": "Pixie",
+    "cardText": "[fanfare] Summon a Fairy token. Combo (3): Give it Rush.\nAt the start of your main phase, destroy this card.\nWhile this card is on your field, your followers have \"Follower Strike: Deal 2 damage to the enemy follower.\"",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Fairy token. Combo (3): Give it Rush."
+      },
+      {
+        "key": "StartMainPhase",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": ""
+      },
+      {
+        "key": "Passive",
+        "text": "At the start of your main phase, destroy this card.",
+        "trigger": "At the start of your main phase",
+        "body": "Destroy this card."
+      },
+      {
+        "key": "FollowerStrike",
+        "trigger": "Follower Strike:",
+        "body": "Deal 2 damage to the enemy follower."
+      }
+    ]
+  },
+  {
+    "id": "BP03-012EN",
+    "name": "Flower Princess",
+    "trait": "Princess / Fable",
+    "cardText": "[fanfare] Put a Fairy token into your EX area. Combo (3): Put a Fable counter on this card.\n[act][engage], remove a Fable counter from this card: Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Fairy token into your EX area. Combo (3): Put a Fable counter on this card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], remove a Fable counter from this card",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-013EN",
+    "name": "Fen Sprite",
+    "trait": "Fae-Touched",
+    "cardText": "[fanfare] Select an enemy follower on the field. During its controller's next turn, it can't attack enemies.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. During its controller's next turn, it can't attack enemies."
+      }
+    ]
+  },
+  {
+    "id": "BP03-014EN",
+    "name": "Tweedle Dum, Tweedle Dee",
+    "trait": "Fable",
+    "cardText": "[evolve][cost01]: Evolve this follower."
+  },
+  {
+    "id": "BP03-015EN",
+    "name": "Tweedle Dum, Tweedle Dee (Evolved)",
+    "trait": "Fable",
+    "cardText": "On Evolve: Look at the top 4 cards of your deck. You may reveal a card that costs 1 play point from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Look at the top 4 cards of your deck. You may reveal a card that costs 1 play point from among them and add it to your hand. Put the remaining cards on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP03-016EN",
+    "name": "Floral Breeze",
+    "trait": "Verdant / Beast",
+    "cardText": "Select a card on your field. Return it to its owner's hand and give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "ReturnToHand",
+        "body": "Select a card on your field. Return it to its owner's hand and give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-017EN",
+    "name": "Woodland Band",
+    "trait": "Beast / Fable",
+    "cardText": "[fanfare] Look at the top 4 cards of your deck. You may put a Fable follower from among them into your EX area. Put the remaining cards on the bottom of your deck in any order.\n[act][engage], put this card into its owner's cemetery: Select a Fable follower on your field and put a Fable counter on it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 4 cards of your deck. You may put a Fable follower from among them into your EX area. Put the remaining cards on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], put this card into its owner's cemetery",
+        "body": "Select a Fable follower on your field and put a Fable counter on it."
+      }
+    ]
+  },
+  {
+    "id": "BP03-LD01EN",
+    "name": "Itsuki Mitsutagawa"
+  }
+]

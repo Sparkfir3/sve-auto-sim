@@ -84,13 +84,6 @@
     "cardText": "[quick]\nPut the top card of your deck into your EX area. Repeat until your EX area is full.\nAt the start of your next end phase, banish each card in your EX area.",
     "effectText": [
       {
-        "key": "Fill EX",
-        "text": "",
-        "trigger": "",
-        "cost": "",
-        "body": ""
-      },
-      {
         "key": "Banish",
         "text": "At the start of your next end phase, banish each card in your EX area.",
         "trigger": "At the start of your next end phase",

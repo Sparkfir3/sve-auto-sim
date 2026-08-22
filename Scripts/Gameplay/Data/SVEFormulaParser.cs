@@ -25,6 +25,8 @@ namespace SVESimulator
             Keyword,
             Counter,
             Name,
+            NameContains,
+            NameXor,
             Class,
 
             // Card Stats
@@ -244,12 +246,21 @@ namespace SVESimulator
             else if(formula.Trim().StartsWith("m("))
             {
                 var minMaxFormula = ParseCardFilterFormula(formula);
-                ParseMinMaxCount(minMaxFormula[CardFilterSetting.MinMaxCount], out min, out max);
+                ParseMinMaxCount(minMaxFormula[CardFilterSetting.MinMaxCount], player, card, out min, out max);
             }
             else
             {
                 min = max = ParseValue(formula, player, card);
             }
+        }
+
+        public static void ParseMinMaxCount(in string formula, out int min, out int max) => ParseMinMaxCount(formula, null, null, out min, out max);
+        public static void ParseMinMaxCount(in string formula, PlayerController player, RuntimeCard card, out int min, out int max)
+        {
+            string[] substrings = formula.Split(',');
+            Debug.Assert(substrings.Length == 2, $"Tried to parse invalid min max formula: {formula}");
+            min = ParseFormulaInt(substrings[0].Trim(), 0, out _, player, card);
+            max = ParseFormulaInt(substrings[1].Trim(), 0, out _, player, card);
         }
 
         #endregion
@@ -377,7 +388,7 @@ namespace SVESimulator
             if(args.Length == 0)
                 return 0;
 
-            args[0] = args[0].Trim();
+            args[0] = args[0].Trim().Replace("PP", "PlayPoints");
             Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
             usedPlayerReference = false;
             switch(args[0])
@@ -396,6 +407,16 @@ namespace SVESimulator
                 case "spellsPlayed":
                     usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
+                case "returnedToHandFromField":
+                    usedPlayerReference = true;
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsReturnedToHandFromField, filter) : 0;
+                case "maxPlayPoints":
+                    usedPlayerReference = true;
+                    return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.MaxPlayPoints].effectiveValue : 0;
+                case "playPoints":
+                case "currentPlayPoints":
+                    usedPlayerReference = true;
+                    return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.PlayPoints].effectiveValue : 0;
 
                 // Player Zone
                 case "evolveDeckFaceUp":
@@ -510,18 +531,39 @@ namespace SVESimulator
                 if(!filterSetting.HasValue)
                     continue;
 
-                nextIndex++; // move past open parentheses TODO - actually check for a parentheses
+                // Name Filters
                 if(filterSetting == CardFilterSetting.Name)
                 {
-                    string name = ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex).Trim();
-                    if(name.StartsWith('\"') && name.EndsWith('\"'))
-                        name = name[1..^1];
-                    filters.Add(CardFilterSetting.Name, $"{currentFilterData}{name.Trim()}");
+                    if(nextIndex >= formula.Length)
+                        continue;
+
+                    switch(formula[nextIndex++])
+                    {
+                        case 'E': // Contains
+                            filterSetting = CardFilterSetting.NameContains;
+                            nextIndex++; // move past open parentheses
+                            goto case '(';
+                        case '^': // XOR
+                            filterSetting = CardFilterSetting.NameXor;
+                            break;
+                        case '(': // Regular Name Filter
+                            string name = ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex).Trim();
+                            if(name.StartsWith('\"') && name.EndsWith('\"'))
+                                name = name[1..^1].Trim();
+                            currentFilterData = $"{currentFilterData}{name}";
+                            nextIndex++; // move past close parentheses
+                            break;
+                        default: // Invalid
+                            nextIndex--;
+                            continue;
+                    }
+                    filters.Add(filterSetting.Value, currentFilterData);
+                    continue;
                 }
-                else
-                {
-                    filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
-                }
+
+                // Regular Filters
+                nextIndex++; // move past open parentheses TODO - actually check for a parentheses
+                filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
                 nextIndex++; // move past close parentheses
             }
             return filters;
@@ -540,16 +582,8 @@ namespace SVESimulator
             return card != null ? ParseCardFilterFormula(formula, card.instanceId) : ParseCardFilterFormula(formula);
         }
 
-        public static void ParseMinMaxCount(in string formula, out int min, out int max)
-        {
-            string[] substrings = formula.Split(',');
-            Debug.Assert(substrings.Length == 2, $"Tried to parse invalid min max formula: {formula}");
-            min = ParseFormulaInt(substrings[0], 0, out _);
-            max = ParseFormulaInt(substrings[1], 0, out _);
-        }
-
         // -----
-        
+
         private static string ParseFilterFormulaSubstring(in string formula, int startIndex, out int endIndex)
         {
             endIndex = startIndex;

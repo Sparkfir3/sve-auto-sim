@@ -182,6 +182,11 @@ namespace SVESimulator
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
 
+                    if(originZone.Equals(SVEProperties.Zones.Hand))
+                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
+                    else
+                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+
                     if(executeConfirmationTiming)
                         SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                 }
@@ -216,12 +221,21 @@ namespace SVESimulator
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
             }
 
-            // Handle engage status
+            // Handle engage status & set face up
             if(baseCard.namedStats.TryGetValue(SVEProperties.CardStats.Engaged, out Stat engagedStat) && engagedStat.effectiveValue > 0)
                 EngageCard(evolvedCard);
-
-            // Set face up
             evolvedCard.namedStats[SVEProperties.CardStats.FaceUp].baseValue = 1;
+
+            // Transfer keywords (transfer stats handled in PlayerEventControllerLocal)
+            if(baseCard.GetModifiedKeywords(out List<RuntimeKeyword> newKeywords, out List<RuntimeKeyword> removedKeywords))
+            {
+                if(newKeywords is { Count: > 0 })
+                    foreach(RuntimeKeyword keyword in newKeywords)
+                        ApplyKeywordToCard(evolvedCard, keyword.keywordId, keyword.valueId, adding: true);
+                if(removedKeywords is { Count: > 0 })
+                    foreach(RuntimeKeyword keyword in removedKeywords)
+                        ApplyKeywordToCard(evolvedCard, keyword.keywordId, keyword.valueId, adding: false);
+            }
 
             // Passive handling & effect triggers
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
@@ -239,15 +253,13 @@ namespace SVESimulator
         public void SendToCemetery(NetworkIdentity playerNetId, RuntimeCard card, string cardZone, bool isDestroy = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
-            card.RemoveAllModifiersWithoutNotify();
 
             if(cardZone.Equals(SVEProperties.Zones.Field) && isPlayerEffectSolver)
             {
                 if(player.netId.isLocalPlayer)
                 {
                     SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveLastWordsTrigger>(gameState, card, card.ownerPlayer, x => x.MatchesFilter(card), false);
                     SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                         x => x.MatchesFilter(card), false);
@@ -257,12 +269,19 @@ namespace SVESimulator
                     PlayerInfo localPlayer = gameState.players.Find(x => x.netId.isLocalPlayer);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardLeaveFieldTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field], localPlayer,
                         x => x.MatchesFilter(card), false);
+                    if(isDestroy)
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardDestroyedTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field],
+                            localPlayer, x => x.MatchesFilter(card), false);
                 }
             }
             else if(cardZone.Equals(SVEProperties.Zones.Hand) && isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnDiscardedTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
             }
+
+            // Move cards after triggering effects so that LastWords can use properly use it's filter
+            StandardSendRuntimeCardToZone(player, card, cardZone, SVEProperties.Zones.Cemetery);
+            card.RemoveAllModifiersWithoutNotify();
         }
 
         public void BanishCard(NetworkIdentity playerNetId, RuntimeCard card, string cardZone)
@@ -290,6 +309,10 @@ namespace SVESimulator
             {
                 SVEEffectPool.Instance.UnregisterPassiveAbilities(card);
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardReturnToHandFromField>(gameState, card, player, _ => true, false);
+                if(cardZone.Equals(SVEProperties.Zones.Field))
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardReturnToHandFromField>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                        x => x.MatchesFilter(card), false);
+
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardLeaveFieldTrigger>(gameState, card, card.ownerPlayer, _ => true, false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardLeaveFieldTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
@@ -426,8 +449,6 @@ namespace SVESimulator
 
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveStartEndPhaseTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false,
-                    triggerState: SVEEffectPool.EffectTriggerState.StartEndPhase);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlaySpellTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
 
@@ -457,20 +478,30 @@ namespace SVESimulator
 
         #region Combat
 
-        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard card, bool isAttackingLeader)
+        public void DeclareAttack(NetworkIdentity playerNetId, RuntimeCard attackingCard, RuntimeCard defendingCard, bool isAttackingLeader)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            EngageCard(card);
+            EngageCard(attackingCard);
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false);
+                // Strike triggers
+                SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackTrigger>(gameState, attackingCard, player,
+                    x => x.MatchesFilter(defendingCard), executeConfirmationTiming: false,
+                    triggeringCard: defendingCard, triggeringCardZone: defendingCard != null ? SVEProperties.Zones.Field : null);
                 if(isAttackingLeader)
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackLeaderTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false);
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackLeaderTrigger>(gameState, attackingCard, player, _ => true, executeConfirmationTiming: false);
+                }
                 else
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: false);
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnAttackFollowerTrigger>(gameState, attackingCard, player,
+                        x => x.MatchesFilter(defendingCard), executeConfirmationTiming: false,
+                        triggeringCard: defendingCard, triggeringCardZone: SVEProperties.Zones.Field);
+                }
 
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
-                    x => x.MatchesFilter(card), executeConfirmationTiming: true);
+                // On other attack trigger
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardAttackTrigger>(gameState, attackingCard, player.namedZones[SVEProperties.Zones.Field], player,
+                    x => x.MatchesFilter(attackingCard), executeConfirmationTiming: true);
             }
         }
 
@@ -725,7 +756,8 @@ namespace SVESimulator
 
         #region Effect Costs
 
-        public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, RemoveCounterData[] countersToRemove)
+        public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, RemoveCounterData[] countersToRemove,
+            int[] cardInstanceIdsToEngage, List<RuntimeCard> additionalRuntimeCardData = null)
         {
             foreach(Cost cost in costs)
             {
@@ -733,6 +765,9 @@ namespace SVESimulator
                 {
                     case PlayPointCost ppCost:
                         player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= SVEFormulaParser.ParseValue(ppCost.amount);
+                        break;
+                    case EvolvePointCost epCost:
+                        player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= SVEFormulaParser.ParseValue(epCost.amount);
                         break;
                     case EngageSelfCost:
                         EngageCard(card);
@@ -746,6 +781,7 @@ namespace SVESimulator
             for(int i = 0; i < cardsMoveToZone.Length; i++)
             {
                 RuntimeCard cardToMove = player.namedZones[cardsMoveToZone[i].startZone].cards.FirstOrDefault(x => x.instanceId == cardsMoveToZone[i].cardInstanceId);
+                cardToMove ??= additionalRuntimeCardData?.FirstOrDefault(x => x.instanceId == cardsMoveToZone[i].cardInstanceId);
                 switch(cardsMoveToZone[i].endZone)
                 {
                     case SVEProperties.Zones.Cemetery:
@@ -766,6 +802,12 @@ namespace SVESimulator
                 int targetAmount = countersToRemove[i].keywordValue - countersToRemove[i].amount;
                 targetCard.SetCounterAmount((SVEProperties.Counters)countersToRemove[i].keywordType, targetAmount);
             }
+
+            for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
+            {
+                RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
+                EngageCard(targetCard);
+            }
         }
 
         #endregion
@@ -773,6 +815,15 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        public void OnCardsSelectedForAbility(PlayerInfo player, List<RuntimeCard> cards, bool executeConfirmationTiming = false)
+        {
+            if(isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                foreach(RuntimeCard card in cards)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnSelectedForAbilityTrigger>(gameState, card, player, _ => true, executeConfirmationTiming: executeConfirmationTiming);
+            }
+        }
 
         public int GetRandomNumber(int min, int max) => rng.Next(min, max);
 

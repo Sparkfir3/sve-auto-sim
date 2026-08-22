@@ -79,9 +79,12 @@ namespace SVESimulator
         private Vector3 raycastHitPos;
 
         public bool IsActive => gameObject.activeInHierarchy;
+        public List<CardObject> CurrentSelectedCards => currentSelectedCards;
         public int ValidTargetsCount => AllCards.Count(x => currentFilter.MatchesCard(x));
         public SelectionMode CurrentMode => currentMode;
         public float SlotScale => slotScale;
+
+        public Action<CardSelectionArea> UpdateActionButtonOverride;
 
         #endregion
 
@@ -187,6 +190,7 @@ namespace SVESimulator
             SetFilter("");
             scrollRect.onValueChanged.RemoveListener(ScrollSelectionArea);
             OnDisableZone();
+            UpdateActionButtonOverride = null;
             gameObject.SetActive(false);
         }
 
@@ -262,12 +266,7 @@ namespace SVESimulator
             {
                 Player.ZoneController.handZone.SetAllCardsInteractable(filter);
             }
-
-#if UNITY_EDITOR
-            debug_SerializedFilter.Clear();
-            foreach(var kvPair in currentFilter)
-                debug_SerializedFilter.Add(kvPair.Key, kvPair.Value);
-#endif
+            OnUpdateFilter();
         }
 
         public void SetConfirmAction(string cardName, string actionText, string effectText, int minSelectionCount, int maxSelectionCount, Action<List<CardObject>> action,
@@ -320,8 +319,8 @@ namespace SVESimulator
                 DeselectAllCards();
                 GameUIManager.MultipleChoice.Close();
             });
-            if(minSelectCount == 0) // move "Skip" button to end if applicable
-                GameUIManager.MultipleChoice.MoveButtonToEnd(GameUIManager.MultipleChoice.ActiveButtonCount - 1);
+            if(minSelectCount == 0) // move "Skip" button to end if it exists
+                GameUIManager.MultipleChoice.MoveButtonToEnd(GameUIManager.MultipleChoice.ActiveButtonCount - 2);
             UpdateActionButton();
         }
 
@@ -466,9 +465,14 @@ namespace SVESimulator
             else if(Input.GetKeyUp(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
                     inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer) && Vector3.Distance(raycastHitPos, hit.point) < 5f)
             {
-                if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card) && currentFilter.MatchesCard(card))
+                if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card))
                 {
-                    ToggleCardSelection(card);
+                    // deselect for XOR filter - bypass filter (it fails filter because it checks against itself inside the filter)
+                    if((currentFilter?.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor) ?? false) && currentSelectedCards.Contains(card))
+                        ToggleCardSelection(card);
+                    // regular toggle selection
+                    else if(currentFilter.MatchesCard(card))
+                        ToggleCardSelection(card);
                 }
             }
         }
@@ -626,18 +630,26 @@ namespace SVESimulator
                 {
                     currentSelectedCards.Add(card);
                     card.SetHighlightMode(CardObject.HighlightMode.Selected);
+                    OnUpdateSelectedCards();
                 }
             }
             else
             {
                 currentSelectedCards.Remove(card);
                 card.SetHighlightMode(CardObject.HighlightMode.None);
+                OnUpdateSelectedCards();
             }
             UpdateActionButton();
         }
 
         private void UpdateActionButton()
         {
+            if(UpdateActionButtonOverride != null)
+            {
+                UpdateActionButtonOverride.Invoke(this);
+                return;
+            }
+
             // If minSelectCount is 0, the "Close" button is an option, so the action button should be disabled if none are selected
             GameUIManager.MultipleChoice.SetButtonActive(0, currentSelectedCards.Count >= Mathf.Max(minSelectCount, 1) || maxSelectCount == 0);
         }
@@ -647,6 +659,32 @@ namespace SVESimulator
             foreach(CardObject card in currentSelectedCards)
                 card.SetHighlightMode(CardObject.HighlightMode.None);
             currentSelectedCards.Clear();
+            OnUpdateSelectedCards();
+        }
+
+        private void OnUpdateSelectedCards()
+        {
+            if(currentFilter?.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor) ?? false)
+            {
+                currentFilter[SVEFormulaParser.CardFilterSetting.NameXor] = string.Join("\n",
+                    currentSelectedCards.Select(x => LibraryCardCache.GetName(x.RuntimeCard.cardId)).Distinct());
+                OnUpdateFilter();
+            }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Other
+
+        private void OnUpdateFilter()
+        {
+#if UNITY_EDITOR
+            debug_SerializedFilter.Clear();
+            foreach(var kvPair in currentFilter)
+                debug_SerializedFilter.Add(kvPair.Key, kvPair.Value?.Replace("\n", " / "));
+#endif
         }
 
         #endregion

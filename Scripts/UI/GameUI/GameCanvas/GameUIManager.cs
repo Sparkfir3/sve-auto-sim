@@ -30,6 +30,8 @@ namespace SVESimulator.UI
         private MultipleChoiceWindow multipleChoiceWindow;
         [SerializeField]
         private EffectTargetingUI effectTargetingUI;
+        [SerializeField]
+        private SelectAmountWindow selectAmountWindow;
 
         [Title("Other Game Info"), SerializeField]
         private ViewingZoneWindow viewingZoneWindow;
@@ -63,6 +65,7 @@ namespace SVESimulator.UI
         public static ActivateEffectWindow ActivateEffect => Instance.activateEffectWindow;
         public static MultipleChoiceWindow MultipleChoice => Instance.multipleChoiceWindow;
         public static EffectTargetingUI EffectTargeting => Instance.effectTargetingUI;
+        public static SelectAmountWindow SelectAmount => Instance.selectAmountWindow;
 
         // Other Game Info
         public static ViewingZoneWindow ViewingZone => Instance.viewingZoneWindow;
@@ -107,6 +110,7 @@ namespace SVESimulator.UI
             activateEffectWindow.Close();
             multipleChoiceWindow.Close();
             effectTargetingUI.gameObject.SetActive(true);
+            selectAmountWindow.Close();
 
             // Other Game Info
             viewingZoneWindow.gameObject.SetActive(false);

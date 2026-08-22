@@ -227,6 +227,12 @@ namespace SVESimulator
             SetTargetingLine(attackingCard.transform.position, defendingCard.transform.position);
         }
 
+        public void PlayAttackPreview(CardObject attackingCard, Vector3 targetPosition)
+        {
+            SetTargetingLineActive(true);
+            SetTargetingLine(attackingCard.transform.position, targetPosition);
+        }
+
         public void EndAttackPreview()
         {
             SetTargetingLineActive(false);

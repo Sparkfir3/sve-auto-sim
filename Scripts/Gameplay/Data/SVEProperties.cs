@@ -11,6 +11,7 @@ namespace SVESimulator
             Stack = 6,
             Spell = 7,
             Prayer = 8,
+            Fable = 9,
         }
 
         public enum SVEEffectTarget
@@ -20,9 +21,11 @@ namespace SVESimulator
             AllPlayerCards,
             AllPlayerCardsEx,
             AllPlayerCardsFieldAndEx,
+            AllPlayerCardsAndLeader,
             TargetPlayerCard,
             TargetPlayerCardOrLeader,
             TargetPlayerCardEx,
+            TargetPlayerCardFieldOrEx,
             TriggerCard,
 
             Opponent,
@@ -39,6 +42,7 @@ namespace SVESimulator
             AllCards,
             TargetCard,
             TargetCardEx,
+            MultiTargetMode,
 
             AllPlayers,
             AllLeaders
@@ -113,6 +117,7 @@ namespace SVESimulator
             public const string ID_EN = "ID EN";
             public const string Class = "Class";
             public const string Name = "Name";
+            public const string NameAlts = "Alternate Names";
             public const string Text = "Text";
             public const string Trait = "Trait";
             public const string Rarity = "Rarity";
@@ -176,6 +181,8 @@ namespace SVESimulator
             public const string CantDestroyByAbilities = "CantDestroyByAbilities";
             public const string CannotAttack = "CannotAttack";
             public const string CannotAttackLeaders = "CannotAttackLeaders";
+            public const string CannotUseAct = "CannotUseAct";
+            public const string OpponentMustSelectAsTarget = "OpponentMustSelectAsTarget";
 
             // Plus Damage
             public const string Plus1Damage = "Plus1Damage";

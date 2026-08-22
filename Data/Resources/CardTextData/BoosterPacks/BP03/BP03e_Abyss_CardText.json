@@ -1,0 +1,295 @@
+[
+  {
+    "id": "BP03-073EN",
+    "name": "Dark Alice",
+    "trait": "Demon / Fable",
+    "cardText": "Rush.\nStrike: Each opponent discards a card.\n[lastwords] Banish the top 10 cards of your deck: Put this follower onto its owner's field. Discard a card.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Each opponent discards a card."
+      },
+      {
+        "key": "OppDiscard",
+        "body": "Each opponent discards a card."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "cost": "Banish the top 10 cards of your deck",
+        "body": "Put this follower onto its owner's field. Discard a card."
+      },
+      {
+        "key": "SelfDiscard",
+        "body": "Put this follower onto its owner's field. Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-074EN",
+    "name": "Masquerade Ghost",
+    "trait": "Departed",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nWhenever a Ghost is put onto your field, give it [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "body": "Whenever a Ghost is put onto your field, give it [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-075EN",
+    "name": "Masquerade Ghost (Evolved)",
+    "trait": "Departed",
+    "cardText": "Whenever a Ghost is put onto your field, give it [attack]+1.\nWhenever a Ghost you control leaves the field, summon a Gargantuan Ghost token.\n[lastwords] Put this card into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "body": "Whenever a Ghost is put onto your field, give it [attack]+1."
+      },
+      {
+        "key": "OnOtherLeaveField",
+        "body": "Whenever a Ghost you control leaves the field, summon a Gargantuan Ghost token."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this card into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP03-076EN",
+    "name": "Odile, Black Swan",
+    "trait": "Fable",
+    "cardText": "[fanfare] Deal 2 damage to each enemy leader and enemy follower on the field. Necrocharge (20): Give this follower Storm.\nStrike: Deal 2 damage to each enemy leader and enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 2 damage to each enemy leader and enemy follower on the field. Necrocharge (20): Give this follower Storm."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Deal 2 damage to each enemy leader and enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-077EN",
+    "name": "Demonium, Punk Devil",
+    "trait": "Demon",
+    "cardText": "Ward.\n[act] Give your leader [defense]-2: Give this follower Bane. This ability can be activated once per turn.\n[lastwords] Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Give your leader [defense]-2",
+        "body": "Give this follower Bane. This ability can be activated once per turn."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP03-078EN",
+    "name": "Baccherus, Peppy Ghostie",
+    "trait": "Departed",
+    "cardText": "[evolve][cost01]: Evolve this follower.\n[fanfare] If there is a Gargantuan Ghost on your field, draw a card.\nThis follower's name is also Ghost.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there is a Gargantuan Ghost on your field, draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-079EN",
+    "name": "Baccherus, Peppy Ghostie (Evolved)",
+    "trait": "Departed",
+    "cardText": "This follower's name is also Ghost.\n[lastwords] Put this card into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this card into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP03-080EN",
+    "name": "Demon Maestro",
+    "trait": "Demon",
+    "cardText": "[act] Give your leader [defense]-2: Draw a card. This ability can be activated once per turn.",
+    "effectText": [
+      {
+        "key": "Act",
+        "text": "[act] Give your leader [defense]-2: Draw a card. This ability can be activated once per turn.",
+        "trigger": "[act]",
+        "cost": "Give your leader [defense]-2",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-081EN",
+    "name": "Trombone Devil",
+    "trait": "Demon",
+    "cardText": "[evolve][cost01]: Evolve this follower.\nAt the start of your end phase, if Sanguine is active for you, select an enemy leader or enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if Sanguine is active for you, select an enemy leader or enemy follower on the field and deal it 3 damage.",
+        "trigger": "At the start of your end phase, if Sanguine is active for you",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-082EN",
+    "name": "Trombone Devil (Evolved)",
+    "trait": "Demon",
+    "cardText": "On Evolve: Deal 1 damage to each leader.\nAt the start of your end phase, if Sanguine is active for you, select an enemy leader or enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Deal 1 damage to each leader."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, if Sanguine is active for you, select an enemy leader or enemy follower on the field and deal it 3 damage.",
+        "trigger": "At the start of your end phase, if Sanguine is active for you",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP03-083EN",
+    "name": "Furtive Fangs",
+    "trait": "Beast / Fable",
+    "cardText": "Select a follower on your field. For the rest of this turn, it has \"Strike: Select an enemy follower on the field and deal it X damage. X equals this follower's attack.\"",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a follower on your field. For the rest of this turn, it has \"Strike: Select an enemy follower on the field and deal it X damage. X equals this follower's attack.\""
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike:",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals this follower's attack."
+      }
+    ]
+  },
+  {
+    "id": "BP03-084EN",
+    "name": "Pumpkin Necromancer",
+    "trait": "Departed/",
+    "cardText": "[fanfare] Put a Gargantuan Ghost token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Gargantuan Ghost token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP03-085EN",
+    "name": "Parade Raven",
+    "trait": "Departed",
+    "cardText": "[fanfare] Put another follower from your field into its owner's cemetery: Select a follower that costs 5 play points or less in your cemetery and put it onto your field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Put another follower from your field into its owner's cemetery",
+        "body": "Select a follower that costs 5 play points or less in your cemetery and put it onto your field."
+      }
+    ]
+  },
+  {
+    "id": "BP03-086EN",
+    "name": "Mischievous Zombie",
+    "trait": "Departed",
+    "cardText": "[evolve][cost02]: Evolve this follower.\n[fanfare] Discard a card: Summon a Ghost token. If you discarded a Departed card, draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a card",
+        "body": "Summon a Ghost token. If you discarded a Departed card, draw a card."
+      },
+      {
+        "key": "Token",
+        "cost": "Discard a card",
+        "body": "Summon a Ghost token. If you discarded a Departed card, draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP03-087EN",
+    "name": "Mischievous Zombie (Evolved)",
+    "trait": "Departed",
+    "cardText": "On Evolve: Select a Ghost on your field and give it Bane.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select a Ghost on your field and give it Bane."
+      }
+    ]
+  },
+  {
+    "id": "BP03-088EN",
+    "name": "Devilish Flautist",
+    "trait": "Departed",
+    "cardText": "Rush.\n[fanfare] Discard a random card: Give this follower [attack]+1 and Drain.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a random card",
+        "body": "Give this follower [attack]+1 and Drain."
+      }
+    ]
+  },
+  {
+    "id": "BP03-089EN",
+    "name": "Infernal Orchestration",
+    "trait": "Demon",
+    "cardText": "Deal 1 damage to your leader. The next time you put a follower onto your field this turn by playing it, give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "AtkDef",
+        "text": "The next time you put a follower onto your field this turn by playing it, give it [attack]+1/[defense]+1.",
+        "trigger": "The next time you put a follower onto your field this turn by playing it",
+        "body": "Give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP03-LD04EN",
+    "name": "Subaru Makabe"
+  },
+  {
+    "id": "BP03-T01EN",
+    "name": "Gargantuan Ghost",
+    "trait": "Departed / Token",
+    "cardText": "Ward.\nAt the start of your main phase, banish this card.",
+    "effectText": [
+      {
+        "key": "StartMainPhase",
+        "text": "At the start of your main phase, banish this card.",
+        "trigger": "At the start of your main phase,",
+        "body": "Banish this card."
+      }
+    ]
+  }
+]

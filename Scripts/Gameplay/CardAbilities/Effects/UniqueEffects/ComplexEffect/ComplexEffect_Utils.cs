@@ -7,11 +7,13 @@ namespace SVESimulator
     {
         private bool BreakCondition => !player || !Application.isPlaying;
 
-        private string ReplaceWithVariableValues(string line, Dictionary<string, string> variables)
+        private string ReplaceWithVariableValues(string line)
         {
             foreach(var kvPair in variables)
             {
-                (string variable, string value) = (kvPair.Key, kvPair.Value);
+                if(kvPair.Value is not CE_Value ceValue)
+                    continue;
+                (string variable, string value) = (kvPair.Key, ceValue?.value);
                 line = line.Replace(variable, value);
             }
             return line;

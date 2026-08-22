@@ -194,10 +194,18 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void FlipTopDeckToFaceUp(Action<CardObject> onComplete)
+        public void FlipTopDeckToFaceUp(CardObject card = null, Action<CardObject> onComplete = null)
         {
-            RuntimeCard runtimeCard = localZoneController.deckZone.Runtime.cards[0];
-            CardObject card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            RuntimeCard runtimeCard;
+            if(!card)
+            {
+                runtimeCard = localZoneController.deckZone.Runtime.cards[0];
+                card = localZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+            }
+            else
+            {
+                runtimeCard = card.RuntimeCard;
+            }
             localZoneController.FlipCardToFaceUp(card, onComplete: () => onComplete?.Invoke(card));
 
             LocalFlipTopDeckMessage msg = new()
@@ -209,7 +217,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void FlipTopDeckToFaceDown(CardObject card = null)
+        public void FlipTopDeckToFaceDown(CardObject card = null, Action onComplete = null)
         {
             if(!card)
             {
@@ -218,7 +226,7 @@ namespace SVESimulator
             }
             if(!card)
                 return;
-            localZoneController.FlipCardToFaceDown(card);
+            localZoneController.FlipCardToFaceDown(card, onComplete: onComplete);
 
             LocalFlipTopDeckMessage msg = new()
             {
@@ -326,17 +334,20 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void MillDeck(bool targetLocalPlayer, int count, Action onComplete)
+        public void MillDeck(bool targetLocalPlayer, int count, Action onComplete = null) => MillDeck(targetLocalPlayer, count, _ => onComplete?.Invoke());
+        public void MillDeck(bool targetLocalPlayer, int count, Action<List<RuntimeCard>> onComplete)
         {
             StartCoroutine(MillCoroutine());
             IEnumerator MillCoroutine() // Use delay to prevents cards from moving all at once
             {
                 int movedCount = 0;
                 PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
+                List<RuntimeCard> cardList = new();
                 for(int i = 0; i < count; i++)
                 {
                     RuntimeCard runtimeCard = targetZoneController.deckZone.Runtime.cards[0];
                     CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+                    cardList.Add(runtimeCard);
 
                     targetZoneController.SendCardToCemetery(cardObject, onComplete: () => { movedCount++; });
                     sveEffectSolver.SendToCemetery(targetLocalPlayer ? netIdentity : opponentInfo.netId, runtimeCard, SVEProperties.Zones.Deck);
@@ -351,13 +362,49 @@ namespace SVESimulator
                     yield return new WaitForSeconds(0.15f);
                 }
                 yield return new WaitUntil(() => movedCount >= count);
-                onComplete?.Invoke();
+                onComplete?.Invoke(cardList);
             }
         }
 
-        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true) =>
-            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost);
-        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false)
+        public void MillDeckToBanished(bool targetLocalPlayer, int count, Action onComplete = null, bool onlyMoveObjects = false) =>
+            MillDeckToBanished(targetLocalPlayer, count, _ => onComplete?.Invoke(), onlyMoveObjects);
+        public void MillDeckToBanished(bool targetLocalPlayer, int count, Action<List<RuntimeCard>> onComplete, bool onlyMoveObjects = false)
+        {
+            StartCoroutine(MillCoroutine());
+            IEnumerator MillCoroutine() // Use delay to prevents cards from moving all at once
+            {
+                int movedCount = 0;
+                PlayerCardZoneController targetZoneController = targetLocalPlayer ? localZoneController : oppZoneController;
+                List<RuntimeCard> cardList = targetZoneController.deckZone.Runtime.cards
+                    .GetRange(0, Mathf.Min(count, targetZoneController.deckZone.Runtime.cards.Count));
+                for(int i = 0; i < cardList.Count; i++)
+                {
+                    RuntimeCard runtimeCard = cardList[i];
+                    CardObject cardObject = targetZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+
+                    targetZoneController.SendCardToBanishedZone(cardObject, onComplete: () => { movedCount++; });
+                    yield return new WaitForSeconds(0.15f);
+
+                    if(onlyMoveObjects)
+                        continue;
+                    sveEffectSolver.BanishCard(targetLocalPlayer ? netIdentity : opponentInfo.netId, runtimeCard, SVEProperties.Zones.Deck);
+                    LocalBanishCardMessage msg = new()
+                    {
+                        playerNetId = netIdentity,
+                        cardInstanceId = runtimeCard.instanceId,
+                        isOpponentCard = !targetLocalPlayer,
+                        originZone = SVEProperties.Zones.Deck
+                    };
+                    NetworkClient.Send(msg);
+                }
+                yield return new WaitUntil(() => movedCount >= count);
+                onComplete?.Invoke(cardList);
+            }
+        }
+
+        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null) =>
+            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, fixedCost);
+        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -370,7 +417,7 @@ namespace SVESimulator
             int playPointCost = 0;
             if(payCost)
             {
-                playPointCost = card.RuntimeCard.PlayPointCost(playerController);
+                playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
                 if(!ignoreAltCosts && card.RuntimeCard.HasAvailableAlternateCost(playerController, out List<TriggeredAbility> alternateCostAbilities))
                 {
                     if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
@@ -391,7 +438,7 @@ namespace SVESimulator
 
             if(originZone.IsNullOrWhiteSpace())
                 originZone = localZoneController.handZone.ContainsCard(card) ? SVEProperties.Zones.Hand : SVEProperties.Zones.ExArea;
-            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: !cardHasWard);
+            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
             localZoneController.PlayCardToField(card, slot);
 
             // Network message
@@ -408,14 +455,16 @@ namespace SVESimulator
             // Handle Ward
             if(cardHasWard)
                 GameUIManager.MultipleChoice.OpenEngageWardCardOptions(playerController, card);
+            else
+                SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
 
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, bool useEvolveCost = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true)
         {
             // Condition checks
-            if(!isActivePlayer || playerController.EvolvedThisTurn)
+            if(playerController.EvolvedThisTurn && useEvolveForTurn)
                 return false;
             if(useEvolveCost)
             {
@@ -429,7 +478,8 @@ namespace SVESimulator
                 Debug.LogError($"Failed to find a corresponding slot for card {baseCard.name} on the player's field!");
                 return false;
             }
-            CardObject evolvedCard = GetEvolvedCardOf(baseCard.RuntimeCard);
+            if(!evolvedCard)
+                evolvedCard = GetEvolvedCardOf(baseCard.RuntimeCard);
             if(!evolvedCard)
                 return false;
 
@@ -442,7 +492,7 @@ namespace SVESimulator
 
             baseCard.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.fieldZone.HighlightCardsCanAttack();
-            playerController.EvolvedThisTurn = true;
+            playerController.EvolvedThisTurn |= useEvolveForTurn;
 
             // Networking
             LocalEvolveCardMessage msg = new()
@@ -456,7 +506,7 @@ namespace SVESimulator
             };
             NetworkClient.Send(msg);
 
-            // Transfer attack/defense modifiers to card
+            // Transfer attack/defense modifiers to card (transfer keywords is handled in effect solver)
             SVEEffectPool.Instance.RemovePassivesFromCard(baseCard.RuntimeCard, playerController);
             int atkDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].baseValue;
             int defDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].baseValue;
@@ -561,6 +611,9 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
+            if(sourceZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsReturnedToHandFromField.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+
             // Show if adding from cemetery, otherwise normal move logic
             if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
                 StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.AddCardToHand(x, onComplete));
@@ -863,14 +916,15 @@ namespace SVESimulator
 
         #region Combat & Attack Handling
 
-        private void DeclareAttack(CardObject attackingCard, bool isAttackingLeader)
+        private void DeclareAttack(CardObject attackingCard, CardObject defendingCard, bool isAttackingLeader)
         {
             playerController.AdditionalStats.CardsAttackedThisTurn.Add(new PlayedCardData(attackingCard.RuntimeCard.instanceId, attackingCard.RuntimeCard.cardId));
-            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, isAttackingLeader);
+            sveEffectSolver.DeclareAttack(netIdentity, attackingCard.RuntimeCard, defendingCard ? defendingCard.RuntimeCard : null, isAttackingLeader);
             LocalDeclareAttackMessage msg = new()
             {
                 playerNetId = netIdentity,
-                cardInstanceId = attackingCard.RuntimeCard.instanceId,
+                attackerInstanceId = attackingCard.RuntimeCard.instanceId,
+                defenderInstanceId = defendingCard ? defendingCard.RuntimeCard.instanceId : -1,
                 isAttackingLeader = isAttackingLeader
             };
             NetworkClient.Send(msg);
@@ -881,15 +935,23 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null || defendingCard == null)
                 return;
 
-            DeclareAttack(attackingCard, isAttackingLeader: false);
+            int defenderSlotNumber = defendingCard.CurrentZone == oppZoneController.fieldZone ? oppZoneController.fieldZone.GetSlotNumber(defendingCard) : -1;
+            DeclareAttack(attackingCard, defendingCard, isAttackingLeader: false);
             SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
-                CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
-                SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, defendingCard, () =>
+                if(defendingCard.CurrentZone == oppZoneController.fieldZone) // defender is still on field
+                    CardManager.Animator.PlayAttackPreview(attackingCard, defendingCard);
+                else // if defender is no longer on the field, aim towards its old position instead
+                    CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.fieldZone.GetSlotPosition(defenderSlotNumber));
+
+                SVEQuickTimingController.Instance.CallQuickTimingCombat(attackingCard, defendingCard, defenderSlotNumber, () =>
                 {
                     CardManager.Animator.EndAttackPreview();
-                    if(attackingCard.CurrentZone != localZoneController.fieldZone) // cancel attack if attacking card is no longer on field
+                    if(attackingCard.CurrentZone != localZoneController.fieldZone || defendingCard.CurrentZone != oppZoneController.fieldZone) // cancel attack if attacking card or defending is no longer on field
+                    {
+                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                         return;
+                    }
 
                     CardManager.Animator.PlayAttackAnimation(attackingCard, defendingCard, () =>
                     {
@@ -917,7 +979,7 @@ namespace SVESimulator
             if(!isActivePlayer || attackingCard == null)
                 return;
 
-            DeclareAttack(attackingCard, isAttackingLeader: true);
+            DeclareAttack(attackingCard, null, isAttackingLeader: true);
             SVEEffectPool.Instance.OnNextConfirmationTimingEnd += () =>
             {
                 CardManager.Animator.PlayAttackPreview(attackingCard, oppZoneController.LeaderCardObject);
@@ -925,7 +987,10 @@ namespace SVESimulator
                 {
                     CardManager.Animator.EndAttackPreview();
                     if(attackingCard.CurrentZone != localZoneController.fieldZone) // cancel attack if attacking card is no longer on field
+                    {
+                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                         return;
+                    }
 
                     CardManager.Animator.PlayAttackAnimation(attackingCard, oppZoneController.LeaderCardObject, () => { sveEffectSolver.FightLeader(playerInfo.netId, attackingCard.RuntimeCard, opponentInfo); });
                     LocalAttackLeaderMessage msg = new()
@@ -1212,8 +1277,9 @@ namespace SVESimulator
                 IsPayingCosts = true;
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
                 string cardOriginZone = card.CurrentZone.Runtime.name;
-                List<MoveCardToZoneData> cardsToMove = new();
+                List<MoveCardToZoneData> cardsToMove = new(); // TODO - compress these lists into a container class
                 List<RemoveCounterData> countersToRemove = new();
+                List<int> cardInstanceIdsToEngage = new();
                 foreach(Cost cost in costs)
                 {
                     if(cost is not SveCost sveCost)
@@ -1221,6 +1287,8 @@ namespace SVESimulator
 
                     if(sveCost is RemoveCountersCost removeCounterCost)
                         yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, abilityName, countersToRemove));
+                    else if(sveCost is EngageCardCost engageCardCost)
+                        yield return StartCoroutine(engageCardCost.PayCost(playerController, card, abilityName, cardInstanceIdsToEngage));
                     else
                         yield return StartCoroutine(sveCost.PayCost(playerController, card, abilityName, cardsToMove));
                 }
@@ -1243,7 +1311,7 @@ namespace SVESimulator
                 }
 
                 // Resolve paying cost
-                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray());
+                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
 
                 LocalPayEffectCostMessage msg = new()
                 {
@@ -1253,6 +1321,7 @@ namespace SVESimulator
                     abilityName = abilityName,
                     cardsMoveToZoneData = cardsToMove.ToArray(),
                     countersToRemove = countersToRemove.ToArray(),
+                    cardInstanceIdsToEngage = cardInstanceIdsToEngage.ToArray()
                 };
                 NetworkClient.Send(msg);
 
@@ -1280,6 +1349,21 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        public void OnCardsSelectedForAbility(List<CardObject> cards)
+        {
+            sveEffectSolver.OnCardsSelectedForAbility(playerInfo, cards.Where(x => x.RuntimeCard.ownerPlayer.netId.isLocalPlayer).Select(x => x.RuntimeCard).ToList());
+            List<RuntimeCard> opponentCards = cards.Where(x => !x.RuntimeCard.ownerPlayer.netId.isLocalPlayer).Select(x => x.RuntimeCard).ToList();
+            if(opponentCards is not { Count: > 0 })
+                return;
+            LocalSelectedOppCardsForAbility msg = new()
+            {
+                playerNetId = netIdentity,
+                cardInstanceIds = opponentCards.Select(x => x.instanceId).ToArray()
+            };
+            // TODO - Temporary disable, currently crashes the game
+            // NetworkClient.Send(msg);
+        }
 
         public int GetRandomNumber(int min, int max)
         {

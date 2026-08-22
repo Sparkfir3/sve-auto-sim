@@ -36,6 +36,11 @@
                 "value": null,
                 "name": "ID EN",
                 "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "Alternate Names",
+                "$type": "CCGKit.StringProperty"
             }
         ],
         "stats": [
@@ -135,6 +140,11 @@
             {
                 "value": null,
                 "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "Alternate Names",
                 "$type": "CCGKit.StringProperty"
             }
         ],

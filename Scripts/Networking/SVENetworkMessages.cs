@@ -322,14 +322,16 @@ namespace SVESimulator
     public struct LocalDeclareAttackMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
-        public int cardInstanceId;
+        public int attackerInstanceId;
+        public int defenderInstanceId;
         public bool isAttackingLeader;
     }
 
     public struct OpponentDeclareAttackMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
-        public int cardInstanceId;
+        public int attackerInstanceId;
+        public int defenderInstanceId;
     }
 
     public struct LocalAttackFollowerMessage : NetworkMessage
@@ -627,6 +629,7 @@ namespace SVESimulator
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
         public RemoveCounterData[] countersToRemove;
+        public int[] cardInstanceIdsToEngage;
     }
 
     public struct OpponentPayEffectCostMessage : NetworkMessage
@@ -637,6 +640,8 @@ namespace SVESimulator
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
         public RemoveCounterData[] countersToRemove;
+        public int[] cardInstanceIdsToEngage;
+        public NetCard[] additionalNetCardData; // extra data needed to initialize cards from non-public zones like the deck
     }
 
     public readonly struct MoveCardToZoneData
@@ -676,6 +681,18 @@ namespace SVESimulator
     // ------------------------------
 
     #region Other
+
+    public struct LocalSelectedOppCardsForAbility : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+    }
+
+    public struct OpponentSelectedOppCardsForAbility : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public int[] cardInstanceIds;
+    }
 
     public struct LocalAdvanceRngMessage : NetworkMessage
     {

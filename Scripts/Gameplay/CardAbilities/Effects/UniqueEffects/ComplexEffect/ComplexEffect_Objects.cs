@@ -1,15 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CCGKit;
+using UnityEngine;
 
 namespace SVESimulator
 {
     public partial class ComplexEffect
     {
+        #region Base/Standard
+
         private abstract class CE_Object
         {
             public abstract Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters);
         }
+
+        // -----
 
         private class CE_Value : CE_Object
         {
@@ -23,9 +29,26 @@ namespace SVESimulator
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters) => Task.FromResult<CE_Object>(this);
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Cards
+
         private class CE_Card : CE_Object
         {
             public RuntimeCard card;
+
+            public CE_Card(RuntimeCard card)
+            {
+                this.card = card;
+            }
+
+            public CE_Card(PlayerController player, int instanceId, string zone)
+            {
+                card = player.GetPlayerInfo().namedZones[zone].cards.FirstOrDefault(x => x.instanceId == instanceId);
+                Debug.Assert(card != null);
+            }
 
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
             {
@@ -39,6 +62,31 @@ namespace SVESimulator
             }
         }
 
+        private class CE_CardList : CE_Object
+        {
+            public List<RuntimeCard> cardList;
+
+            public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
+            {
+                switch(token)
+                {
+                    case "filterCount":
+                        if(parameters.Length == 0)
+                            return Task.FromResult<CE_Object>(new CE_Value(cardList.Count.ToString()));
+                        var filter = SVEFormulaParser.ParseCardFilterFormula(parameters[0]);
+                        return Task.FromResult<CE_Object>(new CE_Value(cardList.Count(x => filter.MatchesCard(x)).ToString()));
+                    default:
+                        return Task.FromResult<CE_Object>(null);
+                }
+            }
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Other
+
         private class CE_EffectCost : CE_Object
         {
             public List<MoveCardToZoneData> movedCardsData;
@@ -48,12 +96,20 @@ namespace SVESimulator
             {
                 switch(token)
                 {
+                    case "firstMovedCard":
+                        return movedCardsData is { Count: > 0 }
+                            ? Task.FromResult<CE_Object>(new CE_Card(player, movedCardsData[0].cardInstanceId, movedCardsData[0].endZone))
+                            : Task.FromResult<CE_Object>(null);
                     case "movedCardsCount":
                         return Task.FromResult<CE_Object>(new CE_Value(movedCardsData.Count.ToString()));
+                    case "removedCountersCount":
+                        return Task.FromResult<CE_Object>(new CE_Value(removedCountersData.Sum(x => x.amount).ToString()));
                     default:
                         return Task.FromResult<CE_Object>(null);
                 }
             }
         }
+
+        #endregion
     }
 }
