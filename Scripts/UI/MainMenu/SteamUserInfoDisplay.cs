@@ -123,11 +123,13 @@ namespace SVESimulator.UI
             opponentProfileImage.texture = profilePic;
             opponentUsername.text = username;
             MoveCard(opponentInfoCard, opponentCardOnScreenPos, true);
+            isShowingOpponent = true;
         }
 
         private void HideOpponentInfo()
         {
             MoveCard(opponentInfoCard, opponentCardOffScreenPos, false);
+            isShowingOpponent = false;
         }
 
         // -----
