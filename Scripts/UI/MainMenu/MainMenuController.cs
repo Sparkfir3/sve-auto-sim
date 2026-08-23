@@ -24,8 +24,8 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject selectDeckError;
 
-        public event Action<NetworkIdentity> OnOpponentConnected;
-        public event Action<NetworkIdentity> OnOpponentDisconnected;
+        public event Action OnOpponentConnected;
+        public event Action OnOpponentDisconnected;
         public event Action<bool> OnTryConnection;
         public event Action<string> OnConnectionFailed;
 
@@ -125,7 +125,7 @@ namespace SVESimulator.UI
             if(SVEGameNetworkManager.ConnectedPlayerCount >= 2 && mainMenuView.CurrentState == MainMenuViewState.Connecting)
             {
                 mainMenuView.PerformAction(MainMenuAction.ReadyToStart);
-                OnOpponentConnected?.Invoke(conn.identity);
+                OnOpponentConnected?.Invoke();
             }
         }
 
@@ -134,7 +134,7 @@ namespace SVESimulator.UI
             if(NetworkClient.active && mainMenuView.CurrentState == MainMenuViewState.ReadyToStart && conn.connectionId != 0) // other user disconnect
             {
                 mainMenuView.PerformAction(MainMenuAction.OppDisconnected);
-                OnOpponentDisconnected?.Invoke(conn.identity);
+                OnOpponentDisconnected?.Invoke();
             }
         }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using TMPro;
+using ShowInInspector = Sirenix.OdinInspector.ShowInInspectorAttribute;
 
 namespace SVESimulator.UI
 {
@@ -10,10 +11,14 @@ namespace SVESimulator.UI
     {
         #region Variables
 
-        [Title("Runtime Data"), SerializeField]
+        [field: Title("Runtime Data"), ShowInInspector]
         public bool ShowPlayer { get; set; }
-        [SerializeField]
+        [ShowInInspector]
         private bool isShowingPlayer;
+        [field: ShowInInspector]
+        public bool ShowOpponent { get; set; }
+        [ShowInInspector]
+        private bool isShowingOpponent;
 
         [Title("Object References & Settings"), SerializeField]
         private CardAnimationController animController;
@@ -70,6 +75,13 @@ namespace SVESimulator.UI
                 else if(SVEGameNetworkManager.DataManager.TryGetLocalProfileInfo(out Texture2D profilePic, out string username))
                     ShowPlayerInfo(profilePic, username);
             }
+            if(isShowingOpponent != ShowOpponent)
+            {
+                if(!ShowOpponent)
+                    HideOpponentInfo();
+                else if(SVEGameNetworkManager.DataManager.TryGetOpponentProfileInfo(out Texture2D profilePic, out string username))
+                    ShowOpponentInfo(profilePic, username);
+            }
         }
 
         #endregion
@@ -80,6 +92,8 @@ namespace SVESimulator.UI
 
         public void HideAll()
         {
+            ShowPlayer = false;
+            ShowOpponent = false;
             HidePlayerInfo();
             HideOpponentInfo();
         }

@@ -70,6 +70,8 @@ namespace SVESimulator.UI
             OnStateExit += HandleStateExit;
             mainMenuController.OnTryConnection += OnTryConnection;
             mainMenuController.OnConnectionFailed += ShowErrorMessage;
+            mainMenuController.OnOpponentConnected += OnOpponentConnected;
+            mainMenuController.OnOpponentDisconnected += OnOpponentDisconnected;
 
             connectingIndicator.SetActive(false);
         }
@@ -178,7 +180,8 @@ namespace SVESimulator.UI
                 case MainMenuViewState.ReadyToStart:
                     steamRoomCodeInputField.Interactable = false;
                     errorTextBox.gameObject.SetActive(false);
-                    userInfoDisplay.ShowPlayer = true;
+                    if(SVEGameNetworkManager.IsSteamManager)
+                        userInfoDisplay.ShowPlayer = true;
                     break;
                 default:
                     steamRoomCodeInputField.Hide();
@@ -219,7 +222,13 @@ namespace SVESimulator.UI
 
         public void OnOpponentConnected()
         {
-            // TODO
+            if(SVEGameNetworkManager.IsSteamManager)
+                userInfoDisplay.ShowOpponent = true;
+        }
+
+        public void OnOpponentDisconnected()
+        {
+            userInfoDisplay.ShowOpponent = false;
         }
 
         #endregion
