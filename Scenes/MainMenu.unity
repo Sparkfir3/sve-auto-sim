@@ -226,7 +226,7 @@ Transform:
   m_GameObject: {fileID: 141820877}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7660445, z: 0, w: 0.64278764}
-  m_LocalPosition: {x: 7, y: 0.5, z: -35}
+  m_LocalPosition: {x: 0, y: 0.5, z: -40}
   m_LocalScale: {x: 1.5000002, y: 1.5, z: 1.5000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -330,6 +330,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 24784904}
     m_Modifications:
+    - target: {fileID: 1263428230348997388, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 3909232756487607039, guid: 3c342b70bbff1f14dbfb01740a0c0637, type: 3}
       propertyPath: m_text
       value: Waiting for Opponent...
@@ -707,7 +711,7 @@ Transform:
   m_GameObject: {fileID: 554574826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.6427876, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: -7, y: 0.5, z: -35}
+  m_LocalPosition: {x: -7, y: 0.5, z: -40}
   m_LocalScale: {x: 1.5000002, y: 1.5, z: 1.5000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1137,7 +1141,7 @@ Transform:
   m_GameObject: {fileID: 1015648333}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7372774, z: 0, w: 0.67559016}
-  m_LocalPosition: {x: -13, y: 0.5, z: -19.5}
+  m_LocalPosition: {x: -12.5, y: 0.5, z: -19.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1760,13 +1764,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256910360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.6883546, z: 0, w: 0.72537434}
-  m_LocalPosition: {x: 11, y: 0.5, z: -19.5}
+  m_LocalRotation: {x: 0, y: -0.67559016, z: 0, w: 0.7372774}
+  m_LocalPosition: {x: 4.5, y: 0.5, z: -19.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1382269662}
-  m_LocalEulerAnglesHint: {x: 0, y: -87, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -85, z: 0}
 --- !u!224 &1260160416 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2266225393945875389, guid: d6f4815513817fa4396487ebb56e4880, type: 3}
