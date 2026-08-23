@@ -51,14 +51,6 @@ namespace SVESimulator
             UserProfileInfo.TryAdd(conn.connectionId, new ProfileInfo(profilePic, username));
         }
 
-        [Command(requiresAuthority = false)]
-        public void CmdRemoveProfileInfo(NetworkConnectionToClient conn = null)
-        {
-            if(conn == null)
-                return;
-            UserProfileInfo.Remove(conn.connectionId);
-        }
-
         // -----
 
         public bool TryGetLocalProfileInfo(out Texture2D profilePic, out string username)
