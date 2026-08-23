@@ -12,10 +12,10 @@ namespace SVESimulator
     /// </summary>
     public class NetworkDataManager : NetworkBehaviour
     {
-        private class ProfileInfo
+        public class ProfileInfo
         {
-            public Texture2D profilePic;
-            public string username;
+            public readonly Texture2D profilePic;
+            public readonly string username;
 
             public ProfileInfo()
             {
@@ -30,7 +30,7 @@ namespace SVESimulator
             }
         }
 
-        private readonly SyncDictionary<int, ProfileInfo> UserProfileInfo = new();
+        public readonly SyncDictionary<int, ProfileInfo> UserProfileInfo = new();
 
         // ------------------------------
 
