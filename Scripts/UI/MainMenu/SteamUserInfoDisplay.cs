@@ -1,3 +1,4 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
@@ -7,6 +8,13 @@ namespace SVESimulator.UI
 {
     public class SteamUserInfoDisplay : MonoBehaviour
     {
+        #region Variables
+
+        [Title("Runtime Data"), SerializeField]
+        public bool ShowPlayer { get; set; }
+        [SerializeField]
+        private bool isShowingPlayer;
+
         [Title("Object References & Settings"), SerializeField]
         private CardAnimationController animController;
         [SerializeField]
@@ -34,7 +42,11 @@ namespace SVESimulator.UI
         [BoxGroup("Opponent Info"), SerializeField]
         private Transform opponentCardOnScreenPos;
 
+        #endregion
+
         // ------------------------------
+
+        #region Unity Functions
 
         private void Start()
         {
@@ -44,39 +56,67 @@ namespace SVESimulator.UI
             opponentInfoCard.transform.position = opponentCardOffScreenPos.position;
         }
 
+        private void Update()
+        {
+            if(Time.frameCount % 2 == 0)
+                return;
+            if(!SVEGameNetworkManager.IsSteamManagerAndConnected || !SVEGameNetworkManager.DataManager)
+                return;
+
+            if(isShowingPlayer != ShowPlayer)
+            {
+                if(!ShowPlayer)
+                    HidePlayerInfo();
+                else if(SVEGameNetworkManager.DataManager.TryGetLocalProfileInfo(out Texture2D profilePic, out string username))
+                    ShowPlayerInfo(profilePic, username);
+            }
+        }
+
+        #endregion
+
         // ------------------------------
+
+        #region Public Controls
 
         public void HideAll()
         {
-            MoveCard(playerInfoCard, playerCardOffScreenPos, false);
-            MoveCard(opponentInfoCard, opponentCardOffScreenPos, false);
+            HidePlayerInfo();
+            HideOpponentInfo();
         }
 
-        public void ShowPlayerInfo(Texture2D profilePic, string username)
+        #endregion
+
+        // ------------------------------
+
+        #region Show/Hide/Move Controls
+
+        private void ShowPlayerInfo(Texture2D profilePic, string username)
         {
             playerProfileImage.texture = profilePic;
             playerUsername.text = username;
             MoveCard(playerInfoCard, playerCardOnScreenPos, true);
+            isShowingPlayer = true;
         }
 
-        public void HidePlayerInfo()
+        private void HidePlayerInfo()
         {
-            MoveCard(playerInfoCard, playerCardOffScreenPos, true);
+            MoveCard(playerInfoCard, playerCardOffScreenPos, false);
+            isShowingPlayer = false;
         }
 
-        public void ShowOpponentInfo(Texture2D profilePic, string username)
+        private void ShowOpponentInfo(Texture2D profilePic, string username)
         {
             opponentProfileImage.texture = profilePic;
             opponentUsername.text = username;
             MoveCard(opponentInfoCard, opponentCardOnScreenPos, true);
         }
 
-        public void HideOpponentInfo()
+        private void HideOpponentInfo()
         {
-            MoveCard(opponentInfoCard, opponentCardOffScreenPos, true);
+            MoveCard(opponentInfoCard, opponentCardOffScreenPos, false);
         }
 
-        // ------------------------------
+        // -----
 
         private void MoveCard(MainMenuCardObject card, Transform target, bool toActive)
         {
@@ -88,5 +128,7 @@ namespace SVESimulator.UI
                 card.gameObject.SetActive(toActive);
             });
         }
+
+        #endregion
     }
 }

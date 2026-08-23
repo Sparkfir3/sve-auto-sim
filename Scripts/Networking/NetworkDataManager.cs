@@ -1,13 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using Steamworks;
 
 namespace SVESimulator
 {
+    /// <summary>
+    /// Stores and handles general information about players when connected to the network
+    /// (Specifically, handles storing Steam profile information)
+    /// </summary>
     public class NetworkDataManager : NetworkBehaviour
     {
-        private struct ProfileInfo
+        private class ProfileInfo
         {
             public Texture2D profilePic;
             public string username;
@@ -33,13 +38,51 @@ namespace SVESimulator
 
         public void SaveProfileInfo(int connectionId, Texture2D profilePic, string username)
         {
-            Debug.Log($"Caching user info {username} with connection ID {connectionId}");
+            Debug.Log($"Caching user info for {username} with connection ID {connectionId}");
             UserProfileInfo.TryAdd(connectionId, new ProfileInfo(profilePic, username));
         }
 
-        public bool TryGetProfileInfo(int connectionId, out Texture2D profilePic, out string username)
+        public void RemoveProfileInfo(int connectionId)
         {
+            UserProfileInfo.Remove(connectionId);
+        }
+
+        // -----
+
+        public bool TryGetLocalProfileInfo(out Texture2D profilePic, out string username)
+        {
+            if(NetworkClient.connection == null)
+            {
+                profilePic = null;
+                username = null;
+                return false;
+            }
+
+            int connectionId = NetworkClient.connection.connectionId;
             if(!UserProfileInfo.TryGetValue(connectionId, out ProfileInfo profileInfo))
+            {
+                profilePic = null;
+                username = null;
+                return false;
+            }
+            profilePic = profileInfo.profilePic;
+            username = profileInfo.username;
+            return true;
+        }
+
+        public bool TryGetOpponentProfileInfo(out Texture2D profilePic, out string username)
+        {
+            // assuming for an opponent to be connected, we must also be connected already
+            if(UserProfileInfo.Count <= 1 || NetworkClient.connection == null)
+            {
+                profilePic = null;
+                username = null;
+                return false;
+            }
+
+            int connectionId = NetworkClient.connection.connectionId;
+            ProfileInfo profileInfo = UserProfileInfo.FirstOrDefault(x => x.Key != connectionId).Value;
+            if(profileInfo == null)
             {
                 profilePic = null;
                 username = null;

@@ -172,6 +172,8 @@ namespace SVESimulator
             Server server = FindObjectOfType<Server>();
             if(server)
                 server.OnPlayerDisconnected(conn.connectionId);
+            if(DataManager)
+                DataManager.RemoveProfileInfo(conn.connectionId);
             OnPlayerDisconnected?.Invoke(conn);
         }
 
