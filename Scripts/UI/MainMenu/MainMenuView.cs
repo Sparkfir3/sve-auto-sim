@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using Sparkfire.Utility;
 using TMPro;
 
@@ -12,7 +13,7 @@ namespace SVESimulator.UI
     {
         #region Variables
 
-        [field: Title("Runtime Data"), SerializeField, ReadOnly]
+        [field: Title("Runtime Data"), SerializeField, Sirenix.OdinInspector.ReadOnly]
         public MainMenuViewState CurrentState { get; private set; }
 
         [Title("Settings"), SerializeField]
@@ -70,6 +71,8 @@ namespace SVESimulator.UI
             OnStateExit += HandleStateExit;
             mainMenuController.OnTryConnection += OnTryConnection;
             mainMenuController.OnConnectionFailed += ShowErrorMessage;
+            mainMenuController.OnClientConnected += OnClientConnected;
+            mainMenuController.OnClientDisconnected += OnClientDisconnected;
             mainMenuController.OnOpponentConnected += OnOpponentConnected;
             mainMenuController.OnOpponentDisconnected += OnOpponentDisconnected;
 
@@ -218,6 +221,20 @@ namespace SVESimulator.UI
                 steamRoomCodeInputField.Interactable = true;
                 connectingIndicator.SetActive(false);
             }
+        }
+
+        public void OnClientConnected()
+        {
+            if(!SVEGameNetworkManager.IsSteamManager)
+                return;
+            userInfoDisplay.ShowPlayer = true;
+            if(!NetworkClient.activeHost)
+                userInfoDisplay.ShowOpponent = true;
+        }
+
+        public void OnClientDisconnected()
+        {
+            userInfoDisplay.HideAll();
         }
 
         public void OnOpponentConnected()

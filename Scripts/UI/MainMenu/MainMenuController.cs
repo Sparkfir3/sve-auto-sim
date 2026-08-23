@@ -24,6 +24,8 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject selectDeckError;
 
+        public event Action OnClientConnected;
+        public event Action OnClientDisconnected;
         public event Action OnOpponentConnected;
         public event Action OnOpponentDisconnected;
         public event Action<bool> OnTryConnection;
@@ -144,6 +146,7 @@ namespace SVESimulator.UI
             onNextConnectionToServerSuccess?.Invoke();
             onNextConnectionToServerSuccess = null;
             onNextConnectionToServerFailed = null;
+            OnClientConnected?.Invoke();
         }
 
         private void HandleLocalPlayerDisconnected()
@@ -154,6 +157,7 @@ namespace SVESimulator.UI
             onNextConnectionToServerFailed = null;
             if(mainMenuView.CurrentState is MainMenuViewState.Connecting or MainMenuViewState.ReadyToStart)
                 mainMenuView.PerformAction(MainMenuAction.Back);
+            OnClientDisconnected?.Invoke();
         }
 
         #endregion
