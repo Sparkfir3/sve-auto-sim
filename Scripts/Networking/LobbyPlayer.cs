@@ -11,7 +11,7 @@ namespace SVESimulator
                 return;
             if(SVEGameNetworkManager.IsSteamManagerAndConnected && NetworkDataManager.TryGetUserProfileInfo(out Texture2D profilePic, out string username))
             {
-                SVEGameNetworkManager.DataManager.CmdSaveProfileInfo(NetworkClient.connection.connectionId, profilePic, username);
+                SVEGameNetworkManager.DataManager.CmdSaveProfileInfo(profilePic, username);
             }
         }
     }

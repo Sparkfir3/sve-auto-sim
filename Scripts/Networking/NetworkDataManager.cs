@@ -43,18 +43,20 @@ namespace SVESimulator
         // ------------------------------
 
         [Command(requiresAuthority = false)]
-        public void CmdSaveProfileInfo(int connectionId, Texture2D profilePic, string username) => SaveProfileInfo(connectionId, profilePic, username);
-        private void SaveProfileInfo(int connectionId, Texture2D profilePic, string username)
+        public void CmdSaveProfileInfo(Texture2D profilePic, string username, NetworkConnectionToClient conn = null)
         {
-            Debug.Log($"Caching user info for {username} with connection ID {connectionId}");
-            UserProfileInfo.TryAdd(connectionId, new ProfileInfo(profilePic, username));
+            if(conn == null)
+                return;
+            Debug.Log($"Caching user info for {username} with connection ID {conn.connectionId}");
+            UserProfileInfo.TryAdd(conn.connectionId, new ProfileInfo(profilePic, username));
         }
 
         [Command(requiresAuthority = false)]
-        public void CmdRemoveProfileInfo(int connectionId) => RemoveProfileInfo(connectionId);
-        private void RemoveProfileInfo(int connectionId)
+        public void CmdRemoveProfileInfo(NetworkConnectionToClient conn = null)
         {
-            UserProfileInfo.Remove(connectionId);
+            if(conn == null)
+                return;
+            UserProfileInfo.Remove(conn.connectionId);
         }
 
         // -----
