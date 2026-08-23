@@ -44,8 +44,8 @@ namespace SVESimulator.UI
         {
             GameManager.Instance.Initialize();
             deckSelectionController.Initialize();
-            deckSelectionController.OnSelectDeck += () => selectDeckError.SetActive(false);
             mainMenuView.OnButtonClicked += HandleButtonClicked;
+            deckSelectionController.OnSelectDeck += HandleDeckSelected;
             SVEGameNetworkManager.OnPlayerConnected += HandlePlayerConnectedToServer;
             SVEGameNetworkManager.OnPlayerDisconnected += HandlePlayerDisconnectedFromServer;
             SVEGameNetworkManager.OnLocalConnect += HandleLocalPlayerConnected;
@@ -114,6 +114,13 @@ namespace SVESimulator.UI
                     QuitGame();
                     break;
             }
+        }
+
+        private void HandleDeckSelected()
+        {
+            selectDeckError.SetActive(false);
+            if(NetworkClient.active)
+                TryLoadSelectedDeck();
         }
 
         #endregion
