@@ -173,7 +173,7 @@ namespace SVESimulator
             if(server)
                 server.OnPlayerDisconnected(conn.connectionId);
             if(DataManager)
-                DataManager.RemoveProfileInfo(conn.connectionId);
+                DataManager.CmdRemoveProfileInfo(conn.connectionId);
             OnPlayerDisconnected?.Invoke(conn);
         }
 

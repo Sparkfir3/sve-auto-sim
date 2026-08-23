@@ -17,6 +17,12 @@ namespace SVESimulator
             public Texture2D profilePic;
             public string username;
 
+            public ProfileInfo()
+            {
+                profilePic = null;
+                username = null;
+            }
+
             public ProfileInfo(Texture2D profilePic, string username)
             {
                 this.profilePic = profilePic;
@@ -24,7 +30,7 @@ namespace SVESimulator
             }
         }
 
-        private readonly Dictionary<int, ProfileInfo> UserProfileInfo = new();
+        private readonly SyncDictionary<int, ProfileInfo> UserProfileInfo = new();
 
         // ------------------------------
 
@@ -36,13 +42,17 @@ namespace SVESimulator
 
         // ------------------------------
 
-        public void SaveProfileInfo(int connectionId, Texture2D profilePic, string username)
+        [Command(requiresAuthority = false)]
+        public void CmdSaveProfileInfo(int connectionId, Texture2D profilePic, string username) => SaveProfileInfo(connectionId, profilePic, username);
+        private void SaveProfileInfo(int connectionId, Texture2D profilePic, string username)
         {
             Debug.Log($"Caching user info for {username} with connection ID {connectionId}");
             UserProfileInfo.TryAdd(connectionId, new ProfileInfo(profilePic, username));
         }
 
-        public void RemoveProfileInfo(int connectionId)
+        [Command(requiresAuthority = false)]
+        public void CmdRemoveProfileInfo(int connectionId) => RemoveProfileInfo(connectionId);
+        private void RemoveProfileInfo(int connectionId)
         {
             UserProfileInfo.Remove(connectionId);
         }
