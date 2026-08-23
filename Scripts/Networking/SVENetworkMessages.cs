@@ -5,6 +5,8 @@ namespace SVESimulator
 {
     #region Game Setup/Game Flow
 
+    public struct SpawnGameplayPlayerControllerMsg : NetworkMessage { }
+
     public struct SetGoingFirstPlayerMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;

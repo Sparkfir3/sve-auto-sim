@@ -24,12 +24,15 @@ namespace SVESimulator.UI
         [SerializeField]
         private GameObject selectDeckError;
 
-        [FoldoutGroup("Network Manager Prefabs"), SerializeField, AssetsOnly]
-        private GameObject networkManagerSteam;
-        [FoldoutGroup("Network Manager Prefabs"), SerializeField, AssetsOnly]
-        private GameObject networkManagerKcp;
+        public event Action OnClientConnected;
+        public event Action OnClientDisconnected;
+        public event Action OnOpponentConnected;
+        public event Action OnOpponentDisconnected;
+        public event Action<bool> OnTryConnection;
+        public event Action<string> OnConnectionFailed;
 
-        private Action onNextConnectionToServer;
+        private Action onNextConnectionToServerSuccess;
+        private Action onNextConnectionToServerFailed;
 
         #endregion
 
@@ -41,8 +44,8 @@ namespace SVESimulator.UI
         {
             GameManager.Instance.Initialize();
             deckSelectionController.Initialize();
-            deckSelectionController.OnSelectDeck += () => selectDeckError.SetActive(false);
             mainMenuView.OnButtonClicked += HandleButtonClicked;
+            deckSelectionController.OnSelectDeck += HandleDeckSelected;
             SVEGameNetworkManager.OnPlayerConnected += HandlePlayerConnectedToServer;
             SVEGameNetworkManager.OnPlayerDisconnected += HandlePlayerDisconnectedFromServer;
             SVEGameNetworkManager.OnLocalConnect += HandleLocalPlayerConnected;
@@ -71,14 +74,14 @@ namespace SVESimulator.UI
                 case MainMenuButton.PlayOnlineHost:
                     if(IsConnecting || !SVEGameNetworkManager.IsSteamConnected)
                         return;
-                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
+                    onNextConnectionToServerSuccess = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     HostSteamLobby();
                     break;
                 case MainMenuButton.PlayOnlineJoin:
                     if(IsConnecting || !SVEGameNetworkManager.IsSteamConnected || mainMenuView.RoomCode.IsNullOrWhiteSpace())
                         return;
                     // TODO - loading icon
-                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
+                    onNextConnectionToServerSuccess = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     JoinSteamLobby();
                     break;
 
@@ -86,31 +89,38 @@ namespace SVESimulator.UI
                 case MainMenuButton.PlayLocalHost:
                     if(IsConnecting)
                         return;
-                    onNextConnectionToServer = null;
+                    onNextConnectionToServerSuccess = null;
                     StartLocalHost(onStartSuccess: () => mainMenuView.PerformAction(MainMenuAction.Connecting));
                     break;
                 case MainMenuButton.PlayLocalJoin:
                     if(IsConnecting)
                         return;
                     // TODO - loading icon
-                    onNextConnectionToServer = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
+                    onNextConnectionToServerSuccess = () => mainMenuView.PerformAction(MainMenuAction.Connecting);
                     StartLocalClient();
                     break;
 
                 // Other
                 case MainMenuButton.BackToMain:
-                    if(SVEGameNetworkManager.Instance.isNetworkActive)
-                        SVEGameNetworkManager.Instance.StopHost();
-                    onNextConnectionToServer = null;
+                    SVEGameNetworkManager.Instance.Disconnect();
+                    onNextConnectionToServerSuccess = null;
                     IsConnecting = false;
                     break;
                 case MainMenuButton.StartGame:
+                    TryLoadSelectedDeck();
                     SVEGameNetworkManager.SceneManager.LoadGameplay();
                     break;
                 case MainMenuButton.Quit:
                     QuitGame();
                     break;
             }
+        }
+
+        private void HandleDeckSelected()
+        {
+            selectDeckError.SetActive(false);
+            if(NetworkClient.active)
+                TryLoadSelectedDeck();
         }
 
         #endregion
@@ -122,27 +132,39 @@ namespace SVESimulator.UI
         private void HandlePlayerConnectedToServer(NetworkConnectionToClient conn)
         {
             if(SVEGameNetworkManager.ConnectedPlayerCount >= 2 && mainMenuView.CurrentState == MainMenuViewState.Connecting)
+            {
                 mainMenuView.PerformAction(MainMenuAction.ReadyToStart);
+                OnOpponentConnected?.Invoke();
+            }
         }
 
         private void HandlePlayerDisconnectedFromServer(NetworkConnectionToClient conn)
         {
             if(NetworkClient.active && mainMenuView.CurrentState == MainMenuViewState.ReadyToStart && conn.connectionId != 0) // other user disconnect
+            {
                 mainMenuView.PerformAction(MainMenuAction.OppDisconnected);
+                OnOpponentDisconnected?.Invoke();
+            }
         }
 
         private void HandleLocalPlayerConnected()
         {
             IsConnecting = false;
-            onNextConnectionToServer?.Invoke();
-            onNextConnectionToServer = null;
+            onNextConnectionToServerSuccess?.Invoke();
+            onNextConnectionToServerSuccess = null;
+            onNextConnectionToServerFailed = null;
+            OnClientConnected?.Invoke();
         }
 
         private void HandleLocalPlayerDisconnected()
         {
             IsConnecting = false;
+            onNextConnectionToServerFailed?.Invoke();
+            onNextConnectionToServerSuccess = null;
+            onNextConnectionToServerFailed = null;
             if(mainMenuView.CurrentState is MainMenuViewState.Connecting or MainMenuViewState.ReadyToStart)
                 mainMenuView.PerformAction(MainMenuAction.Back);
+            OnClientDisconnected?.Invoke();
         }
 
         #endregion
@@ -157,7 +179,7 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            InitKcpNetworkManager(() =>
+            SVEGameNetworkManager.Instance.InitKcpNetworkManager(() =>
             {
                 try
                 {
@@ -166,6 +188,7 @@ namespace SVESimulator.UI
                 catch(SocketException e)
                 {
                     Debug.Log($"Attempted to start new a LAN connection instance when one is already active.\n{e.ToString()}");
+                    OnConnectionFailed?.Invoke("An active LAN connection was found, but a second one cannot be started on the same network.");
                     onStartFail?.Invoke();
                     return;
                 }
@@ -179,29 +202,11 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            InitKcpNetworkManager(() =>
+            onNextConnectionToServerFailed = () => OnConnectionFailed?.Invoke("Failed to find an active LAN connection.");
+            SVEGameNetworkManager.Instance.InitKcpNetworkManager(() =>
             {
                 SVEGameNetworkManager.Instance.StartClient();
             });
-        }
-
-        private void InitKcpNetworkManager(Action onComplete)
-        {
-            if(!SVEGameNetworkManager.IsSteamManager)
-            {
-                onComplete?.Invoke();
-                return;
-            }
-            StopAllCoroutines();
-            StartCoroutine(ClientCoroutine());
-            IEnumerator ClientCoroutine()
-            {
-                Destroy(SVEGameNetworkManager.Instance.gameObject);
-                yield return null;
-                Instantiate(networkManagerKcp);
-                yield return null;
-                onComplete?.Invoke();
-            }
         }
 
         #endregion
@@ -216,18 +221,16 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            StartCoroutine(StartHostCoroutine());
-            IEnumerator StartHostCoroutine()
+            SVEGameNetworkManager.OnFindLobbyTimeout += () =>
             {
-                if(!SVEGameNetworkManager.IsSteamManager)
-                {
-                    Destroy(SVEGameNetworkManager.Instance.gameObject);
-                    yield return null;
-                    Instantiate(networkManagerSteam);
-                    yield return null;
-                }
+                Debug.Log($"Connection to Steam lobby timed out.");
+                IsConnecting = false;
+                OnConnectionFailed?.Invoke("Connection timed out.");
+            };
+            SVEGameNetworkManager.Instance.InitSteamNetworkManager(() =>
+            {
                 SVEGameNetworkManager.SteamLobby.HostLobby(mainMenuView.RoomCode);
-            }
+            });
         }
 
         public void JoinSteamLobby()
@@ -236,21 +239,19 @@ namespace SVESimulator.UI
                 return;
             LibraryCardCache.ClearCache();
             IsConnecting = true;
-            StartCoroutine(StartClientCoroutine());
-            IEnumerator StartClientCoroutine()
+            SVEGameNetworkManager.OnFindLobbyTimeout += () =>
             {
-                if(!SVEGameNetworkManager.IsSteamManager)
-                {
-                    Destroy(SVEGameNetworkManager.Instance.gameObject);
-                    yield return null;
-                    Instantiate(networkManagerSteam);
-                    yield return null;
-                }
+                Debug.Log($"Failed to find lobby/Connection to Steam lobby timed out.");
+                IsConnecting = false;
+                OnConnectionFailed?.Invoke("Failed to find a game lobby.");
+            };
+            SVEGameNetworkManager.Instance.InitSteamNetworkManager(() =>
+            {
                 SVEGameNetworkManager.SteamLobby.GetLobby(mainMenuView.RoomCode, lobbyID =>
                 {
                     SteamMatchmaking.JoinLobby(lobbyID);
                 });
-            }
+            });
         }
 
         #endregion
@@ -267,10 +268,7 @@ namespace SVESimulator.UI
                 if(value == _isConnecting)
                     return;
                 _isConnecting = value;
-                if(_isConnecting)
-                    mainMenuView.OnStartConnecting();
-                else
-                    mainMenuView.OnEndConnecting();
+                OnTryConnection?.Invoke(_isConnecting);
             }
         }
 

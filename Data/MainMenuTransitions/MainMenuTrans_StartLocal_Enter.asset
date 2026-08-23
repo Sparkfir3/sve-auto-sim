@@ -25,7 +25,7 @@ MonoBehaviour:
     <TargetPosition>k__BackingField: 4
     <PostDelay>k__BackingField: 0
     moveType: 0
-    toFaceUp: 0
+    toFaceUp: 1
     isActive: 0
   - <TargetButton>k__BackingField: 4
     <TargetPosition>k__BackingField: 7
@@ -37,7 +37,7 @@ MonoBehaviour:
     <TargetPosition>k__BackingField: 4
     <PostDelay>k__BackingField: 0
     moveType: 0
-    toFaceUp: 0
+    toFaceUp: 1
     isActive: 0
   - <TargetButton>k__BackingField: 1
     <TargetPosition>k__BackingField: 7

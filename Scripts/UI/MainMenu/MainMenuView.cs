@@ -3,7 +3,9 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using Sparkfire.Utility;
+using TMPro;
 
 namespace SVESimulator.UI
 {
@@ -11,24 +13,36 @@ namespace SVESimulator.UI
     {
         #region Variables
 
-        [field: Title("Runtime Data"), SerializeField]
+        [field: Title("Runtime Data"), SerializeField, Sirenix.OdinInspector.ReadOnly]
         public MainMenuViewState CurrentState { get; private set; }
 
         [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
-
+        
+        // ---
+        
         [Title("Object References"), SerializeField]
-        private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
-        [SerializeField]
-        private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
+        private MainMenuController mainMenuController;
         [SerializeField]
         private SteamRoomCodeInputField steamRoomCodeInputField;
         [SerializeField]
         private GameObject connectingIndicator;
+        [SerializeField]
+        private TextMeshProUGUI errorTextBox;
+        [SerializeField]
+        private SteamUserInfoDisplay userInfoDisplay;
+        
+        [FoldoutGroup("Cards"), SerializeField]
+        private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
+        [FoldoutGroup("Cards"), SerializeField]
+        private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
+        
         [FoldoutGroup("Controllers"), SerializeField]
         private CardAnimationController animationController;
         [FoldoutGroup("Controllers"), SerializeField]
         private MainMenuInputController inputController;
+        
+        // ---
 
         public bool AllowInputs => !animationController.IsAnimating;
         public string RoomCode => steamRoomCodeInputField.Text;
@@ -55,6 +69,12 @@ namespace SVESimulator.UI
             }
             OnStateEnter += HandleStateEnter;
             OnStateExit += HandleStateExit;
+            mainMenuController.OnTryConnection += OnTryConnection;
+            mainMenuController.OnConnectionFailed += ShowErrorMessage;
+            mainMenuController.OnClientConnected += OnClientConnected;
+            mainMenuController.OnClientDisconnected += OnClientDisconnected;
+            mainMenuController.OnOpponentConnected += OnOpponentConnected;
+            mainMenuController.OnOpponentDisconnected += OnOpponentDisconnected;
 
             connectingIndicator.SetActive(false);
         }
@@ -157,13 +177,19 @@ namespace SVESimulator.UI
                 case MainMenuViewState.PlayOnline:
                     steamRoomCodeInputField.Interactable = true;
                     steamRoomCodeInputField.Show();
+                    userInfoDisplay.HideAll();
                     break;
                 case MainMenuViewState.Connecting:
                 case MainMenuViewState.ReadyToStart:
                     steamRoomCodeInputField.Interactable = false;
+                    errorTextBox.gameObject.SetActive(false);
+                    if(SVEGameNetworkManager.IsSteamManager)
+                        userInfoDisplay.ShowPlayer = true;
                     break;
                 default:
                     steamRoomCodeInputField.Hide();
+                    errorTextBox.gameObject.SetActive(false);
+                    userInfoDisplay.HideAll();
                     break;
             }
         }
@@ -175,16 +201,51 @@ namespace SVESimulator.UI
         // ------------------------------
 
         #region Networking Events
-
-        public void OnStartConnecting()
+        
+        public void ShowErrorMessage(string error)
         {
-            steamRoomCodeInputField.Interactable = false;
-            connectingIndicator.SetActive(true);
+            errorTextBox.text = error;
+            errorTextBox.gameObject.SetActive(true);
+        }
+        
+        public void OnTryConnection(bool isConnecting)
+        {
+            if(isConnecting)
+            {
+                steamRoomCodeInputField.Interactable = false;
+                connectingIndicator.SetActive(true);
+                errorTextBox.gameObject.SetActive(false);
+            }
+            else
+            {
+                steamRoomCodeInputField.Interactable = true;
+                connectingIndicator.SetActive(false);
+            }
         }
 
-        public void OnEndConnecting()
+        public void OnClientConnected()
         {
-            connectingIndicator.SetActive(false);
+            if(!SVEGameNetworkManager.IsSteamManager)
+                return;
+            userInfoDisplay.ShowPlayer = true;
+            if(!NetworkClient.activeHost)
+                userInfoDisplay.ShowOpponent = true;
+        }
+
+        public void OnClientDisconnected()
+        {
+            userInfoDisplay.HideAll();
+        }
+
+        public void OnOpponentConnected()
+        {
+            if(SVEGameNetworkManager.IsSteamManager)
+                userInfoDisplay.ShowOpponent = true;
+        }
+
+        public void OnOpponentDisconnected()
+        {
+            userInfoDisplay.ShowOpponent = false;
         }
 
         #endregion

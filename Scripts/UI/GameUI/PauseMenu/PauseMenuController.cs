@@ -68,9 +68,7 @@ namespace SVESimulator
             if(connectionManager)
                 connectionManager.DisableDisconnectEvents();
 
-            NetworkManager.singleton.StopHost();
-            NetworkManager.singleton.StopServer();
-            SteamMatchmaking.LeaveLobby(new CSteamID(SteamLobby.CurrentLobbyID));
+            SVEGameNetworkManager.Instance.Disconnect();
             quitTransition.Transition();
         }
     }

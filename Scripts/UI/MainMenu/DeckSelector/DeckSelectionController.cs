@@ -274,6 +274,8 @@ namespace SVESimulator
 
         private void SelectDeck(string deckName, string deckData)
         {
+            if(deckName != null && deckName.Equals(CurrentDeckName) && deckData != null && deckData.Equals(CurrentDeckData))
+                return;
             CurrentDeckName = deckName;
             CurrentDeckData = deckData;
             if(IsStarterDeckMenu)
