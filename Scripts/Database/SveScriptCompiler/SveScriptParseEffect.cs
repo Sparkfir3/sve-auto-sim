@@ -388,7 +388,6 @@ namespace SVESimulator.SveScript
         private static Dictionary<string, EffectParams> StandardEffectInfoDictionary = new()
         {
             // Movement - Deck to Zone
-            { "DrawThenDamage", new EffectParams("DrawThenDamageEffect",                    EffectParameterType.Amount, EffectParameterType.Amount2) },
             { "DeckToField", new EffectParams("DeckToFieldEffect",                          true, false) },
             { "Draw", new EffectParams("DrawCardEffect",                                    true, false, EffectParameterType.Amount) },
             { "DrawCard", new EffectParams("DrawCardEffect",                                true, false, EffectParameterType.Amount) },

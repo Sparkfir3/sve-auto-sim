@@ -141,7 +141,13 @@ text "[quick]
 
 keyword Quick;
 ability Spell {
-    effect DrawThenDamage(1, H) to TargetOpponentCardOrLeader F;
+    effect TargetForSequence(Draw, Damage) to TargetOpponentCardOrLeader F;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Damage {
+    effect DealDamage(H) to AllOpponentCardsAndLeader;
 }
 
 // ------------------------------

@@ -768,9 +768,42 @@
             "effect": {
               "target": "TargetOpponentCardOrLeader",
               "filter": "F",
+              "effectName1": "Draw",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
               "amount": "1",
-              "amount2": "H",
-              "$type": "SVESimulator.DrawThenDamageEffect"
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCardsAndLeader",
+              "filter": null,
+              "amount": "H",
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
