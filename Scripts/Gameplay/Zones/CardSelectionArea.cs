@@ -211,12 +211,14 @@ namespace SVESimulator
         {
             if(currentMode == SelectionMode.PlaceCardsFromHand)
                 zoneController.handZone.SetTargetSlotActive(true);
+            zoneController.handZone.SetAllCardsInteractable(false);
 
             currentMode = newMode;
             switch(currentMode)
             {
                 case SelectionMode.PlaceCardsFromHand:
                     zoneController.handZone.SetTargetSlotActive(true);
+                    zoneController.handZone.SetAllCardsInteractable(true);
                     goto case SelectionMode.MoveSelectionArea;
                 case SelectionMode.MoveSelectionArea:
                 case SelectionMode.SelectCardsFromDeckAndMove:
