@@ -326,6 +326,22 @@ namespace SVESimulator
             UpdateActionButton();
         }
 
+        public void DisableEmptySlots()
+        {
+            int disableCount = 0;
+            for(int i = 0; i < cardSlots.Count; i++)
+            {
+                if(cardSlots[i].target.gameObject.activeInHierarchy && !cardSlots[i].card)
+                {
+                    cardSlots[i].target.gameObject.SetActive(false);
+                    disableCount++;
+                }
+            }
+            if(disableCount == 0)
+                return;
+            RepositionSlots(false);
+        }
+
         #endregion
 
         // ------------------------------
@@ -589,7 +605,8 @@ namespace SVESimulator
 
         private void RepositionSlots(bool instant)
         {
-            int slotCount = cardSlots.Count(x => x.Value.target.isActiveAndEnabled);
+            List<CardSlot> activeSlots = cardSlots.Where(x => x.Value.target.isActiveAndEnabled).Select(x => x.Value).ToList();
+            int slotCount = activeSlots.Count;
             int rowSize = Mathf.Min(slotCount, maxRowLength);
             float leftPosition = rowSize % 2 == 1
                 ? -slotSpacing.x * Math.Min(rowSize / 2, maxRowLength / 2)
@@ -597,12 +614,12 @@ namespace SVESimulator
 
             for(int i = 0; i < slotCount; i++)
             {
-                TargetableSlot slot = cardSlots[i].target;
+                TargetableSlot slot = activeSlots[i].target;
                 Vector3 targetPosition = new Vector3(leftPosition + (slotSpacing.x * (i % maxRowLength)), 0f, startHeight + (-slotSpacing.y * (int)(i / maxRowLength)));
                 if(instant)
                     slot.transform.localPosition = targetPosition;
                 else
-                    slot.transform.DOLocalMove(targetPosition, repositionTime, true);
+                    slot.transform.DOLocalMove(targetPosition, repositionTime);
             }
 
             scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x,
