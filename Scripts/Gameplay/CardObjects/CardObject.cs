@@ -129,6 +129,8 @@ namespace SVESimulator
             CanAttackLeader = false;
             IsValidDefender = false;
             attachedCard = null;
+
+            gameObject.name = $"Card {runtimeCard.instanceId}";
         }
 
         public void OnStartTurn()
