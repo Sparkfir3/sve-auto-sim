@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using Sparkfire.Utility;
 using UnityEngine;
@@ -212,7 +213,7 @@ namespace SVESimulator.SveScript
                         effectData.Add("effectName", argument);
                         break;
                     case EffectParameterType.Function:
-                        effectData.Add("function", argument?.Trim());
+                        effectData.Add("function", argument != null ? string.Join("\n", argument.Trim().Split("\n").Select(x => x.Trim())) : null);
                         break;
 
                     // Dynamic length arguments - must always be the last argument in the list

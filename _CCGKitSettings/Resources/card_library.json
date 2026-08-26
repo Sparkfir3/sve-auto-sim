@@ -33386,7 +33386,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = revealTopDeck.getValue(P)\n        perform Atk { amount = amt }",
+              "function": "let amt = revealTopDeck.getValue(P)\nperform Atk { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -34647,7 +34647,7 @@
             "name": "Act",
             "type": "Activated",
             "effect": {
-              "function": "let amt = payCost(AtkDef).removedCountersCount\n        performCostless AtkDef { amount = amt }",
+              "function": "let amt = payCost(AtkDef).removedCountersCount\nperformCostless AtkDef { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -39727,7 +39727,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = mill(4).filterCount(S)\n        perform PlayPoints { amount = amt }",
+              "function": "let amt = mill(4).filterCount(S)\nperform PlayPoints { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -40832,7 +40832,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let cost = payCost(Effect).firstMovedCard.getValue(P)\n        let card = revealTopDeckUntilValue(-1 ~(F) [P > cost])\n        performCostless SendToField { trigger = card }",
+              "function": "let cost = payCost(Effect).firstMovedCard.getValue(P)\nlet card = revealTopDeckUntilValue(-1 ~(F) [P > cost])\nperformCostless SendToField { trigger = card }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -44426,7 +44426,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let draw = payCost(Token).firstMovedCard.getValue(0~(t(Departed))1)\n        performCostless Token\n        performIf draw then Draw",
+              "function": "let draw = payCost(Token).firstMovedCard.getValue(0~(t(Departed))1)\nperformCostless Token\nperformIf draw then Draw",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -49168,7 +49168,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = payCost(Damage).movedCardsCount\n        let amt = amt * 2\n        performCostless Damage { amount = amt }",
+              "function": "let amt = payCost(Damage).movedCardsCount\nlet amt = amt * 2\nperformCostless Damage { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -57226,7 +57226,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = revealTopDeck.getValue(P)\n        perform Damage { amount = amt }\n        perform Defense { amount = amt }",
+              "function": "let amt = revealTopDeck.getValue(P)\nperform Damage { amount = amt }\nperform Defense { amount = amt }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
@@ -59264,7 +59264,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let amt = revealTopDeck.getValue(P)\n        performIf [amt%2]=1 then DamageOpponent else DamageSelf",
+              "function": "let amt = revealTopDeck.getValue(P)\nperformIf [amt%2]=1 then DamageOpponent else DamageSelf",
               "$type": "SVESimulator.ComplexEffect"
             },
             "target": null,
