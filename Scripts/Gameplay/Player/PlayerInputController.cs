@@ -281,7 +281,7 @@ namespace SVESimulator
                             {
                                 bool playCardSuccess = currentTargetSlot.SlotNumber > -1
                                     ? Player.LocalEvents.PlayCardToField(currentSelectedCard, currentTargetSlot.SlotNumber)
-                                    : Player.LocalEvents.PlayCardToField(currentSelectedCard);
+                                    : Player.LocalEvents.PlayCardToField(currentSelectedCard, currentSelectedCard.transform.position);
                                 if(playCardSuccess)
                                     return;
                             }
