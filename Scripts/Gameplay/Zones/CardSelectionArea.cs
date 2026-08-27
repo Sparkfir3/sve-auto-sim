@@ -615,11 +615,28 @@ namespace SVESimulator
             for(int i = 0; i < slotCount; i++)
             {
                 TargetableSlot slot = activeSlots[i].target;
+                CardObject card = activeSlots[i].card;
                 Vector3 targetPosition = new Vector3(leftPosition + (slotSpacing.x * (i % maxRowLength)), 0f, startHeight + (-slotSpacing.y * (int)(i / maxRowLength)));
                 if(instant)
+                {
+                    if(card)
+                    {
+                        Vector3 positionDiff = targetPosition - slot.transform.localPosition;
+                        card.transform.localPosition += targetPosition;
+                    }
                     slot.transform.localPosition = targetPosition;
+                }
                 else
-                    slot.transform.DOLocalMove(targetPosition, repositionTime);
+                {
+                    Transform cardParent = card ? card.transform.parent : null;
+                    if(card)
+                        card.transform.parent = slot.transform;
+                    slot.transform.DOLocalMove(targetPosition, repositionTime).onComplete = () =>
+                    {
+                        if(card && cardParent && card.transform.parent == slot.transform)
+                            card.transform.parent = cardParent;
+                    };
+                }
             }
 
             scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x,
