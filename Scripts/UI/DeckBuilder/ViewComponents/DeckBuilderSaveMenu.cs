@@ -38,10 +38,10 @@ namespace SVESimulator.DeckBuilder
 
         // ------------------------------
 
-        public void Initialize()
+        public void Initialize(string deckName)
         {
-            if(!DeckBuilderController.DeckNameToLoad.IsNullOrWhiteSpace())
-                deckNameInputField.SetTextWithoutNotify(DeckBuilderController.DeckNameToLoad);
+            if(!deckName.IsNullOrWhiteSpace())
+                deckNameInputField.SetTextWithoutNotify(deckName);
             deckNameInputField.onValueChanged.AddListener(_ => UpdateSaveButton());
             saveDeckButton.onClick.AddListener(() => OnSaveDeck?.Invoke(deckNameInputField.text));
 
