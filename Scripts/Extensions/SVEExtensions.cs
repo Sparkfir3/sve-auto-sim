@@ -187,6 +187,30 @@ namespace SVESimulator
             return true;
         }
 
+        // -----
+
+        /// <summary>
+        /// Checks for if a card matches an Instance ID filter in a filter dictionary, if it has one
+        /// Also returns true if the filter does not have an Instance ID filter
+        /// </summary>
+        public static bool MatchesInstanceId(this Dictionary<CardFilterSetting, string> filters, in CardObject card)
+            => filters.MatchesInstanceId(card ? card.RuntimeCard : null);
+        /// <summary>
+        /// Checks for if a card matches an Instance ID filter in a filter dictionary, if it has one
+        /// Also returns true if the filter does not have an Instance ID filter
+        /// </summary>
+        public static bool MatchesInstanceId(this Dictionary<CardFilterSetting, string> filters, in RuntimeCard card)
+        {
+            if(card == null)
+                return false;
+            if(filters == null || !filters.TryGetValue(CardFilterSetting.InstanceID, out string value) || value.IsNullOrWhiteSpace())
+                return true;
+            Dictionary<CardFilterSetting, string> idFilter = new() { { CardFilterSetting.InstanceID, value } };
+            return idFilter.MatchesCard(card);
+        }
+
+        // -----
+
         public static bool HasExcludeSelf(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.ExcludeSelf);
 
         public static bool HasNameExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.NameXor);
