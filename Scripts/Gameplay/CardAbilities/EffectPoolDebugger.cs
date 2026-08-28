@@ -14,7 +14,6 @@ namespace SVESimulator
         private struct SerializedPassive
         {
             public int sourceCardInstanceId;
-            public string targetsFormula;
             public List<int> affectedCardIds;
             public SVEProperties.SVEEffectTarget target;
             public SVEProperties.PassiveDuration duration;
