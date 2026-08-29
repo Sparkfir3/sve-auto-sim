@@ -35,7 +35,6 @@ namespace SVESimulator
                     RegisteredPassiveAbility passive = new()
                     {
                         sourceCardInstanceId = card.RuntimeCard.instanceId,
-                        targetsFormula = null,
                         filters = new Dictionary<SVEFormulaParser.CardFilterSetting, string>()
                         {
                             { SVEFormulaParser.CardFilterSetting.InstanceID, $"{card.RuntimeCard.instanceId}" }

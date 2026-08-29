@@ -37,28 +37,38 @@ namespace SVESimulator
 
     // ------------------------------
 
-    #region Card Movement
+    #region Card Movement - From Field (Self)
 
+    // Fanfare
     public class SveOnCardEnterFieldTrigger : SveTrigger { }
     public class SveOnCardEnterFieldFromHandTrigger : SveTrigger { }
     public class SveOnCardEnterFieldFromNotHandTrigger : SveTrigger { }
 
+    // Other
     public class SveLastWordsTrigger : SveTriggerWithFilter { }
-
     public class SveOnCardReturnToHandFromField : SveTrigger { }
-
-    public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
-
     public class SveOnCardLeaveFieldTrigger : SveTrigger { }
 
+    #endregion
+
+    // -----
+
+    #region Card Movement - From Field (Other Card)
+
+    // Player cards
     public class SveOnOtherCardEnterFieldTrigger : SveTriggerWithFilter { }
-
     public class SveOnOtherCardLeaveFieldTrigger : SveTriggerWithFilter { }
+    public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
 
+    // Opponent cards
     public class SveOnOpponentCardLeaveFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOpponentCardDestroyedTrigger : SveTriggerWithFilter { }
 
+    #endregion
+
     // -----
+
+    #region Card Movement - Other
 
     public class SveOnDiscardedTrigger : SveTrigger { }
 
@@ -69,28 +79,26 @@ namespace SVESimulator
     #region Card/Player Actions
 
     public class SveOnEvolveTrigger : SveTrigger { }
-
     public class SveOnOtherEvolveTrigger : SveTriggerWithFilter { }
 
     public class SveOnRaceTrigger : SveTrigger { }
-
     public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }
 
+    public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
+
+    #endregion
+
+    // ------------------------------
+
+    #region Combat
+
     public class SveOnAttackTrigger : SveTriggerWithFilter { }
-
     public class SveOnAttackFollowerTrigger : SveTriggerWithFilter { }
-
     public class SveOnAttackLeaderTrigger : SveTrigger { }
 
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
-    public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
-
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
-
-    public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
-
-    public class SveOnSelectedForAbilityTrigger : SveTrigger { }
 
     #endregion
 
@@ -109,6 +117,9 @@ namespace SVESimulator
     // ------------------------------
 
     #region Other
+
+    public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
+    public class SveOnSelectedForAbilityTrigger : SveTrigger { }
 
     public class SpellAbility : SveTrigger { }
 

@@ -43,13 +43,13 @@ namespace SVESimulator.DeckBuilder
 
         // ------------------------------
 
-        #region Unity Functions
+        #region Unity Functions/Initialize
 
-        private void Awake()
+        public void Initialize(string deckName)
         {
             filterOptionsMenu.Initialize();
             deckPreview.Initialize();
-            saveMenu.Initialize();
+            saveMenu.Initialize(deckName);
 
             model.OnUpdateFilteredCardList += cardList.UpdateCardList;
             model.OnUpdateDeck += UpdateDeck;

@@ -14,6 +14,8 @@ namespace SVESimulator.UI
         private string currentCardId;
 
         [TitleGroup("Object References"), SerializeField]
+        protected RectTransform displayContainer;
+        [SerializeField]
         private RawImage cardImage;
         [SerializeField]
         private TextMeshProUGUI textBoxName;
@@ -25,6 +27,7 @@ namespace SVESimulator.UI
         private TextMeshProUGUI textBoxTrait;
 
         private int leaderTypeId;
+        protected bool initialized = false;
 
         // ------------------------------
 
@@ -32,11 +35,18 @@ namespace SVESimulator.UI
 
         private void Awake()
         {
+            Initialize();
+        }
+
+        public virtual void Initialize()
+        {
+            if(initialized)
+                return;
             currentCardId = "";
             leaderTypeId = GameManager.Instance?.config?.cardTypes?.FirstOrDefault(x => x.name.Equals(SVEProperties.CardTypes.Leader))?.id ?? 5;
         }
 
-        public void Display(CardObject card)
+        public virtual void Display(CardObject card)
         {
             if(card && card.IsVisible)
                 Display(card.LibraryCard);

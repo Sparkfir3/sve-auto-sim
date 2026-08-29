@@ -272,31 +272,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verticalOffset: 95
-  evolveTextTemplate: Evolve ({0})
+  evolveTextTemplate: '<sprite index=5>{0}: Evolve this follower.'
   evolveCostFormatting:
     serializedPairs:
     - key: 0
-      value: 0
+      value: <sprite index=6>
     - key: 1
-      value: 1
+      value: <sprite index=7>
     - key: 2
-      value: 2
+      value: <sprite index=8>
     - key: 3
-      value: 3
+      value: <sprite index=9>
     - key: 4
-      value: 4
+      value: <sprite index=10>
     - key: 5
-      value: 5
+      value: <sprite index=11>
     - key: 6
-      value: 6
+      value: <sprite index=12>
     - key: 7
-      value: 7
+      value: <sprite index=13>
     - key: 8
-      value: 8
+      value: <sprite index=14>
     - key: 9
-      value: 9
+      value: <sprite index=15>
     - key: 10
-      value: 10
+      value: <sprite index=16>
   evolvePointFormatting: <sprite index=26>
   serveTextTemplate: '{0} ({1}) Race this follower{2}.'
   carrotIconFormatting: <sprite index=28>

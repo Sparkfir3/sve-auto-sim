@@ -55,6 +55,8 @@ namespace SVESimulator.DeckBuilder
 
         private void Awake()
         {
+            view.Initialize(DeckNameToLoad);
+
             cardList.AddCard += model.AddCard;
             deckPreview.AddCard += model.AddCard;
             cardList.RemoveCard += model.RemoveCard;

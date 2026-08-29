@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
@@ -133,6 +134,20 @@ namespace SVESimulator
                 pooledCard.card.gameObject.SetActive(false);
             }
             cardsByInstanceId.Clear();
+            StartCoroutine(InitializeCardPool());
+        }
+
+        private IEnumerator InitializeCardPool()
+        {
+            yield return new WaitForEndOfFrame();
+            while(cardPool.Count < 50)
+            {
+                PooledCard newCard = SpawnNewCard();
+                newCard.active = false;
+                newCard.card.gameObject.SetActive(false);
+                yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
+            }
         }
 
         private bool TryGetFirstAvailableCard(out PooledCard card)
@@ -146,7 +161,7 @@ namespace SVESimulator
             PooledCard newCard = new()
             {
                 active = false,
-                card = Instantiate(cardPrefab).GetComponent<CardObject>()
+                card = Instantiate(cardPrefab, transform).GetComponent<CardObject>()
             };
             newCard.card.transform.rotation = Quaternion.Euler(defaultRotation);
             cardPool.Add(newCard);

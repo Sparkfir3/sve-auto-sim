@@ -404,6 +404,12 @@ namespace SVESimulator
 
         public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null) =>
             PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, fixedCost);
+        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
+        {
+            if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
+                return false;
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, fixedCost);
+        }
         public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))

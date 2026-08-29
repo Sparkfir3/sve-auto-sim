@@ -211,12 +211,14 @@ namespace SVESimulator
         {
             if(currentMode == SelectionMode.PlaceCardsFromHand)
                 zoneController.handZone.SetTargetSlotActive(true);
+            zoneController.handZone.SetAllCardsInteractable(false);
 
             currentMode = newMode;
             switch(currentMode)
             {
                 case SelectionMode.PlaceCardsFromHand:
                     zoneController.handZone.SetTargetSlotActive(true);
+                    zoneController.handZone.SetAllCardsInteractable(true);
                     goto case SelectionMode.MoveSelectionArea;
                 case SelectionMode.MoveSelectionArea:
                 case SelectionMode.SelectCardsFromDeckAndMove:
@@ -322,6 +324,22 @@ namespace SVESimulator
             if(minSelectCount == 0) // move "Skip" button to end if it exists
                 GameUIManager.MultipleChoice.MoveButtonToEnd(GameUIManager.MultipleChoice.ActiveButtonCount - 2);
             UpdateActionButton();
+        }
+
+        public void DisableEmptySlots()
+        {
+            int disableCount = 0;
+            for(int i = 0; i < cardSlots.Count; i++)
+            {
+                if(cardSlots[i].target.gameObject.activeInHierarchy && !cardSlots[i].card)
+                {
+                    cardSlots[i].target.gameObject.SetActive(false);
+                    disableCount++;
+                }
+            }
+            if(disableCount == 0)
+                return;
+            RepositionSlots(false);
         }
 
         #endregion
@@ -587,7 +605,8 @@ namespace SVESimulator
 
         private void RepositionSlots(bool instant)
         {
-            int slotCount = cardSlots.Count(x => x.Value.target.isActiveAndEnabled);
+            List<CardSlot> activeSlots = cardSlots.Where(x => x.Value.target.isActiveAndEnabled).Select(x => x.Value).ToList();
+            int slotCount = activeSlots.Count;
             int rowSize = Mathf.Min(slotCount, maxRowLength);
             float leftPosition = rowSize % 2 == 1
                 ? -slotSpacing.x * Math.Min(rowSize / 2, maxRowLength / 2)
@@ -595,12 +614,29 @@ namespace SVESimulator
 
             for(int i = 0; i < slotCount; i++)
             {
-                TargetableSlot slot = cardSlots[i].target;
+                TargetableSlot slot = activeSlots[i].target;
+                CardObject card = activeSlots[i].card;
                 Vector3 targetPosition = new Vector3(leftPosition + (slotSpacing.x * (i % maxRowLength)), 0f, startHeight + (-slotSpacing.y * (int)(i / maxRowLength)));
                 if(instant)
+                {
+                    if(card)
+                    {
+                        Vector3 positionDiff = targetPosition - slot.transform.localPosition;
+                        card.transform.localPosition += targetPosition;
+                    }
                     slot.transform.localPosition = targetPosition;
+                }
                 else
-                    slot.transform.DOLocalMove(targetPosition, repositionTime, true);
+                {
+                    Transform cardParent = card ? card.transform.parent : null;
+                    if(card)
+                        card.transform.parent = slot.transform;
+                    slot.transform.DOLocalMove(targetPosition, repositionTime).onComplete = () =>
+                    {
+                        if(card && cardParent && card.transform.parent == slot.transform)
+                            card.transform.parent = cardParent;
+                    };
+                }
             }
 
             scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x,

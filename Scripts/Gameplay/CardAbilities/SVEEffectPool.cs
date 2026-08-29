@@ -203,7 +203,6 @@ namespace SVESimulator
                     {
                         sourceCardInstanceId = sourceCard.instanceId,
                         sourceCardId = sourceCard.cardId,
-                        targetsFormula = filterFormula,
                         filters = SVEFormulaParser.ParseCardFilterFormula(filterFormula, sourceCard.instanceId),
                         effect = passiveEffect,
                         affectedCards = new List<RuntimeCard>(),
@@ -644,8 +643,10 @@ namespace SVESimulator
             }
 
             List<CardObject> potentialPassiveTargets = new();
-            potentialPassiveTargets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards());
-            potentialPassiveTargets.AddRange(player.OppZoneController.fieldZone.GetAllPrimaryCards());
+            if(passive.target is SVEProperties.SVEEffectTarget.AllPlayerCards or SVEProperties.SVEEffectTarget.AllCards)
+                potentialPassiveTargets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards());
+            if(passive.target is SVEProperties.SVEEffectTarget.AllOpponentCards or SVEProperties.SVEEffectTarget.AllCards)
+                potentialPassiveTargets.AddRange(player.OppZoneController.fieldZone.GetAllPrimaryCards());
             foreach(CardObject card in potentialPassiveTargets)
             {
                 if(!passive.filters.MatchesCard(card.RuntimeCard) || passive.affectedCards.Contains(card.RuntimeCard))
@@ -752,7 +753,6 @@ namespace SVESimulator
     {
         public int sourceCardInstanceId;
         public int sourceCardId;
-        public string targetsFormula;
         public Dictionary<CardFilterSetting, string> filters;
         public SvePassiveEffect effect;
         public List<RuntimeCard> affectedCards;
@@ -778,7 +778,6 @@ namespace SVESimulator
         public bool Equals(RegisteredPassiveAbility other)
         {
             return sourceCardInstanceId == other.sourceCardInstanceId
-                && targetsFormula == null ? other.targetsFormula == null : targetsFormula.Equals(other.targetsFormula)
                 && effect.GetType() == other.effect.GetType()
                 && affectedCards.Count == other.affectedCards.Count
                 && target == other.target
@@ -787,6 +786,6 @@ namespace SVESimulator
         }
 
         public override bool Equals(object obj) => obj is RegisteredPassiveAbility other && Equals(other);
-        public override int GetHashCode() => HashCode.Combine(sourceCardInstanceId, targetsFormula, effect, (int)target, (int)duration);
+        public override int GetHashCode() => HashCode.Combine(sourceCardInstanceId, effect, (int)target, (int)duration);
     }
 }

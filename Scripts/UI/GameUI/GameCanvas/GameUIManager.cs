@@ -102,6 +102,7 @@ namespace SVESimulator.UI
             mulliganScreen.Close();
 
             // Main Game Info
+            cardInfoDisplay.Initialize();
             cardInfoDisplay.Hide();
 
             // Gameplay Menus

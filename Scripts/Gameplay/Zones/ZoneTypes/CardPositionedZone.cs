@@ -235,6 +235,25 @@ namespace SVESimulator
             return kvPair[0].Key;
         }
 
+        public bool TryGetClosestOpenSlotNumber(Vector3 position, out int index)
+        {
+            float lowestSqrDistance = Mathf.Infinity;
+            index = -1;
+            foreach(var kvPair in cardSlots)
+            {
+                (int slotIndex, CardSlot slot) = (kvPair.Key, kvPair.Value);
+                if(slot.card)
+                    continue;
+                float sqrDistance = (position - slot.position).sqrMagnitude;
+                if(sqrDistance < lowestSqrDistance)
+                {
+                    lowestSqrDistance = sqrDistance;
+                    index = slotIndex;
+                }
+            }
+            return index >= 0;
+        }
+
         public Vector3 GetSlotPosition(TargetableSlot slot) => GetSlotPosition(slot.SlotNumber);
         public Vector3 GetSlotPosition(int slotNumber) => cardSlots[slotNumber].position;
         public Vector3 GetSlotLocalPosition(int slotNumber) => cardSlots[slotNumber].localPosition;

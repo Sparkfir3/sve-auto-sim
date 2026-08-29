@@ -125,6 +125,7 @@ namespace SVESimulator
             yield return player.StartCoroutine(AddCardsFromDeck(player, selectionArea, sourceCardInstanceId, minCheck, maxCheck));
 
             // Perform actions
+            bool isFirstAction = true;
             foreach(CheckActionParameters action in allActions)
             {
                 if(action.action == CheckCardAction.None)
@@ -143,6 +144,10 @@ namespace SVESimulator
                     confirmAction?.Invoke(new List<CardObject>(selectionArea.AllCards));
                     break;
                 }
+
+                // Clean up selection area
+                if(!isFirstAction)
+                    selectionArea.DisableEmptySlots();
 
                 // Select targets and perform effect
                 selectionArea.SetFilter(action.filter);
@@ -163,6 +168,7 @@ namespace SVESimulator
                     }
                 }
                 yield return new WaitUntil(() => !waiting);
+                isFirstAction = false;
             }
 
             selectionArea.Disable();
