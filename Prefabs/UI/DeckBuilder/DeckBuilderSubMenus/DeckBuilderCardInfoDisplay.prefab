@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCardId: 
+  displayContainer: {fileID: 8748715966086409602}
   cardImage: {fileID: 5808464359284931517}
   textBoxName: {fileID: 3224071774347820915}
   textBoxID: {fileID: 2764625208865235559}

@@ -702,7 +702,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 0}
+  m_SizeDelta: {x: 436, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &7280014939754276274
 GameObject:
@@ -751,15 +751,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7280014939754276274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 798bcff09e220c74c805a3a9443e8464, type: 3}
+  m_Script: {fileID: 11500000, guid: ea74b664624a4344abf71a81336cf43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentCardId: 
+  displayContainer: {fileID: 3579965878571288621}
   cardImage: {fileID: 5269715474855377462}
   textBoxName: {fileID: 2838973499924490830}
   textBoxID: {fileID: 3160729751639598321}
   textBoxMainText: {fileID: 2132892070520989385}
   textBoxTrait: {fileID: 4159433634759521757}
+  pinnedToRight: 1
+  repositionPoint: 0.7
 --- !u!1 &8395695638815271451
 GameObject:
   m_ObjectHideFlags: 0
