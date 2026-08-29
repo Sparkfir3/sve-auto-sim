@@ -643,8 +643,10 @@ namespace SVESimulator
             }
 
             List<CardObject> potentialPassiveTargets = new();
-            potentialPassiveTargets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards());
-            potentialPassiveTargets.AddRange(player.OppZoneController.fieldZone.GetAllPrimaryCards());
+            if(passive.target is SVEProperties.SVEEffectTarget.AllPlayerCards or SVEProperties.SVEEffectTarget.AllCards)
+                potentialPassiveTargets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards());
+            if(passive.target is SVEProperties.SVEEffectTarget.AllOpponentCards or SVEProperties.SVEEffectTarget.AllCards)
+                potentialPassiveTargets.AddRange(player.OppZoneController.fieldZone.GetAllPrimaryCards());
             foreach(CardObject card in potentialPassiveTargets)
             {
                 if(!passive.filters.MatchesCard(card.RuntimeCard) || passive.affectedCards.Contains(card.RuntimeCard))
