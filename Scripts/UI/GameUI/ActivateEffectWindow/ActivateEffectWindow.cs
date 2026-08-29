@@ -18,7 +18,7 @@ namespace SVESimulator
         private float verticalOffset = 50f;
 
         [BoxGroup("Evolve Text"), SerializeField]
-        private string evolveTextTemplate = "Evolve ({0})";
+        private string evolveTextTemplate = "{0}: Evolve this follower.";
         [BoxGroup("Evolve Text"), SerializeField]
         private SerializedDictionary<int, string> evolveCostFormatting = new();
         [BoxGroup("Evolve Text"), SerializeField]
