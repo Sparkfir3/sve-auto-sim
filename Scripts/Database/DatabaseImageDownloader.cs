@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
 using System.Linq;
+using ReformSim.LibAvif;
 using Sirenix.OdinInspector;
 
 namespace SVESimulator.Database.Scraper
@@ -13,7 +14,7 @@ namespace SVESimulator.Database.Scraper
     {
         #region Variables
 
-        private const string BASE_IMAGE_URL = "https://cdn.dingdongdb.me/images/{0}/{1}/{2}.png";
+        private const string BASE_IMAGE_URL = "https://cdn.dingdongdb.me/images/{0}/{1}/{2}.avif";
 
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private int currentDownloadingCount;
@@ -108,13 +109,13 @@ namespace SVESimulator.Database.Scraper
             string cardBackFilePath = Path.Join(pathInfo.MiscImagesPath, pathInfo.CardBackFile);
             if(!string.IsNullOrWhiteSpace(cardBackURL) && !File.Exists(cardBackFilePath))
             {
-                StartCoroutine(DownloadImage(cardBackURL, cardBackFilePath));
+                StartCoroutine(DownloadImagePng(cardBackURL, cardBackFilePath));
                 yield return new WaitForSeconds(delayBetweenDownloads);
             }
             string evolvePointFilePath = Path.Join(pathInfo.MiscImagesPath, pathInfo.EvolvePointFile);
             if(!File.Exists(evolvePointFilePath))
             {
-                StartCoroutine(DownloadImage(evolvePointURL, evolvePointFilePath));
+                StartCoroutine(DownloadImagePng(evolvePointURL, evolvePointFilePath));
                 yield return new WaitForSeconds(delayBetweenDownloads);
             }
             yield return new WaitUntil(() => currentDownloadingCount < maxConcurrentDownloads);
@@ -149,10 +150,10 @@ namespace SVESimulator.Database.Scraper
                 return;
 
             string downloadURL = string.Format(BASE_IMAGE_URL, language == SetDownloadSettings.CardLanguage.EN ? "en" : "jp", setCode, $"{setCode}-{cardId}");
-            StartCoroutine(DownloadImage(downloadURL, outputFilePath));
+            StartCoroutine(DownloadImageAvif(downloadURL, outputFilePath));
         }
 
-        private IEnumerator DownloadImage(string url, string outputFilePath)
+        private IEnumerator DownloadImagePng(string url, string outputFilePath)
         {
             currentDownloadingCount++;
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
@@ -166,6 +167,26 @@ namespace SVESimulator.Database.Scraper
             }
 
             Texture2D texture = DownloadHandlerTexture.GetContent(request);
+            SaveTextureToDisk(texture, outputFilePath);
+            currentDownloadingCount--;
+            totalDownloadedCount++;
+            OnDownloadProgressUpdate?.Invoke(totalDownloadedCount, targetDownloadCount);
+        }
+
+        private IEnumerator DownloadImageAvif(string url, string outputFilePath)
+        {
+            currentDownloadingCount++;
+            UnityWebRequest request = UnityWebRequest.Get(url);
+            yield return request.SendWebRequest();
+
+            if(request.result is not UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error downloading image to {outputFilePath}: {request.error}\nURL: {url}");
+                currentDownloadingCount--;
+                yield break;
+            }
+
+            Texture2D texture = AvifLoader.CreateTexture2D(request.downloadHandler.data, true, false, makeNoLongerReadable: false, flipVertical: true);
             SaveTextureToDisk(texture, outputFilePath);
             currentDownloadingCount--;
             totalDownloadedCount++;
