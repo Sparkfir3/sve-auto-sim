@@ -14,7 +14,7 @@ To set up the project:
 - Clone this repository into the project's Assets folder, ideally into a subfolder
    - The subfolder can be named anything you want, but personally I use `_Main` (the underscore sorts the folder to the top)
 
-Your folder structure inside Unity should look like this:
+Your folder structure inside Unity should look like this (`AvifLoader` imports to the Assets folder by default, but I recommend to moving it into the Plugins folder):
 ```
 Assets
 ├── _Main
@@ -23,6 +23,7 @@ Assets
 ├── com.rlabrecque.steamworks.net
 ├── Mirror
 ├── Plugins
+│   ├─ AvifLoader
 │   ├─ Demigant
 │   │  ├─ DemiLib
 │   │  └─ DOTWeen
@@ -37,6 +38,7 @@ Required:
 - <a href="https://github.com/rlabrecque/Steamworks.NET/releases">Steamworks.NET</a> 2024.8.0
 - <a href="https://assetstore.unity.com/packages/templates/systems/ccg-kit-52739">CCG Kit</a> (paid asset, documentation available <a href="https://www.gamevanillawiki.com/ccg-kit/introduction/">here</a>)
 - <a href="https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041">Odin Inspector</a> (paid asset)
+- <a href="https://assetstore.unity.com/packages/tools/utilities/avif-loader-237189">AVIF Loader</a> (paid asset)
 - <a href="https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676">DOTween</a>
 
 Recommended:
