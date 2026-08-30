@@ -78,7 +78,7 @@ namespace SVESimulator
             // Choose card order for mulligan
             int cardCount = localZoneController.handZone.AllCards.Count;
             localZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.MoveSelectionArea, cardCount, cardCount);
-            localZoneController.selectionArea.AddAllCardsInHand();
+            localZoneController.selectionArea.AddAllCardsInHand(true);
             localZoneController.selectionArea.SetFilter(null);
             localZoneController.selectionArea.SetConfirmAction(null, "Confirm Order", "Rearrange Cards for Mulligan", 1, 0, _ =>
             {

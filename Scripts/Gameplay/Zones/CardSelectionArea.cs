@@ -348,10 +348,11 @@ namespace SVESimulator
 
         #region Add Cards
 
-        public void AddAllCardsInHand()
+        public void AddAllCardsInHand(bool setInteractable)
         {
             List<CardObject> cardsToMove = new(zoneController.handZone.AllCards);
             MoveCardsToSelectionArea(cardsToMove);
+            SetAllCardsInteractable(setInteractable);
         }
 
         public void AddCardFromTopDeck() => AddCardFromTopDeck(out _);
