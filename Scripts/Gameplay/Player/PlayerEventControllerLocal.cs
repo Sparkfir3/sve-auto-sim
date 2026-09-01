@@ -301,7 +301,14 @@ namespace SVESimulator
         public void DrawCard(CardObject cardObject = null, bool reveal = false)
         {
             if(!cardObject && localZoneController.deckZone.Runtime.cards.Count == 0)
+            {
+                EndGameMessage endGameMessage = new()
+                {
+                    winnerPlayerIndex = opponentInfo.netId
+                };
+                NetworkServer.SendToAll(endGameMessage);
                 return;
+            }
 
             RuntimeCard runtimeCard = cardObject ? cardObject.RuntimeCard : null;
             if(runtimeCard == null)
