@@ -26,6 +26,7 @@ namespace SVESimulator
                 return;
             }
             Player.InputController.allowedInputs = Player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
+            ZoneController.handZone.SetAllCardsInteractable(Player.isActivePlayer);
             if(IsLocalPlayerZone)
                 ZoneController.fieldZone.HighlightCardsCanAttack();
         }

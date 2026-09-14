@@ -197,6 +197,7 @@ namespace SVESimulator
         protected virtual void OnDisableZone()
         {
             Player.InputController.allowedInputs = Player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
+            zoneController.handZone.SetAllCardsInteractable(Player.isActivePlayer);
             zoneController.fieldZone.HighlightCardsCanAttack();
             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(zoneController.Player.GetOpponentInfo().netId);
         }
@@ -348,10 +349,11 @@ namespace SVESimulator
 
         #region Add Cards
 
-        public void AddAllCardsInHand()
+        public void AddAllCardsInHand(bool setInteractable)
         {
             List<CardObject> cardsToMove = new(zoneController.handZone.AllCards);
             MoveCardsToSelectionArea(cardsToMove);
+            SetAllCardsInteractable(setInteractable);
         }
 
         public void AddCardFromTopDeck() => AddCardFromTopDeck(out _);
