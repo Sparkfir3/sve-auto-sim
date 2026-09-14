@@ -197,6 +197,7 @@ namespace SVESimulator
         protected virtual void OnDisableZone()
         {
             Player.InputController.allowedInputs = Player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
+            zoneController.handZone.SetAllCardsInteractable(Player.isActivePlayer);
             zoneController.fieldZone.HighlightCardsCanAttack();
             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(zoneController.Player.GetOpponentInfo().netId);
         }
