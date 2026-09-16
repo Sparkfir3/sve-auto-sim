@@ -48855,6 +48855,301 @@
     ]
   },
   {
+    "name": "Booster Set #5 \"Omens Eternal\"",
+    "cards": [
+      {
+        "cardTypeId": 0,
+        "name": "Puppet",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Neutral",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Puppetry / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Rush.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP05-T03",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 2
+          }
+        ],
+        "abilities": [],
+        "id": 100053003
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Ancient Artifact",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Neutral",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Supreme / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Rush.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP05-T04",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 2
+          }
+        ],
+        "abilities": [],
+        "id": 100053004
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mystic Artifact",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Neutral",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Supreme / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\n[fanfare] Draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP05-T05",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100053005
+      }
+    ]
+  },
+  {
     "name": "Crossover Set \"Umamusume: Pretty Derby\"",
     "cards": [
       {
