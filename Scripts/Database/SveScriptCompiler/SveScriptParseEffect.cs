@@ -440,6 +440,9 @@ namespace SVESimulator.SveScript
             { "PlaySpellFromCemeterySetCost", new EffectParams("PlaySpellFromCemeterySetCostEffect",    false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "Salvage", new EffectParams("SalvageCardEffect",                                          false, false, EffectParameterType.Amount, EffectParameterType.Filter) },
 
+            // Movement - Evolve Deck to Zone
+            { "SummonFromEvolveDeck", new EffectParams("SummonFromEvolveDeckEffect",                    false, false, EffectParameterType.FilterOptional) },
+
             // ------------------------------
 
             // Stat Effects
