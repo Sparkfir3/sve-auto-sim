@@ -26,6 +26,7 @@ namespace SVESimulator
 
             // Send to zone and target
             FieldAndTarget,
+            ExAreaAndTarget,
 
             // Rearrange and send
             TopDeckAnyOrder,
@@ -286,6 +287,25 @@ namespace SVESimulator
                                 additionalFilters: $"i({string.Join(",", selectedCards.Select(x => x.RuntimeCard.instanceId))})"));
                     };
                     maxSelect = Mathf.Min(maxSelect, player.ZoneController.fieldZone.OpenSlotCount());
+                    return true;
+
+                case CheckCardAction.ExAreaAndTarget:
+                    actionText = "Send to EX Area";
+                    confirmAction = selectedCards =>
+                    {
+                        foreach(CardObject card in selectedCards)
+                        {
+                            card.Interactable = player.isActivePlayer;
+                            player.LocalEvents.SendToExArea(card, SVEProperties.Zones.Deck);
+                        }
+                        if(action.parameters.IsNullOrWhiteSpace())
+                            onComplete?.Invoke();
+                        else
+                            SVEEffectPool.Instance.StartCoroutine(EffectSequence.ResolveEffectsAsSequence(new List<string>() { action.parameters },
+                                player, triggerInstanceId, triggerZone, sourceInstanceId, sourceZone, onComplete,
+                                additionalFilters: $"i({string.Join(",", selectedCards.Select(x => x.RuntimeCard.instanceId))})"));
+                    };
+                    maxSelect = Mathf.Min(maxSelect, player.ZoneController.exAreaZone.OpenSlotCount());
                     return true;
 
                 // ------------------------------
