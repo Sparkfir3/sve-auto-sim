@@ -712,7 +712,7 @@ namespace SVESimulator
             return card;
         }
 
-        public void SendToExArea(CardObject card, string originZone = null)
+        public void SendToExArea(CardObject card, string originZone = null, bool onlyMoveObject = false)
         {
             if(!localZoneController.exAreaZone.HasOpenSlot() || CounterUtilities.HandleStackLeaveField(playerController, card))
                 return;
@@ -723,11 +723,14 @@ namespace SVESimulator
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
             int targetSlotId = localZoneController.exAreaZone.GetFirstOpenSlotId();
 
-            sveEffectSolver.SendCardToExArea(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
+            if(!onlyMoveObject)
+                sveEffectSolver.SendCardToExArea(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToExArea(x, targetSlotId, onComplete));
 
             // ---
 
+            if(onlyMoveObject)
+                return;
             LocalSendToExAreaMessage msg = new()
             {
                 playerNetId = netIdentity,
