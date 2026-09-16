@@ -62,6 +62,10 @@ namespace SVESimulator
                         if(!card.IsEvolvedType() ^ inverse)
                             return false;
                         break;
+                    case CardFilterSetting.AdvancedCard:
+                        if(!card.IsAdvancedType() ^ inverse)
+                            return false;
+                        break;
 
                     // Card Properties (+ Token)
                     case CardFilterSetting.Token:

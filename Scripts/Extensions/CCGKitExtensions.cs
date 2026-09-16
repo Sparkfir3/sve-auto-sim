@@ -34,7 +34,7 @@ namespace SVESimulator
         {
             if(card == null)
                 return false;
-            return card.IsCardType(SVEProperties.CardTypes.Follower) || card.IsCardType(SVEProperties.CardTypes.EvolvedFollower);
+            return card.IsCardType(SVEProperties.CardTypes.Follower) || card.IsCardType(SVEProperties.CardTypes.EvolvedFollower) || card.cardType.name.Equals(SVEProperties.CardTypes.AdvancedFollower);
         }
 
         public static bool IsSpell(this Card card, GameConfiguration gameConfig = null) => IsCardType(card, SVEProperties.CardTypes.Spell, gameConfig);
@@ -60,7 +60,7 @@ namespace SVESimulator
         {
             if(card == null)
                 return false;
-            return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower) ||  card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedSpell);;
+            return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower) ||  card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedSpell);
         }
 
         public static bool IsToken(this CardObject card, GameConfiguration gameConfig = null) => card.RuntimeCard.IsToken(gameConfig);
@@ -77,6 +77,14 @@ namespace SVESimulator
         public static bool IsEvolvedVersionOf(this Card evolvedCard, Card baseCard)
         {
             return evolvedCard.name.Replace(" (Evolved)", "").Equals(baseCard.name);
+        }
+
+        public static bool IsAdvancedType(this CardObject card) => card.RuntimeCard.IsAdvancedType();
+        public static bool IsAdvancedType(this RuntimeCard card)
+        {
+            if(card == null)
+                return false;
+            return card.cardType.name.Equals(SVEProperties.CardTypes.AdvancedFollower);
         }
 
         #endregion

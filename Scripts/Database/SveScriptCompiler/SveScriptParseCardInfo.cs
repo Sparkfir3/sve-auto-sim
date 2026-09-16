@@ -90,20 +90,25 @@ namespace SVESimulator.SveScript
 
 		public static void CompileCardStats(ref CardInfo cardInfo)
 		{
-			if(cardInfo.ccgCardTypeId == 0 || cardInfo.ccgCardTypeId == 1) // follower or evolved follower
+			bool follower = cardInfo.ccgCardTypeId is 0 or 1 or 6; // follower, evolved follower, advanced follower
+			bool amulet = cardInfo.ccgCardTypeId is 4;
+			bool evolveDeck = cardInfo.ccgCardTypeId is 1 or 3 or 6; // evolved follower, evolved spell, advanced follower
+			bool leader = cardInfo.ccgCardTypeId is 5;
+
+			if(follower)
 			{
 				cardInfo.stats.Add(new CardStat(cardInfo.attack,     0, "Attack",      0, 99));
 				cardInfo.stats.Add(new CardStat(cardInfo.defense,    1, "Defense",     0, 99));
 			}
-			if(cardInfo.ccgCardTypeId == 0 || cardInfo.ccgCardTypeId == 1 || cardInfo.ccgCardTypeId == 4) // follower, evolved follower, or amulet
+			if(follower || amulet)
 				cardInfo.stats.Add(new CardStat(0,                   2, "Engaged",     0, 1));
-			if(cardInfo.ccgCardTypeId == 0) // regular follower
+			if(follower && !evolveDeck)
 				cardInfo.stats.Add(new CardStat(cardInfo.evolveCost, 3, "Evolve Cost", 0, 99));
-			if(cardInfo.ccgCardTypeId != 1 && cardInfo.ccgCardTypeId != 3 && cardInfo.ccgCardTypeId != 5) // not evolved follower/spell or leader
+			if(!evolveDeck && !leader)
 				cardInfo.stats.Add(new CardStat(cardInfo.cost,       4, "Cost",        0, 99));
-			if(cardInfo.ccgCardTypeId == 0 || cardInfo.ccgCardTypeId == 1) // follower or evolved follower
+			if(follower)
 				cardInfo.stats.Add(new CardStat(-1,                  5, "Attached Instance IDs", -1, 999999));
-			if(cardInfo.ccgCardTypeId is 1 or 3) // evolved follower or evolved spell
+			if(evolveDeck)
 				cardInfo.stats.Add(new CardStat(0,                   6, "Face Up",     0, 1));
 		}
 
