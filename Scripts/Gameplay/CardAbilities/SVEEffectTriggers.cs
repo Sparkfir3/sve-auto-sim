@@ -61,6 +61,7 @@ namespace SVESimulator
     public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
 
     // Opponent cards
+    public class SveOnOpponentCardEnterFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOpponentCardLeaveFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOpponentCardDestroyedTrigger : SveTriggerWithFilter { }
 

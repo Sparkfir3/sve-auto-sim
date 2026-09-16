@@ -35,6 +35,7 @@ namespace SVESimulator.SveScript
             { "OnOtherReturnToHandFromField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardReturnToHandFromField", TriggerParameterType.Filter) },
 
             // Card Movement - From Field (Other, Opponent Cards)
+            { "OnOpponentCardEnterField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardDestroyed", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardDestroyedTrigger", TriggerParameterType.Filter) },
 
