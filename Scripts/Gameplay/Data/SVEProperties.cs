@@ -199,6 +199,7 @@ namespace SVESimulator
             public const string CannotDealDamage = "CannotDealDamage";
             public const string DoesNotTakeDamage = "DoesNotTakeDamage";
             public const string DoesNotTakeCombatDamage = "DoesNotTakeCombatDamage";
+            public const string DoesNotTakeAbilityDamage = "DoesNotTakeAbilityDamage";
             public const string DoubleCombatDamage = "DoubleCombatDamage";
             public const string DoubleLeaderDamage = "DoubleLeaderDamage";
         }

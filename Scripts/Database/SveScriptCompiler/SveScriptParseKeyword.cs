@@ -97,6 +97,7 @@ namespace SVESimulator.SveScript
             { "DoesNotTakeCombatDamage",    new Keyword(5, 2) },
             { "DoubleCombatDamage",         new Keyword(5, 3) },
             { "DoubleLeaderDamage",         new Keyword(5, 4) },
+            { "DoesNotTakeAbilityDamage",   new Keyword(5, 5) },
 
             // Counters
             { "Stack",                      new Keyword(6, 1) },

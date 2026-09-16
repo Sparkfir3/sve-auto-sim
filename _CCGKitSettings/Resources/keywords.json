@@ -136,6 +136,9 @@
             },
             {
                 "value": "DoubleLeaderDamage"
+            },
+            {
+                "value": "DoesNotTakeAbilityDamage"
             }
         ],
         "id": 5
