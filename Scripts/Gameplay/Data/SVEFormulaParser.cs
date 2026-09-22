@@ -35,6 +35,7 @@ namespace SVESimulator
             Defense,
             EvolveCost,
             PlayPointCost,
+            PlayPointCostXor,
             Reserved,
             Engaged,
             Racing,
@@ -553,6 +554,29 @@ namespace SVESimulator
                             if(name.StartsWith('\"') && name.EndsWith('\"'))
                                 name = name[1..^1].Trim();
                             currentFilterData = $"{currentFilterData}{name}";
+                            nextIndex++; // move past close parentheses
+                            break;
+                        default: // Invalid
+                            nextIndex--;
+                            continue;
+                    }
+                    filters.Add(filterSetting.Value, currentFilterData);
+                    continue;
+                }
+
+                // Cost Filters
+                else if(filterSetting == CardFilterSetting.PlayPointCost)
+                {
+                    if(nextIndex >= formula.Length)
+                        continue;
+
+                    switch(formula[nextIndex++])
+                    {
+                        case '^': // XOR
+                            filterSetting = CardFilterSetting.PlayPointCostXor;
+                            break;
+                        case '(': // Regular Cost Filter
+                            filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
                             nextIndex++; // move past close parentheses
                             break;
                         default: // Invalid
