@@ -85,6 +85,19 @@ namespace SVESimulator
             public const string Resolution = "Resolution";
         }
 
+        public static class ZoneIds
+        {
+            public const int Hand = 6;
+            public const int Deck = 2;
+            public const int Field = 0;
+            public const int ExArea = 1;
+            public const int Cemetery = 3;
+            public const int EvolveDeck = 4;
+            public const int Banished = 5;
+            public const int Leader = 22;
+            public const int Resolution = 21;
+        }
+
         public static class PlayerStats
         {
             public const string Defense = "Defense";
