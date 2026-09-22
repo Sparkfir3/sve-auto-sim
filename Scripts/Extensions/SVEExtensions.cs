@@ -259,6 +259,47 @@ namespace SVESimulator
 
         // ------------------------------
 
+        #region Zone Counts
+
+        public static int CountMatchingFilter(this List<CardObject> cards, Dictionary<CardFilterSetting, string> filters)
+        {
+            if(cards is not { Count: > 0 } || filters == null || filters.Count == 0)
+                return cards?.Count ?? 0;
+            if(!filters.HasExclusiveOr())
+                return cards.Count(x => filters.MatchesCard(x.RuntimeCard));
+
+            // Handle XOR counting
+            int count = 0;
+            bool checkNames = filters.HasNameExclusiveOr();
+            bool checkCosts = filters.HasCostExclusiveOr();
+            foreach(CardObject card in cards)
+            {
+                if(!filters.MatchesCard(card.RuntimeCard))
+                    continue;
+                if(checkNames)
+                    filters[CardFilterSetting.NameXor] = $"{filters[CardFilterSetting.NameXor]}" +
+                        $"\n{LibraryCardCache.GetName(card.RuntimeCard.cardId)}";
+                if(checkCosts)
+                {
+                    if(!card.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat costStat))
+                        continue;
+                    filters[CardFilterSetting.PlayPointCostXor] = $"{filters[CardFilterSetting.PlayPointCostXor]}" +
+                        $"\n{costStat.effectiveValue}";
+                }
+                count++;
+            }
+
+            if(checkNames)
+                filters[CardFilterSetting.NameXor] = filters[CardFilterSetting.NameXor]?.Trim();
+            if(checkCosts)
+                filters[CardFilterSetting.PlayPointCostXor] = filters[CardFilterSetting.PlayPointCostXor]?.Trim();
+            return count;
+        }
+
+        #endregion
+
+        // ------------------------------
+
         #region Effect Targets
 
         public static bool IsLeader(this SVEProperties.SVEEffectTarget target) => target.IsLeader(out _, out _);

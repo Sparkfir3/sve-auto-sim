@@ -347,24 +347,24 @@ namespace SVESimulator
                 case 'f': // Count on field matching filter
                     Dictionary<CardFilterSetting, string> filterF = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
-                    value = player ? player.ZoneController.fieldZone.GetAllPrimaryCards().Count(x => filterF.MatchesCard(x.RuntimeCard)) : 0;
+                    value = player ? player.ZoneController.fieldZone.GetAllPrimaryCards().CountMatchingFilter(filterF) : 0;
                     break;
                 case 'x': // Count in EX area matching filter
                     Dictionary<CardFilterSetting, string> filterEX = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
-                    value = player ? player.ZoneController.exAreaZone.GetAllPrimaryCards().Count(x => filterEX.MatchesCard(x.RuntimeCard)) : 0;
+                    value = player ? player.ZoneController.exAreaZone.GetAllPrimaryCards().CountMatchingFilter(filterEX) : 0;
                     break;
                 case 'y': // Count in cemetery matching filter
                     Dictionary<CardFilterSetting, string> filterCemetery = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
-                    value = player ? player.ZoneController.cemeteryZone.AllCards.Count(x => filterCemetery.MatchesCard(x.RuntimeCard)) : 0;
+                    value = player ? player.ZoneController.cemeteryZone.AllCards.CountMatchingFilter(filterCemetery) : 0;
                     break;
 
                 // Opponent zone counts
                 case 'p': // Count on opponent's field matching filter
                     Dictionary<CardFilterSetting, string> filterP = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
                     endIndex += indexDelta + 1; // Move past close parentheses
-                    value = player ? player.OppZoneController.fieldZone.GetAllPrimaryCards().Count(x => filterP.MatchesCard(x.RuntimeCard)) : 0;
+                    value = player ? player.OppZoneController.fieldZone.GetAllPrimaryCards().CountMatchingFilter(filterP) : 0;
                     break;
 
                 // Other
