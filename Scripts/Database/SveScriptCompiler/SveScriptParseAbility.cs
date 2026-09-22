@@ -53,6 +53,9 @@ namespace SVESimulator.SveScript
                 case "Activated":
                     ParseAndAddActivatedAbility(text[splitIndex..], ref cardInfo, name);
                     break;
+                case "ActFromHand":
+                    ParseAndAddActivatedAbility(text[splitIndex..], ref cardInfo, name, zoneId: 6);
+                    break;
                 case "Passive":
                     ParseAndAddPassiveAbility(text[splitIndex..], ref cardInfo, name, trigger);
                     break;
@@ -68,10 +71,11 @@ namespace SVESimulator.SveScript
 
         #region Ability Types
 
-        private static void ParseAndAddActivatedAbility(in string text, ref CardInfo cardInfo, in string name)
+        private static void ParseAndAddActivatedAbility(in string text, ref CardInfo cardInfo, in string name, in int zoneId = 0)
         {
             ActivatedAbility newAbility = new()
             {
+                zoneId = zoneId,
                 name = name
             };
 
