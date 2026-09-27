@@ -27,6 +27,8 @@ namespace SVESimulator.UI
         [SerializeField]
         private ActivateEffectWindow activateEffectWindow;
         [SerializeField]
+        private ActFromHandButton actFromHandButton;
+        [SerializeField]
         private MultipleChoiceWindow multipleChoiceWindow;
         [SerializeField]
         private EffectTargetingUI effectTargetingUI;
@@ -63,6 +65,7 @@ namespace SVESimulator.UI
         // Gameplay menus
         public static QuickTimingDisplay QuickTiming => Instance.quickTimingDisplay;
         public static ActivateEffectWindow ActivateEffect => Instance.activateEffectWindow;
+        public static ActFromHandButton ActFromHandButton => Instance.actFromHandButton;
         public static MultipleChoiceWindow MultipleChoice => Instance.multipleChoiceWindow;
         public static EffectTargetingUI EffectTargeting => Instance.effectTargetingUI;
         public static SelectAmountWindow SelectAmount => Instance.selectAmountWindow;
@@ -128,6 +131,7 @@ namespace SVESimulator.UI
         {
             gameControlsUI.Initialize(player);
             activateEffectWindow.Initialize();
+            actFromHandButton.Initialize(player);
             multipleChoiceWindow.Initialize();
             effectTargetingUI.Initialize();
         }

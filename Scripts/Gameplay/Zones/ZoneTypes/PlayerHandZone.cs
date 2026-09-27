@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CCGKit;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -6,6 +8,9 @@ namespace SVESimulator
 {
     public class PlayerHandZone : CardZone
     {
+        [TitleGroup("Runtime Data"), SerializeField]
+        private List<CardObject> cardsWithActFromHand = new();
+
         [TitleGroup("Settings"), SerializeField]
         private float spacing;
 
@@ -20,6 +25,20 @@ namespace SVESimulator
         {
             base.Initialize(zone, controller);
             SetTargetSlotActive(false);
+        }
+
+        public override void AddCard(CardObject card)
+        {
+            if(card.LibraryCard.abilities.Any(x => x is ActivatedAbility ability && ability.zoneId == SVEProperties.ZoneIds.Hand && x.effect is SveEffect))
+                cardsWithActFromHand.Add(card);
+            base.AddCard(card);
+        }
+
+        public override void RemoveCard(CardObject card)
+        {
+            if(cardsWithActFromHand.Contains(card))
+                cardsWithActFromHand.Remove(card);
+            base.RemoveCard(card);
         }
 
         // ------------------------------
@@ -37,6 +56,28 @@ namespace SVESimulator
         public Vector3 GetLastCardPosition()
         {
             return transform.position + (Vector3.right * (spacing * Mathf.Max(cards.Count - 1, 0)));
+        }
+
+        public bool HasActFromHand()
+        {
+            return cardsWithActFromHand.Count > 0;
+        }
+
+        public bool TryGetActFromHandAbilityData(out Dictionary<CardObject, List<ActivatedAbility>> abilityList)
+        {
+            abilityList = new();
+            foreach(CardObject card in cardsWithActFromHand)
+            {
+                List<ActivatedAbility> abilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility ability && ability.zoneId == SVEProperties.ZoneIds.Hand && x.effect is SveEffect)
+                    .Select(x => x as ActivatedAbility).ToList();
+                if(abilities is not { Count: > 0 })
+                {
+                    Debug.LogError($"Card with instance ID {card.RuntimeCard.instanceId} in player's hand was marked as having ActFromHand, but a corresponding ability could not be found.");
+                    continue;
+                }
+                abilityList.Add(card, abilities);
+            }
+            return abilityList.Count > 0;
         }
 
         // ------------------------------
