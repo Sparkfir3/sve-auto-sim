@@ -1,0 +1,292 @@
+[
+  {
+    "id": "BP10-001EN",
+    "name": "XII. Wolfraud, Hanged Man",
+    "trait": "Arcana / Fae-Touched",
+    "cardText": "[evolve] [cost01]: Evolve this follower.\nThis card can't be destroyed by abilities or take ability damage.\n[fanfare] [cost05]: Search your deck for a Treacherous Reversal, put it into your EX area, then shuffle. It costs 8 less to play this turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost05]",
+        "body": "Search your deck for a Treacherous Reversal, put it into your EX area, then shuffle. It costs 8 less to play this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP10-002EN",
+    "name": "XII. Wolfraud, Hanged Man (Evolved)",
+    "trait": "Arcana / Fae-Touched",
+    "cardText": "This card can't be destroyed by abilities or take ability damage.\nOn Evolve, Combo (3) - Give this follower [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve, Combo (3) -",
+        "body": "Give this follower [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP10-003EN",
+    "name": "Lucille, Keeper of Relics",
+    "trait": "Supreme",
+    "cardText": "[fanfare] Summon an Ancient Artifact or Mystic Artifact token. Put the other into your EX area.\n[act] [engage], banish 5 cards with different base costs from your EX area: You may summon a Spinaria & Lucille, Keepers from your evolve deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon an Ancient Artifact or Mystic Artifact token. Put the other into your EX area."
+      },
+      {
+        "key": "SummonAncient",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": "Summon an Ancient Artifact, and put a Mystic Artifact token into your EX area."
+      },
+      {
+        "key": "SummonMystic",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": "Summon an Mystic Artifact, and put a Ancient Artifact token into your EX area."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], banish 5 cards with different base costs from your EX area",
+        "body": "You may summon a Spinaria & Lucille, Keepers from your evolve deck."
+      }
+    ]
+  },
+  {
+    "id": "BP10-004EN",
+    "name": "Spinaria & Lucille, Keepers",
+    "trait": "Supreme",
+    "cardText": "[fanfare] Deal 6 damage to each enemy leader and enemy follower on the field. Look at the top 2 cards of your deck. You may put up to 2 of them into your EX area. Bury the rest.\nWhenever an enemy follower is put onto the field, [engage]: Deal it 6 damage.\nAt the start of your end phase, refresh this card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 6 damage to each enemy leader and enemy follower on the field. Look at the top 2 cards of your deck. You may put up to 2 of them into your EX area. Bury the rest."
+      },
+      {
+        "key": "CheckTop",
+        "body": "Look at the top 2 cards of your deck. You may put up to 2 of them into your EX area. Bury the rest."
+      },
+      {
+        "key": "OnOpponentCardEnterField",
+        "text": "Whenever an enemy follower is put onto the field, [engage]: Deal it 6 damage.",
+        "trigger": "Whenever an enemy follower is put onto the field,",
+        "cost": "[engage]",
+        "body": "Deal it 6 damage."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, refresh this card.",
+        "trigger": "At the start of your end phase",
+        "body": "Refresh this card."
+      }
+    ]
+  },
+  {
+    "id": "BP10-005EN",
+    "name": "Chipper Skipper",
+    "trait": "Arcana / Elf",
+    "cardText": "[evolve] [cost01]: Evolve this follower.\nWhenever a Mercenary follower is put onto your field, give it [attack]+1/[defense]+1 and Rush.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a Mercenary follower is put onto your field, give it [attack]+1/[defense]+1 and Rush.",
+        "trigger": "Whenever a Mercenary follower is put onto your field",
+        "body": "Give it [attack]+1/[defense]+1 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "BP10-006EN",
+    "name": "Chipper Skipper (Evolved)",
+    "trait": "Arcana / Elf",
+    "cardText": "On Evolve - Look at the top 4 cards of your deck. You may put a follower that costs 2 or less from among them into your EX area. It costs 2 less to play this turn. Put the rest on the bottom of your deck in any order.\nWhenever a Mercenary follower is put onto your field, give it [attack]+1/[defense]+1 and Rush.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Look at the top 4 cards of your deck. You may put a follower that costs 2 or less from among them into your EX area. It costs 2 less to play this turn. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a Mercenary follower is put onto your field, give it [attack]+1/[defense]+1 and Rush.",
+        "trigger": "Whenever a Mercenary follower is put onto your field",
+        "body": "Give it [attack]+1/[defense]+1 and Rush."
+      }
+    ]
+  },
+  {
+    "id": "BP10-007EN",
+    "name": "Windflower Tiger",
+    "trait": "Verdant / Beast",
+    "cardText": "Ward.\n[fanfare] Return a Beast follower not named Windflower Tiger on your field to its owner's hand: Search your deck for a Salvia Panther, reveal it, add it to your hand, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Return a Beast follower not named Windflower Tiger on your field to its owner's hand",
+        "body": "Search your deck for a Salvia Panther, reveal it, add it to your hand, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP10-008EN",
+    "name": "Treacherous Reversal",
+    "trait": "Arcana / Fae-Touched",
+    "cardText": "Destroy each card on the field. Each player buries each card in their EX area. Discard your hand. Look at the top 5 cards of your deck. You may put any number of them into your EX area. Bury the rest.",
+    "effectText": [
+      {
+        "key": "TopDeck",
+        "body": "Look at the top 5 cards of your deck. You may put any number of them into your EX area. Bury the rest."
+      }
+    ]
+  },
+  {
+    "id": "BP10-009EN",
+    "name": "Salvia Panther",
+    "trait": "Verdant / Beast",
+    "cardText": "This card costs 2 less to play if a Beast follower not named Salvia Panther was returned to hand from your field this turn.\n----------\n[evolve] [cost02]: Evolve this follower.\nStorm."
+  },
+  {
+    "id": "BP10-010EN",
+    "name": "Salvia Panther (Evolved)",
+    "trait": "Verdant / Beast",
+    "cardText": "Storm.\nOn Evolve - Select an enemy follower that costs 3 or less on the field and return it to its owner's hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Select an enemy follower that costs 3 or less on the field and return it to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "BP10-011EN",
+    "name": "Optimistic Beastmaster",
+    "trait": "Arcana / Elf",
+    "cardText": "[fanfare] Look at the top 3 cards of your deck. You may put one of them into your EX area. Put the rest on the bottom of your deck in any order.\n[act] [engage]: Select an enemy follower on the field and deal it damage equal to the number of cards with different base costs in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. You may put one of them into your EX area. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field and deal it damage equal to the number of cards with different base costs in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP10-012EN",
+    "name": "Lumbering Carapace",
+    "trait": "Insect",
+    "cardText": "Rush.\n[fanfare] Combo (3) - Search your deck for a Lumbering Carapace, reveal it, add it to your hand, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "[fanfare] Combo (3) - Search your deck for a Lumbering Carapace, reveal it, add it to your hand, then shuffle.",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Lumbering Carapace, reveal it, add it to your hand, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP10-013EN",
+    "name": "Reclusive Ponderer",
+    "trait": "Arcana / Beast",
+    "cardText": "[evolve] [cost01]: Evolve this follower.\n[fanfare] Search your deck for an Arcana card, put it into your EX area, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for an Arcana card, put it into your EX area, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP10-014EN",
+    "name": "Reclusive Ponderer (Evolved)",
+    "trait": "Arcana / Beast",
+    "cardText": "On Evolve - Search your deck for an Arcana card, put it into your EX area, then shuffle.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve:",
+        "body": "Search your deck for an Arcana card, put it into your EX area, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP10-015EN",
+    "name": "Crocus Rat",
+    "trait": "Verdant / Beast",
+    "cardText": "[fanfare] [cost05]: Select an enemy follower on the field. Put it on the bottom of its owner's deck and draw a card.\nWhen this card is returned to hand from your field, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost05]",
+        "body": "Select an enemy follower on the field. Put it on the bottom of its owner's deck and draw a card."
+      },
+      {
+        "key": "OnReturnToHandFromField",
+        "text": "When this card is returned to hand from your field, give your leader [defense]+1.",
+        "trigger": "When this card is returned to hand from your field,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP10-016EN",
+    "name": "Blossoming Archer",
+    "trait": "Elf / Hunter / Verdant",
+    "cardText": "[fanfare] Select an enemy follower on the field and, if there are at least 3 cards with different base costs in your EX area, deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and, if there are at least 3 cards with different base costs in your EX area, deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP10-017EN",
+    "name": "Deepwood Wolf",
+    "trait": "Beast",
+    "cardText": "Storm.\nWhenever another Beast follower is put onto your field, give this follower [attack]+2/[defense]+2.\n[act] [cost01], put this card from your hand into your EX area: Select a card on your field and put it into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever another Beast follower is put onto your field, give this follower [attack]+2/[defense]+2.",
+        "trigger": "Whenever another Beast follower is put onto your field,",
+        "body": "Give this follower [attack]+2/[defense]+2."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "[cost01], put this card from your hand into your EX area",
+        "body": "Select a card on your field and put it into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP10-018EN",
+    "name": "Fairy Assault",
+    "trait": "Pixie",
+    "cardText": "Summon 2 Fairy tokens. Deal each enemy leader damage equal to the number of Pixie tokens on your field."
+  },
+  {
+    "id": "BP10-LD01EN",
+    "name": "Orchis, Heartful Puppet"
+  }
+]

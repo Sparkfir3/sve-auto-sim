@@ -1,0 +1,443 @@
+name XII. Wolfraud, Hanged Man;
+id BP10-001;
+class Forest;
+type Follower;
+trait Arcana / Fae-Touched;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this follower.
+      This card can't be destroyed by abilities or take ability damage.
+      [fanfare] [cost05]: Search your deck for a Treacherous Reversal, put it into your EX area, then shuffle. It costs 8 less to play this turn.";
+
+evolve 1;
+keyword CannotDestroyByAbilities, DoesNotTakeAbilityDamage;
+ability Fanfare {
+    cost (PP, 5);
+    effect SearchAndTarget(1, n(Treacherous Reversal), ExArea, MinusCost);
+}
+ability Spell name MinusCost {
+    effect GiveStat(Cost, -8) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name XII. Wolfraud, Hanged Man (Evolved);
+id BP10-002;
+class Forest;
+type Evolved Follower;
+trait Arcana / Fae-Touched;
+rarity L;
+stats 3/3;
+
+text "This card can't be destroyed by abilities or take ability damage.
+      On Evolve, Combo (3) - Give this follower [attack]+1/[defense]+1.";
+
+keyword CannotDestroyByAbilities, DoesNotTakeAbilityDamage;
+ability OnEvolve {
+    condition c(3);
+    effect GiveStat(AtkDef, 1) to Self;
+}
+
+// ------------------------------
+
+name Lucille, Keeper of Relics;
+id BP10-003;
+class Forest;
+type Follower;
+trait Supreme;
+rarity L;
+cost 6;
+stats 4/4;
+
+text "[fanfare] Summon an Ancient Artifact or Mystic Artifact token. Put the other into your EX area.
+      [act] [engage], banish 5 cards with different base costs from your EX area: You may summon a Spinaria & Lucille, Keepers from your evolve deck.";
+
+keyword Ward;
+ability Fanfare {
+    effect ChooseFromList(SummonAncient, SummonMystic);
+}
+
+ability Spell name SummonAncient {
+    effect Sequence(AncientSummon, MysticEx)
+}
+ability Spell name AncientSummon {
+    effect SummonToken(Ancient Artifact, Field, 1);
+}
+ability Spell name MysticEx {
+    effect SummonToken(Mystic Artifact, ExArea, 1);
+}
+
+ability Spell name SummonMystic {
+    effect Sequence(MysticSummon, AncientEx)
+}
+ability Spell name MysticSummon {
+    effect SummonToken(Mystic Artifact, Field, 1);
+}
+ability Spell name AncientEx {
+    effect SummonToken(Ancient Artifact, ExArea, 1);
+}
+
+ability Act {
+    cost (EngageSelf), (Banish, Self), (BanishFromCemetery, 5, p^);
+    effect SummonFromEvolveDeck(n(Spinaria & Lucille, Keepers));
+}
+
+// ------------------------------
+
+name Spinaria & Lucille, Keepers;
+id BP10-004;
+class Forest;
+type Advanced Follower;
+trait Supreme;
+rarity L;
+cost 10;
+stats 6/6;
+
+text "[fanfare] Deal 6 damage to each enemy leader and enemy follower on the field. Look at the top 2 cards of your deck. You may put up to 2 of them into your EX area. Bury the rest.
+      Whenever an enemy follower is put onto the field, [engage]: Deal it 6 damage.
+      At the start of your end phase, refresh this card.";
+
+ability Fanfare {
+    effect Sequence(Damage, CheckTop);
+}
+ability Spell name Damage {
+    effect DealDamage(6) to AllOpponentCardsAndLeader F;
+}
+ability Spell name CheckTop {
+    effect CheckTop(2, (ExArea, m(0,2)), (SendToCemetery));
+}
+ability OnOpponentCardEnterField {
+    filter F;
+    cost (EngageSelf);
+    effect DealDamage(6) to TriggerCard;
+}
+ability StartEndPhase {
+    effect Refresh() to Self;
+}
+
+// ------------------------------
+
+name Chipper Skipper;
+id BP10-005;
+class Forest;
+type Follower;
+trait Arcana / Elf;
+rarity G;
+cost 2;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this follower.
+      Whenever a Mercenary follower is put onto your field, give it [attack]+1/[defense]+1 and Rush.";
+
+evolve 1;
+ability OnOtherEnterField {
+    filter Ft(Mercenary);
+    effect TargetForSequence(AtkDef, Rush) to TriggerCard;
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Chipper Skipper (Evolved);
+id BP10-006;
+class Forest;
+type Evolved Follower;
+trait Arcana / Elf;
+rarity G;
+stats 2/2;
+
+text "On Evolve - Look at the top 4 cards of your deck. You may put a follower that costs 2 or less from among them into your EX area. It costs 2 less to play this turn. Put the rest on the bottom of your deck in any order.
+      Whenever a Mercenary follower is put onto your field, give it [attack]+1/[defense]+1 and Rush.";
+
+ability OnEvolve {
+    effect CheckTop(4, (ExAreaAndTarget, Fp(m(0,2)), 1, MinusCost), (BottomDeckAnyOrder));
+}
+ability Spell name MinusCost {
+    effect GiveStat(Cost, -2) to AllPlayerCardsEx;
+}
+ability OnOtherEnterField {
+    filter Ft(Mercenary);
+    effect TargetForSequence(AtkDef, Rush) to TriggerCard;
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Windflower Tiger;
+id BP10-007;
+class Forest;
+type Follower;
+trait Verdant / Beast;
+rarity G;
+cost 2;
+stats 2/3;
+
+text "Ward.
+      [fanfare] Return a Beast follower not named Windflower Tiger on your field to its owner's hand: Search your deck for a Salvia Panther, reveal it, add it to your hand, then shuffle.";
+
+keyword Ward;
+ability Fanfare {
+    cost (ReturnToHand, TargetPlayerCard, Ft(Beast)!n(Windflower Tiger));
+    effect Search(1, n(Salvia Panther), Hand);
+}
+
+// ------------------------------
+
+name Treacherous Reversal;
+id BP10-008;
+class Forest;
+type Spell;
+trait Arcana / Fae-Touched;
+rarity G;
+cost 8;
+
+text "Destroy each card on the field. Each player buries each card in their EX area. Discard your hand. Look at the top 5 cards of your deck. You may put any number of them into your EX area. Bury the rest.";
+
+ability Spell {
+    effect Sequence(Destroy, ExArea, TopDeck);
+}
+ability Spell name Destroy {
+    effect Destroy() to AllCards;
+}
+ability Spell name ExArea {
+    effect SendToCemetery() to AllCardsExArea;
+}
+ability Spell name TopDeck {
+    effect CheckTop(5, (ExArea, m(0,5)), (SendToCemetery));
+}
+
+// ------------------------------
+
+name Salvia Panther;
+id BP10-009;
+class Forest;
+type Follower;
+trait Verdant / Beast;
+rarity S;
+cost 3;
+stats 3/2;
+
+text "This card costs 2 less to play if a Beast follower not named Salvia Panther was returned to hand from your field this turn.
+      ----------
+      [evolve] [cost02]: Evolve this follower.
+      Storm.";
+
+evolve 2;
+keyword Storm;
+ability ModifiedCost {
+    condition #(returnedToHandFromField, Ft(Beast)!n(Salvia Panther));
+    effect ReducedCost(2);
+}
+
+// ------------------------------
+
+name Salvia Panther (Evolved);
+id BP10-010;
+class Forest;
+type Evolved Follower;
+trait Verdant / Beast;
+rarity S;
+stats 4/3;
+
+text "Storm.
+      On Evolve - Select an enemy follower that costs 3 or less on the field and return it to its owner's hand.";
+
+keyword Storm;
+ability OnEvolve {
+    effect ReturnToHand() to TargetOpponentCard Fp(m(0,3));
+}
+
+// ------------------------------
+
+name Optimistic Beastmaster;
+id BP10-011;
+class Forest;
+type Follower;
+trait Arcana / Elf;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Look at the top 3 cards of your deck. You may put one of them into your EX area. Put the rest on the bottom of your deck in any order.
+      [act] [engage]: Select an enemy follower on the field and deal it damage equal to the number of cards with different base costs in your EX area.";
+
+ability Fanfare {
+    effect CheckTop(3, (ExArea, m(0,1)), (BottomDeckAnyOrder));
+}
+ability Act {
+    condition p(#F);
+    cost (EngageSelf);
+    effect DealDamage(y(p^)) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Lumbering Carapace;
+id BP10-012;
+class Forest;
+type Follower;
+trait Insect;
+rarity S;
+cost 1;
+stats 2/1;
+
+text "Rush.
+      [fanfare] Combo (3) - Search your deck for a Lumbering Carapace, reveal it, add it to your hand, then shuffle.";
+
+keyword Rush;
+ability Fanfare {
+    condition c(3);
+    effect Search(1, n(Lumbering Carapace), Hand);
+}
+
+// ------------------------------
+
+name Reclusive Ponderer;
+id BP10-013;
+class Forest;
+type Follower;
+trait Arcana / Beast;
+rarity B;
+cost 4;
+stats 4/4;
+
+text "[evolve] [cost01]: Evolve this follower.
+      [fanfare] Search your deck for an Arcana card, put it into your EX area, then shuffle.";
+
+evolve 1;
+ability Fanfare {
+    condition x()<5;
+    effect Search(1, t(Arcana), ExArea);
+}
+
+// ------------------------------
+
+name Reclusive Ponderer (Evolved);
+id BP10-014;
+class Forest;
+type Evolved Follower;
+trait Arcana / Beast;
+rarity B;
+stats 5/5;
+
+text "On Evolve - Search your deck for an Arcana card, put it into your EX area, then shuffle.";
+
+ability OnEvolve {
+    condition x()<5;
+    effect Search(1, t(Arcana), ExArea);
+}
+
+// ------------------------------
+
+name Crocus Rat;
+id BP10-015;
+class Forest;
+type Follower;
+trait Verdant / Beast;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[fanfare] [cost05]: Select an enemy follower on the field. Put it on the bottom of its owner's deck and draw a card.
+      When this card is returned to hand from your field, give your leader [defense]+1.";
+
+ability Fanfare {
+    condition p(#F);
+    cost (PP, 5);
+    effect Sequence(BottomDeck, Draw);
+}
+ability Spell name BottomDeck {
+    effect BottomDeck() to TargetOpponentCard F;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability OnReturnToHandFromField {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Blossoming Archer;
+id BP10-016;
+class Forest;
+type Follower;
+trait Elf / Hunter / Verdant;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[fanfare] Select an enemy follower on the field and, if there are at least 3 cards with different base costs in your EX area, deal it 3 damage.";
+
+ability Fanfare {
+    effect DealDamage(0?(x(p^) > 2)3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Deepwood Wolf;
+id BP10-017;
+class Forest;
+type Follower;
+trait Beast;
+rarity B;
+cost 7;
+stats 4/4;
+
+text "Storm.
+      Whenever another Beast follower is put onto your field, give this follower [attack]+2/[defense]+2.
+      [act] [cost01], put this card from your hand into your EX area: Select a card on your field and put it into its owner's EX area.";
+
+keyword Storm;
+ability OnOtherEnterField {
+    filter Ft(Beast);
+    effect GiveStat(AtkDef, 2) to Self;
+}
+ability ActFromHand {
+    condition f();
+    cost (PP, 1), (SendToExArea, Self);
+    effect SendToExArea() to TargetPlayerCard;
+}
+
+// ------------------------------
+
+name Fairy Assault;
+id BP10-018;
+class Forest;
+type Follower;
+trait Pixie;
+rarity B;
+cost 3;
+
+text "Summon 2 Fairy tokens. Deal each enemy leader damage equal to the number of Pixie tokens on your field.";
+
+ability Spell {
+    effect Sequence(Token, Damage);
+}
+ability Spell name Token {
+    effect SummonToken(Fairy, Field, 2);
+}
+ability Spell name Damage {
+    effect DealDamage(f(Kt(Pixie))) to OpponentLeader;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Orchis, Heartful Puppet;
+id BP10-LD01EN;
+class Forest;
+type Leader;
