@@ -49475,12 +49475,7 @@
             "modifiers": []
           }
         ],
-        "keywords": [
-          {
-            "keywordId": 0,
-            "valueId": 0
-          }
-        ],
+        "keywords": [],
         "abilities": [
           {
             "trigger": {
@@ -50269,7 +50264,8 @@
             "effect": {
               "effectName1": "Destroy",
               "effectName2": "ExArea",
-              "effectName3": "TopDeck",
+              "effectName3": "Discard",
+              "effectName4": "TopDeck",
               "$type": "SVESimulator.EffectSequence"
             },
             "target": null,
@@ -50303,6 +50299,21 @@
               "target": "AllCardsExArea",
               "filter": null,
               "$type": "SVESimulator.SendToCemeteryEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.DiscardHandEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -50658,7 +50669,7 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "amount": "y(p^)",
+              "amount": "x(p^)",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "target": null,
@@ -51376,7 +51387,7 @@
         "id": 100101017
       },
       {
-        "cardTypeId": 0,
+        "cardTypeId": 2,
         "name": "Fairy Assault",
         "costs": [],
         "properties": [
@@ -51403,57 +51414,12 @@
         ],
         "stats": [
           {
-            "baseValue": -1,
-            "statId": 0,
-            "name": "Attack",
-            "originalValue": -1,
-            "minValue": 0,
-            "maxValue": 99,
-            "modifiers": []
-          },
-          {
-            "baseValue": -1,
-            "statId": 1,
-            "name": "Defense",
-            "originalValue": -1,
-            "minValue": 0,
-            "maxValue": 99,
-            "modifiers": []
-          },
-          {
-            "baseValue": 0,
-            "statId": 2,
-            "name": "Engaged",
-            "originalValue": 0,
-            "minValue": 0,
-            "maxValue": 1,
-            "modifiers": []
-          },
-          {
-            "baseValue": -1,
-            "statId": 3,
-            "name": "Evolve Cost",
-            "originalValue": -1,
-            "minValue": 0,
-            "maxValue": 99,
-            "modifiers": []
-          },
-          {
             "baseValue": 3,
             "statId": 4,
             "name": "Cost",
             "originalValue": 3,
             "minValue": 0,
             "maxValue": 99,
-            "modifiers": []
-          },
-          {
-            "baseValue": -1,
-            "statId": 5,
-            "name": "Attached Instance IDs",
-            "originalValue": -1,
-            "minValue": -1,
-            "maxValue": 999999,
             "modifiers": []
           }
         ],

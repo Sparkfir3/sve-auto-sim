@@ -239,6 +239,10 @@
         "body": "Select an enemy follower on the field. Put it on the bottom of its owner's deck and draw a card."
       },
       {
+        "key": "BottomDeck",
+        "body": "Select an enemy follower on the field. Put it on the bottom of its owner's deck and draw a card."
+      },
+      {
         "key": "OnReturnToHandFromField",
         "text": "When this card is returned to hand from your field, give your leader [defense]+1.",
         "trigger": "When this card is returned to hand from your field,",

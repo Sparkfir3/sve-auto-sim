@@ -54,7 +54,6 @@ stats 4/4;
 text "[fanfare] Summon an Ancient Artifact or Mystic Artifact token. Put the other into your EX area.
       [act] [engage], banish 5 cards with different base costs from your EX area: You may summon a Spinaria & Lucille, Keepers from your evolve deck.";
 
-keyword Ward;
 ability Fanfare {
     effect ChooseFromList(SummonAncient, SummonMystic);
 }
@@ -206,13 +205,16 @@ cost 8;
 text "Destroy each card on the field. Each player buries each card in their EX area. Discard your hand. Look at the top 5 cards of your deck. You may put any number of them into your EX area. Bury the rest.";
 
 ability Spell {
-    effect Sequence(Destroy, ExArea, TopDeck);
+    effect Sequence(Destroy, ExArea, Discard, TopDeck);
 }
 ability Spell name Destroy {
     effect Destroy() to AllCards;
 }
 ability Spell name ExArea {
     effect SendToCemetery() to AllCardsExArea;
+}
+ability Spell name Discard {
+    effect DiscardHand();
 }
 ability Spell name TopDeck {
     effect CheckTop(5, (ExArea, m(0,5)), (Cemetery));
@@ -279,7 +281,7 @@ ability Fanfare {
 ability Act {
     condition p(#F);
     cost (EngageSelf);
-    effect DealDamage(y(p^)) to TargetOpponentCard F;
+    effect DealDamage(x(p^)) to TargetOpponentCard F;
 }
 
 // ------------------------------
@@ -416,7 +418,7 @@ ability ActFromHand {
 name Fairy Assault;
 id BP10-018;
 class Forest;
-type Follower;
+type Spell;
 trait Pixie;
 rarity B;
 cost 3;
