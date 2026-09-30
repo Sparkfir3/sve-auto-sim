@@ -49747,7 +49747,7 @@
               "amount": "2",
               "checkAction1": "ExArea",
               "checkAmount1": "m(0,2)",
-              "checkAction2": "SendToCemetery",
+              "checkAction2": "Cemetery",
               "checkAction3": "None",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
@@ -50319,7 +50319,7 @@
               "amount": "5",
               "checkAction1": "ExArea",
               "checkAmount1": "m(0,5)",
-              "checkAction2": "SendToCemetery",
+              "checkAction2": "Cemetery",
               "checkAction3": "None",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
@@ -51523,7 +51523,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "BP10-LD01EN",
+            "value": "BP10-LD01",
             "name": "ID",
             "$type": "CCGKit.StringProperty"
           }
@@ -51531,7 +51531,7 @@
         "stats": [],
         "keywords": [],
         "abilities": [],
-        "id": 110102001
+        "id": 100102001
       }
     ]
   },

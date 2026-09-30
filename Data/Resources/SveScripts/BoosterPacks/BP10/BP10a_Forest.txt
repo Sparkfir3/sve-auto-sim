@@ -106,7 +106,7 @@ ability Spell name Damage {
     effect DealDamage(6) to AllOpponentCardsAndLeader F;
 }
 ability Spell name CheckTop {
-    effect CheckTop(2, (ExArea, m(0,2)), (SendToCemetery));
+    effect CheckTop(2, (ExArea, m(0,2)), (Cemetery));
 }
 ability OnOpponentCardEnterField {
     filter F;
@@ -215,7 +215,7 @@ ability Spell name ExArea {
     effect SendToCemetery() to AllCardsExArea;
 }
 ability Spell name TopDeck {
-    effect CheckTop(5, (ExArea, m(0,5)), (SendToCemetery));
+    effect CheckTop(5, (ExArea, m(0,5)), (Cemetery));
 }
 
 // ------------------------------
@@ -438,6 +438,6 @@ ability Spell name Damage {
 // ------------------------------
 
 name Orchis, Heartful Puppet;
-id BP10-LD01EN;
+id BP10-LD01;
 class Forest;
 type Leader;
