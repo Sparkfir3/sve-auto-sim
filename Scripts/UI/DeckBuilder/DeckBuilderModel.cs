@@ -116,9 +116,8 @@ namespace SVESimulator.DeckBuilder
                 cardTypeIds.Add(4);
             if(Filters.cardType.HasFlag(CardTypeFilter.Leader)) // Leader
                 cardTypeIds.Add(5);
-
-            if(Filters.cardType.HasFlag(CardTypeFilter.Leader)) // Leader
-                cardTypeIds.Add(5);
+            if(Filters.cardType.HasFlag(CardTypeFilter.Advanced)) // Advanced
+                cardTypeIds.Add(6);
 
             bool checkTokens = Filters.cardType.HasFlag(CardTypeFilter.Token);
             if(cardTypeIds.Count == 0 && !checkTokens)

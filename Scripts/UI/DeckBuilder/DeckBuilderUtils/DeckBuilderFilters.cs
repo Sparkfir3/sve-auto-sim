@@ -48,6 +48,7 @@ namespace SVESimulator.DeckBuilder
         Evolved = 8,
         Leader = 16,
         Token = 32,
+        Advanced = 64,
     }
 
     [Flags]

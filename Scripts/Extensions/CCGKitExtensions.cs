@@ -28,7 +28,8 @@ namespace SVESimulator
         public static bool IsCardType(this RuntimeCard card, string cardType) => card.cardType.name.Equals(cardType);
 
         public static bool IsFollowerOrEvolvedFollower(this Card card, GameConfiguration gameConfig = null)
-            => IsCardType(card, SVEProperties.CardTypes.Follower, gameConfig) || IsCardType(card, SVEProperties.CardTypes.EvolvedFollower, gameConfig);
+            => IsCardType(card, SVEProperties.CardTypes.Follower, gameConfig) || IsCardType(card, SVEProperties.CardTypes.EvolvedFollower, gameConfig)
+                || IsCardType(card, SVEProperties.CardTypes.AdvancedFollower, gameConfig);
         public static bool IsFollowerOrEvolvedFollower(this CardObject card) => IsFollowerOrEvolvedFollower(card.RuntimeCard);
         public static bool IsFollowerOrEvolvedFollower(this RuntimeCard card)
         {
