@@ -18,7 +18,7 @@ ability Fanfare {
     effect SearchAndTarget(1, n(Treacherous Reversal), ExArea, MinusCost);
 }
 ability Spell name MinusCost {
-    effect GiveStat(Cost, -8) to AllPlayerCardsEx;
+    effect GiveStatEndOfTurn(Cost, -8) to AllPlayerCardsEx;
 }
 
 // ------------------------------
@@ -161,7 +161,7 @@ ability OnEvolve {
     effect CheckTop(4, (ExAreaAndTarget, Fp(m(0,2)), 1, MinusCost), (BottomDeckAnyOrder));
 }
 ability Spell name MinusCost {
-    effect GiveStat(Cost, -2) to AllPlayerCardsEx;
+    effect GiveStatEndOfTurn(Cost, -2) to AllPlayerCardsEx;
 }
 ability OnOtherEnterField {
     filter Ft(Mercenary);

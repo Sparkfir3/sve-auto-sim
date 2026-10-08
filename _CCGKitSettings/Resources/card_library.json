@@ -49280,7 +49280,7 @@
               "filter": null,
               "targetStats": "Cost",
               "amount": "-8",
-              "$type": "SVESimulator.GiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -50042,7 +50042,7 @@
               "filter": null,
               "targetStats": "Cost",
               "amount": "-2",
-              "$type": "SVESimulator.GiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
