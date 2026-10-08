@@ -252,8 +252,9 @@ namespace SVESimulator.DeckBuilder
                     case 5: // Leader
                         CurrentLeader = card;
                         break;
-                    case 1: // Evolved
-                    case 3:
+                    case 1: // Evolved Follower
+                    case 3: // Evolved Spell (Carrot)
+                    case 6: // Advanced
                         CurrentEvolveDeck.Add(card, cardAmount.amount);
                         break;
                     default: // Main Deck
@@ -284,7 +285,7 @@ namespace SVESimulator.DeckBuilder
             }
 
             // Main/Evolve Deck
-            var targetDeck = card.cardTypeId is 1 or 3 ? CurrentEvolveDeck : CurrentMainDeck;
+            var targetDeck = card.cardTypeId is 1 or 3 or 6 ? CurrentEvolveDeck : CurrentMainDeck;
             if(!targetDeck.TryAdd(card, 1))
             {
                 int maxCount = DeckConstructionRules.GetMaxCardCount(card);
@@ -311,7 +312,7 @@ namespace SVESimulator.DeckBuilder
             }
 
             // Main/Evolve Deck
-            var targetDeck = card.cardTypeId is 1 or 3 ? CurrentEvolveDeck : CurrentMainDeck;
+            var targetDeck = card.cardTypeId is 1 or 3 or 6 ? CurrentEvolveDeck : CurrentMainDeck;
             if(!targetDeck.TryGetValue(card, out int count))
                 return;
             if(count <= 1)
