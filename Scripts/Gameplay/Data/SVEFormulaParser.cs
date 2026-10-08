@@ -565,7 +565,7 @@ namespace SVESimulator
                 }
 
                 // Cost Filters
-                else if(filterSetting == CardFilterSetting.PlayPointCost)
+                if(filterSetting == CardFilterSetting.PlayPointCost)
                 {
                     if(nextIndex >= formula.Length)
                         continue;
@@ -576,7 +576,7 @@ namespace SVESimulator
                             filterSetting = CardFilterSetting.PlayPointCostXor;
                             break;
                         case '(': // Regular Cost Filter
-                            filters.Add(filterSetting.Value, $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}");
+                            currentFilterData = $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}";
                             nextIndex++; // move past close parentheses
                             break;
                         default: // Invalid
