@@ -64,15 +64,11 @@ namespace SVESimulator
             return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower) ||  card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedSpell);
         }
 
-        public static bool IsToken(this CardObject card, GameConfiguration gameConfig = null) => card.RuntimeCard.IsToken(gameConfig);
-        public static bool IsToken(this RuntimeCard card, GameConfiguration gameConfig = null)
+        public static bool IsToken(this CardObject card, GameConfiguration gameConfig = null) => card && card.RuntimeCard.IsToken(gameConfig);
+        public static bool IsToken(this RuntimeCard card, GameConfiguration gameConfig = null) => card != null && LibraryCardCache.GetCard(card.cardId, gameConfig).IsToken();
+        public static bool IsToken(this Card card)
         {
-            if(card == null)
-                return false;
-            gameConfig ??= GameManager.Instance.config;
-            if(gameConfig == null)
-                return false;
-            return LibraryCardCache.GetCard(card.cardId, gameConfig).TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Token);
+            return card.TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Token);
         }
 
         public static bool IsEvolvedVersionOf(this Card evolvedCard, Card baseCard)

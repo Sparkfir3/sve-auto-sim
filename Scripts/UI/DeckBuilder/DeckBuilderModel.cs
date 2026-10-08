@@ -124,8 +124,11 @@ namespace SVESimulator.DeckBuilder
                 return;
             cardList.KeepWhere(x =>
             {
-                bool passesFilter = cardTypeIds.Count == 0 || cardTypeIds.Contains(x.cardTypeId);
-                return x.IsToken() ? checkTokens && passesFilter : passesFilter;
+                if(x.IsToken())
+                    return checkTokens;
+                if(checkTokens && cardTypeIds.Count == 0)
+                    return false;
+                return cardTypeIds.Count == 0 || cardTypeIds.Contains(x.cardTypeId);
             });
         }
 
