@@ -79,8 +79,9 @@ ability Spell name AncientEx {
 }
 
 ability Act {
-    cost (EngageSelf), (Banish, Self), (BanishFromCemetery, 5, p^);
-    effect SummonFromEvolveDeck(n(Spinaria & Lucille, Keepers));
+    condition x(p^)=5;
+    cost (EngageSelf), (Banish, AllPlayerCardsEx);
+    effect SummonFromEvolveDeck(n(Spinaria & Lucille, Keepers), m(0,1));
 }
 
 // ------------------------------
@@ -109,6 +110,7 @@ ability Spell name CheckTop {
 }
 ability OnOpponentCardEnterField {
     filter F;
+    condition ~(R);
     cost (EngageSelf);
     effect DealDamage(6) to TriggerCard;
 }

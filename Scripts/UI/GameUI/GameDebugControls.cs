@@ -47,6 +47,19 @@ namespace SVESimulator
             SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
         }
 
+        [Button("Search to EX Area")]
+        public void SearchToExArea()
+        {
+            SearchDeckEffect searchEffect = new()
+            {
+                amount = "m(0,5)",
+                filter = null,
+                searchDeckAction = SearchDeckEffect.SearchDeckAction.ExArea,
+                text = "[Debug Mode] Search for a card"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
+        }
+
         [Button]
         public void Salvage()
         {

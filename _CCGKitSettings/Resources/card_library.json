@@ -49597,23 +49597,23 @@
             "zoneId": 0,
             "costs": [
               {
+                "condition": "x(p^)=5",
+                "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "target": "Self",
+                "target": "AllPlayerCardsEx",
                 "filter": "",
                 "$type": "SVESimulator.BanishCost"
-              },
-              {
-                "amount": "5",
-                "filter": "p^",
-                "$type": "SVESimulator.BanishFromCemeteryCost"
               }
             ],
             "name": "Act",
             "type": "Activated",
             "effect": {
               "filter": "n(Spinaria & Lucille, Keepers)",
+              "amount": "m(0,1)",
               "$type": "SVESimulator.SummonFromEvolveDeckEffect"
             },
             "target": null,
@@ -49752,8 +49752,8 @@
           {
             "trigger": {
               "filter": "F",
+              "condition": "~(R)",
               "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.EngageSelfCost\"\r\n  }\r\n]",
-              "condition": null,
               "$type": "SVESimulator.SveOnOpponentCardEnterFieldTrigger"
             },
             "name": "OnOpponentCardEnterField",

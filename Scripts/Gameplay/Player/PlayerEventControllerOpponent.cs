@@ -185,15 +185,22 @@ namespace SVESimulator
             CardZone originZone = oppZoneController.AllZones[msg.originZone];
             if(!originZone.TryGetCard(msg.card.instanceId, out CardObject card))
             {
-                if(msg.originZone.Equals(SVEProperties.Zones.Deck))
+                RuntimeCard runtimeCard = new();
+                InitRuntimeCard(ref runtimeCard, msg.card);
+                switch(msg.originZone)
                 {
-                    RuntimeCard runtimeCard = new RuntimeCard();
-                    InitRuntimeCard(ref runtimeCard, msg.card);
-                    card = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
-                }
-                else
-                {
-                    return;
+                    case SVEProperties.Zones.Deck:
+                    {
+                        card = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
+                        break;
+                    }
+                    case SVEProperties.Zones.EvolveDeck:
+                        card = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard, oppZoneController.evolveDeckZone);
+                        break;
+                    default:
+                        card = CardManager.Instance.RequestCard(runtimeCard);
+                        Debug.LogError($"Opponent attempted to play card from zone {msg.originZone}, but client could not find an instance of that card!");
+                        break;
                 }
             }
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
