@@ -411,7 +411,7 @@ ability OnOtherEnterField {
 }
 ability ActFromHand {
     condition f();
-    cost (PP, 1), (SendToExArea, Self);
+    cost (PP, 1), (SendToExArea, SelfFromHand);
     effect SendToExArea() to TargetPlayerCard;
 }
 

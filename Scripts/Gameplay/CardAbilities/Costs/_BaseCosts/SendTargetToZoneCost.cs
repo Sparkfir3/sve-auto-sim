@@ -39,6 +39,8 @@ namespace SVESimulator
             {
                 case SVEProperties.SVEEffectTarget.Self:
                     return player.ZoneController.fieldZone.GetAllPrimaryCards().Any(x => x.RuntimeCard.instanceId == card.instanceId);
+                case SVEProperties.SVEEffectTarget.SelfFromHand:
+                    return player.ZoneController.handZone.AllCards.Any(x => x.RuntimeCard.instanceId == card.instanceId);
                 case SVEProperties.SVEEffectTarget.AllPlayerCards:
                 case SVEProperties.SVEEffectTarget.AllPlayerCardsEx:
                 case SVEProperties.SVEEffectTarget.AllPlayerCardsFieldAndEx:

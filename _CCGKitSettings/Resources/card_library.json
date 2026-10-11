@@ -51368,7 +51368,7 @@
                 "$type": "SVESimulator.PlayPointCost"
               },
               {
-                "target": "Self",
+                "target": "SelfFromHand",
                 "filter": "",
                 "$type": "SVESimulator.SendToExAreaCost"
               }

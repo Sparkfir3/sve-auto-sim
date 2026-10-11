@@ -17,6 +17,7 @@ namespace SVESimulator
         public enum SVEEffectTarget
         {
             Self,
+            SelfFromHand,
             Leader,
             AllPlayerCards,
             AllPlayerCardsEx,
