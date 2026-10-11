@@ -8,7 +8,7 @@ namespace SVESimulator
 {
     public class PlayerHandZone : CardZone
     {
-        [TitleGroup("Runtime Data"), SerializeField]
+        [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private List<CardObject> cardsWithActFromHand = new();
 
         [TitleGroup("Settings"), SerializeField]
