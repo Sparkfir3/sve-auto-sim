@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using SVESimulator.CardTextData;
-using SVESimulator.Database.Scraper;
+using SVESimulator.Database.ImageDownloader;
 using SVESimulator.SveScript;
 using SVESimulator.UI;
 using TMPro;

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SVESimulator.Database.Scraper
+namespace SVESimulator.Database.ImageDownloader
 {
     [Serializable]
     public class SetDownloadSettings

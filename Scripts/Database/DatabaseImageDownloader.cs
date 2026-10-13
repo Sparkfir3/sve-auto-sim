@@ -9,7 +9,7 @@ using ReformSim.LibAvif;
 using Sirenix.OdinInspector;
 using Sparkfire.Utility;
 
-namespace SVESimulator.Database.Scraper
+namespace SVESimulator.Database.ImageDownloader
 {
     public class DatabaseImageDownloader : MonoBehaviour
     {
