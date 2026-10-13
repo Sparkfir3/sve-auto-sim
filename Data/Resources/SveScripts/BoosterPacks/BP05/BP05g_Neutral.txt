@@ -1,0 +1,43 @@
+name Puppet;
+id BP05-T03;
+class Neutral;
+type Follower;
+trait Puppetry / Token;
+cost 1;
+stats 1/1;
+
+text "Rush.";
+
+keyword Rush;
+
+// ------------------------------
+
+name Ancient Artifact;
+id BP05-T04;
+class Neutral;
+type Follower;
+trait Supreme / Token;
+cost 1;
+stats 3/1;
+
+text "Rush.";
+
+keyword Rush;
+
+// ------------------------------
+
+name Mystic Artifact;
+id BP05-T05;
+class Neutral;
+type Follower;
+trait Supreme / Token;
+cost 3;
+stats 2/3;
+
+text "Ward.
+      [fanfare] Draw a card.";
+
+keyword Ward;
+ability Fanfare {
+    effect Draw(1);
+}

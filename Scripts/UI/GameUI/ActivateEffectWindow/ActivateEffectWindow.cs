@@ -59,7 +59,7 @@ namespace SVESimulator
 
         #region Open/Close Controls
 
-        public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities, bool onlyQuicks = false)
+        public void Open(PlayerController player, CardObject card, List<ActivatedAbility> abilities, bool checkEvolveServe = true, bool checkStack = true, bool onlyQuicks = false)
         {
             int i = 0;
             bool canUseAct = !card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotUseAct);
@@ -89,12 +89,12 @@ namespace SVESimulator
                     Close();
                 });
 
-                if(!onlyQuicks && ability.effect is IEvolveEffect)
+                if(!checkEvolveServe && !onlyQuicks && ability.effect is IEvolveEffect)
                     AddEvolveWithEPFromAbility(player, card, ability, ref i);
             }
 
             // Stack
-            if(!onlyQuicks && card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
+            if(checkStack && !onlyQuicks && card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack))
             {
                 MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
                 ActivatedAbility ability = CounterUtilities.InnateStackAbility;
@@ -119,7 +119,7 @@ namespace SVESimulator
             }
 
             // Evolve/Serve
-            if(!onlyQuicks)
+            if(checkEvolveServe && !onlyQuicks)
             {
                 AddEvolveEffectsFromEvolveCost(player, card, ref i);
                 AddServeEffects(player, card, ref i);
@@ -127,8 +127,40 @@ namespace SVESimulator
 
             // Open window
             Vector2 viewportPos = cam.WorldToViewportPoint(card.transform.position);
-            window.anchoredPosition = new Vector2(viewportPos.x * rectTransform.rect.width, viewportPos.y * rectTransform.rect.height + verticalOffset);
+            SetAnchoredPosition(new Vector2(viewportPos.x * rectTransform.rect.width, viewportPos.y * rectTransform.rect.height + verticalOffset));
             gameObject.SetActive(true);
+        }
+
+        public void AddEffects(PlayerController player, CardObject card, List<ActivatedAbility> abilities)
+        {
+            int i = buttons.Count(x => x.gameObject.activeSelf);
+            for(; i < abilities.Count; i++)
+            {
+                MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
+                ActivatedAbility ability = abilities[i]; // need to detach reference from var i for the button event
+
+                button.gameObject.SetActive(true);
+                button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
+                button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
+                    && (ability.effect is not IEvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
+                button.OnClickEffect.AddListener(() =>
+                {
+                    player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
+                    player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.name, () =>
+                    {
+                        SVEEffectPool.Instance.ResolveEffectImmediate(ability.effect as SveEffect, card.RuntimeCard, SVEProperties.Zones.Field, onComplete: () =>
+                        {
+                            SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
+                        });
+                    });
+                    Close();
+                });
+            }
+        }
+
+        public void SetAnchoredPosition(Vector2 viewportPos)
+        {
+            window.anchoredPosition = viewportPos;
         }
 
         public void Close()

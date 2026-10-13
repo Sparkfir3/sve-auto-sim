@@ -28,13 +28,14 @@ namespace SVESimulator
         public static bool IsCardType(this RuntimeCard card, string cardType) => card.cardType.name.Equals(cardType);
 
         public static bool IsFollowerOrEvolvedFollower(this Card card, GameConfiguration gameConfig = null)
-            => IsCardType(card, SVEProperties.CardTypes.Follower, gameConfig) || IsCardType(card, SVEProperties.CardTypes.EvolvedFollower, gameConfig);
+            => IsCardType(card, SVEProperties.CardTypes.Follower, gameConfig) || IsCardType(card, SVEProperties.CardTypes.EvolvedFollower, gameConfig)
+                || IsCardType(card, SVEProperties.CardTypes.AdvancedFollower, gameConfig);
         public static bool IsFollowerOrEvolvedFollower(this CardObject card) => IsFollowerOrEvolvedFollower(card.RuntimeCard);
         public static bool IsFollowerOrEvolvedFollower(this RuntimeCard card)
         {
             if(card == null)
                 return false;
-            return card.IsCardType(SVEProperties.CardTypes.Follower) || card.IsCardType(SVEProperties.CardTypes.EvolvedFollower);
+            return card.IsCardType(SVEProperties.CardTypes.Follower) || card.IsCardType(SVEProperties.CardTypes.EvolvedFollower) || card.cardType.name.Equals(SVEProperties.CardTypes.AdvancedFollower);
         }
 
         public static bool IsSpell(this Card card, GameConfiguration gameConfig = null) => IsCardType(card, SVEProperties.CardTypes.Spell, gameConfig);
@@ -60,23 +61,27 @@ namespace SVESimulator
         {
             if(card == null)
                 return false;
-            return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower) ||  card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedSpell);;
+            return card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedFollower) ||  card.cardType.name.Equals(SVEProperties.CardTypes.EvolvedSpell);
         }
 
-        public static bool IsToken(this CardObject card, GameConfiguration gameConfig = null) => card.RuntimeCard.IsToken(gameConfig);
-        public static bool IsToken(this RuntimeCard card, GameConfiguration gameConfig = null)
+        public static bool IsToken(this CardObject card, GameConfiguration gameConfig = null) => card && card.RuntimeCard.IsToken(gameConfig);
+        public static bool IsToken(this RuntimeCard card, GameConfiguration gameConfig = null) => card != null && LibraryCardCache.GetCard(card.cardId, gameConfig).IsToken();
+        public static bool IsToken(this Card card)
         {
-            if(card == null)
-                return false;
-            gameConfig ??= GameManager.Instance.config;
-            if(gameConfig == null)
-                return false;
-            return LibraryCardCache.GetCard(card.cardId, gameConfig).TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Token);
+            return card.TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Token);
         }
 
         public static bool IsEvolvedVersionOf(this Card evolvedCard, Card baseCard)
         {
             return evolvedCard.name.Replace(" (Evolved)", "").Equals(baseCard.name);
+        }
+
+        public static bool IsAdvancedType(this CardObject card) => card.RuntimeCard.IsAdvancedType();
+        public static bool IsAdvancedType(this RuntimeCard card)
+        {
+            if(card == null)
+                return false;
+            return card.cardType.name.Equals(SVEProperties.CardTypes.AdvancedFollower);
         }
 
         #endregion

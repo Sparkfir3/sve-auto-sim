@@ -487,8 +487,8 @@ namespace SVESimulator
             {
                 if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card))
                 {
-                    // deselect for XOR filter - bypass filter (it fails filter because it checks against itself inside the filter)
-                    if((currentFilter?.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor) ?? false) && currentSelectedCards.Contains(card))
+                    // deselect for XOR filter - bypass filter (it fails normal filter match because it checks against itself inside the filter)
+                    if((currentFilter?.HasExclusiveOr() ?? false) && currentSelectedCards.Contains(card))
                         ToggleCardSelection(card);
                     // regular toggle selection
                     else if(currentFilter.MatchesCard(card))
@@ -702,12 +702,21 @@ namespace SVESimulator
 
         private void OnUpdateSelectedCards()
         {
-            if(currentFilter?.ContainsKey(SVEFormulaParser.CardFilterSetting.NameXor) ?? false)
+            bool filterUpdated = false;
+            if(currentFilter?.HasNameExclusiveOr() ?? false)
             {
                 currentFilter[SVEFormulaParser.CardFilterSetting.NameXor] = string.Join("\n",
                     currentSelectedCards.Select(x => LibraryCardCache.GetName(x.RuntimeCard.cardId)).Distinct());
-                OnUpdateFilter();
+                filterUpdated = true;
             }
+            if(currentFilter?.HasCostExclusiveOr() ?? false)
+            {
+                currentFilter[SVEFormulaParser.CardFilterSetting.PlayPointCostXor] = string.Join("\n",
+                    currentSelectedCards.Select(x => x.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat stat) ? stat.effectiveValue : -1).Distinct());
+                filterUpdated = true;
+            }
+            if(filterUpdated)
+                OnUpdateFilter();
         }
 
         #endregion

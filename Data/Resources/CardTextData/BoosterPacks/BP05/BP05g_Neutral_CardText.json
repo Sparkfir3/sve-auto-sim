@@ -1,0 +1,27 @@
+[
+  {
+    "id": "BP05-T03EN",
+    "name": "Puppet",
+    "trait": "Puppetry / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP05-T04EN",
+    "name": "Ancient Artifact",
+    "trait": "Supreme / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP05-T05EN",
+    "name": "Mystic Artifact",
+    "trait": "Supreme / Token",
+    "cardText": "Ward.\n[fanfare] Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card."
+      }
+    ]
+  }
+]

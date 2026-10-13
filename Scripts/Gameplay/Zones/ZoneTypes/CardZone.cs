@@ -38,6 +38,7 @@ namespace SVESimulator
         public PlayerController Player => ZoneController.Player;
 
         public event Action OnInitialize;
+        public event Action OnUpdated;
 
         // ------------------------------
 
@@ -58,11 +59,13 @@ namespace SVESimulator
             cards.Add(card);
             card.transform.parent = transform;
             card.IsVisible = visible;
+            OnUpdated?.Invoke();
         }
 
         public virtual void RemoveCard(CardObject card)
         {
             cards.Remove(card);
+            OnUpdated?.Invoke();
         }
 
         public bool TryGetCard(int instanceId, out CardObject card)

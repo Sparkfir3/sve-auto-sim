@@ -94,7 +94,7 @@ namespace SVESimulator.DeckBuilder
             if(Filters.text.IsNullOrWhiteSpace())
                 return;
 
-            cardList = cardList.Where(x => x.name.ToLower().Contains(Filters.text.ToLower())).ToList();
+            cardList.KeepWhere(x => x.name.ToLower().Contains(Filters.text.ToLower()));
         }
 
         private void FilterByCardType(ref List<Card> cardList)
@@ -116,19 +116,20 @@ namespace SVESimulator.DeckBuilder
                 cardTypeIds.Add(4);
             if(Filters.cardType.HasFlag(CardTypeFilter.Leader)) // Leader
                 cardTypeIds.Add(5);
-
-            if(Filters.cardType.HasFlag(CardTypeFilter.Leader)) // Leader
-                cardTypeIds.Add(5);
+            if(Filters.cardType.HasFlag(CardTypeFilter.Advanced)) // Advanced
+                cardTypeIds.Add(6);
 
             bool checkTokens = Filters.cardType.HasFlag(CardTypeFilter.Token);
             if(cardTypeIds.Count == 0 && !checkTokens)
                 return;
-            cardList = cardList.Where(x =>
+            cardList.KeepWhere(x =>
             {
-                if(x.properties.Any(y => y is StringProperty property && y.name.Equals(SVEProperties.CardStats.Trait) && (property.value?.Contains("Token") ?? false)))
+                if(x.IsToken())
                     return checkTokens;
+                if(checkTokens && cardTypeIds.Count == 0)
+                    return false;
                 return cardTypeIds.Count == 0 || cardTypeIds.Contains(x.cardTypeId);
-            }).ToList();
+            });
         }
 
         private void FilterByClass(ref List<Card> cardList)
@@ -154,11 +155,11 @@ namespace SVESimulator.DeckBuilder
 
             if(classNames.Count == 0)
                 return;
-            _filteredCardList = _filteredCardList.Where(x =>
+            cardList.KeepWhere(x =>
             {
                 string cardClass = x.GetStringProperty(SVEProperties.CardStats.Class);
                 return classNames.Any(y => cardClass.Equals(y));
-            }).ToList();
+            });
         }
 
         private void FilterByUniverse(ref List<Card> cardList)
@@ -174,11 +175,11 @@ namespace SVESimulator.DeckBuilder
             if(universesList.Count == 0)
                 return;
 
-            cardList = cardList.Where(x =>
+            cardList.KeepWhere(x =>
             {
                 string universe = x.TryGetStringProperty(SVEProperties.CardStats.Universe);
                 return universesList.Any(y => universe == null ? y == null : universe.Equals(y));
-            }).ToList();
+            });
         }
 
         private void FilterByStat(ref List<Card> cardList, int min, int max, string statName, int maxLimit = 10)
@@ -188,11 +189,11 @@ namespace SVESimulator.DeckBuilder
             if(max >= maxLimit)
                 max = 99;
 
-            cardList = cardList.Where(x =>
+            cardList.KeepWhere(x =>
             {
                 Stat stat = x.stats.FirstOrDefault(y => y.name.Equals(statName));
                 return stat != null && (stat.baseValue >= min && stat.baseValue <= max);
-            }).ToList();
+            });
         }
 
         // NOT CURRENTLY USED
@@ -215,14 +216,14 @@ namespace SVESimulator.DeckBuilder
         //
         //     if(rarities.Count == 0)
         //         return;
-        //     cardList = cardList.Where(x =>
+        //     cardList.KeepWhere(x =>
         //     {
         //         StringProperty rarityProperty = x.properties.Find(y => y.name.Equals(SVEProperties.CardStats.Rarity) && y is StringProperty) as StringProperty;
         //         if(rarityProperty == null)
         //             return false;
         //         string cardRarity = rarityProperty.value;
         //         return rarities.Any(y => cardRarity.Equals(y));
-        //     }).ToList();
+        //     });
         // }
 
         #endregion
@@ -254,8 +255,9 @@ namespace SVESimulator.DeckBuilder
                     case 5: // Leader
                         CurrentLeader = card;
                         break;
-                    case 1: // Evolved
-                    case 3:
+                    case 1: // Evolved Follower
+                    case 3: // Evolved Spell (Carrot)
+                    case 6: // Advanced
                         CurrentEvolveDeck.Add(card, cardAmount.amount);
                         break;
                     default: // Main Deck
@@ -286,7 +288,7 @@ namespace SVESimulator.DeckBuilder
             }
 
             // Main/Evolve Deck
-            var targetDeck = card.cardTypeId is 1 or 3 ? CurrentEvolveDeck : CurrentMainDeck;
+            var targetDeck = card.cardTypeId is 1 or 3 or 6 ? CurrentEvolveDeck : CurrentMainDeck;
             if(!targetDeck.TryAdd(card, 1))
             {
                 int maxCount = DeckConstructionRules.GetMaxCardCount(card);
@@ -313,7 +315,7 @@ namespace SVESimulator.DeckBuilder
             }
 
             // Main/Evolve Deck
-            var targetDeck = card.cardTypeId is 1 or 3 ? CurrentEvolveDeck : CurrentMainDeck;
+            var targetDeck = card.cardTypeId is 1 or 3 or 6 ? CurrentEvolveDeck : CurrentMainDeck;
             if(!targetDeck.TryGetValue(card, out int count))
                 return;
             if(count <= 1)

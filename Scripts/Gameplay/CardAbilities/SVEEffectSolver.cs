@@ -156,24 +156,27 @@ namespace SVESimulator
         public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool executeConfirmationTiming = true)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
-            if(player != null)
+            if(player == null)
+                return;
+
+            RuntimeZone oldZone = player.namedZones[originZone];
+            RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
+
+            oldZone.RemoveCard(card);
+            field.AddCard(card);
+
+            // TODO - support for more than one attached card
+            if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
+                attachedCardInfo.baseValue = -1;
+            if(card.HasKeyword(SVEProperties.PassiveAbilities.PutOnFieldEngaged))
+                EngageCard(card);
+
+            if(playPoints > 0)
+                player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPoints;
+
+            if(isPlayerEffectSolver)
             {
-                RuntimeZone oldZone = player.namedZones[originZone];
-                RuntimeZone field = player.namedZones[SVEProperties.Zones.Field];
-
-                oldZone.RemoveCard(card);
-                field.AddCard(card);
-
-                // TODO - support for more than one attached card
-                if(card.namedStats.TryGetValue(SVEProperties.CardStats.AttachedCardInstanceIDs, out Stat attachedCardInfo))
-                    attachedCardInfo.baseValue = -1;
-                if(card.HasKeyword(SVEProperties.PassiveAbilities.PutOnFieldEngaged))
-                    EngageCard(card);
-
-                if(playPoints > 0)
-                    player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPoints;
-
-                if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
+                if(playerNetId.isLocalPlayer)
                 {
                     SVEEffectPool.Instance.ApplyAllActivePassivesToCard(card);
                     SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, card);
@@ -186,10 +189,16 @@ namespace SVESimulator
                         SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
                     else
                         SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
-
-                    if(executeConfirmationTiming)
-                        SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                 }
+                else
+                {
+                    PlayerInfo localPlayer = gameState.players.Find(x => x.netId.isLocalPlayer);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOpponentCardEnterFieldTrigger>(gameState, card, localPlayer.namedZones[SVEProperties.Zones.Field], localPlayer,
+                        x => x.MatchesFilter(card), false);
+                }
+
+                if(executeConfirmationTiming)
+                    SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
             }
         }
 

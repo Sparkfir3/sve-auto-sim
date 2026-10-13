@@ -45,6 +45,8 @@ namespace SVESimulator.SveScript
             { "evolved spell", 3 },
             { "amulet", 4 },
             { "leader", 5 },
+            { "advanced", 6 },
+            { "advanced follower", 6 },
         };
 
         public static readonly Dictionary<string, string> ClassList = new()

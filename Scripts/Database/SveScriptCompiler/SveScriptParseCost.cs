@@ -105,6 +105,7 @@ namespace SVESimulator.SveScript
                         newCost.Add("$type", "SVESimulator.DiscardRandomCardCost");
                         break;
                     case "SendToCemetery":
+                    case "SendToExArea":
                     case "ReturnToHand":
                     case "Banish":
                         if(args.Length < 2)

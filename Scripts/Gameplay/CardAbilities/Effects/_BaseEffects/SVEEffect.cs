@@ -25,6 +25,7 @@ namespace SVESimulator
             switch(targetMode)
             {
                 case SVEProperties.SVEEffectTarget.Self:
+                case SVEProperties.SVEEffectTarget.SelfFromHand:
                     CardObject sourceCard = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                     if(sourceCard)
                         targets.Add(sourceCard);
@@ -81,6 +82,12 @@ namespace SVESimulator
                     filter = SVEFormulaParser.ParseCardFilterFormula(rawFilter, sourceCardInstanceId);
                     targets.AddRange(player.ZoneController.fieldZone.GetAllPrimaryCards().Where(x => filter.MatchesCard(x)).ToList());
                     targets.AddRange(player.OppZoneController.fieldZone.GetAllPrimaryCards().Where(x => filter.MatchesCard(x)).ToList());
+                    onTargetFound?.Invoke(targets);
+                    return;
+                case SVEProperties.SVEEffectTarget.AllCardsExArea:
+                    filter = SVEFormulaParser.ParseCardFilterFormula(rawFilter, sourceCardInstanceId);
+                    targets.AddRange(player.ZoneController.exAreaZone.GetAllPrimaryCards().Where(x => filter.MatchesCard(x)).ToList());
+                    targets.AddRange(player.OppZoneController.exAreaZone.GetAllPrimaryCards().Where(x => filter.MatchesCard(x)).ToList());
                     onTargetFound?.Invoke(targets);
                     return;
                 case SVEProperties.SVEEffectTarget.TriggerCard:

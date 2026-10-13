@@ -39,6 +39,8 @@ namespace SVESimulator
         public CardSelectionArea selectionArea; // for selecting effect targets from a zone other than field/EX
         public ZoneViewingArea zoneViewingArea; // for viewing cards in a zone (ex. cemetery) outside of performing effects
         public EvolvePointDisplay evolvePointDisplay;
+        [field: SerializeField]
+        public Transform ActFromHandButtonAnchor { get; private set; }
 
         [TitleGroup("Runtime References"), ShowInInspector, ReadOnly]
         public PlayerController Player { get; set; }
@@ -111,7 +113,7 @@ namespace SVESimulator
             Debug.Assert(deckZone.Runtime.cards != null);
             Debug.Assert(deckZone.Runtime.cards.All(x => x.cardType != null));
             Debug.Assert(deckZone.Runtime.cards.All(x => x.cardType.name != null));
-            List<RuntimeCard> evolveCards = deckZone.Runtime.cards.Where(x => x.IsEvolvedType()).ToList();
+            List<RuntimeCard> evolveCards = deckZone.Runtime.cards.Where(x => x.IsEvolvedType() || x.IsAdvancedType()).ToList();
             evolveDeckZone.SetStackHeight(evolveCards.Count);
             return evolveCards;
         }

@@ -62,6 +62,10 @@ namespace SVESimulator
                         if(!card.IsEvolvedType() ^ inverse)
                             return false;
                         break;
+                    case CardFilterSetting.AdvancedCard:
+                        if(!card.IsAdvancedType() ^ inverse)
+                            return false;
+                        break;
 
                     // Card Properties (+ Token)
                     case CardFilterSetting.Token:
@@ -156,6 +160,13 @@ namespace SVESimulator
                         if((!card.namedStats.TryGetValue(targetStat, out Stat stat) || stat.effectiveValue < min || stat.effectiveValue > max) ^ inverse)
                             return false;
                         break;
+                    case CardFilterSetting.PlayPointCostXor:
+                        Debug.Assert(!inverse, "Filter type \"Play Point Cost - Exclusive OR\" does not support using inverse");
+                        int playPointCost = card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out stat) ? stat.effectiveValue : -1;
+                        string[] currentCosts = value?.Split('\n');
+                        if(playPointCost == -1 || currentCosts != null && currentCosts.Any(x => x.Equals(playPointCost.ToString())))
+                            return false;
+                        break;
                     case CardFilterSetting.EvolveCost:
                         SVEFormulaParser.ParseValueAsMinMax(value, player, out int minEvolveCost, out int maxEvolveCost);
                         int evolveCost = card.EvolveCost();
@@ -213,7 +224,9 @@ namespace SVESimulator
 
         public static bool HasExcludeSelf(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.ExcludeSelf);
 
+        public static bool HasExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.HasNameExclusiveOr() || filters.HasCostExclusiveOr();
         public static bool HasNameExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.NameXor);
+        public static bool HasCostExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.PlayPointCostXor);
 
         private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value, PlayerController player = null)
         {
@@ -243,6 +256,47 @@ namespace SVESimulator
         }
 
 		#endregion
+
+        // ------------------------------
+
+        #region Zone Counts
+
+        public static int CountMatchingFilter(this List<CardObject> cards, Dictionary<CardFilterSetting, string> filters)
+        {
+            if(cards is not { Count: > 0 } || filters == null || filters.Count == 0)
+                return cards?.Count ?? 0;
+            if(!filters.HasExclusiveOr())
+                return cards.Count(x => filters.MatchesCard(x.RuntimeCard));
+
+            // Handle XOR counting
+            int count = 0;
+            bool checkNames = filters.HasNameExclusiveOr();
+            bool checkCosts = filters.HasCostExclusiveOr();
+            foreach(CardObject card in cards)
+            {
+                if(!filters.MatchesCard(card.RuntimeCard))
+                    continue;
+                if(checkNames)
+                    filters[CardFilterSetting.NameXor] = $"{filters[CardFilterSetting.NameXor]}" +
+                        $"\n{LibraryCardCache.GetName(card.RuntimeCard.cardId)}";
+                if(checkCosts)
+                {
+                    if(!card.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat costStat))
+                        continue;
+                    filters[CardFilterSetting.PlayPointCostXor] = $"{filters[CardFilterSetting.PlayPointCostXor]}" +
+                        $"\n{costStat.effectiveValue}";
+                }
+                count++;
+            }
+
+            if(checkNames)
+                filters[CardFilterSetting.NameXor] = filters[CardFilterSetting.NameXor]?.Trim();
+            if(checkCosts)
+                filters[CardFilterSetting.PlayPointCostXor] = filters[CardFilterSetting.PlayPointCostXor]?.Trim();
+            return count;
+        }
+
+        #endregion
 
         // ------------------------------
 
