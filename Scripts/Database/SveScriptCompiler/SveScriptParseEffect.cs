@@ -48,7 +48,9 @@ namespace SVESimulator.SveScript
                             effectData.Add("target", additionalArgs[i++]);
                         if(effectParams.hasFilter)
                         {
-                            effectData.Add("filter", additionalArgs[i..].Length > 0 ? string.Join(' ', additionalArgs[i..]) : null);
+                            string filter = additionalArgs[i..].Length > 0 ? string.Join(' ', additionalArgs[i..]) : null;
+                            if(!filter.IsNullOrWhiteSpace())
+                                effectData.Add("filter", filter);
                             i = additionalArgs.Length - 1;
                         }
                         break;
@@ -58,8 +60,6 @@ namespace SVESimulator.SveScript
             }
             if(effectParams.hasTarget)
                 effectData.TryAdd("target", "Self");
-            if(effectParams.hasFilter)
-                effectData.TryAdd("filter", null);
 
             // Get Evolve keyword
             if(effectType.Equals("Evolve") && effectData.TryGetValue("target", out JToken target) && target.ToString().Equals("Self"))

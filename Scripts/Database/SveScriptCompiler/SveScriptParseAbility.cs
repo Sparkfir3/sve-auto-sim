@@ -190,10 +190,6 @@ namespace SVESimulator.SveScript
             }
             if(ability is TriggeredAbility triggeredAbility)
             {
-                if(!triggerData.ContainsKey("condition"))
-                    triggerData.Add("condition", null);
-                if(!triggerData.ContainsKey("cost"))
-                    triggerData.Add("cost", null);
                 triggerData.Add("$type", EffectTriggerDictionary[triggerType].ccgType);
                 triggeredAbility.trigger = triggerData;
             }
