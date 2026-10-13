@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using ReformSim.LibAvif;
 using Sirenix.OdinInspector;
+using Sparkfire.Utility;
 
 namespace SVESimulator.Database.Scraper
 {
@@ -23,8 +24,8 @@ namespace SVESimulator.Database.Scraper
         [SerializeField, ReadOnly]
         private int targetDownloadCount;
 
-        [TitleGroup("Settings"), SerializeField, TableList]
-        private List<SetDownloadSettings> downloadSettings;
+        [TitleGroup("Settings"), SerializeField]
+        private TextAsset downloadSettingsFile;
         [SerializeField, LabelText("Card Back URL")]
         private string cardBackURL = "";
         [SerializeField, LabelText("Evolve Point URL")]
@@ -37,6 +38,7 @@ namespace SVESimulator.Database.Scraper
         [SerializeField, InlineEditor]
         private FilePathInfo pathInfo;
 
+        [ShowInInspector, TableList, ReadOnly, HideInEditorMode]
         private List<SetDownloadSettings> runtimeDownloadSettings = new();
 
         public event Action<int, int> OnDownloadProgressUpdate; // Current downloaded count, total download target
@@ -63,7 +65,15 @@ namespace SVESimulator.Database.Scraper
 
         private void CalculateDownloadSize()
         {
-            foreach(SetDownloadSettings settings in downloadSettings)
+            // Get raw/complete download list
+            List<SetDownloadSettings> fullDownloadSettings = new();
+            string[] lines = downloadSettingsFile.text.Split('\n');
+            for(int i = 0; i < lines.Length; i++)
+                if(!lines[i].IsNullOrWhiteSpace())
+                    fullDownloadSettings.AddRange(SetDownloadSettings.ParseDownloadSettingsLine(lines[i]));
+
+            // Check against local files
+            foreach(SetDownloadSettings settings in fullDownloadSettings)
             {
                 string folderPath = Path.Combine(pathInfo.ImagesPath, settings.setCode);
                 if(!Directory.Exists(folderPath))
@@ -73,13 +83,13 @@ namespace SVESimulator.Database.Scraper
                 }
 
                 int i = settings.startIndex;
-                for(; i < settings.endIndex; i++)
+                for(; i <= settings.endIndex; i++)
                 {
                     string fileName = $"{settings.setCode}-{settings.GetCardIdNumberWithLanguage(i)}.png";
                     if(!File.Exists(Path.Combine(folderPath, fileName)))
                         break;
                 }
-                if(i >= settings.endIndex)
+                if(i > settings.endIndex)
                     continue;
 
                 runtimeDownloadSettings.Add(new SetDownloadSettings()
