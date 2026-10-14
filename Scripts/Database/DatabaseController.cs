@@ -102,6 +102,7 @@ namespace SVESimulator.Database
         [TitleGroup("Buttons"), Button]
         private void GenerateLibrary()
         {
+            // Generate new
             TextAsset[] sveScripts = Resources.LoadAll<TextAsset>(sveScriptResourcesPath);
             Debug.Log($"Loaded {sveScripts.Length} SVE scripts");
             foreach(TextAsset script in sveScripts)
@@ -113,6 +114,12 @@ namespace SVESimulator.Database
 #else
             SveScriptCompiler.GenerateAndSaveFullCardLibrary(paths, Path.Combine(paths.MainFolderPath, "card_library.json"));
 #endif
+
+            // Delete data
+            if(Directory.Exists(paths.CardDataPath))
+            {
+                Directory.Delete(paths.CardDataPath, true);
+            }
         }
 
         private void SaveDatabaseVersion()
