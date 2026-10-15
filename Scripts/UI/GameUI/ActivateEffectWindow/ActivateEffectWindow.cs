@@ -7,12 +7,16 @@ using Sparkfire.Utility;
 using CCGKit;
 using SVESimulator.CardTextData;
 
-namespace SVESimulator
+namespace SVESimulator.UI
 {
     public class ActivateEffectWindow : MonoBehaviour
     {
-        [Title("Runtime Data"), SerializeField, ReadOnly]
-        public bool PointerInside { get; set; }
+        #region Variables
+
+        [field: Title("Runtime Data"), ShowInInspector, ReadOnly]
+        public bool PointerInsideMain { get; set; }
+        [field: ShowInInspector, ReadOnly]
+        public bool PointerInsideSub { get; set; }
 
         [Title("Settings"), SerializeField]
         private float verticalOffset = 50f;
@@ -38,11 +42,28 @@ namespace SVESimulator
         [SerializeField, HideInPlayMode]
         private List<GameObject> testButtons;
         [SerializeField]
+        private ActivateEvolveOptionsWindow evolveOptionsWindow;
+
+        [Title("Object References - Prefabs"), SerializeField]
         private MultipleChoiceButton buttonPrefab;
 
         private Camera cam;
 
+        public bool PointerInside
+        {
+            get => PointerInsideMain || PointerInsideSub;
+            set
+            {
+                PointerInsideMain = value;
+                PointerInsideSub = value;
+            }
+        }
+
+        #endregion
+
         // ------------------------------
+
+        #region Initialization
 
         public void Initialize()
         {
@@ -53,7 +74,10 @@ namespace SVESimulator
             {
                 Destroy(testButton);
             }
+            evolveOptionsWindow.Initialize();
         }
+
+        #endregion
 
         // ------------------------------
 
@@ -126,6 +150,7 @@ namespace SVESimulator
             }
 
             // Open window
+            evolveOptionsWindow.gameObject.SetActive(false);
             Vector2 viewportPos = cam.WorldToViewportPoint(card.transform.position);
             SetAnchoredPosition(new Vector2(viewportPos.x * rectTransform.rect.width, viewportPos.y * rectTransform.rect.height + verticalOffset));
             gameObject.SetActive(true);
