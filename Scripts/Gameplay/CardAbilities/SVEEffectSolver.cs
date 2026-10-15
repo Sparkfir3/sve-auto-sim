@@ -202,7 +202,7 @@ namespace SVESimulator
             }
         }
 
-        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint, bool useEvolveCost = true)
+        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint, bool useEvolveCost = true, bool isSuperEvolve = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             if(player == null)
@@ -256,6 +256,13 @@ namespace SVESimulator
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherEvolveTrigger>(gameState, evolvedCard, SVEProperties.Zones.Field, field, player,
                     x => x.MatchesFilter(evolvedCard), true);
+
+                if(isSuperEvolve)
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnSuperEvolveTrigger>(gameState, evolvedCard, player, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherSuperEvolveTrigger>(gameState, evolvedCard, SVEProperties.Zones.Field, field, player,
+                        x => x.MatchesFilter(evolvedCard), true);
+                }
             }
         }
 

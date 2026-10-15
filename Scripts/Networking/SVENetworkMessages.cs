@@ -376,6 +376,7 @@ namespace SVESimulator
         public int fieldSlotId;
         public bool useEvolvePoint;
         public bool useEvolveCost;
+        public bool isSuperEvolve;
     }
 
     public struct OpponentEvolveCardMessage : NetworkMessage
@@ -386,6 +387,7 @@ namespace SVESimulator
         public int fieldSlotId;
         public bool useEvolvePoint;
         public bool useEvolveCost;
+        public bool isSuperEvolve;
     }
 
     public struct LocalServeAndRaceMessage : NetworkMessage

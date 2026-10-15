@@ -487,7 +487,7 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true, bool isSuperEvolve = false)
         {
             // Condition checks
             if(playerController.EvolvedThisTurn && useEvolveForTurn)
@@ -529,7 +529,8 @@ namespace SVESimulator
                 evolvedCardInstanceId = evolvedCard.RuntimeCard.instanceId,
                 fieldSlotId = slot,
                 useEvolvePoint = useEvolvePoint,
-                useEvolveCost = useEvolveCost
+                useEvolveCost = useEvolveCost,
+                isSuperEvolve = isSuperEvolve
             };
             NetworkClient.Send(msg);
 
@@ -537,6 +538,11 @@ namespace SVESimulator
             SVEEffectPool.Instance.RemovePassivesFromCard(baseCard.RuntimeCard, playerController);
             int atkDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].baseValue;
             int defDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].baseValue;
+            if(isSuperEvolve)
+            {
+                atkDiff++;
+                defDiff++;
+            }
             ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].statId, atkDiff, true);
             ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, defDiff, true);
 

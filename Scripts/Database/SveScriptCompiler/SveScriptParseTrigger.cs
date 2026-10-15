@@ -45,6 +45,8 @@ namespace SVESimulator.SveScript
             // Card/Player Actions
             { "OnEvolve", new EffectTriggerInfo("SVESimulator.SveOnEvolveTrigger") },
             { "OnOtherEvolve", new EffectTriggerInfo("SVESimulator.SveOnOtherEvolveTrigger", TriggerParameterType.Filter) },
+            { "OnSuperEvolve", new EffectTriggerInfo("SVESimulator.SveOnSuperEvolveTrigger") },
+            { "OnOtherSuperEvolve", new EffectTriggerInfo("SVESimulator.SveOnOtherSuperEvolveTrigger", TriggerParameterType.Filter) },
             { "OnRace", new EffectTriggerInfo("SVESimulator.SveOnRaceTrigger") },
             { "OnOtherRace", new EffectTriggerInfo("SVESimulator.SveOnOtherRaceTrigger", TriggerParameterType.Filter) },
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
