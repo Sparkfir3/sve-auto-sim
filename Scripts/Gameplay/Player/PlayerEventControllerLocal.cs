@@ -409,15 +409,15 @@ namespace SVESimulator
             }
         }
 
-        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null) =>
-            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, fixedCost);
-        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
+        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null) =>
+            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
+        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
         {
             if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
                 return false;
-            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, fixedCost);
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
         }
-        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
+        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -431,18 +431,31 @@ namespace SVESimulator
             if(payCost)
             {
                 playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
-                if(!ignoreAltCosts && card.RuntimeCard.HasAvailableAlternateCost(playerController, out List<TriggeredAbility> alternateCostAbilities))
+                // Alternate cost
+                if(!ignoreAltCosts && card.RuntimeCard.HasAvailableModifiedCost<AlternateCostEffect>(playerController, out List<TriggeredAbility> alternateCostAbilities))
                 {
                     if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
                         return false;
-                    ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, usePlayPointCost =>
+                    ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, true, usePlayPointCost =>
                     {
                         PlayCardToField(card, slot, originZone, usePlayPointCost, ignoreAltCosts: true);
                     });
                     return true;
                 }
+                // Base cost
                 if(!CanPayPlayPointsCost(playPointCost))
                     return false;
+                // Additional cost
+                if(!ignoreAdditionalCosts && card.RuntimeCard.HasAvailableModifiedCost<AdditionalCostEffect>(playerController, out List<TriggeredAbility> additionalCostAbilities))
+                {
+                    if(!additionalCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
+                        return false;
+                    ChoosePlayCardCostOption(card, playPointCost, additionalCostAbilities, false, _ =>
+                    {
+                        PlayCardToField(card, slot, originZone, payCost: true, ignoreAltCosts: true, ignoreAdditionalCosts: true, fixedCost: playPointCost);
+                    });
+                    return true;
+                }
             }
 
             // Play card to field
@@ -888,7 +901,7 @@ namespace SVESimulator
             {
                 if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
                     return false;
-                ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, usePlayPointCost =>
+                ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, true, usePlayPointCost =>
                 {
                     PlaySpell(card, originZone, usePlayPointCost ? playPointCost : 0, ignoreAltCosts: true);
                 });
@@ -1426,7 +1439,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        private void ChoosePlayCardCostOption(CardObject card, int playPointCost, List<TriggeredAbility> alternateCostAbilities, Action<bool> onChooseCost)
+        private void ChoosePlayCardCostOption(CardObject card, int playPointCost, List<TriggeredAbility> alternateCostAbilities, bool showBaseCost, Action<bool> onChooseCost)
         {
             if(alternateCostAbilities == null || alternateCostAbilities.Count == 0)
             {
@@ -1435,15 +1448,16 @@ namespace SVESimulator
             }
 
             // TODO - send card to resolution
-            List<MultipleChoiceWindow.MultipleChoiceEntryData> playOptions = new()
+            List<MultipleChoiceWindow.MultipleChoiceEntryData> playOptions = new();
+            if(showBaseCost)
             {
-                new MultipleChoiceWindow.MultipleChoiceEntryData()
+                playOptions.Add(new MultipleChoiceWindow.MultipleChoiceEntryData()
                 {
                     text = $"{playPointCost} Play Points",
                     onSelect = () => onChooseCost?.Invoke(true),
                     disabled = !CanPayPlayPointsCost(playPointCost)
-                }
-            };
+                });
+            }
             foreach(TriggeredAbility ability in alternateCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
@@ -1457,6 +1471,7 @@ namespace SVESimulator
                 entry.disabled = !CanPayCosts(card.RuntimeCard, trigger.Costs, ability.name);
                 playOptions.Add(entry);
             }
+            // TODO - add cancel option
 
             GameUIManager.MultipleChoice.Open(playerController, card.LibraryCard.name, playOptions, "");
         }
