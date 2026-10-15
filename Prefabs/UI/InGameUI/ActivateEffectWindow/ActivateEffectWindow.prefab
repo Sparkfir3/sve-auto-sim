@@ -395,7 +395,7 @@ MonoBehaviour:
     - key: 10
       value: <sprite index=16>
   evolvePointFormatting: <sprite index=26>
-  serveTextTemplate: '{0} ({1}) Race this follower{2}.'
+  serveTextTemplate: '{0} {1}: Race this follower{2}.'
   carrotIconFormatting: <sprite index=28>
   rectTransform: {fileID: 4373415351481364239}
   window: {fileID: 2942690425565000330}

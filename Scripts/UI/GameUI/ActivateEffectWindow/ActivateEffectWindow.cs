@@ -315,39 +315,52 @@ namespace SVESimulator.UI
             if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.IsRacing))
                 return;
 
-            bool allowEvolvePoint = !player.EvolvedThisTurn && player.LocalEvents.HasEvolvePoint();
             if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve1))
-            {
-                AddServeButton(player, card, ref buttonsIndex, 1, false);
-                if(allowEvolvePoint)
-                    AddServeButton(player, card, ref buttonsIndex, 1, true);
-            }
+                AddServeButton(ref buttonsIndex, 1);
             if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve2))
-            {
-                AddServeButton(player, card, ref buttonsIndex, 2, false);
-                if(allowEvolvePoint)
-                    AddServeButton(player, card, ref buttonsIndex, 2, true);
-            }
+                AddServeButton(ref buttonsIndex, 2);
             if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve3))
-            {
-                AddServeButton(player, card, ref buttonsIndex, 3, false);
-                if(allowEvolvePoint)
-                    AddServeButton(player, card, ref buttonsIndex, 3, true);
-            }
-        }
+                AddServeButton(ref buttonsIndex, 3);
 
-        private void AddServeButton(PlayerController player, CardObject card, ref int buttonsIndex, int serveCount, bool withEvolvePoint)
-        {
-            MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
-            button.gameObject.SetActive(true);
-            button.Text = GetFormattedServeText(serveCount, withEvolvePoint);
-            button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(serveCount, withEvolvePoint) && serveCount <= player.ZoneController.EvolveDeckCarrotCount();
-            button.OnClickEffect.AddListener(() =>
+            // -----
+
+            void AddServeButton(ref int buttonsIndex, int serveCount)
             {
-                player.LocalEvents.ServeAndRaceCard(card, withEvolvePoint, serveCount);
-                Close();
-            });
-            buttonsIndex++;
+                bool canServe = !player.EvolvedThisTurn && serveCount <= player.ZoneController.EvolveDeckCarrotCount();
+                bool canPayBaseCost = player.LocalEvents.CanPayEvolveCost(serveCount);
+
+                // Create button
+                MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+                button.gameObject.SetActive(true);
+                button.Text = GetFormattedServeText(serveCount);
+                button.Interactable = canServe && canPayBaseCost;
+                Action baseServe = () =>
+                {
+                    player.LocalEvents.ServeAndRaceCard(card, false, serveCount);
+                    Close();
+                };
+                button.OnClickEffect.AddListener(() => baseServe?.Invoke());
+                buttonsIndex++;
+
+                // Check serve with EP
+                if(!canServe || !player.LocalEvents.HasEvolvePoint() || !player.LocalEvents.CanPayEvolveCost(serveCount, true))
+                    return;
+                button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_RACE, baseServe);
+                button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_EVOLVE_POINT, () =>
+                {
+                    player.LocalEvents.ServeAndRaceCard(card, true, serveCount);
+                    Close();
+                });
+                button.OnHoverEnter += () =>
+                {
+                    evolveOptionsWindow.Open(button, isEvolve: false, canUseBase: canPayBaseCost, hasEvolvePoint: true, hasSuperEvolve: false);
+                };
+                if(!button.Interactable) // Enable base button if necessary (can't use base cost, but can use evolve point)
+                {
+                    button.Interactable = true;
+                    button.OnClickEffect.RemoveAllListeners();
+                }
+            }
         }
 
         #endregion
