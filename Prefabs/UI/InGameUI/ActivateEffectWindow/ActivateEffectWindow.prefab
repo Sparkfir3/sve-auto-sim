@@ -463,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb3abd27ec3b334794af7d899f3d82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentButton: {fileID: 0}
   standardEvolve: {fileID: 104988218000544116}
   race: {fileID: 5118536304824456316}
   evolvePoint: {fileID: 8278234025318136075}

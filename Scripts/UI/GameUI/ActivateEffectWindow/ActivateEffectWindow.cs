@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -100,7 +101,7 @@ namespace SVESimulator.UI
                     && (ability.effect is not IEvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
                 if(onlyQuicks)
                     button.Interactable &= ability.IsQuickAbility();
-                button.OnClickEffect.AddListener(() =>
+                Action onClick = () =>
                 {
                     player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                     player.LocalEvents.PayAbilityCosts(card, ability.costs, ability.name, () =>
@@ -111,10 +112,11 @@ namespace SVESimulator.UI
                         });
                     });
                     Close();
-                });
+                };
+                button.OnClickEffect.AddListener(() => onClick?.Invoke());
 
                 if(!checkEvolveServe && !onlyQuicks && ability.effect is IEvolveEffect)
-                    AddEvolveWithEPFromAbility(player, card, ability, ref i);
+                    AddEvolveOptionsFromAbility(player, card, ability, button, onClick);
             }
 
             // Stack
@@ -145,7 +147,7 @@ namespace SVESimulator.UI
             // Evolve/Serve
             if(checkEvolveServe && !onlyQuicks)
             {
-                AddEvolveEffectsFromEvolveCost(player, card, ref i);
+                AddEvolveOptionsFromCost(player, card, ref i);
                 AddServeEffects(player, card, ref i);
             }
 
@@ -206,12 +208,12 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        #region Generic Acts
+        #region Evolve Options
 
-        private void AddEvolveWithEPFromAbility(PlayerController player, CardObject card, ActivatedAbility ability, ref int buttonsIndex)
+        private void AddEvolveOptionsFromAbility(PlayerController player, CardObject card, ActivatedAbility ability, MultipleChoiceButton button, Action baseEvolveAction)
         {
-            // Should add check
-            if(!player.LocalEvents.HasEvolvePoint())
+            // Should add options check
+            if(player.EvolvedThisTurn || !player.LocalEvents.HasEvolvePoint())
                 return;
             int playPointCostAmount = SVEFormulaParser.ParseValue((ability.costs.FirstOrDefault(x => x is PlayPointCost) as PlayPointCost)?.amount, player, card);
             if(playPointCostAmount <= 0)
@@ -229,18 +231,9 @@ namespace SVESimulator.UI
             if(!player.LocalEvents.CanPayCosts(card.RuntimeCard, costs, ability.name))
                 return;
 
-            // Get formatted text
-            string text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
-            text = text.Replace(TextFormatting.FormatCardText($"[cost{playPointCostAmount:D2}]"),
-                TextFormatting.FormatCardText($"[cost{(playPointCostAmount - 1):D2}] + {evolvePointFormatting}"));
-
-            // Create button
-            buttonsIndex++;
-            MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
-            button.gameObject.SetActive(true);
-            button.Text = text;
-            button.Interactable = true;
-            button.OnClickEffect.AddListener(() =>
+            // Init options
+            button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_STANDARD_EVOLVE, baseEvolveAction);
+            button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_EVOLVE_POINT, () =>
             {
                 player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(card.RuntimeCard.instanceId, card.LibraryCard.id, ability.name));
                 player.LocalEvents.PayAbilityCosts(card, costs, ability.name, () =>
@@ -252,39 +245,68 @@ namespace SVESimulator.UI
                 });
                 Close();
             });
+            button.OnHoverEnter += () =>
+            {
+                evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: button.Interactable, hasEvolvePoint: true, hasSuperEvolve: false);
+            };
+
+            // Enable base button if necessary (can't use base evolve, but can use evolve point)
+            if(!button.Interactable)
+            {
+                button.Interactable = true;
+                button.OnClickEffect.RemoveAllListeners();
+            }
         }
 
-        private void AddEvolveEffectsFromEvolveCost(PlayerController player, CardObject card, ref int buttonsIndex)
+        private void AddEvolveOptionsFromCost(PlayerController player, CardObject card, ref int buttonsIndex)
         {
-            // Evolve without evolve point
             int evolveCost = card.GetEvolveCost();
-            if(evolveCost >= 0)
+            if(evolveCost < 0)
+                return;
+            bool canEvolveThisTurn = !player.EvolvedThisTurn && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
+            bool canPayBaseCost = player.LocalEvents.CanPayEvolveCost(evolveCost);
+
+            // Evolve without evolve point
+            MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
+            button.gameObject.SetActive(true);
+            button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost));
+            button.Interactable = canEvolveThisTurn && canPayBaseCost;
+            Action evolveAction = () =>
             {
-                MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
-                button.gameObject.SetActive(true);
-                button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost));
-                button.Interactable = !player.EvolvedThisTurn && player.LocalEvents.CanPayEvolveCost(evolveCost) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
-                button.OnClickEffect.AddListener(() =>
-                {
-                    player.LocalEvents.EvolveCard(card, false);
-                    Close();
-                });
-                buttonsIndex++;
-            }
+                player.LocalEvents.EvolveCard(card, false);
+                Close();
+            };
+            button.OnClickEffect.AddListener(() => evolveAction?.Invoke());
+            buttonsIndex++;
+
+            if(!canEvolveThisTurn)
+                return;
+            button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_STANDARD_EVOLVE, evolveAction);
 
             // Evolve with evolve point
-            if(!player.EvolvedThisTurn && evolveCost > 0 && player.LocalEvents.HasEvolvePoint())
+            if(evolveCost > 0 && player.LocalEvents.HasEvolvePoint() && player.LocalEvents.CanPayEvolveCost(evolveCost - 1, true))
             {
-                MultipleChoiceButton button = buttonsIndex < buttons.Count ? buttons[buttonsIndex] : AddNewButton();
-                button.gameObject.SetActive(true);
-                button.Text = string.Format(evolveTextTemplate, GetFormattedEvolveCost(evolveCost - 1, true));
-                button.Interactable = player.LocalEvents.CanPayEvolveCost(evolveCost, true) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card.RuntimeCard);
-                button.OnClickEffect.AddListener(() =>
+                button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_EVOLVE_POINT, () =>
                 {
                     player.LocalEvents.EvolveCard(card, true);
                     Close();
                 });
-                buttonsIndex++;
+            }
+
+            // TODO - Super evolve
+
+            // Options menu
+            if(button.AdditionalEffects.Count <= 1)
+                return;
+            button.OnHoverEnter += () =>
+            {
+                evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: canPayBaseCost, hasEvolvePoint: true, hasSuperEvolve: false);
+            };
+            // Enable base button if necessary (can't use base evolve, but can use evolve point)
+            if(!button.Interactable)
+            {
+                button.Interactable = true;
+                button.OnClickEffect.RemoveAllListeners();
             }
         }
 
