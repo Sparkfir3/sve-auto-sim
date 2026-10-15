@@ -497,6 +497,7 @@ namespace SVESimulator
                 return false;
 
             // Evolve logic
+            playerController.AdditionalStats.CardsEvolvedThisTurn.Add(new PlayedCardData(evolvedCard.RuntimeCard.instanceId, evolvedCard.RuntimeCard.cardId));
             sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint, useEvolveCost);
             localZoneController.EvolveCard(baseCard, evolvedCard, slot);
             evolvedCard.NumberOfTurnsOnBoard = baseCard.NumberOfTurnsOnBoard;
@@ -543,8 +544,12 @@ namespace SVESimulator
                 sveEffectSolver.SendToCemetery(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone, isDestroy);
             if(isLocalPlayersCard)
             {
-                if(isDestroy && originZone.Equals(SVEProperties.Zones.Field))
-                    playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                if(originZone.Equals(SVEProperties.Zones.Field))
+                {
+                    playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                    if(isDestroy)
+                        playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                }
                 else if(originZone.Equals(SVEProperties.Zones.Hand))
                     playerController.AdditionalStats.CardsDiscardedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             }
@@ -597,6 +602,8 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.BanishCard(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone);
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToBanishedZone(x, onComplete));
 
             // ---
@@ -624,8 +631,11 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
-            if(sourceZone.Equals(SVEProperties.Zones.Field))
+            if(isLocalPlayersCard && sourceZone.Equals(SVEProperties.Zones.Field))
+            {
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
                 playerController.AdditionalStats.CardsReturnedToHandFromField.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            }
 
             // Show if adding from cemetery, otherwise normal move logic
             if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
@@ -657,6 +667,9 @@ namespace SVESimulator
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
 
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+
             sveEffectSolver.SendCardToBottomDeck(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToBottomDeck(x, onComplete));
 
@@ -681,6 +694,9 @@ namespace SVESimulator
             originZone ??= card.CurrentZone.Runtime.name;
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
+
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
 
             sveEffectSolver.SendCardToTopDeck(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToTopDeck(x, onComplete));
@@ -722,6 +738,9 @@ namespace SVESimulator
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
             int targetSlotId = localZoneController.exAreaZone.GetFirstOpenSlotId();
+
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
 
             if(!onlyMoveObject)
                 sveEffectSolver.SendCardToExArea(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);

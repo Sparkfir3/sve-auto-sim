@@ -9,11 +9,14 @@ namespace SVESimulator
     {
         [SyncVar]
         public bool UseRuneFollowersForSpellchain;
+
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDestroyedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDiscardedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsAttackedThisTurn = new();
+        public readonly SyncList<PlayedCardData> CardsEvolvedThisTurn = new();
+        public readonly SyncList<PlayedCardData> CardsLeftFieldThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsReturnedToHandFromField = new();
 
         public List<PlayedCardData> SpellsPlayedThisTurn => CardsPlayedThisTurn.Where(x =>
@@ -37,6 +40,8 @@ namespace SVESimulator
             CardsDestroyedThisTurn.Clear();
             CardsDiscardedThisTurn.Clear();
             CardsAttackedThisTurn.Clear();
+            CardsEvolvedThisTurn.Clear();
+            CardsLeftFieldThisTurn.Clear();
             CardsReturnedToHandFromField.Clear();
         }
 
