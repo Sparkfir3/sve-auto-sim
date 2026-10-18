@@ -223,7 +223,7 @@ namespace SVESimulator
 
             // Evolve
             oppZoneController.EvolveCard(baseCard, evolvedCard, msg.fieldSlotId);
-            sveEffectSolver.EvolveCard(msg.playerNetId, baseCard.RuntimeCard, evolvedCard.RuntimeCard, msg.useEvolvePoint, msg.useEvolveCost);
+            sveEffectSolver.EvolveCard(msg.playerNetId, baseCard.RuntimeCard, evolvedCard.RuntimeCard, msg.useEvolvePoint, msg.useEvolveCost, msg.isSuperEvolve);
         }
 
         public void SendToCemetery(OpponentSendCardToCemeteryMessage msg)
