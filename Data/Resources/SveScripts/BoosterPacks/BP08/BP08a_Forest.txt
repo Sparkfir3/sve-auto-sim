@@ -1,0 +1,17 @@
+name Lloyd;
+name-alt Puppet;
+id BP08-T01;
+class Forest;
+type Follower;
+trait Puppetry / Token;
+cost 0;
+stats 2/4;
+
+text "Ward.
+      [fanfare] Give your leader [defense]+2.
+      While this card is on the field, its name is also Puppet.";
+
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(Def, 2) to Leader;
+}

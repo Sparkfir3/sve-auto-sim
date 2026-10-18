@@ -1,0 +1,366 @@
+name Aria, Lady of the Woods;
+id BP16-001;
+class Forest;
+type Follower;
+trait Pixie / Princess;
+rarity L;
+cost 1;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Put 2 Fairy tokens into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken(Fairy, ExArea, 2);
+}
+
+// ------------------------------
+
+name Aria, Lady of the Woods (Evolved);
+id BP16-002;
+class Forest;
+type Evolved Follower;
+trait Pixie / Princess;
+rarity L;
+stats 1/1;
+
+text "On Evolve - Summon a Fairy token.
+      On Super-Evolve - Give each Pixie token follower on your field and in your EX area [attack]+1/[defense]+1.";
+
+ability OnEvolve {
+    effect SummonToken(Fairy, Field, 1);
+}
+ability OnSuperEvolve {
+    effect GiveStat(AtkDef, 1) to AllPlayerCardsFieldAndEx FKt(Pixie);
+}
+
+// ------------------------------
+
+name Orchis, Newfound Heart;
+id BP16-003;
+class Forest;
+type Follower;
+trait Puppetry;
+rarity L;
+cost 2;
+stats 1/2;
+
+text "[fanfare] Banish 2 cards named Puppet from your EX area: Put a Lloyd token into your EX area.
+      [act] [engage]: Select a Puppet on your field and give it [attack]+1/[defense]+1, Storm, and Bane. Activate only if there are at least 3 Puppetry cards in your cemetery.";
+
+ability Fanfare {
+    cost (Banish, TargetPlayerCardEx, n(Puppet)m(2,2));
+    effect SummonToken(Lloyd, ExArea, 1);
+}
+ability Act {
+    cost (EngageSelf);
+    condition f(n(Puppet)) & [y(t(Puppetry)) > 2]
+    effect TargetForSequence(AtkDef, Storm, Bane) to TargetPlayerCard n(Puppet);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards;
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to AllPlayerCards;
+}
+ability Spell name Bane {
+    effect GiveKeyword(Bane) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Nazuri, Bestial Innkeeper;
+id BP16-004;
+class Forest;
+type Follower;
+trait Festive / Beast;
+rarity L;
+cost 3;
+stats 2/2;
+
+text "[fanfare] If there are at least 3 Festive cards on your field and/or in your EX area, search your deck for a Festive follower not named Nazuri, Bestial Innkeeper that costs 3 or less, summon it, then shuffle.";
+
+ability Fanfare {
+    condition [f(t(Festive))+x(t(Festive))] > 2;
+    effect Search(1, Ft(Festive)!n(Nazuri, Bestial Innkeeper), Field);
+}
+
+// ------------------------------
+
+name Glade, Fragrantwood Ward;
+id BP16-005;
+class Forest;
+type Follower;
+trait Elf / Hunter;
+rarity G;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Glade, Fragrantwood Ward (Evolved);
+id BP16-006;
+class Forest;
+type Evolved Follower;
+trait Elf / Hunter;
+rarity G;
+stats 4/4;
+
+text "On Evolve - Draw a card. Summon 2 Fairy tokens.
+      On Super-Evolve - Select any number of enemy followers on the field and deal X damage divided between them. X equals the total number of cards on your field and in your hand.";
+
+ability OnEvolve {
+    effect Sequence(Draw, Summon);
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}
+ability Spell name Summon {
+    effect SummonToken(Fairy, Field, 2);
+}
+ability OnSuperEvolve {
+    effect DealDamageDivided(f()+H) to TargetPlayerCard F;
+}
+
+// ------------------------------
+
+name Lily, Crystalian Innocence;
+id BP16-007;
+class Forest;
+type Follower;
+trait Crstalian;
+rarity G;
+cost 1;
+stats 1/1;
+
+text "[fanfare] Select an enemy follower on the field and change its attack and defense to 1.";
+
+ability Fanfare {
+    effect SetStat(AtkDef, 1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Liam, Crazed Creator;
+id BP16-008;
+class Forest;
+type Spell;
+trait Puppetry / Cutthroat;
+rarity G;
+cost 4;
+stats 3/3;
+
+text "[fanfare] Summon 2 Puppet tokens.
+      [act] [engage]: Look at the top 5 cards of your deck. You may put a Puppetry card that costs 3 or less from among them into your EX area. It costs 3 less to play this turn. Put the rest on the bottom of your deck in any order.";
+
+ability Fanfare {
+    effect SummonToken(Puppet, Field, 2);
+}
+ability Act {
+    cost (EngageSelf);
+    effect CheckTop(5, (ExAreaAndTarget, t(Puppetry)p(m(0,3)), 1, MinusCost), (BottomDeckAnyOrder));
+}
+ability Spell name MinusCost {
+    effect GiveStat(Cost, -3) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Aerin, Crystalian Frostward;
+id BP16-009;
+class Forest;
+type Follower;
+trait Crystalian;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "Ward.
+      [fanfare] Select an enemy follower on the field. It can't attack enemies during its controller's next turn.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    condition p(#F);
+    effect GiveKeywordEndOfNextTurn(CantAttack) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Aerin, Crystalian Frostward (Evolved);
+id BP16-010;
+class Forest;
+type Evolved Follower;
+trait Crystalian;
+rarity S;
+stats 4/4;
+
+text "Ward.
+      On Evolve - Search your deck for a Crystalian follower that costs 2 or less, put it into your EX area, then shuffle. It costs 2 less to play this turn.";
+
+keyword Ward;
+ability OnEvolve {
+    effect Search(1, Ft(Crystalian)p(m(0,2)), ExArea);
+}
+
+// ------------------------------
+
+name Bayle, Luxglaive Warrior;
+id BP16-011;
+class Forest;
+type Follower;
+trait Hunter / Beast;
+rarity S;
+cost 3;
+stats 4/4;
+
+text "This can't be played unless a follower you control has left the field this turn.
+      ----------
+      [fanfare] Select an enemy follower on the field and deal it 4 damage.";
+
+ability ModifiedCost {
+    condition #(leftField, F);
+    effect AdditionalCost();
+}
+ability Fanfare {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Godwood Staff;
+id BP16-012;
+class Forest;
+type Amulet;
+trait Elf;
+rarity S;
+cost 1;
+
+text "When this leaves the field, give your leader [defense]+1 and recover 1 play point.";
+
+ability OnLeaveField {
+    effect Sequence(Defense, PlayPoint);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 1) to Leader;
+}
+ability Spell name PlayPoint {
+    effect GiveStat(PP, 1) to Leader;
+}
+
+// ------------------------------
+
+name Fairy Tamer;
+id BP16-013;
+class Forest;
+type Follower;
+trait Pixie / Elf;
+rarity B;
+cost 2;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Summon a Fairy token.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken(Fairy, Field, 1);
+}
+
+// ------------------------------
+
+name Fairy Tamer (Evolved);
+id BP16-014;
+class Forest;
+type Evolved Follower;
+trait Pixie / Elf;
+rarity B;
+stats 2/2;
+
+text "On Evolve - Select up to 2 other Pixie followers on your field and/or in your EX area and give them [attack]+1/[defense]+1.";
+
+ability OnEvolve {
+    effect GiveStat(AtkDef, 1) to TargetPlayerCardFieldOrEx XFt(Pixie)m(0,2);
+}
+
+// ------------------------------
+
+name Good Fairy of the Pond;
+id BP16-015;
+class Forest;
+type Follower;
+trait Pixie;
+rarity B;
+cost 1;
+stats 2/1;
+
+text "[fanfare][lastwords] Put a Fairy token into your EX area.";
+
+ability Fanfare {
+    effect SummonToken(Fairy, ExArea, 1);
+}
+ability LastWords {
+    effect SummonToken(Fairy, ExArea, 1);
+}
+
+// ------------------------------
+
+name Fay Twinkletoes;
+id BP16-016;
+class Forest;
+type Follower;
+trait Pixie;
+rarity B;
+cost 3;
+stats 2/3;
+
+text "[fanfare] Give each other [forestcraft] follower on your field [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards XFc(Forest);
+}
+
+// ------------------------------
+
+name Baby Carbuncle;
+id BP16-017;
+class Forest;
+type Follower;
+trait Fae-Touched / Beast;
+rarity B;
+cost 1;
+stats 0/1;
+
+text "[fanfare] Return a Beast card on your field not named Baby Carbuncle to its owner's hand: Draw a card.";
+
+ability Fanfare {
+    cost (ReturnToHand, TargetPlayerCard, t(Beast)!n(Baby Carbuncle));
+    effect DrawCard(1);
+}
+
+// ------------------------------
+
+name Fragrantwood Whispers;
+id BP16-018;
+class Forest;
+type Spell;
+trait Elf / Hunter;
+rarity B;
+cost 1;
+
+text "Choose 1. If a follower on your field evolved this turn, choose up to 2 instead. (1) Give your leader [defense]+2. (2) Draw a card.";
+
+ability Spell {
+    effect ChooseAmountFromList(1?(#(evolved))m(0,2), Defense, Draw);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}

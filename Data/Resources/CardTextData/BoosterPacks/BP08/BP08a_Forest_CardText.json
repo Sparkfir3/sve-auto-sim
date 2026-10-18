@@ -1,0 +1,15 @@
+[
+  {
+    "id": "BP08-T01EN",
+    "name": "Lloyd",
+    "trait": "Puppetry / Token",
+    "cardText": "Ward.\n[fanfare] Give your leader [defense]+2.\nWhile this card is on the field, its name is also Puppet.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": " Give your leader [defense]+2."
+      }
+    ]
+  }
+]
