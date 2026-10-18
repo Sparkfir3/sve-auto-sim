@@ -516,6 +516,7 @@ namespace SVESimulator.SveScript
             // ------------------------------
 
             // Passive - Modified Cost
+            { "AdditionalCost", new EffectParams("AdditionalCostEffect",                    false, false) },
             { "AlternateCost", new EffectParams("AlternateCostEffect",                      false, false) },
             { "ReducedCost", new EffectParams("ReducedCostEffect",                          false, false, EffectParameterType.Amount) },
         };

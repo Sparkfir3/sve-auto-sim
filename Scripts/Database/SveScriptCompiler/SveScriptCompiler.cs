@@ -224,8 +224,9 @@ namespace SVESimulator.SveScript
                 using(StreamWriter writer = new(setOutputFile))
                 {
                     string[] cardFiles = Directory.GetFiles(Path.Combine(pathInfo.CardDataPath, setCode), "*.json");
+                    string setName = SetNames.GetValueOrDefault(setCode, setCode);
                     writer.Write($"{{\n" +
-                        $"\"name\": \"{SetNames[setCode]}\",\n" +
+                        $"\"name\": \"{setName}\",\n" +
                         $"\"cards\": [\n");
                     for(int i = 0; i < cardFiles.Length; i++)
                     {
