@@ -162,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6510399805230046764}
   - component: {fileID: 6335978380703145927}
+  - component: {fileID: 1379166576123858332}
   m_Layer: 0
   m_Name: DatabaseController
   m_TagString: Untagged
@@ -205,11 +206,26 @@ MonoBehaviour:
   shouldGenerateLibrary: 0
   generateLibraryInBuild: 0
   imageDownloader: {fileID: 7670950712414427884}
+  customSetController: {fileID: 1379166576123858332}
   paths: {fileID: 11400000, guid: 1be49ed2c17c930479692049869b18e0, type: 2}
   cardLibrary: {fileID: 4900000, guid: fefad9391dc2282429bec99288bc0d2e, type: 3}
   loadingOverlay: {fileID: 7992651225575324366}
   loadingBar: {fileID: 3221152137238019798}
   infoText: {fileID: 7548809262549312368}
+--- !u!114 &1379166576123858332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954418802077701730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1764189da81004b41a99660e55e38bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefsKey: UseCustomSets
+  pathInfo: {fileID: 11400000, guid: 1be49ed2c17c930479692049869b18e0, type: 2}
 --- !u!1 &2876701133790969941
 GameObject:
   m_ObjectHideFlags: 0

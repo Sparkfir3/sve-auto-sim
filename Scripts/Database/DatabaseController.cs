@@ -38,6 +38,8 @@ namespace SVESimulator.Database
 
         [TitleGroup("Object References"), SerializeField]
         private DatabaseImageDownloader imageDownloader;
+        [SerializeField]
+        private CustomSetController customSetController;
         [SerializeField, InlineEditor]
         private FilePathInfo paths;
         [SerializeField]
@@ -57,6 +59,10 @@ namespace SVESimulator.Database
 
         private void Awake()
         {
+            if(!HasRunThisSession)
+            {
+                customSetController.Initialize();
+            }
             if(HasRunThisSession || !checkToRunDownloader || (!runInEditor && Application.isEditor))
             {
                 DisableOverlay();
@@ -89,7 +95,7 @@ namespace SVESimulator.Database
 
             if(shouldGenerateLibrary && (Application.isEditor || generateLibraryInBuild))
             {
-                GenerateLibrary();
+                GenerateMainLibrary();
                 yield return null;
             }
             SaveDatabaseVersion();
@@ -100,7 +106,7 @@ namespace SVESimulator.Database
         }
 
         [TitleGroup("Buttons"), Button]
-        private void GenerateLibrary()
+        private void GenerateMainLibrary()
         {
             // Generate new
             TextAsset[] sveScripts = Resources.LoadAll<TextAsset>(sveScriptResourcesPath);
