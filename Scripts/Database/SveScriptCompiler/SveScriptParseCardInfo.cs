@@ -43,7 +43,7 @@ namespace SVESimulator.SveScript
 		    }
 		    catch(Exception e)
 		    {
-			    Debug.LogError($"Error while parsing card stats (input of {text}):\n{e}");
+			    SveScriptDebugger.LogError($"Error while parsing card stats (input of {text}):\n{e}");
 		    }
 	    }
 

@@ -33,6 +33,7 @@ namespace SVESimulator.Database
         [Button]
         public void CompileCustomSets()
         {
+            SveScriptDebugger.Reset();
             IEnumerable<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x));
             foreach(string folder in folders)
             {
@@ -47,12 +48,22 @@ namespace SVESimulator.Database
                 IEnumerable<string> scriptFiles = Directory.EnumerateFiles(scriptsFolder, "*.txt", SearchOption.TopDirectoryOnly);
                 foreach(string script in scriptFiles)
                 {
-                    SveScriptCompiler.ParseSveScriptCardSet(File.ReadAllText(Path.Combine(scriptsFolder, script)), dataFolder, out List<string> outputFilePaths, sortIntoSubfolders: false);
-                    // TODO - error handling
-                    // TODO - generate text data files
+                    try
+                    {
+                        SveScriptCompiler.ParseSveScriptCardSet(File.ReadAllText(Path.Combine(scriptsFolder, script)), dataFolder, out List<string> outputFilePaths, sortIntoSubfolders: false);
+                        // TODO - generate text data files
+                    }
+                    catch(System.Exception e)
+                    {
+                        SveScriptDebugger.LogError($"Error compiling script {script} in custom set {folder}: {e.Message}");
+                    }
                 }
+
+                if(SveScriptDebugger.HasErrors())
+                    break;
+
                 SveScriptCompiler.SaveSetFile(dataFolder, Path.Combine(mainFolder, "FullSet.json"), $"Custom Set - {folder}");
-                Debug.Log($"Finished Compiling Custom Set {folder}");
+                SveScriptDebugger.Log($"Finished Compiling Custom Set {folder}");
             }
         }
 

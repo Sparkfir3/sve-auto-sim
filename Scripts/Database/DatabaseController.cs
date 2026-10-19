@@ -111,6 +111,7 @@ namespace SVESimulator.Database
             // Generate new
             TextAsset[] sveScripts = Resources.LoadAll<TextAsset>(sveScriptResourcesPath);
             Debug.Log($"Loaded {sveScripts.Length} SVE scripts");
+            SveScriptDebugger.Reset();
             foreach(TextAsset script in sveScripts)
             {
                 SveScriptCompiler.ParseSveScriptCardSet(script.text, paths.CardDataPath);

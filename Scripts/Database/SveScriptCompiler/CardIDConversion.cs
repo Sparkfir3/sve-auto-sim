@@ -46,7 +46,7 @@ namespace SVESimulator.SveScript
             }
             catch(Exception e)
             {
-                Debug.LogError($"Invalid Card ID Provided: {cardId}\n{e}");
+                SveScriptDebugger.LogError($"Invalid Card ID Provided: {cardId}\n{e}");
                 return 0;
             }
         }

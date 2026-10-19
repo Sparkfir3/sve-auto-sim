@@ -236,7 +236,7 @@ namespace SVESimulator.SveScript
                     serializer.Serialize(jWriter, setJsons);
                 }
             }
-            Debug.Log("Successfully compiled SVE scripts");
+            SveScriptDebugger.Log("Successfully compiled SVE scripts");
         }
 
         public static void SaveSetFile(in string dataFolder, in string setOutputFile, in string setCode)
