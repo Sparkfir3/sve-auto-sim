@@ -90,7 +90,7 @@
   {
     "id": "BP16-007EN",
     "name": "Lily, Crystalian Innocence",
-    "trait": "Crstalian",
+    "trait": "Crystalian",
     "cardText": "[fanfare] Select an enemy follower on the field and change its attack and defense to 1.",
     "effectText": [
       {
@@ -123,7 +123,7 @@
     "id": "BP16-009EN",
     "name": "Aerin, Crystalian Frostward",
     "trait": "Crystalian",
-    "cardText": "Ward.\n[fanfare] Select an enemy follower on the field. It can't attack enemies during its controller's next turn.",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Select an enemy follower on the field. It can't attack enemies during its controller's next turn.",
     "effectText": [
       {
         "key": "Fanfare",
@@ -239,7 +239,7 @@
         "key": "Fanfare",
         "text": "",
         "trigger": "[fanfare]",
-        "cost": "Return a Beast card on your field not named Baby Carbuncle to its owner's hand:",
+        "cost": "Return a Beast card on your field not named Baby Carbuncle to its owner's hand",
         "body": "Draw a card."
       }
     ]

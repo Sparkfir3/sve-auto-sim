@@ -51846,13 +51846,20 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "condition": "f(n(Puppet)) & [y(t(Puppetry)) > 2]\n    effect TargetForSequence(AtkDef, Storm, Bane) to TargetPlayerCard n(Puppet)",
+                "condition": "f(n(Puppet)) & [y(t(Puppetry)) > 2]",
                 "$type": "SVESimulator.ConditionAsCost"
               }
             ],
             "name": "Act",
             "type": "Activated",
-            "effect": null,
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "n(Puppet)",
+              "effectName1": "AtkDef",
+              "effectName2": "Storm",
+              "effectName3": "Bane",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
             "target": null,
             "$type": "CCGKit.ActivatedAbility"
           },
@@ -52007,7 +52014,7 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "filter": "Ft(Festive)!n(Nazuri, Bestial Innkeeper)",
+              "filter": "Ft(Festive)!n(Nazuri, Bestial Innkeeper)p(m(0,3))",
               "searchDeckAction": "Field",
               "$type": "SVESimulator.SearchDeckEffect"
             },
@@ -52262,7 +52269,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Crstalian",
+            "value": "Crystalian",
             "name": "Trait",
             "$type": "CCGKit.StringProperty"
           },
@@ -52357,7 +52364,7 @@
         "id": 100161007
       },
       {
-        "cardTypeId": 2,
+        "cardTypeId": 0,
         "name": "Liam, Crazed Creator",
         "costs": [],
         "properties": [
@@ -52384,12 +52391,57 @@
         ],
         "stats": [
           {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
             "baseValue": 4,
             "statId": 4,
             "name": "Cost",
             "originalValue": 4,
             "minValue": 0,
             "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
             "modifiers": []
           }
         ],
@@ -52447,7 +52499,7 @@
               "filter": null,
               "targetStats": "Cost",
               "amount": "-3",
-              "$type": "SVESimulator.GiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -52471,7 +52523,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "Ward.\n[fanfare] Select an enemy follower on the field. It can't attack enemies during its controller's next turn.",
+            "value": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Select an enemy follower on the field. It can't attack enemies during its controller's next turn.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -52661,7 +52713,26 @@
               "amount": "1",
               "filter": "Ft(Crystalian)p(m(0,2))",
               "searchDeckAction": "ExArea",
-              "$type": "SVESimulator.SearchDeckEffect"
+              "effectName1": "MinusCost",
+              "$type": "SVESimulator.SearchDeckAndTargetEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "MinusCost",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCardsEx",
+              "filter": null,
+              "targetStats": "Cost",
+              "amount": "-2",
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"
@@ -53472,7 +53543,7 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
-              "amount": "1?(#(evolved))m(0,2)",
+              "amount": "m(1?(#(evolved))0,1?(#(evolved))2)",
               "effectName1": "Defense",
               "effectName2": "Draw",
               "$type": "SVESimulator.ChooseAmountFromList"
