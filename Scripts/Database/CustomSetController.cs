@@ -27,7 +27,14 @@ namespace SVESimulator.Database
             if(PlayerPrefs.HasKey(playerPrefsKey))
                 UseCustomSets = PlayerPrefs.GetInt(playerPrefsKey) == 1;
             else
-                PlayerPrefs.SetInt(playerPrefsKey, 0);
+                SetCustomSetsEnabled(false);
+        }
+
+        public void SetCustomSetsEnabled(bool customSetsEnabled)
+        {
+            UseCustomSets = customSetsEnabled;
+            PlayerPrefs.SetInt(playerPrefsKey, customSetsEnabled ? 1 : 0);
+            PlayerPrefs.Save();
         }
 
         [Button]
