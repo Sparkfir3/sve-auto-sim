@@ -70,7 +70,7 @@ namespace SVESimulator.Database
                     break;
 
                 SveScriptCompiler.SaveSetFile(dataFolder, Path.Combine(mainFolder, "FullSet.json"), $"Custom Set - {folder}");
-                SveScriptDebugger.Log($"Finished Compiling Custom Set {folder}");
+                SveScriptDebugger.Log($"Successfully Finished Compiling Custom Set - {folder}");
             }
         }
 

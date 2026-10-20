@@ -1,6 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using SVESimulator.Database;
+using SVESimulator.SveScript;
 using TMPro;
 using UnityEngine.UI;
 
@@ -20,6 +21,8 @@ namespace SVESimulator.UI
         private TextMeshProUGUI onToggleText;
         [SerializeField]
         private Button compileButton;
+        [SerializeField]
+        private DebugConsoleDisplay debugConsole;
 
         // ------------------------------
 
@@ -48,13 +51,16 @@ namespace SVESimulator.UI
                 onToggleText.color = isOn ? Color.green : Color.black;
             });
 
-            // Button
+            // Compiler
             compileButton.onClick.AddListener(CompileCustomSets);
+            debugConsole.Clear();
         }
 
         private void CompileCustomSets()
         {
+            debugConsole.Clear();
             controller.CompileCustomSets();
+            debugConsole.AddEntries(SveScriptDebugger.GetLogs());
         }
     }
 }
