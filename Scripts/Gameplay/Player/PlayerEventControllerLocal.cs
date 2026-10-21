@@ -1447,7 +1447,8 @@ namespace SVESimulator
 
         private void ChoosePlayCardCostOption(CardObject card, int playPointCost, List<TriggeredAbility> alternateCostAbilities, bool showBaseCost, Action<bool> onChooseCost)
         {
-            if(alternateCostAbilities == null || alternateCostAbilities.Count == 0)
+            if(alternateCostAbilities == null || alternateCostAbilities.Count == 0 ||
+               alternateCostAbilities.All(x => x.trigger is SveTrigger trigger && trigger.Costs.All(y => y is SveCost { IsInternalCost: true })))
             {
                 onChooseCost?.Invoke(true);
                 return;
@@ -1467,7 +1468,7 @@ namespace SVESimulator
             foreach(TriggeredAbility ability in alternateCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
-                AlternateCostEffect effect = ability.effect as AlternateCostEffect;
+                SveModifiedCostEffect effect = ability.effect as SveModifiedCostEffect;
                 Debug.Assert(trigger != null && effect != null);
 
                 MultipleChoiceWindow.MultipleChoiceEntryData entry = effect.AsMultipleChoiceEntry(() =>

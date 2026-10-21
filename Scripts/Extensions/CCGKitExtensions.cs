@@ -143,7 +143,7 @@ namespace SVESimulator
 
         public static bool HasAvailableModifiedCost<T>(this RuntimeCard card, PlayerController player, out List<TriggeredAbility> costAbilities) where T : SveModifiedCostEffect
         {
-            List<TriggeredAbility> allCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is T)
+            List<TriggeredAbility> allCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility { effect: T })
                 .Select(x => x as TriggeredAbility).ToList();
             if(allCostAbilities.Count == 0)
             {
@@ -156,7 +156,7 @@ namespace SVESimulator
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
                 T effect = ability.effect as T;
-                if(trigger == null || effect == null || (!trigger.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, card)))
+                if(trigger == null || effect == null)
                     continue;
                 costAbilities.Add(ability);
             }

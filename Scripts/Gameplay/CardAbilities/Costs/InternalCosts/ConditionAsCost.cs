@@ -15,6 +15,13 @@ namespace SVESimulator
 
         // ------------------------------
 
+        public ConditionAsCost() { }
+
+        public ConditionAsCost(string condition)
+        {
+            this.condition = condition;
+        }
+
         public override string GetReadableString(GameConfiguration config)
         {
             return $"Condition {condition}";

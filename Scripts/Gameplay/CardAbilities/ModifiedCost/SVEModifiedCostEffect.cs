@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using CCGKit;
+using SVESimulator.UI;
 
 namespace SVESimulator
 {
@@ -10,6 +11,18 @@ namespace SVESimulator
         {
             Debug.LogError("Attempted to resolve a modified cost effect, this should not happen.");
             onComplete?.Invoke();
+        }
+
+        public virtual MultipleChoiceWindow.MultipleChoiceEntryData AsMultipleChoiceEntry(Action onSelect)
+        {
+            return new MultipleChoiceWindow.MultipleChoiceEntryData()
+            {
+                text = text,
+                onSelect = () =>
+                {
+                    onSelect?.Invoke();
+                },
+            };
         }
     }
 }
