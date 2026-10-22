@@ -181,6 +181,7 @@ namespace SVESimulator.SveScript
                     case EffectParameterType.SearchDeckAction:
                     case EffectParameterType.CreateTokenOption:
                     case EffectParameterType.TokenName:
+                    case EffectParameterType.Name:
                     case EffectParameterType.Trait:
                     case EffectParameterType.Filter:
                         string keyName = effectParams.parameters[i].ToString();
@@ -338,6 +339,7 @@ namespace SVESimulator.SveScript
 
             // Other
             TokenName,
+            Name,
             Trait,
             Function,
             PassiveDuration
@@ -525,7 +527,9 @@ namespace SVESimulator.SveScript
         {
             { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect) },
             { "GiveKeyword", new EffectParams("GiveKeywordPassive",                         false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
+            { "GiveName", new EffectParams("AddNamePassive",                                false, true, EffectParameterType.Name, EffectParameterType.PassiveDuration) },
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
+            { "GiveTrait", new EffectParams("AddTraitPassive",                              false, true, EffectParameterType.Trait, EffectParameterType.PassiveDuration) },
             { "MinusCostOther", new EffectParams("MinusCostOtherPassive",                   false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
         };
 

@@ -49068,11 +49068,6 @@
             "value": "BP08-T01",
             "name": "ID",
             "$type": "CCGKit.StringProperty"
-          },
-          {
-            "value": "Puppet",
-            "name": "Alternate Names",
-            "$type": "CCGKit.StringProperty"
           }
         ],
         "stats": [
@@ -49152,6 +49147,24 @@
               "targetStats": "Defense",
               "amount": "2",
               "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "target": null,
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "target": "Self",
+              "filter": null,
+              "condition": null,
+              "cost": null,
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "name": "Puppet",
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.AddNamePassive"
             },
             "target": null,
             "$type": "CCGKit.TriggeredAbility"

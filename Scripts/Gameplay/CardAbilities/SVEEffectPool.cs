@@ -711,12 +711,35 @@ namespace SVESimulator
             additionalTraits = null;
             for(int i = 0; i < registeredPassives.Count; i++)
             {
-                if(registeredPassives[i].effect is not AddTraitPassive addTraitPassive || !registeredPassives[i].affectedCards.Any(x => x.instanceId == card.instanceId))
+                if(registeredPassives[i].effect is not AddTraitPassive addTraitPassive || registeredPassives[i].affectedCards.All(x => x.instanceId != card.instanceId))
                     continue;
                 additionalTraits ??= new List<string>();
                 additionalTraits.Add(addTraitPassive.trait);
             }
             return additionalTraits != null;
+        }
+
+        public bool TryGetAdditionalCardNames(RuntimeCard card, out List<string> additionalNames)
+        {
+            additionalNames = null;
+            for(int i = 0; i < registeredPassives.Count; i++) // from passive
+            {
+                if(registeredPassives[i].effect is not AddNamePassive addNamePassive || registeredPassives[i].affectedCards.All(x => x.instanceId != card.instanceId))
+                    continue;
+                additionalNames ??= new List<string>();
+                additionalNames.Add(addNamePassive.name);
+            }
+            Card libraryCard = LibraryCardCache.GetCard(card.cardId); // from property
+            if(libraryCard != null)
+            {
+                string extraNames = libraryCard.TryGetStringProperty(SVEProperties.CardStats.NameAlts);
+                if(!extraNames.IsNullOrWhiteSpace())
+                {
+                    additionalNames ??= new List<string>();
+                    additionalNames.AddRange(extraNames.Split('\n').ToList());
+                }
+            }
+            return additionalNames != null;
         }
 
         #endregion

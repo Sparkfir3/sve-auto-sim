@@ -1,5 +1,4 @@
 name Lloyd;
-name-alt Puppet;
 id BP08-T01;
 class Forest;
 type Follower;
@@ -14,4 +13,7 @@ text "Ward.
 keyword Ward;
 ability Fanfare {
     effect GiveStat(Def, 2) to Leader;
+}
+ability Passive {
+    effect GiveName(Puppet) to Self;
 }
