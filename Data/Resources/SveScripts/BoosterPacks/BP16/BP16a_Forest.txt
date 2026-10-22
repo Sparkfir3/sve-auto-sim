@@ -124,7 +124,7 @@ ability Spell name Summon {
     effect SummonToken(Fairy, Field, 2);
 }
 ability OnSuperEvolve {
-    effect DealDamageDivided(f()+H) to TargetPlayerCard F;
+    effect DealDamageDivided(f()+H) to Fm(0,5);
 }
 
 // ------------------------------

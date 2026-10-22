@@ -52248,7 +52248,7 @@
             "name": "OnSuperEvolve",
             "type": "Triggered",
             "effect": {
-              "filter": "TargetPlayerCard F",
+              "filter": "Fm(0,5)",
               "amount": "f()+H",
               "$type": "SVESimulator.DealDamageDividedEffect"
             },
