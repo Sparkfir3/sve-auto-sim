@@ -17,3 +17,25 @@ ability Fanfare {
 ability Passive {
     effect GiveName(Puppet) to Self;
 }
+
+// ------------------------------
+
+name Victoria;
+id BP08-T02;
+class Forest;
+type Follower;
+trait Puppetry / Cutthroat / Token;
+cost 0;
+stats 4/1;
+
+text "Rush. Assail.
+      [fanfare] Draw a card.
+      While this card is on the field, its name is also Puppet.";
+
+keywords Rush, Assail;
+ability Fanfare {
+    effect Draw(1);
+}
+ability Passive {
+    effect GiveName(Puppet, WhileOnField) to Self;
+}
