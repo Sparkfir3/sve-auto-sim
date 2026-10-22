@@ -511,7 +511,7 @@ namespace SVESimulator
 
             // Evolve logic
             playerController.AdditionalStats.CardsEvolvedThisTurn.Add(new PlayedCardData(evolvedCard.RuntimeCard.instanceId, evolvedCard.RuntimeCard.cardId));
-            sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint, useEvolveCost);
+            sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint, useEvolveCost, isSuperEvolve);
             localZoneController.EvolveCard(baseCard, evolvedCard, slot);
             evolvedCard.NumberOfTurnsOnBoard = baseCard.NumberOfTurnsOnBoard;
             evolvedCard.CanAttack = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 0;

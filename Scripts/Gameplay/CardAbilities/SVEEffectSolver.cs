@@ -228,6 +228,8 @@ namespace SVESimulator
 
                 player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+                if(isSuperEvolve)
+                    player.namedStats[SVEProperties.PlayerStats.SuperEvolutionPoints].baseValue = 0;
             }
 
             // Handle engage status & set face up

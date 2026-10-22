@@ -284,7 +284,8 @@ namespace SVESimulator.UI
             button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_STANDARD_EVOLVE, evolveAction);
 
             // Evolve with evolve point
-            if(evolveCost > 0 && player.LocalEvents.HasEvolvePoint() && player.LocalEvents.CanPayEvolveCost(evolveCost - 1, true))
+            bool canUseEvolvePoint = evolveCost > 0 && player.LocalEvents.HasEvolvePoint() && player.LocalEvents.CanPayEvolveCost(evolveCost - 1, true);
+            if(canUseEvolvePoint)
             {
                 button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_EVOLVE_POINT, () =>
                 {
@@ -293,14 +294,31 @@ namespace SVESimulator.UI
                 });
             }
 
-            // TODO - Super evolve
+            // Super evolve
+            bool canSuperEvolve = (canPayBaseCost || canUseEvolvePoint) && player.LocalEvents.CanSuperEvolve();
+            if(canSuperEvolve)
+            {
+                button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_SUPER_EVOLVE, () =>
+                {
+                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, isSuperEvolve: true);
+                    Close();
+                });
+                if(canUseEvolvePoint)
+                {
+                    button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_SUPER_EVOLVE_WITH_EP, () =>
+                    {
+                        player.LocalEvents.EvolveCard(card, useEvolvePoint: true, isSuperEvolve: true);
+                        Close();
+                    });
+                }
+            }
 
             // Options menu
             if(button.AdditionalEffects.Count <= 1)
                 return;
             button.OnHoverEnter += () =>
             {
-                evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: canPayBaseCost, hasEvolvePoint: true, hasSuperEvolve: false);
+                evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: canPayBaseCost, hasEvolvePoint: canUseEvolvePoint, hasSuperEvolve: canSuperEvolve);
             };
             // Enable base button if necessary (can't use base evolve, but can use evolve point)
             if(!button.Interactable)

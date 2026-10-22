@@ -49,6 +49,7 @@ namespace SVESimulator.UI
 
             standardEvolve.Interactable = canUseBase;
             race.Interactable = canUseBase;
+            superEvolve.Interactable = canUseBase && hasSuperEvolve;
 
             standardEvolve.gameObject.SetActive(isEvolve);
             race.gameObject.SetActive(!isEvolve);
@@ -60,6 +61,9 @@ namespace SVESimulator.UI
 
         private void OnDisable()
         {
+            standardEvolve.Interactable = true;
+            race.Interactable = true;
+            superEvolve.Interactable = true;
             parentButton = null;
         }
 
