@@ -117,6 +117,8 @@ namespace SVESimulator.UI
 
                 if(!checkEvolveServe && !onlyQuicks && ability.effect is IEvolveEffect)
                     AddEvolveOptionsFromAbility(player, card, ability, button, onClick);
+                else
+                    button.OnHoverEnter += () => evolveOptionsWindow.Close();
             }
 
             // Stack
@@ -140,6 +142,7 @@ namespace SVESimulator.UI
                     });
                     Close();
                 });
+                button.OnHoverEnter += () => evolveOptionsWindow.Close();
                 abilities.Add(CounterUtilities.InnateStackAbility);
                 i++;
             }
@@ -152,7 +155,7 @@ namespace SVESimulator.UI
             }
 
             // Open window
-            evolveOptionsWindow.gameObject.SetActive(false);
+            evolveOptionsWindow.Close();
             Vector2 viewportPos = cam.WorldToViewportPoint(card.transform.position);
             SetAnchoredPosition(new Vector2(viewportPos.x * rectTransform.rect.width, viewportPos.y * rectTransform.rect.height + verticalOffset));
             gameObject.SetActive(true);
@@ -245,6 +248,7 @@ namespace SVESimulator.UI
                 });
                 Close();
             });
+            button.SetArrowActive(true);
             button.OnHoverEnter += () =>
             {
                 evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: button.Interactable, hasEvolvePoint: true, hasSuperEvolve: false);
@@ -284,7 +288,8 @@ namespace SVESimulator.UI
             button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_STANDARD_EVOLVE, evolveAction);
 
             // Evolve with evolve point
-            if(evolveCost > 0 && player.LocalEvents.HasEvolvePoint() && player.LocalEvents.CanPayEvolveCost(evolveCost - 1, true))
+            bool canUseEvolvePoint = evolveCost > 0 && player.LocalEvents.HasEvolvePoint() && player.LocalEvents.CanPayEvolveCost(evolveCost - 1, true);
+            if(canUseEvolvePoint)
             {
                 button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_EVOLVE_POINT, () =>
                 {
@@ -293,14 +298,32 @@ namespace SVESimulator.UI
                 });
             }
 
-            // TODO - Super evolve
+            // Super evolve
+            bool canSuperEvolve = (canPayBaseCost || canUseEvolvePoint) && player.LocalEvents.CanSuperEvolve();
+            if(canSuperEvolve)
+            {
+                button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_SUPER_EVOLVE, () =>
+                {
+                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, isSuperEvolve: true);
+                    Close();
+                });
+                if(canUseEvolvePoint)
+                {
+                    button.AdditionalEffects.Add(ActivateEvolveOptionsWindow.KEY_SUPER_EVOLVE_WITH_EP, () =>
+                    {
+                        player.LocalEvents.EvolveCard(card, useEvolvePoint: true, isSuperEvolve: true);
+                        Close();
+                    });
+                }
+            }
 
             // Options menu
             if(button.AdditionalEffects.Count <= 1)
                 return;
+            button.SetArrowActive(true);
             button.OnHoverEnter += () =>
             {
-                evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: canPayBaseCost, hasEvolvePoint: true, hasSuperEvolve: false);
+                evolveOptionsWindow.Open(button, isEvolve: true, canUseBase: canPayBaseCost, hasEvolvePoint: canUseEvolvePoint, hasSuperEvolve: canSuperEvolve);
             };
             // Enable base button if necessary (can't use base evolve, but can use evolve point)
             if(!button.Interactable)
@@ -351,6 +374,7 @@ namespace SVESimulator.UI
                     player.LocalEvents.ServeAndRaceCard(card, true, serveCount);
                     Close();
                 });
+                button.SetArrowActive(true);
                 button.OnHoverEnter += () =>
                 {
                     evolveOptionsWindow.Open(button, isEvolve: false, canUseBase: canPayBaseCost, hasEvolvePoint: true, hasSuperEvolve: false);

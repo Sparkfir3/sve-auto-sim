@@ -634,9 +634,18 @@ namespace SVESimulator
             {
                 ZoneController.evolvePointDisplay.SetEvolvePointCount(newAmount);
             };
+            playerInfo.namedStats[SVEProperties.PlayerStats.SuperEvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                ZoneController.evolvePointDisplay.SetSuperEvolvePointActive(newAmount > 0);
+            };
+
             opponentInfo.namedStats[SVEProperties.PlayerStats.EvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
             {
                 OppZoneController.evolvePointDisplay.SetEvolvePointCount(newAmount);
+            };
+            opponentInfo.namedStats[SVEProperties.PlayerStats.SuperEvolutionPoints].onValueChanged += (oldAmount, newAmount) =>
+            {
+                OppZoneController.evolvePointDisplay.SetSuperEvolvePointActive(newAmount > 0);
             };
         }
 

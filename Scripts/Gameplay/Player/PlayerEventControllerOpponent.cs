@@ -206,7 +206,7 @@ namespace SVESimulator
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return;
 
-            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost);
+            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost, executeConfirmationTiming: false);
             oppZoneController.PlayCardToField(card, msg.fieldSlotId);
         }
 

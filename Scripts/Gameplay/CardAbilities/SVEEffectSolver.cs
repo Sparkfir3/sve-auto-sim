@@ -228,6 +228,8 @@ namespace SVESimulator
 
                 player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+                if(isSuperEvolve)
+                    player.namedStats[SVEProperties.PlayerStats.SuperEvolutionPoints].baseValue = 0;
             }
 
             // Handle engage status & set face up
@@ -633,8 +635,8 @@ namespace SVESimulator
         public void SetCardStat(RuntimeCard card, int statId, int value) => SetCardStat(card, statId, value, out _);
         public void SetCardStat(RuntimeCard card, int statId, int value, out bool isDestroyed)
         {
-            card.stats[statId].baseValue = value;
-            isDestroyed = DestroyZeroDefenseFollower(card.ownerPlayer.netId, card);
+            int diff = value - card.stats[statId].effectiveValue;
+            ApplyCardStatModifier(card, statId, diff, true, 0, out isDestroyed);
         }
 
         public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, bool checkDefense = true, bool isCombatDamage = false)

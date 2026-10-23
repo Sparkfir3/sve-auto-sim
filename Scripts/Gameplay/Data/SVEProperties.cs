@@ -105,6 +105,7 @@ namespace SVESimulator
             public const string MaxPlayPoints = "Max Play Points";
             public const string PlayPoints = "Play Points";
             public const string EvolutionPoints = "Evolution Points";
+            public const string SuperEvolutionPoints = "Super Evolution Points";
         }
 
         public static class CardTypes

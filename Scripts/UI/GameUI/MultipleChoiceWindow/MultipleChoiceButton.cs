@@ -16,10 +16,14 @@ namespace SVESimulator.UI
         private TextMeshProUGUI textbox;
         [SerializeField]
         private Button button;
+        [SerializeField]
+        private Image sideArrow;
+
         [HideInInspector]
         public UnityEvent OnClickEffect;
 
         public Dictionary<string, Action> AdditionalEffects { get; private set; } = new();
+        public RectTransform RectTransform => GetComponent<RectTransform>();
 
         public event Action OnHoverEnter;
         public event Action OnHoverExit;
@@ -77,6 +81,14 @@ namespace SVESimulator.UI
             OnClickEffect.RemoveAllListeners();
             AdditionalEffects.Clear();
             button.interactable = true;
+            if(sideArrow)
+                sideArrow.gameObject.SetActive(false);
+        }
+
+        public void SetArrowActive(bool active)
+        {
+            if(sideArrow)
+                sideArrow.gameObject.SetActive(active);
         }
 
         public bool InvokeAdditionalEffect(string effectName)

@@ -261,8 +261,8 @@ namespace SVESimulator
         {
             string[] substrings = formula.Split(',');
             Debug.Assert(substrings.Length == 2, $"Tried to parse invalid min max formula: {formula}");
-            min = ParseFormulaInt(substrings[0].Trim(), 0, out _, player, card);
-            max = ParseFormulaInt(substrings[1].Trim(), 0, out _, player, card);
+            min = ParseValue(substrings[0].Trim(), player, card);
+            max = ParseValue(substrings[1].Trim(), player, card);
         }
 
         #endregion

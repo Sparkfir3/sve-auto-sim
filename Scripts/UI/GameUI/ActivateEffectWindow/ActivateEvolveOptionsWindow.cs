@@ -46,9 +46,11 @@ namespace SVESimulator.UI
         public void Open(MultipleChoiceButton parent, bool isEvolve, bool canUseBase, bool hasEvolvePoint, bool hasSuperEvolve)
         {
             parentButton = parent;
+            RectTransform.anchoredPosition = new Vector2(RectTransform.anchoredPosition.x, parent.RectTransform.anchoredPosition.y);
 
             standardEvolve.Interactable = canUseBase;
             race.Interactable = canUseBase;
+            superEvolve.Interactable = canUseBase && hasSuperEvolve;
 
             standardEvolve.gameObject.SetActive(isEvolve);
             race.gameObject.SetActive(!isEvolve);
@@ -58,8 +60,16 @@ namespace SVESimulator.UI
             gameObject.SetActive(true);
         }
 
+        public void Close()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void OnDisable()
         {
+            standardEvolve.Interactable = true;
+            race.Interactable = true;
+            superEvolve.Interactable = true;
             parentButton = null;
         }
 

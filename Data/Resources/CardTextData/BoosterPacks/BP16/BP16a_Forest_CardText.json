@@ -1,0 +1,267 @@
+[
+  {
+    "id": "BP16-001EN",
+    "name": "Aria, Lady of the Woods",
+    "trait": "Pixie / Princess",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Put 2 Fairy tokens into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put 2 Fairy tokens into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP16-002EN",
+    "name": "Aria, Lady of the Woods (Evolved)",
+    "trait": "Pixie / Princess",
+    "cardText": "On Evolve - Summon a Fairy token.\nOn Super-Evolve - Give each Pixie token follower on your field and in your EX area [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve -",
+        "body": "Summon a Fairy token."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve -",
+        "body": "Give each Pixie token follower on your field and in your EX area [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP16-003EN",
+    "name": "Orchis, Newfound Heart",
+    "trait": "Puppetry",
+    "cardText": "[fanfare] Banish 2 cards named Puppet from your EX area: Put a Lloyd token into your EX area.\n[act] [engage]: Select a Puppet on your field and give it [attack]+1/[defense]+1, Storm, and Bane. Activate only if there are at least 3 Puppetry cards in your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Banish 2 cards named Puppet from your EX area",
+        "body": "Put a Lloyd token into your EX area."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select a Puppet on your field and give it [attack]+1/[defense]+1, Storm, and Bane. Activate only if there are at least 3 Puppetry cards in your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP16-004EN",
+    "name": "Nazuri, Bestial Innkeeper",
+    "trait": "Festive / Beast",
+    "cardText": "[fanfare] If there are at least 3 Festive cards on your field and/or in your EX area, search your deck for a Festive follower not named Nazuri, Bestial Innkeeper that costs 3 or less, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 3 Festive cards on your field and/or in your EX area, search your deck for a Festive follower not named Nazuri, Bestial Innkeeper that costs 3 or less, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP16-005EN",
+    "name": "Glade, Fragrantwood Ward",
+    "trait": "Elf / Hunter",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP16-006EN",
+    "name": "Glade, Fragrantwood Ward (Evolved)",
+    "trait": "Elf / Hunter",
+    "cardText": "On Evolve - Draw a card. Summon 2 Fairy tokens.\nOn Super-Evolve - Select any number of enemy followers on the field and deal X damage divided between them. X equals the total number of cards on your field and in your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve -",
+        "body": "Draw a card. Summon 2 Fairy tokens."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve -",
+        "body": "Select any number of enemy followers on the field and deal X damage divided between them. X equals the total number of cards on your field and in your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP16-007EN",
+    "name": "Lily, Crystalian Innocence",
+    "trait": "Crystalian",
+    "cardText": "[fanfare] Select an enemy follower on the field and change its attack and defense to 1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and change its attack and defense to 1."
+      }
+    ]
+  },
+  {
+    "id": "BP16-008EN",
+    "name": "Liam, Crazed Creator",
+    "trait": "Puppetry / Cutthroat",
+    "cardText": "[fanfare] Summon 2 Puppet tokens.\n[act] [engage]: Look at the top 5 cards of your deck. You may put a Puppetry card that costs 3 or less from among them into your EX area. It costs 3 less to play this turn. Put the rest on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon 2 Puppet tokens."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Look at the top 5 cards of your deck. You may put a Puppetry card that costs 3 or less from among them into your EX area. It costs 3 less to play this turn. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP16-009EN",
+    "name": "Aerin, Crystalian Frostward",
+    "trait": "Crystalian",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Select an enemy follower on the field. It can't attack enemies during its controller's next turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. It can't attack enemies during its controller's next turn."
+      }
+    ]
+  },
+  {
+    "id": "BP16-010EN",
+    "name": "Aerin, Crystalian Frostward (Evolved)",
+    "trait": "Crystalian",
+    "cardText": "Ward.\nOn Evolve - Search your deck for a Crystalian follower that costs 2 or less, put it into your EX area, then shuffle. It costs 2 less to play this turn.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for a Crystalian follower that costs 2 or less, put it into your EX area, then shuffle. It costs 2 less to play this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP16-011EN",
+    "name": "Bayle, Luxglaive Warrior",
+    "trait": "Hunter / Beast",
+    "cardText": "This can't be played unless a follower you control has left the field this turn.\n----------\n[fanfare] Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP16-012EN",
+    "name": "Godwood Staff",
+    "trait": "Elf",
+    "cardText": "When this leaves the field, give your leader [defense]+1 and recover 1 play point.",
+    "effectText": [
+      {
+        "key": "OnLeaveField",
+        "text": "When this leaves the field, give your leader [defense]+1 and recover 1 play point.",
+        "trigger": "When this leaves the field,",
+        "body": "Give your leader [defense]+1 and recover 1 play point."
+      }
+    ]
+  },
+  {
+    "id": "BP16-013EN",
+    "name": "Fairy Tamer",
+    "trait": "Pixie / Elf",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Summon a Fairy token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Fairy token."
+      }
+    ]
+  },
+  {
+    "id": "BP16-014EN",
+    "name": "Fairy Tamer (Evolved)",
+    "trait": "Pixie / Elf",
+    "cardText": "On Evolve - Select up to 2 other Pixie followers on your field and/or in your EX area and give them [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select up to 2 other Pixie followers on your field and/or in your EX area and give them [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP16-015EN",
+    "name": "Good Fairy of the Pond",
+    "trait": "Pixie",
+    "cardText": "[fanfare][lastwords] Put a Fairy token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Fairy token into your EX area."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put a Fairy token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP16-016EN",
+    "name": "Fay Twinkletoes",
+    "trait": "Pixie",
+    "cardText": "[fanfare] Give each other [forestcraft] follower on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give each other [forestcraft] follower on your field [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP16-017EN",
+    "name": "Baby Carbuncle",
+    "trait": "Fae-Touched / Beast",
+    "cardText": "[fanfare] Return a Beast card on your field not named Baby Carbuncle to its owner's hand: Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "Return a Beast card on your field not named Baby Carbuncle to its owner's hand",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP16-018EN",
+    "name": "Fragrantwood Whispers",
+    "trait": "Elf / Hunter",
+    "cardText": "Choose 1. If a follower on your field evolved this turn, choose up to 2 instead. (1) Give your leader [defense]+2. (2) Draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose 1. If a follower on your field evolved this turn, choose up to 2 instead. (1) Give your leader [defense]+2. (2) Draw a card."
+      },
+      {
+        "key": "Defense",
+        "body": "Give your leader [defense]+2."
+      },
+      {
+        "key": "Draw",
+        "body": "Draw a card."
+      }
+    ]
+  }
+]
