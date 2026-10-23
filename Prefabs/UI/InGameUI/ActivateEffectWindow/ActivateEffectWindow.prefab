@@ -395,7 +395,7 @@ MonoBehaviour:
     - key: 10
       value: <sprite index=16>
   evolvePointFormatting: <sprite index=26>
-  serveTextTemplate: '{0} {1}: Race this follower{2}.'
+  serveTextTemplate: '{0}{1}: Race this follower{2}.'
   carrotIconFormatting: <sprite index=28>
   rectTransform: {fileID: 4373415351481364239}
   window: {fileID: 2942690425565000330}
@@ -1260,7 +1260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5671747781183834352, guid: 01cc9fcbb1244f942b9c412e288fb6de, type: 3}
       propertyPath: m_text
-      value: Super Evolve with Evolve Point
+      value: Super-Evolve with Evolve Point
       objectReference: {fileID: 0}
     - target: {fileID: 5671747781183834352, guid: 01cc9fcbb1244f942b9c412e288fb6de, type: 3}
       propertyPath: m_fontSize
@@ -1421,7 +1421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5671747781183834352, guid: 01cc9fcbb1244f942b9c412e288fb6de, type: 3}
       propertyPath: m_text
-      value: Super Evolve
+      value: Super-Evolve
       objectReference: {fileID: 0}
     - target: {fileID: 5671747781183834352, guid: 01cc9fcbb1244f942b9c412e288fb6de, type: 3}
       propertyPath: m_fontSize
