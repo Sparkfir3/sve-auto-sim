@@ -409,15 +409,15 @@ namespace SVESimulator
             }
         }
 
-        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null) =>
-            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, fixedCost);
-        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
+        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null) =>
+            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
+        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
         {
             if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
                 return false;
-            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, fixedCost);
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
         }
-        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, int? fixedCost = null)
+        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -431,18 +431,31 @@ namespace SVESimulator
             if(payCost)
             {
                 playPointCost = fixedCost ?? card.RuntimeCard.PlayPointCost(playerController);
-                if(!ignoreAltCosts && card.RuntimeCard.HasAvailableAlternateCost(playerController, out List<TriggeredAbility> alternateCostAbilities))
+                // Alternate cost
+                if(!ignoreAltCosts && card.RuntimeCard.HasAvailableModifiedCost<AlternateCostEffect>(playerController, out List<TriggeredAbility> alternateCostAbilities))
                 {
                     if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
                         return false;
-                    ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, usePlayPointCost =>
+                    ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, true, usePlayPointCost =>
                     {
                         PlayCardToField(card, slot, originZone, usePlayPointCost, ignoreAltCosts: true);
                     });
                     return true;
                 }
+                // Base cost
                 if(!CanPayPlayPointsCost(playPointCost))
                     return false;
+                // Additional cost
+                if(!ignoreAdditionalCosts && card.RuntimeCard.HasAvailableModifiedCost<AdditionalCostEffect>(playerController, out List<TriggeredAbility> additionalCostAbilities))
+                {
+                    if(!additionalCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
+                        return false;
+                    ChoosePlayCardCostOption(card, playPointCost, additionalCostAbilities, false, _ =>
+                    {
+                        PlayCardToField(card, slot, originZone, payCost: true, ignoreAltCosts: true, ignoreAdditionalCosts: true, fixedCost: playPointCost);
+                    });
+                    return true;
+                }
             }
 
             // Play card to field
@@ -474,7 +487,7 @@ namespace SVESimulator
             return true;
         }
 
-        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true)
+        public bool EvolveCard(CardObject baseCard, bool useEvolvePoint, CardObject evolvedCard = null, bool useEvolveCost = true, bool useEvolveForTurn = true, bool isSuperEvolve = false)
         {
             // Condition checks
             if(playerController.EvolvedThisTurn && useEvolveForTurn)
@@ -497,7 +510,8 @@ namespace SVESimulator
                 return false;
 
             // Evolve logic
-            sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint, useEvolveCost);
+            playerController.AdditionalStats.CardsEvolvedThisTurn.Add(new PlayedCardData(evolvedCard.RuntimeCard.instanceId, evolvedCard.RuntimeCard.cardId));
+            sveEffectSolver.EvolveCard(netIdentity, baseCard.RuntimeCard, evolvedCard.RuntimeCard, useEvolvePoint, useEvolveCost, isSuperEvolve);
             localZoneController.EvolveCard(baseCard, evolvedCard, slot);
             evolvedCard.NumberOfTurnsOnBoard = baseCard.NumberOfTurnsOnBoard;
             evolvedCard.CanAttack = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Engaged].effectiveValue == 0;
@@ -515,7 +529,8 @@ namespace SVESimulator
                 evolvedCardInstanceId = evolvedCard.RuntimeCard.instanceId,
                 fieldSlotId = slot,
                 useEvolvePoint = useEvolvePoint,
-                useEvolveCost = useEvolveCost
+                useEvolveCost = useEvolveCost,
+                isSuperEvolve = isSuperEvolve
             };
             NetworkClient.Send(msg);
 
@@ -523,6 +538,11 @@ namespace SVESimulator
             SVEEffectPool.Instance.RemovePassivesFromCard(baseCard.RuntimeCard, playerController);
             int atkDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].baseValue;
             int defDiff = baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].effectiveValue - baseCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].baseValue;
+            if(isSuperEvolve)
+            {
+                atkDiff++;
+                defDiff++;
+            }
             ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].statId, atkDiff, true);
             ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, defDiff, true);
 
@@ -543,8 +563,12 @@ namespace SVESimulator
                 sveEffectSolver.SendToCemetery(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone, isDestroy);
             if(isLocalPlayersCard)
             {
-                if(isDestroy && originZone.Equals(SVEProperties.Zones.Field))
-                    playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                if(originZone.Equals(SVEProperties.Zones.Field))
+                {
+                    playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                    if(isDestroy)
+                        playerController.AdditionalStats.CardsDestroyedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+                }
                 else if(originZone.Equals(SVEProperties.Zones.Hand))
                     playerController.AdditionalStats.CardsDiscardedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             }
@@ -597,6 +621,8 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.BanishCard(isLocalPlayersCard ? netIdentity : opponentInfo.netId, runtimeCard, originZone);
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToBanishedZone(x, onComplete));
 
             // ---
@@ -624,8 +650,11 @@ namespace SVESimulator
 
             if(!onlyMoveObject)
                 sveEffectSolver.ReturnCardToHand(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, sourceZone);
-            if(sourceZone.Equals(SVEProperties.Zones.Field))
+            if(isLocalPlayersCard && sourceZone.Equals(SVEProperties.Zones.Field))
+            {
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
                 playerController.AdditionalStats.CardsReturnedToHandFromField.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+            }
 
             // Show if adding from cemetery, otherwise normal move logic
             if(!sourceZone.Equals(SVEProperties.Zones.Cemetery))
@@ -657,6 +686,9 @@ namespace SVESimulator
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
 
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+
             sveEffectSolver.SendCardToBottomDeck(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToBottomDeck(x, onComplete));
 
@@ -681,6 +713,9 @@ namespace SVESimulator
             originZone ??= card.CurrentZone.Runtime.name;
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
+
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
 
             sveEffectSolver.SendCardToTopDeck(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
             StandardSendCardObjectToZone(card, targetZoneController, (x, onComplete) => targetZoneController.SendCardToTopDeck(x, onComplete));
@@ -722,6 +757,9 @@ namespace SVESimulator
             bool isLocalPlayersCard = card.CurrentZone.IsLocalPlayerZone;
             PlayerCardZoneController targetZoneController = isLocalPlayersCard ? localZoneController : oppZoneController;
             int targetSlotId = localZoneController.exAreaZone.GetFirstOpenSlotId();
+
+            if(isLocalPlayersCard && originZone.Equals(SVEProperties.Zones.Field))
+                playerController.AdditionalStats.CardsLeftFieldThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
 
             if(!onlyMoveObject)
                 sveEffectSolver.SendCardToExArea(isLocalPlayersCard ? playerInfo : opponentInfo, runtimeCard, originZone);
@@ -869,7 +907,7 @@ namespace SVESimulator
             {
                 if(!CanPayPlayPointsCost(playPointCost) && !alternateCostAbilities.Any(x => CanPayCosts(card.RuntimeCard, (x.trigger as SveTrigger)?.Costs, x.name)))
                     return false;
-                ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, usePlayPointCost =>
+                ChoosePlayCardCostOption(card, playPointCost, alternateCostAbilities, true, usePlayPointCost =>
                 {
                     PlaySpell(card, originZone, usePlayPointCost ? playPointCost : 0, ignoreAltCosts: true);
                 });
@@ -1407,28 +1445,30 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        private void ChoosePlayCardCostOption(CardObject card, int playPointCost, List<TriggeredAbility> alternateCostAbilities, Action<bool> onChooseCost)
+        private void ChoosePlayCardCostOption(CardObject card, int playPointCost, List<TriggeredAbility> alternateCostAbilities, bool showBaseCost, Action<bool> onChooseCost)
         {
-            if(alternateCostAbilities == null || alternateCostAbilities.Count == 0)
+            if(alternateCostAbilities == null || alternateCostAbilities.Count == 0 ||
+               alternateCostAbilities.All(x => x.trigger is SveTrigger trigger && trigger.Costs.All(y => y is SveCost { IsInternalCost: true })))
             {
                 onChooseCost?.Invoke(true);
                 return;
             }
 
             // TODO - send card to resolution
-            List<MultipleChoiceWindow.MultipleChoiceEntryData> playOptions = new()
+            List<MultipleChoiceWindow.MultipleChoiceEntryData> playOptions = new();
+            if(showBaseCost)
             {
-                new MultipleChoiceWindow.MultipleChoiceEntryData()
+                playOptions.Add(new MultipleChoiceWindow.MultipleChoiceEntryData()
                 {
                     text = $"{playPointCost} Play Points",
                     onSelect = () => onChooseCost?.Invoke(true),
                     disabled = !CanPayPlayPointsCost(playPointCost)
-                }
-            };
+                });
+            }
             foreach(TriggeredAbility ability in alternateCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
-                AlternateCostEffect effect = ability.effect as AlternateCostEffect;
+                SveModifiedCostEffect effect = ability.effect as SveModifiedCostEffect;
                 Debug.Assert(trigger != null && effect != null);
 
                 MultipleChoiceWindow.MultipleChoiceEntryData entry = effect.AsMultipleChoiceEntry(() =>
@@ -1438,6 +1478,7 @@ namespace SVESimulator
                 entry.disabled = !CanPayCosts(card.RuntimeCard, trigger.Costs, ability.name);
                 playOptions.Add(entry);
             }
+            // TODO - add cancel option
 
             GameUIManager.MultipleChoice.Open(playerController, card.LibraryCard.name, playOptions, "");
         }

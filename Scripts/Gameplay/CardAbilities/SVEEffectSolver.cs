@@ -202,7 +202,7 @@ namespace SVESimulator
             }
         }
 
-        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint, bool useEvolveCost = true)
+        public void EvolveCard(NetworkIdentity playerNetId, RuntimeCard baseCard, RuntimeCard evolvedCard, bool useEvolvePoint, bool useEvolveCost = true, bool isSuperEvolve = false)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             if(player == null)
@@ -228,6 +228,8 @@ namespace SVESimulator
 
                 player.namedStats[SVEProperties.PlayerStats.PlayPoints].baseValue -= playPointCost;
                 player.namedStats[SVEProperties.PlayerStats.EvolutionPoints].baseValue -= useEvolvePoint ? 1 : 0;
+                if(isSuperEvolve)
+                    player.namedStats[SVEProperties.PlayerStats.SuperEvolutionPoints].baseValue = 0;
             }
 
             // Handle engage status & set face up
@@ -256,6 +258,13 @@ namespace SVESimulator
                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnEvolveTrigger>(gameState, evolvedCard, player, _ => true, false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherEvolveTrigger>(gameState, evolvedCard, SVEProperties.Zones.Field, field, player,
                     x => x.MatchesFilter(evolvedCard), true);
+
+                if(isSuperEvolve)
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnSuperEvolveTrigger>(gameState, evolvedCard, player, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherSuperEvolveTrigger>(gameState, evolvedCard, SVEProperties.Zones.Field, field, player,
+                        x => x.MatchesFilter(evolvedCard), true);
+                }
             }
         }
 
@@ -626,8 +635,8 @@ namespace SVESimulator
         public void SetCardStat(RuntimeCard card, int statId, int value) => SetCardStat(card, statId, value, out _);
         public void SetCardStat(RuntimeCard card, int statId, int value, out bool isDestroyed)
         {
-            card.stats[statId].baseValue = value;
-            isDestroyed = DestroyZeroDefenseFollower(card.ownerPlayer.netId, card);
+            int diff = value - card.stats[statId].effectiveValue;
+            ApplyCardStatModifier(card, statId, diff, true, 0, out isDestroyed);
         }
 
         public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, bool checkDefense = true, bool isCombatDamage = false)

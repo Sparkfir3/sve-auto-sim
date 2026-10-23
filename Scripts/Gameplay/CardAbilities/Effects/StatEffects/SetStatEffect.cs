@@ -23,7 +23,7 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            int boostAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
+            int targetAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
 
             // Target leader
             if(target.IsLeader(out bool local, out bool opponent))
@@ -33,15 +33,15 @@ namespace SVESimulator
                     case StatBoostType.Defense:
                     case StatBoostType.AttackDefense:
                         if(local)
-                            player.LocalEvents.SetLeaderDefense(player.GetPlayerInfo(), boostAmount);
+                            player.LocalEvents.SetLeaderDefense(player.GetPlayerInfo(), targetAmount);
                         if(opponent)
-                            player.LocalEvents.SetLeaderDefense(player.GetOpponentInfo(), boostAmount);
+                            player.LocalEvents.SetLeaderDefense(player.GetOpponentInfo(), targetAmount);
                         break;
                     case StatBoostType.MaxPlayPoint:
                         Debug.LogError("Directly setting max play points via SetStat effect is not supported.");
                         break;
                     case StatBoostType.PlayPoint:
-                        player.LocalEvents.SetCurrentPlayPoints(boostAmount);
+                        player.LocalEvents.SetCurrentPlayPoints(targetAmount);
                         break;
                     default:
                         Debug.LogError($"Attempted to apply invalid stat boost {targetStats} to {target}!");
@@ -67,7 +67,7 @@ namespace SVESimulator
                 {
                     foreach(string stat in targetStats.AsNamedStatArray())
                     {
-                        player.LocalEvents.SetCardStat(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, boostAmount);
+                        player.LocalEvents.SetCardStat(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, targetAmount);
                     }
                 }
                 onComplete?.Invoke();

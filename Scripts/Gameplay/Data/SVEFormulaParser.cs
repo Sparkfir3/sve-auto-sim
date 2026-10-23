@@ -261,8 +261,8 @@ namespace SVESimulator
         {
             string[] substrings = formula.Split(',');
             Debug.Assert(substrings.Length == 2, $"Tried to parse invalid min max formula: {formula}");
-            min = ParseFormulaInt(substrings[0].Trim(), 0, out _, player, card);
-            max = ParseFormulaInt(substrings[1].Trim(), 0, out _, player, card);
+            min = ParseValue(substrings[0].Trim(), player, card);
+            max = ParseValue(substrings[1].Trim(), player, card);
         }
 
         #endregion
@@ -392,46 +392,44 @@ namespace SVESimulator
 
             args[0] = args[0].Trim().Replace("PP", "PlayPoints");
             Dictionary<CardFilterSetting, string> filter = args.Length >= 2 ? ParseCardFilterFormula(args[1]) : null;
-            usedPlayerReference = false;
+            usedPlayerReference = true;
             switch(args[0])
             {
-                // Player Stats
+                // Player Info - Cards Moved/Abilities
                 case "destroyed":
-                    usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDestroyedThisTurn, filter) : 0;
                 case "discard":
                 case "discarded":
-                    usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDiscardedThisTurn, filter) : 0;
                 case "attacked":
-                    usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
                 case "spellsPlayed":
-                    usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
+                case "evolved":
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsEvolvedThisTurn, filter) : 0;
+                case "leftField":
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsLeftFieldThisTurn, filter) : 0;
                 case "returnedToHandFromField":
-                    usedPlayerReference = true;
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsReturnedToHandFromField, filter) : 0;
+
+                // Player Info - Stats
                 case "maxPlayPoints":
-                    usedPlayerReference = true;
                     return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.MaxPlayPoints].effectiveValue : 0;
                 case "playPoints":
                 case "currentPlayPoints":
-                    usedPlayerReference = true;
                     return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.PlayPoints].effectiveValue : 0;
 
                 // Player Zone
                 case "evolveDeckFaceUp":
-                    usedPlayerReference = true;
                     return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
                         && faceUpStat.effectiveValue == 1 && (filter == null || filter.MatchesCard(x))) : 0;
                 case "evolveDeckFaceDown":
-                    usedPlayerReference = true;
                     return player ? player.ZoneController.evolveDeckZone.Runtime.cards.Count(x => x.namedStats.TryGetValue(SVEProperties.CardStats.FaceUp, out Stat faceUpStat)
                         && faceUpStat.effectiveValue == 0 && (filter == null || filter.MatchesCard(x))) : 0;
 
                 // Card
                 case "turnsOnField":
+                    usedPlayerReference = false;
                     if(card == null)
                         return 0;
                     CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
@@ -439,6 +437,7 @@ namespace SVESimulator
 
                 // Default
                 default:
+                    usedPlayerReference = false;
                     return 0;
             }
         }

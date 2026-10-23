@@ -182,6 +182,12 @@ namespace SVESimulator
             return playerInfo.namedStats[SVEProperties.PlayerStats.EvolutionPoints].effectiveValue > 0;
         }
 
+        public bool CanSuperEvolve()
+        {
+            return playerController.CurrentTurnNumber >= (playerInfo.isGoingFirst ? 7 : 6) &&
+                playerInfo.namedStats[SVEProperties.PlayerStats.SuperEvolutionPoints].effectiveValue > 0;
+        }
+
         public bool CanPayEvolveCost(int amount, bool tryUseEvolvePoint = false)
         {
             return CanPayPlayPointsCost(tryUseEvolvePoint && HasEvolvePoint() ? Mathf.Max(amount - 1, 0) : amount);

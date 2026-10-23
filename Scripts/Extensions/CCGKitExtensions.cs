@@ -141,27 +141,30 @@ namespace SVESimulator
             return Mathf.Max(baseCost - reduction, 0);
         }
 
-        public static bool HasAvailableAlternateCost(this RuntimeCard card, PlayerController player, out List<TriggeredAbility> alternateCostAbilities)
+        public static bool HasAvailableModifiedCost<T>(this RuntimeCard card, PlayerController player, out List<TriggeredAbility> costAbilities) where T : SveModifiedCostEffect
         {
-            List<TriggeredAbility> allAlternateCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is AlternateCostEffect)
+            List<TriggeredAbility> allCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility { effect: T })
                 .Select(x => x as TriggeredAbility).ToList();
-            if(allAlternateCostAbilities.Count == 0)
+            if(allCostAbilities.Count == 0)
             {
-                alternateCostAbilities = null;
+                costAbilities = null;
                 return false;
             }
 
-            alternateCostAbilities = new List<TriggeredAbility>();
-            foreach(TriggeredAbility ability in allAlternateCostAbilities)
+            costAbilities = new List<TriggeredAbility>();
+            foreach(TriggeredAbility ability in allCostAbilities)
             {
                 SveTrigger trigger = ability.trigger as SveTrigger;
-                AlternateCostEffect effect = ability.effect as AlternateCostEffect;
-                if(trigger == null || effect == null || (!trigger.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, card)))
+                T effect = ability.effect as T;
+                if(trigger == null || effect == null)
                     continue;
-                alternateCostAbilities.Add(ability);
+                costAbilities.Add(ability);
             }
-            return alternateCostAbilities.Count > 0;
+            return costAbilities.Count > 0;
         }
+
+        public static bool HasAvailableAlternateCost(this RuntimeCard card, PlayerController player, out List<TriggeredAbility> costAbilities)
+            => HasAvailableModifiedCost<AlternateCostEffect>(card, player, out costAbilities);
 
         public static int EvolveCost(this RuntimeCard card)
         {

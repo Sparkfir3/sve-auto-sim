@@ -105,6 +105,7 @@ namespace SVESimulator.UI
 
         public void OpenEngageWardCardOptions(PlayerController player, CardObject card, bool executeConfirmationTiming = true, Action onComplete = null)
         {
+            Debug.Log($"Opening engage for Ward menu for {card.LibraryCard.name}");
             Action confirmOption = () =>
             {
                 if(executeConfirmationTiming)

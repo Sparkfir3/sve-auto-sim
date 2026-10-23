@@ -48,7 +48,13 @@ namespace SVESimulator
         [Title("Debug Buttons"), Button]
         private void TestFormulaIntParser(string formula = "1c(3)4")
         {
-            Debug.Log(SVEFormulaParser.ParseValue(formula, player));
+            if(formula.StartsWith("m("))
+            {
+                SVEFormulaParser.ParseValueAsMinMax(formula, player, null, out int min, out int max);
+                Debug.Log($"Min: {min}, Max: {max}");
+            }
+            else
+                Debug.Log(SVEFormulaParser.ParseValue(formula, player));
         }
 
         [Button]

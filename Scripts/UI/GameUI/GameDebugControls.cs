@@ -109,5 +109,18 @@ namespace SVESimulator
             };
             SVEEffectPool.Instance.ResolveEffectImmediate(banishEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
         }
+
+        [Button]
+        public void CreateToken(string tokenName, SVEProperties.TokenCreationOption mode = SVEProperties.TokenCreationOption.Field)
+        {
+            SummonTokenEffect summonEffect = new()
+            {
+                tokenName = tokenName,
+                createTokenOption = mode,
+                amount = "1",
+                text = "[Debug Mode] Summon Token"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(summonEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+        }
     }
 }

@@ -16,9 +16,11 @@ namespace SVESimulator
         {
             get
             {
-                if(_costList != null || cost.IsNullOrWhiteSpace())
+                if(_costList != null || (cost.IsNullOrWhiteSpace() && condition.IsNullOrWhiteSpace()))
                     return _costList;
-                _costList = cost.ToCostList();
+                _costList = cost.ToCostList() ?? new List<Cost>();
+                if(!condition.IsNullOrWhiteSpace())
+                    _costList.Add(new ConditionAsCost(condition));
                 return _costList;
             }
         }
@@ -81,6 +83,9 @@ namespace SVESimulator
 
     public class SveOnEvolveTrigger : SveTrigger { }
     public class SveOnOtherEvolveTrigger : SveTriggerWithFilter { }
+
+    public class SveOnSuperEvolveTrigger : SveTrigger { }
+    public class SveOnOtherSuperEvolveTrigger : SveTriggerWithFilter { }
 
     public class SveOnRaceTrigger : SveTrigger { }
     public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }

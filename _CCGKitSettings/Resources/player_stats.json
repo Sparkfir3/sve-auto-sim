@@ -34,5 +34,14 @@
         "maxValue": 20,
         "id": 3,
         "$type": "CCGKit.PlayerStat"
+    },
+    {
+        "name": "Super Evolution Points",
+        "baseValue": 1,
+        "originalValue": 1,
+        "minValue": 0,
+        "maxValue": 1,
+        "id": 4,
+        "$type": "CCGKit.PlayerStat"
     }
 ]

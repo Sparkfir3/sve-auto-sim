@@ -206,7 +206,7 @@ namespace SVESimulator
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return;
 
-            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost);
+            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost, executeConfirmationTiming: false);
             oppZoneController.PlayCardToField(card, msg.fieldSlotId);
         }
 
@@ -223,7 +223,7 @@ namespace SVESimulator
 
             // Evolve
             oppZoneController.EvolveCard(baseCard, evolvedCard, msg.fieldSlotId);
-            sveEffectSolver.EvolveCard(msg.playerNetId, baseCard.RuntimeCard, evolvedCard.RuntimeCard, msg.useEvolvePoint, msg.useEvolveCost);
+            sveEffectSolver.EvolveCard(msg.playerNetId, baseCard.RuntimeCard, evolvedCard.RuntimeCard, msg.useEvolvePoint, msg.useEvolveCost, msg.isSuperEvolve);
         }
 
         public void SendToCemetery(OpponentSendCardToCemeteryMessage msg)
