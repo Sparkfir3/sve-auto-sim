@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SVESimulator.CardTextData;
 using SVESimulator.SveScript;
 
 namespace SVESimulator.Database
@@ -53,16 +54,22 @@ namespace SVESimulator.Database
 
                 string scriptsFolder = Path.Combine(mainFolder, pathInfo.CustomSetScriptsFolder);
                 IEnumerable<string> scriptFiles = Directory.EnumerateFiles(scriptsFolder, "*.txt", SearchOption.TopDirectoryOnly);
+                int cardCount = 0;
                 foreach(string script in scriptFiles)
                 {
                     try
                     {
-                        SveScriptCompiler.ParseSveScriptCardSet(File.ReadAllText(Path.Combine(scriptsFolder, script)), dataFolder, out List<string> outputFilePaths, sortIntoSubfolders: false);
-                        // TODO - generate text data files
+                        string scriptPath = Path.Combine(scriptsFolder, script);
+                        SveScriptCompiler.ParseSveScriptCardSet(File.ReadAllText(scriptPath), dataFolder, out List<string> outputFilePaths, sortIntoSubfolders: false);
+                        cardCount += outputFilePaths?.Count ?? 0;
+                        string textDataPath = Path.Combine(mainFolder, pathInfo.CustomSetTextDataFolder, Path.GetFileNameWithoutExtension(script) + "_TextData.json");
+                        if(!File.Exists(textDataPath))
+                            using(FileStream _ = File.Create(textDataPath)) { }
+                        CardTextCompiler.CompileTextJson(textDataPath, outputFilePaths);
                     }
                     catch(System.Exception e)
                     {
-                        SveScriptDebugger.LogError($"Error compiling script {script} in custom set {folder}: {e.Message}");
+                        SveScriptDebugger.LogError($"Error compiling script {script} in custom set {folder}:\n{e.Message}");
                     }
                 }
 
@@ -70,7 +77,7 @@ namespace SVESimulator.Database
                     break;
 
                 SveScriptCompiler.SaveSetFile(dataFolder, Path.Combine(mainFolder, "FullSet.json"), $"Custom Set - {folder}");
-                SveScriptDebugger.Log($"Successfully Finished Compiling Custom Set - {folder}");
+                SveScriptDebugger.Log($"Successfully Finished Compiling Custom Set - {folder}\nTotal Cards Compiled: {cardCount}");
             }
         }
 

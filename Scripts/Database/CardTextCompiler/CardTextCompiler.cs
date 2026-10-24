@@ -16,24 +16,19 @@ namespace SVESimulator.CardTextData
     {
         private const string RESOURCE_PATH_INFO = "FilePathInfo";
 
-        public static void CompileTextJson(TextAsset baseScript, TextAsset outputFile)
+        public static void CompileTextJson(string outputFilePath, List<string> compiledScriptsFilePaths)
         {
-#if !UNITY_EDITOR
-            Debug.LogError("Card text compiler to JSON is not supported outside of the Unity editor!");
-            return;
-#else
-            if(!baseScript || !outputFile)
+            if(string.IsNullOrWhiteSpace(outputFilePath))
             {
-                Debug.Log("Base SVE script or output file was not provided, cannot parse text into JSON");
+                SveScriptDebugger.LogError("Output file was not provided, cannot parse text into JSON");
                 return;
             }
 
-            SveScriptCompiler.ParseSveScriptCardSet(baseScript.text, Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO).CardDataPath, out List<string> outputFilePaths);
-            List<TextData> oldTextData = JsonConvert.DeserializeObject<List<TextData>>(outputFile.text);
+            List<TextData> oldTextData = JsonConvert.DeserializeObject<List<TextData>>(File.ReadAllText(outputFilePath));
             List<TextData> newTextData = new();
 
             // Parse text files
-            foreach(string file in outputFilePaths)
+            foreach(string file in compiledScriptsFilePaths)
             {
                 // Read basic data
                 JObject cardData = JObject.Parse(File.ReadAllText(file));
@@ -87,7 +82,6 @@ namespace SVESimulator.CardTextData
             }
 
             // Write to output
-            string outputFilePath = Path.GetFullPath(Path.Join(Application.dataPath.Replace("/Assets", ""), AssetDatabase.GetAssetPath(outputFile)));
             using(StreamWriter writer = new(outputFilePath))
             {
                 using(JsonTextWriter jWriter = new(writer))
@@ -99,9 +93,24 @@ namespace SVESimulator.CardTextData
                     serializer.Serialize(jWriter, newTextData);
                 }
             }
-            Debug.Log($"Compiled card text for {newTextData.Count} cards in {baseScript.name}, saved to {outputFile.name}");
-#endif
+            SveScriptDebugger.Log($"Compiled card text data for {newTextData.Count} cards, saved to {Path.GetFileName(outputFilePath)}");
         }
+
+#if UNITY_EDITOR
+        public static void CompileTextJson(TextAsset baseScript, TextAsset outputFile)
+        {
+            if(!baseScript || !outputFile)
+            {
+                SveScriptDebugger.LogError("Base SVE script or output file was not provided, cannot parse text into JSON");
+                return;
+            }
+
+            string projectRoot = Directory.GetParent(Application.dataPath)!.FullName;
+            string outputFilePath = Path.GetFullPath(Path.Combine(projectRoot, AssetDatabase.GetAssetPath(outputFile)));
+            SveScriptCompiler.ParseSveScriptCardSet(baseScript.text, Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO).CardDataPath, out List<string> compiledScriptFilePaths);
+            CompileTextJson(outputFilePath, compiledScriptFilePaths);
+        }
+#endif
 
         private static string GetDefaultTriggerText(in string key)
         {
