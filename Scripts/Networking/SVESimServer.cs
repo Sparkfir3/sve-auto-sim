@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
+using SVESimulator.Database;
 using UnityEngine;
 
 namespace SVESimulator
@@ -23,6 +24,16 @@ namespace SVESimulator
         }
 
         // ------------------------------
+
+        protected override void LoadGameConfiguration()
+        {
+            base.LoadGameConfiguration();
+            if(CustomSetController.UseCustomSets)
+            {
+                CustomSetController.LoadCustomSets(GameManager.Instance.config);
+                Debug.Log("Loaded custom sets");
+            }
+        }
 
         /// <summary>
         /// Starts the multiplayer game. This is automatically called when the appropriate number of players have joined a room.

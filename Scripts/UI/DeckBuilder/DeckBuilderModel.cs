@@ -53,7 +53,12 @@ namespace SVESimulator.DeckBuilder
             IsDirty = false;
             gameConfig = new GameConfiguration();
             gameConfig.LoadGameConfigurationAtRuntime();
-            Debug.Log($"Deck builder loaded {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets from library");
+            Debug.Log($"Deck builder loaded {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets from main library");
+            if(CustomSetController.UseCustomSets)
+            {
+                CustomSetController.LoadCustomSets(gameConfig);
+                Debug.Log($"Loaded custom sets, new total of {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets");
+            }
         }
 
         #endregion

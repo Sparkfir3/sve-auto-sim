@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CCGKit;
+using FullSerializer;
 using SVESimulator.CardTextData;
 using SVESimulator.SveScript;
 
@@ -11,6 +13,7 @@ namespace SVESimulator.Database
 {
     public class CustomSetController : MonoBehaviour
     {
+        private const string RESOURCE_PATH_INFO = "FilePathInfo";
         public static bool UseCustomSets = false;
 
         [ShowInInspector, ReadOnly]
@@ -81,9 +84,36 @@ namespace SVESimulator.Database
             }
         }
 
-        public void LoadCustomSets()
+        public static void LoadCustomSets(GameConfiguration gameConfig)
         {
-            // TODO - load to ccg kit runtime library
+            if(!UseCustomSets)
+                Debug.LogError("Loading customs sets while custom sets are disabled!");
+
+            FilePathInfo pathInfo = Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO);
+            IEnumerable<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x));
+            foreach(string folder in folders)
+            {
+                if(folder.Equals(pathInfo.CustomSetTemplateFolder))
+                    continue;
+
+                string dataFile = Path.Combine(pathInfo.CustomSetFolderPath, folder, "FullSet.json");
+                if(!File.Exists(dataFile))
+                {
+                    Debug.LogError($"Custom set {folder} does not contain a FullSet.json file, skipping load");
+                    continue;
+                }
+
+                fsData setData = fsJsonParser.Parse(File.ReadAllText(dataFile));
+                if(!setData.IsList)
+                    setData = new fsData(new List<fsData> { setData });
+                object deserialized = null;
+                new fsSerializer().TryDeserialize(setData, typeof(List<CardSet>), ref deserialized).AssertSuccessWithoutWarnings();
+                List<CardSet> setLibrary = deserialized as List<CardSet>;
+                Debug.Assert(setLibrary != null, $"Failed to deserialize card set library for custom set {folder}");
+                gameConfig.cardSets.AddRange(setLibrary);
+                foreach(CardSet set in setLibrary)
+                    gameConfig.cards.AddRange(set.cards);
+            }
         }
 
         // ------------------------------
