@@ -130,7 +130,6 @@ namespace SVESimulator.Database
                     continue;
 
                 string textDataFolder = Path.Combine(pathInfo.CustomSetFolderPath, folder, pathInfo.CustomSetTextDataFolder);
-                Debug.Log(textDataFolder);
                 IEnumerable<string> textDataFiles = Directory.EnumerateFiles(textDataFolder, "*.json", SearchOption.TopDirectoryOnly);
                 paths.AddRange(textDataFiles);
             }

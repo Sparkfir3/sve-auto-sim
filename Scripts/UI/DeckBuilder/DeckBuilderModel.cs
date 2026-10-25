@@ -57,7 +57,7 @@ namespace SVESimulator.DeckBuilder
             if(CustomSetController.UseCustomSets)
             {
                 CustomSetController.LoadCustomSets(gameConfig);
-                Debug.Log($"Loaded custom sets, new total of {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets");
+                Debug.Log($"Loaded custom sets, totaling {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets");
             }
         }
 
