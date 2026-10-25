@@ -90,7 +90,7 @@ namespace SVESimulator.Database
                 Debug.LogError("Loading customs sets while custom sets are disabled!");
 
             FilePathInfo pathInfo = Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO);
-            IEnumerable<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x));
+            List<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x)).ToList();
             foreach(string folder in folders)
             {
                 if(folder.Equals(pathInfo.CustomSetTemplateFolder))
@@ -114,6 +114,27 @@ namespace SVESimulator.Database
                 foreach(CardSet set in setLibrary)
                     gameConfig.cards.AddRange(set.cards);
             }
+            LibraryCardCache.CacheCustomSetTextDataList(GetTextDataPaths(folders, pathInfo));
+        }
+
+        public static List<string> GetTextDataPaths(List<string> folders = null, FilePathInfo pathInfo = null)
+        {
+            if(!pathInfo)
+                pathInfo = Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO);
+            folders ??= Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x)).ToList();
+
+            List<string> paths = new();
+            foreach(string folder in folders)
+            {
+                if(folder.Equals(pathInfo.CustomSetTemplateFolder))
+                    continue;
+
+                string textDataFolder = Path.Combine(pathInfo.CustomSetFolderPath, folder, pathInfo.CustomSetTextDataFolder);
+                Debug.Log(textDataFolder);
+                IEnumerable<string> textDataFiles = Directory.EnumerateFiles(textDataFolder, "*.json", SearchOption.TopDirectoryOnly);
+                paths.AddRange(textDataFiles);
+            }
+            return paths;
         }
 
         // ------------------------------
