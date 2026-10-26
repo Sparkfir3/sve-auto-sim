@@ -22,6 +22,8 @@ namespace SVESimulator.UI
         [SerializeField]
         private Button compileButton;
         [SerializeField]
+        private Button downloadImagesButton;
+        [SerializeField]
         private DebugConsoleDisplay debugConsole;
 
         // ------------------------------
@@ -53,6 +55,8 @@ namespace SVESimulator.UI
 
             // Compiler
             compileButton.onClick.AddListener(CompileCustomSets);
+            downloadImagesButton.onClick.AddListener(DownloadImages);
+            downloadImagesButton.interactable = false;
             debugConsole.Clear();
         }
 
@@ -61,6 +65,19 @@ namespace SVESimulator.UI
             debugConsole.Clear();
             controller.CompileCustomSets();
             debugConsole.AddEntries(SveScriptDebugger.GetLogs());
+            if(!SveScriptDebugger.HasErrors())
+                downloadImagesButton.interactable = true;
+        }
+
+        private void DownloadImages()
+        {
+            SveScriptDebugger.Log("Downloading images...");
+            debugConsole.AddEntry(LogType.Log, "Downloading images...");
+            controller.DownloadCustomSetImages(() =>
+            {
+                SveScriptDebugger.Log("Finished downloading images");
+                debugConsole.AddEntry(LogType.Log, "Finished downloading images");
+            });
         }
     }
 }

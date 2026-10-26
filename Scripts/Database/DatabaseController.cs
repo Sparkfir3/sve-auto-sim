@@ -92,6 +92,7 @@ namespace SVESimulator.Database
             imageDownloader.OnDownloadProgressUpdate += SetLoadingPercent;
             imageDownloader.DownloadAllImages(() => downloading = false);
             yield return new WaitUntil(() => !downloading);
+            imageDownloader.OnDownloadProgressUpdate -= SetLoadingPercent;
 
             if(shouldGenerateLibrary && (Application.isEditor || generateLibraryInBuild))
             {

@@ -1,18 +1,24 @@
+using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using CCGKit;
 using FullSerializer;
+using Sparkfire.Utility;
 using SVESimulator.CardTextData;
+using SVESimulator.Database.ImageDownloader;
 using SVESimulator.SveScript;
 
 namespace SVESimulator.Database
 {
     public class CustomSetController : MonoBehaviour
     {
+        #region Variables
+
         private const string RESOURCE_PATH_INFO = "FilePathInfo";
         public static bool UseCustomSets = false;
 
@@ -23,7 +29,11 @@ namespace SVESimulator.Database
         [SerializeField, InlineEditor]
         private FilePathInfo pathInfo;
 
+        #endregion
+
         // ------------------------------
+
+        #region Initialization & Controls
 
         public void Initialize()
         {
@@ -40,6 +50,12 @@ namespace SVESimulator.Database
             PlayerPrefs.SetInt(playerPrefsKey, customSetsEnabled ? 1 : 0);
             PlayerPrefs.Save();
         }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Data Loading
 
         [Button]
         public void CompileCustomSets()
@@ -136,7 +152,44 @@ namespace SVESimulator.Database
             return paths;
         }
 
+        public void DownloadCustomSetImages(Action onComplete = null)
+        {
+            DatabaseImageDownloader imageDownloader = FindObjectOfType<DatabaseImageDownloader>();
+            if(!imageDownloader)
+            {
+                Debug.LogError("DatabaseImageDownloader was not found, cannot download custom set images");
+                onComplete?.Invoke();
+                return;
+            }
+            StartCoroutine(Download());
+            IEnumerator Download()
+            {
+                IEnumerable<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x));
+                foreach(string folder in folders)
+                {
+                    if(folder.Equals(pathInfo.CustomSetTemplateFolder))
+                        continue;
+                    string folderPath = Path.Combine(pathInfo.CustomSetFolderPath, folder);
+                    string downloadSettingsFile = Path.Combine(folderPath, pathInfo.CustomSetDownloadSettingsFileName);
+                    if(!File.Exists(downloadSettingsFile))
+                        continue;
+                    string downloadSettings = File.ReadAllText(downloadSettingsFile);
+                    if(downloadSettings.IsNullOrWhiteSpace())
+                        continue;
+
+                    bool waiting = true;
+                    imageDownloader.DownloadCustomSetImages(downloadSettings, Path.Combine(folderPath, pathInfo.CustomSetImagesFolder), () => waiting = false);
+                    yield return new WaitUntil(() => !waiting);
+                }
+                onComplete?.Invoke();
+            }
+        }
+
+        #endregion
+
         // ------------------------------
+
+        #region File Management
 
         private void CreateTemplateFolder()
         {
@@ -150,7 +203,11 @@ namespace SVESimulator.Database
                 File.Create(Path.Combine(scriptsFolder, "TemplateScript.txt"));
             string textDataFolder = Path.Combine(templateFolder, pathInfo.CustomSetTextDataFolder);
             Directory.CreateDirectory(textDataFolder);
+            string imagesFolder = Path.Combine(templateFolder, pathInfo.CustomSetImagesFolder);
+            Directory.CreateDirectory(imagesFolder);
             File.Create(Path.Combine(templateFolder, pathInfo.CustomSetDownloadSettingsFileName));
         }
+
+        #endregion
     }
 }
