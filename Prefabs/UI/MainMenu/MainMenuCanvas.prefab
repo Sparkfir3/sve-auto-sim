@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textBox: {fileID: 6165207332065595060}
   prefix: 'Version '
-  suffix: -alpha
+  suffix: -beta
   editorSuffix: ' [editor]'
 --- !u!114 &6165207332065595060
 MonoBehaviour:
