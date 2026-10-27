@@ -59,7 +59,7 @@ namespace SVESimulator.Database
 
         // ------------------------------
 
-        #region Data Loading
+        #region Data Compiling & Downloading
 
         [Button]
         public void CompileCustomSets()
@@ -104,61 +104,6 @@ namespace SVESimulator.Database
             }
         }
 
-        public static void LoadCustomSets(GameConfiguration gameConfig)
-        {
-            if(!UseCustomSets)
-                Debug.LogError("Loading customs sets while custom sets are disabled!");
-
-            GetCustomSetFolderNames();
-            foreach(string folder in CustomSetFolderNames)
-            {
-                if(folder.Equals(PathInfo.CustomSetTemplateFolder))
-                    continue;
-
-                string dataFile = Path.Combine(PathInfo.CustomSetFolderPath, folder, "FullSet.json");
-                if(!File.Exists(dataFile))
-                {
-                    Debug.LogError($"Custom set {folder} does not contain a FullSet.json file, skipping load");
-                    continue;
-                }
-
-                fsData setData = fsJsonParser.Parse(File.ReadAllText(dataFile));
-                if(!setData.IsList)
-                    setData = new fsData(new List<fsData> { setData });
-                object deserialized = null;
-                new fsSerializer().TryDeserialize(setData, typeof(List<CardSet>), ref deserialized).AssertSuccessWithoutWarnings();
-                List<CardSet> setLibrary = deserialized as List<CardSet>;
-                Debug.Assert(setLibrary != null, $"Failed to deserialize card set library for custom set {folder}");
-                gameConfig.cardSets.AddRange(setLibrary);
-                foreach(CardSet set in setLibrary)
-                    gameConfig.cards.AddRange(set.cards);
-            }
-
-            // Text data & images
-            LibraryCardCache.CacheCustomSetTextDataList(GetTextDataPaths(CustomSetFolderNames, PathInfo));
-            foreach(string folder in GetCustomSetFolderPaths())
-                CardTextureManager.CacheCustomCardTextureFolderPath(Path.Combine(folder, PathInfo.CustomSetImagesFolder));
-        }
-
-        public static List<string> GetTextDataPaths(List<string> folders = null, FilePathInfo pathInfo = null)
-        {
-            if(!pathInfo)
-                pathInfo = PathInfo;
-            folders ??= GetCustomSetFolderNames();
-
-            List<string> paths = new();
-            foreach(string folder in folders)
-            {
-                if(folder.Equals(pathInfo.CustomSetTemplateFolder))
-                    continue;
-
-                string textDataFolder = Path.Combine(pathInfo.CustomSetFolderPath, folder, pathInfo.CustomSetTextDataFolder);
-                IEnumerable<string> textDataFiles = Directory.EnumerateFiles(textDataFolder, "*.json", SearchOption.TopDirectoryOnly);
-                paths.AddRange(textDataFiles);
-            }
-            return paths;
-        }
-
         public void DownloadCustomSetImages(Action onComplete = null)
         {
             DatabaseImageDownloader imageDownloader = FindObjectOfType<DatabaseImageDownloader>();
@@ -196,9 +141,70 @@ namespace SVESimulator.Database
 
         // ------------------------------
 
-        #region Get Info
+        #region Data Loading (Static)
 
-        public static List<string> GetCustomSetFolderNames()
+        public static void LoadCustomSets(GameConfiguration gameConfig)
+        {
+            if(!UseCustomSets)
+                Debug.LogError("Loading customs sets while custom sets are disabled!");
+
+            GetCustomSetFolderNames();
+            foreach(string folder in CustomSetFolderNames)
+            {
+                if(folder.Equals(PathInfo.CustomSetTemplateFolder))
+                    continue;
+
+                string dataFile = Path.Combine(PathInfo.CustomSetFolderPath, folder, "FullSet.json");
+                if(!File.Exists(dataFile))
+                {
+                    Debug.LogError($"Custom set {folder} does not contain a FullSet.json file, skipping load");
+                    continue;
+                }
+
+                fsData setData = fsJsonParser.Parse(File.ReadAllText(dataFile));
+                if(!setData.IsList)
+                    setData = new fsData(new List<fsData> { setData });
+                object deserialized = null;
+                new fsSerializer().TryDeserialize(setData, typeof(List<CardSet>), ref deserialized).AssertSuccessWithoutWarnings();
+                List<CardSet> setLibrary = deserialized as List<CardSet>;
+                Debug.Assert(setLibrary != null, $"Failed to deserialize card set library for custom set {folder}");
+                gameConfig.cardSets.AddRange(setLibrary);
+                foreach(CardSet set in setLibrary)
+                    gameConfig.cards.AddRange(set.cards);
+            }
+
+            // Text data & images
+            LibraryCardCache.CacheCustomSetTextDataList(GetTextDataPaths(CustomSetFolderNames, PathInfo));
+            foreach(string folder in GetCustomSetFolderPaths())
+                CardTextureManager.CacheCustomCardTextureFolderPath(Path.Combine(folder, PathInfo.CustomSetImagesFolder));
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Get File & Directory Info (Static)
+
+        private static List<string> GetTextDataPaths(List<string> folders = null, FilePathInfo pathInfo = null)
+        {
+            if(!pathInfo)
+                pathInfo = PathInfo;
+            folders ??= GetCustomSetFolderNames();
+
+            List<string> paths = new();
+            foreach(string folder in folders)
+            {
+                if(folder.Equals(pathInfo.CustomSetTemplateFolder))
+                    continue;
+
+                string textDataFolder = Path.Combine(pathInfo.CustomSetFolderPath, folder, pathInfo.CustomSetTextDataFolder);
+                IEnumerable<string> textDataFiles = Directory.EnumerateFiles(textDataFolder, "*.json", SearchOption.TopDirectoryOnly);
+                paths.AddRange(textDataFiles);
+            }
+            return paths;
+        }
+
+        private static List<string> GetCustomSetFolderNames()
         {
             CachePathInfo();
             CustomSetFolderNames = Directory.EnumerateDirectories(PathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(PathInfo.CustomSetFolderPath, x)).ToList();
@@ -206,7 +212,7 @@ namespace SVESimulator.Database
             return CustomSetFolderNames;
         }
 
-        public static List<string> GetCustomSetFolderPaths()
+        private static List<string> GetCustomSetFolderPaths()
         {
             GetCustomSetFolderNames();
             return CustomSetFolderNames.Select(x => Path.Combine(PathInfo.CustomSetFolderPath, x)).ToList();

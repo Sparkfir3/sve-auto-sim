@@ -60,6 +60,8 @@ namespace SVESimulator.UI
             debugConsole.Clear();
         }
 
+        // ------------------------------
+
         private void CompileCustomSets()
         {
             debugConsole.Clear();
