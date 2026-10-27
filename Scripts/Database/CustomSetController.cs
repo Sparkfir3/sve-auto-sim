@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml;
 using CCGKit;
 using FullSerializer;
 using Sparkfire.Utility;
@@ -20,7 +19,10 @@ namespace SVESimulator.Database
         #region Variables
 
         private const string RESOURCE_PATH_INFO = "FilePathInfo";
+
         public static bool UseCustomSets = false;
+        private static List<string> CustomSetFolderNames;
+        private static FilePathInfo PathInfo;
 
         [ShowInInspector, ReadOnly]
         private bool useCustomSets => UseCustomSets;
@@ -42,6 +44,8 @@ namespace SVESimulator.Database
                 UseCustomSets = PlayerPrefs.GetInt(playerPrefsKey) == 1;
             else
                 SetCustomSetsEnabled(false);
+            if(pathInfo)
+                PathInfo = pathInfo;
         }
 
         public void SetCustomSetsEnabled(bool customSetsEnabled)
@@ -61,8 +65,8 @@ namespace SVESimulator.Database
         public void CompileCustomSets()
         {
             SveScriptDebugger.Reset();
-            IEnumerable<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x));
-            foreach(string folder in folders)
+            GetCustomSetFolderNames();
+            foreach(string folder in CustomSetFolderNames)
             {
                 if(folder.Equals(pathInfo.CustomSetTemplateFolder))
                     continue;
@@ -105,14 +109,13 @@ namespace SVESimulator.Database
             if(!UseCustomSets)
                 Debug.LogError("Loading customs sets while custom sets are disabled!");
 
-            FilePathInfo pathInfo = Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO);
-            List<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x)).ToList();
-            foreach(string folder in folders)
+            GetCustomSetFolderNames();
+            foreach(string folder in CustomSetFolderNames)
             {
-                if(folder.Equals(pathInfo.CustomSetTemplateFolder))
+                if(folder.Equals(PathInfo.CustomSetTemplateFolder))
                     continue;
 
-                string dataFile = Path.Combine(pathInfo.CustomSetFolderPath, folder, "FullSet.json");
+                string dataFile = Path.Combine(PathInfo.CustomSetFolderPath, folder, "FullSet.json");
                 if(!File.Exists(dataFile))
                 {
                     Debug.LogError($"Custom set {folder} does not contain a FullSet.json file, skipping load");
@@ -130,14 +133,18 @@ namespace SVESimulator.Database
                 foreach(CardSet set in setLibrary)
                     gameConfig.cards.AddRange(set.cards);
             }
-            LibraryCardCache.CacheCustomSetTextDataList(GetTextDataPaths(folders, pathInfo));
+
+            // Text data & images
+            LibraryCardCache.CacheCustomSetTextDataList(GetTextDataPaths(CustomSetFolderNames, PathInfo));
+            foreach(string folder in GetCustomSetFolderPaths())
+                CardTextureManager.CacheCustomCardTextureFolderPath(Path.Combine(folder, PathInfo.CustomSetImagesFolder));
         }
 
         public static List<string> GetTextDataPaths(List<string> folders = null, FilePathInfo pathInfo = null)
         {
             if(!pathInfo)
-                pathInfo = Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO);
-            folders ??= Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x)).ToList();
+                pathInfo = PathInfo;
+            folders ??= GetCustomSetFolderNames();
 
             List<string> paths = new();
             foreach(string folder in folders)
@@ -164,8 +171,8 @@ namespace SVESimulator.Database
             StartCoroutine(Download());
             IEnumerator Download()
             {
-                IEnumerable<string> folders = Directory.EnumerateDirectories(pathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(pathInfo.CustomSetFolderPath, x));
-                foreach(string folder in folders)
+                GetCustomSetFolderNames();
+                foreach(string folder in CustomSetFolderNames)
                 {
                     if(folder.Equals(pathInfo.CustomSetTemplateFolder))
                         continue;
@@ -189,7 +196,27 @@ namespace SVESimulator.Database
 
         // ------------------------------
 
-        #region File Management
+        #region Get Info
+
+        public static List<string> GetCustomSetFolderNames()
+        {
+            CachePathInfo();
+            CustomSetFolderNames = Directory.EnumerateDirectories(PathInfo.CustomSetFolderPath).Select(x => Path.GetRelativePath(PathInfo.CustomSetFolderPath, x)).ToList();
+            CustomSetFolderNames.Remove(PathInfo.CustomSetTemplateFolder);
+            return CustomSetFolderNames;
+        }
+
+        public static List<string> GetCustomSetFolderPaths()
+        {
+            GetCustomSetFolderNames();
+            return CustomSetFolderNames.Select(x => Path.Combine(PathInfo.CustomSetFolderPath, x)).ToList();
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region File/Data Management
 
         private void CreateTemplateFolder()
         {
@@ -206,6 +233,12 @@ namespace SVESimulator.Database
             string imagesFolder = Path.Combine(templateFolder, pathInfo.CustomSetImagesFolder);
             Directory.CreateDirectory(imagesFolder);
             File.Create(Path.Combine(templateFolder, pathInfo.CustomSetDownloadSettingsFileName));
+        }
+
+        private static void CachePathInfo()
+        {
+            if(!PathInfo)
+                PathInfo = Resources.Load<FilePathInfo>(RESOURCE_PATH_INFO);
         }
 
         #endregion
