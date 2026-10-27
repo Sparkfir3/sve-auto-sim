@@ -19,10 +19,12 @@ namespace SVESimulator.UI
         private Toggle onToggle;
         [SerializeField]
         private TextMeshProUGUI onToggleText;
-        [SerializeField]
+        [BoxGroup("Buttons"), SerializeField]
         private Button compileButton;
-        [SerializeField]
+        [BoxGroup("Buttons"), SerializeField]
         private Button downloadImagesButton;
+        [BoxGroup("Buttons"), SerializeField]
+        private Button clearConsoleButton;
         [SerializeField]
         private DebugConsoleDisplay debugConsole;
 
@@ -57,6 +59,7 @@ namespace SVESimulator.UI
             compileButton.onClick.AddListener(CompileCustomSets);
             downloadImagesButton.onClick.AddListener(DownloadImages);
             downloadImagesButton.interactable = false;
+            clearConsoleButton.onClick.AddListener(ClearConsole);
             debugConsole.Clear();
         }
 
@@ -64,11 +67,12 @@ namespace SVESimulator.UI
 
         private void CompileCustomSets()
         {
-            debugConsole.Clear();
             controller.CompileCustomSets();
-            debugConsole.AddEntries(SveScriptDebugger.GetLogs());
             if(!SveScriptDebugger.HasErrors())
                 downloadImagesButton.interactable = true;
+            else if(!CustomSetController.UseCustomSets)
+                offToggle.isOn = true;
+            debugConsole.AddEntries(SveScriptDebugger.GetLogs());
         }
 
         private void DownloadImages()
@@ -80,6 +84,11 @@ namespace SVESimulator.UI
                 SveScriptDebugger.Log("Finished downloading images");
                 debugConsole.AddEntry(LogType.Log, "Finished downloading images");
             });
+        }
+
+        private void ClearConsole()
+        {
+            debugConsole.Clear();
         }
     }
 }

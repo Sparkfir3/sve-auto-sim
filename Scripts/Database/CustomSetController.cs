@@ -65,6 +65,7 @@ namespace SVESimulator.Database
         public void CompileCustomSets()
         {
             SveScriptDebugger.Reset();
+            SveScriptDebugger.Log("Starting custom set compilation...");
             GetCustomSetFolderNames();
             foreach(string folder in CustomSetFolderNames)
             {
@@ -92,12 +93,20 @@ namespace SVESimulator.Database
                     }
                     catch(System.Exception e)
                     {
-                        SveScriptDebugger.LogError($"Error compiling script {script} in custom set {folder}:\n{e.Message}");
+                        SveScriptDebugger.LogError($"Error compiling script {Path.GetFileName(script)} in custom set {folder}:\n{e.Message}");
+                        Debug.LogException(e);
                     }
                 }
 
                 if(SveScriptDebugger.HasErrors())
+                {
+                    if(UseCustomSets)
+                    {
+                        SetCustomSetsEnabled(false);
+                        SveScriptDebugger.Log("Custom sets have been disabled due to compilation errors");
+                    }
                     break;
+                }
 
                 SveScriptCompiler.SaveSetFile(dataFolder, Path.Combine(mainFolder, "FullSet.json"), $"Custom Set - {folder}");
                 SveScriptDebugger.Log($"Successfully Finished Compiling Custom Set - {folder}\nTotal Cards Compiled: {cardCount}");

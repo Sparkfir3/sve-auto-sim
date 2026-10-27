@@ -24,7 +24,7 @@ namespace SVESimulator.SveScript
             string mainEffectArgs = text.TextInsideParentheses(out _, out int pointer);
             pointer++; // move past close parentheses
             if(!StandardEffectInfoDictionary.TryGetValue(effectType, out EffectParams effectParams))
-                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text: {text}");
+                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from: {effectType} effect. Raw text:\n{text}");
             effectCcgType = effectParams.ccgType;
 
             // Unique Case - Complex Effect (Function Parameter Type)
@@ -83,7 +83,7 @@ namespace SVESimulator.SveScript
             string mainEffectArgs = text.TextInsideParentheses(out _, out int pointer);
             pointer++; // move past close parentheses
             if(!PassiveEffectInfoDictionary.TryGetValue(effectType, out EffectParams effectParams))
-                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text: {text}");
+                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text:\n{text}");
             effectCcgType = effectParams.ccgType;
 
             // Parse additional args
@@ -169,7 +169,7 @@ namespace SVESimulator.SveScript
                 if(argument == null && effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull
                    and not EffectParameterType.FilterOptional and not EffectParameterType.PassiveDuration)
                 {
-                    SveScriptDebugger.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
+                    SveScriptDebugger.LogWarning($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                         $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
                         $"\nReceived: ({string.Join(", ", argsArray)})");
                 }
