@@ -12,6 +12,8 @@ namespace SVESimulator.UI
         [Title("Object References"), SerializeField]
         private CustomSetController controller;
         [SerializeField]
+        private Transform container;
+        [SerializeField]
         private Toggle offToggle;
         [SerializeField]
         private TextMeshProUGUI offToggleText;
@@ -19,12 +21,16 @@ namespace SVESimulator.UI
         private Toggle onToggle;
         [SerializeField]
         private TextMeshProUGUI onToggleText;
+
+        [BoxGroup("Buttons"), SerializeField]
+        private Button closeButton;
         [BoxGroup("Buttons"), SerializeField]
         private Button compileButton;
         [BoxGroup("Buttons"), SerializeField]
         private Button downloadImagesButton;
         [BoxGroup("Buttons"), SerializeField]
         private Button clearConsoleButton;
+
         [SerializeField]
         private DebugConsoleDisplay debugConsole;
 
@@ -61,6 +67,23 @@ namespace SVESimulator.UI
             downloadImagesButton.interactable = false;
             clearConsoleButton.onClick.AddListener(ClearConsole);
             debugConsole.Clear();
+
+            // Other
+            closeButton.onClick.AddListener(Close);
+        }
+
+        public void Open()
+        {
+            if(!container)
+                container = transform.parent;
+            container.gameObject.SetActive(true);
+        }
+
+        public void Close()
+        {
+            if(!container)
+                container = transform.parent;
+            container.gameObject.SetActive(false);
         }
 
         // ------------------------------

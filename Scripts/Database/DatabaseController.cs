@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -21,6 +22,9 @@ namespace SVESimulator.Database
 
         [field: ShowInInspector, ReadOnly, HideInEditorMode]
         public static bool HasRunThisSession { get; private set; }
+        [field: ShowInInspector, ReadOnly, HideInEditorMode]
+        public bool IsDownloadingImages { get; private set; }
+
         // -----
 
         [field: TitleGroup("Settings"), SerializeField]
@@ -66,6 +70,7 @@ namespace SVESimulator.Database
             if(HasRunThisSession || !checkToRunDownloader || (!runInEditor && Application.isEditor))
             {
                 DisableOverlay();
+                IsDownloadingImages = false;
                 HasRunThisSession = true;
                 return;
             }
@@ -86,6 +91,7 @@ namespace SVESimulator.Database
             //     yield break;
             // }
 
+            IsDownloadingImages = true;
             EnableOverlay();
 
             bool downloading = true;
@@ -103,6 +109,7 @@ namespace SVESimulator.Database
             yield return null;
 
             DisableOverlay();
+            IsDownloadingImages = false;
             HasRunThisSession = true;
         }
 

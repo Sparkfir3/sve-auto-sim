@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using Sparkfire.Utility;
+using SVESimulator.Database;
 using TMPro;
+using UnityEngine.UI;
 
 namespace SVESimulator.UI
 {
@@ -18,11 +20,13 @@ namespace SVESimulator.UI
 
         [Title("Settings"), SerializeField]
         private SerializedDictionary<MainMenuAction, MainMenuTransition> transitions;
-        
+
         // ---
-        
+
         [Title("Object References"), SerializeField]
         private MainMenuController mainMenuController;
+        [SerializeField]
+        private CardAnimationController animationController;
         [SerializeField]
         private SteamRoomCodeInputField steamRoomCodeInputField;
         [SerializeField]
@@ -31,20 +35,22 @@ namespace SVESimulator.UI
         private TextMeshProUGUI errorTextBox;
         [SerializeField]
         private SteamUserInfoDisplay userInfoDisplay;
-        
+
+        [FoldoutGroup("Custom Sets"), SerializeField]
+        private Button customSetsButton;
+        [FoldoutGroup("Custom Sets"), SerializeField]
+        private TextMeshProUGUI customSetsEnabledText;
+        [FoldoutGroup("Custom Sets"), SerializeField]
+        private CustomSetsModal customSetsModal;
+
         [FoldoutGroup("Cards"), SerializeField]
         private SerializedDictionary<MainMenuButton, MainMenuCardObject> buttonCards;
         [FoldoutGroup("Cards"), SerializeField]
         private SerializedDictionary<MainMenuCardPosition, Transform> cardPositions;
-        
-        [FoldoutGroup("Controllers"), SerializeField]
-        private CardAnimationController animationController;
-        [FoldoutGroup("Controllers"), SerializeField]
-        private MainMenuInputController inputController;
-        
+
+
         // ---
 
-        public bool AllowInputs => !animationController.IsAnimating;
         public string RoomCode => steamRoomCodeInputField.Text;
 
         public event Action<MainMenuViewState> OnStateEnter;
@@ -76,12 +82,24 @@ namespace SVESimulator.UI
             mainMenuController.OnOpponentConnected += OnOpponentConnected;
             mainMenuController.OnOpponentDisconnected += OnOpponentDisconnected;
 
+            customSetsButton.onClick.AddListener(OpenCustomSetsModal);
             connectingIndicator.SetActive(false);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            inputController.AllowInputs = AllowInputs;
+            customSetsEnabledText.text = CustomSetController.UseCustomSets ? "ON" : "OFF";
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Get Info
+
+        public bool IsModalOpen()
+        {
+            return customSetsModal.gameObject.activeInHierarchy;
         }
 
         #endregion
@@ -152,6 +170,11 @@ namespace SVESimulator.UI
         // ------------------------------
 
         #region UI Events
+
+        private void OpenCustomSetsModal()
+        {
+            customSetsModal.Open();
+        }
 
         [TitleGroup("Debug"), Button, DisableInEditorMode]
         private void OnButtonClickedInternal(MainMenuButton button, MainMenuAction action)

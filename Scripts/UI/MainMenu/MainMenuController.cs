@@ -7,6 +7,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Sparkfire.Utility;
 using Steamworks;
+using SVESimulator.Database;
 
 namespace SVESimulator.UI
 {
@@ -14,11 +15,19 @@ namespace SVESimulator.UI
     {
         #region Variables
 
-        [Title("Runtime Data"), SerializeField]
+        [field: Title("Runtime Data"), SerializeField]
+        public bool AllowInputs { get; set; } = true;
+        [SerializeField]
         private bool _isConnecting;
 
         [Title("Object References"), SerializeField]
         private MainMenuView mainMenuView;
+        [SerializeField]
+        private MainMenuInputController inputController;
+        [SerializeField]
+        private CardAnimationController animationController;
+        [SerializeField]
+        private DatabaseController databaseController;
         [SerializeField]
         private DeckSelectionController deckSelectionController;
         [SerializeField]
@@ -50,6 +59,11 @@ namespace SVESimulator.UI
             SVEGameNetworkManager.OnPlayerDisconnected += HandlePlayerDisconnectedFromServer;
             SVEGameNetworkManager.OnLocalConnect += HandleLocalPlayerConnected;
             SVEGameNetworkManager.OnLocalDisconnect += HandleLocalPlayerDisconnected;
+        }
+
+        private void Update()
+        {
+            inputController.AllowInputs = AllowInputs && !mainMenuView.IsModalOpen() && !databaseController.IsDownloadingImages && !animationController.IsAnimating;
         }
 
         private void OnDestroy()

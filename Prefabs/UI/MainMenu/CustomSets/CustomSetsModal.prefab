@@ -1611,10 +1611,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
+  container: {fileID: 0}
   offToggle: {fileID: 8405502249222581735}
   offToggleText: {fileID: 4401621786910654961}
   onToggle: {fileID: 5262109122186229456}
   onToggleText: {fileID: 5391019817803849814}
+  closeButton: {fileID: 6029401095920840229}
   compileButton: {fileID: 7068409201750182813}
   downloadImagesButton: {fileID: 5426915197878692177}
   clearConsoleButton: {fileID: 7635596757609296120}
