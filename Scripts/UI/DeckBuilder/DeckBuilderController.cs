@@ -76,6 +76,8 @@ namespace SVESimulator.DeckBuilder
             if(!DeckDataToLoad.IsNullOrWhiteSpace())
             {
                 model.ImportDeck(DeckDataToLoad);
+                if(model.HasImportErrors)
+                    view.OpenImportErrorsModal();
                 SetInitialFiltersFromDeckData();
             }
             DeckDataToLoad = null;

@@ -38,6 +38,10 @@ namespace SVESimulator.DeckBuilder
         public Dictionary<Card, int> CurrentMainDeck { get; private set; } = new();
         public Dictionary<Card, int> CurrentEvolveDeck { get; private set; } = new();
 
+        [ShowInInspector]
+        public List<DeckSaveLoadUtils.CardAmountPair> ImportErrors { get; private set; } = new();
+        public bool HasImportErrors => ImportErrors.Count > 0;
+
         public Action OnUpdateFilters;
         public event Action OnUpdateFilteredCardList;
         public event Action OnUpdateDeck;
@@ -243,15 +247,17 @@ namespace SVESimulator.DeckBuilder
             CurrentLeader = null;
             CurrentMainDeck.Clear();
             CurrentEvolveDeck.Clear();
+            ImportErrors.Clear();
 
             List<DeckSaveLoadUtils.CardAmountPair> cardAsArray = DeckSaveLoadUtils.LoadDeck(data, out string deckClass);
             DeckClass = deckClass;
             foreach(DeckSaveLoadUtils.CardAmountPair cardAmount in cardAsArray)
             {
-                Card card = gameConfig.cards.FirstOrDefault(x => x.id == cardAmount.id);
+                Card card = gameConfig.cards.FirstOrDefault(x => x.id == cardAmount.ccgId);
                 if(card == null)
                 {
-                    Debug.LogError($"Failed to find card in database with ID {cardAmount.id} (desired amount: {cardAmount.amount})");
+                    Debug.LogError($"Failed to find card in database with ID {cardAmount.id} (desired amount: {cardAmount.amount}, internal ID: {cardAmount.ccgId})");
+                    ImportErrors.Add(cardAmount);
                     continue;
                 }
 

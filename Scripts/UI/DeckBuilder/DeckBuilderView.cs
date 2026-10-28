@@ -6,6 +6,7 @@ using Sparkfire.Utility;
 using CCGKit;
 using SVESimulator.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace SVESimulator.DeckBuilder
 {
@@ -27,6 +28,8 @@ namespace SVESimulator.DeckBuilder
         private DeckBuilderDeckStats deckStats;
         [SerializeField]
         private DeckBuilderFilterOptionsMenu filterOptionsMenu;
+        [SerializeField]
+        private DeckBuilderImportErrorsModal importErrorsModal;
         [SerializeField]
         private GameObject exitModal;
         [SerializeField]
@@ -104,6 +107,16 @@ namespace SVESimulator.DeckBuilder
         // ------------------------------
 
         #region Open/Close Menus
+
+        public void OpenImportErrorsModal()
+        {
+            importErrorsModal.Open(DeckBuilderController.DeckNameToLoad, model.ImportErrors);
+        }
+
+        public void CloseImportErrorsModal()
+        {
+            importErrorsModal.Close();
+        }
 
         public void OpenAdvancedFilters()
         {
