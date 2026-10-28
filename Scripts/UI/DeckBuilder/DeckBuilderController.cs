@@ -71,6 +71,7 @@ namespace SVESimulator.DeckBuilder
             sortTypeDropdown.value = 0;
             sortTypeDropdown.onValueChanged.AddListener(HandleSortModeUpdated);
 
+            model.Initialize();
             if(!DeckDataToLoad.IsNullOrWhiteSpace())
             {
                 model.ImportDeck(DeckDataToLoad);

@@ -50,9 +50,9 @@ namespace SVESimulator.DeckBuilder
 
         // ------------------------------
 
-        #region Unity Functions
+        #region Initialize
 
-        private void Awake()
+        public void Initialize()
         {
             IsDirty = false;
             gameConfig = new GameConfiguration();
