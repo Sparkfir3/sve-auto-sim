@@ -275,7 +275,7 @@ type Follower;
 trait Umamusume;
 rarity B;
 cost 2;
-stats 2/2;
+stats 3/2;
 
 text "[feed][cost01]: Race this follower.
       [act][cost03], [engage]: Select an enemy follower on the field and deal it 3 damage.";
