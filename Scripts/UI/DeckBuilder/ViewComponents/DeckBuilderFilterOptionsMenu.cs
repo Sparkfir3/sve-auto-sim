@@ -25,6 +25,8 @@ namespace SVESimulator.DeckBuilder
         private DeckBuilderFilterClass cardClassButtonGroup;
         [BoxGroup("Card Properties"), SerializeField]
         private DeckBuilderFilterUniverse universeButtonGroup;
+        [BoxGroup("Card Properties"), SerializeField]
+        private DeckBuilderFilterRarity rarityButtonGroup;
 
         [BoxGroup("Cost"), SerializeField]
         private MinMaxSlider costSlider;
@@ -65,6 +67,7 @@ namespace SVESimulator.DeckBuilder
             cardTypeButtonGroup.Initialize(~CardTypeFilter.Token);
             cardClassButtonGroup.Initialize(model.Filters.cardClass);
             universeButtonGroup.Initialize(model.Filters.universe);
+            rarityButtonGroup.Initialize(model.Filters.rarity);
         }
 
         private void Update()

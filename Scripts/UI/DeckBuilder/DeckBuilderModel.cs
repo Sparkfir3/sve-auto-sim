@@ -92,7 +92,7 @@ namespace SVESimulator.DeckBuilder
                 FilterByStat(ref _filteredCardList, Filters.minAttack, Filters.maxAttack, SVEProperties.CardStats.Attack);
             if(Filters.useDefense)
                 FilterByStat(ref _filteredCardList, Filters.minDefense, Filters.maxDefense, SVEProperties.CardStats.Defense);
-            // FilterByRarity(ref _filteredCardList); NOT CURRENTLY USED
+            // FilterByRarity(ref _filteredCardList); CURRENTLY NOT USED due to card rarities not being saved in database currently
 
             CardListSorting.SortCardList(ref _filteredCardList, SortMode);
             OnUpdateFilteredCardList?.Invoke();
@@ -205,35 +205,33 @@ namespace SVESimulator.DeckBuilder
             });
         }
 
-        // NOT CURRENTLY USED
-        // private void FilterByRarity(ref List<Card> cardList)
-        // {
-        //     if(Filters.rarity <= 0)
-        //         return;
-        //
-        //     List<string> rarities = new();
-        //     if(Filters.rarity.HasFlag(RarityFilter.Legendary))
-        //         rarities.Add(SVEProperties.CardRarity.Legendary);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Gold))
-        //         rarities.Add(SVEProperties.CardRarity.Gold);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Silver))
-        //         rarities.Add(SVEProperties.CardRarity.Silver);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Bronze))
-        //         rarities.Add(SVEProperties.CardRarity.Bronze);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Token))
-        //         rarities.Add(SVEProperties.CardRarity.Token);
-        //
-        //     if(rarities.Count == 0)
-        //         return;
-        //     cardList.KeepWhere(x =>
-        //     {
-        //         StringProperty rarityProperty = x.properties.Find(y => y.name.Equals(SVEProperties.CardStats.Rarity) && y is StringProperty) as StringProperty;
-        //         if(rarityProperty == null)
-        //             return false;
-        //         string cardRarity = rarityProperty.value;
-        //         return rarities.Any(y => cardRarity.Equals(y));
-        //     });
-        // }
+        // CURRENTLY NOT USED due to card rarities not being saved in database currently
+        private void FilterByRarity(ref List<Card> cardList)
+        {
+            if(Filters.rarity <= 0)
+                return;
+
+            List<string> rarities = new();
+            if(Filters.rarity.HasFlag(RarityFilter.Legendary))
+                rarities.Add(SVEProperties.CardRarity.Legendary);
+            if(Filters.rarity.HasFlag(RarityFilter.Gold))
+                rarities.Add(SVEProperties.CardRarity.Gold);
+            if(Filters.rarity.HasFlag(RarityFilter.Silver))
+                rarities.Add(SVEProperties.CardRarity.Silver);
+            if(Filters.rarity.HasFlag(RarityFilter.Bronze))
+                rarities.Add(SVEProperties.CardRarity.Bronze);
+
+            if(rarities.Count == 0)
+                return;
+            cardList.KeepWhere(x =>
+            {
+                StringProperty rarityProperty = x.properties.Find(y => y.name.Equals(SVEProperties.CardStats.Rarity) && y is StringProperty) as StringProperty;
+                if(rarityProperty == null)
+                    return false;
+                string cardRarity = rarityProperty.value;
+                return rarities.Any(y => cardRarity.Equals(y));
+            });
+        }
 
         #endregion
 

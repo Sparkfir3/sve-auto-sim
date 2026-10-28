@@ -14,6 +14,7 @@ namespace SVESimulator.DeckBuilder
         [LabelText("Class")]
         public ClassFilter cardClass;
         public UniverseFilter universe;
+        public RarityFilter rarity;
 
         [HorizontalGroup("Cost"), LabelWidth(100)]
         public bool useCost = true;
@@ -36,7 +37,6 @@ namespace SVESimulator.DeckBuilder
         [HorizontalGroup("Defense"), LabelWidth(100), Range(0, 10)]
         public int maxDefense = 10;
 
-        // public RarityFilter rarity; UNUSED
     }
 
     [Flags]
@@ -78,6 +78,6 @@ namespace SVESimulator.DeckBuilder
         Gold = 2,
         Silver = 4,
         Bronze = 8,
-        Token = 16,
+        Other = 16,
     }
 }

@@ -3802,6 +3802,7 @@ MonoBehaviour:
     cardType: 31
     cardClass: 0
     universe: 0
+    rarity: 0
     useCost: 1
     minCost: 0
     maxCost: 8
@@ -9637,6 +9638,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -456.83002
       objectReference: {fileID: 0}
+    - target: {fileID: 7389801720241912825, guid: bec190d1bca71a241926156f96221c72, type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 6478212572397316401}
     - target: {fileID: 7485274892974017852, guid: bec190d1bca71a241926156f96221c72, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
