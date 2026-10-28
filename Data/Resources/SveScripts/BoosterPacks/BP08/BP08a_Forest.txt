@@ -1,0 +1,41 @@
+name Lloyd;
+id BP08-T01;
+class Forest;
+type Follower;
+trait Puppetry / Token;
+cost 0;
+stats 2/4;
+
+text "Ward.
+      [fanfare] Give your leader [defense]+2.
+      While this card is on the field, its name is also Puppet.";
+
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Passive {
+    effect GiveName(Puppet) to Self;
+}
+
+// ------------------------------
+
+name Victoria;
+id BP08-T02;
+class Forest;
+type Follower;
+trait Puppetry / Cutthroat / Token;
+cost 0;
+stats 4/1;
+
+text "Rush. Assail.
+      [fanfare] Draw a card.
+      While this card is on the field, its name is also Puppet.";
+
+keywords Rush, Assail;
+ability Fanfare {
+    effect Draw(1);
+}
+ability Passive {
+    effect GiveName(Puppet, WhileOnField) to Self;
+}
