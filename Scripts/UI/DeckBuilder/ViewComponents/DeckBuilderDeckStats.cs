@@ -17,21 +17,25 @@ namespace SVESimulator.DeckBuilder
         [SerializeField]
         private List<RectTransform> costBreakdownBars;
 
-        [SerializeField]
+        [BoxGroup("Main Deck"), SerializeField]
         private TextMeshProUGUI textDeckCurrentAmt;
-        [SerializeField]
+        [BoxGroup("Main Deck"), SerializeField]
         private TextMeshProUGUI textDeckMaxAmt;
-        [SerializeField]
+        [BoxGroup("Main Deck"), SerializeField]
         private TextMeshProUGUI textAmtFollowers;
-        [SerializeField]
+        [BoxGroup("Main Deck"), SerializeField]
         private TextMeshProUGUI textAmtSpells;
-        [SerializeField]
+        [BoxGroup("Main Deck"), SerializeField]
         private TextMeshProUGUI textAmtAmulets;
 
-        [SerializeField]
+        [BoxGroup("Evolve Deck"), SerializeField]
         private TextMeshProUGUI textEvolveDeckCurrentAmt;
-        [SerializeField]
+        [BoxGroup("Evolve Deck"), SerializeField]
         private TextMeshProUGUI textAmtEvolved;
+        [BoxGroup("Evolve Deck"), SerializeField]
+        private TextMeshProUGUI textAmtAdvanced;
+        [BoxGroup("Evolve Deck"), SerializeField]
+        private TextMeshProUGUI textAmtCarrots;
 
         [Title("Settings"), SerializeField]
         private string stringTemplate = "{0}: {1}";
@@ -51,7 +55,7 @@ namespace SVESimulator.DeckBuilder
 
         private void UpdateMainDeckGraph()
         {
-            int mainDeckCount = model.MainDeckCount;
+            List<int> counts = new();
             for(int i = 0; i < costBreakdownBars.Count; i++)
             {
                 int count = model.CurrentMainDeck.Where(x =>
@@ -59,8 +63,14 @@ namespace SVESimulator.DeckBuilder
                     Stat stat = x.Key.stats.FirstOrDefault(y => y.name.Equals(SVEProperties.CardStats.Cost));
                     return stat != null && ((i == costBreakdownBars.Count - 1) ? stat.baseValue >= i : stat.baseValue == i);
                 }).Sum(x => x.Value);
+                counts.Add(count);
 
-                float percent = mainDeckCount > 0 ? (float)count / mainDeckCount : 0f;
+            }
+
+            int highestCount = counts.Max();
+            for(int i = 0; i < costBreakdownBars.Count; i++)
+            {
+                float percent = highestCount > 0 ? (float)counts[i] / highestCount : 0f;
                 costBreakdownBars[i].anchoredPosition = new Vector2(0f, -(1f - percent) * costBreakdownBars[i].rect.height);
             }
         }
@@ -84,7 +94,13 @@ namespace SVESimulator.DeckBuilder
             textEvolveDeckCurrentAmt.text = model.EvolveDeckCount.ToString();
 
             textAmtEvolved.text = string.Format(stringTemplate, "Evolved",
-                model.CurrentEvolveDeck.Where(x => x.Key.IsFollowerOrEvolvedFollower(model.gameConfig)).Sum(x => x.Value));
+                model.CurrentEvolveDeck.Where(x => x.Key.IsCardType(SVEProperties.CardTypes.EvolvedFollower)).Sum(x => x.Value));
+            textAmtAdvanced.text = string.Format(stringTemplate, "Advanced",
+                model.CurrentEvolveDeck.Where(x => x.Key.IsCardType(SVEProperties.CardTypes.AdvancedFollower)).Sum(x => x.Value));
+
+            int carrotCount = model.CurrentEvolveDeck.FirstOrDefault(x => x.Key.id == UmaUtilities.CarrotCardId).Value;
+            textAmtCarrots.gameObject.SetActive(carrotCount > 0);
+            textAmtCarrots.text = string.Format(stringTemplate, "Carrots", carrotCount);
         }
 
         #endregion

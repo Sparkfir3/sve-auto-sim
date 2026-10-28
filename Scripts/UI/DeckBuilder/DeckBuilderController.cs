@@ -55,8 +55,6 @@ namespace SVESimulator.DeckBuilder
 
         private void Awake()
         {
-            view.Initialize(DeckNameToLoad);
-
             cardList.AddCard += model.AddCard;
             deckPreview.AddCard += model.AddCard;
             cardList.RemoveCard += model.RemoveCard;
@@ -76,10 +74,13 @@ namespace SVESimulator.DeckBuilder
             if(!DeckDataToLoad.IsNullOrWhiteSpace())
             {
                 model.ImportDeck(DeckDataToLoad);
-                if(model.HasImportErrors)
-                    view.OpenImportErrorsModal();
                 SetInitialFiltersFromDeckData();
             }
+
+            view.Initialize(DeckNameToLoad);
+            if(model.HasImportErrors)
+                view.OpenImportErrorsModal();
+
             DeckDataToLoad = null;
             DeckNameToLoad = null;
         }

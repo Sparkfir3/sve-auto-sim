@@ -9,6 +9,7 @@ namespace SVESimulator.Database
 {
     public static class DeckSaveLoadUtils
     {
+        [Serializable]
         public struct CardAmountPair
         {
             public string id;

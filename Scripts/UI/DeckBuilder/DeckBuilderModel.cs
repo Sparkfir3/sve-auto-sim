@@ -38,7 +38,7 @@ namespace SVESimulator.DeckBuilder
         public Dictionary<Card, int> CurrentMainDeck { get; private set; } = new();
         public Dictionary<Card, int> CurrentEvolveDeck { get; private set; } = new();
 
-        [ShowInInspector]
+        [ShowInInspector, ReadOnly]
         public List<DeckSaveLoadUtils.CardAmountPair> ImportErrors { get; private set; } = new();
         public bool HasImportErrors => ImportErrors.Count > 0;
 

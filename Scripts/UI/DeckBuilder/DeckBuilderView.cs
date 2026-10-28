@@ -80,6 +80,8 @@ namespace SVESimulator.DeckBuilder
                     CloseSaveDeckMenu();
                 if(exitModal.activeInHierarchy)
                     CloseExitModal();
+                if(importErrorsModal.gameObject.activeInHierarchy)
+                    CloseImportErrorsModal();
             }
         }
 
