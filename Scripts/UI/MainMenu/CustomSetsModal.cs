@@ -30,6 +30,8 @@ namespace SVESimulator.UI
         private Button downloadImagesButton;
         [BoxGroup("Buttons"), SerializeField]
         private Button clearConsoleButton;
+        [BoxGroup("Buttons"), SerializeField]
+        private Button openFolderButton;
 
         [SerializeField]
         private DebugConsoleDisplay debugConsole;
@@ -70,6 +72,7 @@ namespace SVESimulator.UI
 
             // Other
             closeButton.onClick.AddListener(Close);
+            openFolderButton.onClick.AddListener(OpenDataFolder);
         }
 
         public void Open()
@@ -112,6 +115,11 @@ namespace SVESimulator.UI
         private void ClearConsole()
         {
             debugConsole.Clear();
+        }
+
+        private void OpenDataFolder()
+        {
+            Application.OpenURL($"file://{Application.persistentDataPath}");
         }
     }
 }
