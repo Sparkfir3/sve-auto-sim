@@ -34280,6 +34280,7 @@
             "type": "Triggered",
             "effect": {
               "effectName": "FollowerStrike",
+              "duration": "WhileOnField",
               "$type": "SVESimulator.GiveAbilityPassive"
             },
             "$type": "CCGKit.TriggeredAbility"

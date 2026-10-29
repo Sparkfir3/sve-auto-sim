@@ -525,7 +525,7 @@ namespace SVESimulator.SveScript
 
         private static Dictionary<string, EffectParams> PassiveEffectInfoDictionary = new()
         {
-            { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect) },
+            { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect, EffectParameterType.PassiveDuration) },
             { "GiveKeyword", new EffectParams("GiveKeywordPassive",                         false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
             { "GiveName", new EffectParams("AddNamePassive",                                false, true, EffectParameterType.Name, EffectParameterType.PassiveDuration) },
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
