@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sparkfire.Utility;
 using UnityEngine;
 
 namespace SVESimulator.SveScript
@@ -22,25 +23,28 @@ namespace SVESimulator.SveScript
             try
             {
                 string[] idSegments = cardId.Trim().Split('-');
+                string idSet = idSegments[0];
+                string idNumber = idSegments[1];
 
-                string setTypeRaw = SetTypeToID.First(x => idSegments[0].Contains(x.Key)).Key;
-                int setTypeId = SetTypeToID[setTypeRaw];
-                int setNumber = int.Parse(idSegments[0].Replace(setTypeRaw, ""));
+                string setTypeRaw = new(idSet.Where(x => !char.IsDigit(x)).ToArray());
+                int setTypeId = SetTypeToID.GetValueOrDefault(setTypeRaw, 99);
+                string setNumberRaw = new(idSet.Where(char.IsDigit).ToArray());
+                int setNumber = setNumberRaw.IsNullOrWhiteSpace() ? 0 : int.Parse(setNumberRaw);
 
-                int language = idSegments[1].EndsWith("EN") ? 1 : 0;
-                idSegments[1] = idSegments[1].Replace("EN", "");
+                int language = idNumber.EndsWith("EN") ? 1 : 0;
+                idNumber = idNumber.Replace("EN", "");
                 int cardType = 1;
-                if(idSegments[1].StartsWith("LD")) // Leader
+                if(idNumber.StartsWith("LD")) // Leader
                 {
                     cardType = 2;
-                    idSegments[1] = idSegments[1].Replace("LD", "");
+                    idNumber = idNumber.Replace("LD", "");
                 }
-                else if(idSegments[1].StartsWith("T")) // Token
+                else if(idNumber.StartsWith("T")) // Token
                 {
                     cardType = 3;
-                    idSegments[1] = idSegments[1].Replace("T", "");
+                    idNumber = idNumber.Replace("T", "");
                 }
-                int cardNumber = int.Parse(idSegments[1]);
+                int cardNumber = int.Parse(idNumber);
 
                 return int.Parse($"{setTypeId}{language}{setNumber:D3}{cardType}{cardNumber:D3}");
             }
@@ -53,10 +57,21 @@ namespace SVESimulator.SveScript
 
         private static readonly Dictionary<string, int> SetTypeToID = new()
         {
-            { "CSD", 4 }, // needs to before SD otherwise the C"SD" converts incorrectly
-            { "BP",  1 },
-            { "SD",  2 },
-            { "CP",  3 },
+            { "BP",     1 },
+            { "SD",     2 },
+            { "CP",     3 },
+            { "CSD",    4 },
+            { "CSDa",   4 },
+            { "CSDb",   5 },
+            { "CSDc",   6 },
+            { "SS",     7 },
+            { "SP",     8 },
+            { "ECP",    9 },
+            { "SDD",    10 },
+            { "PCS",    11 },
+
+            { "PR",     20 },
+            // Default/Custom Set: 99
         };
     }
 }

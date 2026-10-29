@@ -164,6 +164,9 @@ namespace SVESimulator
         public static class CardUniverse
         {
             public const string Umamusume = "Umamusume: Pretty Derby";
+            public const string IdolmasterCG = "THE IDOLM@STER CINDERELLA GIRLS";
+            public const string Vanguard = "Cardfight!! Vanguard";
+            public const string PrincessConnect = "Princess Connect! Re: Dive";
         }
 
         public static class Keywords
