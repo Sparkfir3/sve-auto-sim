@@ -46933,28 +46933,22 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
               "target": "Leader",
-              "filter": null,
               "targetStats": "Defense",
               "amount": "2",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
               "target": "Self",
               "filter": null,
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.PassiveAbilityOnField"
             },
             "name": "Passive",
@@ -46964,7 +46958,6 @@
               "duration": "WhileOnField",
               "$type": "SVESimulator.AddNamePassive"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -47065,8 +47058,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -47076,15 +47067,12 @@
               "amount": "1",
               "$type": "SVESimulator.DrawCardEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
               "target": "Self",
               "filter": null,
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.PassiveAbilityOnField"
             },
             "name": "Passive",
@@ -47094,7 +47082,6 @@
               "duration": "WhileOnField",
               "$type": "SVESimulator.AddNamePassive"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -49314,7 +49301,7 @@
     ]
   },
   {
-    "name": "BP16",
+    "name": "Booster Set #16 \"New World Genesis\"",
     "cards": [
       {
         "cardTypeId": 0,
@@ -49407,8 +49394,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -49419,7 +49404,6 @@
               "amount": "2",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -49502,8 +49486,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnEvolveTrigger"
             },
             "name": "OnEvolve",
@@ -49514,13 +49496,10 @@
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnSuperEvolveTrigger"
             },
             "name": "OnSuperEvolve",
@@ -49532,7 +49511,6 @@
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -49625,7 +49603,6 @@
           {
             "trigger": {
               "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCardEx\",\r\n    \"filter\": \"n(Puppet)m(2,2)\",\r\n    \"$type\": \"SVESimulator.BanishCost\"\r\n  }\r\n]",
-              "condition": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -49636,7 +49613,6 @@
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
@@ -49660,61 +49636,48 @@
               "effectName3": "Bane",
               "$type": "SVESimulator.TargetForEffectSequence"
             },
-            "target": null,
             "$type": "CCGKit.ActivatedAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "AtkDef",
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCards",
-              "filter": null,
               "targetStats": "AttackDefense",
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Storm",
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCards",
-              "filter": null,
               "keywordType": 0,
               "keywordValue": 1,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Bane",
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCards",
-              "filter": null,
               "keywordType": 0,
               "keywordValue": 6,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -49807,7 +49770,6 @@
           {
             "trigger": {
               "condition": "[f(t(Festive))+x(t(Festive))] > 2",
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -49818,7 +49780,6 @@
               "searchDeckAction": "Field",
               "$type": "SVESimulator.SearchDeckEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -49992,8 +49953,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnEvolveTrigger"
             },
             "name": "OnEvolve",
@@ -50003,13 +49962,10 @@
               "effectName2": "Summon",
               "$type": "SVESimulator.EffectSequence"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Draw",
@@ -50019,13 +49975,10 @@
               "amount": "1",
               "$type": "SVESimulator.DrawCardEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Summon",
@@ -50036,13 +49989,10 @@
               "amount": "2",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnSuperEvolveTrigger"
             },
             "name": "OnSuperEvolve",
@@ -50052,7 +50002,6 @@
               "amount": "f()+H",
               "$type": "SVESimulator.DealDamageDividedEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50144,8 +50093,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -50157,7 +50104,6 @@
               "amount": "1",
               "$type": "SVESimulator.SetStatEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50249,8 +50195,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -50261,7 +50205,6 @@
               "amount": "2",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
@@ -50283,25 +50226,20 @@
               "checkAction3": "None",
               "$type": "SVESimulator.CheckTopDeckEffect"
             },
-            "target": null,
             "$type": "CCGKit.ActivatedAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "MinusCost",
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCardsEx",
-              "filter": null,
               "targetStats": "Cost",
               "amount": "-3",
               "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50403,7 +50341,6 @@
           {
             "trigger": {
               "condition": "p(#F)",
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -50415,7 +50352,6 @@
               "keywordValue": 5,
               "$type": "SVESimulator.GiveKeywordEndOfNextTurnEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50503,8 +50439,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnEvolveTrigger"
             },
             "name": "OnEvolve",
@@ -50516,25 +50450,20 @@
               "effectName1": "MinusCost",
               "$type": "SVESimulator.SearchDeckAndTargetEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "MinusCost",
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCardsEx",
-              "filter": null,
               "targetStats": "Cost",
               "amount": "-2",
               "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50627,7 +50556,6 @@
           {
             "trigger": {
               "condition": "#(leftField, F)",
-              "cost": null,
               "$type": "SVESimulator.ModifiedCostTrigger"
             },
             "name": "ModifiedCost",
@@ -50635,13 +50563,10 @@
             "effect": {
               "$type": "SVESimulator.AdditionalCostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -50652,7 +50577,6 @@
               "amount": "4",
               "$type": "SVESimulator.DealDamageEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50708,8 +50632,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardLeaveFieldTrigger"
             },
             "name": "OnLeaveField",
@@ -50719,43 +50641,34 @@
               "effectName2": "PlayPoint",
               "$type": "SVESimulator.EffectSequence"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Defense",
             "type": "Triggered",
             "effect": {
               "target": "Leader",
-              "filter": null,
               "targetStats": "Defense",
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "PlayPoint",
             "type": "Triggered",
             "effect": {
               "target": "Leader",
-              "filter": null,
               "targetStats": "PlayPoint",
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50852,8 +50765,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -50864,7 +50775,6 @@
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -50947,8 +50857,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnEvolveTrigger"
             },
             "name": "OnEvolve",
@@ -50960,7 +50868,6 @@
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -51052,8 +50959,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -51064,13 +50969,10 @@
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveLastWordsTrigger"
             },
             "name": "LastWords",
@@ -51081,7 +50983,6 @@
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -51173,8 +51074,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -51186,7 +51085,6 @@
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -51279,7 +51177,6 @@
           {
             "trigger": {
               "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"t(Beast)!n(Baby Carbuncle)\",\r\n    \"$type\": \"SVESimulator.ReturnToHandCost\"\r\n  }\r\n]",
-              "condition": null,
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -51289,7 +51186,6 @@
               "amount": "1",
               "$type": "SVESimulator.DrawCardEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
@@ -51336,8 +51232,6 @@
         "abilities": [
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Spell",
@@ -51348,31 +51242,24 @@
               "effectName2": "Draw",
               "$type": "SVESimulator.ChooseAmountFromList"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Defense",
             "type": "Triggered",
             "effect": {
               "target": "Leader",
-              "filter": null,
               "targetStats": "Defense",
               "amount": "2",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           },
           {
             "trigger": {
-              "condition": null,
-              "cost": null,
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Draw",
@@ -51382,7 +51269,6 @@
               "amount": "1",
               "$type": "SVESimulator.DrawCardEffect"
             },
-            "target": null,
             "$type": "CCGKit.TriggeredAbility"
           }
         ],
