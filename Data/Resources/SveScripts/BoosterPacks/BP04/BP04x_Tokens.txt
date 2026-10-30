@@ -1,0 +1,29 @@
+name Serpent;
+id BP04-T01;
+class Abyss;
+type Follower;
+trait Demon / Token;
+cost 1;
+stats 0/1;
+
+text "Bane.";
+
+keyword Bane;
+
+// ------------------------------
+
+name Goblin King;
+id BP04-T02;
+class Neutral;
+type Follower;
+trait Goblinoid / Token;
+cost 4;
+stats 6/6;
+
+text "Ward.
+      [fanfare] Give each other Goblinoid follower on your field [attack]+1/[defense]+1.";
+
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Goblinoid)X;
+}

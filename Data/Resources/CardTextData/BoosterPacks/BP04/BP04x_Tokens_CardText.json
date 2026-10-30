@@ -1,0 +1,21 @@
+[
+  {
+    "id": "BP04-T01EN",
+    "name": "Serpent",
+    "trait": "Demon / Token",
+    "cardText": "Bane."
+  },
+  {
+    "id": "BP04-T02EN",
+    "name": "Goblin King",
+    "trait": "Goblinoid / Token",
+    "cardText": "Ward.\n[fanfare] Give each other Goblinoid follower on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give each other Goblinoid follower on your field [attack]+1/[defense]+1."
+      }
+    ]
+  }
+]
