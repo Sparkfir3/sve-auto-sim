@@ -7,8 +7,9 @@ using System.IO;
 using System.Linq;
 using ReformSim.LibAvif;
 using Sirenix.OdinInspector;
+using Sparkfire.Utility;
 
-namespace SVESimulator.Database.Scraper
+namespace SVESimulator.Database.ImageDownloader
 {
     public class DatabaseImageDownloader : MonoBehaviour
     {
@@ -23,8 +24,8 @@ namespace SVESimulator.Database.Scraper
         [SerializeField, ReadOnly]
         private int targetDownloadCount;
 
-        [TitleGroup("Settings"), SerializeField, TableList]
-        private List<SetDownloadSettings> downloadSettings;
+        [TitleGroup("Settings"), SerializeField]
+        private TextAsset downloadSettingsFile;
         [SerializeField, LabelText("Card Back URL")]
         private string cardBackURL = "";
         [SerializeField, LabelText("Evolve Point URL")]
@@ -37,6 +38,7 @@ namespace SVESimulator.Database.Scraper
         [SerializeField, InlineEditor]
         private FilePathInfo pathInfo;
 
+        [ShowInInspector, TableList, ReadOnly, HideInEditorMode]
         private List<SetDownloadSettings> runtimeDownloadSettings = new();
 
         public event Action<int, int> OnDownloadProgressUpdate; // Current downloaded count, total download target
@@ -55,6 +57,14 @@ namespace SVESimulator.Database.Scraper
             StartCoroutine(DownloadAllCards(onComplete));
         }
 
+        public void DownloadCustomSetImages(string downloadSettings, string outputFolder, Action onComplete = null)
+        {
+            if(!Application.isPlaying)
+                return;
+            CalculateCustomSetDownloadSize(downloadSettings, outputFolder);
+            StartCoroutine(DownloadCustomSetCards(outputFolder, onComplete));
+        }
+
         #endregion
 
         // ------------------------------
@@ -63,7 +73,16 @@ namespace SVESimulator.Database.Scraper
 
         private void CalculateDownloadSize()
         {
-            foreach(SetDownloadSettings settings in downloadSettings)
+            // Get raw/complete download list
+            runtimeDownloadSettings.Clear();
+            List<SetDownloadSettings> fullDownloadSettings = new();
+            string[] lines = downloadSettingsFile.text.Split('\n');
+            for(int i = 0; i < lines.Length; i++)
+                if(!lines[i].IsNullOrWhiteSpace())
+                    fullDownloadSettings.AddRange(SetDownloadSettings.ParseDownloadSettingsLine(lines[i]));
+
+            // Check against local files
+            foreach(SetDownloadSettings settings in fullDownloadSettings)
             {
                 string folderPath = Path.Combine(pathInfo.ImagesPath, settings.setCode);
                 if(!Directory.Exists(folderPath))
@@ -73,13 +92,13 @@ namespace SVESimulator.Database.Scraper
                 }
 
                 int i = settings.startIndex;
-                for(; i < settings.endIndex; i++)
+                for(; i <= settings.endIndex; i++)
                 {
                     string fileName = $"{settings.setCode}-{settings.GetCardIdNumberWithLanguage(i)}.png";
                     if(!File.Exists(Path.Combine(folderPath, fileName)))
                         break;
                 }
-                if(i >= settings.endIndex)
+                if(i > settings.endIndex)
                     continue;
 
                 runtimeDownloadSettings.Add(new SetDownloadSettings()
@@ -125,7 +144,59 @@ namespace SVESimulator.Database.Scraper
             {
                 for(int i = settings.startIndex; i <= settings.endIndex; i++)
                 {
-                    DownloadSetCard(pathInfo.ImagesPath, settings.setCode, settings.GetCardIdNumberWithLanguage(i), settings.language);
+                    DownloadSetCard(Path.Combine(pathInfo.ImagesPath, settings.setCode), settings.setCode, settings.GetCardIdNumberWithLanguage(i), settings.language);
+                    yield return new WaitForSeconds(delayBetweenDownloads);
+                    if(currentDownloadingCount >= maxConcurrentDownloads)
+                        yield return new WaitUntil(() => currentDownloadingCount < maxConcurrentDownloads);
+                }
+            }
+            onComplete?.Invoke();
+        }
+
+        private void CalculateCustomSetDownloadSize(string downloadSettings, string outputFolder)
+        {
+            // Get raw/complete download list
+            runtimeDownloadSettings.Clear();
+            List<SetDownloadSettings> fullDownloadSettings = new();
+            string[] lines = downloadSettings.Split('\n');
+            for(int i = 0; i < lines.Length; i++)
+                if(!lines[i].IsNullOrWhiteSpace())
+                    fullDownloadSettings.AddRange(SetDownloadSettings.ParseDownloadSettingsLine(lines[i]));
+
+            // Check against local files
+            foreach(SetDownloadSettings settings in fullDownloadSettings)
+            {
+                int i = settings.startIndex;
+                for(; i <= settings.endIndex; i++)
+                {
+                    string fileName = $"{settings.setCode}-{settings.GetCardIdNumberWithLanguage(i)}.png";
+                    if(!File.Exists(Path.Combine(outputFolder, fileName)))
+                        break;
+                }
+                if(i > settings.endIndex)
+                    continue;
+
+                runtimeDownloadSettings.Add(new SetDownloadSettings()
+                {
+                    setCode = settings.setCode,
+                    cardType = settings.cardType,
+                    startIndex = i,
+                    endIndex = settings.endIndex,
+                    language = settings.language
+                });
+            }
+            targetDownloadCount = runtimeDownloadSettings.Sum(x => x.endIndex - x.startIndex + 1);
+        }
+
+        private IEnumerator DownloadCustomSetCards(string outputFolder, Action onComplete = null)
+        {
+            if(!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+            foreach(SetDownloadSettings settings in runtimeDownloadSettings)
+            {
+                for(int i = settings.startIndex; i <= settings.endIndex; i++)
+                {
+                    DownloadSetCard(outputFolder, settings.setCode, settings.GetCardIdNumberWithLanguage(i), settings.language);
                     yield return new WaitForSeconds(delayBetweenDownloads);
                     if(currentDownloadingCount >= maxConcurrentDownloads)
                         yield return new WaitUntil(() => currentDownloadingCount < maxConcurrentDownloads);
@@ -142,10 +213,9 @@ namespace SVESimulator.Database.Scraper
 
         private void DownloadSetCard(string folderPath, string setCode, string cardId, SetDownloadSettings.CardLanguage language)
         {
-            string outputFolderPath = Path.Combine(folderPath, setCode);
-            if(!Directory.Exists(outputFolderPath))
-                Directory.CreateDirectory(outputFolderPath);
-            string outputFilePath = Path.Combine(outputFolderPath, $"{setCode}-{cardId}.png");
+            if(!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            string outputFilePath = Path.Combine(folderPath, $"{setCode}-{cardId}.png");
             if(File.Exists(outputFilePath))
                 return;
 

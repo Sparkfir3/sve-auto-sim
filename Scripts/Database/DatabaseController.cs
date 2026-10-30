@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using SVESimulator.CardTextData;
-using SVESimulator.Database.Scraper;
+using SVESimulator.Database.ImageDownloader;
 using SVESimulator.SveScript;
 using SVESimulator.UI;
 using TMPro;
@@ -21,6 +22,9 @@ namespace SVESimulator.Database
 
         [field: ShowInInspector, ReadOnly, HideInEditorMode]
         public static bool HasRunThisSession { get; private set; }
+        [field: ShowInInspector, ReadOnly, HideInEditorMode]
+        public bool IsDownloadingImages { get; private set; }
+
         // -----
 
         [field: TitleGroup("Settings"), SerializeField]
@@ -38,6 +42,8 @@ namespace SVESimulator.Database
 
         [TitleGroup("Object References"), SerializeField]
         private DatabaseImageDownloader imageDownloader;
+        [SerializeField]
+        private CustomSetController customSetController;
         [SerializeField, InlineEditor]
         private FilePathInfo paths;
         [SerializeField]
@@ -57,9 +63,14 @@ namespace SVESimulator.Database
 
         private void Awake()
         {
+            if(!HasRunThisSession)
+            {
+                customSetController.Initialize();
+            }
             if(HasRunThisSession || !checkToRunDownloader || (!runInEditor && Application.isEditor))
             {
                 DisableOverlay();
+                IsDownloadingImages = false;
                 HasRunThisSession = true;
                 return;
             }
@@ -80,30 +91,35 @@ namespace SVESimulator.Database
             //     yield break;
             // }
 
+            IsDownloadingImages = true;
             EnableOverlay();
 
             bool downloading = true;
             imageDownloader.OnDownloadProgressUpdate += SetLoadingPercent;
             imageDownloader.DownloadAllImages(() => downloading = false);
             yield return new WaitUntil(() => !downloading);
+            imageDownloader.OnDownloadProgressUpdate -= SetLoadingPercent;
 
             if(shouldGenerateLibrary && (Application.isEditor || generateLibraryInBuild))
             {
-                GenerateLibrary();
+                GenerateMainLibrary();
                 yield return null;
             }
             SaveDatabaseVersion();
             yield return null;
 
             DisableOverlay();
+            IsDownloadingImages = false;
             HasRunThisSession = true;
         }
 
         [TitleGroup("Buttons"), Button]
-        private void GenerateLibrary()
+        private void GenerateMainLibrary()
         {
+            // Generate new
             TextAsset[] sveScripts = Resources.LoadAll<TextAsset>(sveScriptResourcesPath);
             Debug.Log($"Loaded {sveScripts.Length} SVE scripts");
+            SveScriptDebugger.Reset();
             foreach(TextAsset script in sveScripts)
             {
                 SveScriptCompiler.ParseSveScriptCardSet(script.text, paths.CardDataPath);
@@ -113,6 +129,12 @@ namespace SVESimulator.Database
 #else
             SveScriptCompiler.GenerateAndSaveFullCardLibrary(paths, Path.Combine(paths.MainFolderPath, "card_library.json"));
 #endif
+
+            // Delete data
+            if(Directory.Exists(paths.CardDataPath))
+            {
+                Directory.Delete(paths.CardDataPath, true);
+            }
         }
 
         private void SaveDatabaseVersion()

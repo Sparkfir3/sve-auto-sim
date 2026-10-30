@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Sparkfire.Utility;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using SVESimulator.CardTextData;
 using CCGKit;
@@ -25,7 +26,8 @@ namespace SVESimulator
 
         private const string TextDataResourcesPath = "CardTextData";
 
-        private static TextAsset[] textDataList = null;
+        private static List<TextData> textDataListMain = null;
+        private static List<TextData> textDataListCustomSets = null;
         private static Dictionary<int, CardData> cards = new(); // [CardID, Data]
 
         public static int CacheSize => cards.Count;
@@ -122,41 +124,52 @@ namespace SVESimulator
 
         #region Cache Processing
 
+        public static void CacheMainTextDataList()
+        {
+            if(textDataListMain == null)
+            {
+                TextAsset[] textDataAssets = Resources.LoadAll<TextAsset>(TextDataResourcesPath);
+                textDataListMain = textDataAssets.SelectMany(x => JsonConvert.DeserializeObject<List<TextData>>(x.text)).ToList();
+            }
+        }
+
+        public static void CacheCustomSetTextDataList(List<string> textDataPaths)
+        {
+            textDataListCustomSets ??= new List<TextData>();
+            textDataListCustomSets.Clear();
+            foreach(string path in textDataPaths)
+            {
+                textDataListCustomSets.AddRange(JsonConvert.DeserializeObject<List<TextData>>(File.ReadAllText(path)));
+            }
+        }
+
         private static void CacheCardTextData(ref CardData data)
         {
-            if(textDataList == null)
-            {
-                textDataList = Resources.LoadAll<TextAsset>(TextDataResourcesPath);
-            }
-
+            CacheMainTextDataList();
             string baseId = data.card.GetEnglishSveID();
-            foreach(TextAsset textAsset in textDataList)
-            {
-                List<TextData> allTextData = JsonConvert.DeserializeObject<List<TextData>>(textAsset.text);
-                TextData textData = allTextData.FirstOrDefault(x => x.id.ToString().Equals(baseId));
-                if(textData == null)
-                    continue;
-
-                data.displayId = textData.id;
-                data.name = textData.name;
-                data.text = FormatCardText(textData.cardText, "");
-                data.trait = textData.trait;
-                data.effects = textData.effectText?.ToDictionary(x => x.key);
-                if(data.effects != null)
-                {
-                    foreach(EffectText effect in data.effects.Values)
-                    {
-                        effect.text = FormatCardText(effect.text);
-                        effect.trigger = FormatCardText(effect.trigger);
-                        effect.cost = FormatCardText(effect.cost);
-                        effect.body = FormatCardText(effect.body);
-                    }
-                }
-                else
-                {
-                    data.effects = new Dictionary<string, EffectText>();
-                }
+            TextData textData = textDataListMain?.FirstOrDefault(x => x.id.Equals(baseId));
+            textData ??= textDataListCustomSets?.FirstOrDefault(x => x.id.Equals(baseId));
+            if(textData == null)
                 return;
+
+            data.displayId = textData.id;
+            data.name = textData.name;
+            data.text = FormatCardText(textData.cardText, "");
+            data.trait = textData.trait;
+            data.effects = textData.effectText?.ToDictionary(x => x.key);
+            if(data.effects != null)
+            {
+                foreach(EffectText effect in data.effects.Values)
+                {
+                    effect.text = FormatCardText(effect.text);
+                    effect.trigger = FormatCardText(effect.trigger);
+                    effect.cost = FormatCardText(effect.cost);
+                    effect.body = FormatCardText(effect.body);
+                }
+            }
+            else
+            {
+                data.effects = new Dictionary<string, EffectText>();
             }
         }
 

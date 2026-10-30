@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
+using SVESimulator.Database;
 using UnityEngine;
 
 namespace SVESimulator
@@ -23,6 +24,17 @@ namespace SVESimulator
         }
 
         // ------------------------------
+
+        protected override void LoadGameConfiguration()
+        {
+            base.LoadGameConfiguration();
+            Debug.Log($"Game loaded {GameManager.Instance.config.cards.Count} cards in {GameManager.Instance.config.cardSets.Count} sets from main library");
+            if(CustomSetController.UseCustomSets)
+            {
+                CustomSetController.LoadCustomSets(GameManager.Instance.config);
+                Debug.Log($"Loaded custom sets, totaling {GameManager.Instance.config.cards.Count} cards in {GameManager.Instance.config.cardSets.Count} sets");
+            }
+        }
 
         /// <summary>
         /// Starts the multiplayer game. This is automatically called when the appropriate number of players have joined a room.

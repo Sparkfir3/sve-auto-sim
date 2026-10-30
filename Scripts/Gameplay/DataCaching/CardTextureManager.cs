@@ -14,6 +14,7 @@ namespace SVESimulator
         private static Texture missingTexture;
         private static Texture cardBackTexture;
         private static Dictionary<string, Texture> cardTextureCache = new();
+        private static List<string> customCardTextureFolderPaths = new();
 
         // ------------------------------
 
@@ -38,9 +39,7 @@ namespace SVESimulator
                 return texture;
             ValidatePathInfo();
 
-            string filePath = Path.Combine(Path.Combine(pathInfo.BuildFolderImagesPath, GetSubfolderFromID(cardId), $"{cardId}{pathInfo.DefaultFileExtension}"));
-            if(!File.Exists(filePath))
-                filePath = Path.Combine(pathInfo.ImagesPath, GetSubfolderFromID(cardId), $"{cardId}{pathInfo.DefaultFileExtension}");
+            string filePath = GetTextureFilePath(cardId);
             texture = LoadTextureFromFile(filePath);
             CacheCardTexture(cardId, texture);
             return texture;
@@ -66,11 +65,18 @@ namespace SVESimulator
             cardTextureCache.Add(cardId, texture);
         }
 
+        public static void CacheCustomCardTextureFolderPath(string path)
+        {
+            if(!customCardTextureFolderPaths.Contains(path))
+                customCardTextureFolderPaths.Add(path);
+        }
+
         public static void ClearCache()
         {
             foreach(Texture texture in cardTextureCache.Values)
                 Object.Destroy(texture);
             cardTextureCache.Clear();
+            customCardTextureFolderPaths.Clear();
         }
 
         #endregion
@@ -86,6 +92,26 @@ namespace SVESimulator
 #if UNITY_EDITOR
             Debug.Assert(pathInfo);
 #endif
+        }
+
+        private static string GetTextureFilePath(in string cardId)
+        {
+            string filePath = Path.Combine(Path.Combine(pathInfo.BuildFolderImagesPath, GetSubfolderFromID(cardId), $"{cardId}{pathInfo.DefaultFileExtension}")); // check main data folder
+            if(!File.Exists(filePath)) // check build folder
+                filePath = Path.Combine(pathInfo.ImagesPath, GetSubfolderFromID(cardId), $"{cardId}{pathInfo.DefaultFileExtension}");
+            if(!File.Exists(filePath) && customCardTextureFolderPaths is { Count: > 0 }) // check custom images
+            {
+                foreach(string folderPath in customCardTextureFolderPaths)
+                {
+                    string customFilePath = Path.Combine(folderPath, $"{cardId}{pathInfo.DefaultFileExtension}");
+                    if(File.Exists(customFilePath))
+                    {
+                        filePath = customFilePath;
+                        break;
+                    }
+                }
+            }
+            return filePath;
         }
 
         private static Texture LoadTextureFromFile(string filePath)

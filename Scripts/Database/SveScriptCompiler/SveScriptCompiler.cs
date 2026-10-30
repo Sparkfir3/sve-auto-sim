@@ -23,7 +23,7 @@ namespace SVESimulator.SveScript
         }
 
         public static void ParseSveScriptCardSet(in string text, in string outputPath) => ParseSveScriptCardSet(text, outputPath, out _);
-        public static void ParseSveScriptCardSet(in string text, in string outputPath, out List<string> outputFilePaths)
+        public static void ParseSveScriptCardSet(in string text, in string outputPath, out List<string> outputFilePaths, bool sortIntoSubfolders = true)
         {
             outputFilePaths = new List<string>();
             if(string.IsNullOrWhiteSpace(outputPath))
@@ -35,8 +35,8 @@ namespace SVESimulator.SveScript
                 string cardJson = ParseSveScriptCard(text[pointer..], out int parseLength, out string cardID);
                 pointer += parseLength;
 
-                string folderName = cardID.Split("-")?[0];
-                string fullFolderPath = !string.IsNullOrWhiteSpace(folderName) ? Path.Combine(outputPath, folderName) : outputPath;
+                string folderName = cardID.Split("-")?[0] ?? "Set";
+                string fullFolderPath = sortIntoSubfolders ? Path.Combine(outputPath, folderName) : outputPath;
                 string outputFile = Path.Combine(fullFolderPath, $"{cardID}.json");
                 outputFilePaths.Add(outputFile);
 
@@ -215,27 +215,8 @@ namespace SVESimulator.SveScript
             {
                 // Set up individual set output
                 string setOutputFile = Path.Combine(pathInfo.CardDataPath, $"{setCode}-FullSet.json");
-                if(File.Exists(setOutputFile))
-                    File.Delete(setOutputFile);
                 Directory.CreateDirectory(pathInfo.CardDataPath);
-                using(FileStream _ = File.Create(setOutputFile)) { }
-
-                // Iterate through file list
-                using(StreamWriter writer = new(setOutputFile))
-                {
-                    string[] cardFiles = Directory.GetFiles(Path.Combine(pathInfo.CardDataPath, setCode), "*.json");
-                    string setName = SetNames.GetValueOrDefault(setCode, setCode);
-                    writer.Write($"{{\n" +
-                        $"\"name\": \"{setName}\",\n" +
-                        $"\"cards\": [\n");
-                    for(int i = 0; i < cardFiles.Length; i++)
-                    {
-                        writer.Write(File.ReadAllText(cardFiles[i]));
-                        if(i < cardFiles.Length - 1)
-                            writer.Write(",\n");
-                    }
-                    writer.Write("\n]\n}");
-                }
+                SaveSetFile(Path.Combine(pathInfo.CardDataPath, setCode), setOutputFile, setCode);
             }
 
             // Compile full library
@@ -255,7 +236,29 @@ namespace SVESimulator.SveScript
                     serializer.Serialize(jWriter, setJsons);
                 }
             }
-            Debug.Log("Successfully compiled SVE scripts");
+            SveScriptDebugger.Log("Successfully compiled SVE scripts");
+        }
+
+        public static void SaveSetFile(in string dataFolder, in string setOutputFile, in string setCode)
+        {
+            if(File.Exists(setOutputFile))
+                File.Delete(setOutputFile);
+            using(FileStream _ = File.Create(setOutputFile)) { }
+            using(StreamWriter writer = new(setOutputFile))
+            {
+                string[] cardFiles = Directory.GetFiles(dataFolder, "*.json");
+                string setName = SetNames.GetValueOrDefault(setCode, setCode);
+                writer.Write($"{{\n" +
+                    $"\"name\": \"{setName}\",\n" +
+                    $"\"cards\": [\n");
+                for(int i = 0; i < cardFiles.Length; i++) // iterative write to avoid memory overhead of creating large json objects constantly (also too lazy to refactor)
+                {
+                    writer.Write(File.ReadAllText(cardFiles[i]));
+                    if(i < cardFiles.Length - 1)
+                        writer.Write(",\n");
+                }
+                writer.Write("\n]\n}");
+            }
         }
     }
 }

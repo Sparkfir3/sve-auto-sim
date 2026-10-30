@@ -24,7 +24,7 @@ namespace SVESimulator.SveScript
             string mainEffectArgs = text.TextInsideParentheses(out _, out int pointer);
             pointer++; // move past close parentheses
             if(!StandardEffectInfoDictionary.TryGetValue(effectType, out EffectParams effectParams))
-                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text: {text}");
+                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from: {effectType} effect. Raw text:\n{text}");
             effectCcgType = effectParams.ccgType;
 
             // Unique Case - Complex Effect (Function Parameter Type)
@@ -48,7 +48,9 @@ namespace SVESimulator.SveScript
                             effectData.Add("target", additionalArgs[i++]);
                         if(effectParams.hasFilter)
                         {
-                            effectData.Add("filter", additionalArgs[i..].Length > 0 ? string.Join(' ', additionalArgs[i..]) : null);
+                            string filter = additionalArgs[i..].Length > 0 ? string.Join(' ', additionalArgs[i..]) : null;
+                            if(!filter.IsNullOrWhiteSpace())
+                                effectData.Add("filter", filter);
                             i = additionalArgs.Length - 1;
                         }
                         break;
@@ -58,8 +60,6 @@ namespace SVESimulator.SveScript
             }
             if(effectParams.hasTarget)
                 effectData.TryAdd("target", "Self");
-            if(effectParams.hasFilter)
-                effectData.TryAdd("filter", null);
 
             // Get Evolve keyword
             if(effectType.Equals("Evolve") && effectData.TryGetValue("target", out JToken target) && target.ToString().Equals("Self"))
@@ -83,7 +83,7 @@ namespace SVESimulator.SveScript
             string mainEffectArgs = text.TextInsideParentheses(out _, out int pointer);
             pointer++; // move past close parentheses
             if(!PassiveEffectInfoDictionary.TryGetValue(effectType, out EffectParams effectParams))
-                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text: {text}");
+                throw new ArgumentException($"Invalid effect type provided: {effectType}\nParsed from {effectType} effect. Raw text:\n{text}");
             effectCcgType = effectParams.ccgType;
 
             // Parse additional args
@@ -169,7 +169,7 @@ namespace SVESimulator.SveScript
                 if(argument == null && effectParams.parameters[i] is not EffectParameterType.AmountDefaultNull and not EffectParameterType.Amount2DefaultNull
                    and not EffectParameterType.FilterOptional and not EffectParameterType.PassiveDuration)
                 {
-                    Debug.LogError($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
+                    SveScriptDebugger.LogWarning($"Invalid argument: did not find an argument at index {i} (of expected type {effectParams.parameters[i].ToString()}) for effect of type {effectParams.ccgType}" +
                         $"{(effectParams.parameters.Length > 0 ? $"\nExpected parameters of type(s): {string.Join(", ", effectParams.parameters)}" : "")}" +
                         $"\nReceived: ({string.Join(", ", argsArray)})");
                 }
@@ -525,7 +525,7 @@ namespace SVESimulator.SveScript
 
         private static Dictionary<string, EffectParams> PassiveEffectInfoDictionary = new()
         {
-            { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect) },
+            { "GiveAbility", new EffectParams("GiveAbilityPassive",                         false, true, EffectParameterType.SingleEffect, EffectParameterType.PassiveDuration) },
             { "GiveKeyword", new EffectParams("GiveKeywordPassive",                         false, true, EffectParameterType.Keyword, EffectParameterType.PassiveDuration) },
             { "GiveName", new EffectParams("AddNamePassive",                                false, true, EffectParameterType.Name, EffectParameterType.PassiveDuration) },
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using CCGKit;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using Sparkfire.Utility;
 
 namespace SVESimulator

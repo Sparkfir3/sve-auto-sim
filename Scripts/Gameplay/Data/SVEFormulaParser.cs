@@ -396,21 +396,21 @@ namespace SVESimulator
             switch(args[0])
             {
                 // Player Info - Cards Moved/Abilities
+                case "attacked":
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
                 case "destroyed":
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDestroyedThisTurn, filter) : 0;
                 case "discard":
                 case "discarded":
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsDiscardedThisTurn, filter) : 0;
-                case "attacked":
-                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsAttackedThisTurn, filter) : 0;
-                case "spellsPlayed":
-                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
                 case "evolved":
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsEvolvedThisTurn, filter) : 0;
                 case "leftField":
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsLeftFieldThisTurn, filter) : 0;
                 case "returnedToHandFromField":
                     return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.CardsReturnedToHandFromField, filter) : 0;
+                case "spellsPlayed":
+                    return player ? GetMiscPlayerStatFromCardList(player.AdditionalStats.SpellsPlayedThisTurn, filter) : 0;
 
                 // Player Info - Stats
                 case "maxPlayPoints":

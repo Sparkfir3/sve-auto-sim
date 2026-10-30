@@ -38,6 +38,10 @@ namespace SVESimulator.DeckBuilder
         public Dictionary<Card, int> CurrentMainDeck { get; private set; } = new();
         public Dictionary<Card, int> CurrentEvolveDeck { get; private set; } = new();
 
+        [ShowInInspector, ReadOnly]
+        public List<DeckSaveLoadUtils.CardAmountPair> ImportErrors { get; private set; } = new();
+        public bool HasImportErrors => ImportErrors.Count > 0;
+
         public Action OnUpdateFilters;
         public event Action OnUpdateFilteredCardList;
         public event Action OnUpdateDeck;
@@ -46,14 +50,19 @@ namespace SVESimulator.DeckBuilder
 
         // ------------------------------
 
-        #region Unity Functions
+        #region Initialize
 
-        private void Awake()
+        public void Initialize()
         {
             IsDirty = false;
             gameConfig = new GameConfiguration();
             gameConfig.LoadGameConfigurationAtRuntime();
-            Debug.Log($"Deck builder loaded {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets from library");
+            Debug.Log($"Deck builder loaded {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets from main library");
+            if(CustomSetController.UseCustomSets)
+            {
+                CustomSetController.LoadCustomSets(gameConfig);
+                Debug.Log($"Loaded custom sets, totaling {gameConfig.cards.Count} cards in {gameConfig.cardSets.Count} sets");
+            }
         }
 
         #endregion
@@ -83,7 +92,7 @@ namespace SVESimulator.DeckBuilder
                 FilterByStat(ref _filteredCardList, Filters.minAttack, Filters.maxAttack, SVEProperties.CardStats.Attack);
             if(Filters.useDefense)
                 FilterByStat(ref _filteredCardList, Filters.minDefense, Filters.maxDefense, SVEProperties.CardStats.Defense);
-            // FilterByRarity(ref _filteredCardList); NOT CURRENTLY USED
+            // FilterByRarity(ref _filteredCardList); CURRENTLY NOT USED due to card rarities not being saved in database currently
 
             CardListSorting.SortCardList(ref _filteredCardList, SortMode);
             OnUpdateFilteredCardList?.Invoke();
@@ -196,35 +205,33 @@ namespace SVESimulator.DeckBuilder
             });
         }
 
-        // NOT CURRENTLY USED
-        // private void FilterByRarity(ref List<Card> cardList)
-        // {
-        //     if(Filters.rarity <= 0)
-        //         return;
-        //
-        //     List<string> rarities = new();
-        //     if(Filters.rarity.HasFlag(RarityFilter.Legendary))
-        //         rarities.Add(SVEProperties.CardRarity.Legendary);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Gold))
-        //         rarities.Add(SVEProperties.CardRarity.Gold);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Silver))
-        //         rarities.Add(SVEProperties.CardRarity.Silver);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Bronze))
-        //         rarities.Add(SVEProperties.CardRarity.Bronze);
-        //     if(Filters.rarity.HasFlag(RarityFilter.Token))
-        //         rarities.Add(SVEProperties.CardRarity.Token);
-        //
-        //     if(rarities.Count == 0)
-        //         return;
-        //     cardList.KeepWhere(x =>
-        //     {
-        //         StringProperty rarityProperty = x.properties.Find(y => y.name.Equals(SVEProperties.CardStats.Rarity) && y is StringProperty) as StringProperty;
-        //         if(rarityProperty == null)
-        //             return false;
-        //         string cardRarity = rarityProperty.value;
-        //         return rarities.Any(y => cardRarity.Equals(y));
-        //     });
-        // }
+        // CURRENTLY NOT USED due to card rarities not being saved in database currently
+        private void FilterByRarity(ref List<Card> cardList)
+        {
+            if(Filters.rarity <= 0)
+                return;
+
+            List<string> rarities = new();
+            if(Filters.rarity.HasFlag(RarityFilter.Legendary))
+                rarities.Add(SVEProperties.CardRarity.Legendary);
+            if(Filters.rarity.HasFlag(RarityFilter.Gold))
+                rarities.Add(SVEProperties.CardRarity.Gold);
+            if(Filters.rarity.HasFlag(RarityFilter.Silver))
+                rarities.Add(SVEProperties.CardRarity.Silver);
+            if(Filters.rarity.HasFlag(RarityFilter.Bronze))
+                rarities.Add(SVEProperties.CardRarity.Bronze);
+
+            if(rarities.Count == 0)
+                return;
+            cardList.KeepWhere(x =>
+            {
+                StringProperty rarityProperty = x.properties.Find(y => y.name.Equals(SVEProperties.CardStats.Rarity) && y is StringProperty) as StringProperty;
+                if(rarityProperty == null)
+                    return false;
+                string cardRarity = rarityProperty.value;
+                return rarities.Any(y => cardRarity.Equals(y));
+            });
+        }
 
         #endregion
 
@@ -238,15 +245,17 @@ namespace SVESimulator.DeckBuilder
             CurrentLeader = null;
             CurrentMainDeck.Clear();
             CurrentEvolveDeck.Clear();
+            ImportErrors.Clear();
 
             List<DeckSaveLoadUtils.CardAmountPair> cardAsArray = DeckSaveLoadUtils.LoadDeck(data, out string deckClass);
             DeckClass = deckClass;
             foreach(DeckSaveLoadUtils.CardAmountPair cardAmount in cardAsArray)
             {
-                Card card = gameConfig.cards.FirstOrDefault(x => x.id == cardAmount.id);
+                Card card = gameConfig.cards.FirstOrDefault(x => x.id == cardAmount.ccgId);
                 if(card == null)
                 {
-                    Debug.LogError($"Failed to find card in database with ID {cardAmount.id} (desired amount: {cardAmount.amount})");
+                    Debug.LogError($"Failed to find card in database with ID {cardAmount.id} (desired amount: {cardAmount.amount}, internal ID: {cardAmount.ccgId})");
+                    ImportErrors.Add(cardAmount);
                     continue;
                 }
 

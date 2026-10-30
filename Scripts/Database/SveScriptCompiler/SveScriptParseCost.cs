@@ -133,7 +133,7 @@ namespace SVESimulator.SveScript
                         break;
 
                     default:
-                        Debug.LogError($"Invalid cost arg {args[0]} found in line: {text}");
+                        SveScriptDebugger.LogError($"Invalid cost arg {args[0]} found in line: {text}");
                         break;
                 }
                 costs.Add(newCost);

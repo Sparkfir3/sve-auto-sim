@@ -113,8 +113,6 @@ namespace SVESimulator.SveScript
             public string name;
             [JsonProperty(Order = 12)]
             public JObject effect;
-            [JsonProperty(Order = 13)]
-            public object target => null;
         }
 
         internal class TriggeredAbility : Ability

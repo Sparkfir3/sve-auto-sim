@@ -9,14 +9,17 @@ namespace SVESimulator.Database
 {
     public static class DeckSaveLoadUtils
     {
+        [Serializable]
         public struct CardAmountPair
         {
-            public int id;
+            public string id;
+            public int ccgId;
             public int amount;
 
-            public CardAmountPair(int id, int amount)
+            public CardAmountPair(string id, int ccgId, int amount)
             {
                 this.id = id;
+                this.ccgId = ccgId;
                 this.amount = amount;
             }
         }
@@ -46,8 +49,9 @@ namespace SVESimulator.Database
                     continue;
                 }
                 int amount = int.Parse(cardInfo[0]);
-                int ccgId = CardIDConversion.CardIdToCCGKitId(cardInfo[1]);
-                cards.Add(new CardAmountPair(ccgId, amount));
+                string cardId = cardInfo[1].Trim();
+                int ccgId = CardIDConversion.CardIdToCCGKitId(cardId);
+                cards.Add(new CardAmountPair(cardId, ccgId, amount));
             }
             return cards;
         }
@@ -62,7 +66,7 @@ namespace SVESimulator.Database
             {
                 JObject cardCount = new()
                 {
-                    { "id", amountInfo.id },
+                    { "id", amountInfo.ccgId },
                     { "amount", amountInfo.amount }
                 };
                 cardList.Add(cardCount);

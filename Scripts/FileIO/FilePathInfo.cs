@@ -50,6 +50,23 @@ namespace SVESimulator
 
         public string DatabaseVersionFilePath => Path.Combine(MainFolderPath, DatabaseVersionFileName);
 
+        // -----
+
+        [field: BoxGroup("Custom Set Info"), SerializeField]
+        private string CustomSetMainFolder { get; set; } = "CustomSets";
+        [field: BoxGroup("Custom Set Info"), SerializeField]
+        public string CustomSetTemplateFolder { get; private set; } = "Template";
+        [field: BoxGroup("Custom Set Info"), SerializeField]
+        public string CustomSetScriptsFolder { get; private set; } = "Scripts";
+        [field: BoxGroup("Custom Set Info"), SerializeField]
+        public string CustomSetTextDataFolder { get; private set; } = "TextData";
+        [field: BoxGroup("Custom Set Info"), SerializeField]
+        public string CustomSetImagesFolder { get; private set; } = "Images";
+        [field: BoxGroup("Custom Set Info"), SerializeField]
+        public string CustomSetDownloadSettingsFileName { get; private set; } = "DownloadSettings.txt";
+
+        public string CustomSetFolderPath => Path.Combine(Application.persistentDataPath, CustomSetMainFolder);
+
         // ------------------------------
 
 #if UNITY_EDITOR
