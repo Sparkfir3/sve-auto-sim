@@ -142,11 +142,13 @@ namespace SVESimulator.Database
             File.WriteAllText(paths.DatabaseVersionFilePath, DatabaseVersion);
         }
 
+#if UNITY_EDITOR
         [TitleGroup("Buttons"), Button, LabelText("Generate Text JSON")]
         private void GenerateTextJson(TextAsset baseScript, TextAsset outputFile)
         {
             CardTextCompiler.CompileTextJson(baseScript, outputFile);
         }
+#endif
 
         #endregion
 
