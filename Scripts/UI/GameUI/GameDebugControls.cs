@@ -44,7 +44,8 @@ namespace SVESimulator
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.Hand,
                 text = "[Debug Mode] Search for a card"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
+            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button("Search to EX Area")]
@@ -57,7 +58,8 @@ namespace SVESimulator
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.ExArea,
                 text = "[Debug Mode] Search for a card"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
+            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -71,7 +73,8 @@ namespace SVESimulator
                 filter = null,
                 text = "[Debug Mode] Salvage"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(salvageEffect, Player.ZoneController.cemeteryZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(salvageEffect, Player.ZoneController.cemeteryZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -95,7 +98,8 @@ namespace SVESimulator
                 filter = "m(0,10)",
                 text = "[Debug Mode] Destroy"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(destroyEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(destroyEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -107,7 +111,8 @@ namespace SVESimulator
                 filter = "m(0,10)",
                 text = "[Debug Mode] Banish"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(banishEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(banishEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -120,7 +125,8 @@ namespace SVESimulator
                 amount = "1",
                 text = "[Debug Mode] Summon Token"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(summonEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(summonEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
     }
 }
