@@ -1,0 +1,75 @@
+[
+  {
+    "id": "BP09-T01EN",
+    "name": "Instant Poison",
+    "trait": "Alchemist / Forbidden / Token",
+    "cardText": "Select an enemy follower on the field. Deal 4 damage to it and 2 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Follower",
+        "body": "Select an enemy follower on the field. Deal 4 damage to it and 2 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP09-T02EN",
+    "name": "Eternal Potion",
+    "trait": "Alchemist / Forbidden / Token",
+    "cardText": "Select a [runecraft] follower that costs 3 or less in your cemetery and summon it. Give it Rush and \"At the start of your end phase, destroy this card.\"",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a [runecraft] follower that costs 3 or less in your cemetery and summon it. Give it Rush and \"At the start of your end phase, destroy this card.\""
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, destroy this card.",
+        "trigger": "At the start of your end phase,",
+        "body": "Destroy this card."
+      }
+    ]
+  },
+  {
+    "id": "BP09-T03EN",
+    "name": "Mysterian Missile",
+    "trait": "Mage / Academic / Token",
+    "cardText": "Select an enemy follower on the field and deal it 3 damage. If there are at least 10 Academic cards in your cemetery, deal 2 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Follower",
+        "text": "",
+        "trigger": "",
+        "cost": "",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If there are at least 10 Academic cards in your cemetery, deal 2 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP09-T04EN",
+    "name": "Aftershock",
+    "trait": "Dragonewt / Draconic Duelist / Token",
+    "cardText": "Whenever a Draconic Duelist follower is put onto your field, place a lightning counter on this card.\n[act] [engage]: Select a [dragoncraft] follower on your field and give it [attack]+2. Activate only if this card has at least 5 lightning counters.\n[act] [engage]: Select an enemy follower on the field. Destroy it and deal 3 damage to its leader. Activate only if this card has at least 10 lightning counters.",
+    "effectText": [
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a Draconic Duelist follower is put onto your field, place a lightning counter on this card.",
+        "trigger": "Whenever a Draconic Duelist follower is put onto your field,",
+        "body": "Place a lightning counter on this card."
+      },
+      {
+        "key": "Atk",
+        "cost": "[engage]",
+        "body": "Select a [dragoncraft] follower on your field and give it [attack]+2. Activate only if this card has at least 5 lightning counters."
+      },
+      {
+        "key": "TargetEnemy",
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field. Destroy it and deal 3 damage to its leader. Activate only if this card has at least 10 lightning counters."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select an enemy follower on the field. Destroy it and deal 3 damage to its leader."
+      }
+    ]
+  }
+]

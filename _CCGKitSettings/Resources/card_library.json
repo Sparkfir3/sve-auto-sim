@@ -48021,6 +48021,500 @@
           }
         ],
         "id": 100083002
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Otohime's Vanguard",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Rush.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP08-T03",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 2
+          }
+        ],
+        "abilities": [],
+        "id": 100083003
+      }
+    ]
+  },
+  {
+    "name": "Booster Set #9 \"Duet of Dawn and Dusk\"",
+    "cards": [
+      {
+        "cardTypeId": 2,
+        "name": "Instant Poison",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Alchemist / Forbidden / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select an enemy follower on the field. Deal 4 damage to it and 2 damage to its leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-T01",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Follower",
+              "effectName2": "Leader",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Follower",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leader",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100093001
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Eternal Potion",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Alchemist / Forbidden / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select a [runecraft] follower that costs 3 or less in your cemetery and summon it. Give it Rush and \"At the start of your end phase, destroy this card.\"",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-T02",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "filter": "Fc(Rune)p(m(0,3))",
+              "effectName1": "Rush",
+              "effectName2": "GiveDestroy",
+              "$type": "SVESimulator.CemeteryToFieldAndTargetEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Rush",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "keywordType": 0,
+              "keywordValue": 2,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "GiveDestroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "effectName": "Destroy",
+              "$type": "SVESimulator.GiveAbilityEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveStartEndPhaseTrigger"
+            },
+            "name": "StartEndPhase",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100093002
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Mysterian Missile",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Mage / Academic / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select an enemy follower on the field and deal it 3 damage. If there are at least 10 Academic cards in your cemetery, deal 2 damage to its leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-T03",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Follower",
+              "effectName2": "Leader",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Follower",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leader",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100093003
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Aftershock",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt / Draconic Duelist / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Whenever a Draconic Duelist follower is put onto your field, place a lightning counter on this card.\n[act] [engage]: Select a [dragoncraft] follower on your field and give it [attack]+2. Activate only if this card has at least 5 lightning counters.\n[act] [engage]: Select an enemy follower on the field. Destroy it and deal 3 damage to its leader. Activate only if this card has at least 10 lightning counters.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-T04",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "filter": "Ft(Draconic Duelist)",
+              "$type": "SVESimulator.SveOnOtherCardEnterFieldTrigger"
+            },
+            "name": "OnOtherEnterField",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 10,
+              "keywordValue": 1,
+              "amount": "1",
+              "$type": "SVESimulator.GiveCounterEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "condition": "f(Fc(Dragon)) & [r(Lightning)>4]",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
+            "name": "Atk",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "Fc(Dragon)",
+              "targetStats": "Attack",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "condition": "p(#F) & [r(Lightning)>9]",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
+            "name": "TargetEnemy",
+            "type": "Activated",
+            "effect": {
+              "effectName1": "Destroy",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Destroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100093004
       }
     ]
   },

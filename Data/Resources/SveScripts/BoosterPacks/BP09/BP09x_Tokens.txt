@@ -1,0 +1,99 @@
+name Instant Poison;
+id BP09-T01;
+class Rune;
+type Spell;
+trait Alchemist / Forbidden / Token;
+cost 2;
+
+text "Select an enemy follower on the field. Deal 4 damage to it and 2 damage to its leader.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Eternal Potion;
+id BP09-T02;
+class Rune;
+type Spell;
+trait Alchemist / Forbidden / Token;
+cost 2;
+
+text "Select a [runecraft] follower that costs 3 or less in your cemetery and summon it. Give it Rush and "At the start of your end phase, destroy this card."";
+
+ability Spell {
+    effect CemeteryToFieldAndTarget(1, Fc(Rune)p(m(0,3)), Rush, GiveDestroy);
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+ability Spell name GiveDestroy {
+    effect GiveAbility(Destroy) to AllPlayerCards;
+}
+ability StartEndPhase {
+    effect Destroy() to Self;
+}
+
+// ------------------------------
+
+name Mysterian Missile;
+id BP09-T03;
+class Rune;
+type Spell;
+trait Mage / Academic / Token;
+cost 2;
+
+text "Select an enemy follower on the field and deal it 3 damage. If there are at least 10 Academic cards in your cemetery, deal 2 damage to its leader.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Aftershock;
+id BP09-T04;
+class Dragon;
+type Amulet;
+trait Dragonewt / Draconic Duelist / Token;
+cost 3;
+
+text "Whenever a Draconic Duelist follower is put onto your field, place a lightning counter on this card.
+      [act] [engage]: Select a [dragoncraft] follower on your field and give it [attack]+2. Activate only if this card has at least 5 lightning counters.
+      [act] [engage]: Select an enemy follower on the field. Destroy it and deal 3 damage to its leader. Activate only if this card has at least 10 lightning counters.";
+
+ability OnOtherEnterField {
+    filter Ft(Draconic Duelist);
+    effect GiveCounter(Lightning, 1) to Self;
+}
+ability Act name Atk {
+    cost (EngageSelf);
+    condition f(Fc(Dragon)) & [r(Lightning)>4];
+    effect GiveStat(Atk, 2) to TargetPlayerCard Fc(Dragon);
+}
+ability Act name TargetEnemy {
+    cost (EngageSelf);
+    condition p(#F) & [r(Lightning)>9];
+    effect Sequence(Destroy, Damage);
+}
+ability Spell name Destroy {
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name Damage {
+    effect DealDamage(3) to OpponentLeader;
+}
