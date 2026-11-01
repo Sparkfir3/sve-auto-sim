@@ -1,0 +1,31 @@
+[
+  {
+    "id": "BP06-T01EN",
+    "name": "Celestial Shikigami",
+    "trait": "Shikigami / Token",
+    "cardText": "Aura."
+  },
+  {
+    "id": "BP06-T02EN",
+    "name": "Paper Shikigami",
+    "trait": "Shikigami / Token",
+    "cardText": "[lastwords] Draw a card. Discard a card.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Draw a card. Discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP06-T03EN",
+    "name": "One-Tailed Fox",
+    "trait": "Yokai / Token",
+    "cardText": "Rush. Ward."
+  }
+]

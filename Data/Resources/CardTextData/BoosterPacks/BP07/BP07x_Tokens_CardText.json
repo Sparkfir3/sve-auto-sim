@@ -1,0 +1,46 @@
+[
+  {
+    "id": "BP07-T01EN",
+    "name": "Assembly Droid",
+    "trait": "Machina / Token",
+    "cardText": "[act] [engage], bury 3 Machina followers: Select an enemy follower on the field and deal it 5 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury 3 Machina followers",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP07-T02EN",
+    "name": "Repair Mode",
+    "trait": "Machina / Token",
+    "cardText": "[quick]\nGive your leader [defense]+1."
+  },
+  {
+    "id": "BP07-T03EN",
+    "name": "Naterran Great Tree",
+    "trait": "Natura / Token",
+    "cardText": "When this card leaves the field, draw a card, then discard a card.\n[act] [cost01]: Bury this card.",
+    "effectText": [
+      {
+        "key": "OnLeaveField",
+        "text": "When this card leaves the field, draw a card, then discard a card.",
+        "trigger": "When this card leaves the field,",
+        "body": "Draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01]",
+        "body": "Bury this card."
+      }
+    ]
+  }
+]
