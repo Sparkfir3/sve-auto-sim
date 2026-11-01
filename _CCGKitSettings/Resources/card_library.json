@@ -48438,7 +48438,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 10,
+              "keywordType": 11,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
