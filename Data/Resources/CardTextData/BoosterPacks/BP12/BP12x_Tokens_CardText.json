@@ -1,0 +1,87 @@
+[
+  {
+    "id": "BP12-T01EN",
+    "name": "Carbuncle's Sparkle",
+    "trait": "Fae-Touched / Beast / Token",
+    "cardText": "Choose one. (1) Select a follower on the field and return it to its owner's hand. (2) Give your leader [defense]+4. (3) Draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one. (1) Select a follower on the field and return it to its owner's hand. (2) Give your leader [defense]+4. (3) Draw 2 cards."
+      },
+      {
+        "key": "ReturnToHand",
+        "body": "Select a follower on the field and return it to its owner's hand."
+      },
+      {
+        "key": "Def",
+        "body": "Give your leader [defense]+4."
+      },
+      {
+        "key": "Draw",
+        "body": "Draw 2 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP12-T02EN",
+    "name": "Twilight Blade",
+    "trait": "Commander / Officer / Token",
+    "cardText": "As an additional cost to play this card, engage a Lecia, Sky Saber and Nano, the Dawnblade on your field.\n----------\nDeal 10 damage to each enemy leader and enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "text": "As an additional cost to play this card, engage a Lecia, Sky Saber and Nano, the Dawnblade on your field.",
+        "cost": "Engage a Lecia, Sky Saber and Nano, the Dawnblade on your field."
+      }
+    ]
+  },
+  {
+    "id": "BP12-T03EN",
+    "name": "Armored Tentacle",
+    "trait": "Machina / Supreme / Token",
+    "cardText": "Ward.\n[lastwords] Give your leader [defense]+4.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Give your leader [defense]+4."
+      }
+    ]
+  },
+  {
+    "id": "BP12-T04EN",
+    "name": "Assault Tentacle",
+    "trait": "Machina / Supreme / Token",
+    "cardText": "Storm.\n[lastwords] Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP12-T05EN",
+    "name": "Medusiana",
+    "trait": "Demon / Gorgon / Token",
+    "cardText": "Rush. Assail. Bane.\n[fanfare] Give your leader [defense]+X, where X equals the number of Demon followers on your field.\n[lastwords] Each opponent buries a follower.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+X, where X equals the number of Demon followers on your field."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Each opponent buries a follower."
+      },
+      {
+        "key": "Bury",
+        "body": "Each opponent buries a follower."
+      }
+    ]
+  }
+]

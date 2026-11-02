@@ -1,0 +1,126 @@
+name Sootspawn;
+id BP14-T01;
+class Sword;
+type Follower;
+trait Festive / Token;
+cost 2;
+stats 2/2;
+
+text "Ward.
+      [lastwords] Select an enemy follower on the field and deal it 2 damage.";
+
+keyword Ward;
+ability LastWords {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Glittering Gold;
+id BP14-T02;
+class Sword;
+type Spell;
+trait Festive / Thief / Loot / Token;
+cost 0;
+
+text "NOT IMPLEMENTED
+      [act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.";
+
+// ------------------------------
+
+name Flame General's Regalia;
+id BP14-T03;
+class Sword;
+type Amulet;
+trait Commander / Celestial / Token;
+cost 3;
+
+text "Whenever a follower on your field evolves, select an enemy follower on the field and deal it 2 damage.
+      [act] [cost01], [engage], bury this: Select a Commander follower on your field and give it "Strike - Deal 2 damage to each enemy leader."";
+
+ability OnOtherEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Act {
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
+    condition f(Ft(Commander));
+    effect GiveAbility(Strike) to TargetPlayerCard Ft(Commander);
+}
+ability Strike {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Tidal Tyranny;
+id BP14-T04;
+class Dragon;
+type Spell;
+trait Festive / Dragonewt / Token;
+cost 2;
+
+text "Select an enemy follower on the field and deal it 4 damage. If Overflow is active for you, deal 6 damage instead.";
+
+ability Spell {
+    condition p(#F);
+    effect DealDamage(4o6) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Wolfling's Struggle;
+id BP14-T05;
+class Abyss;
+type Spell;
+trait Festive / Demon / Beast / Token;
+cost 0;
+
+text "Select an enemy follower on the field. Deal it 1 damage, and you may discard a card. If you do, bury the top card of your deck.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, Bury);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+ability Spell name Bury {
+    cost (Optional), (Discard, 1);
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Fox of Invitation;
+id BP14-T06;
+class Haven;
+type Follower;
+trait Festive / Zealot / Beast / Token;
+cost 1;
+stats 0/1;
+
+text "Ward.
+      [fanfare] Give your leader [defense]+1.";
+
+keyword Ward;
+ability Fanfare {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Mercurial Might;
+id BP14-T07;
+class Haven;
+type Spell;
+trait Faith / Supreme / Token;
+cost 1;
+
+text "NOT FULLY IMPLEMENTED
+      [quick]
+      If your leader would take damage this turn, it takes that much minus 1 instead. Draw a card.";
+
+keyword Quick;
+ability Spell {
+    effect Draw(1);
+}

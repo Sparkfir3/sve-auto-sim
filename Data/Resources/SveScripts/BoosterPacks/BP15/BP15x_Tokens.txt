@@ -1,0 +1,75 @@
+name Gilded Blade;
+id BP15-T01;
+class Sword;
+type Spell;
+trait Loot / Token;
+cost 2;
+
+text "Select an enemy follower on the field. Deal it 2 damage and, if there are at least 10 cards in opponents' cemeteries, deal 2 damage to its leader.";
+
+keyword Rush;
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    condition z()>9;
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Gilded Goblet;
+id BP15-T02;
+class Sword;
+type Spell;
+trait Loot / Token;
+cost 2;
+
+text "Give your leader [defense]+1. If there are at least 10 cards in opponents' cemeteries, give [defense]+2 instead.";
+
+ability Spell name Defense {
+    effect GiveStat(Def, 1?(z()>9)2) to Leader;
+}
+
+// ------------------------------
+
+name Gilded Boots;
+id BP15-T03;
+class Sword;
+type Spell;
+trait Loot / Token;
+cost 2;
+
+text "Select a Thief follower on your field and give it Rush. If there are at least 10 cards in opponents' cemeteries, give Storm instead.";
+
+ability Spell {
+    condition f(Ft(Thief));
+    effect TargetForSequence(Rush, Storm) to TargetPlayerCard Ft(Thief);
+}
+ability Spell name Rush {
+    condition z()<10;
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+ability Spell name Storm {
+    condition z()>9;
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Rulenye, Echoing Scream;
+id BP15-T04;
+class Abyss;
+type Follower;
+trait Omen / Necromancer / Token;
+cost 2;
+stats 2/1;
+
+text "Rush. Assail.";
+
+keywords Rush, Assail;

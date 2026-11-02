@@ -1,0 +1,38 @@
+[
+  {
+    "id": "BP15-T01EN",
+    "name": "Gilded Blade",
+    "trait": "Loot / Token",
+    "cardText": "Select an enemy follower on the field. Deal it 2 damage and, if there are at least 10 cards in opponents' cemeteries, deal 2 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Follower",
+        "body": "Select an enemy follower on the field. Deal it 2 damage and, if there are at least 10 cards in opponents' cemeteries, deal 2 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP15-T02EN",
+    "name": "Gilded Goblet",
+    "trait": "Loot / Token",
+    "cardText": "Give your leader [defense]+1. If there are at least 10 cards in opponents' cemeteries, give [defense]+2 instead."
+  },
+  {
+    "id": "BP15-T03EN",
+    "name": "Gilded Boots",
+    "trait": "Loot / Token",
+    "cardText": "Select a Thief follower on your field and give it Rush. If there are at least 10 cards in opponents' cemeteries, give Storm instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a Thief follower on your field and give it Rush. If there are at least 10 cards in opponents' cemeteries, give Storm instead."
+      }
+    ]
+  },
+  {
+    "id": "BP15-T04EN",
+    "name": "Rulenye, Echoing Scream",
+    "trait": "Omen / Necromancer / Token",
+    "cardText": "Rush. Assail."
+  }
+]
