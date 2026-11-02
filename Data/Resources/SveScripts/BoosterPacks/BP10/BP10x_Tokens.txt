@@ -1,0 +1,38 @@
+name Exterminus Weapon;
+id BP10-T01;
+class Sword;
+type Follower;
+trait Machina / Officer / Token;
+cost 2;
+stats 6/6;
+
+text "Ward.
+      [fanfare] Select an enemy card on the field and destroy it.
+      [lastwords] Deal 4 damage to each enemy leader.";
+
+keyword Ward;
+ability Fanfare {
+    effect Destroy() to TargetOpponentCard;
+}
+ability LastWords {
+    effect DealDamage(4) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Devoted Dragon;
+id BP10-T02;
+class Dragon;
+type Follower;
+trait Wyrmkin / Token;
+cost 5;
+stats 6/6;
+
+text "Ward.
+      While there's an Aiela, Devoted Knight on your field, this follower doesn't take ability damage.";
+
+keyword Ward;
+ability Passive {
+    condition f(n(Aiela, Devoted Knight));
+    effect GiveKeyword(DoesNotTakeAbilityDamage) to Self;
+}

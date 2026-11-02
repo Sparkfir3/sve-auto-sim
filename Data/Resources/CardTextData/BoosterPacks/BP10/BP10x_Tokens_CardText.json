@@ -1,0 +1,26 @@
+[
+  {
+    "id": "BP10-T01EN",
+    "name": "Exterminus Weapon",
+    "trait": "Machina / Officer / Token",
+    "cardText": "Ward.\n[fanfare] Select an enemy card on the field and destroy it.\n[lastwords] Deal 4 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy card on the field and destroy it."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Deal 4 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP10-T02EN",
+    "name": "Devoted Dragon",
+    "trait": "Wyrmkin / Token",
+    "cardText": "Ward.\nWhile there's an Aiela, Devoted Knight on your field, this follower doesn't take ability damage."
+  }
+]
