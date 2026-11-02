@@ -136,6 +136,7 @@ namespace SVESimulator
             public const string Token = "Token";
             public const string Leader = "Leader";
             public const string AdvancedFollower = "Advanced Follower";
+            public const string Crest = "Crest";
         }
 
         public static class CardStats

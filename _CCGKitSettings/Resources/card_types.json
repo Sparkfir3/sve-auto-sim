@@ -513,5 +513,50 @@
         "moveAfterTriggeringEffect": false,
         "zoneId": 0,
         "id": 6
+    },
+    {
+        "name": "Crest",
+        "properties": [
+            {
+                "value": null,
+                "name": "Class",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "Universe",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "Trait",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "Text",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "ID EN",
+                "$type": "CCGKit.StringProperty"
+            },
+            {
+                "value": null,
+                "name": "Alternate Names",
+                "$type": "CCGKit.StringProperty"
+            }
+        ],
+        "stats": [],
+        "destroyConditions": [],
+        "moveAfterTriggeringEffect": false,
+        "zoneId": 0,
+        "id": 7
     }
 ]

@@ -798,6 +798,23 @@ namespace SVESimulator
 
             // ---
 
+            bool isCrest = libraryCard.IsCrest();
+            if(isCrest)
+            {
+                if(creationOption != SVEProperties.TokenCreationOption.ExArea)
+                {
+                    Debug.LogError($"Attempted to summon Crest token {tokenName} outside the EX area (attempted mode {creationOption})");
+                    return null;
+                }
+                if(localZoneController.exAreaZone.CountOfCardByFilter($"n({libraryCard.TryGetStringProperty(SVEProperties.CardStats.Name, "Crest")})") > 0)
+                {
+                    Debug.Log($"Skipped summoning Crest token {tokenName} because one already exists");
+                    return null;
+                }
+            }
+
+            // ---
+
             // Get target slot
             CardPositionedZone targetObjectZone;
             int targetSlotId = -1;

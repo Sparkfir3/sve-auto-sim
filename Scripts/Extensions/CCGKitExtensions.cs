@@ -70,6 +70,13 @@ namespace SVESimulator
             return card.TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Token);
         }
 
+        public static bool IsCrest(this CardObject card, GameConfiguration gameConfig = null) => card && card.RuntimeCard.IsCrest(gameConfig);
+        public static bool IsCrest(this RuntimeCard card, GameConfiguration gameConfig = null) => card != null && LibraryCardCache.GetCard(card.cardId, gameConfig).IsCrest();
+        public static bool IsCrest(this Card card)
+        {
+            return card.TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Crest);
+        }
+
         public static bool IsEvolvedVersionOf(this Card evolvedCard, Card baseCard)
         {
             return evolvedCard.name.Replace(" (Evolved)", "").Equals(baseCard.name);
