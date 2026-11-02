@@ -30,6 +30,7 @@ cost 2;
 text "Select a [runecraft] follower that costs 3 or less in your cemetery and summon it. Give it Rush and "At the start of your end phase, destroy this card."";
 
 ability Spell {
+    condition y(Fc(Rune)p(m(0,3)));
     effect CemeteryToFieldAndTarget(1, Fc(Rune)p(m(0,3)), Rush, GiveDestroy);
 }
 ability Spell name Rush {
@@ -38,7 +39,7 @@ ability Spell name Rush {
 ability Spell name GiveDestroy {
     effect GiveAbility(Destroy) to AllPlayerCards;
 }
-ability StartEndPhase {
+ability StartEndPhase name Destroy {
     effect Destroy() to Self;
 }
 
@@ -61,6 +62,7 @@ ability Spell name Follower {
     effect DealDamage(4) to TargetOpponentCard F;
 }
 ability Spell name Leader {
+    condition y(t(Academic))>9;
     effect DealDamage(2) to OpponentLeader;
 }
 

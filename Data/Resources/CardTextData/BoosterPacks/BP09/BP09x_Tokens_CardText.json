@@ -22,7 +22,7 @@
         "body": "Select a [runecraft] follower that costs 3 or less in your cemetery and summon it. Give it Rush and \"At the start of your end phase, destroy this card.\""
       },
       {
-        "key": "StartEndPhase",
+        "key": "Destroy",
         "text": "At the start of your end phase, destroy this card.",
         "trigger": "At the start of your end phase,",
         "body": "Destroy this card."

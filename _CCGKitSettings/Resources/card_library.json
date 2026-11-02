@@ -48242,6 +48242,7 @@
         "abilities": [
           {
             "trigger": {
+              "condition": "y(Fc(Rune)p(m(0,3)))",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Spell",
@@ -48287,7 +48288,7 @@
             "trigger": {
               "$type": "SVESimulator.SveStartEndPhaseTrigger"
             },
-            "name": "StartEndPhase",
+            "name": "Destroy",
             "type": "Triggered",
             "effect": {
               "target": "Self",
@@ -48367,6 +48368,7 @@
           },
           {
             "trigger": {
+              "condition": "y(t(Academic))>9",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Leader",
