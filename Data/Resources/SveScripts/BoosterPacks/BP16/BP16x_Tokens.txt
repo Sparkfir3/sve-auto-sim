@@ -1,0 +1,156 @@
+name Guardian Golem;
+id BP16-T01;
+class Rune;
+type Follower;
+trait Golem / Token;
+cost 3;
+stats 3/5;
+
+text "Ward.
+      [lastwords] Give your leader [defense]+2.";
+
+keyword Ward;
+ability LastWords {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Looking Smart!;
+id BP16-T02;
+class Rune;
+type Spell;
+trait Mage / Academic / Token;
+cost 0;
+
+text "Select an enemy follower on the field. Deal it 2 damage, draw a card, then discard a card.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, Draw, Discard);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Fire Drake Whelp;
+id BP16-T03;
+class Dragon;
+type Follower;
+trait Wyrmkin / Token;
+cost 1;
+stats 1/1;
+
+text "Intimidate.";
+
+keyword Intimidate;
+
+// ------------------------------
+
+name Mimi, Right Paw Hellhound;
+id BP16-T04;
+class Abyss;
+type Follower;
+trait Demon / Token;
+cost 1;
+stats 2/2;
+
+text "[lastwords] Select an enemy follower on the field. Deal it 2 damage and bury the top card of your deck.";
+
+ability LastWords {
+    condition p(#F);
+    effect Sequence(Damage, Bury);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Spell name Bury {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Coco, Left Paw Hellhound;
+id BP16-T05;
+class Abyss;
+type Follower;
+trait Demon / Token;
+cost 1;
+stats 2/2;
+
+text "[lastwords] Give your leader [defense]+2. Bury the top card of your deck.";
+
+ability LastWords {
+    effect Sequence(Defense, Bury);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Bury {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Silent Rider;
+id BP16-T06;
+class Neutral;
+type Follower;
+trait Archfiend / Token;
+cost 1;
+stats 5/5;
+
+text "Storm.";
+
+keyword Storm;
+
+// ------------------------------
+
+name Servant of Cocytus;
+id BP16-T07;
+class Neutral;
+type Follower;
+trait Archfiend / Token;
+cost 1;
+stats 8/8;
+
+// ------------------------------
+
+name Demon of Purgatory;
+id BP16-T08;
+class Neutral;
+type Follower;
+trait Archfiend / Token;
+cost 1;
+stats 6/4;
+
+text "Ward.
+      [fanfare] Select an enemy follower on the field and deal it 6 damage.";
+
+keyword Ward;
+ability Fanfare {
+    effect DealDamage(6) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Astaroth's Reckoning;
+id BP16-T09;
+class Neutral;
+type Spell;
+trait Archfiend / Token;
+cost 10;
+
+text "Change each enemy leader's defense to 1.";
+
+ability Spell {
+    effect SetStat(Def, 1) to AllLeaders;
+}
