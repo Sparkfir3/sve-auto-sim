@@ -7,7 +7,7 @@ namespace SVESimulator.Database.ImageDownloader
     [Serializable]
     public class SetDownloadSettings
     {
-        public enum CardType { Standard, Token, Leader }
+        public enum CardType { Standard, Token, Leader, Promo }
         public enum CardLanguage { JP, EN }
 
         public string setCode;
@@ -22,6 +22,7 @@ namespace SVESimulator.Database.ImageDownloader
         {
             CardType.Token => $"T{id.ToString("D2")}",
             CardType.Leader => $"LD{id.ToString("D2")}",
+            CardType.Promo => $"PR{id.ToString("D2")}",
             _ => $"{id.ToString("D3")}"
         };
 
@@ -62,6 +63,7 @@ namespace SVESimulator.Database.ImageDownloader
                         "T" => CardType.Token,
                         "LD" => CardType.Leader,
                         "L" => CardType.Leader,
+                        "PR" => CardType.Promo,
                         _ => CardType.Standard
                     };
                     int startIndex = int.Parse(startRangeRaw);

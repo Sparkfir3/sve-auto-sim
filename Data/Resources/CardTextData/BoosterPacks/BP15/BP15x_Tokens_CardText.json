@@ -34,5 +34,104 @@
     "name": "Rulenye, Echoing Scream",
     "trait": "Omen / Necromancer / Token",
     "cardText": "Rush. Assail."
+  },
+  {
+    "id": "BP15-PR09EN",
+    "name": "Annihilating Onslaught",
+    "trait": "Omen / Hunter / Token",
+    "cardText": "If there are at least 6 Hunter cards in your cemetery, deal 6 damage to each enemy leader."
+  },
+  {
+    "id": "BP15-PR10EN",
+    "name": "Remnant of Hollowness",
+    "trait": "Omen / Thief / Loot / Token",
+    "cardText": "Choose 1. If there are at least 10 cards in opponents' cemeteries, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 3 damage. If there are at least 10 cards in opponents' cemeteries, deal 8 damage instead. (2) Look at the top 3 cards of your deck. You may reveal a Thief card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose 1. If there are at least 10 cards in opponents' cemeteries, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 3 damage. If there are at least 10 cards in opponents' cemeteries, deal 8 damage instead. (2) Look at the top 3 cards of your deck. You may reveal a Thief card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If there are at least 10 cards in opponents' cemeteries, deal 8 damage instead."
+      },
+      {
+        "key": "CheckTop",
+        "body": "Look at the top 3 cards of your deck. You may reveal a Thief card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP15-PR11EN",
+    "name": "Ersatz Elimination",
+    "trait": "Omen / Mage / Token",
+    "cardText": "Select a follower in your cemetery with both the Omen and Mage traits that costs 3 or less and summon it.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a follower in your cemetery with both the Omen and Mage traits that costs 3 or less and summon it."
+      }
+    ]
+  },
+  {
+    "id": "BP15-PR12EN",
+    "name": "Melodius Monody",
+    "trait": "Omen / Idolatry / Token",
+    "cardText": "NOT IMPLEMENTED\nAs an additional cost to play this, you may engage any number of Idolatry cards on your field.\n----------\nSelect an enemy follower on the field and deal it damage equal to 2 times the number of Idolatry cards you engaged as the additional cost to play this."
+  },
+  {
+    "id": "BP15-PR13EN",
+    "name": "Fangs of Ardent Destruction",
+    "trait": "Omen / Wyrmkin / Token",
+    "cardText": "Deal 1 damage to each follower on the field. If Overflow is active for you, give each Galmieux, Ardent Disdain on your field Storm."
+  },
+  {
+    "id": "BP15-PR14EN",
+    "name": "Wings of Desire",
+    "trait": "Omen / Demon / Token",
+    "cardText": "NOT FULLY IMPLEMENTED\nSelect a follower on your field. Give it \"Strike - Deal each enemy follower on the field damage equal to the number of times your leader has lost defense this turn\" and deal 1 damage to your leader.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Deal each enemy follower on the field damage equal to the number of times your leader has lost defense this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP15-PR15EN",
+    "name": "Scream Diffusion",
+    "trait": "Omen / Necromancer / Token",
+    "cardText": "Summon a Rulenye, Echoing Scream token for every 5 cards in your cemetery."
+  },
+  {
+    "id": "BP15-PR16EN",
+    "name": "Torrent of Despair",
+    "trait": "Omen / Zealot / Token",
+    "cardText": "Select an enemy follower on the field and banish it.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and banish it."
+      }
+    ]
+  },
+  {
+    "id": "BP15-PR17EN",
+    "name": "Great Testimony",
+    "trait": "Omen / Token",
+    "cardText": "Select an enemy follower on the field. Destroy it and, if there's a Mjerrabaine, Great One on your field, deal 2 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Destroy",
+        "body": "Select an enemy follower on the field. Destroy it and, if there's a Mjerrabaine, Great One on your field, deal 2 damage to its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP15-PR18EN",
+    "name": "Ravenous Sweetness",
+    "trait": "Omen / Token",
+    "cardText": "Deal 2 damage to each enemy leader. Give your leader [defense]+2. Draw 2 cards. Each opponent discards 2 random cards."
   }
 ]

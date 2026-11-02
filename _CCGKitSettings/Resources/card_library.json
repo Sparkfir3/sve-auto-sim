@@ -52983,6 +52983,735 @@
     "cards": [
       {
         "cardTypeId": 2,
+        "name": "Annihilating Onslaught",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Forestcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Hunter / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "If there are at least 6 Hunter cards in your cemetery, deal 6 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR09",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "y(t(Hunter))",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "6",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154009
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Remnant of Hollowness",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Thief / Loot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Choose 1. If there are at least 10 cards in opponents' cemeteries, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 3 damage. If there are at least 10 cards in opponents' cemeteries, deal 8 damage instead. (2) Look at the top 3 cards of your deck. You may reveal a Thief card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR10",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "amount": "m(1?(y()>9)0,1?(y()>9)2)",
+              "effectName1": "Damage",
+              "effectName2": "CheckTop",
+              "$type": "SVESimulator.ChooseAmountFromList"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "3?(y()>9)8",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "CheckTop",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "checkAction1": "Hand",
+              "checkFilter1": "t(Thief)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154010
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Ersatz Elimination",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Mage / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select a follower in your cemetery with both the Omen and Mage traits that costs 3 or less and summon it.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR11",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "y(Ft(Omen / Mage))",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "filter": "Ft(Omen / Mage)",
+              "$type": "SVESimulator.CemeteryToFieldEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154011
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Melodius Monody",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Idolatry / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "NOT IMPLEMENTED\nAs an additional cost to play this, you may engage any number of Idolatry cards on your field.\n----------\nSelect an enemy follower on the field and deal it damage equal to 2 times the number of Idolatry cards you engaged as the additional cost to play this.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR12",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [],
+        "id": 100154012
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Fangs of Ardent Destruction",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Deal 1 damage to each follower on the field. If Overflow is active for you, give each Galmieux, Ardent Disdain on your field Storm.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR13",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Damage",
+              "effectName2": "Storm",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Storm",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "filter": "n(Galmieux, Ardent Disdain)",
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154013
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Wings of Desire",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Demon / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "NOT FULLY IMPLEMENTED\nSelect a follower on your field. Give it \"Strike - Deal each enemy follower on the field damage equal to the number of times your leader has lost defense this turn\" and deal 1 damage to your leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR14",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "GiveAbility",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "GiveAbility",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "F",
+              "effectName": "Strike",
+              "$type": "SVESimulator.GiveAbilityEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154014
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Scream Diffusion",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Necromancer / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Summon a Rulenye, Echoing Scream token for every 5 cards in your cemetery.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR15",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Rulenye, Echoing Scream",
+              "createTokenOption": "Field",
+              "amount": "y()/5",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154015
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Torrent of Despair",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Zealot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select an enemy follower on the field and banish it.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR16",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.BanishCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154016
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Great Testimony",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Neutral",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select an enemy follower on the field. Destroy it and, if there's a Mjerrabaine, Great One on your field, deal 2 damage to its leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR17",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Destroy",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Destroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "f(n(Mjerrabaine, Great One))",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154017
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Ravenous Sweetness",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Neutral",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Deal 2 damage to each enemy leader. Give your leader [defense]+2. Draw 2 cards. Each opponent discards 2 random cards.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP15-PR18",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Damage",
+              "effectName2": "Defense",
+              "effectName3": "Draw",
+              "effectName4": "Discard",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Defense",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "2",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "target": "Opponent",
+              "amount": "2",
+              "$type": "SVESimulator.DiscardRandomCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100154018
+      },
+      {
+        "cardTypeId": 2,
         "name": "Gilded Blade",
         "costs": [],
         "properties": [

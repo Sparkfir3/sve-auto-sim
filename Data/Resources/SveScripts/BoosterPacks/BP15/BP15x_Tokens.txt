@@ -73,3 +73,202 @@ stats 2/1;
 text "Rush. Assail.";
 
 keywords Rush, Assail;
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+name Annihilating Onslaught;
+id BP15-PR09;
+class Forest;
+type Spell;
+trait Omen / Hunter / Token;
+cost 3;
+
+text "If there are at least 6 Hunter cards in your cemetery, deal 6 damage to each enemy leader.";
+
+ability Spell {
+    condition y(t(Hunter));
+    effect DealDamage(6) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Remnant of Hollowness;
+id BP15-PR10;
+class Sword;
+type Spell;
+trait Omen / Thief / Loot / Token;
+cost 2;
+
+text "Choose 1. If there are at least 10 cards in opponents' cemeteries, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 3 damage. If there are at least 10 cards in opponents' cemeteries, deal 8 damage instead. (2) Look at the top 3 cards of your deck. You may reveal a Thief card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.";
+
+ability Spell {
+    effect ChooseAmountFromList(m(1?(y()>9)0,1?(y()>9)2), Damage, CheckTop);
+}
+ability Spell name Damage {
+    condition p(#F);
+    effect DealDamage(3?(y()>9)8) to TargetOpponentCard F;
+}
+ability Spell name CheckTop {
+    effect CheckTop(3, (Hand, t(Thief), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Ersatz Elimination;
+id BP15-PR11;
+class Rune;
+type Spell;
+trait Omen / Mage / Token;
+cost 1;
+
+text "Select a follower in your cemetery with both the Omen and Mage traits that costs 3 or less and summon it.";
+
+ability Spell {
+    condition y(Ft(Omen / Mage));
+    effect CemeteryToField(1, Ft(Omen / Mage));
+}
+
+// ------------------------------
+
+name Melodius Monody;
+id BP15-PR12;
+class Rune;
+type Spell;
+trait Omen / Idolatry / Token;
+cost 0;
+
+text "NOT IMPLEMENTED
+      As an additional cost to play this, you may engage any number of Idolatry cards on your field.
+      ----------
+      Select an enemy follower on the field and deal it damage equal to 2 times the number of Idolatry cards you engaged as the additional cost to play this.";
+
+// ------------------------------
+
+name Fangs of Ardent Destruction;
+id BP15-PR13;
+class Dragon;
+type Spell;
+trait Omen / Wyrmkin / Token;
+cost 1;
+
+text "Deal 1 damage to each follower on the field. If Overflow is active for you, give each Galmieux, Ardent Disdain on your field Storm.";
+
+ability Spell {
+    effect Sequence(Damage, Storm);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to AllCards F;
+}
+ability Spell name Storm {
+    condition o;
+    effect GiveKeyword(Storm) to AllPlayerCards n(Galmieux, Ardent Disdain);
+}
+
+// ------------------------------
+
+name Wings of Desire;
+id BP15-PR14;
+class Abyss;
+type Spell;
+trait Omen / Demon / Token;
+cost 1;
+
+text "NOT FULLY IMPLEMENTED
+      Select a follower on your field. Give it "Strike - Deal each enemy follower on the field damage equal to the number of times your leader has lost defense this turn" and deal 1 damage to your leader.";
+
+ability Spell {
+    condition f(F);
+    effect Sequence(GiveAbility, Damage);
+}
+ability Spell name GiveAbility {
+    effect GiveAbility(Strike) to TargetPlayerCard F;
+}
+ability Strike {
+    effect DealDamage(1) to AllOpponentCards F;
+}
+ability Spell name Damage {
+    effect DealDamage(1) to Leader;
+}
+
+// ------------------------------
+
+name Scream Diffusion;
+id BP15-PR15;
+class Abyss;
+type Spell;
+trait Omen / Necromancer / Token;
+cost 2;
+
+text "Summon a Rulenye, Echoing Scream token for every 5 cards in your cemetery.";
+
+ability Spell {
+    effect SummonToken("Rulenye, Echoing Scream", Field, y()/5);
+}
+
+// ------------------------------
+
+name Torrent of Despair;
+id BP15-PR16;
+class Haven;
+type Spell;
+trait Omen / Zealot / Token;
+cost 0;
+
+text "Select an enemy follower on the field and banish it.";
+
+ability Spell {
+    condition p(#F);
+    effect Banish() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Great Testimony;
+id BP15-PR17;
+class Neutral;
+type Spell;
+trait Omen / Token;
+cost 0;
+
+text "Select an enemy follower on the field. Destroy it and, if there's a Mjerrabaine, Great One on your field, deal 2 damage to its leader.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Destroy, Damage);
+}
+ability Spell name Destroy {
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name Damage {
+    condition f(n(Mjerrabaine, Great One));
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Ravenous Sweetness;
+id BP15-PR18;
+class Neutral;
+type Spell;
+trait Omen / Token;
+cost 5;
+
+text "Deal 2 damage to each enemy leader. Give your leader [defense]+2. Draw 2 cards. Each opponent discards 2 random cards.";
+
+ability Spell {
+    effect Sequence(Damage, Defense, Draw, Discard);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(2);
+}
+ability Spell name Discard {
+    effect DiscardRandomCard(2) to Opponent;
+}
