@@ -1,0 +1,40 @@
+[
+  {
+    "id": "BP20-T03EN",
+    "name": "White Psalm, New Revelation",
+    "trait": "Omen / Idolatry / Token",
+    "cardText": "[act] [engage] 3 Idolatry cards on your field: Bury this.\n[lastwords] Summon a Black Psalm, New Revelation token. Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage] 3 Idolatry cards on your field",
+        "body": "Bury this."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Summon a Black Psalm, New Revelation token. Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T04EN",
+    "name": "Black Psalm, New Revelation",
+    "trait": "Omen / Idolatry / Token",
+    "cardText": "[act] [engage] 3 Idolatry cards on your field: Bury this.\n[lastwords] Summon a White Psalm, New Revelation token. Deal 1 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage] 3 Idolatry cards on your field",
+        "body": "Bury this."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Summon a White Psalm, New Revelation token. Deal 1 damage to each enemy leader."
+      }
+    ]
+  }
+]

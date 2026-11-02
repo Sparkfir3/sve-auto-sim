@@ -1,0 +1,32 @@
+[
+  {
+    "id": "BP19-T01EN",
+    "name": "Dread Pirate's Flag",
+    "trait": "Condemned / Thief / Loot / Token",
+    "cardText": "Select a Thief follower on your field. Give it [attack]+1 and, if it's a Condemned–Thief follower, deal 1 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a Thief follower on your field. Give it [attack]+1 and, if it's a Condemned–Thief follower, deal 1 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-T02EN",
+    "name": "Chimera Test Subject",
+    "trait": "Condemned / Arcanaform / Forbidden / Token",
+    "cardText": "[fanfare] If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane.\n[lastwords] Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Draw a card."
+      }
+    ]
+  }
+]

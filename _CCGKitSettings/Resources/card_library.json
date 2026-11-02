@@ -57929,6 +57929,492 @@
     ]
   },
   {
+    "name": "Booster Set #19 \"Eightfold Retribution\"",
+    "cards": [
+      {
+        "cardTypeId": 2,
+        "name": "Dread Pirate's Flag",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Thief / Loot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select a Thief follower on your field. Give it [attack]+1 and, if it's a Condemned–Thief follower, deal 1 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-T01",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(Ft(Thief))",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "Ft(Thief)",
+              "effectName1": "Atk",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Atk",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "targetStats": "Attack",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "0~(t(Condemned / Thief))1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100193001
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Chimera Test Subject",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Arcanaform / Forbidden / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane.\n[lastwords] Draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-T02",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "y(Ft(Condemned))>4",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "AtkDef",
+              "effectName2": "Rush",
+              "effectName3": "Assail",
+              "effectName4": "Bane",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "targetStats": "AttackDefense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Rush",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 0,
+              "keywordValue": 2,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "y(Ft(Condemned))>9",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Assail",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 0,
+              "keywordValue": 3,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "y(Ft(Condemned))>9",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Bane",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 0,
+              "keywordValue": 6,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100193002
+      }
+    ]
+  },
+  {
+    "name": "Booster Set #20 \"Omens and Heirs\"",
+    "cards": [
+      {
+        "cardTypeId": 4,
+        "name": "White Psalm, New Revelation",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Idolatry / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act] [engage] 3 Idolatry cards on your field: Bury this.\n[lastwords] Summon a Black Psalm, New Revelation token. Give your leader [defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T03",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "target": "TargetPlayerCard",
+                "filter": "t(Idolatry)m(3,3)",
+                "$type": "SVESimulator.EngageCardCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.SendToCemeteryEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Token",
+              "effectName2": "Def",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Black Psalm, New Revelation",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203003
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Black Psalm, New Revelation",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Idolatry / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act] [engage] 3 Idolatry cards on your field: Bury this.\n[lastwords] Summon a White Psalm, New Revelation token. Deal 1 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T04",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "target": "TargetPlayerCard",
+                "filter": "t(Idolatry)m(3,3)",
+                "$type": "SVESimulator.EngageCardCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.SendToCemeteryEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Token",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Token",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "White Psalm, New Revelation",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203004
+      }
+    ]
+  },
+  {
     "name": "Crossover Set \"Umamusume: Pretty Derby\"",
     "cards": [
       {

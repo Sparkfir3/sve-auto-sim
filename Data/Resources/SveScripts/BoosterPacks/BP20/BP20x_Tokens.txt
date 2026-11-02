@@ -1,0 +1,49 @@
+name White Psalm, New Revelation;
+id BP20-T03;
+class Rune;
+type Amulet;
+trait Omen / Idolatry / Token;
+cost 1;
+
+text "[act] [engage] 3 Idolatry cards on your field: Bury this.
+      [lastwords] Summon a Black Psalm, New Revelation token. Give your leader [defense]+1.";
+
+ability Act {
+    cost (Engage, TargetPlayerCard, t(Idolatry)m(3,3));
+    effect SendToCemetery() to Self;
+}
+ability LastWords {
+    effect Sequence(Token, Def);
+}
+ability Spell name Token {
+    effect SummonToken("Black Psalm, New Revelation", Field, 1);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Black Psalm, New Revelation;
+id BP20-T04;
+class Rune;
+type Amulet;
+trait Omen / Idolatry / Token;
+cost 1;
+
+text "[act] [engage] 3 Idolatry cards on your field: Bury this.
+      [lastwords] Summon a White Psalm, New Revelation token. Deal 1 damage to each enemy leader.";
+
+ability Act {
+    cost (Engage, TargetPlayerCard, t(Idolatry)m(3,3));
+    effect SendToCemetery() to Self;
+}
+ability LastWords {
+    effect Sequence(Token, Damage);
+}
+ability Spell name Token {
+    effect SummonToken("White Psalm, New Revelation", Field, 1);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to OpponentLeader;
+}

@@ -1,0 +1,54 @@
+name Dread Pirate's Flag;
+id BP19-T01;
+class Sword;
+type Spell;
+trait Condemned / Thief / Loot / Token;
+cost 1;
+
+text "Select a Thief follower on your field. Give it [attack]+1 and, if it's a Condemned–Thief follower, deal 1 damage to each enemy leader.";
+
+ability Spell {
+    condition f(Ft(Thief));
+    effect TargetForSequence(Atk, Damage) to TargetPlayerCard Ft(Thief);
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to AllPlayerCards;
+}
+ability Spell name Damage {
+    effect DealDamage(0~(t(Condemned / Thief))1) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Chimera Test Subject;
+id BP19-T02;
+class Rune;
+type Follower;
+trait Condemned / Arcanaform / Forbidden / Token;
+cost 2;
+stats 2/2;
+
+text "[fanfare] If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane.
+      [lastwords] Draw a card.";
+
+ability Fanfare {
+    condition y(Ft(Condemned))>4;
+    effect Sequence(AtkDef, Rush, Assail, Bane);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to Self;
+}
+ability Spell name Assail {
+    condition y(Ft(Condemned))>9;
+    effect GiveKeyword(Assail) to Self;
+}
+ability Spell name Bane {
+    condition y(Ft(Condemned))>9;
+    effect GiveKeyword(Bane) to Self;
+}
+ability LastWords {
+    effect Draw(1);
+}
