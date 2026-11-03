@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CCGKit;
+using UnityEngine.UI;
 
 namespace SVESimulator
 {
@@ -11,6 +12,14 @@ namespace SVESimulator
     {
         [SerializeField]
         private PlayerController _player;
+        [SerializeField]
+        private List<GameObject> buttons;
+        [SerializeField]
+        private Button toggleButton;
+        [SerializeField]
+        private RectTransform toggleGraphic;
+        [SerializeField]
+        private bool isExpanded = true;
 
         private PlayerController Player
         {
@@ -24,7 +33,20 @@ namespace SVESimulator
 
         // ------------------------------
 
-        [Button]
+        public void Toggle()
+        {
+            isExpanded = !isExpanded;
+            foreach(GameObject button in buttons)
+                button.SetActive(isExpanded);
+
+            Vector3 graphicRotation = toggleGraphic.localEulerAngles;
+            graphicRotation.z = isExpanded ? -90f : 90f;
+            toggleGraphic.localEulerAngles = graphicRotation;
+        }
+
+        // ------------------------------
+
+        [TitleGroup("Buttons"), Button]
         public void DrawCard()
         {
             Player.LocalEvents.DrawCard();
