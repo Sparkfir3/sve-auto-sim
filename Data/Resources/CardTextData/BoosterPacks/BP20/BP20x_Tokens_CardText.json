@@ -7,6 +7,7 @@
     "effectText": [
       {
         "key": "ActFromExArea",
+        "trigger": "[act]",
         "cost": "[cost00]",
         "body": "Select an enemy follower on the field and change its defense to 1. Activate only once per turn."
       }
@@ -19,7 +20,7 @@
     "cardText": "NOT FULLY IMPLEMENTED\nAt the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle.",
     "effectText": [
       {
-        "key": "StartMainPhase",
+        "key": "StartMainPhaseFromExArea",
         "body": "At the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle."
       },
       {
@@ -63,6 +64,96 @@
         "key": "LastWords",
         "trigger": "[lastwords]",
         "body": "Summon a White Psalm, New Revelation token. Deal 1 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T05EN",
+    "name": "Crest: Galmieux, Ardor Manifest",
+    "trait": "Omen / Wyrmkin / Token",
+    "cardText": "[act] [cost00]: Select an Omen follower on your field and deal it 1 damage. Activate only once per turn.",
+    "effectText": [
+      {
+        "key": "ActFromExArea",
+        "trigger": "[act]",
+        "cost": "[cost00]",
+        "body": "Select an Omen follower on your field and deal it 1 damage. Activate only once per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T06EN",
+    "name": "Crest: Sham-Nacha, Heir to Entwining",
+    "trait": "Omen / Heir / Encroacher / Token",
+    "cardText": "NOT IMPLEMENTED\nIf you would choose 1 or more options, choose any number instead."
+  },
+  {
+    "id": "BP20-T07EN",
+    "name": "Crest: Marwynn, Despair Manifest",
+    "trait": "Omen / Zealot / Token",
+    "cardText": "At the start of your end phase, select an enemy leader or enemy follower on the field and deal it 1 damage. If there are at least 3 crests in your EX area, deal 2 damage instead. If there are 5, deal 4 damage instead.",
+    "effectText": [
+      {
+        "key": "StartEndPhaseFromExArea",
+        "text": "At the start of your end phase, select an enemy leader or enemy follower on the field and deal it 1 damage. If there are at least 3 crests in your EX area, deal 2 damage instead. If there are 5, deal 4 damage instead.",
+        "trigger": "At the start of your end phase,",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage. If there are at least 3 crests in your EX area, deal 2 damage instead. If there are 5, deal 4 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T08EN",
+    "name": "Crest: Himeka, Heir to Repose",
+    "trait": "Omen / Heir / Zealot / Token",
+    "cardText": "At the start of your end phase, select an enemy follower on the field and, if there are at least 3 crests in your EX area, give it [attack]-2/[defense]-2. If there are 5, give [attack]-4/[defense]-4 instead.",
+    "effectText": [
+      {
+        "key": "StartEndPhaseFromExArea",
+        "text": "At the start of your end phase, select an enemy follower on the field and, if there are at least 3 crests in your EX area, give it [attack]-2/[defense]-2. If there are 5, give [attack]-4/[defense]-4 instead.",
+        "trigger": "At the start of your end phase,",
+        "body": "Select an enemy follower on the field and, if there are at least 3 crests in your EX area, give it [attack]-2/[defense]-2. If there are 5, give [attack]-4/[defense]-4 instead."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T09EN",
+    "name": "Crest: Congregant of Repose",
+    "trait": "Omen / Zealot / Token",
+    "cardText": "At the start of your end phase, select an Omen follower on your field and, if there are at least 3 crests in your EX area, give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "StartEndPhaseFromExArea",
+        "text": "At the start of your end phase, select an Omen follower on your field and, if there are at least 3 crests in your EX area, give it [attack]+1/[defense]+1.",
+        "trigger": "At the start of your end phase,",
+        "body": "Select an Omen follower on your field and, if there are at least 3 crests in your EX area, give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T10EN",
+    "name": "Crest: Supplicant of Repose",
+    "trait": "Omen / Zealot / Token",
+    "cardText": "At the start of your end phase, if there are at least 3 crests in your EX area, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "StartEndPhaseFromExArea",
+        "text": "At the start of your end phase, if there are at least 3 crests in your EX area, give your leader [defense]+1.",
+        "trigger": "At the start of your end phase, if there are at least 3 crests in your EX area,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-T11EN",
+    "name": "Crest: Congregant of Repose",
+    "trait": "Omen / Token",
+    "cardText": "At the start of your end phase, if there's 1 card or less in your hand, draw a card.",
+    "effectText": [
+      {
+        "key": "StartEndPhaseFromExArea",
+        "text": "At the start of your end phase, if there's 1 card or less in your hand, draw a card.",
+        "trigger": "At the start of your end phase, if there's 1 card or less in your hand,",
+        "body": "Draw a card."
       }
     ]
   }

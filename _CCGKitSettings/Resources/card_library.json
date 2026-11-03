@@ -58988,7 +58988,7 @@
         "costs": [],
         "properties": [
           {
-            "value": "Runecraft",
+            "value": "Swordcraft",
             "name": "Class",
             "$type": "CCGKit.StringProperty"
           },
@@ -59287,6 +59287,327 @@
           }
         ],
         "id": 100203004
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Galmieux, Ardor Manifest",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act] [cost00]: Select an Omen follower on your field and deal it 1 damage. Activate only once per turn.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T05",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 1,
+            "costs": [
+              {
+                "amount": "0",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.OncePerTurnCost"
+              },
+              {
+                "condition": "f(Ft(Omen))",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
+            "name": "ActFromExArea",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "Ft(Omen)",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100203005
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Sham-Nacha, Heir to Entwining",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Abysscraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Heir / Encroacher / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "NOT IMPLEMENTED\nIf you would choose 1 or more options, choose any number instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T06",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [],
+        "id": 100203006
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Marwynn, Despair Manifest",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Zealot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "At the start of your end phase, select an enemy leader or enemy follower on the field and deal it 1 damage. If there are at least 3 crests in your EX area, deal 2 damage instead. If there are 5, deal 4 damage instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T07",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveStartEndPhaseFromExAreaTrigger"
+            },
+            "name": "StartEndPhaseFromExArea",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCardOrLeader",
+              "filter": "F",
+              "amount": "[1?(x(T)>2)2]?(x(T)>4)4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203007
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Himeka, Heir to Repose",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Heir / Zealot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "At the start of your end phase, select an enemy follower on the field and, if there are at least 3 crests in your EX area, give it [attack]-2/[defense]-2. If there are 5, give [attack]-4/[defense]-4 instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T08",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveStartEndPhaseFromExAreaTrigger"
+            },
+            "name": "StartEndPhaseFromExArea",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "targetStats": "AttackDefense",
+              "amount": "[0?(x(T)>2)2]?(x(T)>4)4",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203008
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Congregant of Repose",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Zealot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "At the start of your end phase, select an Omen follower on your field and, if there are at least 3 crests in your EX area, give it [attack]+1/[defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T09",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveStartEndPhaseFromExAreaTrigger"
+            },
+            "name": "StartEndPhaseFromExArea",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "Ft(Omen)",
+              "targetStats": "AttackDefense",
+              "amount": "0?(x(T)>2)1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203009
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Supplicant of Repose",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Zealot / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "At the start of your end phase, if there are at least 3 crests in your EX area, give your leader [defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T10",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "x(T)>2",
+              "$type": "SVESimulator.SveStartEndPhaseFromExAreaTrigger"
+            },
+            "name": "StartEndPhaseFromExArea",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203010
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Congregant of Repose",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Havencraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "At the start of your end phase, if there's 1 card or less in your hand, draw a card.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T11",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "H<2",
+              "$type": "SVESimulator.SveStartEndPhaseFromExAreaTrigger"
+            },
+            "name": "StartEndPhaseFromExArea",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203011
       }
     ]
   },
