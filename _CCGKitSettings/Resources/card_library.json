@@ -58925,6 +58925,153 @@
     "name": "Booster Set #20 \"Omens and Heirs\"",
     "cards": [
       {
+        "cardTypeId": 7,
+        "name": "Crest: Krulle, Hier to Unkilling",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Forestcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Heir / Hunter / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act] [cost00]: Select an enemy follower on the field and change its defense to 1. Activate only once per turn.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T01",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 1,
+            "costs": [
+              {
+                "amount": "0",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.OncePerTurnCost"
+              },
+              {
+                "condition": "p(#F)",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
+            "name": "ActFromExArea",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.SetStatEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100203001
+      },
+      {
+        "cardTypeId": 7,
+        "name": "Crest: Octrice, Hollowness Manifest",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Runecraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Thief / Token",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "NOT FULLY IMPLEMENTED\nAt the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-T02",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveStartMainPhaseFromExAreaTrigger"
+            },
+            "name": "StartMainPhaseFromExArea",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Counter",
+              "effectName2": "Banish",
+              "effectName3": "Search",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Counter",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 24,
+              "keywordValue": 1,
+              "amount": "1",
+              "$type": "SVESimulator.GiveCounterEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "r(Reversal)>7",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Banish",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.BanishCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "r(Reversal)>7",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Search",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "t(Thief)",
+              "searchDeckAction": "Hand",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100203002
+      },
+      {
         "cardTypeId": 4,
         "name": "White Psalm, New Revelation",
         "costs": [],

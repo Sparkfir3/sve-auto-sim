@@ -60,6 +60,7 @@ namespace SVESimulator.SveScript
 
             // Game Phases
             { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },
+            { "StartMainPhaseFromExArea", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseFromExAreaTrigger") },
             { "StartOpponentMainPhase", new EffectTriggerInfo("SVESimulator.SveStartOpponentMainPhaseTrigger") },
             { "StartEndPhase", new EffectTriggerInfo("SVESimulator.SveStartEndPhaseTrigger") },
 

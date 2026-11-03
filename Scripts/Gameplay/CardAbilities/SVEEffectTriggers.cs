@@ -113,6 +113,7 @@ namespace SVESimulator
     #region Game Phases
 
     public class SveStartMainPhaseTrigger : SveTrigger { }
+    public class SveStartMainPhaseFromExAreaTrigger : SveTrigger { }
 
     public class SveStartOpponentMainPhaseTrigger : SveTrigger { }
 

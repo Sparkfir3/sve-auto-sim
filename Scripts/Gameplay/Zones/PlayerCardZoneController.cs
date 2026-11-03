@@ -425,7 +425,7 @@ namespace SVESimulator
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
 
             bool isCrest = token.IsCrest();
-            token.SetStatOverlayActive(!isCrest);
+            token.SetStatOverlayActive(zone == fieldZone || isCrest);
             token.SetCostOverlayActive(!isCrest && zone == exAreaZone);
             if(token.IsFollowerOrEvolvedFollower() && zone == fieldZone && zone.IsLocalPlayerZone)
                 token.CalculateCanAttackStatus();

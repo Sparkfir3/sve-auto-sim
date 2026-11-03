@@ -1,3 +1,46 @@
+name Crest: Krulle, Hier to Unkilling;
+id BP20-T01;
+class Forest;
+type Crest;
+trait Omen / Heir / Hunter / Token;
+
+text "[act] [cost00]: Select an enemy follower on the field and change its defense to 1. Activate only once per turn.";
+
+ability ActFromExArea {
+    cost (PP, 0), (OncePerTurn);
+    condition p(#F);
+    effect SetStat(Def, 1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Crest: Octrice, Hollowness Manifest;
+id BP20-T02;
+class Rune;
+type Crest;
+trait Omen / Thief / Token;
+
+text "NOT FULLY IMPLEMENTED
+      At the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle.";
+
+ability StartMainPhaseFromExArea {
+    effect Sequence(Counter, Banish, Search);
+}
+
+ability Spell name Counter {
+    effect GiveCounter(Reversal, 1) to Self;
+}
+ability Spell name Banish {
+    condition r(Reversal)>7;
+    effect Banish() to Self;
+}
+ability Spell name Search {
+    condition r(Reversal)>7;
+    effect Search(1, t(Thief), Hand);
+}
+
+// ------------------------------
+
 name White Psalm, New Revelation;
 id BP20-T03;
 class Rune;
