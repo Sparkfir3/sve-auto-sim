@@ -106,7 +106,7 @@ namespace SVESimulator
             }
 
             #region Card
-            if(canInteract && currentSelectedCard)
+            if(canInteract && currentSelectedCard && !currentSelectedCard.IsCrest())
             {
                 if(Input.GetMouseButtonDown(0))
                     BeginInteract();
@@ -390,9 +390,10 @@ namespace SVESimulator
             if(onlyQuicks && !activatedAbilities.Any(x => x.costs.Any(y => y is QuickEffectAsCost)))
                 return false;
 
+            bool isOnField = card.CurrentZone.Runtime.zoneId == SVEProperties.ZoneIds.Field;
             if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack) || card.CanServe())
             {
-                GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, onlyQuicks: onlyQuicks);
+                GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, checkEvolveServe: isOnField, checkStack: isOnField, onlyQuicks: onlyQuicks);
                 return true;
             }
             return false;

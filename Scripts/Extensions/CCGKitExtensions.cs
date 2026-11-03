@@ -74,7 +74,7 @@ namespace SVESimulator
         public static bool IsCrest(this RuntimeCard card, GameConfiguration gameConfig = null) => card != null && LibraryCardCache.GetCard(card.cardId, gameConfig).IsCrest();
         public static bool IsCrest(this Card card)
         {
-            return card.TryGetStringProperty(SVEProperties.CardStats.Trait, "").Contains(SVEProperties.CardTypes.Crest);
+            return card.IsCardType(SVEProperties.CardTypes.Crest);
         }
 
         public static bool IsEvolvedVersionOf(this Card evolvedCard, Card baseCard)

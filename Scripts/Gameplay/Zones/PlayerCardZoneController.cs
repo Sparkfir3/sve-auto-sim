@@ -424,8 +424,9 @@ namespace SVESimulator
             zone.MoveCardToSlot(token, slotNumber,
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
 
-            token.SetStatOverlayActive(true);
-            token.SetCostOverlayActive(zone == exAreaZone);
+            bool isCrest = token.IsCrest();
+            token.SetStatOverlayActive(!isCrest);
+            token.SetCostOverlayActive(!isCrest && zone == exAreaZone);
             if(token.IsFollowerOrEvolvedFollower() && zone == fieldZone && zone.IsLocalPlayerZone)
                 token.CalculateCanAttackStatus();
             else
