@@ -20,6 +20,7 @@ namespace SVESimulator
             Spell,
             Amulet,
             AdvancedCard,
+            Crest,
 
             // Card Properties
             Trait,
@@ -497,6 +498,7 @@ namespace SVESimulator
                     'A' => CardFilterSetting.Amulet,
                     'E' => CardFilterSetting.Evolved,
                     'V' => CardFilterSetting.AdvancedCard,
+                    'T' => CardFilterSetting.Crest,
                     'K' => CardFilterSetting.Token,
                     'X' => CardFilterSetting.ExcludeSelf,
                     'R' => CardFilterSetting.Reserved,

@@ -118,6 +118,7 @@ namespace SVESimulator
     public class SveStartOpponentMainPhaseTrigger : SveTrigger { }
 
     public class SveStartEndPhaseTrigger : SveTrigger { }
+    public class SveStartEndPhaseFromExAreaTrigger : SveTrigger { }
 
     #endregion
 

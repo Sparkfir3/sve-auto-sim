@@ -63,6 +63,7 @@ namespace SVESimulator.SveScript
             { "StartMainPhaseFromExArea", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseFromExAreaTrigger") },
             { "StartOpponentMainPhase", new EffectTriggerInfo("SVESimulator.SveStartOpponentMainPhaseTrigger") },
             { "StartEndPhase", new EffectTriggerInfo("SVESimulator.SveStartEndPhaseTrigger") },
+            { "StartEndPhaseFromExArea", new EffectTriggerInfo("SVESimulator.SveStartEndPhaseFromExAreaTrigger") },
 
             // Other
             { "OnLeaderGainDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderGainDefenseTrigger") },
