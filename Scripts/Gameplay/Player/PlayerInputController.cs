@@ -223,7 +223,8 @@ namespace SVESimulator
             CardManager.Animator.SetTargetingLineActive(false);
 
             // Open ability menu
-            if(currentSelectedCard.CurrentZone == Player.ZoneController.fieldZone && currentTargetSlot && currentTargetSlot.Card == currentSelectedCard)
+            if((currentSelectedCard.CurrentZone == Player.ZoneController.fieldZone || currentSelectedCard.CurrentZone == Player.ZoneController.exAreaZone)
+               && currentTargetSlot && currentTargetSlot.Card == currentSelectedCard)
             {
                 TryOpenActivateEffectWindow(currentSelectedCard);
             }
@@ -385,7 +386,8 @@ namespace SVESimulator
             bool onlyQuicks = allowedInputs.HasFlag(InputTypes.OnlyQuicks);
             if(onlyQuicks && card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotUseAct))
                 return false;
-            List<ActivatedAbility> activatedAbilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility act && x.effect is SveEffect && act.zoneId == SVEProperties.ZoneIds.Field)
+
+            List<ActivatedAbility> activatedAbilities = card.LibraryCard.abilities.Where(x => x is ActivatedAbility act && x.effect is SveEffect && act.zoneId == card.CurrentZone.Runtime.zoneId)
                 .Select(x => x as ActivatedAbility).ToList();
             if(onlyQuicks && !activatedAbilities.Any(x => x.costs.Any(y => y is QuickEffectAsCost)))
                 return false;

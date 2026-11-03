@@ -56,6 +56,10 @@ namespace SVESimulator.SveScript
                 case "ActFromHand":
                     ParseAndAddActivatedAbility(text[splitIndex..], ref cardInfo, name, zoneId: 6);
                     break;
+                case "ActFromEx":
+                case "ActFromExArea":
+                    ParseAndAddActivatedAbility(text[splitIndex..], ref cardInfo, name, zoneId: 1);
+                    break;
                 case "Passive":
                     ParseAndAddPassiveAbility(text[splitIndex..], ref cardInfo, name, trigger);
                     break;
