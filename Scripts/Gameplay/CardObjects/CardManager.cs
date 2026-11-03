@@ -74,6 +74,26 @@ namespace SVESimulator
             return newCard.card;
         }
 
+        public CardObject RequestCard(Card card, bool setActive = true)
+        {
+            if(!TryGetFirstAvailableCard(out PooledCard newCard))
+            {
+                newCard = SpawnNewCard();
+            }
+            newCard.active = true;
+            newCard.card.RuntimeCard = null;
+            if(setActive)
+            {
+                newCard.card.gameObject.SetActive(true);
+            }
+
+            string id = card.GetEnglishSveID();
+            SetCardTexture(newCard.card, id);
+            newCard.card.gameObject.name = $"LibraryCard {id}";
+            newCard.card.OverrideLibraryCard(card);
+            return newCard.card;
+        }
+
         public bool ReleaseCard(CardObject card)
         {
             PooledCard pooledCard = cardPool.Find(x => x.card == card);
@@ -88,7 +108,8 @@ namespace SVESimulator
                 return false;
             }
 
-            cardsByInstanceId.Remove(card.RuntimeCard.instanceId);
+            if(card.RuntimeCard != null)
+                cardsByInstanceId.Remove(card.RuntimeCard.instanceId);
             if(card.CurrentZone)
                 card.CurrentZone.RemoveCard(card);
             card.RuntimeCard = null;
@@ -168,16 +189,16 @@ namespace SVESimulator
             return newCard;
         }
 
-        private void SetCardTexture(CardObject card)
+        private void SetCardTexture(CardObject card, string id = null)
         {
             card.SetCardBack(CardTextureManager.GetCardBackTexture());
-            if(card.RuntimeCard == null)
+            if(card.RuntimeCard == null && id.IsNullOrWhiteSpace())
             {
                 card.SetCardFront(CardTextureManager.GetCardBackTexture());
                 return;
             }
 
-            string id = card.LibraryCard.GetEnglishSveID();
+            id ??= card.LibraryCard.GetEnglishSveID();
             card.SetCardFront(CardTextureManager.GetCardTexture(id));
         }
 

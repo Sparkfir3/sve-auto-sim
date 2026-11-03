@@ -184,6 +184,12 @@ namespace SVESimulator
                     for(int i = 0; i < cardsToMove.Count; i++)
                         Player.OppZoneController.SendCardToBanishedZone(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
+
+                // Other
+                case SelectionMode.SelectToken:
+                    for(int i = 0; i < cardsToMove.Count; i++)
+                        CardManager.Instance.ReleaseCard(cardsToMove[i]);
+                    break;
             }
 
             DeselectAllCards();
@@ -241,6 +247,7 @@ namespace SVESimulator
                 case SelectionMode.ViewCardsOppEvolveDeck:
                 case SelectionMode.ViewCardsBanished:
                 case SelectionMode.ViewCardsOppBanished:
+                case SelectionMode.SelectToken:
                     Interactable = false;
                     InteractionType = ZoneInteractionType.None;
                     endInteractionType = TargetableSlot.InteractionType.None;
@@ -585,7 +592,7 @@ namespace SVESimulator
             zoneController.MoveCardToSelectionArea(card, delay: delay, rearrangeHand: false);
         }
 
-        private void SetScrollViewTintActive(bool active)
+        public void SetScrollViewTintActive(bool active)
         {
             scrollViewTint.alpha = active ? 1f : 0f;
             if(scrollViewRaycastBlocker)

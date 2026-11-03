@@ -418,7 +418,8 @@ namespace SVESimulator
         {
             token.CurrentZone = zone;
             zone.AddCard(token);
-            zone.Runtime.AddCard(token.RuntimeCard);
+            if(token.RuntimeCard != null)
+                zone.Runtime.AddCard(token.RuntimeCard);
 
             MoveCardTransform(token, zone.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, instant: true);
             zone.MoveCardToSlot(token, slotNumber,
