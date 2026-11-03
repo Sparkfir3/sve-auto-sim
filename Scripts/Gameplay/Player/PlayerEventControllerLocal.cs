@@ -813,6 +813,12 @@ namespace SVESimulator
                 }
             }
 
+            if(libraryCard.IsSpell() && creationOption != SVEProperties.TokenCreationOption.ExArea)
+            {
+                Debug.LogError($"Attempted to create Spell token {tokenName} outside the EX area (attempted mode {creationOption})");
+                return null;
+            }
+
             // ---
 
             // Get target slot
@@ -829,7 +835,7 @@ namespace SVESimulator
                     targetSlotId = localZoneController.exAreaZone.GetFirstOpenSlotId();
                     break;
                 default:
-                    Debug.LogError($"Attempted to create token with invalid TokenCreationOption: {creationOption}");
+                    Debug.LogError($"Attempted to create token with invalid TokenCreationOption: {creationOption}\nThis should never occur naturally, something went wrong");
                     return null;
             }
             if(targetSlotId < 0)
@@ -963,10 +969,7 @@ namespace SVESimulator
 
                 sveEffectSolver.FinishSpell(netIdentity, runtimeCard);
                 card.SetHighlightMode(CardObject.HighlightMode.None);
-                if(card.IsToken())
-                    CardManager.Instance.ReleaseCard(card);
-                else
-                    localZoneController.SendCardToCemetery(card);
+                StandardSendCardObjectToZone(card, localZoneController, (x, onComplete) => localZoneController.SendCardToCemetery(x, onComplete));
 
                 LocalFinishSpellMessage msg = new()
                 {
