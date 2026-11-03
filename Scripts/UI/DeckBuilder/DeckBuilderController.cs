@@ -162,8 +162,8 @@ namespace SVESimulator.DeckBuilder
 
         private void ManageLibraryCache()
         {
-            if(LibraryCardCache.CacheSize > 100)
-                LibraryCardCache.ClearCache();
+            if(LibraryCardCache.MainCacheSize > 100)
+                LibraryCardCache.ClearMainCache();
         }
 
         #endregion
