@@ -256,6 +256,12 @@ namespace SVESimulator
 
         public Vector3 GetSlotPosition(TargetableSlot slot) => GetSlotPosition(slot.SlotNumber);
         public Vector3 GetSlotPosition(int slotNumber) => cardSlots[slotNumber].position;
+        public Vector3 GetSlotPosition(CardObject card)
+        {
+            int slotNumber = GetSlotNumber(card);
+            return slotNumber < 0 ? transform.position : cardSlots[slotNumber].position;
+        }
+
         public Vector3 GetSlotLocalPosition(int slotNumber) => cardSlots[slotNumber].localPosition;
 
         public CardObject GetCard(int slotNumber) => (slotNumber >= 0 && slotNumber < cardSlots.Count) ? cardSlots[slotNumber].card : null;
