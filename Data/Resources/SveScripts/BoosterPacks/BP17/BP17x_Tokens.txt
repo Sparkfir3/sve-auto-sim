@@ -102,19 +102,18 @@ type Spell;
 trait Wyrmkin / Cutthroat / Draconic Duelist / Token;
 cost 0;
 
-text "NOT FULLY IMPLEMENTED
-      This can't be played unless Overflow is active for you.
+text "This can't be played unless Overflow is active for you.
       At the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader.
       ----------
       Select a Rowen, Dragon Lance on your field and give it "If this would deal damage, it deals that much plus 1 instead" for the rest of this turn.";
 
 ability Spell {
-    condition f(n(Rowen, Dragon Lance));
+    condition o & f(n(Rowen, Dragon Lance));
     effect GiveKeywordEndOfTurn(Plus1Damage) to TargetPlayerCard n(Rowen, Dragon Lance);
 }
-ability ModifiedCost {
-    condition o;
-    effect AdditionalCost();
+ability StartEndPhaseFromExArea {
+    condition 1o0;
+    effect DealDamage(1) to Leader;
 }
 
 // ------------------------------

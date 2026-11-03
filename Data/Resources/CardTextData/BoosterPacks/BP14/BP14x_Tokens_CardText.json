@@ -16,7 +16,15 @@
     "id": "BP14-T02EN",
     "name": "Glittering Gold",
     "trait": "Festive / Thief / Loot / Token",
-    "cardText": "NOT IMPLEMENTED\n[act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card."
+    "cardText": "[act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.",
+    "effectText": [
+      {
+        "key": "ActFromExArea",
+        "trigger": "[act]",
+        "cost": "[cost01], banish this and 2 other cards named Glittering Gold from your EX area",
+        "body": "Give your leader [defense]+1. Draw a card."
+      }
+    ]
   },
   {
     "id": "BP14-T03EN",
@@ -67,7 +75,7 @@
       },
       {
         "key": "Bury",
-        "text": "You may discard a card. If you do, bury the top card of your deck.",
+        "text": "You may discard a card. If you do, bury the top card of your deck."
       }
     ]
   },

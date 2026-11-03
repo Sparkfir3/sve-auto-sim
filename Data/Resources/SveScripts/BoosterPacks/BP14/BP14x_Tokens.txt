@@ -23,8 +23,18 @@ type Spell;
 trait Festive / Thief / Loot / Token;
 cost 0;
 
-text "NOT IMPLEMENTED
-      [act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.";
+text "[act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.";
+
+ability ActFromExArea {
+    cost (PP, 1), (Banish, SelfFromEx), (Banish, TargetPlayerCardEx, Xn(Glittering Gold)m(2,2));
+    effect Sequence(Def, Draw);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+ability Spell name Draw {
+    effect Draw();
+}
 
 // ------------------------------
 

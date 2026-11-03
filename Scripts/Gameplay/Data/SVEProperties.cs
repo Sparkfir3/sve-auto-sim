@@ -36,6 +36,7 @@ namespace SVESimulator
         {
             Self,
             SelfFromHand,
+            SelfFromEx,
             Leader,
             AllPlayerCards,
             AllPlayerCardsEx,

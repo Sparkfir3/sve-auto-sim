@@ -52537,7 +52537,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "NOT IMPLEMENTED\n[act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.",
+            "value": "[act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -52559,7 +52559,62 @@
           }
         ],
         "keywords": [],
-        "abilities": [],
+        "abilities": [
+          {
+            "zoneId": 1,
+            "costs": [
+              {
+                "amount": "1",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "target": "SelfFromEx",
+                "filter": "",
+                "$type": "SVESimulator.BanishCost"
+              },
+              {
+                "target": "TargetPlayerCardEx",
+                "filter": "Xn(Glittering Gold)m(2,2)",
+                "$type": "SVESimulator.BanishCost"
+              }
+            ],
+            "name": "ActFromExArea",
+            "type": "Activated",
+            "effect": {
+              "effectName1": "Def",
+              "effectName2": "Draw",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
         "id": 100143002
       },
       {
@@ -57313,7 +57368,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "NOT FULLY IMPLEMENTED\nThis can't be played unless Overflow is active for you.\nAt the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader.\n----------\nSelect a Rowen, Dragon Lance on your field and give it \"If this would deal damage, it deals that much plus 1 instead\" for the rest of this turn.",
+            "value": "This can't be played unless Overflow is active for you.\nAt the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader.\n----------\nSelect a Rowen, Dragon Lance on your field and give it \"If this would deal damage, it deals that much plus 1 instead\" for the rest of this turn.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -57338,7 +57393,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "f(n(Rowen, Dragon Lance))",
+              "condition": "o & f(n(Rowen, Dragon Lance))",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Spell",
@@ -57354,13 +57409,15 @@
           },
           {
             "trigger": {
-              "condition": "o",
-              "$type": "SVESimulator.ModifiedCostTrigger"
+              "condition": "1o0",
+              "$type": "SVESimulator.SveStartEndPhaseFromExAreaTrigger"
             },
-            "name": "ModifiedCost",
+            "name": "StartEndPhaseFromExArea",
             "type": "Triggered",
             "effect": {
-              "$type": "SVESimulator.AdditionalCostEffect"
+              "target": "Leader",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           }

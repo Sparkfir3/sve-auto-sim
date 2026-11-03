@@ -26,6 +26,7 @@ namespace SVESimulator
             {
                 case SVEProperties.SVEEffectTarget.Self:
                 case SVEProperties.SVEEffectTarget.SelfFromHand:
+                case SVEProperties.SVEEffectTarget.SelfFromEx:
                     CardObject sourceCard = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
                     if(sourceCard)
                         targets.Add(sourceCard);

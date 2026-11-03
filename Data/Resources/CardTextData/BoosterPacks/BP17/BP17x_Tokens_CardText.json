@@ -52,11 +52,15 @@
     "id": "BP17-T06EN",
     "name": "Curse of the Black Dragon",
     "trait": "Wyrmkin / Cutthroat / Draconic Duelist / Token",
-    "cardText": "NOT FULLY IMPLEMENTED\nThis can't be played unless Overflow is active for you.\nAt the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader.\n----------\nSelect a Rowen, Dragon Lance on your field and give it \"If this would deal damage, it deals that much plus 1 instead\" for the rest of this turn.",
+    "cardText": "This can't be played unless Overflow is active for you.\nAt the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader.\n----------\nSelect a Rowen, Dragon Lance on your field and give it \"If this would deal damage, it deals that much plus 1 instead\" for the rest of this turn.",
     "effectText": [
       {
         "key": "Spell",
         "body": "Select a Rowen, Dragon Lance on your field and give it \"If this would deal damage, it deals that much plus 1 instead\" for the rest of this turn."
+      },
+      {
+        "key": "StartEndPhaseFromExArea",
+        "body": "At the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader."
       }
     ]
   },
