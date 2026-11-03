@@ -105,10 +105,9 @@ trait Wyrmkin / Token;
 cost 4;
 stats 4/4;
 
-text "NOT FULLY IMPLEMENTED
-      Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.";
+text "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.";
 
-ability OnOtherLeaveField {
+ability OnOtherFieldToCemetery {
     filter n(Ian, Dragon Buster);
     effect DealDamage(5) to OpponentLeader;
 }

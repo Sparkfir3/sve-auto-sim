@@ -58214,7 +58214,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "NOT FULLY IMPLEMENTED\nWhenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
+            "value": "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -58285,9 +58285,9 @@
           {
             "trigger": {
               "filter": "n(Ian, Dragon Buster)",
-              "$type": "SVESimulator.SveOnOtherCardLeaveFieldTrigger"
+              "$type": "SVESimulator.SveOnOtherCardFieldToCemetery"
             },
-            "name": "OnOtherLeaveField",
+            "name": "OnOtherFieldToCemetery",
             "type": "Triggered",
             "effect": {
               "target": "OpponentLeader",

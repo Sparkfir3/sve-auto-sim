@@ -32,6 +32,7 @@ namespace SVESimulator.SveScript
             // Card Movement - From Field (Other, Player Cards)
             { "OnOtherEnterField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
+            { "OnOtherFieldToCemetery", new EffectTriggerInfo("SVESimulator.SveOnOtherCardFieldToCemetery", TriggerParameterType.Filter) },
             { "OnOtherReturnToHandFromField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardReturnToHandFromField", TriggerParameterType.Filter) },
 
             // Card Movement - From Field (Other, Opponent Cards)

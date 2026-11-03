@@ -51,10 +51,10 @@
     "id": "BP18-T06EN",
     "name": "Adelle, Jealous Dragon",
     "trait": "Wyrmkin / Token",
-    "cardText": "NOT FULLY IMPLEMENTED\nWhenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
+    "cardText": "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
     "effectText": [
       {
-        "key": "OnOtherLeaveField",
+        "key": "OnOtherFieldToCemetery",
         "text": "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
         "trigger": "Whenever an Ian, Dragon Buster is put from your field into the cemetery,",
         "body": "Deal 5 damage to each enemy leader."
