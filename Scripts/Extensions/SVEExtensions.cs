@@ -163,7 +163,13 @@ namespace SVESimulator
                             CardFilterSetting.Defense => SVEProperties.CardStats.Defense,
                             _ => SVEProperties.CardStats.Cost
                         };
-                        if((!card.namedStats.TryGetValue(targetStat, out Stat stat) || stat.effectiveValue < min || stat.effectiveValue > max) ^ inverse)
+                        // if checking cost on an evolved card, check the base card's cost instead
+                        if(!card.namedStats.TryGetValue(targetStat, out Stat stat) && targetStat == SVEProperties.CardStats.Cost && player && card.IsEvolvedType())
+                        {
+                            RuntimeCard baseCard = card.GetAttachedCard(player.ZoneController.fieldZone.Runtime, clearAttachedCard: false);
+                            stat = baseCard?.namedStats.GetValueOrDefault(targetStat);
+                        }
+                        if((stat != null && (stat.effectiveValue < min || stat.effectiveValue > max)) ^ inverse)
                             return false;
                         break;
                     case CardFilterSetting.PlayPointCostXor:
