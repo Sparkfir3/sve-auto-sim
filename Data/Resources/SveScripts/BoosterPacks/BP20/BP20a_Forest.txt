@@ -121,9 +121,9 @@ name Windbloom Sylph (Evolved);
 id BP20-006;
 class Forest;
 type Evolved Follower;
-trait Elf / Hunter;
+trait Fae-Touched;
 rarity G;
-stats 4/4;
+stats 3/3;
 
 text "On Evolve - Search your deck for a Fae-Touched card not named Windbloom Sylph, reveal it, add it to your hand, then shuffle.
       Whenever you play a Fae-Touched card, give your leader [defense]+1.";
@@ -305,7 +305,7 @@ name Devotee of Unkilling;
 id BP20-015;
 class Forest;
 type Follower;
-trait Pixie;
+trait Omen / Hunter;
 rarity B;
 cost 2;
 stats 2/3;
