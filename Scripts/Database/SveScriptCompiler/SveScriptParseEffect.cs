@@ -218,6 +218,9 @@ namespace SVESimulator.SveScript
                         break;
 
                     // Dynamic length arguments - must always be the last argument in the list
+                    case EffectParameterType.AmountFilterPairList:
+                        ParseAmountFilterPairList(argsArray[i..], ref effectData);
+                        return;
                     case EffectParameterType.FilteredSearchDeckActionsList:
                         ParseFilteredSearchDeckActionsList(argsArray[i..], ref effectData);
                         return;
@@ -240,6 +243,34 @@ namespace SVESimulator.SveScript
         // -----
 
         #region Parse Special Args
+
+        private static void ParseAmountFilterPairList(in string[] argsArray, ref JObject effectData)
+        {
+            if(argsArray.Length > 6)
+                throw new ArgumentException($"Invalid argument array: received ({string.Join(",", argsArray)}) with {argsArray.Length} parameters, but no more than 6 are supported for AmountFilterPair effect argument");
+
+            for(int i = 0; i < 3; i++)
+            {
+                string amount, filter;
+                int amountIndex = i * 2;
+                int filterIndex = amountIndex + 1;
+                if(filterIndex > argsArray.Length)
+                {
+                    amount = null;
+                    filter = null;
+                }
+                else
+                {
+                    amount = argsArray[amountIndex];
+                    filter = argsArray[filterIndex];
+                }
+
+                if(!amount.IsNullOrWhiteSpace())
+                    effectData.Add($"amount{(i == 0 ? "" : (i + 1).ToString())}", amount);
+                if(!filter.IsNullOrWhiteSpace())
+                    effectData.Add($"filter{(i == 0 ? "" : (i + 1).ToString())}", filter);
+            }
+        }
 
         private static void ParseFilteredSearchDeckActionsList(in string[] argsArray, ref JObject effectData)
         {
@@ -329,6 +360,7 @@ namespace SVESimulator.SveScript
             // Unique effect parameters
             SearchDeckAction,
             FilteredSearchDeckActionsList,
+            AmountFilterPairList,
             CheckCardActions, // parser includes "amount" field as part of this
             CreateTokenOption,
 
@@ -398,6 +430,7 @@ namespace SVESimulator.SveScript
             { "RedrawHand", new EffectParams("RedrawHandEffect",                            false, false, EffectParameterType.AmountDefaultNull) },
             { "Search", new EffectParams("SearchDeckEffect",                                false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction) },
             { "SearchFilteredOptions", new EffectParams("SearchDeckFilteredOptionsEffect",  false, false, EffectParameterType.Amount, EffectParameterType.FilteredSearchDeckActionsList) },
+            { "SearchMultiFilter", new EffectParams("SearchMultiFilterEffect",  			false, false, EffectParameterType.SearchDeckAction, EffectParameterType.AmountFilterPairList) },
             { "SearchAndTarget", new EffectParams("SearchDeckAndTargetEffect",              false, false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.SearchDeckAction, EffectParameterType.ListOfEffects) },
             { "TopDeckToEx", new EffectParams("TopDeckToExEffect",                          false, false, EffectParameterType.Amount) },
             { "TopDeckToExArea", new EffectParams("TopDeckToExEffect",                      false, false, EffectParameterType.Amount) },

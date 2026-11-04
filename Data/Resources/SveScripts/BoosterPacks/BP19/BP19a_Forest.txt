@@ -174,7 +174,7 @@ ability Spell {
     effect Sequence(Search, Tokens);
 }
 ability Spell name Search {
-    effect Search(m(0,2), n^nE(Orchis)p(m(0,3))|(nE(Zwei)p(m(0,3))), Field);
+    effect SearchMultiFilter(Field, 1, nE(Orchis)p(m(0,3)), 1, nE(Zwei)p(m(0,3)));
 }
 ability Spell name Tokens {
     effect SummonToken(Puppet, ExArea, 2);

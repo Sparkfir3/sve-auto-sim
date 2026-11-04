@@ -19,7 +19,9 @@ namespace SVESimulator
         {
             SVEFormulaParser.ParseValueAsMinMax(amount, player, out _, out max);
             min = 0; // searches can always fail or be declined
-            if(searchDeckAction == SearchDeckAction.ExArea)
+            if(searchDeckAction == SearchDeckAction.Field)
+                max = Mathf.Min(max, player.ZoneController.fieldZone.OpenSlotCount());
+            else if(searchDeckAction == SearchDeckAction.ExArea)
                 max = Mathf.Min(max, player.ZoneController.exAreaZone.OpenSlotCount());
         }
 

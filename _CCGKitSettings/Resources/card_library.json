@@ -59613,10 +59613,12 @@
             "name": "Search",
             "type": "Triggered",
             "effect": {
-              "amount": "m(0,2)",
-              "filter": "n^nE(Orchis)p(m(0,3))|(nE(Zwei)p(m(0,3)))",
               "searchDeckAction": "Field",
-              "$type": "SVESimulator.SearchDeckEffect"
+              "amount": "1",
+              "filter": "nE(Orchis)p(m(0,3))",
+              "amount2": "1",
+              "filter2": "nE(Zwei)p(m(0,3))",
+              "$type": "SVESimulator.SearchMultiFilterEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           },
