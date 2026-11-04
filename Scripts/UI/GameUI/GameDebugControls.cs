@@ -140,6 +140,19 @@ namespace SVESimulator
         }
 
         [Button]
+        public void Discard()
+        {
+            DiscardEffect discardEffect = new()
+            {
+                amount = "m(0,H)",
+                filter = "",
+                text = "[Debug Mode] Discard"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(discardEffect, Player.ZoneController.leaderZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
+        }
+
+        [Button]
         public void CreateToken(string tokenName, SVEProperties.TokenCreationOption mode = SVEProperties.TokenCreationOption.Field)
         {
             SummonTokenEffect summonEffect = new()
