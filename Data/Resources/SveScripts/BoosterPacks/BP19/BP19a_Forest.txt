@@ -198,7 +198,7 @@ evolve 2;
 ability Fanfare {
     condition c(3);
     cost (Optional);
-    effect Evolve() to Self;
+    effect EvolveNotOncePerTurn() to Self;
 }
 
 // ------------------------------

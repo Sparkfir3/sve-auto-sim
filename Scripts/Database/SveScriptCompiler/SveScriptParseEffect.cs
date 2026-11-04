@@ -499,6 +499,7 @@ namespace SVESimulator.SveScript
 
             // Other Effects
             { "Evolve", new EffectParams("EvolveEffect")                                            },
+            { "EvolveNotOncePerTurn", new EffectParams("EvolveNotOncePerTurnEffect")                },
             { "GiveAbility", new EffectParams("GiveAbilityEffect",                                  EffectParameterType.SingleEffect) },
             { "GiveAbilityEndOfTurn", new EffectParams("GiveAbilityEndOfTurnEffect",                EffectParameterType.SingleEffect) },
             { "GiveTrait", new EffectParams("GiveTraitEffect",                                      EffectParameterType.Trait) },

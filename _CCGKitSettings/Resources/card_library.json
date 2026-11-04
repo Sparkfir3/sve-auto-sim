@@ -59736,7 +59736,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "$type": "SVESimulator.EvolveEffect"
+              "$type": "SVESimulator.EvolveNotOncePerTurnEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           }

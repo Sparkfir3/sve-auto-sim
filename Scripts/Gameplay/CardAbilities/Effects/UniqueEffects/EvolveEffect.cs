@@ -12,6 +12,8 @@ namespace SVESimulator
         [StringField("Target Filter", width = 100), Order(2)]
         public string filter;
 
+        public virtual bool UseEvolveForTurn => target == SVEProperties.SVEEffectTarget.Self;
+
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
@@ -26,15 +28,15 @@ namespace SVESimulator
                     {
                         continue;
                     }
-                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, useEvolveCost: false, useEvolveForTurn: target == SVEProperties.SVEEffectTarget.Self);
+                    player.LocalEvents.EvolveCard(card, useEvolvePoint: false, useEvolveCost: false, useEvolveForTurn: UseEvolveForTurn);
                 }
                 onComplete?.Invoke();
             });
         }
 
-        public bool CanEvolve(PlayerController player, RuntimeCard card)
+        public virtual bool CanEvolve(PlayerController player, RuntimeCard card)
         {
-            return player && !player.EvolvedThisTurn && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card);
+            return player && (!UseEvolveForTurn || !player.EvolvedThisTurn) && player.ZoneController.EvolveDeckHasEvolvedVersionOf(card);
         }
     }
 }
