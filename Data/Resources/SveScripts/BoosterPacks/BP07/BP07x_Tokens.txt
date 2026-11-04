@@ -1,0 +1,58 @@
+name Assembly Droid;
+id BP07-T01;
+class Neutral;
+type Follower;
+trait Machina / Token;
+cost 1;
+stats 1/1;
+
+text "[act] [engage], bury 3 Machina followers: Select an enemy follower on the field and deal it 5 damage.";
+
+ability Act {
+    condition p(#F);
+    cost (EngageSelf), (SendToCemetery, TargetPlayerCard, Ft(Machina)m(3,3));
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Repair Mode;
+id BP07-T02;
+class Neutral;
+type Spell;
+trait Machina / Token;
+cost 1;
+
+text "[quick]
+      Give your leader [defense]+1.";
+
+keyword Quick;
+ability Spell {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Naterran Great Tree;
+id BP07-T03;
+class Neutral;
+type Amulet;
+trait Natura / Token;
+cost 1;
+
+text "When this card leaves the field, draw a card, then discard a card.
+      [act] [cost01]: Bury this card.";
+
+ability OnLeaveField {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw();
+}
+ability Spell name Discard {
+    effect Discard();
+}
+ability Act {
+    cost (PP, 1);
+    effect SendToCemetery() to Self;
+}

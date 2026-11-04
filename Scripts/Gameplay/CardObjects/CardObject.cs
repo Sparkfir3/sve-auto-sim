@@ -385,6 +385,12 @@ namespace SVESimulator
             statsDisplay.Reset();
         }
 
+        public void OverrideLibraryCard(Card card)
+        {
+            LibraryCard = card;
+            LibraryCardCache.CacheCard(LibraryCard);
+        }
+
         #endregion
     }
 }

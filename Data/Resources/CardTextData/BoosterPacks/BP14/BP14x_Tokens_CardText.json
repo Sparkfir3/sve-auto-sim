@@ -1,0 +1,101 @@
+[
+  {
+    "id": "BP14-T01EN",
+    "name": "Sootspawn",
+    "trait": "Festive / Token",
+    "cardText": "Ward.\n[lastwords] Select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP14-T02EN",
+    "name": "Glittering Gold",
+    "trait": "Festive / Thief / Loot / Token",
+    "cardText": "[act] [cost01], banish this and 2 other cards named Glittering Gold from your EX area: Give your leader [defense]+1. Draw a card.",
+    "effectText": [
+      {
+        "key": "ActFromExArea",
+        "trigger": "[act]",
+        "cost": "[cost01], banish this and 2 other cards named Glittering Gold from your EX area",
+        "body": "Give your leader [defense]+1. Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP14-T03EN",
+    "name": "Flame General's Regalia",
+    "trait": "Commander / Celestial / Token",
+    "cardText": "Whenever a follower on your field evolves, select an enemy follower on the field and deal it 2 damage.\n[act] [cost01], [engage], bury this: Select a Commander follower on your field and give it \"Strike - Deal 2 damage to each enemy leader.\"",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever a follower on your field evolves, select an enemy follower on the field and deal it 2 damage.",
+        "trigger": "Whenever a follower on your field evolves,",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], bury this",
+        "body": "Select a Commander follower on your field and give it \"Strike - Deal 2 damage to each enemy leader.\""
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike -",
+        "body": "Deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP14-T04EN",
+    "name": "Tidal Tyranny",
+    "trait": "Festive / Dragonewt / Token",
+    "cardText": "Select an enemy follower on the field and deal it 4 damage. If Overflow is active for you, deal 6 damage instead.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 4 damage. If Overflow is active for you, deal 6 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP14-T05EN",
+    "name": "Wolfling's Struggle",
+    "trait": "Festive / Demon / Beast / Token",
+    "cardText": "Select an enemy follower on the field. Deal it 1 damage, and you may discard a card. If you do, bury the top card of your deck.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 1 damage, and you may discard a card. If you do, bury the top card of your deck."
+      },
+      {
+        "key": "Bury",
+        "text": "You may discard a card. If you do, bury the top card of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP14-T06EN",
+    "name": "Fox of Invitation",
+    "trait": "Festive / Zealot / Beast / Token",
+    "cardText": "Ward.\n[fanfare] Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP14-T07EN",
+    "name": "Mercurial Might",
+    "trait": "Faith / Supreme / Token",
+    "cardText": "NOT FULLY IMPLEMENTED\n[quick]\nIf your leader would take damage this turn, it takes that much minus 1 instead. Draw a card."
+  }
+]

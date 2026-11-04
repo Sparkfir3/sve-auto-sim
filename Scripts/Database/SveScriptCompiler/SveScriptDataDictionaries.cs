@@ -83,6 +83,7 @@ namespace SVESimulator.SveScript
             { "leader", 5 },
             { "advanced", 6 },
             { "advanced follower", 6 },
+            { "crest", 7 },
         };
 
         public static readonly Dictionary<string, string> ClassList = new()

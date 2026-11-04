@@ -1,0 +1,51 @@
+[
+  {
+    "id": "BP05-T01EN",
+    "name": "Destruction in White",
+    "trait": "Omen / Idolatry / Token",
+    "cardText": "At the start of your main phase, give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "StartMainPhase",
+        "body": "At the start of your main phase, give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP05-T02EN",
+    "name": "Destruction in Black",
+    "trait": "Omen / Idolatry / Token",
+    "cardText": "At the start of your main phase, deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "StartMainPhase",
+        "body": "At the start of your main phase, deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP05-T03EN",
+    "name": "Puppet",
+    "trait": "Puppetry / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP05-T04EN",
+    "name": "Ancient Artifact",
+    "trait": "Supreme / Token",
+    "cardText": "Rush."
+  },
+  {
+    "id": "BP05-T05EN",
+    "name": "Mystic Artifact",
+    "trait": "Supreme / Token",
+    "cardText": "Ward.\n[fanfare] Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card."
+      }
+    ]
+  }
+]

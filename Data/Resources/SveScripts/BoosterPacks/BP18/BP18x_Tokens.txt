@@ -1,0 +1,206 @@
+name Seeds of Salvation;
+id BP18-T01;
+class Forest;
+type Spell;
+trait Togh Keyoh / Verdant / Token;
+cost 1;
+
+text "Draw a card. You may turn any number of faceup evolved followers in your evolve deck facedown. Gain 1 Evolution Point.";
+
+ability Spell {
+    effect Sequence(Draw, Flip, EvoPoint);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Flip {
+    effect FlipEvolveDeckFaceDown(EF, m(0,10));
+}
+ability Spell name EvoPoint {
+    effect GiveStat(EP, 1) to Self;
+}
+
+// ------------------------------
+
+name All-Access Search;
+id BP18-T02;
+class Sword;
+type Spell;
+trait Togh Keyoh / Detective / Token;
+cost 1;
+
+text "Place 3 gigabyte counters on each Gigabyte Blade on your field. Draw 2 cards.";
+
+ability Spell {
+    effect Sequence(Counters, Draw);
+}
+ability Spell name Counters {
+    effect GiveCounter(Gigabyte, 3) to AllPlayerCards n(Gigabyte Blade);
+}
+ability Spell name Draw {
+    effect Draw(2);
+}
+
+// ------------------------------
+
+name Adorn with Jewels;
+id BP18-T03;
+class Rune;
+type Spell;
+trait Togh Keyoh / Alchemist / Merchant / Token;
+cost 1;
+
+text "NOT IMPLEMENTED
+      For the rest of this turn, you may play cards from your banished zone.";
+
+// ------------------------------
+
+name Ginger's Curse;
+id BP18-T04;
+class Rune;
+type Spell;
+trait Mage / Token;
+cost 1;
+
+text "NOT FULLY IMPLEMENTED
+      Select an enemy follower on the field. It loses all abilities. Change its attack and defense to 1.";
+
+ability Spell {
+    condition p(#F);
+    effect TargetForSequence(AtkDef) to TargetOpponentCard F;
+}
+ability Spell name AtkDef {
+    effect SetStat(AtkDef, 1) to AllOpponentCards;
+}
+
+// ------------------------------
+
+name Youthful Strike;
+id BP18-T05;
+class Dragon;
+type Spell;
+trait Togh Keyoh / Dragonewt / Draconic Duelist / Token;
+cost 2;
+
+text "Select an enemy follower on the field and a Togh Keyoh follower on your field. Destroy the first follower and give the second Storm.";
+
+ability Spell {
+    condition p(#F) & f(Ft(Togh Keyoh));
+    effect OrderedTargetForSequence(Destroy, Storm) to MultiTargetMode (1, TargetOpponentCard, F), (1, TargetPlayerCard, Ft(Togh Keyoh));
+}
+ability Spell name Destroy {
+    effect Destroy() to AllCards;
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to AllCards;
+}
+
+// ------------------------------
+
+name Adelle, Jealous Dragon;
+id BP18-T06;
+class Dragon;
+type Follower;
+trait Wyrmkin / Token;
+cost 4;
+stats 4/4;
+
+text "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.";
+
+ability OnOtherFieldToCemetery {
+    filter n(Ian, Dragon Buster);
+    effect DealDamage(5) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Diurnal Slumber;
+id BP18-T07;
+class Abyss;
+type Spell;
+trait Togh Keyoh / Demon / Token;
+cost 1;
+
+text "Select up to 3 Togh Keyoh cards in your cemetery with different names that cost 2 or less and add them to your hand.";
+
+ability Spell {
+    effect Salvage(m(0,3), t(Togh Keyoh)p(m(0,2))n^);
+}
+
+// ------------------------------
+
+name Righteous Conviction;
+id BP18-T08;
+class Haven;
+type Spell;
+trait Togh Keyoh / Faith / Token;
+cost 1;
+
+text "Deal damage to each enemy leader equal to the number of Togh Keyoh followers on your field. Give your leader [defense]+1.";
+
+ability Spell {
+    effect Sequence(Damage, Def);
+}
+ability Spell name Damage {
+    effect DealDamage(f(Ft(Togh Keyoh))) to OpponentLeader;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Totem of Madness;
+id BP18-T09;
+class Haven;
+type Amulet;
+trait Zealot / Eidolon / Token;
+cost 1;
+
+text "At the start of your end phase, place a curse counter on this. Then, if this has 1 curse counter, deal 1 damage to your leader. If it has 2, discard a card. If it has 3, discard a card, deal 3 damage to your leader, and bury this.";
+
+ability StartEndPhase {
+    effect Sequence(Counter, One, Two, Three);
+}
+ability Spell name Counter {
+    effect GiveCounter(Curse, 1) to Self;
+}
+ability Spell name One {
+    condition r(Curse)=1;
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Two {
+    condition r(Curse)=2;
+    effect Discard(1);
+}
+ability Spell name Three {
+    condition r(Curse)=3;
+    effect Sequence(Discard, Damage, Bury);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+ability Spell name Damage {
+    effect DealDamage(3) to Leader;
+}
+ability Spell name Bury {
+    effect SendToCemetery() to Self;
+}
+
+// ------------------------------
+
+name Bansai Suzuki, Clone Technique;
+id BP18-T10;
+class Neutral;
+type Follower;
+trait Togh Keyoh / Ward Office / Token;
+cost 6;
+stats 5/5;
+
+text "Rush. Assail. Ward.
+      At the start of your end phase, summon a Bansai Suzuki, Clone Technique token.";
+
+keywords Rush, Assail, Ward;
+ability StartEndPhase {
+    effect SummonToken("Bansai Suzuki, Clone Technique", Field, 1);
+}

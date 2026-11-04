@@ -20,6 +20,7 @@ namespace SVESimulator
             Spell,
             Amulet,
             AdvancedCard,
+            Crest,
 
             // Card Properties
             Trait,
@@ -366,6 +367,11 @@ namespace SVESimulator
                     endIndex += indexDelta + 1; // Move past close parentheses
                     value = player ? player.OppZoneController.fieldZone.GetAllPrimaryCards().CountMatchingFilter(filterP) : 0;
                     break;
+                case 'z': // Count in opponent's cemetery matching filter
+                    Dictionary<CardFilterSetting, string> filterZ = ParseCardFilterFormula(formula[endIndex..].TextInsideParentheses(out _, out indexDelta), card);
+                    endIndex += indexDelta + 1; // Move past close parentheses
+                    value = player ? player.OppZoneController.cemeteryZone.AllCards.CountMatchingFilter(filterZ) : 0;
+                    break;
 
                 // Other
                 case '#': // Advanced stats
@@ -492,6 +498,7 @@ namespace SVESimulator
                     'A' => CardFilterSetting.Amulet,
                     'E' => CardFilterSetting.Evolved,
                     'V' => CardFilterSetting.AdvancedCard,
+                    'T' => CardFilterSetting.Crest,
                     'K' => CardFilterSetting.Token,
                     'X' => CardFilterSetting.ExcludeSelf,
                     'R' => CardFilterSetting.Reserved,

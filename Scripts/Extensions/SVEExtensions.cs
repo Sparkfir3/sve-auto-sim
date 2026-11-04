@@ -66,6 +66,10 @@ namespace SVESimulator
                         if(!card.IsAdvancedType() ^ inverse)
                             return false;
                         break;
+                    case CardFilterSetting.Crest:
+                        if(!card.IsCrest() ^ inverse)
+                            return false;
+                        break;
 
                     // Card Properties (+ Token)
                     case CardFilterSetting.Token:

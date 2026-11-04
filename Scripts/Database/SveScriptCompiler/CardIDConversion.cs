@@ -14,7 +14,7 @@ namespace SVESimulator.SveScript
          *      AA  = Set type
          *      L   = Language (1 = EN, 0 = JP)
          *      BBB = Set number
-         *      T   = Card type (1 = regular, 2 = leader, 3 = token)
+         *      T   = Card type (1 = regular, 2 = leader, 3 = token, 4 = promo)
          *      XXX = Card number
          */
 
@@ -43,6 +43,11 @@ namespace SVESimulator.SveScript
                 {
                     cardType = 3;
                     idNumber = idNumber.Replace("T", "");
+                }
+                else if(idNumber.StartsWith("PR")) // Promo
+                {
+                    cardType = 4;
+                    idNumber = idNumber.Replace("PR", "");
                 }
                 int cardNumber = int.Parse(idNumber);
 

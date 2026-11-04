@@ -156,7 +156,8 @@ namespace SVESimulator.UI
 
             // Open window
             evolveOptionsWindow.Close();
-            Vector2 viewportPos = cam.WorldToViewportPoint(card.transform.position);
+            Vector3 positionAnchor = card.CurrentZone is CardPositionedZone positionedZone ? positionedZone.GetSlotPosition(card) : card.transform.position;
+            Vector2 viewportPos = cam.WorldToViewportPoint(positionAnchor);
             SetAnchoredPosition(new Vector2(viewportPos.x * rectTransform.rect.width, viewportPos.y * rectTransform.rect.height + verticalOffset));
             gameObject.SetActive(true);
         }

@@ -29,8 +29,12 @@ namespace SVESimulator
         private static List<TextData> textDataListMain = null;
         private static List<TextData> textDataListCustomSets = null;
         private static Dictionary<int, CardData> cards = new(); // [CardID, Data]
+        private static Dictionary<int, CardData> tokens = new(); // [CardID, Data]
+        private static bool cachedAllTokens = false;
 
-        public static int CacheSize => cards.Count;
+        public static int MainCacheSize => cards.Count;
+        public static int TokenCacheSize => tokens.Count;
+        public static int FullCacheSize => cards.Count + tokens.Count;
 
         #endregion
 
@@ -40,19 +44,34 @@ namespace SVESimulator
 
         public static void CacheCard(Card card)
         {
-            if(card == null || cards.ContainsKey(card.id))
+            if(card == null || cards.ContainsKey(card.id) || tokens.ContainsKey(card.id))
                 return;
-            CardData data = new CardData()
+            CardData data = new()
             {
                 card = card
             };
-            cards.TryAdd(card.id, data);
+            if(!card.IsToken())
+                cards.TryAdd(card.id, data);
+            else
+                tokens.TryAdd(card.id, data);
             CacheCardTextData(ref data);
         }
 
         public static void ClearCache()
         {
+            ClearMainCache();
+            ClearTokenCache();
+        }
+
+        public static void ClearMainCache()
+        {
             cards.Clear();
+        }
+
+        public static void ClearTokenCache()
+        {
+            tokens.Clear();
+            cachedAllTokens = false;
         }
 
         #endregion
@@ -63,7 +82,7 @@ namespace SVESimulator
 
         public static Card GetCard(in int cardId, in GameConfiguration config = null)
         {
-            if(cards.TryGetValue(cardId, out CardData cardData) && cardData != null)
+            if((cards.TryGetValue(cardId, out CardData cardData) || tokens.TryGetValue(cardId, out cardData)) && cardData != null)
                 return cardData.card;
 
             Card newCard = (config ?? GameManager.Instance.config).GetCard(cardId);
@@ -79,23 +98,30 @@ namespace SVESimulator
             return GetCard(cardObject.RuntimeCard.cardId, config);
         }
 
+        public static List<Card> GetAllTokens()
+        {
+            if(!cachedAllTokens)
+                CacheAllTokens();
+            return tokens.Values.Select(x => x.card).ToList();
+        }
+
         // -----
 
-        public static string GetName(in int cardId) => cards.GetValueOrDefault(cardId, null)?.name;
-        public static string GetDisplayId(in int cardId) => cards.GetValueOrDefault(cardId, null)?.displayId;
-        public static string GetCardText(in int cardId) => cards.GetValueOrDefault(cardId, null)?.text;
-        public static string GetCardTrait(in int cardId) => cards.GetValueOrDefault(cardId, null)?.trait;
+        public static string GetName(in int cardId) => cards.GetValueOrDefault(cardId, null)?.name ?? tokens.GetValueOrDefault(cardId, null)?.name;
+        public static string GetDisplayId(in int cardId) => cards.GetValueOrDefault(cardId, null)?.displayId ?? tokens.GetValueOrDefault(cardId, null)?.displayId;
+        public static string GetCardText(in int cardId) => cards.GetValueOrDefault(cardId, null)?.text ?? tokens.GetValueOrDefault(cardId, null)?.text;
+        public static string GetCardTrait(in int cardId) => cards.GetValueOrDefault(cardId, null)?.trait ?? tokens.GetValueOrDefault(cardId, null)?.trait;
 
         public static string GetEffectName(in int cardId, in string effectName)
         {
-            if(!cards.TryGetValue(cardId, out CardData cardData) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
+            if((!cards.TryGetValue(cardId, out CardData cardData) && !tokens.TryGetValue(cardId, out cardData)) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
                 return null;
             return textData?.name ?? (textData?.key ?? "");
         }
 
         public static string GetEffectText(in int cardId, in string effectName)
         {
-            if(!cards.TryGetValue(cardId, out CardData cardData) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
+            if((!cards.TryGetValue(cardId, out CardData cardData) && !tokens.TryGetValue(cardId, out cardData)) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
                 return null;
             if(textData == null)
                 return "";
@@ -106,14 +132,14 @@ namespace SVESimulator
 
         public static string GetEffectTextCost(in int cardId, in string effectName)
         {
-            if(!cards.TryGetValue(cardId, out CardData cardData) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
+            if((!cards.TryGetValue(cardId, out CardData cardData) && !tokens.TryGetValue(cardId, out cardData)) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
                 return null;
             return textData?.cost ?? "";
         }
 
         public static string GetEffectTextBody(in int cardId, in string effectName)
         {
-            if(!cards.TryGetValue(cardId, out CardData cardData) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
+            if((!cards.TryGetValue(cardId, out CardData cardData) && !tokens.TryGetValue(cardId, out cardData)) || !cardData.effects.TryGetValue(effectName, out EffectText textData))
                 return null;
             return textData?.body ?? (textData?.text ?? "");
         }
@@ -141,6 +167,17 @@ namespace SVESimulator
             {
                 textDataListCustomSets.AddRange(JsonConvert.DeserializeObject<List<TextData>>(File.ReadAllText(path)));
             }
+        }
+
+        public static void CacheAllTokens(in GameConfiguration config = null)
+        {
+            if(cachedAllTokens)
+                return;
+
+            List<Card> tokenList = GameManager.Instance.config.cards.Where(x => x.IsToken()).ToList();
+            foreach(Card card in tokenList)
+                CacheCard(card);
+            cachedAllTokens = true;
         }
 
         private static void CacheCardTextData(ref CardData data)

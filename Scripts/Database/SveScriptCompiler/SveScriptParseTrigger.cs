@@ -32,6 +32,7 @@ namespace SVESimulator.SveScript
             // Card Movement - From Field (Other, Player Cards)
             { "OnOtherEnterField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
+            { "OnOtherFieldToCemetery", new EffectTriggerInfo("SVESimulator.SveOnOtherCardFieldToCemetery", TriggerParameterType.Filter) },
             { "OnOtherReturnToHandFromField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardReturnToHandFromField", TriggerParameterType.Filter) },
 
             // Card Movement - From Field (Other, Opponent Cards)
@@ -60,8 +61,10 @@ namespace SVESimulator.SveScript
 
             // Game Phases
             { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },
+            { "StartMainPhaseFromExArea", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseFromExAreaTrigger") },
             { "StartOpponentMainPhase", new EffectTriggerInfo("SVESimulator.SveStartOpponentMainPhaseTrigger") },
             { "StartEndPhase", new EffectTriggerInfo("SVESimulator.SveStartEndPhaseTrigger") },
+            { "StartEndPhaseFromExArea", new EffectTriggerInfo("SVESimulator.SveStartEndPhaseFromExAreaTrigger") },
 
             // Other
             { "OnLeaderGainDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderGainDefenseTrigger") },

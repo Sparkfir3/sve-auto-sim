@@ -1,0 +1,118 @@
+[
+  {
+    "id": "BP18-T01EN",
+    "name": "Seeds of Salvation",
+    "trait": "Togh Keyoh / Verdant / Token",
+    "cardText": "Draw a card. You may turn any number of faceup evolved followers in your evolve deck facedown. Gain 1 Evolution Point.",
+    "effectText": [
+      {
+        "key": "Flip",
+        "body": "You may turn any number of faceup evolved followers in your evolve deck facedown."
+      }
+    ]
+  },
+  {
+    "id": "BP18-T02EN",
+    "name": "All-Access Search",
+    "trait": "Togh Keyoh / Detective / Token",
+    "cardText": "Place 3 gigabyte counters on each Gigabyte Blade on your field. Draw 2 cards."
+  },
+  {
+    "id": "BP18-T03EN",
+    "name": "Adorn with Jewels",
+    "trait": "Togh Keyoh / Alchemist / Merchant / Token",
+    "cardText": "NOT IMPLEMENTED\nFor the rest of this turn, you may play cards from your banished zone."
+  },
+  {
+    "id": "BP18-T04EN",
+    "name": "Ginger's Curse",
+    "trait": "Mage / Token",
+    "cardText": "NOT FULLY IMPLEMENTED\nSelect an enemy follower on the field. It loses all abilities. Change its attack and defense to 1.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field. It loses all abilities. Change its attack and defense to 1."
+      }
+    ]
+  },
+  {
+    "id": "BP18-T05EN",
+    "name": "Youthful Strike",
+    "trait": "Togh Keyoh / Dragonewt / Draconic Duelist / Token",
+    "cardText": "Select an enemy follower on the field and a Togh Keyoh follower on your field. Destroy the first follower and give the second Storm.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and a Togh Keyoh follower on your field. Destroy the first follower and give the second Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP18-T06EN",
+    "name": "Adelle, Jealous Dragon",
+    "trait": "Wyrmkin / Token",
+    "cardText": "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "OnOtherFieldToCemetery",
+        "text": "Whenever an Ian, Dragon Buster is put from your field into the cemetery, deal 5 damage to each enemy leader.",
+        "trigger": "Whenever an Ian, Dragon Buster is put from your field into the cemetery,",
+        "body": "Deal 5 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP18-T07EN",
+    "name": "Diurnal Slumber",
+    "trait": "Togh Keyoh / Demon / Token",
+    "cardText": "Select up to 3 Togh Keyoh cards in your cemetery with different names that cost 2 or less and add them to your hand.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 3 Togh Keyoh cards in your cemetery with different names that cost 2 or less and add them to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP18-T08EN",
+    "name": "Righteous Conviction",
+    "trait": "Togh Keyoh / Faith / Token",
+    "cardText": "Deal damage to each enemy leader equal to the number of Togh Keyoh followers on your field. Give your leader [defense]+1."
+  },
+  {
+    "id": "BP18-T09EN",
+    "name": "Totem of Madness",
+    "trait": "Zealot / Eidolon / Token",
+    "cardText": "At the start of your end phase, place a curse counter on this. Then, if this has 1 curse counter, deal 1 damage to your leader. If it has 2, discard a card. If it has 3, discard a card, deal 3 damage to your leader, and bury this.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, place a curse counter on this. Then, if this has 1 curse counter, deal 1 damage to your leader. If it has 2, discard a card. If it has 3, discard a card, deal 3 damage to your leader, and bury this.",
+        "trigger": "At the start of your end phase,",
+        "body": "Place a curse counter on this. Then, if this has 1 curse counter, deal 1 damage to your leader. If it has 2, discard a card. If it has 3, discard a card, deal 3 damage to your leader, and bury this."
+      },
+      {
+        "key": "Two",
+        "body": "Discard a card"
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card"
+      }
+    ]
+  },
+  {
+    "id": "BP18-T10EN",
+    "name": "Bansai Suzuki, Clone Technique",
+    "trait": "Togh Keyoh / Ward Office / Token",
+    "cardText": "Rush. Assail. Ward.\nAt the start of your end phase, summon a Bansai Suzuki, Clone Technique token.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, summon a Bansai Suzuki, Clone Technique token.",
+        "trigger": "At the start of your end phase,",
+        "body": "Summon a Bansai Suzuki, Clone Technique token."
+      }
+    ]
+  }
+]

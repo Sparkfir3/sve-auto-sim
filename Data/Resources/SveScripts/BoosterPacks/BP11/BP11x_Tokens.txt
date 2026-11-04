@@ -1,0 +1,90 @@
+name Val, Trusty Getaway Car;
+id BP11-T01;
+class Sword;
+type Amulet;
+trait Wasteland / Mount / Token;
+cost 2;
+
+text "[act] [engage] a Bunny & Baron, Specter Duo on your field: Maneuver this card. (For the rest of this turn, it becomes a follower with [attack]3/[defense]3.)
+      [act] [cost01], [engage] 2 followers on your field: Maneuver this card.
+      Storm.
+      Strike - If there's another Wasteland follower on your field, draw a card.";
+
+// ------------------------------
+
+name Magitrain;
+id BP11-T02;
+class Abyss;
+type Amulet;
+trait Wasteland / Mount / Token;
+cost 5;
+
+text "[act] [cost01], [engage] any number of followers that cost a total of 5 or more on your field: Maneuver this card. (For the rest of this turn, it becomes a follower with [attack]4/[defense]5.)
+      Rush.
+      Strike - Select an engaged enemy follower on the field. Destroy it and give your leader [defense]+2.";
+
+// ------------------------------
+
+name Dutiful Steed;
+id BP11-T03;
+class Neutral;
+type Amulet;
+trait Wasteland / Mount / Beast / Token;
+cost 1;
+
+text "[act] Bury this card: Select a follower on your field and, if it's a Wasteland follower, give it [attack]+1/[defense]+1.";
+
+ability Act {
+    cost (SendToCemetery, Self);
+    condition f(F);
+    effect TargetForSequence(AtkDef) to TargetPlayerCard F;
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Wasteland);
+}
+
+// ------------------------------
+
+name Bullet Bike;
+id BP11-T04;
+class Neutral;
+type Amulet;
+trait Wasteland / Mount / Token;
+cost 1;
+
+text "[act] Bury this card: Select a follower on your field. Give it Rush and, if it's a Wasteland follower, [attack]+1.";
+
+ability Act {
+    cost (SendToCemetery, Self);
+    condition f(F);
+    effect TargetForSequence(Rush, Atk) to TargetPlayerCard F;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to AllPlayerCards Ft(Wasteland);
+}
+
+// ------------------------------
+
+name Arcane Personnel Carrier;
+id BP11-T05;
+class Neutral;
+type Amulet;
+trait Wasteland / Mount / Token;
+cost 1;
+
+text "[act] Bury this card: Select a follower on your field. Give it Ward and, if it's a Wasteland follower, [defense]+1.";
+
+ability Act {
+    cost (SendToCemetery, Self);
+    condition f(F);
+    effect TargetForSequence(Ward, Def) to TargetPlayerCard F;
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to AllPlayerCards;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to AllPlayerCards Ft(Wasteland);
+}

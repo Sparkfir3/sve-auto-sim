@@ -39,3 +39,17 @@ ability Fanfare {
 ability Passive {
     effect GiveName(Puppet, WhileOnField) to Self;
 }
+
+// ------------------------------
+
+name Otohime's Vanguard;
+id BP08-T03;
+class Dragon;
+type Follower;
+trait Marine / Token;
+cost 1;
+stats 2/1;
+
+text "Rush.";
+
+keyword Rush;

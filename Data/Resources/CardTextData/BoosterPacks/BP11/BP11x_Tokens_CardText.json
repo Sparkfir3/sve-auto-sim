@@ -1,0 +1,56 @@
+[
+  {
+    "id": "BP11-T01EN",
+    "name": "Val, Trusty Getaway Car",
+    "trait": "Wasteland / Mount / Token",
+    "cardText": "NOT IMPLEMENTED\n[act] [engage] a Bunny & Baron, Specter Duo on your field: Maneuver this card. (For the rest of this turn, it becomes a follower with [attack]3/[defense]3.)\n[act] [cost01], [engage] 2 followers on your field: Maneuver this card.\nStorm.\nStrike - If there's another Wasteland follower on your field, draw a card."
+  },
+  {
+    "id": "BP11-T02EN",
+    "name": "Magitrain",
+    "trait": "Wasteland / Mount / Token",
+    "cardText": "NOT IMPLEMENTED\n[act] [cost01], [engage] any number of followers that cost a total of 5 or more on your field: Maneuver this card. (For the rest of this turn, it becomes a follower with [attack]4/[defense]5.)\nRush.\nStrike - Select an engaged enemy follower on the field. Destroy it and give your leader [defense]+2."
+  },
+  {
+    "id": "BP11-T03EN",
+    "name": "Dutiful Steed",
+    "trait": "Wasteland / Mount / Beast / Token",
+    "cardText": "[act] Bury this card: Select a follower on your field and, if it's a Wasteland follower, give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury this card",
+        "body": "Select a follower on your field and, if it's a Wasteland follower, give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP11-T04EN",
+    "name": "Bullet Bike",
+    "trait": "Wasteland / Mount / Token",
+    "cardText": "[act] Bury this card: Select a follower on your field. Give it Rush and, if it's a Wasteland follower, [attack]+1.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury this card",
+        "body": "Select a follower on your field. Give it Rush and, if it's a Wasteland follower, [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP11-T05EN",
+    "name": "Arcane Personnel Carrier",
+    "trait": "Wasteland / Mount / Token",
+    "cardText": "[act] Bury this card: Select a follower on your field. Give it Ward and, if it's a Wasteland follower, [defense]+1.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury this card",
+        "body": "Select a follower on your field. Give it Ward and, if it's a Wasteland follower, [defense]+1."
+      }
+    ]
+  }
+]

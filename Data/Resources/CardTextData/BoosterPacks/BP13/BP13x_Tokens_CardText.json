@@ -1,0 +1,66 @@
+[
+  {
+    "id": "BP13-T01EN",
+    "name": "Anne's Summoning",
+    "trait": "Golem / Arcanaform / Academic / Token",
+    "cardText": "Rush. Ward.\n[fanfare] Give your leader [defense]+2.\nAt the start of your main phase, banish this card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Give your leader [defense]+2."
+      },
+      {
+        "key": "StartMainPhase",
+        "text": "At the start of your main phase, banish this card.",
+        "trigger": "At the start of your main phase,",
+        "body": "Banish this card."
+      }
+    ]
+  },
+  {
+    "id": "BP13-T02EN",
+    "name": "Resentful Blaze",
+    "trait": "Mage / Academic / Princess / Cutthroat / Token",
+    "cardText": "Choose one. (1) Select an enemy follower on the field and deal it 4 damage. (2) Select 2 enemy followers on the field and, if there are at least 15 Academic cards in your cemetery, deal them 4 damage.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose one. (1) Select an enemy follower on the field and deal it 4 damage. (2) Select 2 enemy followers on the field and, if there are at least 15 Academic cards in your cemetery, deal them 4 damage."
+      },
+      {
+        "key": "DamageOne",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "DamageTwo",
+        "body": "Select 2 enemy followers on the field and, if there are at least 15 Academic cards in your cemetery, deal them 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP13-T03EN",
+    "name": "Blood Arts",
+    "trait": "Wasteland / Vampire / Token",
+    "cardText": "Deal 1 damage to your leader and each enemy follower on the field. Give each Aluzard, Timeworn Vampire on your field [attack]+1 and Drain, then give them [attack]+3/[defense]+3 if there are 3 faceup evolved followers named Aluzard, Timeworn Vampire in your evolve deck."
+  },
+  {
+    "id": "BP13-T04EN",
+    "name": "Darkest Desire",
+    "trait": "Departed / Cutthroat / Token",
+    "cardText": "As an additional cost to play this card, bury 2 followers.\n----------\nDeal 2 damage to each enemy leader. Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "text": "As an additional cost to play this card, bury 2 followers.",
+        "body": "Bury 2 followers."
+      }
+    ]
+  },
+  {
+    "id": "BP13-T05EN",
+    "name": "Keenedge Artifact",
+    "trait": "Supreme / Token",
+    "cardText": "Rush. Drain."
+  }
+]

@@ -220,5 +220,221 @@
             }
         ],
         "id": 9
+    },
+    {
+        "name": "SoulCounter",
+        "values": [
+            {
+                "value": "Soul0"
+            },
+            {
+                "value": "Soul1"
+            }
+        ],
+        "id": 10
+    },
+    {
+        "name": "LightningCounter",
+        "values": [
+            {
+                "value": "Lightning0"
+            },
+            {
+                "value": "Lightning1"
+            }
+        ],
+        "id": 11
+    },
+    {
+        "name": "GraceCounter",
+        "values": [
+            {
+                "value": "Grace0"
+            },
+            {
+                "value": "Grace1"
+            }
+        ],
+        "id": 12
+    },
+    {
+        "name": "CalamityCounter",
+        "values": [
+            {
+                "value": "Calamity0"
+            },
+            {
+                "value": "Calamity1"
+            }
+        ],
+        "id": 13
+    },
+    {
+        "name": "ManaCounter",
+        "values": [
+            {
+                "value": "Mana0"
+            },
+            {
+                "value": "Mana1"
+            }
+        ],
+        "id": 14
+    },
+    {
+        "name": "DormancyCounter",
+        "values": [
+            {
+                "value": "Dormancy0"
+            },
+            {
+                "value": "Dormancy1"
+            }
+        ],
+        "id": 15
+    },
+    {
+        "name": "SeasonalCounter",
+        "values": [
+            {
+                "value": "Seasonal0"
+            },
+            {
+                "value": "Seasonal1"
+            }
+        ],
+        "id": 16
+    },
+    {
+        "name": "DivineWaterCounter",
+        "values": [
+            {
+                "value": "DivineWater0"
+            },
+            {
+                "value": "DivineWater1"
+            }
+        ],
+        "id": 17
+    },
+    {
+        "name": "FightingSpiritCounter",
+        "values": [
+            {
+                "value": "FightingSpirit0"
+            },
+            {
+                "value": "FightingSpirit1"
+            }
+        ],
+        "id": 18
+    },
+    {
+        "name": "ArrowCounter",
+        "values": [
+            {
+                "value": "Arrow0"
+            },
+            {
+                "value": "Arrow1"
+            }
+        ],
+        "id": 19
+    },
+    {
+        "name": "GigabyteCounter",
+        "values": [
+            {
+                "value": "Gigabyte0"
+            },
+            {
+                "value": "Gigabyte1"
+            }
+        ],
+        "id": 20
+    },
+    {
+        "name": "CurseCounter",
+        "values": [
+            {
+                "value": "Curse0"
+            },
+            {
+                "value": "Curse1"
+            }
+        ],
+        "id": 21
+    },
+    {
+        "name": "FusionCounter",
+        "values": [
+            {
+                "value": "Fusion0"
+            },
+            {
+                "value": "Fusion1"
+            }
+        ],
+        "id": 22
+    },
+    {
+        "name": "PainCounter",
+        "values": [
+            {
+                "value": "Pain0"
+            },
+            {
+                "value": "Pain1"
+            }
+        ],
+        "id": 23
+    },
+    {
+        "name": "ReversalCounter",
+        "values": [
+            {
+                "value": "Reversal0"
+            },
+            {
+                "value": "Reversal1"
+            }
+        ],
+        "id": 24
+    },
+    {
+        "name": "PassionCounter",
+        "values": [
+            {
+                "value": "Passion0"
+            },
+            {
+                "value": "Passion1"
+            }
+        ],
+        "id": 25
+    },
+    {
+        "name": "BunclieCounter",
+        "values": [
+            {
+                "value": "Bunclie0"
+            },
+            {
+                "value": "Bunclie1"
+            }
+        ],
+        "id": 26
+    },
+    {
+        "name": "BatteryCounter",
+        "values": [
+            {
+                "value": "Battery0"
+            },
+            {
+                "value": "Battery1"
+            }
+        ],
+        "id": 27
     }
 ]

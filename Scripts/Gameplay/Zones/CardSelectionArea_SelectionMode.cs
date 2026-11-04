@@ -25,9 +25,13 @@ namespace SVESimulator
             ViewCardsOppEvolveDeck = 8,
             ViewCardsBanished = 9,
             ViewCardsOppBanished = 10,
+
+            // Other
+            SelectToken = 14,
         }
 
         public static bool IsModeSelectCards(SelectionMode mode) => mode is SelectionMode.SelectCardsFromDeck or SelectionMode.SelectCardsFromCemetery
-            or SelectionMode.SelectCardsFromOppHand or SelectionMode.SelectCardsFromEvolveDeck or SelectionMode.SelectCardsFromDeckAndMove;
+            or SelectionMode.SelectCardsFromOppHand or SelectionMode.SelectCardsFromEvolveDeck or SelectionMode.SelectCardsFromDeckAndMove
+            or SelectionMode.SelectToken;
     }
 }

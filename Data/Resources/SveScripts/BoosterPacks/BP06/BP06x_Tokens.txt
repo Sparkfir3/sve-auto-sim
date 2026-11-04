@@ -1,0 +1,47 @@
+name Celestial Shikigami;
+id BP06-T01;
+class Rune;
+type Follower;
+trait Shikigami / Token;
+cost 4;
+stats 4/5;
+
+text "Aura.";
+
+keyword Aura;
+
+// ------------------------------
+
+name Paper Shikigami;
+id BP06-T02;
+class Rune;
+type Follower;
+trait Shikigami / Token;
+cost 2;
+stats 2/2;
+
+text "[lastwords] Draw a card. Discard a card.";
+
+ability LastWords {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw();
+}
+ability Spell name Discard {
+    effect Discard();
+}
+
+// ------------------------------
+
+name One-Tailed Fox;
+id BP06-T03;
+class Abyss;
+type Follower;
+trait Yokai / Token;
+cost 2;
+stats 1/3;
+
+text "Rush. Ward.";
+
+keywords Rush, Ward;

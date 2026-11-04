@@ -12,12 +12,31 @@ namespace SVESimulator
             Spell = 7,
             Prayer = 8,
             Fable = 9,
+            Soul = 10,
+            Lightning = 11,
+            Grace = 12,
+            Calamity = 13,
+            Mana = 14,
+            Dormancy = 15,
+            Seasonal = 16,
+            DivineWater = 17,
+            FightingSpirit = 18,
+            Arrow = 19,
+            Gigabyte = 20,
+            Curse = 21,
+            Fusion = 22,
+            Pain = 23,
+            Reversal = 24,
+            Passion = 25,
+            Bunclie = 26,
+            Battery = 27,
         }
 
         public enum SVEEffectTarget
         {
             Self,
             SelfFromHand,
+            SelfFromEx,
             Leader,
             AllPlayerCards,
             AllPlayerCardsEx,
@@ -118,6 +137,7 @@ namespace SVESimulator
             public const string Token = "Token";
             public const string Leader = "Leader";
             public const string AdvancedFollower = "Advanced Follower";
+            public const string Crest = "Crest";
         }
 
         public static class CardStats

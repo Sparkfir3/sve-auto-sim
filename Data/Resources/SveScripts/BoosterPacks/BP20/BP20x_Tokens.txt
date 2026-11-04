@@ -1,0 +1,191 @@
+name Crest: Krulle, Hier to Unkilling;
+id BP20-T01;
+class Forest;
+type Crest;
+trait Omen / Heir / Hunter / Token;
+
+text "[act] [cost00]: Select an enemy follower on the field and change its defense to 1. Activate only once per turn.";
+
+ability ActFromExArea {
+    cost (PP, 0), (OncePerTurn);
+    condition p(#F);
+    effect SetStat(Def, 1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Crest: Octrice, Hollowness Manifest;
+id BP20-T02;
+class Sword;
+type Crest;
+trait Omen / Thief / Token;
+
+text "NOT FULLY IMPLEMENTED
+      At the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle.";
+
+ability StartMainPhaseFromExArea {
+    effect Sequence(Counter, Banish, Search);
+}
+
+ability Spell name Counter {
+    effect GiveCounter(Reversal, 1) to Self;
+}
+ability Spell name Banish {
+    condition r(Reversal)>7;
+    effect Banish() to Self;
+}
+ability Spell name Search {
+    condition r(Reversal)>7;
+    effect Search(1, t(Thief), Hand);
+}
+
+// ------------------------------
+
+name White Psalm, New Revelation;
+id BP20-T03;
+class Rune;
+type Amulet;
+trait Omen / Idolatry / Token;
+cost 1;
+
+text "[act] [engage] 3 Idolatry cards on your field: Bury this.
+      [lastwords] Summon a Black Psalm, New Revelation token. Give your leader [defense]+1.";
+
+ability Act {
+    cost (Engage, TargetPlayerCard, t(Idolatry)m(3,3));
+    effect SendToCemetery() to Self;
+}
+ability LastWords {
+    effect Sequence(Token, Def);
+}
+ability Spell name Token {
+    effect SummonToken("Black Psalm, New Revelation", Field, 1);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Black Psalm, New Revelation;
+id BP20-T04;
+class Rune;
+type Amulet;
+trait Omen / Idolatry / Token;
+cost 1;
+
+text "[act] [engage] 3 Idolatry cards on your field: Bury this.
+      [lastwords] Summon a White Psalm, New Revelation token. Deal 1 damage to each enemy leader.";
+
+ability Act {
+    cost (Engage, TargetPlayerCard, t(Idolatry)m(3,3));
+    effect SendToCemetery() to Self;
+}
+ability LastWords {
+    effect Sequence(Token, Damage);
+}
+ability Spell name Token {
+    effect SummonToken("White Psalm, New Revelation", Field, 1);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Crest: Galmieux, Ardor Manifest;
+id BP20-T05;
+class Dragon;
+type Crest;
+trait Omen / Wyrmkin / Token;
+
+text "[act] [cost00]: Select an Omen follower on your field and deal it 1 damage. Activate only once per turn.";
+
+ability ActFromExArea {
+    cost (PP, 0), (OncePerTurn);
+    condition f(Ft(Omen));
+    effect DealDamage(1) to TargetPlayerCard Ft(Omen);
+}
+
+// ------------------------------
+
+name Crest: Sham-Nacha, Heir to Entwining;
+id BP20-T06;
+class Abyss;
+type Crest;
+trait Omen / Heir / Encroacher / Token;
+
+text "NOT IMPLEMENTED
+      If you would choose 1 or more options, choose any number instead.";
+
+// ------------------------------
+
+name Crest: Marwynn, Despair Manifest;
+id BP20-T07;
+class Haven;
+type Crest;
+trait Omen / Zealot / Token;
+
+text "At the start of your end phase, select an enemy leader or enemy follower on the field and deal it 1 damage. If there are at least 3 crests in your EX area, deal 2 damage instead. If there are 5, deal 4 damage instead.";
+
+ability StartEndPhaseFromExArea {
+    effect DealDamage([1?(x(T)>2)2]?(x(T)>4)4) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Crest: Himeka, Heir to Repose;
+id BP20-T08;
+class Haven;
+type Crest;
+trait Omen / Heir / Zealot / Token;
+
+text "At the start of your end phase, select an enemy follower on the field and, if there are at least 3 crests in your EX area, give it [attack]-2/[defense]-2. If there are 5, give [attack]-4/[defense]-4 instead.";
+
+ability StartEndPhaseFromExArea {
+    effect GiveStat(AtkDef, [0?(x(T)>2)2]?(x(T)>4)4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Crest: Congregant of Repose;
+id BP20-T09;
+class Haven;
+type Crest;
+trait Omen / Zealot / Token;
+
+text "At the start of your end phase, select an Omen follower on your field and, if there are at least 3 crests in your EX area, give it [attack]+1/[defense]+1.";
+
+ability StartEndPhaseFromExArea {
+    effect GiveStat(AtkDef, 0?(x(T)>2)1) to TargetPlayerCard Ft(Omen);
+}
+
+// ------------------------------
+
+name Crest: Supplicant of Repose;
+id BP20-T10;
+class Haven;
+type Crest;
+trait Omen / Zealot / Token;
+
+text "At the start of your end phase, if there are at least 3 crests in your EX area, give your leader [defense]+1.";
+
+ability StartEndPhaseFromExArea {
+    condition x(T)>2;
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Crest: Congregant of Repose;
+id BP20-T11;
+class Haven;
+type Crest;
+trait Omen / Token;
+
+text "At the start of your end phase, if there's 1 card or less in your hand, draw a card.";
+
+ability StartEndPhaseFromExArea {
+    condition H<2;
+    effect Draw();
+}

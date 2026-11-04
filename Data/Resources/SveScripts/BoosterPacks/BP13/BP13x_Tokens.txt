@@ -1,0 +1,114 @@
+name Anne's Summoning;
+id BP13-T01;
+class Rune;
+type Follower;
+trait Golem / Arcanaform / Academic / Token;
+cost 2;
+stats 4/4;
+
+text "Rush. Ward.
+      [fanfare] Give your leader [defense]+2.
+      At the start of your main phase, banish this card.";
+
+keywords Rush, Ward;
+ability Fanfare {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability StartMainPhase {
+    effect Banish() to Self;
+}
+
+// ------------------------------
+
+name Resentful Blaze;
+id BP13-T02;
+class Rune;
+type Spell;
+trait Mage / Academic / Princess / Cutthroat / Token;
+cost 1;
+
+text "Choose one. (1) Select an enemy follower on the field and deal it 4 damage. (2) Select 2 enemy followers on the field and, if there are at least 15 Academic cards in your cemetery, deal them 4 damage.";
+
+ability Spell {
+    condition p(#F);
+    effect ChooseFromList(DamageOne, DamageTwo);
+}
+ability Spell name DamageOne {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability Spell name DamageTwo {
+    condition p(#F)>1;
+    effect DealDamage(0 ?(y(t(Academic))>14) 4) to TargetOpponentCard Fm(2,2);
+}
+
+// ------------------------------
+
+name Blood Arts;
+id BP13-T03;
+class Abyss;
+type Spell;
+trait Wasteland / Vampire / Token;
+cost 1;
+
+text "Deal 1 damage to your leader and each enemy follower on the field. Give each Aluzard, Timeworn Vampire on your field [attack]+1 and Drain, then give them [attack]+3/[defense]+3 if there are 3 faceup evolved followers named Aluzard, Timeworn Vampire in your evolve deck.";
+
+ability Spell {
+    effect Sequence(DamageLeader, DamageFollowers, Atk, Drain, AtkDef);
+}
+ability Spell name DamageLeader {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name DamageFollowers {
+    effect DealDamage(1) to AllOpponentCards F;
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to AllPlayerCards n(Aluzard, Timeworm Vampire);
+}
+ability Spell name Drain {
+    effect GiveKeyword(Drain) to AllPlayerCards n(Aluzard, Timeworm Vampire);
+}
+ability Spell name AtkDef {
+    condition #(evolveDeckFaceUp, n(Aluzard, Timework Vampire))=3;
+    effect GiveStat(AtkDef, 3) to AllPlayerCards n(Aluzard, Timeworm Vampire);
+}
+
+// ------------------------------
+
+name Darkest Desire;
+id BP13-T04;
+class Abyss;
+type Spell;
+trait Departed / Cutthroat / Token;
+cost 1;
+
+text "As an additional cost to play this card, bury 2 followers.
+      ----------
+      Deal 2 damage to each enemy leader. Give your leader [defense]+2.";
+
+ability Spell {
+    effect Sequence(Damage, Def);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability ModifiedCost {
+    cost (SendToCemetery, TargetPlayerCard, Fm(2,2));
+    effect AdditionalCost();
+}
+
+// ------------------------------
+
+name Keenedge Artifact;
+id BP13-T05;
+class Neutral;
+type Follower;
+trait Supreme / Token;
+cost 5;
+stats 3/4;
+
+text "Rush. Drain.";
+
+keywords Rush, Drain;

@@ -1,0 +1,97 @@
+[
+  {
+    "id": "BP16-T01EN",
+    "name": "Guardian Golem",
+    "trait": "Golem / Token",
+    "cardText": "Ward.\n[lastwords] Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP16-T02EN",
+    "name": "Looking Smart!",
+    "trait": "Mage / Academic / Token",
+    "cardText": "Select an enemy follower on the field. Deal it 2 damage, draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 2 damage, draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP16-T03EN",
+    "name": "Fire Drake Whelp",
+    "trait": "Wyrmkin / Token",
+    "cardText": "Intimidate."
+  },
+  {
+    "id": "BP16-T04EN",
+    "name": "Mimi, Right Paw Hellhound",
+    "trait": "Demon / Token",
+    "cardText": "[lastwords] Select an enemy follower on the field. Deal it 2 damage and bury the top card of your deck.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select an enemy follower on the field. Deal it 2 damage and bury the top card of your deck."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 2 damage and bury the top card of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP16-T05EN",
+    "name": "Coco, Left Paw Hellhound",
+    "trait": "Demon / Token",
+    "cardText": "[lastwords] Give your leader [defense]+2. Bury the top card of your deck.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Give your leader [defense]+2. Bury the top card of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP16-T06EN",
+    "name": "Silent Rider",
+    "trait": "Archfiend / Token",
+    "cardText": "Storm."
+  },
+  {
+    "id": "BP16-T07EN",
+    "name": "Servant of Cocytus",
+    "trait": "Archfiend / Token"
+  },
+  {
+    "id": "BP16-T08EN",
+    "name": "Demon of Purgatory",
+    "trait": "Archfiend / Token",
+    "cardText": "Ward.\n[fanfare] Select an enemy follower on the field and deal it 6 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 6 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP16-T09EN",
+    "name": "Astaroth's Reckoning",
+    "trait": "Archfiend / Token",
+    "cardText": "Change each enemy leader's defense to 1."
+  }
+]

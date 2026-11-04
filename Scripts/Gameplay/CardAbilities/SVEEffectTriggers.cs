@@ -60,6 +60,7 @@ namespace SVESimulator
     // Player cards
     public class SveOnOtherCardEnterFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOtherCardLeaveFieldTrigger : SveTriggerWithFilter { }
+    public class SveOnOtherCardFieldToCemetery : SveTriggerWithFilter { }
     public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
 
     // Opponent cards
@@ -113,10 +114,12 @@ namespace SVESimulator
     #region Game Phases
 
     public class SveStartMainPhaseTrigger : SveTrigger { }
+    public class SveStartMainPhaseFromExAreaTrigger : SveTrigger { }
 
     public class SveStartOpponentMainPhaseTrigger : SveTrigger { }
 
     public class SveStartEndPhaseTrigger : SveTrigger { }
+    public class SveStartEndPhaseFromExAreaTrigger : SveTrigger { }
 
     #endregion
 

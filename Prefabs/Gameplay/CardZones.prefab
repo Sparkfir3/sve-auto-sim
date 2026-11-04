@@ -2234,10 +2234,10 @@ PrefabInstance:
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 6262566546309279166}
+      objectReference: {fileID: 8445628089125123598}
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <SlotNumber>k__BackingField
-      value: -1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7901093782637960067, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2400,10 +2400,10 @@ PrefabInstance:
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 6262566546309279166}
+      objectReference: {fileID: 8445628089125123598}
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <SlotNumber>k__BackingField
-      value: -1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7901093782637960067, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2742,10 +2742,10 @@ PrefabInstance:
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 6262566546309279166}
+      objectReference: {fileID: 8445628089125123598}
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <SlotNumber>k__BackingField
-      value: -1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7901093782637960067, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3361,10 +3361,10 @@ PrefabInstance:
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 6262566546309279166}
+      objectReference: {fileID: 8445628089125123598}
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <SlotNumber>k__BackingField
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7901093782637960067, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4095,10 +4095,10 @@ PrefabInstance:
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <ParentZone>k__BackingField
       value: 
-      objectReference: {fileID: 6262566546309279166}
+      objectReference: {fileID: 8445628089125123598}
     - target: {fileID: 1901704032749244144, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: <SlotNumber>k__BackingField
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7901093782637960067, guid: 15dc98cdecfc6c04e91332608c1802da, type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -1,0 +1,73 @@
+name Destruction in White;
+id BP05-T01;
+class Rune;
+type Amulet;
+trait Omen / Idolatry / Token;
+cost 1;
+
+text "At the start of your main phase, give your leader [defense]+2.";
+
+ability StartMainPhase {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Destruction in Black;
+id BP05-T02;
+class Rune;
+type Amulet;
+trait Omen / Idolatry / Token;
+cost 2;
+
+text "At the start of your main phase, deal 2 damage to each enemy leader.";
+
+ability StartMainPhase {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Puppet;
+id BP05-T03;
+class Neutral;
+type Follower;
+trait Puppetry / Token;
+cost 1;
+stats 1/1;
+
+text "Rush.";
+
+keyword Rush;
+
+// ------------------------------
+
+name Ancient Artifact;
+id BP05-T04;
+class Neutral;
+type Follower;
+trait Supreme / Token;
+cost 1;
+stats 3/1;
+
+text "Rush.";
+
+keyword Rush;
+
+// ------------------------------
+
+name Mystic Artifact;
+id BP05-T05;
+class Neutral;
+type Follower;
+trait Supreme / Token;
+cost 3;
+stats 2/3;
+
+text "Ward.
+      [fanfare] Draw a card.";
+
+keyword Ward;
+ability Fanfare {
+    effect Draw(1);
+}

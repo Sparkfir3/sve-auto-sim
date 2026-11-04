@@ -1,7 +1,10 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using CCGKit;
+using UnityEngine.UI;
 
 namespace SVESimulator
 {
@@ -9,6 +12,14 @@ namespace SVESimulator
     {
         [SerializeField]
         private PlayerController _player;
+        [SerializeField]
+        private List<GameObject> buttons;
+        [SerializeField]
+        private Button toggleButton;
+        [SerializeField]
+        private RectTransform toggleGraphic;
+        [SerializeField]
+        private bool isExpanded = true;
 
         private PlayerController Player
         {
@@ -22,7 +33,20 @@ namespace SVESimulator
 
         // ------------------------------
 
-        [Button]
+        public void Toggle()
+        {
+            isExpanded = !isExpanded;
+            foreach(GameObject button in buttons)
+                button.SetActive(isExpanded);
+
+            Vector3 graphicRotation = toggleGraphic.localEulerAngles;
+            graphicRotation.z = isExpanded ? -90f : 90f;
+            toggleGraphic.localEulerAngles = graphicRotation;
+        }
+
+        // ------------------------------
+
+        [TitleGroup("Buttons"), Button]
         public void DrawCard()
         {
             Player.LocalEvents.DrawCard();
@@ -44,7 +68,8 @@ namespace SVESimulator
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.Hand,
                 text = "[Debug Mode] Search for a card"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
+            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button("Search to EX Area")]
@@ -57,7 +82,8 @@ namespace SVESimulator
                 searchDeckAction = SearchDeckEffect.SearchDeckAction.ExArea,
                 text = "[Debug Mode] Search for a card"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // need a dummy card to perform the effect from lol
+            SVEEffectPool.Instance.ResolveEffectImmediate(searchEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -71,7 +97,8 @@ namespace SVESimulator
                 filter = null,
                 text = "[Debug Mode] Salvage"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(salvageEffect, Player.ZoneController.cemeteryZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(salvageEffect, Player.ZoneController.cemeteryZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -95,7 +122,8 @@ namespace SVESimulator
                 filter = "m(0,10)",
                 text = "[Debug Mode] Destroy"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(destroyEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(destroyEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -107,7 +135,8 @@ namespace SVESimulator
                 filter = "m(0,10)",
                 text = "[Debug Mode] Banish"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(banishEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(banishEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
         }
 
         [Button]
@@ -120,7 +149,36 @@ namespace SVESimulator
                 amount = "1",
                 text = "[Debug Mode] Summon Token"
             };
-            SVEEffectPool.Instance.ResolveEffectImmediate(summonEffect, Player.ZoneController.deckZone.Runtime.cards[0]); // dummy card to perform the effect
+            SVEEffectPool.Instance.ResolveEffectImmediate(summonEffect, Player.ZoneController.deckZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
+        }
+
+        [Button]
+        public void TokenToExArea()
+        {
+            StartCoroutine(Coroutine());
+            IEnumerator Coroutine()
+            {
+                List<Card> tokens = LibraryCardCache.GetAllTokens();
+                Player.ZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.SelectToken, tokens.Count, tokens.Count, false);
+                Player.ZoneController.selectionArea.SetScrollViewTintActive(true);
+                Player.ZoneController.selectionArea.SetConfirmAction(null, "Select Token", "Select Token", 0, 1, selectedCards =>
+                {
+                    if(selectedCards.Count > 0)
+                        CreateToken(selectedCards[0].LibraryCard.name, SVEProperties.TokenCreationOption.ExArea);
+                    Player.ZoneController.selectionArea.Disable();
+                }, showTargetingToOpponent: false);
+
+                yield return null;
+                for(int i = 0; i < tokens.Count; i++)
+                {
+                    CardObject cardObject = CardManager.Instance.RequestCard(tokens[i]);
+                    Player.ZoneController.AddAndPlaceToken(cardObject, Player.ZoneController.selectionArea, i);
+                    cardObject.transform.localScale = Vector3.one * Player.ZoneController.selectionArea.SlotScale;
+                    Player.ZoneController.MoveCardToSelectionArea(cardObject, i, rearrangeHand: false);
+                    yield return null;
+                }
+            }
         }
     }
 }

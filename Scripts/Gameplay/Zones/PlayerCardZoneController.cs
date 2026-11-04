@@ -418,14 +418,16 @@ namespace SVESimulator
         {
             token.CurrentZone = zone;
             zone.AddCard(token);
-            zone.Runtime.AddCard(token.RuntimeCard);
+            if(token.RuntimeCard != null)
+                zone.Runtime.AddCard(token.RuntimeCard);
 
             MoveCardTransform(token, zone.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, instant: true);
             zone.MoveCardToSlot(token, slotNumber,
                 newInteractionType: IsLocalPlayer ? TargetableSlot.InteractionType.None : TargetableSlot.InteractionType.AttackCard);
 
-            token.SetStatOverlayActive(true);
-            token.SetCostOverlayActive(zone == exAreaZone);
+            bool isCrest = token.IsCrest();
+            token.SetStatOverlayActive(zone == fieldZone || isCrest);
+            token.SetCostOverlayActive(!isCrest && zone == exAreaZone);
             if(token.IsFollowerOrEvolvedFollower() && zone == fieldZone && zone.IsLocalPlayerZone)
                 token.CalculateCanAttackStatus();
             else

@@ -1,0 +1,202 @@
+name Lococo's Teddy Bear;
+id BP17-T01;
+class Forest;
+type Follower;
+trait Puppetry / Token;
+cost 2;
+stats 2/2;
+
+text "[lastwords] Deal 1 damage to your leader.";
+
+ability LastWords {
+    effect DealDamage(1) to Leader;
+}
+
+// ------------------------------
+
+name Gale Arrow;
+id BP17-T02;
+class Forest;
+type Spell;
+trait Elf / Token;
+cost 1;
+
+text "Select an enemy follower on the field. Combo (3) - Deal it 2 damage.";
+
+ability Spell {
+    condition p(#F);
+    effect DealDamage(0c(3)2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Storm Arrow;
+id BP17-T03;
+class Forest;
+type Spell;
+trait Elf / Token;
+cost 1;
+
+text "Combo (5) - Deal 2 damage to each enemy leader.";
+
+ability Spell {
+    condition c(5);
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Quadra Magic;
+id BP17-T04;
+class Rune;
+type Spell;
+trait Mage / Token;
+cost 2;
+
+text "Spellchain (5) - This costs 1 less to play.
+      ----------
+      Select up to 2 enemy followers on the field and deal them 2 damage. Put an Elements of Creation token into your EX area.";
+
+ability Spell {
+    effect Sequence(Damage, Token);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to TargetOpponentCard Fm(0,2);
+}
+ability Spell name Token {
+    effect SummonToken(Elements of Creation, ExArea, 1);
+}
+ability ModifiedCost {
+    condition s(5);
+    effect ReducedCost(1);
+}
+
+// ------------------------------
+
+name Elements of Creation;
+id BP17-T05;
+class Rune;
+type Spell;
+trait Mage / Token;
+cost 5;
+
+text "Spellchain (10) - Deal 7 damage to each enemy leader. Give your leader [defense]+7.";
+
+ability Spell {
+    condition s(10);
+    effect Sequence(Damage, Def);
+}
+ability Spell name Damage {
+    effect DealDamage(7) to OpponentLeader;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 7) to Leader;
+}
+
+// ------------------------------
+
+name Curse of the Black Dragon;
+id BP17-T06;
+class Dragon;
+type Spell;
+trait Wyrmkin / Cutthroat / Draconic Duelist / Token;
+cost 0;
+
+text "This can't be played unless Overflow is active for you.
+      At the start of your end phase, if this is in your EX area and Overflow isn't active for you, deal 1 damage to your leader.
+      ----------
+      Select a Rowen, Dragon Lance on your field and give it "If this would deal damage, it deals that much plus 1 instead" for the rest of this turn.";
+
+ability Spell {
+    condition o & f(n(Rowen, Dragon Lance));
+    effect GiveKeywordEndOfTurn(Plus1Damage) to TargetPlayerCard n(Rowen, Dragon Lance);
+}
+ability StartEndPhaseFromExArea {
+    condition 1o0;
+    effect DealDamage(1) to Leader;
+}
+
+// ------------------------------
+
+name A Horrible Night;
+id BP17-T07;
+class Abyss;
+type Spell;
+trait Vampire / Token;
+cost 1;
+
+text "NOT FULLY IMPLEMENTED
+      This can't be played if you've played another A Horrible Night this turn.
+      ----------
+      For the rest of this turn, whenever your leader loses defense, deal 1 damage to each enemy leader and give your leader [defense]+1.";
+
+ability Spell {
+    effect Sequence(Damage, Def);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to OpponentLeader;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+ability ModifiedCost {
+    condition #(spellsPlayed, n(A Horrible Night))=0;
+    effect AdditionalCost();
+}
+
+// ------------------------------
+
+name Luna's Doll;
+id BP17-T08;
+class Abyss;
+type Amulet;
+trait Necromance / Puppetry / Token;
+cost 1;
+
+text "[fanfare] Bury the top 2 cards of your deck.
+      [act] [engage], bury this: Draw a card. Activate only if there are at least 10 cards in your cemetery.";
+
+ability Fanfare {
+    effect Mill(2);
+}
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    condition y()>9;
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Eschamali Adviser;
+id BP17-T09;
+class Haven;
+type Follower;
+trait Faith / Token;
+cost 2;
+stats 2/2;
+
+text "Ward.
+      [fanfare] Draw a card.";
+
+keyword Ward;
+ability Fanfare {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Eschamali Constable;
+id BP17-T10;
+class Haven;
+type Follower;
+trait Faith / Token;
+cost 2;
+stats 2/2;
+
+text "Rush.
+      [fanfare] Give your leader [defense]+2.";
+
+keyword Rush;
+ability Fanfare {
+    effect GiveStat(Def, 2) to Leader;
+}
