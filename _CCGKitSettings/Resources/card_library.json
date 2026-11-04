@@ -37109,7 +37109,8 @@
             "type": "Activated",
             "effect": {
               "amount": "4",
-              "$type": "SVESimulator.MinusCostNextSpellEndOfTurnEffect"
+              "filter": "S",
+              "$type": "SVESimulator.MinusCostNextCardEndOfTurnEffect"
             },
             "$type": "CCGKit.ActivatedAbility"
           }

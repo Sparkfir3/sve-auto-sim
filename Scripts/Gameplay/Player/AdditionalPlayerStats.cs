@@ -47,6 +47,18 @@ namespace SVESimulator
 
         // ------------------------------
 
+        public int CardsPlayedThisTurnWithFilter(Dictionary<SVEFormulaParser.CardFilterSetting, string> filter)
+        {
+            return CardsPlayedThisTurn.Count(x =>
+            {
+                CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
+                Debug.Assert(card);
+                return card && filter.MatchesCard(card);
+            });
+        }
+
+        // ------------------------------
+
         private void UpdateFieldAbilities()
         {
             bool shouldUseRuneFollowersForSpellchain = player.ZoneController.fieldZone.GetAllPrimaryCards()
