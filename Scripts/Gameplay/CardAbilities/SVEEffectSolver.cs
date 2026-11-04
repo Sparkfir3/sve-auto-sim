@@ -181,10 +181,17 @@ namespace SVESimulator
                     SVEEffectPool.Instance.ApplyAllActivePassivesToCard(card);
                     SVEEffectPool.Instance.RegisterPassiveAbilities(gameState, card);
 
+                    // On play
+                    if(originZone.Equals(SVEProperties.Zones.Hand) || originZone.Equals(SVEProperties.Zones.ExArea))
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardTrigger>(gameState, card, originZone, field, player,
+                            x => x.MatchesFilter(card), false);
+
+                    // Fanfare/other fanfare
                     SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
 
+                    // Fanfare from zone
                     if(originZone.Equals(SVEProperties.Zones.Hand))
                         SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
                     else
@@ -469,6 +476,8 @@ namespace SVESimulator
 
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                    x => x.MatchesFilter(card), false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlaySpellTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
 
