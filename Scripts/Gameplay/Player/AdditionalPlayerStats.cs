@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CCGKit;
 using Mirror;
 using UnityEngine;
 
@@ -51,9 +52,8 @@ namespace SVESimulator
         {
             return CardsPlayedThisTurn.Count(x =>
             {
-                CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
-                Debug.Assert(card);
-                return card && filter.MatchesCard(card);
+                RuntimeCard card = CardManager.Instance.GetRuntimeCardByInstanceId(x.instanceId);
+                return filter.MatchesCard(card);
             });
         }
 
