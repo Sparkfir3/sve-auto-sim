@@ -1,0 +1,392 @@
+name Magachiyo, Barbed Convict;
+id BP19-001;
+class Forest;
+type Follower;
+trait Condemned / Elf / Princess;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Magachiyo, Barbed Convict (Evolved);
+id BP19-002;
+class Forest;
+type Evolved Follower;
+trait Condemned / Elf / Princess;
+rarity L;
+stats 3/3;
+
+text "Storm.
+      On Evolve - Select an enemy follower on the field. Combo (3) - Deal it 4 damage.
+      On Super-Evolve - Give each other Condemned follower on your field Storm.";
+
+keyword Storm;
+ability OnEvolve {
+    effect DealDamage(0c(3)4) to TargetOpponentCard F;
+}
+ability OnSuperEvolve {
+    effect GiveKeyword(Storm) to AllPlayerCards Ft(Condemned)X;
+}
+
+// ------------------------------
+
+name Wimael, Redolent Enforcer;
+id BP19-003;
+class Forest;
+type Follower;
+trait Condemned / Verdant / Insect;
+rarity L;
+cost 6;
+stats 4/5;
+
+text "[fanfare] Select an enemy follower on the field and deal it 4 damage.
+      [lastwords] Put this onto its owner's field.";
+
+ability Fanfare {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect CemeteryToField() to TriggerCard;
+}
+
+// ------------------------------
+
+name Zwei, Symphonic Heart;
+id BP19-004;
+class Forest;
+type Follower;
+trait Puppetry / Cutthroat;
+rarity L;
+cost 2;
+stats 2/1;
+
+text "[fanfare] Banish 2 cards named Puppet from your EX area: Put a Victoria token into your EX area.
+      [act] [engage]: Select up to 2 cards on your field named Puppet and give them [attack]+1/[defense]+1. Activate only if there are at least 3 Puppetry cards in your cemetery.";
+
+ability Fanfare {
+    cost (Banish, TargetPlayerCardEx, n(Puppet)m(2,2));
+    effect SummonToken(Victoria, ExArea, 1);
+}
+ability Act {
+    cost (EngageSelf);
+    condition y(t(Puppetry))>2;
+    effect GiveStat(AtkDef, 1) to TargetPlayerCard n(Puppet)m(0,2);
+}
+
+// ------------------------------
+
+name Verdant Lieutenant;
+id BP19-005;
+class Forest;
+type Follower;
+trait Condemned / Elf;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      Whenever a Condemned follower on your field evolves, Combo (3) - Draw a card.";
+
+evolve 1;
+ability OnOtherEvolve {
+    filter t(Condemned);
+    condition c(3);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Verdant Lieutenant (Evolved);
+id BP19-006;
+class Forest;
+type Evolved Follower;
+trait Condemned / Elf;
+rarity G;
+stats 3/3;
+
+text "On Evolve - Select an enemy follower on the field and deal it 2 damage.
+      Whenever a Condemned follower on your field evolves, Combo (3) - Draw a card.";
+
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability OnOtherEvolve {
+    filter t(Condemned);
+    condition c(3);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Warden of Balms;
+id BP19-007;
+class Forest;
+type Follower;
+trait Condemned / Verdant / Insect;
+rarity G;
+cost 1;
+stats 1/1;
+
+text "Ward.
+      [fanfare]/[lastwords] Deal 3 damage to each enemy leader.
+      [act] Discard this: Select a Condemned follower on your field. Destroy it, deal 1 damage to each enemy leader, and draw a card.";
+
+keyword Ward;
+ability Fanfare {
+    effect DealDamage(3) to OpponentLeader;
+}
+ability LastWords {
+    effect DealDamage(3) to OpponentLeader;
+}
+ability ActFromHand {
+    cost (SendToCemetery, SelfFromHand);
+    condition f(Ft(Condemned));
+    effect Sequence(Destroy, Damage, Draw);
+}
+ability Spell name Destroy {
+    effect Destroy() to TargetPlayerCard Ft(Condemned);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to OpponentLeader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Synchronous Hearts;
+id BP19-008;
+class Forest;
+type Spell;
+trait Puppetry / Cutthroat;
+rarity G;
+cost 5;
+
+text "Search your deck for a follower with "Orchis" in its name that costs 3 or less and a follower with "Zwei" in its name that costs 3 or less, summon them, then shuffle. Put 2 Puppet tokens into your EX area.";
+
+ability Spell {
+    effect Sequence(Search, Tokens);
+}
+ability Spell name Search {
+    effect Search(m(0,2), n^nE(Orchis)p(m(0,3))|(nE(Zwei)p(m(0,3))), Field);
+}
+ability Spell name Tokens {
+    effect SummonToken(Puppet, ExArea, 2);
+}
+
+// ------------------------------
+
+name Budding Initiate;
+id BP19-009;
+class Forest;
+type Follower;
+trait Condemned / Elf;
+rarity S;
+cost 1;
+stats 1/1;
+
+text "[evolve] [cost02]: Evolve this.
+      [fanfare] Combo (3) - Evolve this.";
+
+evolve 2;
+ability Fanfare {
+    condition c(3);
+    cost (Optional);
+    effect Evolve() to Self;
+}
+
+// ------------------------------
+
+name Budding Initiate (Evolved);
+id BP19-010;
+class Forest;
+type Evolved Follower;
+trait Condemned / Elf;
+rarity S;
+stats 2/2;
+
+text "On Evolve - Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.";
+
+ability OnEvolve {
+    effect CheckTop(4, (Hand, t(Condemned), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Leafshade Assassin;
+id BP19-011;
+class Forest;
+type Follower;
+trait Condemned / Elf;
+rarity S;
+cost 2;
+stats 2/3;
+
+text "Whenever a Condemned follower on your field evolves, Combo (3) - Select an enemy follower on the field and deal it 3 damage.
+      [fanfare] The next Condemned card you play this turn costs 1 less.";
+
+ability OnOtherEvolve {
+    condition c(3);
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Fanfare {
+    effect MinusCostNextCardEndOfTurn(1, t(Condemned));
+}
+
+// ------------------------------
+
+name Puppet Workout;
+id BP19-012;
+class Forest;
+type Spell;
+trait Puppetry;
+rarity S;
+cost 3;
+
+text "Summon 2 Puppet tokens. Give each Puppetry token follower on your field [attack]+2 and Assail.";
+
+ability Spell {
+    effect Sequence(Tokens, Attack, Assail);
+}
+ability Spell name Tokens {
+    effect SummonToken(Puppet, Field, 2);
+}
+ability Spell name Attack {
+    effect GiveStat(Atk, 2) to AllPlayerCards FKt(Puppetry);
+}
+ability Spell name Assail {
+    effect GiveKeyword(Assail) to AllPlayerCards FKt(Puppetry);
+}
+
+// ------------------------------
+
+name Beast Lancer;
+id BP19-013;
+class Forest;
+type Follower;
+trait Beast;
+rarity B;
+cost 4;
+stats 3/5;
+
+text "[evolve] [cost01]: Evolve this.
+      Ward.
+      [fanfare] Select an enemy follower on the field and deal it 3 damage.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Beast Lancer (Evolved);
+id BP19-014;
+class Forest;
+type Evolved Follower;
+trait Beast;
+rarity B;
+stats 4/6;
+
+text "Ward.
+      On Evolve - Select an enemy follower on the field and deal it 3 damage.";
+
+keyword Ward;
+ability OnEvolve {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Merchant of the Wood;
+id BP19-015;
+class Forest;
+type Follower;
+trait Merchant / Beast;
+rarity B;
+cost 4;
+stats 4/3;
+
+text "Rush.
+      [fanfare] Draw 2 cards.";
+
+keyword Rush;
+ability Fanfare {
+    effect Draw(2);
+}
+
+// ------------------------------
+
+name Rogue Puppeteer;
+id BP19-016;
+class Forest;
+type Follower;
+trait Puppetry;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Discard a Puppetry card: Draw a card. Put 2 Puppet tokens into your EX area.";
+
+ability Fanfare {
+    cost (Discard, 1, t(Puppetry));
+    effect Sequence(Draw, Tokens);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Tokens {
+    effect SummonToken(Puppet, ExArea, 2);
+}
+
+// ------------------------------
+
+name Support Troop Elf;
+id BP19-017;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 2;
+stats 3/2;
+
+text "Rush.
+      [fanfare] Select a card on your field not named Support Troop Elf and return it to its owner's hand.";
+
+keyword Rush;
+ability Fanfare {
+    effect ReturnToHand() to TargetPlayerCard !n(Support Troop Elf);
+}
+
+// ------------------------------
+
+name Galepierce;
+id BP19-018;
+class Forest;
+type Spell;
+trait Elf;
+rarity B;
+cost 4;
+
+text "Return a card on your field to its owner's hand: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.";
+
+ability Spell {
+    condition p(#F)&f();
+    effect Sequence(ReturnToHand, Follower, Leader);
+}
+ability Spell name ReturnToHand {
+    effect ReturnToHand() to TargetPlayerCard;
+}
+ability Spell name Follower {
+    effect DealDamage(6) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}

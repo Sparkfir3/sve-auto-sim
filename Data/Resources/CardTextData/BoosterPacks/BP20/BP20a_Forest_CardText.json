@@ -1,0 +1,284 @@
+[
+  {
+    "id": "BP20-001EN",
+    "name": "Izudia, Annihilation Manifest",
+    "trait": "Omen / Hunter",
+    "cardText": "[fanfare] Search your deck for an Omen–Hunter spell that costs 2 or less, reveal it, add it to your hand, then shuffle. If there are at least 6 Hunter cards in your cemetery, put an Annihilating Onslaught token into your EX area.\n[act] [cost00]: The next Omen–Hunter card you play this turn costs 2 less. Activate only once per turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for an Omen–Hunter spell that costs 2 or less, reveal it, add it to your hand, then shuffle. If there are at least 6 Hunter cards in your cemetery, put an Annihilating Onslaught token into your EX area."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for an Omen–Hunter spell that costs 2 or less, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost00]",
+        "body": "The next Omen–Hunter card you play this turn costs 2 less. Activate only once per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-002EN",
+    "name": "Krulle, Heir to Unkilling",
+    "trait": "Omen / Heir / Hunter",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If there are at least 6 Hunter cards in your cemetery, put a Crest: Krulle, Heir to Unkilling token into your EX area and give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 6 Hunter cards in your cemetery, put a Crest: Krulle, Heir to Unkilling token into your EX area and give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-003EN",
+    "name": "Krulle, Heir to Unkilling (Evolved)",
+    "trait": "Omen / Heir / Hunter",
+    "cardText": "On Evolve - Select an enemy follower on the field and give it [attack]-3/[defense]-3.\nOn Super-Evolve - Give each enemy follower on the field [attack]-3/[defense]-3.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and give it [attack]-3/[defense]-3."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Give each enemy follower on the field [attack]-3/[defense]-3."
+      }
+    ]
+  },
+  {
+    "id": "BP20-004EN",
+    "name": "Plumeria, Serene Goddess",
+    "trait": "Verdant",
+    "cardText": "[fanfare] If there are at least 3 Verdant cards in your cemetery, draw a card.\nOnce per turn, when a Verdant follower on your field that costs 5 or less evolves, give it Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 3 Verdant cards in your cemetery, draw a card."
+      },
+      {
+        "key": "OnOtherEvolve",
+        "text": "Once per turn, when a Verdant follower on your field that costs 5 or less evolves, give it Storm.",
+        "trigger": "Once per turn, when a Verdant follower on your field that costs 5 or less evolves,",
+        "body": "When a Verdant follower on your field that costs 5 or less evolves, give it Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP20-005EN",
+    "name": "Windbloom Sylph",
+    "trait": "Fae-Touched",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWhenever you play a Fae-Touched card, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnPlayCard",
+        "body": "Whenever you play a Fae-Touched card, give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-006EN",
+    "name": "Windbloom Sylph (Evolved)",
+    "trait": "Elf / Hunter",
+    "cardText": "On Evolve - Search your deck for a Fae-Touched card not named Windbloom Sylph, reveal it, add it to your hand, then shuffle.\nWhenever you play a Fae-Touched card, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for a Fae-Touched card not named Windbloom Sylph, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "OnPlayCard",
+        "text": "Whenever you play a Fae-Touched card, give your leader [defense]+1.",
+        "trigger": "Whenever you play a Fae-Touched card,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-007EN",
+    "name": "Congregant of Unkilling",
+    "trait": "Omen / Hunter",
+    "cardText": "Ward.\n[fanfare] Search your deck for an Omen–Hunter follower that costs 3 or less, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for an Omen–Hunter follower that costs 3 or less, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-008EN",
+    "name": "Eradicating Arrow",
+    "trait": "Omen / Hunter",
+    "cardText": "Select up to 2 enemy followers on the field and deal them 2 damage. If there are at least 6 Hunter cards in your cemetery, deal 3 damage instead and deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Followers",
+        "body": "Select up to 2 enemy followers on the field and deal them 2 damage. If there are at least 6 Hunter cards in your cemetery, deal 3 damage instead and deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP20-009EN",
+    "name": "Supplicant of Unkilling",
+    "trait": "Omen / Hunter",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If there's an enemy follower on the field with 1 defense, draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there's an enemy follower on the field with 1 defense, draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-010EN",
+    "name": "Supplicant of Unkilling (Evolved)",
+    "trait": "Omen / Hunter",
+    "cardText": "On Evolve - If there's an enemy follower on the field with 1 defense, give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "If there's an enemy follower on the field with 1 defense, give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-011EN",
+    "name": "Greatwood Warrior",
+    "trait": "Hunter",
+    "cardText": "[fanfare] Search your deck for up to 2 [forestcraft] spells with different names, reveal them, add them to your hand, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for up to 2 [forestcraft] spells with different names, reveal them, add them to your hand, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-012EN",
+    "name": "Hamlet of Unkilling",
+    "trait": "Omen / Hunter",
+    "cardText": "[fanfare] Look at the top 2 cards of your deck. You may reveal an Omen–Hunter card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] [engage], bury this: Give your leader [defense]+1. Activate only if there are at least 3 Hunter cards in your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 2 cards of your deck. You may reveal an Omen–Hunter card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury this",
+        "body": "Give your leader [defense]+1. Activate only if there are at least 3 Hunter cards in your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP20-013EN",
+    "name": "Bearer of the Fairy Blade",
+    "trait": "Elf / Fae-Touched",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Put a Fairy token into your EX area.\nWhenever a Pixie token follower is put onto your field, give it [attack]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Fairy token into your EX area."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a Pixie token follower is put onto your field, give it [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-014EN",
+    "name": "Bearer of the Fairy Blade (Evolved)",
+    "trait": "Elf / Fae-Touched",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 2 damage.\nWhenever a Pixie token follower is put onto your field, give it [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a Pixie token follower is put onto your field, give it [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-015EN",
+    "name": "Devotee of Unkilling",
+    "trait": "Pixie",
+    "cardText": "[fanfare] Discard an Omen–Hunter card: Draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard an Omen–Hunter card",
+        "body": "Draw 2 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP20-016EN",
+    "name": "Ageless Bystander",
+    "trait": "Elf",
+    "cardText": "[fanfare] Put a Fairy Wisp token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Fairy Wisp token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-017EN",
+    "name": "Cutie Cat",
+    "trait": "Beast",
+    "cardText": "Storm.\nStrike - Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-018EN",
+    "name": "Bestial Swipe",
+    "trait": "Beast",
+    "cardText": "As an additional cost to play this, you may discard a Beast card.\n----------\nSelect an enemy follower on the field and deal it 3 damage. If you paid this card's additional cost, deal 5 damage instead and draw a card.",
+    "effectText": [
+      {
+        "key": "Damage3",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If you paid this card's additional cost, deal 5 damage instead and draw a card."
+      },
+      {
+        "key": "Sequence",
+        "cost": "As an additional cost to play this, you may discard a Beast card.",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If you paid this card's additional cost, deal 5 damage instead and draw a card."
+      },
+      {
+        "key": "Damage5",
+        "body": "Select an enemy follower on the field and deal it 3 damage. If you paid this card's additional cost, deal 5 damage instead and draw a card."
+      }
+    ]
+  }
+]
