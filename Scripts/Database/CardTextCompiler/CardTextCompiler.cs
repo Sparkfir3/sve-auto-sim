@@ -126,6 +126,9 @@ namespace SVESimulator.CardTextData
                 "FollowerStrike" => "Follower Strike - ",
                 "LeaderStrike" => "Leader Strike - ",
                 "Act" => "[act]",
+                "ActFromHand" => "[act]",
+                "ActFromEx" => "[act]",
+                "ActFromExArea" => "[act]",
                 "Activate" => "[act]",
                 "OnRace" => "On Race:",
                 _ => ""
