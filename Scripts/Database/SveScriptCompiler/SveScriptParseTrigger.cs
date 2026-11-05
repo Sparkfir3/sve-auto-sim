@@ -39,6 +39,7 @@ namespace SVESimulator.SveScript
             { "OnOpponentCardEnterField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardDestroyed", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardDestroyedTrigger", TriggerParameterType.Filter) },
+            { "OnOpponentCardFieldToCemetery", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardFieldToCemeteryTrigger", TriggerParameterType.Filter) },
 
             // Card Movement - Other
             { "OnDiscarded", new EffectTriggerInfo("SVESimulator.SveOnDiscardedTrigger") },
