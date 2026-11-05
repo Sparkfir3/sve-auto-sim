@@ -370,15 +370,18 @@ text "As an additional cost to play this, you may discard a Beast card.
 ability Spell {
     condition p(#F);
     effect ComplexEffect(
-        let paid = payCost(Sequence).movedCardsCount
+        let paid = mayPayCost(AdditionalCost).movedCardsCount
         performIf paid then Sequence else Damage3
     );
 }
 ability Spell name Damage3 {
     effect DealDamage(3) to TargetOpponentCard F;
 }
+ability Spell name AdditionalCost {
+    cost (Discard, 1, t(Beast));
+    effect Sequence();
+}
 ability Spell name Sequence {
-    cost (Optional), (Discard, 1, t(Beast)), (IgnorePrompt);
     effect Sequence(Damage5, Draw);
 }
 ability Spell name Damage5 {

@@ -62848,7 +62848,7 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
-              "function": "let paid = payCost(Sequence).movedCardsCount\nperformIf paid then Sequence else Damage3",
+              "function": "let paid = mayPayCost(AdditionalCost).movedCardsCount\nperformIf paid then Sequence else Damage3",
               "$type": "SVESimulator.ComplexEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -62869,7 +62869,19 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OptionalEffectAsCost\"\r\n  },\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"t(Beast)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  },\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"t(Beast)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AdditionalCost",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Sequence",

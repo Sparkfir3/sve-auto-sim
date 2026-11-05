@@ -51,6 +51,7 @@ namespace SVESimulator
             variables.Clear();
             pointerL = 0;
             pointerR = 0;
+            forceExit = false;
 
             while(pointerL < function.Length)
             {
@@ -88,6 +89,7 @@ namespace SVESimulator
 
                 if(forceExit)
                 {
+                    ComplexLog(LogMode.Main, $"Ending Resolve via forced exit");
                     onComplete?.Invoke();
                     yield break;
                 }
@@ -97,6 +99,7 @@ namespace SVESimulator
             }
 
             yield return new WaitForEndOfFrame();
+            ComplexLog(LogMode.Main, $"Ending Resolve");
             onComplete?.Invoke();
         }
 
@@ -155,7 +158,8 @@ namespace SVESimulator
                 "revealTopDeckUntilValue" =>    await RevealTopDeckUntilValue(args),
                 "mill" =>                       await MillDeck(args),
                 "millDeck" =>                   await MillDeck(args),
-                "payCost" =>                    await PayEffectCost(args),
+                "payCost" =>                    await PayEffectCost(args, true),
+                "mayPayCost" =>                 await PayEffectCost(args, false),
                 _ => null
             };
             if(obj == null)
