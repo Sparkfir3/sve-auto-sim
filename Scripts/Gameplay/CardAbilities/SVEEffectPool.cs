@@ -624,6 +624,8 @@ namespace SVESimulator
                     continue;
                 if(!passive.filters.MatchesCard(card) || !passive.MeetsCondition(player))
                     continue;
+                if(minusCostEffect is MinusCostOtherExPassive && !player.ZoneController.exAreaZone.ContainsCard(card))
+                    continue;
 
                 PlayerInfo playerInfo = player ? player.GetPlayerInfo() : card.ownerPlayer;
                 RuntimeCard sourceCard = playerInfo.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == passive.sourceCardInstanceId);

@@ -565,6 +565,7 @@ namespace SVESimulator.SveScript
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
             { "GiveTrait", new EffectParams("AddTraitPassive",                              false, true, EffectParameterType.Trait, EffectParameterType.PassiveDuration) },
             { "MinusCostOther", new EffectParams("MinusCostOtherPassive",                   false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
+            { "MinusCostOtherEx", new EffectParams("MinusCostOtherExPassive",               false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
         };
 
         #endregion
