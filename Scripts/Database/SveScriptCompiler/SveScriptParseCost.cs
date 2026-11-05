@@ -117,7 +117,8 @@ namespace SVESimulator.SveScript
 
                     // Other Costs
                     case "OncePerTurn":
-                        newCost.Add("$type", $"SVESimulator.OncePerTurnCost");
+                    case "TwicePerTurn":
+                        newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
                         break;
                     case "Quick":
                         newCost.Add("$type", $"SVESimulator.QuickEffectAsCost");
