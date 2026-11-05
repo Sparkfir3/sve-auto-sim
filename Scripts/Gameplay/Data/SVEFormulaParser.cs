@@ -454,9 +454,8 @@ namespace SVESimulator
                 ? cardList.Count()
                 : cardList.Count(x =>
                 {
-                    CardObject card = CardManager.Instance.GetCardByInstanceId(x.instanceId);
-                    Debug.Assert(card);
-                    return card && filter.MatchesCard(card);
+                    RuntimeCard card = CardManager.Instance.GetRuntimeCardByInstanceId(x.instanceId);
+                    return filter.MatchesCard(card);
                 });
         }
 

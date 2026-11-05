@@ -22,6 +22,8 @@ namespace SVESimulator
         private SelectionMode currentMode;
         [TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         private List<CardObject> currentSelectedCards = new();
+        [TitleGroup("Runtime Data")]
+        public bool alwaysAllowDeselect = false;
         [TitleGroup("Runtime Data"), SerializeField]
         private int minSlotCount;
         [TitleGroup("Runtime Data"), SerializeField]
@@ -84,6 +86,7 @@ namespace SVESimulator
         public SelectionMode CurrentMode => currentMode;
         public float SlotScale => slotScale;
 
+        public event Action OnUpdateSelection;
         public Action<CardSelectionArea> UpdateActionButtonOverride;
 
         #endregion
@@ -194,8 +197,10 @@ namespace SVESimulator
 
             DeselectAllCards();
             SetFilter("");
+            alwaysAllowDeselect = false;
             scrollRect.onValueChanged.RemoveListener(ScrollSelectionArea);
             OnDisableZone();
+            OnUpdateSelection = null;
             UpdateActionButtonOverride = null;
             gameObject.SetActive(false);
         }
@@ -495,7 +500,7 @@ namespace SVESimulator
                 if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card))
                 {
                     // deselect for XOR filter - bypass filter (it fails normal filter match because it checks against itself inside the filter)
-                    if((currentFilter?.HasExclusiveOr() ?? false) && currentSelectedCards.Contains(card))
+                    if((alwaysAllowDeselect || (currentFilter?.HasExclusiveOr() ?? false)) && currentSelectedCards.Contains(card))
                         ToggleCardSelection(card);
                     // regular toggle selection
                     else if(currentFilter.MatchesCard(card))
@@ -724,6 +729,7 @@ namespace SVESimulator
             }
             if(filterUpdated)
                 OnUpdateFilter();
+            OnUpdateSelection?.Invoke();
         }
 
         #endregion

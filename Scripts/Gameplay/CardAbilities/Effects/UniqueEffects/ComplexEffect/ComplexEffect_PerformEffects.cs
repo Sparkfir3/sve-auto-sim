@@ -93,7 +93,7 @@ namespace SVESimulator
 
         #region Effect Cost
 
-        private async Task<CE_Object> PayEffectCost(string effectName)
+        private async Task<CE_Object> PayEffectCost(string effectName, bool exitOnDecline)
         {
             // Init
             CardObject card = CardManager.Instance.GetCardByInstanceId(sourceInstanceId);
@@ -107,6 +107,7 @@ namespace SVESimulator
 
             // Select pay or decline
             bool waiting = false;
+            bool declined = false;
             if(costs != null && !costs.Any(x => x is IgnorePromptAsCost))
             {
                 waiting = true;
@@ -123,7 +124,8 @@ namespace SVESimulator
                         text = "Decline",
                         onSelect = () =>
                         {
-                            forceExit = true;
+                            forceExit = exitOnDecline;
+                            declined = true;
                             waiting = false;
                         }
                     },
@@ -133,7 +135,7 @@ namespace SVESimulator
                 while(waiting && !BreakCondition)
                     await Task.Yield();
             }
-            if(forceExit)
+            if(declined || forceExit)
                 return null;
 
             // Pay cost

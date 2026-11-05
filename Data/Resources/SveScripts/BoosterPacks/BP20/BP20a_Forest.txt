@@ -1,0 +1,392 @@
+name Izudia, Annihilation Manifest;
+id BP20-001;
+class Forest;
+type Follower;
+trait Omen / Hunter;
+rarity L;
+cost 4;
+stats 3/5;
+
+text "[fanfare] Search your deck for an Omen–Hunter spell that costs 2 or less, reveal it, add it to your hand, then shuffle. If there are at least 6 Hunter cards in your cemetery, put an Annihilating Onslaught token into your EX area.
+      [act] [cost00]: The next Omen–Hunter card you play this turn costs 2 less. Activate only once per turn.";
+
+ability Fanfare {
+    effect Sequence(Search, Token);
+}
+ability Spell name Search {
+    effect Search(1, St(Omen / Hunter)p(m(0,2)), Hand);
+}
+ability Spell name Token {
+    condition y(t(Hunter))>5;
+    effect SummonToken(Annihilating Onslaught, ExArea, 1);
+}
+ability Act {
+    cost (PP, 0), (OncePerTurn);
+    effect MinusCostNextCardEndOfTurn(2, t(Omen / Hunter));
+}
+
+// ------------------------------
+
+name Krulle, Heir to Unkilling;
+id BP20-002;
+class Forest;
+type Follower;
+trait Omen / Heir / Hunter;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] If there are at least 6 Hunter cards in your cemetery, put a Crest: Krulle, Heir to Unkilling token into your EX area and give your leader [defense]+2.";
+
+evolve 1;
+ability Fanfare {
+    condition y(t(Hunter))>5;
+    effect Sequence(Token, Def);
+}
+ability Spell name Token {
+    effect SummonToken("Crest: Krulle, Heir to Unkilling", ExArea, 1);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Krulle, Heir to Unkilling (Evolved);
+id BP20-003;
+class Forest;
+type Evolved Follower;
+trait Omen / Heir / Hunter;
+rarity L;
+stats 4/4;
+
+text "On Evolve - Select an enemy follower on the field and give it [attack]-3/[defense]-3.
+      On Super-Evolve - Give each enemy follower on the field [attack]-3/[defense]-3.";
+
+ability OnEvolve {
+    effect GiveStat(AtkDef, -3) to TargetOpponentCard F;
+}
+ability OnSuperEvolve {
+    effect GiveStat(AtkDef, -3) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Plumeria, Serene Goddess;
+id BP20-004;
+class Forest;
+type Follower;
+trait Verdant;
+rarity L;
+cost 1;
+stats 1/1;
+
+text "[fanfare] If there are at least 3 Verdant cards in your cemetery, draw a card.
+      Once per turn, when a Verdant follower on your field that costs 5 or less evolves, give it Storm.";
+
+ability Fanfare {
+    condition y(t(Verdant))>2;
+    effect Draw(1);
+}
+ability OnOtherEvolve {
+    cost (OncePerTurn);
+    filter t(Verdant)p(m(0,5));
+    effect GiveKeyword(Storm) to TriggerCard;
+}
+
+// ------------------------------
+
+name Windbloom Sylph;
+id BP20-005;
+class Forest;
+type Follower;
+trait Fae-Touched;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      Whenever you play a Fae-Touched card, give your leader [defense]+1.";
+
+evolve 1;
+ability OnPlayCard {
+    filter t(Fae-Touched);
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Windbloom Sylph (Evolved);
+id BP20-006;
+class Forest;
+type Evolved Follower;
+trait Fae-Touched;
+rarity G;
+stats 3/3;
+
+text "On Evolve - Search your deck for a Fae-Touched card not named Windbloom Sylph, reveal it, add it to your hand, then shuffle.
+      Whenever you play a Fae-Touched card, give your leader [defense]+1.";
+
+ability OnEvolve {
+    effect Search(1, t(Fae-Touched)!n(Windbloom Sylph), Hand);
+}
+ability OnPlayCard {
+    filter t(Fae-Touched);
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Congregant of Unkilling;
+id BP20-007;
+class Forest;
+type Follower;
+trait Omen / Hunter;
+rarity G;
+cost 4;
+stats 3/3;
+
+text "Ward.
+      [fanfare] Search your deck for an Omen–Hunter follower that costs 3 or less, summon it, then shuffle.";
+
+keyword Ward;
+ability Fanfare {
+    effect Search(1, Ft(Omen / Hunter)p(m(0,3)), Field);
+}
+
+// ------------------------------
+
+name Eradicating Arrow;
+id BP20-008;
+class Forest;
+type Spell;
+trait Omen / Hunter;
+rarity G;
+cost 2;
+
+text "Select up to 2 enemy followers on the field and deal them 2 damage. If there are at least 6 Hunter cards in your cemetery, deal 3 damage instead and deal 2 damage to each enemy leader.";
+
+ability Spell {
+    effect Sequence(Followers, Leader);
+}
+ability Spell name Followers {
+    effect DealDamage(2?(y(t(Hunter)>5))3) to TargetOpponentCard Fm(0,2);
+}
+ability Spell name Leader {
+    condition y(t(Hunter)>5);
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Supplicant of Unkilling;
+id BP20-009;
+class Forest;
+type Follower;
+trait Omen / Hunter;
+rarity S;
+cost 1;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] If there's an enemy follower on the field with 1 defense, draw a card.";
+
+evolve 1;
+ability Fanfare {
+    condition p(Fd(1));
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Supplicant of Unkilling (Evolved);
+id BP20-010;
+class Forest;
+type Evolved Follower;
+trait Omen / Hunter;
+rarity S;
+stats 2/2;
+
+text "On Evolve - If there's an enemy follower on the field with 1 defense, give your leader [defense]+2.";
+
+ability OnEvolve {
+    condition p(Fd(1));
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Greatwood Warrior;
+id BP20-011;
+class Forest;
+type Follower;
+trait Hunter;
+rarity S;
+cost 4;
+stats 4/4;
+
+text "[fanfare] Search your deck for up to 2 [forestcraft] spells with different names, reveal them, add them to your hand, then shuffle.";
+
+ability Fanfare {
+    effect Search(2, Sc(Forest)n^, Hand);
+}
+
+// ------------------------------
+
+name Hamlet of Unkilling;
+id BP20-012;
+class Forest;
+type Amulet;
+trait Omen / Hunter;
+rarity S;
+cost 1;
+
+text "[fanfare] Look at the top 2 cards of your deck. You may reveal an Omen–Hunter card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [act] [engage], bury this: Give your leader [defense]+1. Activate only if there are at least 3 Hunter cards in your cemetery.";
+
+ability Fanfare {
+    effect CheckTop(2, (Hand, t(Omen / Hunter), 1), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    condition y(t(Hunter))>2;
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Bearer of the Fairy Blade;
+id BP20-013;
+class Forest;
+type Follower;
+trait Elf / Fae-Touched;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Put a Fairy token into your EX area.
+      Whenever a Pixie token follower is put onto your field, give it [attack]+1.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken(Fairy, ExArea, 1);
+}
+ability OnOtherEnterField {
+    filter FKt(Pixie);
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Bearer of the Fairy Blade (Evolved);
+id BP20-014;
+class Forest;
+type Evolved Follower;
+trait Elf / Fae-Touched;
+rarity B;
+stats 3/3;
+
+text "On Evolve - Select an enemy follower on the field and deal it 2 damage.
+      Whenever a Pixie token follower is put onto your field, give it [attack]+1.";
+
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability OnOtherEnterField {
+    filter FKt(Pixie);
+    effect GiveStat(Atk, 1) to TriggerCard;
+}
+
+// ------------------------------
+
+name Devotee of Unkilling;
+id BP20-015;
+class Forest;
+type Follower;
+trait Omen / Hunter;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Discard an Omen–Hunter card: Draw 2 cards.";
+
+ability Fanfare {
+    cost (Discard, 1, t(Omen / Hunter));
+    effect Draw(2);
+}
+
+// ------------------------------
+
+name Ageless Bystander;
+id BP20-016;
+class Forest;
+type Follower;
+trait Elf;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Put a Fairy Wisp token into your EX area.";
+
+ability Fanfare {
+    effect SummonToken(Fairy Wisp, ExArea, 1);
+}
+
+// ------------------------------
+
+name Cutie Cat;
+id BP20-017;
+class Forest;
+type Follower;
+trait Beast;
+rarity B;
+cost 5;
+stats 4/4;
+
+text "Storm.
+      Strike - Select an enemy follower on the field and deal it 4 damage.";
+
+keyword Storm;
+ability Strike {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Bestial Swipe;
+id BP20-018;
+class Forest;
+type Spell;
+trait Beast;
+rarity B;
+cost 2;
+
+text "As an additional cost to play this, you may discard a Beast card.
+      ----------
+      Select an enemy follower on the field and deal it 3 damage. If you paid this card's additional cost, deal 5 damage instead and draw a card.";
+
+ability Spell {
+    condition p(#F);
+    effect ComplexEffect(
+        let paid = mayPayCost(AdditionalCost).movedCardsCount
+        performIf paid then Sequence else Damage3
+    );
+}
+ability Spell name Damage3 {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name AdditionalCost {
+    cost (Discard, 1, t(Beast));
+    effect Sequence();
+}
+ability Spell name Sequence {
+    effect Sequence(Damage5, Draw);
+}
+ability Spell name Damage5 {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Draw {
+    effect DrawCard(1);
+}

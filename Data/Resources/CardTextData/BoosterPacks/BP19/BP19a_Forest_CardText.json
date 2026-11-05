@@ -1,0 +1,270 @@
+[
+  {
+    "id": "BP19-001EN",
+    "name": "Magachiyo, Barbed Convict",
+    "trait": "Condemned / Elf / Princess",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP19-002EN",
+    "name": "Magachiyo, Barbed Convict (Evolved)",
+    "trait": "Condemned / Elf / Princess",
+    "cardText": "Storm.\nOn Evolve - Select an enemy follower on the field. Combo (3) - Deal it 4 damage.\nOn Super-Evolve - Give each other Condemned follower on your field Storm.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field. Combo (3) - Deal it 4 damage."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Give each other Condemned follower on your field Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP19-003EN",
+    "name": "Wimael, Redolent Enforcer",
+    "trait": "Condemned / Verdant / Insect",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 4 damage.\n[lastwords] Put this onto its owner's field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this onto its owner's field."
+      }
+    ]
+  },
+  {
+    "id": "BP19-004EN",
+    "name": "Zwei, Symphonic Heart",
+    "trait": "Puppetry / Cutthroat",
+    "cardText": "[fanfare] Banish 2 cards named Puppet from your EX area: Put a Victoria token into your EX area.\n[act] [engage]: Select up to 2 cards on your field named Puppet and give them [attack]+1/[defense]+1. Activate only if there are at least 3 Puppetry cards in your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Banish 2 cards named Puppet from your EX area",
+        "body": "Put a Victoria token into your EX area."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select up to 2 cards on your field named Puppet and give them [attack]+1/[defense]+1. Activate only if there are at least 3 Puppetry cards in your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP19-005EN",
+    "name": "Verdant Lieutenant",
+    "trait": "Condemned / Elf",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWhenever a Condemned follower on your field evolves, Combo (3) - Draw a card.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever a Condemned follower on your field evolves, Combo (3) - Draw a card.",
+        "trigger": "Whenever a Condemned follower on your field evolves,",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-006EN",
+    "name": "Verdant Lieutenant (Evolved)",
+    "trait": "Condemned / Elf",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 2 damage.\nWhenever a Condemned follower on your field evolves, Combo (3) - Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever a Condemned follower on your field evolves, Combo (3) - Draw a card.",
+        "trigger": "Whenever a Condemned follower on your field evolves,",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-007EN",
+    "name": "Warden of Balms",
+    "trait": "Condemned / Verdant / Insect",
+    "cardText": "Ward.\n[fanfare]/[lastwords] Deal 3 damage to each enemy leader.\n[act] Discard this: Select a Condemned follower on your field. Destroy it, deal 1 damage to each enemy leader, and draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": " Deal 3 damage to each enemy leader."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": " Deal 3 damage to each enemy leader."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "Discard this",
+        "body": "Select a Condemned follower on your field. Destroy it, deal 1 damage to each enemy leader, and draw a card."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select a Condemned follower on your field. Destroy it, deal 1 damage to each enemy leader, and draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-008EN",
+    "name": "Synchronous Hearts",
+    "trait": "Puppetry / Cutthroat",
+    "cardText": "Search your deck for a follower with \"Orchis\" in its name that costs 3 or less and a follower with \"Zwei\" in its name that costs 3 or less, summon them, then shuffle. Put 2 Puppet tokens into your EX area.",
+    "effectText": [
+      {
+        "key": "Search",
+        "body": "Search your deck for a follower with \"Orchis\" in its name that costs 3 or less and a follower with \"Zwei\" in its name that costs 3 or less, summon them, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP19-009EN",
+    "name": "Budding Initiate",
+    "trait": "Condemned / Elf",
+    "cardText": "[evolve] [cost02]: Evolve this.\n[fanfare] Combo (3) - Evolve this.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Combo (3) - Evolve this."
+      }
+    ]
+  },
+  {
+    "id": "BP19-010EN",
+    "name": "Budding Initiate (Evolved)",
+    "trait": "Condemned / Elf",
+    "cardText": "On Evolve - Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP19-011EN",
+    "name": "Leafshade Assassin",
+    "trait": "Condemned / Elf",
+    "cardText": "Whenever a Condemned follower on your field evolves, Combo (3) - Select an enemy follower on the field and deal it 3 damage.\n[fanfare] The next Condemned card you play this turn costs 1 less.",
+    "effectText": [
+      {
+        "key": "OnOtherEvolve",
+        "text": "Whenever a Condemned follower on your field evolves, Combo (3) - Select an enemy follower on the field and deal it 3 damage.",
+        "trigger": "Whenever a Condemned follower on your field evolves,",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "The next Condemned card you play this turn costs 1 less."
+      }
+    ]
+  },
+  {
+    "id": "BP19-012EN",
+    "name": "Puppet Workout",
+    "trait": "Puppetry",
+    "cardText": "Summon 2 Puppet tokens. Give each Puppetry token follower on your field [attack]+2 and Assail."
+  },
+  {
+    "id": "BP19-013EN",
+    "name": "Beast Lancer",
+    "trait": "Beast",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-014EN",
+    "name": "Beast Lancer (Evolved)",
+    "trait": "Beast",
+    "cardText": "Ward.\nOn Evolve - Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-015EN",
+    "name": "Merchant of the Wood",
+    "trait": "Merchant / Beast",
+    "cardText": "Rush.\n[fanfare] Draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw 2 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP19-016EN",
+    "name": "Rogue Puppeteer",
+    "trait": "Puppetry",
+    "cardText": "[fanfare] Discard a Puppetry card: Draw a card. Put 2 Puppet tokens into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a Puppetry card",
+        "body": "Draw a card. Put 2 Puppet tokens into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-017EN",
+    "name": "Support Troop Elf",
+    "trait": "Elf",
+    "cardText": "Rush.\n[fanfare] Select a card on your field not named Support Troop Elf and return it to its owner's hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a card on your field not named Support Troop Elf and return it to its owner's hand."
+      }
+    ]
+  },
+  {
+    "id": "BP19-018EN",
+    "name": "Galepierce",
+    "trait": "Elf",
+    "cardText": "Return a card on your field to its owner's hand: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader.",
+    "effectText": [
+      {
+        "key": "ReturnToHand",
+        "body": "Return a card on your field to its owner's hand: Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader."
+      },
+      {
+        "key": "Follower",
+        "body": "Select an enemy follower on the field. Deal 6 damage to it and 2 damage to its leader."
+      }
+    ]
+  }
+]

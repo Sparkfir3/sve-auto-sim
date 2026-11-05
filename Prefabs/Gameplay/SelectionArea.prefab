@@ -332,6 +332,7 @@ MonoBehaviour:
   gizmoRadius: 0.25
   currentMode: 0
   currentSelectedCards: []
+  alwaysAllowDeselect: 0
   minSlotCount: 0
   maxSlotCount: 0
   minSelectCount: 0

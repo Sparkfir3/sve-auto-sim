@@ -91,6 +91,7 @@ namespace SVESimulator
     public class SveOnRaceTrigger : SveTrigger { }
     public class SveOnOtherRaceTrigger : SveTriggerWithFilter { }
 
+    public class SveOnPlayCardTrigger : SveTriggerWithFilter { }
     public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
 
     #endregion

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CCGKit;
 using Mirror;
 using UnityEngine;
 
@@ -43,6 +44,17 @@ namespace SVESimulator
             CardsEvolvedThisTurn.Clear();
             CardsLeftFieldThisTurn.Clear();
             CardsReturnedToHandFromField.Clear();
+        }
+
+        // ------------------------------
+
+        public int CardsPlayedThisTurnWithFilter(Dictionary<SVEFormulaParser.CardFilterSetting, string> filter)
+        {
+            return CardsPlayedThisTurn.Count(x =>
+            {
+                RuntimeCard card = CardManager.Instance.GetRuntimeCardByInstanceId(x.instanceId);
+                return filter.MatchesCard(card);
+            });
         }
 
         // ------------------------------

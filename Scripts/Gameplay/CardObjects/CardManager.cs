@@ -42,6 +42,8 @@ namespace SVESimulator
 
         public static CardAnimationController Animator => Instance.cardAnimator;
 
+        private Dictionary<int, RuntimeCard> runtimeCardsByInstanceId = new();
+
         #endregion
 
         // ------------------------------
@@ -71,6 +73,7 @@ namespace SVESimulator
             }
             SetCardTexture(newCard.card);
             cardsByInstanceId.Add(runtimeCard.instanceId, newCard.card);
+            runtimeCardsByInstanceId[runtimeCard.instanceId] = runtimeCard;
             return newCard.card;
         }
 
@@ -134,6 +137,11 @@ namespace SVESimulator
             return cardsByInstanceId.GetValueOrDefault(instanceId, null);
         }
 
+        public RuntimeCard GetRuntimeCardByInstanceId(int instanceId)
+        {
+            return runtimeCardsByInstanceId.GetValueOrDefault(instanceId, null);
+        }
+
         public bool TryGetKeywordIconData(int keywordValue, out KeywordIcon.KeywordIconData data)
         {
             return keywordIcons.TryGetValue(keywordValue, out data);
@@ -155,6 +163,7 @@ namespace SVESimulator
                 pooledCard.card.gameObject.SetActive(false);
             }
             cardsByInstanceId.Clear();
+            runtimeCardsByInstanceId.Clear();
             StartCoroutine(InitializeCardPool());
         }
 

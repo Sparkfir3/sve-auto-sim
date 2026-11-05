@@ -25,7 +25,7 @@ ability Spell name Draw {
 }
 ability Act {
     cost (OncePerTurn), (Quick), (EarthRite);
-    effect MinusCostNextSpellEndOfTurn(4);
+    effect MinusCostNextCardEndOfTurn(4, S);
 }
 
 // ------------------------------

@@ -16,6 +16,8 @@ namespace SVESimulator
         [NonSerialized]
         private string triggerZone, sourceZone;
 
+        public virtual bool UseEvolveForTurn => true;
+
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
