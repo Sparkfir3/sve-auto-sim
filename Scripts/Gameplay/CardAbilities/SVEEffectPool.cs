@@ -218,6 +218,8 @@ namespace SVESimulator
         public void RegisterPassiveAbility(RegisteredPassiveAbility passive)
         {
             registeredPassives.Add(passive);
+            if(passive.effect.duration == SVEProperties.PassiveDuration.PlayerTurn && !localPlayer.isActivePlayer)
+                return;
             if(passive.effect.duration == SVEProperties.PassiveDuration.OpponentTurn && localPlayer.isActivePlayer)
                 return;
             OnNextConfirmationTimingStartOrEnd += () => EnablePassive(passive, localPlayer);
@@ -540,7 +542,8 @@ namespace SVESimulator
 
                 foreach(RegisteredPassiveAbility registeredPassive in registeredPassives)
                 {
-                    if((registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
+                    if((registeredPassive.duration == SVEProperties.PassiveDuration.PlayerTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == !localPlayer.isActivePlayer)
+                       || (registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
                        || (registeredPassive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != registeredPassive.sourceCardInstanceId)
                        || registeredPassive.effect is MinusCostOtherPassive
                        || !registeredPassive.filters.MatchesCard(card)
@@ -571,6 +574,7 @@ namespace SVESimulator
                 if(passive.condition.IsNullOrWhiteSpace())
                     continue;
                 bool meetsCondition = passive.MeetsCondition(localPlayer)
+                    && (passive.duration != SVEProperties.PassiveDuration.PlayerTurn || !localPlayer.isActivePlayer)
                     && (passive.duration != SVEProperties.PassiveDuration.OpponentTurn || localPlayer.isActivePlayer);
 
                 if(meetsCondition && passive.affectedCards.Count == 0)
@@ -589,6 +593,12 @@ namespace SVESimulator
                 {
                     case SVEProperties.PassiveDuration.WhileOnField:
                         continue;
+                    case SVEProperties.PassiveDuration.PlayerTurn:
+                        if(!isTurnPlayer)
+                            DisablePassive(passive);
+                        else
+                            EnablePassive(passive, player);
+                        break;
                     case SVEProperties.PassiveDuration.OpponentTurn:
                         if(isTurnPlayer)
                             DisablePassive(passive);
