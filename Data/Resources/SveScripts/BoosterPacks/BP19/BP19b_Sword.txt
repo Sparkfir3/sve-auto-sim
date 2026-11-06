@@ -46,7 +46,10 @@ ability Spell name Destroy {
 }
 ability Spell name Bury {
     cost (OncePerTurn);
-    effect Mill(2) to Opponent;
+    effect OpponentPerformEffect(OpponentBury);
+}
+ability Spell name OpponentBury {
+    effect Mill(2);
 }
 ability Spell name PlayPoints {
     cost (OncePerTurn);

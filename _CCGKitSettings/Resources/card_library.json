@@ -60945,6 +60945,19 @@
             "name": "Bury",
             "type": "Triggered",
             "effect": {
+              "target": "Self",
+              "effectName": "OpponentBury",
+              "$type": "SVESimulator.OpponentPerformEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "OpponentBury",
+            "type": "Triggered",
+            "effect": {
               "amount": "2",
               "$type": "SVESimulator.MillDeckEffect"
             },
