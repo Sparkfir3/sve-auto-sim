@@ -1352,6 +1352,7 @@ namespace SVESimulator
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
                 string cardOriginZone = card.CurrentZone.Runtime.name;
                 List<MoveCardToZoneData> cardsToMove = new(); // TODO - compress these lists into a container class
+                List<MoveCardToZoneData> fusedCards = new();
                 List<RemoveCounterData> countersToRemove = new();
                 List<int> cardInstanceIdsToEngage = new();
                 foreach(Cost cost in costs)
@@ -1363,6 +1364,8 @@ namespace SVESimulator
                         yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, abilityName, countersToRemove));
                     else if(sveCost is EngageCardCost engageCardCost)
                         yield return StartCoroutine(engageCardCost.PayCost(playerController, card, abilityName, cardInstanceIdsToEngage));
+                    else if(sveCost is FuseCost fuseCost)
+                        yield return StartCoroutine(fuseCost.PayCost(playerController, card, abilityName, fusedCards));
                     else
                         yield return StartCoroutine(sveCost.PayCost(playerController, card, abilityName, cardsToMove));
                 }
@@ -1385,7 +1388,7 @@ namespace SVESimulator
                 }
 
                 // Resolve paying cost
-                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
+                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), fusedCards.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
 
                 LocalPayEffectCostMessage msg = new()
                 {
@@ -1394,6 +1397,7 @@ namespace SVESimulator
                     originZone = cardOriginZone,
                     abilityName = abilityName,
                     cardsMoveToZoneData = cardsToMove.ToArray(),
+                    fusedCardsData = fusedCards.ToArray(),
                     countersToRemove = countersToRemove.ToArray(),
                     cardInstanceIdsToEngage = cardInstanceIdsToEngage.ToArray()
                 };

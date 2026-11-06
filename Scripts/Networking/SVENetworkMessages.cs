@@ -632,6 +632,7 @@ namespace SVESimulator
         public string originZone;
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
+        public MoveCardToZoneData[] fusedCardsData;
         public RemoveCounterData[] countersToRemove;
         public int[] cardInstanceIdsToEngage;
     }
@@ -643,6 +644,7 @@ namespace SVESimulator
         public string originZone;
         public string abilityName;
         public MoveCardToZoneData[] cardsMoveToZoneData;
+        public MoveCardToZoneData[] fusedCardsData;
         public RemoveCounterData[] countersToRemove;
         public int[] cardInstanceIdsToEngage;
         public NetCard[] additionalNetCardData; // extra data needed to initialize cards from non-public zones like the deck

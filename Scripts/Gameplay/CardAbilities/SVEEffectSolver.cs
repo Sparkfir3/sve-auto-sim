@@ -787,8 +787,8 @@ namespace SVESimulator
 
         #region Effect Costs
 
-        public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, RemoveCounterData[] countersToRemove,
-            int[] cardInstanceIdsToEngage, List<RuntimeCard> additionalRuntimeCardData = null)
+        public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, MoveCardToZoneData[] fusedCards,
+            RemoveCounterData[] countersToRemove, int[] cardInstanceIdsToEngage, List<RuntimeCard> additionalRuntimeCardData = null)
         {
             foreach(Cost cost in costs)
             {
@@ -809,24 +809,27 @@ namespace SVESimulator
                 }
             }
 
-            for(int i = 0; i < cardsMoveToZone.Length; i++)
+            // Move cards (move data + fuse)
+            MoveCardToZoneData[] cardsToMove = cardsMoveToZone.Concat(fusedCards).ToArray();
+            for(int i = 0; i < cardsToMove.Length; i++)
             {
-                RuntimeCard cardToMove = player.namedZones[cardsMoveToZone[i].startZone].cards.FirstOrDefault(x => x.instanceId == cardsMoveToZone[i].cardInstanceId);
-                cardToMove ??= additionalRuntimeCardData?.FirstOrDefault(x => x.instanceId == cardsMoveToZone[i].cardInstanceId);
-                switch(cardsMoveToZone[i].endZone)
+                RuntimeCard cardToMove = player.namedZones[cardsToMove[i].startZone].cards.FirstOrDefault(x => x.instanceId == cardsToMove[i].cardInstanceId);
+                cardToMove ??= additionalRuntimeCardData?.FirstOrDefault(x => x.instanceId == cardsToMove[i].cardInstanceId);
+                switch(cardsToMove[i].endZone)
                 {
                     case SVEProperties.Zones.Cemetery:
-                        SendToCemetery(player.netId, cardToMove, cardsMoveToZone[i].startZone);
+                        SendToCemetery(player.netId, cardToMove, cardsToMove[i].startZone);
                         break;
                     case SVEProperties.Zones.Banished:
-                        BanishCard(player.netId, cardToMove, cardsMoveToZone[i].startZone);
+                        BanishCard(player.netId, cardToMove, cardsToMove[i].startZone);
                         break;
                     case SVEProperties.Zones.Hand:
-                        ReturnCardToHand(player, cardToMove, cardsMoveToZone[i].startZone);
+                        ReturnCardToHand(player, cardToMove, cardsToMove[i].startZone);
                         break;
                 }
             }
 
+            // Counters
             for(int i = 0; i < countersToRemove.Length; i++)
             {
                 RuntimeCard targetCard = player.namedZones[countersToRemove[i].cardZone].cards.FirstOrDefault(x => x.instanceId == countersToRemove[i].cardInstanceId);
@@ -834,10 +837,19 @@ namespace SVESimulator
                 targetCard.SetCounterAmount((SVEProperties.Counters)countersToRemove[i].keywordType, targetAmount);
             }
 
+            // Engage
             for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
             {
                 RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
                 EngageCard(targetCard);
+            }
+
+            // Effect triggers
+            if(isPlayerEffectSolver && player.netId.isLocalPlayer)
+            {
+                List<RuntimeCard> fusedRuntimeCards = fusedCards.Select(x => CardManager.Instance.GetRuntimeCardByInstanceId(x.cardInstanceId)).ToList();
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, SVEProperties.Zones.Field,
+                    player.namedZones[SVEProperties.Zones.Field], player, x => fusedRuntimeCards.Any(x.MatchesFilter), false);
             }
         }
 
