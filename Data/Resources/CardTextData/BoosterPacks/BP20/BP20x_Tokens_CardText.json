@@ -17,10 +17,14 @@
     "id": "BP20-T02EN",
     "name": "Crest: Octrice, Hollowness Manifest",
     "trait": "Omen / Thief / Token",
-    "cardText": "NOT FULLY IMPLEMENTED\nAt the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle.",
+    "cardText": "At the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle.",
     "effectText": [
       {
         "key": "StartMainPhaseFromExArea",
+        "body": "At the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "OnPlayOrFuse",
         "body": "At the start of your main phase or whenever you play or fuse a Loot card, place a reversal counter on this. Then, if this has at least 8 reversal counters, banish it, search your deck for a Thief card, reveal it, add it to your hand, then shuffle."
       },
       {

@@ -1,0 +1,321 @@
+[
+  {
+    "id": "BP20-019EN",
+    "name": "Octrice, Hollowness Manifest",
+    "trait": "Omen / Thief",
+    "cardText": "Whenever you play or fuse a Loot card, give this Storm.\n[fanfare] Choose 1. (1) Put a Crest: Octrice, Hollowness Manifest token into your EX area. (2) Search your deck for a Returning Slash, reveal it, add it to your hand, then shuffle.",
+    "effectText": [
+      {
+        "key": "OnPlayCard",
+        "text": "Whenever you play or fuse a Loot card, give this Storm.",
+        "trigger": "Whenever you play or fuse a Loot card,",
+        "body": "Give this Storm."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Put a Crest: Octrice, Hollowness Manifest token into your EX area. (2) Search your deck for a Returning Slash, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "Crest",
+        "body": "Put a Crest: Octrice, Hollowness Manifest token into your EX area."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a Returning Slash, reveal it, add it to your hand, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-020EN",
+    "name": "Sinciro, Heir to Usurpation",
+    "trait": "Omen / Heir / Thief",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If this has a fusion counter, draw a card. If not, put a Gilded Blade token into your EX area.\n[act] Fuse X Loot cards that cost 1 or more: Place X fusion counters on this. X must be 2 or less.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If this has a fusion counter, draw a card. If not, put a Gilded Blade token into your EX area."
+      },
+      {
+        "key": "ActFromHand",
+        "text": "Fuse X Loot cards that cost 1 or more",
+        "trigger": "[act]",
+        "cost": "",
+        "body": "Place X fusion counters on this. X must be 2 or less."
+      }
+    ]
+  },
+  {
+    "id": "BP20-021EN",
+    "name": "Sinciro, Heir to Usurpation (Evolved)",
+    "trait": "Omen / Heir / Thief",
+    "cardText": "NOT FULLY IMPLEMENTED\nIf this would deal ability damage, it deals that much +2 for every fusion counter on it instead.\nOn Evolve - Select an enemy follower on the field and deal it 3 damage.\nOn Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Deal 1 damage to each enemy leader and enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP20-022EN",
+    "name": "Aurelia, Glorious Saber",
+    "trait": "Commander / Princess",
+    "cardText": "This costs X less to play. X equals the number of [swordcraft] cards on your field.\n----------\nRush. Assail. Ward.\nStrike - Draw a card.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-023EN",
+    "name": "Congregant of Usurpation",
+    "trait": "Omen / Thief",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP20-024EN",
+    "name": "Congregant of Usurpation (Evolved)",
+    "trait": "Omen / Thief",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 5 damage. The next Loot card you play this turn costs 2 less.\nWhenever an enemy follower is put from the field into the cemetery, put a Gilded Blade, Gilded Goblet, or Gilded Boots token into your EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 5 damage. The next Loot card you play this turn costs 2 less."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      },
+      {
+        "key": "OnOpponentCardFieldToCemetery",
+        "text": "Whenever an enemy follower is put from the field into the cemetery, put a Gilded Blade, Gilded Goblet, or Gilded Boots token into your EX area.",
+        "trigger": "Whenever an enemy follower is put from the field into the cemetery,",
+        "body": "Put a Gilded Blade, Gilded Goblet, or Gilded Boots token into your EX area."
+      },
+      {
+        "key": "Blade",
+        "body": "Gilded Blade"
+      },
+      {
+        "key": "Goblet",
+        "body": "Gilded Goblet"
+      },
+      {
+        "key": "Boots",
+        "body": "Gilded Boots"
+      }
+    ]
+  },
+  {
+    "id": "BP20-025EN",
+    "name": "Fearful Fighter",
+    "trait": "Officer",
+    "cardText": "NOT FULLY IMPLEMENTED\nIntimidate.\n[fanfare] Select up to 2 enemy followers on the field and deal 6 damage divided between them.\nDuring your turn, whenever an enemy follower that took damage this turn from this is put from the field into the cemetery, put the top card of your deck into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "Select up to 2 enemy followers on the field and deal 6 damage divided between them."
+      },
+      {
+        "key": "OnOpponentCardFieldToCemetery",
+        "text": "During your turn, whenever an enemy follower that took damage this turn from this is put from the field into the cemetery, put the top card of your deck into your EX area.",
+        "trigger": "During your turn, whenever an enemy follower that took damage this turn from this is put from the field into the cemetery,",
+        "body": "Put the top card of your deck into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-026EN",
+    "name": "Returning Slash",
+    "trait": "Omen / Thief / Loot",
+    "cardText": "Select an enemy follower on the field. Deal it 4 damage and, if there's a follower on your field with \"Octrice\" in its name, put a Gilded Blade token into your EX area.\n[act] Fuse a Loot card that costs 1 or more: Give this \"This costs 1 less to play.\"",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 4 damage and, if there's a follower on your field with \"Octrice\" in its name, put a Gilded Blade token into your EX area."
+      },
+      {
+        "key": "ActFromHand",
+        "text": "",
+        "trigger": "[act]",
+        "cost": "Fuse a Loot card that costs 1 or more",
+        "body": "Give this \"This costs 1 less to play.\""
+      }
+    ]
+  },
+  {
+    "id": "BP20-027EN",
+    "name": "Peppy Scout",
+    "trait": "Officer",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP20-028EN",
+    "name": "Peppy Scout (Evolved)",
+    "trait": "Officer",
+    "cardText": "On Evolve - Search your deck for an Officer follower that costs 3 or less, summon it, then shuffle.\nOnce per turn, when an Officer follower is put onto your field, draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve - ",
+        "cost": "",
+        "body": "Search your deck for an Officer follower that costs 3 or less, summon it, then shuffle."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Once per turn, when an Officer follower is put onto your field, draw a card.",
+        "trigger": "Once per turn, when an Officer follower is put onto your field,",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-029EN",
+    "name": "Supplicant of Usurpation",
+    "trait": "Omen / Thief",
+    "cardText": "[fanfare] Put a Gilded Goblet token into your EX area.\nOnce per turn, when you play or fuse a Loot card, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Gilded Goblet token into your EX area."
+      },
+      {
+        "key": "OnPlayOrFuse",
+        "text": "Once per turn, when you play or fuse a Loot card, give your leader [defense]+1.",
+        "trigger": "Once per turn, when you play or fuse a Loot card,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-030EN",
+    "name": "Lair of Usurpation",
+    "trait": "Omen / Thief",
+    "cardText": "[act] [engage], remove a fusion counter from this, bury this: Search your deck for up to 3 differently named Omen–Thief followers that cost a total of 8 or less, summon them, then shuffle.\n[act] Fuse 3 Loot cards that cost 1 or more: Place a fusion counter on this.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], remove a fusion counter from this, bury this",
+        "body": "Search your deck for up to 3 differently named Omen–Thief followers that cost a total of 8 or less, summon them, then shuffle."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "Fuse 3 Loot cards that cost 1 or more",
+        "body": "Place a fusion counter on this."
+      }
+    ]
+  },
+  {
+    "id": "BP20-031EN",
+    "name": "Comrade of the Swordmaster",
+    "trait": "Officer",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Search your deck for an Officer follower that costs 2 or less, put it into your EX area, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for an Officer follower that costs 2 or less, put it into your EX area, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-032EN",
+    "name": "Comrade of the Swordmaster (Evolved)",
+    "trait": "Officer",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 4 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-033EN",
+    "name": "Devotee of Usurpation",
+    "trait": "Omen / Thief",
+    "cardText": "Rush.\nWhenever you play or fuse a Loot card, give this Assail.\n[lastwords] Put a Gilded Goblet and Gilded Boots token into your EX area.",
+    "effectText": [
+      {
+        "key": "OnPlayOrFuse",
+        "text": "Whenever you play or fuse a Loot card, give this Assail.",
+        "trigger": "Whenever you play or fuse a Loot card,",
+        "body": "Give this Assail."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put a Gilded Goblet and Gilded Boots token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-034EN",
+    "name": "Mercurial Mercenary",
+    "trait": "Officer",
+    "cardText": "[fanfare] [cost02]: Search your deck for a Mercurial Mercenary, summon it, then shuffle. Give each Mercurial Mercenary on your field [attack]+1/[defense]+1.\n[act] [engage]: Select an enemy follower on the field and deal it damage equal to the number of cards on your field named Mercurial Mercenary.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost02]",
+        "body": "Search your deck for a Mercurial Mercenary, summon it, then shuffle. Give each Mercurial Mercenary on your field [attack]+1/[defense]+1."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a Mercurial Mercenary, summon it, then shuffle."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field and deal it damage equal to the number of cards on your field named Mercurial Mercenary."
+      }
+    ]
+  },
+  {
+    "id": "BP20-035EN",
+    "name": "Palace Knight",
+    "trait": "Officer",
+    "cardText": "[fanfare] Put a Steelclad Knight token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Steelclad Knight token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-036EN",
+    "name": "Shield Bash",
+    "trait": "Officer",
+    "cardText": "Select a follower on your field and give it Assail and, for the rest of this turn, \"This doesn't take damage.\"",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select a follower on your field and give it Assail and, for the rest of this turn, \"This doesn't take damage.\""
+      }
+    ]
+  }
+]
