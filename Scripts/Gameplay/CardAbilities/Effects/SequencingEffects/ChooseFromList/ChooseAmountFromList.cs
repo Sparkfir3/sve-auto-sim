@@ -13,9 +13,6 @@ namespace SVESimulator
         [StringField("Amount", width = 100), Order(11)]
         public string amount;
 
-        private bool _useSkipButton = false;
-        protected override bool ShouldAddSkipButton => _useSkipButton;
-
         // ------------------------------
 
         protected override IEnumerator ResolveCoroutine(List<string> effectList, CardObject cardObject, Card libraryCard, List<Ability> sveAbilities,
@@ -29,7 +26,7 @@ namespace SVESimulator
             while(maxRemaining > 0)
             {
                 bool waiting = true;
-                _useSkipButton = minRemaining <= 0;
+                ShouldAddSkipButton = minRemaining <= 0;
                 yield return SVEEffectPool.Instance.StartCoroutine(base.ResolveCoroutine(remainingEffectList, cardObject, libraryCard, sveAbilities,
                     player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone,
                     onComplete: () => { waiting = false; },
