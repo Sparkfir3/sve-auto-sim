@@ -109,7 +109,7 @@ namespace SVESimulator
                     if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, null as RuntimeCard))
                         break;
                     if(trigger.Costs is { Count: > 0 } &&
-                       trigger.Costs.All(x => x is SveCost { IsInternalCost: true } sveCost && !sveCost.CanPayCost(localPlayer, sourceCard, triggeredAbility.name)))
+                       trigger.Costs.All(x => x is SveCost { IsInternalCost: true } sveCost and not ConditionAsCost && !sveCost.CanPayCost(localPlayer, sourceCard, triggeredAbility.name)))
                         break;
 
                     // Add effect
