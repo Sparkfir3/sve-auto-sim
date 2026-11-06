@@ -53,6 +53,7 @@ namespace SVESimulator.SveScript
             { "OnOtherRace", new EffectTriggerInfo("SVESimulator.SveOnOtherRaceTrigger", TriggerParameterType.Filter) },
             { "OnPlayCard", new EffectTriggerInfo("SVESimulator.SveOnPlayCardTrigger", TriggerParameterType.Filter) },
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
+            { "OnPlayOrFuse", new EffectTriggerInfo("SVESimulator.SveOnPlayCardFuseTrigger", TriggerParameterType.Filter) },
 
             // Combat
             { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger", TriggerParameterType.Filter) },

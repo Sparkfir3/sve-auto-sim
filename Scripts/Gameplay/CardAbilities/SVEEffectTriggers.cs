@@ -95,6 +95,8 @@ namespace SVESimulator
     public class SveOnPlayCardTrigger : SveTriggerWithFilter { }
     public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
 
+    public class SveOnPlayCardOrFuseTrigger : SveTriggerWithFilter { }
+
     #endregion
 
     // ------------------------------
