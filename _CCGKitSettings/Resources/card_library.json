@@ -65406,7 +65406,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"amount\": \"m(0,2)\",\r\n    \"filter\": \"t(Loot)p(1,99)\",\r\n    \"$type\": \"SVESimulator.BanishFromCemeteryCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"amount\": \"m(0,2)\",\r\n    \"filter\": \"t(Loot)p(1,99)\",\r\n    \"$type\": \"SVESimulator.FuseCost\"\r\n  },\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Fuse",
@@ -66139,7 +66139,7 @@
               {
                 "amount": "1",
                 "filter": "t(Loot)p(m(0,99))",
-                "$type": "SVESimulator.BanishFromCemeteryCost"
+                "$type": "SVESimulator.FuseCost"
               }
             ],
             "name": "ActFromHand",
@@ -66341,7 +66341,7 @@
             "type": "Triggered",
             "effect": {
               "amount": "1",
-              "filter": "Ft(Officer)",
+              "filter": "Ft(Officer)p(m(0,3))",
               "searchDeckAction": "Field",
               "$type": "SVESimulator.SearchDeckEffect"
             },
@@ -66565,7 +66565,7 @@
               {
                 "amount": "3",
                 "filter": "t(Loot)p(m(0,99))",
-                "$type": "SVESimulator.BanishFromCemeteryCost"
+                "$type": "SVESimulator.FuseCost"
               }
             ],
             "name": "ActFromHand",

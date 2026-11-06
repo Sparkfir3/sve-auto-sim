@@ -60,7 +60,7 @@ ability ActFromHand {
 	);
 }
 ability Spell name Fuse {
-	cost (FuseCost, m(0,2), t(Loot)p(1,99));
+	cost (FuseCost, m(0,2), t(Loot)p(1,99)), (IgnorePrompt);
 	effect Fuse();
 }
 ability Spell name Counters {
@@ -250,7 +250,7 @@ text "On Evolve - Search your deck for an Officer follower that costs 3 or less,
       Once per turn, when an Officer follower is put onto your field, draw a card.";
 
 ability OnEvolve {
-    effect Search(1, Ft(Officer), Field);
+    effect Search(1, Ft(Officer)p(m(0,3)), Field);
 }
 ability OnOtherEnterField {
     cost (OncePerTurn);

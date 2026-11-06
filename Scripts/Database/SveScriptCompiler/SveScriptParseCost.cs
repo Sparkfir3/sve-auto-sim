@@ -119,7 +119,7 @@ namespace SVESimulator.SveScript
                     case "FuseCost":
                         newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
                         newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
-                        newCost.Add("$type", "SVESimulator.BanishFromCemeteryCost");
+                        newCost.Add("$type", "SVESimulator.FuseCost");
                         break;
 
                     // Cost Properties
