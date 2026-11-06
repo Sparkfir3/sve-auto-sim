@@ -69,6 +69,8 @@ namespace SVESimulator
                     text = effect.text ?? effectName,
                     onSelect = () =>
                     {
+                        // adding to abilities used list required for OncePerTurn checks
+                        player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(cardObject.RuntimeCard.instanceId, cardObject.LibraryCard.id, abilityToResolve.name));
                         // no need for CanPayCost check, this button should be disabled if cost check above failed
                         player.LocalEvents.PayAbilityCosts(cardObject, trigger?.Costs, effectName, () =>
                         {

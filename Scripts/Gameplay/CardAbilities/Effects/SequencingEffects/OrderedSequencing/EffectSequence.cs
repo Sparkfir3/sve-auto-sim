@@ -70,6 +70,8 @@ namespace SVESimulator
                 bool effectDone = false;
                 Action resolveAction = () =>
                 {
+                    // adding to abilities used list required for OncePerTurn checks
+                    player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(cardObject.RuntimeCard.instanceId, cardObject.LibraryCard.id, baseAbility.name));
                     effectToPerform?.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () => { effectDone = true; });
                 };
                 if(!ignoreCosts && trigger?.Costs is { Count: > 0 })
