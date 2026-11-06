@@ -13,7 +13,7 @@ text "[evolve] [cost01]: Evolve this.
 
 evolve 1;
 ability Passive {
-    effect MinusCostOtherEx(1, PlayerTurn) to t(Loot);
+    effect MinusCostOtherEx(1, PlayerTurn) to AllPlayerCards t(Loot);
 }
 ability Fanfare {
     effect SummonToken(Dread Pirate's Flag, ExArea, 1);
@@ -33,7 +33,7 @@ text "During your turn, any Loot card you play from the EX area costs 1 less.
       During your turn, whenever you play a Loot card, choose 1 that you haven't chosen this turn. (1) Select an enemy follower on the field and destroy it. (2) Each opponent buries the top 2 cards of their deck. (3) Recover 2 play points.";
 
 ability Passive {
-    effect MinusCostOtherEx(1, PlayerTurn) to t(Loot);
+    effect MinusCostOtherEx(1, PlayerTurn) to AllPlayerCards t(Loot);
 }
 ability OnPlayCard {
     filter t(Loot);
@@ -70,11 +70,11 @@ text "Storm. Ward.
 
 keywords Storm, Ward;
 ability Fanfare {
-    condition [f(c(Sword))+x(c(Sword))]>4;
+    condition [f(Fc(Sword))+x(Fc(Sword))]>4;
     effect Banish() to AllOpponentCards F;
 }
 ability Strike {
-    condition [f(c(Sword))+x(c(Sword))]>9;
+    condition [f(Fc(Sword))+x(Fc(Sword))]>9;
     cost (TwicePerTurn);
     effect Refresh() to Self;
 }
@@ -98,7 +98,7 @@ ability Fanfare {
     effect Sequence(ChooseTokens, Evolve);
 }
 ability Spell name ChooseTokens {
-    effect ChooseFromList(2, Steelclad, Knight);
+    effect ChooseAmountFromList(2, Steelclad, Knight);
 }
 ability Spell name Steelclad {
     effect SummonToken(Steelclad Knight, Field, 1);
@@ -296,7 +296,7 @@ ability Spell {
     effect CemeteryToExAreaAndTarget(1, Ft(Officer), AtkDef);
 }
 ability Spell name AtkDef {
-    effect GiveStat(AtkDef, 1) to AllPlayerCards;
+    effect GiveStat(AtkDef, 1) to AllPlayerCardsEx;
 }
 
 // ------------------------------
@@ -350,7 +350,7 @@ class Sword;
 type Follower;
 trait Officer / Thief;
 rarity B;
-cost 2;
+cost 1;
 stats 1/2;
 
 text "Rush.
@@ -358,7 +358,7 @@ text "Rush.
 
 keyword Rush;
 ability LastWords {
-    effect SummonToken(Gilded Blade, ExArea, 2);
+    effect SummonToken(Gilded Blade, ExArea, 1);
 }
 
 // ------------------------------
@@ -433,5 +433,5 @@ ability Spell name Knight {
     effect SummonToken(Knight, Field, 1);
 }
 ability Spell name Damage {
-    effect DealDamage(Fc(Sword)) to TargetOpponentCard F;
+    effect DealDamage(f(Fc(Sword))) to AllOpponentCards;
 }

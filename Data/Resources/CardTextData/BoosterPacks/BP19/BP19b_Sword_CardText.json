@@ -28,7 +28,7 @@
       },
       {
         "key": "Bury",
-        "body": "Select an enemy follower on the field and destroy it."
+        "body": "Each opponent buries the top 2 cards of their deck."
       },
       {
         "key": "PlayPoints",
@@ -290,7 +290,7 @@
     "cardText": "Select an enemy follower on the field. Deal it 2 damage and draw a card. If there's a Ninja follower on your field, deal 3 damage instead.",
     "effectText": [
       {
-        "key": "Spell",
+        "key": "Damage",
         "body": "Select an enemy follower on the field. Deal it 2 damage and draw a card. If there's a Ninja follower on your field, deal 3 damage instead."
       }
     ]

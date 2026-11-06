@@ -60787,8 +60787,8 @@
         "abilities": [
           {
             "trigger": {
-              "target": "t(Loot)",
-              "filter": null,
+              "target": "AllPlayerCards",
+              "filter": "t(Loot)",
               "$type": "SVESimulator.PassiveAbilityOnField"
             },
             "name": "Passive",
@@ -60894,8 +60894,8 @@
         "abilities": [
           {
             "trigger": {
-              "target": "t(Loot)",
-              "filter": null,
+              "target": "AllPlayerCards",
+              "filter": "t(Loot)",
               "$type": "SVESimulator.PassiveAbilityOnField"
             },
             "name": "Passive",
@@ -61063,7 +61063,7 @@
         "abilities": [
           {
             "trigger": {
-              "condition": "[f(c(Sword))+x(c(Sword))]>4",
+              "condition": "[f(Fc(Sword))+x(Fc(Sword))]>4",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -61077,7 +61077,7 @@
           },
           {
             "trigger": {
-              "condition": "[f(c(Sword))+x(c(Sword))]>9",
+              "condition": "[f(Fc(Sword))+x(Fc(Sword))]>9",
               "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.TwicePerTurnCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnAttackTrigger"
             },
@@ -61201,10 +61201,10 @@
             "name": "ChooseTokens",
             "type": "Triggered",
             "effect": {
-              "effectName1": "2",
-              "effectName2": "Steelclad",
-              "effectName3": "Knight",
-              "$type": "SVESimulator.ChooseEffectFromList"
+              "amount": "2",
+              "effectName1": "Steelclad",
+              "effectName2": "Knight",
+              "$type": "SVESimulator.ChooseAmountFromList"
             },
             "$type": "CCGKit.TriggeredAbility"
           },
@@ -62221,7 +62221,7 @@
             "name": "AtkDef",
             "type": "Triggered",
             "effect": {
-              "target": "AllPlayerCards",
+              "target": "AllPlayerCardsEx",
               "targetStats": "AttackDefense",
               "amount": "1",
               "$type": "SVESimulator.GiveStatBoostEffect"
@@ -62514,10 +62514,10 @@
             "modifiers": []
           },
           {
-            "baseValue": 2,
+            "baseValue": 1,
             "statId": 4,
             "name": "Cost",
-            "originalValue": 2,
+            "originalValue": 1,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -62548,7 +62548,7 @@
             "effect": {
               "tokenName": "Gilded Blade",
               "createTokenOption": "ExArea",
-              "amount": "2",
+              "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -62863,9 +62863,8 @@
             "name": "Damage",
             "type": "Triggered",
             "effect": {
-              "target": "TargetOpponentCard",
-              "filter": "F",
-              "amount": "Fc(Sword)",
+              "target": "AllOpponentCards",
+              "amount": "f(Fc(Sword))",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -62922,9 +62921,10 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "Ft(Thief)",
+              "amount": "0~(t(Condemned / Thief))1",
               "effectName1": "Atk",
               "effectName2": "Damage",
-              "$type": "SVESimulator.TargetForEffectSequence"
+              "$type": "SVESimulator.TargetForEffectSequenceWithTargetAmount"
             },
             "$type": "CCGKit.TriggeredAbility"
           },
@@ -62950,7 +62950,7 @@
             "type": "Triggered",
             "effect": {
               "target": "OpponentLeader",
-              "amount": "0~(t(Condemned / Thief))1",
+              "amount": "_",
               "$type": "SVESimulator.DealDamageEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -66453,7 +66453,7 @@
           {
             "trigger": {
               "filter": "t(Loot)",
-              "$type": "SVESimulator.SveOnPlayCardFuseTrigger"
+              "$type": "SVESimulator.SveOnPlayCardOrFuseTrigger"
             },
             "name": "OnPlayOrFuse",
             "type": "Triggered",
@@ -66871,7 +66871,7 @@
           {
             "trigger": {
               "filter": "t(Loot)",
-              "$type": "SVESimulator.SveOnPlayCardFuseTrigger"
+              "$type": "SVESimulator.SveOnPlayCardOrFuseTrigger"
             },
             "name": "OnPlayOrFuse",
             "type": "Triggered",
@@ -67367,7 +67367,7 @@
           {
             "trigger": {
               "filter": "t(Loot)",
-              "$type": "SVESimulator.SveOnPlayCardFuseTrigger"
+              "$type": "SVESimulator.SveOnPlayCardOrFuseTrigger"
             },
             "name": "OnPlayOrFuse",
             "type": "Triggered",
