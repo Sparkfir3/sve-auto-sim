@@ -77,7 +77,7 @@ namespace SVESimulator
             yield return null;
         }
 
-        protected TargetCardForCostEffect CostTargetingEffect(string text = null)
+        protected virtual TargetCardForCostEffect CostTargetingEffect(string text = null)
         {
             return new TargetCardForCostEffect()
             {

@@ -116,6 +116,13 @@ namespace SVESimulator.SveScript
                         break;
 
                     // Other Costs
+                    case "FuseCost":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
+                        newCost.Add("$type", "SVESimulator.BanishFromCemeteryCost");
+                        break;
+
+                    // Cost Properties
                     case "OncePerTurn":
                     case "TwicePerTurn":
                         newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
