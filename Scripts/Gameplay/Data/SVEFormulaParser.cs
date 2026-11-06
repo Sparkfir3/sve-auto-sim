@@ -37,6 +37,8 @@ namespace SVESimulator
             EvolveCost,
             PlayPointCost,
             PlayPointCostXor,
+            PlayPointCostSum,
+            PlayPointCostSumCurrent, // internal data
             Reserved,
             Engaged,
             Racing,
@@ -580,6 +582,11 @@ namespace SVESimulator
                         case '^': // XOR
                             filterSetting = CardFilterSetting.PlayPointCostXor;
                             break;
+                        case 'E': // Sum total
+                            filterSetting = CardFilterSetting.PlayPointCostSum;
+                            filters.Add(CardFilterSetting.PlayPointCostSumCurrent, ""); // internal data
+                            nextIndex++; // move past open parentheses
+                            goto case '(';
                         case '(': // Regular Cost Filter
                             currentFilterData = $"{currentFilterData}{ParseFilterFormulaSubstring(formula, nextIndex, out nextIndex)}";
                             nextIndex++; // move past close parentheses

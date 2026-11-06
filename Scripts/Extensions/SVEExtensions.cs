@@ -179,6 +179,18 @@ namespace SVESimulator
                         if(playPointCost == -1 || currentCosts != null && currentCosts.Any(x => x.Equals(playPointCost.ToString())))
                             return false;
                         break;
+                    case CardFilterSetting.PlayPointCostSum:
+                        Debug.Assert(!inverse, "Filter type \"Play Point Cost - Sum\" does not support using inverse");
+                        if(!card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat statCost))
+                            return false;
+                        int maxCost = SVEFormulaParser.ParseValue(value, player, card) -
+                            SVEFormulaParser.ParseValue(filters.GetValueOrDefault(CardFilterSetting.PlayPointCostSumCurrent), player, card);
+                        if(statCost.effectiveValue > maxCost)
+                            return false;
+                        break;
+                    case CardFilterSetting.PlayPointCostSumCurrent:
+                        // Do nothing, this is an internal data value
+                        break;
                     case CardFilterSetting.EvolveCost:
                         SVEFormulaParser.ParseValueAsMinMax(value, player, out int minEvolveCost, out int maxEvolveCost);
                         int evolveCost = card.EvolveCost();
@@ -236,9 +248,13 @@ namespace SVESimulator
 
         public static bool HasExcludeSelf(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.ExcludeSelf);
 
+        public static bool HasDynamicFilter(this Dictionary<CardFilterSetting, string> filters) => filters.HasExclusiveOr() || filters.HasCostSumTotal();
+
         public static bool HasExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.HasNameExclusiveOr() || filters.HasCostExclusiveOr();
         public static bool HasNameExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.NameXor);
         public static bool HasCostExclusiveOr(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.PlayPointCostXor);
+
+        public static bool HasCostSumTotal(this Dictionary<CardFilterSetting, string> filters) => filters.ContainsKey(CardFilterSetting.PlayPointCostSum);
 
         private static bool CheckAdvancedCardFilter(in RuntimeCard card, in string value, PlayerController player = null)
         {
