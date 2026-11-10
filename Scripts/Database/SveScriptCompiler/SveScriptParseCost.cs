@@ -117,8 +117,11 @@ namespace SVESimulator.SveScript
 
                     // Other Costs
                     case "FuseCost":
+                        string fuseFilter = args.Length > 2 ? args[2].Trim() : "";
+                        if(fuseFilter.IsNullOrWhiteSpace() || !fuseFilter.Contains('X'))
+                            fuseFilter = $"{fuseFilter}X";
                         newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
-                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
+                        newCost.Add("filter", fuseFilter);
                         newCost.Add("$type", "SVESimulator.FuseCost");
                         break;
 

@@ -12,7 +12,7 @@ namespace SVESimulator
                 {
                     player.LocalEvents.SendToExArea(card);
                 }
-                base.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete);
+                base.Resolve(player, triggeringCardInstanceId, SVEProperties.Zones.ExArea, sourceCardInstanceId, SVEProperties.Zones.ExArea, onComplete);
             });
         }
     }

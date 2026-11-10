@@ -183,8 +183,12 @@ namespace SVESimulator
 
                     // On play
                     if(originZone.Equals(SVEProperties.Zones.Hand) || originZone.Equals(SVEProperties.Zones.ExArea))
+                    {
                         SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardTrigger>(gameState, card, originZone, field, player,
                             x => x.MatchesFilter(card), false);
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, originZone, field, player,
+                            x => x.MatchesFilter(card), false);
+                    }
 
                     // Fanfare/other fanfare
                     SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
@@ -479,6 +483,8 @@ namespace SVESimulator
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
             {
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                    x => x.MatchesFilter(card), false);
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlaySpellTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
@@ -817,6 +823,9 @@ namespace SVESimulator
                 cardToMove ??= additionalRuntimeCardData?.FirstOrDefault(x => x.instanceId == cardsToMove[i].cardInstanceId);
                 switch(cardsToMove[i].endZone)
                 {
+                    case SVEProperties.Zones.ExArea:
+                        SendCardToExArea(player, cardToMove, cardsToMove[i].startZone);
+                        break;
                     case SVEProperties.Zones.Cemetery:
                         SendToCemetery(player.netId, cardToMove, cardsToMove[i].startZone);
                         break;

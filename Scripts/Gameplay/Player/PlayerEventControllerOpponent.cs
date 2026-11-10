@@ -675,6 +675,7 @@ namespace SVESimulator
                 // Actual move
                 StandardSendCardObjectToZone(cardToMove, oppZoneController, cardsToMove[i].endZone switch
                 {
+                    SVEProperties.Zones.ExArea => (x, onComplete) => oppZoneController.SendCardToExArea(x, oppZoneController.exAreaZone.GetFirstOpenSlotId(), onComplete),
                     SVEProperties.Zones.Cemetery => (x, onComplete) => oppZoneController.SendCardToCemetery(x, onComplete),
                     SVEProperties.Zones.Hand => (x, onComplete) => oppZoneController.AddCardToHand(x, onComplete),
                     SVEProperties.Zones.Banished => (x, onComplete) => oppZoneController.SendCardToBanishedZone(x, onComplete),
