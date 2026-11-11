@@ -18,7 +18,10 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            int damageAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone) * -1;
+            RuntimeCard sourceCard = CardManager.Instance.GetRuntimeCardByInstanceId(sourceCardInstanceId);
+            int damageAmount = SVEFormulaParser.ParseValue(amount, player, sourceCard) * -1;
+            if(sourceCard != null)
+                damageAmount -= SVEEffectPool.Instance.GetDynamicPlusAbilityDamage(sourceCard, player);
 
             // Target leader
             if(target.IsLeader(out bool local, out bool opponent) && !target.IsFieldCard())

@@ -78,8 +78,7 @@ trait Omen / Heir / Thief;
 rarity L;
 stats 4/4;
 
-text "NOT FULLY IMPLEMENTED
-      If this would deal ability damage, it deals that much +2 for every fusion counter on it instead.
+text "If this would deal ability damage, it deals that much +2 for every fusion counter on it instead.
       On Evolve - Select an enemy follower on the field and deal it 3 damage.
       On Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.";
 
@@ -88,6 +87,9 @@ ability OnEvolve {
 }
 ability OnSuperEvolve {
     effect DealDamage(1) to AllOpponentCardsAndLeader F;
+}
+ability Passive {
+    effect DynamicPlusAbilityDamage(r(Fusion)*2);
 }
 
 // ------------------------------

@@ -755,6 +755,20 @@ namespace SVESimulator
             return additionalNames != null;
         }
 
+        public int GetDynamicPlusAbilityDamage(RuntimeCard card, PlayerController player = null)
+        {
+            int amount = 0;
+            for(int i = 0; i < registeredPassives.Count; i++)
+            {
+                if(registeredPassives[i].effect is not DynamicPlusAbilityDamagePassive plusDamagePassive
+                   || registeredPassives[i].affectedCards.All(x => x.instanceId != card.instanceId))
+                    continue;
+                amount += plusDamagePassive.GetPlusDamageAmount(card, player);
+            }
+            Debug.Log(amount);
+            return amount;
+        }
+
         #endregion
     }
 

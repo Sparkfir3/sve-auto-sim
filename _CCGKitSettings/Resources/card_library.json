@@ -65451,7 +65451,7 @@
             "$type": "CCGKit.StringProperty"
           },
           {
-            "value": "NOT FULLY IMPLEMENTED\nIf this would deal ability damage, it deals that much +2 for every fusion counter on it instead.\nOn Evolve - Select an enemy follower on the field and deal it 3 damage.\nOn Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.",
+            "value": "If this would deal ability damage, it deals that much +2 for every fusion counter on it instead.\nOn Evolve - Select an enemy follower on the field and deal it 3 damage.\nOn Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.",
             "name": "Text",
             "$type": "CCGKit.StringProperty"
           },
@@ -65535,6 +65535,21 @@
               "filter": "F",
               "amount": "1",
               "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "target": "Self",
+              "filter": null,
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "amount": "r(Fusion)*2",
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.DynamicPlusAbilityDamagePassive"
             },
             "$type": "CCGKit.TriggeredAbility"
           }

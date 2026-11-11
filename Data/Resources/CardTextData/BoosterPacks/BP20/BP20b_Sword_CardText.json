@@ -56,7 +56,7 @@
     "id": "BP20-021EN",
     "name": "Sinciro, Heir to Usurpation (Evolved)",
     "trait": "Omen / Heir / Thief",
-    "cardText": "NOT FULLY IMPLEMENTED\nIf this would deal ability damage, it deals that much +2 for every fusion counter on it instead.\nOn Evolve - Select an enemy follower on the field and deal it 3 damage.\nOn Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.",
+    "cardText": "If this would deal ability damage, it deals that much +2 for every fusion counter on it instead.\nOn Evolve - Select an enemy follower on the field and deal it 3 damage.\nOn Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.",
     "effectText": [
       {
         "key": "OnEvolve",
