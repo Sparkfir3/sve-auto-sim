@@ -31,11 +31,12 @@ namespace SVESimulator
 
         protected override TargetCardForCostEffect CostTargetingEffect(string text = null)
         {
+            SVEFormulaParser.ParseValueAsMinMax(amount, null, out int minCount, out int maxCount);
             return new TargetCardForCostEffect()
             {
                 text = text ?? "",
                 target = SVEProperties.SVEEffectTarget.TargetPlayerCardHandOrEx,
-                filter = filter
+                filter = $"{filter}m({minCount},{maxCount})"
             };
         }
 

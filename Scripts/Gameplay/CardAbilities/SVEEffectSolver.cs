@@ -819,6 +819,21 @@ namespace SVESimulator
                 }
             }
 
+            // Counters
+            for(int i = 0; i < countersToRemove.Length; i++)
+            {
+                RuntimeCard targetCard = player.namedZones[countersToRemove[i].cardZone].cards.FirstOrDefault(x => x.instanceId == countersToRemove[i].cardInstanceId);
+                int targetAmount = countersToRemove[i].keywordValue - countersToRemove[i].amount;
+                targetCard.SetCounterAmount((SVEProperties.Counters)countersToRemove[i].keywordType, targetAmount);
+            }
+
+            // Engage
+            for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
+            {
+                RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
+                EngageCard(targetCard);
+            }
+
             // Move cards (move data + fuse)
             MoveCardToZoneData[] cardsToMove = cardsMoveToZone.Concat(fusedCards).ToArray();
             for(int i = 0; i < cardsToMove.Length; i++)
@@ -840,21 +855,6 @@ namespace SVESimulator
                         ReturnCardToHand(player, cardToMove, cardsToMove[i].startZone);
                         break;
                 }
-            }
-
-            // Counters
-            for(int i = 0; i < countersToRemove.Length; i++)
-            {
-                RuntimeCard targetCard = player.namedZones[countersToRemove[i].cardZone].cards.FirstOrDefault(x => x.instanceId == countersToRemove[i].cardInstanceId);
-                int targetAmount = countersToRemove[i].keywordValue - countersToRemove[i].amount;
-                targetCard.SetCounterAmount((SVEProperties.Counters)countersToRemove[i].keywordType, targetAmount);
-            }
-
-            // Engage
-            for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
-            {
-                RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
-                EngageCard(targetCard);
             }
 
             // Effect triggers
