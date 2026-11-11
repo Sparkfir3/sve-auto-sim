@@ -6,7 +6,7 @@
     "cardText": "Whenever you play or fuse a Loot card, give this Storm.\n[fanfare] Choose 1. (1) Put a Crest: Octrice, Hollowness Manifest token into your EX area. (2) Search your deck for a Returning Slash, reveal it, add it to your hand, then shuffle.",
     "effectText": [
       {
-        "key": "OnPlayCard",
+        "key": "OnPlayOrFuse",
         "text": "Whenever you play or fuse a Loot card, give this Storm.",
         "trigger": "Whenever you play or fuse a Loot card,",
         "body": "Give this Storm."
@@ -131,16 +131,8 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
-        "cost": "",
         "body": "Select up to 2 enemy followers on the field and deal 6 damage divided between them."
-      },
-      {
-        "key": "OnOpponentCardFieldToCemetery",
-        "text": "During your turn, whenever an enemy follower that took damage this turn from this is put from the field into the cemetery, put the top card of your deck into your EX area.",
-        "trigger": "During your turn, whenever an enemy follower that took damage this turn from this is put from the field into the cemetery,",
-        "body": "Put the top card of your deck into your EX area."
       }
     ]
   },
@@ -177,9 +169,7 @@
     "effectText": [
       {
         "key": "OnEvolve",
-        "text": "",
         "trigger": "On Evolve - ",
-        "cost": "",
         "body": "Search your deck for an Officer follower that costs 3 or less, summon it, then shuffle."
       },
       {

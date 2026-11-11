@@ -4,18 +4,19 @@ class Sword;
 type Follower;
 trait Omen / Thief;
 rarity L;
-cost 4;
-stats 3/5;
+cost 2;
+stats 2/3;
 
 text "Whenever you play or fuse a Loot card, give this Storm.
       [fanfare] Choose 1. (1) Put a Crest: Octrice, Hollowness Manifest token into your EX area. (2) Search your deck for a Returning Slash, reveal it, add it to your hand, then shuffle.";
 
-ability OnPlayCard {
+ability OnPlayOrFuse {
     filter t(Loot);
+    condition <<~(!k(Storm));
     effect GiveKeyword(Storm) to Self;
 }
 ability Fanfare {
-    effect ChooseFromList(1, Crest, Search);
+    effect ChooseFromList(Crest, Search);
 }
 ability Spell name Crest {
     effect SummonToken("Crest: Octrice, Hollowness Manifest", ExArea, 1);
@@ -52,7 +53,7 @@ ability Spell name Token {
     effect SummonToken(Gilded Blade, ExArea, 1);
 }
 ability ActFromHand {
-	condition [H(t(Loot)p(1,99)) | x(t(Loot)p(1,99))] & x()<5;
+	condition [H(t(Loot)p(m(1,99))) | x(t(Loot)p(m(1,99)))];
 	effect ComplexEffect(
 		let x = payCost(Fuse).movedCards
 		performCostless Fuse
@@ -60,7 +61,7 @@ ability ActFromHand {
 	);
 }
 ability Spell name Fuse {
-	cost (FuseCost, m(0,2), t(Loot)p(1,99)), (IgnorePrompt);
+	cost (FuseCost, m(0,2), t(Loot)p(m(1,99))), (IgnorePrompt);
 	effect Fuse();
 }
 ability Spell name Counters {
@@ -97,8 +98,8 @@ class Sword;
 type Follower;
 trait Commander / Princess;
 rarity L;
-cost 1;
-stats 1/1;
+cost 5;
+stats 3/4;
 
 text "This costs X less to play. X equals the number of [swordcraft] cards on your field.
       ----------
@@ -183,10 +184,6 @@ text "NOT FULLY IMPLEMENTED
 keyword Intimidate;
 ability Fanfare {
     effect DealDamageDivided(6) to TargetOpponentCard Fm(0,2);
-}
-ability OnOpponentCardFieldToCemetery {
-    filter F#(damageTakenThisTurn);
-    effect TopDeckToEx(1);
 }
 
 // ------------------------------
@@ -277,6 +274,7 @@ ability Fanfare {
 }
 ability OnPlayOrFuse {
     filter t(Loot);
+    cost (OncePerTurn);
     effect GiveStat(Def, 1) to Leader;
 }
 
@@ -295,7 +293,7 @@ text "[act] [engage], remove a fusion counter from this, bury this: Search your 
 
 ability Act {
     cost (EngageSelf), (RemoveCounters, Fusion, 1), (SendToCemetery, Self);
-    effect Search(3, n^pE(8), Field);
+    effect Search(3, Ft(Omen / Thief)n^pE(8), Field);
 }
 ability ActFromHand {
     cost (FuseCost, 3, t(Loot)p(m(0,99)));
@@ -431,7 +429,7 @@ text "Select a follower on your field and give it Assail and, for the rest of th
 
 ability Spell {
     condition f(F);
-    effect Sequence(Assail, Damage);
+    effect TargetForSequence(Assail, Damage) to TargetPlayerCard F;
 }
 ability Spell name Assail {
     effect GiveKeyword(Assail) to AllPlayerCards;

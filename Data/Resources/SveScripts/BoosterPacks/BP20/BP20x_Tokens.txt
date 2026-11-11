@@ -25,7 +25,7 @@ text "At the start of your main phase or whenever you play or fuse a Loot card, 
 ability StartMainPhaseFromExArea {
     effect Sequence(Counter, Banish, Search);
 }
-ability OnPlayOrFuse {
+ability OnPlayOrFuseFromEx {
     filter t(Loot);
     effect Sequence(Counter, Banish, Search);
 }

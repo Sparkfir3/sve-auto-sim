@@ -53991,7 +53991,7 @@
             "effect": {
               "target": "AllPlayerCards",
               "keywordType": 0,
-              "keywordValue": 2,
+              "keywordValue": 1,
               "$type": "SVESimulator.GiveKeywordEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -65141,19 +65141,19 @@
         ],
         "stats": [
           {
-            "baseValue": 3,
+            "baseValue": 2,
             "statId": 0,
             "name": "Attack",
-            "originalValue": 3,
+            "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
           },
           {
-            "baseValue": 5,
+            "baseValue": 3,
             "statId": 1,
             "name": "Defense",
-            "originalValue": 5,
+            "originalValue": 3,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -65177,10 +65177,10 @@
             "modifiers": []
           },
           {
-            "baseValue": 4,
+            "baseValue": 2,
             "statId": 4,
             "name": "Cost",
-            "originalValue": 4,
+            "originalValue": 2,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -65200,9 +65200,10 @@
           {
             "trigger": {
               "filter": "t(Loot)",
-              "$type": "SVESimulator.SveOnPlayCardTrigger"
+              "condition": "<<~(!k(Storm))",
+              "$type": "SVESimulator.SveOnPlayCardOrFuseTrigger"
             },
-            "name": "OnPlayCard",
+            "name": "OnPlayOrFuse",
             "type": "Triggered",
             "effect": {
               "target": "Self",
@@ -65219,9 +65220,8 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "effectName1": "1",
-              "effectName2": "Crest",
-              "effectName3": "Search",
+              "effectName1": "Crest",
+              "effectName2": "Search",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -65392,7 +65392,7 @@
             "zoneId": 6,
             "costs": [
               {
-                "condition": "[H(t(Loot)p(1,99)) | x(t(Loot)p(1,99))] & x()<5",
+                "condition": "[H(t(Loot)p(m(1,99))) | x(t(Loot)p(m(1,99)))]",
                 "$type": "SVESimulator.ConditionAsCost"
               }
             ],
@@ -65406,7 +65406,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"amount\": \"m(0,2)\",\r\n    \"filter\": \"t(Loot)p(1,99)\",\r\n    \"$type\": \"SVESimulator.FuseCost\"\r\n  },\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"amount\": \"m(0,2)\",\r\n    \"filter\": \"t(Loot)p(m(1,99))X\",\r\n    \"$type\": \"SVESimulator.FuseCost\"\r\n  },\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Fuse",
@@ -65569,19 +65569,19 @@
         ],
         "stats": [
           {
-            "baseValue": 1,
+            "baseValue": 3,
             "statId": 0,
             "name": "Attack",
-            "originalValue": 1,
+            "originalValue": 3,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
           },
           {
-            "baseValue": 1,
+            "baseValue": 4,
             "statId": 1,
             "name": "Defense",
-            "originalValue": 1,
+            "originalValue": 4,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -65605,10 +65605,10 @@
             "modifiers": []
           },
           {
-            "baseValue": 1,
+            "baseValue": 5,
             "statId": 4,
             "name": "Cost",
-            "originalValue": 1,
+            "originalValue": 5,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -66034,19 +66034,6 @@
               "$type": "SVESimulator.DealDamageDividedEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
-          },
-          {
-            "trigger": {
-              "filter": "F#(damageTakenThisTurn)",
-              "$type": "SVESimulator.SveOnOpponentCardFieldToCemeteryTrigger"
-            },
-            "name": "OnOpponentCardFieldToCemetery",
-            "type": "Triggered",
-            "effect": {
-              "amount": "1",
-              "$type": "SVESimulator.TopDeckToExEffect"
-            },
-            "$type": "CCGKit.TriggeredAbility"
           }
         ],
         "id": 100201025
@@ -66138,7 +66125,7 @@
             "costs": [
               {
                 "amount": "1",
-                "filter": "t(Loot)p(m(0,99))",
+                "filter": "t(Loot)p(m(0,99))X",
                 "$type": "SVESimulator.FuseCost"
               }
             ],
@@ -66466,6 +66453,7 @@
           {
             "trigger": {
               "filter": "t(Loot)",
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OncePerTurnCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnPlayCardOrFuseTrigger"
             },
             "name": "OnPlayOrFuse",
@@ -66553,7 +66541,7 @@
             "type": "Activated",
             "effect": {
               "amount": "3",
-              "filter": "n^pE(8)",
+              "filter": "Ft(Omen / Thief)n^pE(8)",
               "searchDeckAction": "Field",
               "$type": "SVESimulator.SearchDeckEffect"
             },
@@ -66564,7 +66552,7 @@
             "costs": [
               {
                 "amount": "3",
-                "filter": "t(Loot)p(m(0,99))",
+                "filter": "t(Loot)p(m(0,99))X",
                 "$type": "SVESimulator.FuseCost"
               }
             ],
@@ -67239,9 +67227,11 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "F",
               "effectName1": "Assail",
               "effectName2": "Damage",
-              "$type": "SVESimulator.EffectSequence"
+              "$type": "SVESimulator.TargetForEffectSequence"
             },
             "$type": "CCGKit.TriggeredAbility"
           },
@@ -67380,9 +67370,9 @@
           {
             "trigger": {
               "filter": "t(Loot)",
-              "$type": "SVESimulator.SveOnPlayCardOrFuseTrigger"
+              "$type": "SVESimulator.SveOnPlayCardOrFuseFromExTrigger"
             },
-            "name": "OnPlayOrFuse",
+            "name": "OnPlayOrFuseFromEx",
             "type": "Triggered",
             "effect": {
               "effectName1": "Counter",

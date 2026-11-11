@@ -57,7 +57,7 @@ ability Spell name Rush {
 }
 ability Spell name Storm {
     condition z()>9;
-    effect GiveKeyword(Rush) to AllPlayerCards;
+    effect GiveKeyword(Storm) to AllPlayerCards;
 }
 
 // ------------------------------
