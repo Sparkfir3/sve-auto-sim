@@ -188,6 +188,8 @@ namespace SVESimulator
                             x => x.MatchesFilter(card), false);
                         SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, originZone, field, player,
                             x => x.MatchesFilter(card), false);
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseFromExTrigger>(gameState, card, originZone, player.namedZones[SVEProperties.Zones.ExArea], player,
+                            x => x.MatchesFilter(card), false);
                     }
 
                     // Fanfare/other fanfare
@@ -485,6 +487,8 @@ namespace SVESimulator
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
+                    x => x.MatchesFilter(card), false);
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseFromExTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.ExArea], player,
                     x => x.MatchesFilter(card), false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlaySpellTrigger>(gameState, card, player.namedZones[SVEProperties.Zones.Field], player,
                     x => x.MatchesFilter(card), false);
@@ -859,6 +863,8 @@ namespace SVESimulator
                 List<RuntimeCard> fusedRuntimeCards = fusedCards.Select(x => CardManager.Instance.GetRuntimeCardByInstanceId(x.cardInstanceId)).ToList();
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, SVEProperties.Zones.Field,
                     player.namedZones[SVEProperties.Zones.Field], player, x => fusedRuntimeCards.Any(x.MatchesFilter), false);
+                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseFromExTrigger>(gameState, card, SVEProperties.Zones.Field,
+                    player.namedZones[SVEProperties.Zones.ExArea], player, x => fusedRuntimeCards.Any(x.MatchesFilter), false);
             }
         }
 
