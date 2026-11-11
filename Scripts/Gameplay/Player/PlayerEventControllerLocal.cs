@@ -463,7 +463,7 @@ namespace SVESimulator
             bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
 
             if(originZone.IsNullOrWhiteSpace())
-                originZone = localZoneController.handZone.ContainsCard(card) ? SVEProperties.Zones.Hand : SVEProperties.Zones.ExArea;
+                originZone = card.CurrentZone.Runtime.name;
             sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
             localZoneController.PlayCardToField(card, slot);
 
