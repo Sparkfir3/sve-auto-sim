@@ -11,7 +11,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        protected override string TargetZoneName => SVEProperties.Zones.ExArea;
+        protected override string TargetZoneName => SVEProperties.Zones.Cemetery;
         protected override string CostName => nameof(FuseCost);
 
         public override string GetReadableString(GameConfiguration config)

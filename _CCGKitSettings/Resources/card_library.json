@@ -65399,7 +65399,7 @@
             "name": "ActFromHand",
             "type": "Activated",
             "effect": {
-              "function": "let x = payCost(Fuse).movedCards\nperformCostless Fuse\nperform Counters { amount = x }",
+              "function": "let x = payCost(Fuse).movedCardsCount\nperformCostless Fuse { }\nperform Counters { amount = x }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "$type": "CCGKit.ActivatedAbility"

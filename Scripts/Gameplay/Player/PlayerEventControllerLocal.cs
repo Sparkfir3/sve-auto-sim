@@ -1334,15 +1334,15 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            PayAbilityCosts(card, costs, abilityName, (_, _) => { onComplete?.Invoke(); });
+            PayAbilityCosts(card, costs, abilityName, (_, _, _) => { onComplete?.Invoke(); });
         }
 
-        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
         {
             if(costs == null || costs.Count == 0)
             {
                 IsPayingCosts = false;
-                onComplete?.Invoke(null, null);
+                onComplete?.Invoke(null, null, null);
                 return;
             }
             StartCoroutine(Resolve());
@@ -1417,7 +1417,7 @@ namespace SVESimulator
 
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
-                onComplete?.Invoke(cardsToMove, countersToRemove);
+                onComplete?.Invoke(cardsToMove, fusedCards, countersToRemove);
                 IsPayingCosts = false;
             }
         }

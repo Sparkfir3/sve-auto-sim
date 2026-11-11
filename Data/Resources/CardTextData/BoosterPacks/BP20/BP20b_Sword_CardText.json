@@ -39,9 +39,10 @@
       },
       {
         "key": "ActFromHand",
+        "text": "[act] Fuse X Loot cards that cost 1 or more: Place X fusion counters on this. X must be 2 or less.",
         "trigger": "[act]",
-        "cost": "Fuse X Loot cards that cost 1 or more",
-        "body": "Place X fusion counters on this. X must be 2 or less."
+        "cost": "Fuse X Loot cards that cost 1 or more. X must be 2 or less.",
+        "body": "Place X fusion counters on this."
       },
       {
         "key": "Fuse",

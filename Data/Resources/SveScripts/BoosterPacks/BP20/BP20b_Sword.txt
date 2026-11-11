@@ -55,8 +55,8 @@ ability Spell name Token {
 ability ActFromHand {
 	condition [H(t(Loot)p(m(1,99))) | x(t(Loot)p(m(1,99)))];
 	effect ComplexEffect(
-		let x = payCost(Fuse).movedCards
-		performCostless Fuse
+		let x = payCost(Fuse).movedCardsCount
+		performCostless Fuse { }
 		perform Counters { amount = x }
 	);
 }
