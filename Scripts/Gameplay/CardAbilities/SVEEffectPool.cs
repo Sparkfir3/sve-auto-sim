@@ -650,7 +650,8 @@ namespace SVESimulator
                 if(card)
                 {
                     passive.effect.ApplyPassive(card.RuntimeCard, player);
-                    passive.affectedCards.Add(card.RuntimeCard);
+                    if(!passive.affectedCards.Contains(card.RuntimeCard))
+                        passive.affectedCards.Add(card.RuntimeCard);
                 }
                 return;
             }
