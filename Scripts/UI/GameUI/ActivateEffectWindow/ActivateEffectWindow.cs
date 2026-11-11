@@ -50,6 +50,7 @@ namespace SVESimulator.UI
 
         private Camera cam;
 
+        public List<MultipleChoiceButton> ActiveButtons => buttons.Where(x => x.gameObject.activeSelf).ToList();
         public bool PointerInside
         {
             get => PointerInsideMain || PointerInsideSub;
@@ -162,15 +163,16 @@ namespace SVESimulator.UI
             gameObject.SetActive(true);
         }
 
-        public void AddEffects(PlayerController player, CardObject card, List<ActivatedAbility> abilities)
+        public List<MultipleChoiceButton> AddEffects(PlayerController player, CardObject card, List<ActivatedAbility> abilities)
         {
-            int i = buttons.Count(x => x.gameObject.activeSelf);
-            for(; i < abilities.Count; i++)
+            List<MultipleChoiceButton> addedButtons = new();
+            int baseButtonsCount = ActiveButtons.Count;
+            for(int i = 0; i < abilities.Count; i++)
             {
-                MultipleChoiceButton button = i < buttons.Count ? buttons[i] : AddNewButton();
+                int buttonIndex = i + baseButtonsCount;
+                MultipleChoiceButton button = buttonIndex < buttons.Count ? buttons[buttonIndex] : AddNewButton();
                 ActivatedAbility ability = abilities[i]; // need to detach reference from var i for the button event
 
-                button.gameObject.SetActive(true);
                 button.Text = LibraryCardCache.GetEffectText(card.RuntimeCard.cardId, ability.name);
                 button.Interactable = player.LocalEvents.CanPayCosts(card.RuntimeCard, ability.costs, ability.name)
                     && (ability.effect is not IEvolveEffect evolveEffect || evolveEffect.CanEvolve(player, card.RuntimeCard));
@@ -186,7 +188,10 @@ namespace SVESimulator.UI
                     });
                     Close();
                 });
+                button.gameObject.SetActive(true);
+                addedButtons.Add(button);
             }
+            return addedButtons;
         }
 
         public void SetAnchoredPosition(Vector2 viewportPos)
