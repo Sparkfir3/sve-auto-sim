@@ -48120,6 +48120,343 @@
     "name": "Booster Set #9 \"Duet of Dawn and Dusk\"",
     "cards": [
       {
+        "cardTypeId": 0,
+        "name": "Prim, Innocent Princess",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Commander / Princess",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve] [cost01]: Evolve this follower.\n[fanfare] Summon a Knight token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-021",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Knight",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100091021
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Prim, Innocent Princess (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Commander / Princess",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve - Search your deck for a Nonja, Silent Maid, reveal it, add it to your hand, then shuffle your deck.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-022",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "n(Nonja, Silent Maid)",
+              "searchDeckAction": "Hand",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100091022
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Nonja, Silent Maid",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Swordcraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Officer / Maid",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This card costs 1 less to play if there's a Prim, Innocent Princess on your field.\n----------\n[fanfare] Draw 2 cards. Discard 2 cards.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP09-023",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(n(Prim, Innocent Princess))",
+              "$type": "SVESimulator.ModifiedCostTrigger"
+            },
+            "name": "ModifiedCost",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "$type": "SVESimulator.ReducedCostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Draw",
+              "effectName2": "Discard",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "2",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Discard",
+            "type": "Triggered",
+            "effect": {
+              "amount": "2",
+              "filter": null,
+              "$type": "SVESimulator.DiscardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100091023
+      },
+      {
         "cardTypeId": 2,
         "name": "Instant Poison",
         "costs": [],
