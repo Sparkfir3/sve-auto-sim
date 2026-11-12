@@ -1,0 +1,440 @@
+name Barbaros, Briny Convict;
+id BP19-019;
+class Sword;
+type Follower;
+trait Condemned / Thief;
+rarity L;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      During your turn, any Loot card you play from the EX area costs 1 less.
+      [fanfare] Put a Dread Pirate's Flag token into your EX area.";
+
+evolve 1;
+ability Passive {
+    effect MinusCostOtherEx(1, PlayerTurn) to AllPlayerCards t(Loot);
+}
+ability Fanfare {
+    effect SummonToken(Dread Pirate's Flag, ExArea, 1);
+}
+
+// ------------------------------
+
+name Barbaros, Briny Convict (Evolved);
+id BP19-020;
+class Sword;
+type Evolved Follower;
+trait Condemned / Thief;
+rarity L;
+stats 4/4;
+
+text "During your turn, any Loot card you play from the EX area costs 1 less.
+      During your turn, whenever you play a Loot card, choose 1 that you haven't chosen this turn. (1) Select an enemy follower on the field and destroy it. (2) Each opponent buries the top 2 cards of their deck. (3) Recover 2 play points.";
+
+ability Passive {
+    effect MinusCostOtherEx(1, PlayerTurn) to AllPlayerCards t(Loot);
+}
+ability OnPlayCard {
+    filter t(Loot);
+    effect ChooseFromList(Destroy, Bury, PlayPoints);
+}
+ability Spell name Destroy {
+    cost (OncePerTurn);
+    condition p(#F);
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name Bury {
+    cost (OncePerTurn);
+    effect OpponentPerformEffect(OpponentBury);
+}
+ability Spell name OpponentBury {
+    effect Mill(2);
+}
+ability Spell name PlayPoints {
+    cost (OncePerTurn);
+    effect GiveStat(PP, 2) to Leader;
+}
+
+// ------------------------------
+
+name Radiel, Valorous Enforcer;
+id BP19-021;
+class Sword;
+type Follower;
+trait Condemned / Commander;
+rarity L;
+cost 7;
+stats 6/8;
+
+text "Storm. Ward.
+      [fanfare] If there are at least 5 [swordcraft] followers on your field and/or in your EX area, banish each enemy follower on the field.
+      Strike - If there are at least 10 [swordcraft] followers on your field and/or in your EX area, refresh this. Perform only twice per turn.";
+
+keywords Storm, Ward;
+ability Fanfare {
+    condition [f(Fc(Sword))+x(Fc(Sword))]>4;
+    effect Banish() to AllOpponentCards F;
+}
+ability Strike {
+    condition [f(Fc(Sword))+x(Fc(Sword))]>9;
+    cost (TwicePerTurn);
+    effect Refresh() to Self;
+}
+
+// ------------------------------
+
+name Gildaria, Anathema of Peace;
+id BP19-022;
+class Sword;
+type Follower;
+trait Anathema / Beast;
+rarity L;
+cost 5;
+stats 4/4;
+
+text "[evolve] [cost02]: Evolve this.
+      [fanfare] Summon a Steelclad Knight and Knight token. Then, if there are 5 [swordcraft] cards on your field, evolve this.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(ChooseTokens, Evolve);
+}
+ability Spell name ChooseTokens {
+    effect ChooseAmountFromList(2, Steelclad, Knight);
+}
+ability Spell name Steelclad {
+    effect SummonToken(Steelclad Knight, Field, 1);
+}
+ability Spell name Knight {
+    effect SummonToken(Knight, Field, 1);
+}
+ability Spell name Evolve {
+    cost (Optional);
+    condition f(c(Sword))=5;
+    effect EvolveNotOncePerTurn() to Self;
+}
+
+// ------------------------------
+
+name Gildaria, Anathema of Peace (Evolved);
+id BP19-023;
+class Sword;
+type Evolved Follower;
+trait Anathema / Beast;
+rarity L;
+stats 5/5;
+
+text "On Evolve - Deal 4 damage to each enemy follower on the field and 2 damage to each enemy leader.";
+
+ability OnEvolve {
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(4) to AllOpponentCards F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Warden of Honor;
+id BP19-024;
+class Sword;
+type Follower;
+trait Condemned / Commander;
+rarity G;
+cost 4;
+stats 3/4;
+
+text "[evolve] [cost01]: Evolve this.
+      Ward.
+      [fanfare] Put the top card of your deck into your EX area.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    effect TopDeckToEx(1);
+}
+
+// ------------------------------
+
+name Warden of Honor (Evolved);
+id BP19-025;
+class Sword;
+type Evolved Follower;
+trait Condemned / Commander;
+rarity G;
+stats 4/5;
+
+text "Ward.
+      On Evolve - Choose 1. (1) Search your deck for a Warden of Honor, summon it, then shuffle. (2) [cost03]: Search your deck for a Radiel, Valorous Enforcer, summon it, then shuffle.";
+
+keyword Ward;
+ability OnEvolve {
+    effect ChooseFromList(1, Warden, Radiel);
+}
+ability Spell name Warden {
+    effect Search(1, n(Warden of Honor), Field);
+}
+ability Spell name Radiel {
+    cost (PP, 3);
+    effect Search(1, n(Radiel, Valorous Enforcer), Field);
+}
+
+// ------------------------------
+
+name Tidal Gunner;
+id BP19-026;
+class Sword;
+type Follower;
+trait Condemned / Thief;
+rarity G;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Put a Dread Pirate's Flag token into your EX area.
+      Whenever you play a Dread Pirate's Flag, select an enemy leader or enemy follower on the field and deal it 1 damage.";
+
+ability Fanfare {
+    effect SummonToken(Dread Pirate's Flag, ExArea, 1);
+}
+ability OnPlayCard {
+    filter n(Dread Pirate's Flag);
+    effect DealDamage(1) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Prim, Princess's Picnic;
+id BP19-027;
+class Sword;
+type Follower;
+trait Commander / Princess;
+rarity G;
+cost 2;
+stats 1/1;
+
+text "[fanfare] Search your deck for a Maid follower, reveal it, add it to your hand, then shuffle.
+      [act] [cost01], [engage]: You may summon a Nonja, Silent Maid from your hand and give it Ward.";
+
+ability Fanfare {
+    effect Search(1, Ft(Maid), Hand);
+}
+ability Act {
+    cost (PP, 1), (EngageSelf);
+    condition H(n(Nonja, Silent Maid)) & f()<5;
+    effect HandToFieldAndTarget(1, n(Nonja, Silent Maid), Ward);
+}
+ability Spell name Ward {
+    effect GiveKeyword(Ward) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Storm-Wracked First Mate;
+id BP19-028;
+class Sword;
+type Follower;
+trait Condemned / Thief;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Put a Dread Pirate's Flag token into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken(Dread Pirate's Flag, ExArea, 1);
+}
+
+// ------------------------------
+
+name Storm-Wracked First Mate (Evolved);
+id BP19-029;
+class Sword;
+type Evolved Follower;
+trait Condemned / Thief;
+rarity S;
+stats 3/3;
+
+text "On Evolve - Search your deck for a Condemned–Thief follower, reveal it, add it to your hand, then shuffle.";
+
+ability OnEvolve {
+    effect Search(1, Ft(Condemned / Thief), Hand);
+}
+
+// ------------------------------
+
+name Deep-Sea Scout;
+id BP19-030;
+class Sword;
+type Follower;
+trait Condemned / Thief;
+rarity S;
+cost 1;
+stats 2/2;
+
+text "[fanfare] Put a Dread Pirate's Flag token into your EX area.";
+
+ability Fanfare {
+    effect SummonToken(Dread Pirate's Flag, ExArea, 1);
+}
+
+// ------------------------------
+
+name Return from the Brink;
+id BP19-031;
+class Sword;
+type Spell;
+trait Officer;
+rarity S;
+cost 1;
+
+text "Select an Officer follower in your cemetery. Put it into your EX area and give it [attack]+1/[defense]+1.";
+
+ability Spell {
+    effect CemeteryToExAreaAndTarget(1, Ft(Officer), AtkDef);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Felpurr Maid;
+id BP19-032;
+class Sword;
+type Follower;
+trait Maid / Beast;
+rarity B;
+cost 3;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      Storm.
+      Strike - Draw a card.";
+
+evolve 1;
+keyword Storm;
+ability Strike {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Felpurr Maid;
+id BP19-033;
+class Sword;
+type Evolved Follower;
+trait Maid / Beast;
+rarity B;
+stats 3/3;
+
+text "Storm.
+      On Evolve - Deal 1 damage to each enemy follower on the field.
+      Strike - Draw a card.";
+
+keyword Storm;
+ability OnEvolve {
+    effect DealDamage(1) to AllOpponentCards F;
+}
+ability Strike {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Knightly Thief;
+id BP19-034;
+class Sword;
+type Follower;
+trait Officer / Thief;
+rarity B;
+cost 1;
+stats 1/2;
+
+text "Rush.
+      [lastwords] Put a Gilded Blade token into your EX area.";
+
+keyword Rush;
+ability LastWords {
+    effect SummonToken(Gilded Blade, ExArea, 1);
+}
+
+// ------------------------------
+
+name Heavy Warrior;
+id BP19-035;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 5;
+stats 5/5;
+
+text "Ward.
+      [fanfare] Select an enemy follower on the field. Deal 3 damage to it and its leader.";
+
+keyword Ward;
+ability Fanfare {
+    condition p(#F);
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(3) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Ninja Onslaught;
+id BP19-036;
+class Sword;
+type Spell;
+trait Ninja;
+rarity B;
+cost 2;
+
+text "Select an enemy follower on the field. Deal it 2 damage and draw a card. If there's a Ninja follower on your field, deal 3 damage instead.";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, Draw);
+}
+ability Spell name Damage {
+    effect DealDamage(2?(f(Ft(Ninja)))3) to TargetOpponentCard F;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Cannon Volley;
+id BP19-037;
+class Sword;
+type Spell;
+trait Officer;
+rarity B;
+cost 3;
+
+text "Select an enemy follower on the field. Summon a Shield Guardian and Knight token, then deal the selected follower damage equal to the number of [swordcraft] followers on your field.";
+
+ability Spell {
+    condition p(#F);
+    effect TargetForSequence(Shield, Knight, Damage) to TargetOpponentCard F;
+}
+ability Spell name Shield {
+    effect SummonToken(Shield Guardian, Field, 1);
+}
+ability Spell name Knight {
+    effect SummonToken(Knight, Field, 1);
+}
+ability Spell name Damage {
+    effect DealDamage(f(Fc(Sword))) to AllOpponentCards;
+}

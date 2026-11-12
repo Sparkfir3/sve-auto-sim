@@ -9,13 +9,13 @@ text "Select a Thief follower on your field. Give it [attack]+1 and, if it's a C
 
 ability Spell {
     condition f(Ft(Thief));
-    effect TargetForSequence(Atk, Damage) to TargetPlayerCard Ft(Thief);
+    effect TargetForSequenceWithTargetAmount(0~(t(Condemned / Thief))1, Atk, Damage) to TargetPlayerCard Ft(Thief);
 }
 ability Spell name Atk {
     effect GiveStat(Atk, 1) to AllPlayerCards;
 }
 ability Spell name Damage {
-    effect DealDamage(0~(t(Condemned / Thief))1) to OpponentLeader;
+    effect DealDamage(_) to OpponentLeader;
 }
 
 // ------------------------------

@@ -39,6 +39,7 @@ namespace SVESimulator.SveScript
             { "OnOpponentCardEnterField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardEnterFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOpponentCardDestroyed", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardDestroyedTrigger", TriggerParameterType.Filter) },
+            { "OnOpponentCardFieldToCemetery", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardFieldToCemeteryTrigger", TriggerParameterType.Filter) },
 
             // Card Movement - Other
             { "OnDiscarded", new EffectTriggerInfo("SVESimulator.SveOnDiscardedTrigger") },
@@ -52,6 +53,8 @@ namespace SVESimulator.SveScript
             { "OnOtherRace", new EffectTriggerInfo("SVESimulator.SveOnOtherRaceTrigger", TriggerParameterType.Filter) },
             { "OnPlayCard", new EffectTriggerInfo("SVESimulator.SveOnPlayCardTrigger", TriggerParameterType.Filter) },
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
+            { "OnPlayOrFuse", new EffectTriggerInfo("SVESimulator.SveOnPlayCardOrFuseTrigger", TriggerParameterType.Filter) },
+            { "OnPlayOrFuseFromEx", new EffectTriggerInfo("SVESimulator.SveOnPlayCardOrFuseFromExTrigger", TriggerParameterType.Filter) },
 
             // Combat
             { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger", TriggerParameterType.Filter) },

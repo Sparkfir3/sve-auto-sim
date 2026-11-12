@@ -649,31 +649,33 @@ namespace SVESimulator
             };
             List<RuntimeCard> additionalRuntimeCardData = new();
 
-            // Move cards
-            for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
+            // Move card objects
+            MoveCardToZoneData[] cardsToMove = msg.cardsMoveToZoneData.Concat(msg.fusedCardsData).ToArray();
+            for(int i = 0; i < cardsToMove.Length; i++)
             {
                 // Get card & init new RuntimeCard if necessary
-                CardObject cardToMove = CardManager.Instance.GetCardByInstanceId(msg.cardsMoveToZoneData[i].cardInstanceId);
+                CardObject cardToMove = CardManager.Instance.GetCardByInstanceId(cardsToMove[i].cardInstanceId);
                 if(!cardToMove)
                 {
-                    if(msg.cardsMoveToZoneData[i].startZone.Equals(SVEProperties.Zones.Deck))
+                    if(cardsToMove[i].startZone.Equals(SVEProperties.Zones.Deck))
                     {
                         RuntimeCard runtimeCard = new();
-                        NetCard netCard = msg.additionalNetCardData.FirstOrDefault(x => x.instanceId == msg.cardsMoveToZoneData[i].cardInstanceId);
+                        NetCard netCard = msg.additionalNetCardData.FirstOrDefault(x => x.instanceId == cardsToMove[i].cardInstanceId);
                         InitRuntimeCard(ref runtimeCard, netCard);
                         cardToMove = oppZoneController.CreateNewCardObjectTopDeck(runtimeCard);
                         additionalRuntimeCardData.Add(runtimeCard);
                     }
                     else
                     {
-                        Debug.LogError($"Failed to find card with instance ID {msg.cardsMoveToZoneData[i].cardInstanceId} in zone {msg.cardsMoveToZoneData[i].startZone} " +
+                        Debug.LogError($"Failed to find card with instance ID {cardsToMove[i].cardInstanceId} in zone {cardsToMove[i].startZone} " +
                             $"to pay for ability {msg.abilityName} from card with instance ID {msg.cardInstanceId}");
                         continue;
                     }
                 }
                 // Actual move
-                StandardSendCardObjectToZone(cardToMove, oppZoneController, msg.cardsMoveToZoneData[i].endZone switch
+                StandardSendCardObjectToZone(cardToMove, oppZoneController, cardsToMove[i].endZone switch
                 {
+                    SVEProperties.Zones.ExArea => (x, onComplete) => oppZoneController.SendCardToExArea(x, oppZoneController.exAreaZone.GetFirstOpenSlotId(), onComplete),
                     SVEProperties.Zones.Cemetery => (x, onComplete) => oppZoneController.SendCardToCemetery(x, onComplete),
                     SVEProperties.Zones.Hand => (x, onComplete) => oppZoneController.AddCardToHand(x, onComplete),
                     SVEProperties.Zones.Banished => (x, onComplete) => oppZoneController.SendCardToBanishedZone(x, onComplete),
@@ -683,7 +685,7 @@ namespace SVESimulator
             oppZoneController.RearrangeHand();
 
             // Pay cost in backend
-            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.countersToRemove, msg.cardInstanceIdsToEngage, additionalRuntimeCardData);
+            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.fusedCardsData, msg.countersToRemove, msg.cardInstanceIdsToEngage, additionalRuntimeCardData);
         }
 
         #endregion

@@ -67,6 +67,7 @@ namespace SVESimulator
     public class SveOnOpponentCardEnterFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOpponentCardLeaveFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOpponentCardDestroyedTrigger : SveTriggerWithFilter { }
+    public class SveOnOpponentCardFieldToCemeteryTrigger : SveTriggerWithFilter { }
 
     #endregion
 
@@ -93,6 +94,9 @@ namespace SVESimulator
 
     public class SveOnPlayCardTrigger : SveTriggerWithFilter { }
     public class SveOnPlaySpellTrigger : SveTriggerWithFilter { }
+
+    public class SveOnPlayCardOrFuseTrigger : SveTriggerWithFilter { }
+    public class SveOnPlayCardOrFuseFromExTrigger : SveTriggerWithFilter { }
 
     #endregion
 

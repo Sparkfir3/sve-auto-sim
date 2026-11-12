@@ -1,0 +1,441 @@
+name Octrice, Hollowness Manifest;
+id BP20-019;
+class Sword;
+type Follower;
+trait Omen / Thief;
+rarity L;
+cost 2;
+stats 2/3;
+
+text "Whenever you play or fuse a Loot card, give this Storm.
+      [fanfare] Choose 1. (1) Put a Crest: Octrice, Hollowness Manifest token into your EX area. (2) Search your deck for a Returning Slash, reveal it, add it to your hand, then shuffle.";
+
+ability OnPlayOrFuse {
+    filter t(Loot);
+    condition <<~(!k(Storm));
+    effect GiveKeyword(Storm) to Self;
+}
+ability Fanfare {
+    effect ChooseFromList(Crest, Search);
+}
+ability Spell name Crest {
+    effect SummonToken("Crest: Octrice, Hollowness Manifest", ExArea, 1);
+}
+ability Spell name Search {
+    effect Search(1, n(Returning Slash), Hand);
+}
+
+// ------------------------------
+
+name Sinciro, Heir to Usurpation;
+id BP20-020;
+class Sword;
+type Follower;
+trait Omen / Heir / Thief;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] If this has a fusion counter, draw a card. If not, put a Gilded Blade token into your EX area.
+      [act] Fuse X Loot cards that cost 1 or more: Place X fusion counters on this. X must be 2 or less.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(Draw, Token);
+}
+ability Spell name Draw {
+    condition r(Fusion);
+    effect Draw(1);
+}
+ability Spell name Token {
+    condition r(Fusion)=0;
+    effect SummonToken(Gilded Blade, ExArea, 1);
+}
+ability ActFromHand {
+	condition [H(t(Loot)p(m(1,99))) | x(t(Loot)p(m(1,99)))];
+	effect ComplexEffect(
+		let x = payCost(Fuse).movedCardsCount
+		performCostless Fuse { }
+		perform Counters { amount = x }
+	);
+}
+ability Spell name Fuse {
+	cost (FuseCost, m(0,2), t(Loot)p(m(1,99))), (IgnorePrompt);
+	effect Fuse();
+}
+ability Spell name Counters {
+	effect GiveCounters(Fusion, _) to Self;
+}
+
+// ------------------------------
+
+name Sinciro, Heir to Usurpation (Evolved);
+id BP20-021;
+class Sword;
+type Evolved Follower;
+trait Omen / Heir / Thief;
+rarity L;
+stats 4/4;
+
+text "If this would deal ability damage, it deals that much +2 for every fusion counter on it instead.
+      On Evolve - Select an enemy follower on the field and deal it 3 damage.
+      On Super-Evolve - Deal 1 damage to each enemy leader and enemy follower on the field.";
+
+ability OnEvolve {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability OnSuperEvolve {
+    effect DealDamage(1) to AllOpponentCardsAndLeader F;
+}
+ability Passive {
+    effect DynamicPlusAbilityDamage(r(Fusion)*2);
+}
+
+// ------------------------------
+
+name Aurelia, Glorious Saber;
+id BP20-022;
+class Sword;
+type Follower;
+trait Commander / Princess;
+rarity L;
+cost 5;
+stats 3/4;
+
+text "This costs X less to play. X equals the number of [swordcraft] cards on your field.
+      ----------
+      Rush. Assail. Ward.
+      Strike - Draw a card.";
+
+keywords Rush, Assail, Ward;
+ability ModifiedCost {
+    effect ReducedCost(f(c(Sword)));
+}
+ability Strike {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Congregant of Usurpation;
+id BP20-023;
+class Sword;
+type Follower;
+trait Omen / Thief;
+rarity G;
+cost 5;
+stats 4/4;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Congregant of Usurpation (Evolved);
+id BP20-024;
+class Sword;
+type Evolved Follower;
+trait Omen / Thief;
+rarity G;
+stats 5/5;
+
+text "On Evolve - Select an enemy follower on the field and deal it 5 damage. The next Loot card you play this turn costs 2 less.
+      Whenever an enemy follower is put from the field into the cemetery, put a Gilded Blade, Gilded Goblet, or Gilded Boots token into your EX area.";
+
+ability OnEvolve {
+    effect Sequence(Damage, MinusCost);
+}
+ability Spell name Damage {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name MinusCost {
+    effect MinusCostNextCardEndOfTurn(2, t(Loot));
+}
+ability OnOpponentCardFieldToCemetery {
+    filter F;
+    effect ChooseFromList(1, Blade, Goblet, Boots);
+}
+ability Spell name Blade {
+    effect SummonToken(Gilded Blade, ExArea, 1);
+}
+ability Spell name Goblet {
+    effect SummonToken(Gilded Goblet, ExArea, 1);
+}
+ability Spell name Boots {
+    effect SummonToken(Gilded Boots, ExArea, 1);
+}
+
+// ------------------------------
+
+name Fearful Fighter;
+id BP20-025;
+class Sword;
+type Follower;
+trait Officer;
+rarity G;
+cost 5;
+stats 5/5;
+
+text "NOT FULLY IMPLEMENTED
+      Intimidate.
+      [fanfare] Select up to 2 enemy followers on the field and deal 6 damage divided between them.
+      During your turn, whenever an enemy follower that took damage this turn from this is put from the field into the cemetery, put the top card of your deck into your EX area.";
+
+keyword Intimidate;
+ability Fanfare {
+    effect DealDamageDivided(6) to TargetOpponentCard Fm(0,2);
+}
+
+// ------------------------------
+
+name Returning Slash;
+id BP20-026;
+class Sword;
+type Spell;
+trait Omen / Thief / Loot;
+rarity G;
+cost 2;
+
+text "Select an enemy follower on the field. Deal it 4 damage and, if there's a follower on your field with "Octrice" in its name, put a Gilded Blade token into your EX area.
+      [act] Fuse a Loot card that costs 1 or more: Give this "This costs 1 less to play."";
+
+ability Spell {
+    condition p(#F);
+    effect Sequence(Damage, Token);
+}
+ability Spell name Damage {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability Spell name Token {
+    condition f(FnE(Octrice));
+    effect SummonToken(Gilded Blade, ExArea, 1);
+}
+ability ActFromHand {
+    cost (FuseCost, 1, t(Loot)p(m(0,99)));
+    effect Fuse(MinusCost);
+}
+ability Spell name MinusCost {
+    effect GiveStat(Cost, -1) to Self;
+}
+
+// ------------------------------
+
+name Peppy Scout;
+id BP20-027;
+class Sword;
+type Follower;
+trait Officer;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Peppy Scout (Evolved);
+id BP20-028;
+class Sword;
+type Evolved Follower;
+trait Officer;
+rarity S;
+stats 4/4;
+
+text "On Evolve - Search your deck for an Officer follower that costs 3 or less, summon it, then shuffle.
+      Once per turn, when an Officer follower is put onto your field, draw a card.";
+
+ability OnEvolve {
+    effect Search(1, Ft(Officer)p(m(0,3)), Field);
+}
+ability OnOtherEnterField {
+    cost (OncePerTurn);
+    filter Ft(Officer);
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Supplicant of Usurpation;
+id BP20-029;
+class Sword;
+type Follower;
+trait Omen / Thief;
+rarity S;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Put a Gilded Goblet token into your EX area.
+      Once per turn, when you play or fuse a Loot card, give your leader [defense]+1.";
+
+ability Fanfare {
+    effect SummonToken(Gilded Goblet, ExArea, 1);
+}
+ability OnPlayOrFuse {
+    filter t(Loot);
+    cost (OncePerTurn);
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Lair of Usurpation;
+id BP20-030;
+class Sword;
+type Amulet;
+trait Omen / Thief;
+rarity S;
+cost 8;
+
+text "[act] [engage], remove a fusion counter from this, bury this: Search your deck for up to 3 differently named Omen–Thief followers that cost a total of 8 or less, summon them, then shuffle.
+      [act] Fuse 3 Loot cards that cost 1 or more: Place a fusion counter on this.";
+
+ability Act {
+    cost (EngageSelf), (RemoveCounters, Fusion, 1), (SendToCemetery, Self);
+    effect Search(3, Ft(Omen / Thief)n^pE(8), Field);
+}
+ability ActFromHand {
+    cost (FuseCost, 3, t(Loot)p(m(0,99)));
+    effect Fuse(Counter);
+}
+ability Spell name Counter {
+    effect GiveCounter(Fusion, 1) to Self;
+}
+
+// ------------------------------
+
+name Comrade of the Swordmaster;
+id BP20-031;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Search your deck for an Officer follower that costs 2 or less, put it into your EX area, then shuffle.";
+
+evolve 1;
+ability Fanfare {
+    effect Search(1, Ft(Officer)p(m(0,2)), ExArea);
+}
+
+// ------------------------------
+
+name Comrade of the Swordmaster (Evolved);
+id BP20-032;
+class Sword;
+type Evolved Follower;
+trait Officer;
+rarity B;
+stats 4/4;
+
+text "On Evolve - Select an enemy follower on the field and deal it 4 damage.";
+
+ability OnEvolve {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Devotee of Usurpation;
+id BP20-033;
+class Sword;
+type Follower;
+trait Omen / Thief;
+rarity B;
+cost 3;
+stats 3/2;
+
+text "Rush.
+      Whenever you play or fuse a Loot card, give this Assail.
+      [lastwords] Put a Gilded Goblet and Gilded Boots token into your EX area.";
+
+keyword Rush;
+ability OnPlayOrFuse {
+    filter t(Loot);
+    effect GiveKeyword(Assail) to Self;
+}
+ability LastWords {
+    effect Sequence(Goblet, Boots);
+}
+ability Spell name Goblet {
+    effect SummonToken(Gilded Goblet, ExArea, 1);
+}
+ability Spell name Boots {
+    effect SummonToken(Gilded Boots, ExArea, 1);
+}
+
+// ------------------------------
+
+name Mercurial Mercenary;
+id BP20-034;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] [cost02]: Search your deck for a Mercurial Mercenary, summon it, then shuffle. Give each Mercurial Mercenary on your field [attack]+1/[defense]+1.
+      [act] [engage]: Select an enemy follower on the field and deal it damage equal to the number of cards on your field named Mercurial Mercenary.";
+
+ability Fanfare {
+    cost (PP, 2);
+    effect Sequence(Search, AtkDef);
+}
+ability Spell name Search {
+    effect Search(1, n(Mercurial Mercenary), Field);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards n(Mercurial Mercenary);
+}
+ability Act {
+    cost (EngageSelf);
+    condition p(#F);
+    effect DealDamage(f(n(Mercurial Mercenary))) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Palace Knight;
+id BP20-035;
+class Sword;
+type Follower;
+trait Officer;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[fanfare] Put a Steelclad Knight token into your EX area.";
+
+ability Fanfare {
+    effect SummonToken(Steelclad Knight, ExArea, 1);
+}
+
+// ------------------------------
+
+name Shield Bash;
+id BP20-036;
+class Sword;
+type Spell;
+trait Officer;
+rarity B;
+cost 1;
+
+text "Select a follower on your field and give it Assail and, for the rest of this turn, "This doesn't take damage."";
+
+ability Spell {
+    condition f(F);
+    effect TargetForSequence(Assail, Damage) to TargetPlayerCard F;
+}
+ability Spell name Assail {
+    effect GiveKeyword(Assail) to AllPlayerCards;
+}
+ability Spell name Damage {
+    effect GiveKeywordEndOfTurn(DoesNotTakeDamage) to AllPlayerCards;
+}

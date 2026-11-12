@@ -36,6 +36,7 @@ namespace SVESimulator.UI
 
         public string Text
         {
+            get => textbox.text;
             set => textbox.text = value;
         }
 

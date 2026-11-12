@@ -463,7 +463,7 @@ namespace SVESimulator
             bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
 
             if(originZone.IsNullOrWhiteSpace())
-                originZone = localZoneController.handZone.ContainsCard(card) ? SVEProperties.Zones.Hand : SVEProperties.Zones.ExArea;
+                originZone = card.CurrentZone.Runtime.name;
             sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
             localZoneController.PlayCardToField(card, slot);
 
@@ -1334,15 +1334,15 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            PayAbilityCosts(card, costs, abilityName, (_, _) => { onComplete?.Invoke(); });
+            PayAbilityCosts(card, costs, abilityName, (_, _, _) => { onComplete?.Invoke(); });
         }
 
-        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
         {
             if(costs == null || costs.Count == 0)
             {
                 IsPayingCosts = false;
-                onComplete?.Invoke(null, null);
+                onComplete?.Invoke(null, null, null);
                 return;
             }
             StartCoroutine(Resolve());
@@ -1352,6 +1352,7 @@ namespace SVESimulator
                 // Pay cost locally/visuals only - do not use event functions or actual data handling in order to avoid sending overlapping network messages
                 string cardOriginZone = card.CurrentZone.Runtime.name;
                 List<MoveCardToZoneData> cardsToMove = new(); // TODO - compress these lists into a container class
+                List<MoveCardToZoneData> fusedCards = new();
                 List<RemoveCounterData> countersToRemove = new();
                 List<int> cardInstanceIdsToEngage = new();
                 foreach(Cost cost in costs)
@@ -1363,6 +1364,8 @@ namespace SVESimulator
                         yield return StartCoroutine(removeCounterCost.PayCost(playerController, card, abilityName, countersToRemove));
                     else if(sveCost is EngageCardCost engageCardCost)
                         yield return StartCoroutine(engageCardCost.PayCost(playerController, card, abilityName, cardInstanceIdsToEngage));
+                    else if(sveCost is FuseCost fuseCost)
+                        yield return StartCoroutine(fuseCost.PayCost(playerController, card, abilityName, fusedCards));
                     else
                         yield return StartCoroutine(sveCost.PayCost(playerController, card, abilityName, cardsToMove));
                 }
@@ -1385,7 +1388,7 @@ namespace SVESimulator
                 }
 
                 // Resolve paying cost
-                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
+                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), fusedCards.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
 
                 LocalPayEffectCostMessage msg = new()
                 {
@@ -1394,6 +1397,7 @@ namespace SVESimulator
                     originZone = cardOriginZone,
                     abilityName = abilityName,
                     cardsMoveToZoneData = cardsToMove.ToArray(),
+                    fusedCardsData = fusedCards.ToArray(),
                     countersToRemove = countersToRemove.ToArray(),
                     cardInstanceIdsToEngage = cardInstanceIdsToEngage.ToArray()
                 };
@@ -1413,7 +1417,7 @@ namespace SVESimulator
 
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
-                onComplete?.Invoke(cardsToMove, countersToRemove);
+                onComplete?.Invoke(cardsToMove, fusedCards, countersToRemove);
                 IsPayingCosts = false;
             }
         }

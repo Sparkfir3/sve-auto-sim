@@ -22,12 +22,13 @@ namespace SVESimulator
         public string effectName5;
 
         public List<string> allEffects => new() { effectName1, effectName2, effectName3, effectName4, effectName5 };
-        protected virtual bool ShouldAddSkipButton => false;
+        protected bool ShouldAddSkipButton { get; set; }
 
         // ------------------------------
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            ShouldAddSkipButton = true;
             CardObject cardObject = CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId);
             Card libraryCard = LibraryCardCache.GetCard(cardObject.RuntimeCard.cardId, GameManager.Instance.config);
             List<Ability> sveAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility { effect: SveEffect });
@@ -62,6 +63,8 @@ namespace SVESimulator
                         || !player.LocalEvents.CanPayCosts(cardObject.RuntimeCard, trigger.Costs, effectName))
                         enabled = false;
                 }
+                if(enabled)
+                    ShouldAddSkipButton = false;
 
                 // Populate multiple choice window
                 MultipleChoiceWindow.MultipleChoiceEntryData entry = new()
@@ -69,6 +72,8 @@ namespace SVESimulator
                     text = effect.text ?? effectName,
                     onSelect = () =>
                     {
+                        // adding to abilities used list required for OncePerTurn checks
+                        player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(cardObject.RuntimeCard.instanceId, cardObject.LibraryCard.id, abilityToResolve.name));
                         // no need for CanPayCost check, this button should be disabled if cost check above failed
                         player.LocalEvents.PayAbilityCosts(cardObject, trigger?.Costs, effectName, () =>
                         {

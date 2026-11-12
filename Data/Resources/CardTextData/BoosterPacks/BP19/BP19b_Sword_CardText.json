@@ -1,0 +1,318 @@
+[
+  {
+    "id": "BP19-019EN",
+    "name": "Barbaros, Briny Convict",
+    "trait": "Condemned / Thief",
+    "cardText": "[evolve] [cost01]: Evolve this.\nDuring your turn, any Loot card you play from the EX area costs 1 less.\n[fanfare] Put a Dread Pirate's Flag token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Dread Pirate's Flag token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-020EN",
+    "name": "Barbaros, Briny Convict (Evolved)",
+    "trait": "Condemned / Thief",
+    "cardText": "During your turn, any Loot card you play from the EX area costs 1 less.\nDuring your turn, whenever you play a Loot card, choose 1 that you haven't chosen this turn. (1) Select an enemy follower on the field and destroy it. (2) Each opponent buries the top 2 cards of their deck. (3) Recover 2 play points.",
+    "effectText": [
+      {
+        "key": "OnPlayCard",
+        "body": "During your turn, whenever you play a Loot card, choose 1 that you haven't chosen this turn. (1) Select an enemy follower on the field and destroy it. (2) Each opponent buries the top 2 cards of their deck. (3) Recover 2 play points."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select an enemy follower on the field and destroy it."
+      },
+      {
+        "key": "Bury",
+        "body": "Each opponent buries the top 2 cards of their deck."
+      },
+      {
+        "key": "PlayPoints",
+        "body": "Recover 2 play points."
+      }
+    ]
+  },
+  {
+    "id": "BP19-021EN",
+    "name": "Radiel, Valorous Enforcer",
+    "trait": "Condemned / Commander",
+    "cardText": "Storm. Ward.\n[fanfare] If there are at least 5 [swordcraft] followers on your field and/or in your EX area, banish each enemy follower on the field.\nStrike - If there are at least 10 [swordcraft] followers on your field and/or in your EX area, refresh this. Perform only twice per turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 5 [swordcraft] followers on your field and/or in your EX area, banish each enemy follower on the field."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "If there are at least 10 [swordcraft] followers on your field and/or in your EX area, refresh this. Perform only twice per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP19-022EN",
+    "name": "Gildaria, Anathema of Peace",
+    "trait": "Anathema / Beast",
+    "cardText": "[evolve] [cost02]: Evolve this.\n[fanfare] Summon a Steelclad Knight and Knight token. Then, if there are 5 [swordcraft] cards on your field, evolve this.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Steelclad Knight and Knight token. Then, if there are 5 [swordcraft] cards on your field, evolve this."
+      },
+      {
+        "key": "ChooseTokens",
+        "body": "Summon a Steelclad Knight and Knight token."
+      },
+      {
+        "key": "Steelclad",
+        "body": "Summon a Steelclad Knight token."
+      },
+      {
+        "key": "Knight",
+        "body": "Summon a Knight token."
+      },
+      {
+        "key": "Evolve",
+        "text": "If there are 5 [swordcraft] cards on your field, evolve this.",
+        "body": "Evolve this."
+      }
+    ]
+  },
+  {
+    "id": "BP19-023EN",
+    "name": "Gildaria, Anathema of Peace (Evolved)",
+    "trait": "Anathema / Beast",
+    "cardText": "On Evolve - Deal 4 damage to each enemy follower on the field and 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Deal 4 damage to each enemy follower on the field and 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-024EN",
+    "name": "Warden of Honor",
+    "trait": "Condemned / Commander",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Put the top card of your deck into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put the top card of your deck into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-025EN",
+    "name": "Warden of Honor (Evolved)",
+    "trait": "Condemned / Commander",
+    "cardText": "Ward.\nOn Evolve - Choose 1. (1) Search your deck for a Warden of Honor, summon it, then shuffle. (2) [cost03]: Search your deck for a Radiel, Valorous Enforcer, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Choose 1. (1) Search your deck for a Warden of Honor, summon it, then shuffle. (2) [cost03]: Search your deck for a Radiel, Valorous Enforcer, summon it, then shuffle."
+      },
+      {
+        "key": "Warden",
+        "body": "Search your deck for a Warden of Honor, summon it, then shuffle."
+      },
+      {
+        "key": "Radiel",
+        "cost": "[cost03]",
+        "body": "Search your deck for a Radiel, Valorous Enforcer, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP19-026EN",
+    "name": "Tidal Gunner",
+    "trait": "Condemned / Thief",
+    "cardText": "[fanfare] Put a Dread Pirate's Flag token into your EX area.\nWhenever you play a Dread Pirate's Flag, select an enemy leader or enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Dread Pirate's Flag token into your EX area."
+      },
+      {
+        "key": "OnPlayCard",
+        "text": "Whenever you play a Dread Pirate's Flag, select an enemy leader or enemy follower on the field and deal it 1 damage.",
+        "trigger": "Whenever you play a Dread Pirate's Flag,",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-027EN",
+    "name": "Prim, Princess's Picnic",
+    "trait": "Commander / Princess",
+    "cardText": "[fanfare] Search your deck for a Maid follower, reveal it, add it to your hand, then shuffle.\n[act] [cost01], [engage]: You may summon a Nonja, Silent Maid from your hand and give it Ward.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Maid follower, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage]",
+        "body": "You may summon a Nonja, Silent Maid from your hand and give it Ward."
+      }
+    ]
+  },
+  {
+    "id": "BP19-028EN",
+    "name": "Storm-Wracked First Mate",
+    "trait": "Condemned / Thief",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Put a Dread Pirate's Flag token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Dread Pirate's Flag token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-029EN",
+    "name": "Storm-Wracked First Mate (Evolved)",
+    "trait": "Condemned / Thief",
+    "cardText": "On Evolve - Search your deck for a Condemned–Thief follower, reveal it, add it to your hand, then shuffle.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for a Condemned–Thief follower, reveal it, add it to your hand, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP19-030EN",
+    "name": "Deep-Sea Scout",
+    "trait": "Condemned / Thief",
+    "cardText": "[fanfare] Put a Dread Pirate's Flag token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Dread Pirate's Flag token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-031EN",
+    "name": "Return from the Brink",
+    "trait": "Officer",
+    "cardText": "Select an Officer follower in your cemetery. Put it into your EX area and give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an Officer follower in your cemetery. Put it into your EX area and give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-032EN",
+    "name": "Felpurr Maid",
+    "trait": "Maid / Beast",
+    "cardText": "[evolve] [cost01]: Evolve this.\nStorm.\nStrike - Draw a card.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-033EN",
+    "name": "Felpurr Maid (Evolved)",
+    "trait": "Maid / Beast",
+    "cardText": "Storm.\nOn Evolve - Deal 1 damage to each enemy follower on the field.\nStrike - Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Deal 1 damage to each enemy follower on the field."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-034EN",
+    "name": "Knightly Thief",
+    "trait": "Officer / Thief",
+    "cardText": "Rush.\n[lastwords] Put a Gilded Blade token into your EX area.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put a Gilded Blade token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-035EN",
+    "name": "Heavy Warrior",
+    "trait": "Officer",
+    "cardText": "Ward.\n[fanfare] Select an enemy follower on the field. Deal 3 damage to it and its leader.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. Deal 3 damage to it and its leader."
+      },
+      {
+        "key": "Follower",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. Deal 3 damage to it and its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-036EN",
+    "name": "Ninja Onslaught",
+    "trait": "Ninja",
+    "cardText": "Select an enemy follower on the field. Deal it 2 damage and draw a card. If there's a Ninja follower on your field, deal 3 damage instead.",
+    "effectText": [
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 2 damage and draw a card. If there's a Ninja follower on your field, deal 3 damage instead."
+      }
+    ]
+  },
+  {
+    "id": "BP19-037EN",
+    "name": "Cannon Volley",
+    "trait": "Officer",
+    "cardText": "Select an enemy follower on the field. Summon a Shield Guardian and Knight token, then deal the selected follower damage equal to the number of [swordcraft] followers on your field.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field. Summon a Shield Guardian and Knight token, then deal the selected follower damage equal to the number of [swordcraft] followers on your field."
+      },
+      {
+        "key": "Shield",
+        "body": "Summon a Shield Guardian token"
+      },
+      {
+        "key": "Knight",
+        "body": "Summon a Knight token"
+      }
+    ]
+  }
+]

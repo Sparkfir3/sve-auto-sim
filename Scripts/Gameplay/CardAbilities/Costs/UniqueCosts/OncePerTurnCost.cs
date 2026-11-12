@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using UnityEngine;
 using CCGKit;
 
 namespace SVESimulator

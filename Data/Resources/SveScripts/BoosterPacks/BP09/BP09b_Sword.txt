@@ -1,0 +1,61 @@
+name Prim, Innocent Princess;
+id BP09-021;
+class Sword;
+type Follower;
+trait Commander / Princess;
+rarity G;
+cost 2;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this follower.
+      [fanfare] Summon a Knight token.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken(Knight, Field, 1);
+}
+
+// ------------------------------
+
+name Prim, Innocent Princess (Evolved);
+id BP09-022;
+class Sword;
+type Evolved Follower;
+trait Commander / Princess;
+rarity G;
+stats 2/2;
+
+text "On Evolve - Search your deck for a Nonja, Silent Maid, reveal it, add it to your hand, then shuffle your deck.";
+
+ability OnEvolve {
+    effect Search(1, n(Nonja, Silent Maid), Hand);
+}
+
+// ------------------------------
+
+name Nonja, Silent Maid;
+id BP09-023;
+class Sword;
+type Follower;
+trait Officer / Maid;
+rarity G;
+cost 3;
+stats 4/4;
+
+text "This card costs 1 less to play if there's a Prim, Innocent Princess on your field.
+      ----------
+      [fanfare] Draw 2 cards. Discard 2 cards.";
+
+ability ModifiedCost {
+    condition f(n(Prim, Innocent Princess));
+    effect ReducedCost(1);
+}
+ability Fanfare {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(2);
+}
+ability Spell name Discard {
+    effect Discard(2);
+}

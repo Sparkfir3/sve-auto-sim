@@ -546,6 +546,7 @@ namespace SVESimulator.SveScript
             { "EvolveSelectTarget", new EffectParams("EvolveSelectTargetEffect",                    false, false, EffectParameterType.Filter) },
             { "ExtraTurn", new EffectParams("ExtraTurnEffect",                                      false, false) },
             { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",            false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
+            { "Fuse", new EffectParams("FuseEffect",                                                false, false, EffectParameterType.ListOfEffects) },
             { "MinusCostNextCardEndOfTurn", new EffectParams("MinusCostNextCardEndOfTurnEffect",    false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "RevealTop", new EffectParams("RevealTopDeckEffect",                                  false, false, EffectParameterType.CheckCardActions) },
 
@@ -565,6 +566,9 @@ namespace SVESimulator.SveScript
             { "GiveStat", new EffectParams("GiveStatBoostPassive",                          false, true, EffectParameterType.StatType, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
             { "GiveTrait", new EffectParams("AddTraitPassive",                              false, true, EffectParameterType.Trait, EffectParameterType.PassiveDuration) },
             { "MinusCostOther", new EffectParams("MinusCostOtherPassive",                   false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
+            { "MinusCostOtherEx", new EffectParams("MinusCostOtherExPassive",               false, true, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
+
+            { "DynamicPlusAbilityDamage", new EffectParams("DynamicPlusAbilityDamagePassive",   false, false, EffectParameterType.Amount, EffectParameterType.PassiveDuration) },
         };
 
         #endregion

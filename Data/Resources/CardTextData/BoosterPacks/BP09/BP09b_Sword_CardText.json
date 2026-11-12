@@ -1,0 +1,45 @@
+[
+  {
+    "id": "BP09-021EN",
+    "name": "Prim, Innocent Princess",
+    "trait": "Commander / Princess",
+    "cardText": "[evolve] [cost01]: Evolve this follower.\n[fanfare] Summon a Knight token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Knight token."
+      }
+    ]
+  },
+  {
+    "id": "BP09-022EN",
+    "name": "Prim, Innocent Princess (Evolved)",
+    "trait": "Commander / Princess",
+    "cardText": "On Evolve - Search your deck for a Nonja, Silent Maid, reveal it, add it to your hand, then shuffle your deck.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for a Nonja, Silent Maid, reveal it, add it to your hand, then shuffle your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP09-023EN",
+    "name": "Nonja, Silent Maid",
+    "trait": "Officer / Maid",
+    "cardText": "This card costs 1 less to play if there's a Prim, Innocent Princess on your field.\n----------\n[fanfare] Draw 2 cards. Discard 2 cards.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw 2 cards. Discard 2 cards."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard 2 cards."
+      }
+    ]
+  }
+]

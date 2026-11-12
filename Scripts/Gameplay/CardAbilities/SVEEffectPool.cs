@@ -106,10 +106,10 @@ namespace SVESimulator
                         .First(x => x.Value.cards.Any(y => y.instanceId == sourceCard.instanceId)).Key;
 
                     // Condition & cost checks
-                    if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, null as RuntimeCard))
+                    if((trigger.condition?.StartsWith("<<") ?? false) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition[2..], localPlayer, sourceCard))
                         break;
                     if(trigger.Costs is { Count: > 0 } &&
-                       trigger.Costs.All(x => x is SveCost { IsInternalCost: true } sveCost && !sveCost.CanPayCost(localPlayer, sourceCard, triggeredAbility.name)))
+                       trigger.Costs.All(x => x is SveCost { IsInternalCost: true } sveCost and not ConditionAsCost && !sveCost.CanPayCost(localPlayer, sourceCard, triggeredAbility.name)))
                         break;
 
                     // Add effect
@@ -218,6 +218,8 @@ namespace SVESimulator
         public void RegisterPassiveAbility(RegisteredPassiveAbility passive)
         {
             registeredPassives.Add(passive);
+            if(passive.effect.duration == SVEProperties.PassiveDuration.PlayerTurn && !localPlayer.isActivePlayer)
+                return;
             if(passive.effect.duration == SVEProperties.PassiveDuration.OpponentTurn && localPlayer.isActivePlayer)
                 return;
             OnNextConfirmationTimingStartOrEnd += () => EnablePassive(passive, localPlayer);
@@ -430,9 +432,10 @@ namespace SVESimulator
 
             // ---
 
-            void Resolve()
+            void Resolve(bool addToUsedThisTurnList = true)
             {
-                localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
+                if(addToUsedThisTurnList)
+                    localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
                 pendingEffect.effect.Resolve(localPlayer, pendingEffect.triggeringCardInstanceId, pendingEffect.triggeringCardZone,
                     pendingEffect.sourceCardInstanceId, pendingEffect.sourceCardZone, () =>
                     {
@@ -443,7 +446,7 @@ namespace SVESimulator
             void ResolveWithCost()
             {
                 localPlayer.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(pendingEffect.sourceCardInstanceId, cardObject.LibraryCard.id, pendingEffect.abilityName));
-                localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.abilityName, Resolve);
+                localPlayer.LocalEvents.PayAbilityCosts(cardObject, pendingEffect.costs, pendingEffect.abilityName, () => Resolve(addToUsedThisTurnList: false));
             }
         }
 
@@ -540,7 +543,8 @@ namespace SVESimulator
 
                 foreach(RegisteredPassiveAbility registeredPassive in registeredPassives)
                 {
-                    if((registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
+                    if((registeredPassive.duration == SVEProperties.PassiveDuration.PlayerTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == !localPlayer.isActivePlayer)
+                       || (registeredPassive.duration == SVEProperties.PassiveDuration.OpponentTurn && (card.ownerPlayer == localPlayer.GetPlayerInfo()) == localPlayer.isActivePlayer)
                        || (registeredPassive.target == SVEProperties.SVEEffectTarget.Self && card.instanceId != registeredPassive.sourceCardInstanceId)
                        || registeredPassive.effect is MinusCostOtherPassive
                        || !registeredPassive.filters.MatchesCard(card)
@@ -571,6 +575,7 @@ namespace SVESimulator
                 if(passive.condition.IsNullOrWhiteSpace())
                     continue;
                 bool meetsCondition = passive.MeetsCondition(localPlayer)
+                    && (passive.duration != SVEProperties.PassiveDuration.PlayerTurn || !localPlayer.isActivePlayer)
                     && (passive.duration != SVEProperties.PassiveDuration.OpponentTurn || localPlayer.isActivePlayer);
 
                 if(meetsCondition && passive.affectedCards.Count == 0)
@@ -589,6 +594,12 @@ namespace SVESimulator
                 {
                     case SVEProperties.PassiveDuration.WhileOnField:
                         continue;
+                    case SVEProperties.PassiveDuration.PlayerTurn:
+                        if(!isTurnPlayer)
+                            DisablePassive(passive);
+                        else
+                            EnablePassive(passive, player);
+                        break;
                     case SVEProperties.PassiveDuration.OpponentTurn:
                         if(isTurnPlayer)
                             DisablePassive(passive);
@@ -614,6 +625,8 @@ namespace SVESimulator
                     continue;
                 if(!passive.filters.MatchesCard(card) || !passive.MeetsCondition(player))
                     continue;
+                if(minusCostEffect is MinusCostOtherExPassive && !player.ZoneController.exAreaZone.ContainsCard(card))
+                    continue;
 
                 PlayerInfo playerInfo = player ? player.GetPlayerInfo() : card.ownerPlayer;
                 RuntimeCard sourceCard = playerInfo.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == passive.sourceCardInstanceId);
@@ -637,7 +650,8 @@ namespace SVESimulator
                 if(card)
                 {
                     passive.effect.ApplyPassive(card.RuntimeCard, player);
-                    passive.affectedCards.Add(card.RuntimeCard);
+                    if(!passive.affectedCards.Contains(card.RuntimeCard))
+                        passive.affectedCards.Add(card.RuntimeCard);
                 }
                 return;
             }
@@ -740,6 +754,20 @@ namespace SVESimulator
                 }
             }
             return additionalNames != null;
+        }
+
+        public int GetDynamicPlusAbilityDamage(RuntimeCard card, PlayerController player = null)
+        {
+            int amount = 0;
+            for(int i = 0; i < registeredPassives.Count; i++)
+            {
+                if(registeredPassives[i].effect is not DynamicPlusAbilityDamagePassive plusDamagePassive
+                   || registeredPassives[i].affectedCards.All(x => x.instanceId != card.instanceId))
+                    continue;
+                amount += plusDamagePassive.GetPlusDamageAmount(card, player);
+            }
+            Debug.Log(amount);
+            return amount;
         }
 
         #endregion

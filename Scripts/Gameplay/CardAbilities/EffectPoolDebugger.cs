@@ -13,6 +13,7 @@ namespace SVESimulator
         [Serializable]
         private struct SerializedPassive
         {
+            public string name;
             public int sourceCardInstanceId;
             public List<int> affectedCardIds;
             public SVEProperties.SVEEffectTarget target;
@@ -38,13 +39,14 @@ namespace SVESimulator
             effectPool.CmdExecuteConfirmationTiming();
         }
 
-        private void UpdatePassives()
+        private void UpdateSerializedPassives()
         {
             registeredPassives.Clear();
             foreach(RegisteredPassiveAbility passive in effectPool.RegisteredPassives)
             {
                 registeredPassives.Add(new SerializedPassive
                 {
+                    name = passive.effect.GetType().Name,
                     sourceCardInstanceId = passive.sourceCardInstanceId,
                     affectedCardIds = passive.affectedCards.Select(x => x.instanceId).ToList(),
                     target = passive.target,
@@ -54,13 +56,13 @@ namespace SVESimulator
         }
 
 #if UNITY_EDITOR
-        [TitleGroup("Controls"), Button("Update Passives"), DisableInEditorMode]
+        [TitleGroup("Controls"), Button("Update Serialized Passives"), DisableInEditorMode]
         private void OnValidate()
         {
             if(!effectPool)
                 effectPool = GetComponent<SVEEffectPool>();
             if(Application.isPlaying)
-                UpdatePassives();
+                UpdateSerializedPassives();
         }
 
         [TitleGroup("Debugging"), Button]

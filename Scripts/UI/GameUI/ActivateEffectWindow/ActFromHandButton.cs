@@ -118,11 +118,15 @@ namespace SVESimulator.UI
                 if(firstCard)
                 {
                     GameUIManager.ActivateEffect.Open(player, card, abilities, checkEvolveServe: false, checkStack: false);
+                    foreach(MultipleChoiceButton actButton in GameUIManager.ActivateEffect.ActiveButtons)
+                        actButton.Text = $"{LibraryCardCache.GetName(card.RuntimeCard.cardId)}\n{actButton.Text}";
                     firstCard = false;
                 }
                 else
                 {
-                    GameUIManager.ActivateEffect.AddEffects(player, card, abilities);
+                    List<MultipleChoiceButton> addedButtons = GameUIManager.ActivateEffect.AddEffects(player, card, abilities);
+                    foreach(MultipleChoiceButton actButton in addedButtons)
+                        actButton.Text = $"{LibraryCardCache.GetName(card.RuntimeCard.cardId)}\n{actButton.Text}";
                 }
             }
             GameUIManager.ActivateEffect.SetAnchoredPosition(new Vector2(buttonRectTransform.anchoredPosition.x,

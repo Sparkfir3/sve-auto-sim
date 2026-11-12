@@ -632,12 +632,13 @@ namespace SVESimulator
                 originZone = msg.originZone,
                 abilityName = msg.abilityName,
                 cardsMoveToZoneData = msg.cardsMoveToZoneData,
+                fusedCardsData = msg.fusedCardsData,
                 countersToRemove = msg.countersToRemove,
                 cardInstanceIdsToEngage = msg.cardInstanceIdsToEngage,
                 additionalNetCardData = additionalNetCardData.ToArray()
             };
             server.SafeSendToClient(server.gameState.currentOpponent, payCostMsg);
-            (server.effectSolver as SVEEffectSolver).PayAbilityCosts(player, card, costList, msg.cardsMoveToZoneData, msg.countersToRemove, msg.cardInstanceIdsToEngage);
+            (server.effectSolver as SVEEffectSolver).PayAbilityCosts(player, card, costList, msg.cardsMoveToZoneData, msg.fusedCardsData, msg.countersToRemove, msg.cardInstanceIdsToEngage);
         }
 
         #endregion
