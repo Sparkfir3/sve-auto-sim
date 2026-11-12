@@ -64878,7 +64878,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "function": "let t = targetCard(F)\nlet x = revealTopDeck.getValue(P)\nperform Def { amount = x, trigger = t }\nperform Draw { }",
+              "function": "let t = getTargetCard(F)\nlet x = revealTopDeck.getValue(P)\nperform Def { amount = x, trigger = t }\nperform Draw { }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "$type": "CCGKit.TriggeredAbility"

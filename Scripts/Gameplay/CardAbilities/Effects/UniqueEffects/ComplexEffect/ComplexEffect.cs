@@ -160,6 +160,7 @@ namespace SVESimulator
                 "millDeck" =>                   await MillDeck(args),
                 "payCost" =>                    await PayEffectCost(args, true),
                 "mayPayCost" =>                 await PayEffectCost(args, false),
+                "getTargetCard" =>              await GetTargetCard(args),
                 _ => null
             };
             if(obj == null)

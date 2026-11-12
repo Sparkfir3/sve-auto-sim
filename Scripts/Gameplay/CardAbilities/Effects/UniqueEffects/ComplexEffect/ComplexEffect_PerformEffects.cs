@@ -173,6 +173,30 @@ namespace SVESimulator
 
         #region Other
 
+        private async Task<CE_Object> GetTargetCard(string filter)
+        {
+            bool waiting = true;
+            TargetCardForCostEffect getTargetsEffect = new()
+            {
+                text = text,
+                target = SVEProperties.SVEEffectTarget.TargetPlayerCard,
+                filter = filter
+            };
+
+            CE_Card card = null;
+            getTargetsEffect.GetTargets(player, sourceInstanceId, SVEProperties.Zones.Field, targets =>
+            {
+                card = new CE_Card(targets.FirstOrDefault()?.RuntimeCard);
+                waiting = false;
+            });
+            while(waiting && !BreakCondition)
+                await Task.Yield();
+            ComplexLog(LogMode.Value, $"[Target Card] Instance ID {(card != null ? card.card.instanceId : "null")} " +
+                $"with filer {filter}");
+            await Task.Delay(200);
+            return card;
+        }
+
         private async Task<CE_Object> RevealTopDeck()
         {
             bool waiting = true;
