@@ -104,6 +104,7 @@ namespace SVESimulator
             List<Cost> costs = trigger?.Costs;
             List<MoveCardToZoneData> movedCardsData = null;
             List<RemoveCounterData> removedCountersData = null;
+            List<int> engagedCardInstanceIds = null;
 
             // Select pay or decline
             bool waiting = false;
@@ -145,6 +146,7 @@ namespace SVESimulator
                 movedCardsData = costData.CardsToMove.ToList();
                 movedCardsData.AddRange(costData.FusedCards);
                 removedCountersData = costData.CountersToRemove.ToList();
+                engagedCardInstanceIds = costData.EngagedCardsInstanceIds.ToList();
                 waiting = false;
             });
 
@@ -156,7 +158,8 @@ namespace SVESimulator
             return new CE_EffectCost
             {
                 movedCardsData = movedCardsData,
-                removedCountersData = removedCountersData
+                removedCountersData = removedCountersData,
+                engagedCardsInstanceIds = engagedCardInstanceIds
             };
         }
 
