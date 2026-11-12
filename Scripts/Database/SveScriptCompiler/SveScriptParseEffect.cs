@@ -525,6 +525,7 @@ namespace SVESimulator.SveScript
 
             // Effect Sequencing - Choose From List
             { "ChooseAmountFromList", new EffectParams("ChooseAmountFromList",                              false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
+            { "ChooseAmountFromListWithRepeats", new EffectParams("ChooseAmountFromListWithRepeats",        false, false, EffectParameterType.Amount, EffectParameterType.ListOfEffects) },
             { "ChooseFromList", new EffectParams("ChooseEffectFromList",                                    false, false, EffectParameterType.ListOfEffects) },
             { "RollDice", new EffectParams("RollDiceEffect",                                                false, false, EffectParameterType.ListOfEffects6) },
 

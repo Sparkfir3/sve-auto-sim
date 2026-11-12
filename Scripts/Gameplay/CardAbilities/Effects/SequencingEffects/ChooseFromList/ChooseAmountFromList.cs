@@ -10,6 +10,8 @@ namespace SVESimulator
 {
     public class ChooseAmountFromList : ChooseEffectFromList
     {
+        protected virtual bool RemoveEffectFromRemaining => true;
+
         [StringField("Amount", width = 100), Order(11)]
         public string amount;
 
@@ -34,7 +36,7 @@ namespace SVESimulator
                     {
                         if(x.IsNullOrWhiteSpace())
                             maxRemaining = 0;
-                        else
+                        else if(RemoveEffectFromRemaining)
                             remainingEffectList.Remove(x);
                     }));
                 yield return new WaitUntil(() => !waiting);
