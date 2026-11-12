@@ -139,10 +139,25 @@ type Spell;
 trait Omen / Idolatry / Token;
 cost 0;
 
-text "NOT IMPLEMENTED
-      As an additional cost to play this, you may engage any number of Idolatry cards on your field.
+text "As an additional cost to play this, you may engage any number of Idolatry cards on your field.
       ----------
       Select an enemy follower on the field and deal it damage equal to 2 times the number of Idolatry cards you engaged as the additional cost to play this.";
+
+ability Spell {
+    condition p(#F);
+    effect ComplexEffect(
+        let x = payCost(Cost).engagedCardsCount
+        let x = x * 2
+        perform Damage { amount = x }
+    );
+}
+ability Spell name Cost {
+    cost (Engage, TargetPlayerCard, t(Idolatry)m(0,5)), (IgnorePrompt);
+    effect Sequence();
+}
+ability Spell name Damage {
+    effect DealDamage(_) to TargetOpponentCard F;
+}
 
 // ------------------------------
 
