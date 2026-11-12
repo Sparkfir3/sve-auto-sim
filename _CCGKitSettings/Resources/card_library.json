@@ -63535,7 +63535,7 @@
             "trigger": {
               "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Damage",
+            "name": "Token",
             "type": "Triggered",
             "effect": {
               "tokenName": "Chimera Test Subject",
@@ -64264,10 +64264,10 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "tokenName": "Dread Pirate's Flag",
-              "createTokenOption": "ExArea",
-              "amount": "1",
-              "$type": "SVESimulator.SummonTokenEffect"
+              "effectName1": "Damage",
+              "effectName2": "CheckTop",
+              "effectName3": "MinusCost",
+              "$type": "SVESimulator.EffectSequence"
             },
             "$type": "CCGKit.TriggeredAbility"
           },
@@ -65455,7 +65455,7 @@
               "target": "AllPlayerCardsEx",
               "targetStats": "Cost",
               "amount": "-1",
-              "$type": "SVESimulator.GiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           }
@@ -65509,7 +65509,7 @@
             "name": "Spell",
             "type": "Triggered",
             "effect": {
-              "target": "TargetPlayerCard",
+              "target": "TargetOpponentCard",
               "filter": "F",
               "effectName1": "Draw",
               "effectName2": "Damage",
@@ -65741,7 +65741,7 @@
             "effect": {
               "target": "Self",
               "targetStats": "AttackDefense",
-              "amount": "1",
+              "amount": "2",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -70996,9 +70996,9 @@
         "abilities": [
           {
             "trigger": {
-              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+              "$type": "SVESimulator.SpellAbility"
             },
-            "name": "Fanfare",
+            "name": "Spell",
             "type": "Triggered",
             "effect": {
               "effectName1": "DestroyDraw",

@@ -56,7 +56,7 @@ ability Spell name Damage {
     condition p(#F);
     effect DealDamage(5) to TargetOpponentCard F;
 }
-ability Spell name Damage {
+ability Spell name Token {
     effect SummonToken(Chimera Test Subject, Field, 1);
 }
 ability OnSuperEvolve {
@@ -193,7 +193,7 @@ stats 2/4;
 text "[fanfare] Deal 2 damage to each enemy follower on the field. Look at the top 3 cards of your deck. You may reveal a Mage card from among them and add it to your hand. Bury the rest. The next Mage card that costs 3 or less you play this turn costs 3 less.";
 
 ability Fanfare {
-    effect SummonToken(Dread Pirate's Flag, ExArea, 1);
+    effect Sequence(Damage, CheckTop, MinusCost);
 }
 ability Spell name Damage {
     effect DealDamage(2) to AllOpponentCards F;
@@ -438,7 +438,7 @@ ability Spell {
 }
 ability Spell name Cost {
     condition s(7);
-    effect GiveStat(Cost, -1) to AllPlayerCardsEx;
+    effect GiveStatEndOfTurn(Cost, -1) to AllPlayerCardsEx;
 }
 
 // ------------------------------
@@ -455,7 +455,7 @@ text "Select an enemy follower on the field. Draw a card, then deal it damage eq
 
 ability Spell {
     condition p(#F);
-    effect TargetForSequence(Draw, Damage) to TargetPlayerCard F;
+    effect TargetForSequence(Draw, Damage) to TargetOpponentCard F;
 }
 ability Spell name Draw {
     effect Draw(1);

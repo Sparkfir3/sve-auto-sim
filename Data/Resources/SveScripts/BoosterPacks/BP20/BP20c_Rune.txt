@@ -205,7 +205,7 @@ cost 1;
 
 text "Choose 1. (1) Select an Idolatry card on your field. Destroy it and draw a card. (2) Summon a White Psalm, New Revelation token.";
 
-ability Fanfare {
+ability Spell {
     effect ChooseFromList(DestroyDraw, Token);
 }
 ability Spell name DestroyDraw {
