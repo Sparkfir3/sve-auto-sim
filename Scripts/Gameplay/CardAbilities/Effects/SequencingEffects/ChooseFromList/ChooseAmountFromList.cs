@@ -20,10 +20,7 @@ namespace SVESimulator
         protected override IEnumerator ResolveCoroutine(List<string> effectList, CardObject cardObject, Card libraryCard, List<Ability> sveAbilities,
             PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete, Action<string> onChooseOption = null)
         {
-            SVEFormulaParser.ParseValueAsMinMax(amount, player, cardObject.RuntimeCard, out int minRemaining, out int maxRemaining);
-            maxRemaining = Mathf.Min(maxRemaining, effectList.Count(x => x != null));
-            minRemaining = Mathf.Min(minRemaining, maxRemaining);
-
+            GetMinMax(player, cardObject.RuntimeCard, effectList.Count(x => x != null), out int minRemaining, out int maxRemaining);
             List<string> remainingEffectList = new(effectList);
             while(maxRemaining > 0)
             {
@@ -46,6 +43,13 @@ namespace SVESimulator
                 maxRemaining--;
             }
             onComplete?.Invoke();
+        }
+
+        protected virtual void GetMinMax(PlayerController player, RuntimeCard card, in int effectListSize, out int min, out int max)
+        {
+            SVEFormulaParser.ParseValueAsMinMax(amount, player, card, out min, out max);
+            max = Mathf.Min(max, effectListSize);
+            min = Mathf.Min(min, max);
         }
     }
 }
