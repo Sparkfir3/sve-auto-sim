@@ -861,10 +861,13 @@ namespace SVESimulator
             if(isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
                 List<RuntimeCard> fusedRuntimeCards = fusedCards.Select(x => CardManager.Instance.GetRuntimeCardByInstanceId(x.cardInstanceId)).ToList();
+
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, SVEProperties.Zones.Field,
                     player.namedZones[SVEProperties.Zones.Field], player, x => fusedRuntimeCards.Any(x.MatchesFilter), false);
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseFromExTrigger>(gameState, card, SVEProperties.Zones.Field,
                     player.namedZones[SVEProperties.Zones.ExArea], player, x => fusedRuntimeCards.Any(x.MatchesFilter), false);
+                foreach(RuntimeCard fusedCard in fusedRuntimeCards)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnThisFusedTrigger>(gameState, fusedCard, fusedCard.ownerPlayer, x => x.MatchesFilter(card), false);
             }
         }
 
