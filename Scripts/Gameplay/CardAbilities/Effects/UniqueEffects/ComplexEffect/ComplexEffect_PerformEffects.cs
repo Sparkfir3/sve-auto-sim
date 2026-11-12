@@ -27,32 +27,36 @@ namespace SVESimulator
             string overrideAmount = null;
             int? overrideTriggerInstanceId = null;
             string overrideTriggerZone = null;
-            if(!arguments.IsNullOrWhiteSpace())
+            string[] argsSplit = arguments?.Split(",") ?? new string[0];
+            foreach(string arg in argsSplit)
             {
-                string token = arguments.NextWord(0, out int argPointer);
-                ComplexLog(LogMode.Perform, $"Token: {token}");
-                switch(token)
+                if(!arg.IsNullOrWhiteSpace())
                 {
-                    case "amount":
-                        arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim());
-                        ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}");
-                        break;
-                    case "trigger":
-                        arguments.NextWord(argPointer, out argPointer); // move past '='
-                        RuntimeCard overrideTriggerCard = (variables.GetValueOrDefault(arguments[argPointer..].Trim(), null) as CE_Card)?.card;
-                        if(overrideTriggerCard != null)
-                        {
-                            overrideTriggerInstanceId = overrideTriggerCard.instanceId;
-                            // assuming if the card doesn't exist anywhere on the board, it is currently in the deck
-                            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(overrideTriggerCard.instanceId);
-                            overrideTriggerZone = cardObject && cardObject.CurrentZone ? cardObject.CurrentZone.Runtime.name : SVEProperties.Zones.Deck;
-                        }
-                        ComplexLog(LogMode.Perform, $"Override Trigger: {arguments[argPointer..].Trim()} => " +
-                            $"Instance ID {overrideTriggerInstanceId} in zone {overrideTriggerZone}");
-                        break;
-                    default:
-                        break;
+                    string token = arg.NextWord(0, out int argPointer);
+                    ComplexLog(LogMode.Perform, $"Token: {token}");
+                    switch(token)
+                    {
+                        case "amount":
+                            arg.NextWord(argPointer, out argPointer); // move past '='
+                            overrideAmount = ReplaceWithVariableValues(arg[argPointer..].Trim());
+                            ComplexLog(LogMode.Perform, $"Override Amount: {arg[argPointer..].Trim()} => {overrideAmount}");
+                            break;
+                        case "trigger":
+                            arg.NextWord(argPointer, out argPointer); // move past '='
+                            RuntimeCard overrideTriggerCard = (variables.GetValueOrDefault(arg[argPointer..].Trim(), null) as CE_Card)?.card;
+                            if(overrideTriggerCard != null)
+                            {
+                                overrideTriggerInstanceId = overrideTriggerCard.instanceId;
+                                // assuming if the card doesn't exist anywhere on the board, it is currently in the deck
+                                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(overrideTriggerCard.instanceId);
+                                overrideTriggerZone = cardObject && cardObject.CurrentZone ? cardObject.CurrentZone.Runtime.name : SVEProperties.Zones.Deck;
+                            }
+                            ComplexLog(LogMode.Perform, $"Override Trigger: {arg[argPointer..].Trim()} => " +
+                                $"Instance ID {overrideTriggerInstanceId} in zone {overrideTriggerZone}");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
