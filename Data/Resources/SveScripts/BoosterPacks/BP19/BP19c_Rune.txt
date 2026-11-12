@@ -1,0 +1,465 @@
+name Sephie, Depraved Convict;
+id BP19-038;
+class Rune;
+type Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity L;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Remove a fusion counter from this: Summon a Chimera Test Subject token.
+      [act] Fuse a non-token follower: Place a fusion counter on this. If you fused a Condemned follower, draw a card.";
+
+evolve 1;
+ability Fanfare {
+    cost (RemoveCounters, Fusion, 1);
+    effect SummonToken(Chimera Test Subject, Field, 1);
+}
+ability ActFromHand {
+	condition [H(F!K) | x(F!K)];
+	effect ComplexEffect(
+		let x = payCost(Fuse).firstMovedCard.getValue(~(Ft(Condemned)))
+		performCostless Fuse { }
+		perform Counters { }
+		performIf x then Draw
+	);
+}
+ability Spell name Fuse {
+	cost (FuseCost, 1, F!K), (IgnorePrompt);
+	effect Fuse();
+}
+ability Spell name Counters {
+	effect GiveCounters(Fusion, 1) to Self;
+}
+ability Spell name Draw {
+	effect Draw(1);
+}
+
+// ------------------------------
+
+name Sephie, Depraved Convict (Evolved);
+id BP19-039;
+class Rune;
+type Evolved Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity L;
+stats 4/4;
+
+text "On Evolve - Choose 1. If there are at least 10 Condemned followers in your cemetery, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 5 damage. (2) Summon a Chimera Test Subject token.
+      On Super-Evolve - Select up to 2 cards on your field named Volunteer Test Subject and/or Chimera Test Subject and give them Storm.";
+
+ability OnEvolve {
+    effect ChooseAmountFromList(1?(y(Ft(Condemned))>9)2, Damage, Token);
+}
+ability Spell name Damage {
+    condition p(#F);
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Damage {
+    effect SummonToken(Chimera Test Subject, Field, 1);
+}
+ability OnSuperEvolve {
+    effect GiveKeyword(Storm) to TargetPlayerCard m(0,2)n(Volunteer Test Subject)|(n(Chimera Test Subject));
+}
+
+// ------------------------------
+
+name Simael, Cleansing Enforcer;
+id BP19-040;
+class Rune;
+type Follower;
+trait Condemned / Mage;
+rarity L;
+cost 10;
+stats 3/5;
+
+text "This costs 1 less to play for every pair of Mage follower and Mage spell in your cemetery.
+      ----------
+      Storm. Bane. Ward";
+
+keywords Storm, Bane, Ward;
+ability ModifiedCost {
+    effect ReducedCost(y(Ft(Mage)) ?(y(Ft(Mage)) > y(St(Mage))) y(St(Mage)));
+}
+
+// ------------------------------
+
+name Kyrzael, Killshot Enforcer;
+id BP19-041;
+class Rune;
+type Follower;
+trait Condemned / Machina;
+rarity L;
+cost 6;
+stats 4/4;
+
+text "Storm.
+      [fanfare] Search your deck for a Warden of the Trigger, summon it, then shuffle.
+      Strike - Give each other Machina follower on your field [attack]+1/[defense]+1.";
+
+keyword Storm;
+ability Fanfare {
+    effect Search(1, n(Warden of the Trigger), Field);
+}
+ability Strike {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Machina)X;
+}
+
+// ------------------------------
+
+name Obsessive Scholar;
+id BP19-042;
+class Rune;
+type Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity G;
+cost 3;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Remove a fusion counter from this: Summon a Chimera Test Subject token.
+      [act] Fuse a non-token follower: Place a fusion counter on this. (To fuse a card, discard it or bury it from your EX area, and put this from your hand into your EX area.)";
+
+evolve 1;
+ability Fanfare {
+    cost (RemoveCounters, Fusion, 1);
+    effect SummonToken(Chimera Test Subject, Field, 1);
+}
+ability ActFromHand {
+    cost (FuseCost, 1, F!K);
+    effect Fuse(Counter);
+}
+ability Spell name Counter {
+    effect GiveCounter(Fusion, 1) to Self;
+}
+
+// ------------------------------
+
+name Obsessive Scholar (Evolved);
+id BP19-043;
+class Rune;
+type Evolved Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity G;
+stats 3/3;
+
+text "On Evolve - Select an enemy follower on the field and deal it 3 damage.
+      [act] [engage]: Select a Volunteer Test Subject or Chimera Test Subject on your field and give it Drain.";
+
+ability OnEvolve {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Act {
+    cost (EngageSelf);
+    condition f(n(Volunteer Test Subject)|(n(Chimera Test Subject)));
+    effect GiveKeyword(Drain) to TargetPlayerCard n(Volunteer Test Subject)|(n(Chimera Test Subject));
+}
+
+// ------------------------------
+
+name Warden of the Trigger;
+id BP19-044;
+class Rune;
+type Follower;
+trait Condemned / Machina;
+rarity G;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Look at the top card of your deck. If it's a Machina card, you may put into your EX area.
+      [act] [engage]: Select an enemy follower on the field and destroy it. Activate only if there's a Machina follower on your field that costs at least 6.";
+
+ability Fanfare {
+    effect CheckTop(1, (ExArea, t(Machina), 1));
+}
+ability Act {
+    cost (EngageSelf);
+    condition p(#F) & f(Ft(Machina)p(m(6,99)));
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Warden of the Arcane;
+id BP19-045;
+class Rune;
+type Follower;
+trait Condemned / mage;
+rarity G;
+cost 5;
+stats 2/4;
+
+text "[fanfare] Deal 2 damage to each enemy follower on the field. Look at the top 3 cards of your deck. You may reveal a Mage card from among them and add it to your hand. Bury the rest. The next Mage card that costs 3 or less you play this turn costs 3 less.";
+
+ability Fanfare {
+    effect SummonToken(Dread Pirate's Flag, ExArea, 1);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to AllOpponentCards F;
+}
+ability Spell name CheckTop {
+    effect CheckTop(3, (Hand, t(Mage), 1), (Cemetery));
+}
+ability Spell name MinusCost {
+    effect MinusCostNextCardEndOfTurn(3, t(Mage)p(m(0,3)));
+}
+
+// ------------------------------
+
+name Devoted Researcher;
+id BP19-046;
+class Rune;
+type Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity S;
+cost 2;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Remove a fusion counter from this: Summon a Chimera Test Subject token.
+      [act] Fuse a non-token follower: Place a fusion counter on this. (To fuse a card, discard it or bury it from your EX area, and put this from your hand into your EX area.)";
+
+evolve 1;
+ability Fanfare {
+    cost (RemoveCounters, Fusion, 1);
+    effect SummonToken(Chimera Test Subject, Field, 1);
+}
+ability ActFromHand {
+    cost (FuseCost, 1, F!K);
+    effect Fuse(Counter);
+}
+ability Spell name Counter {
+    effect GiveCounter(Fusion, 1) to Self;
+}
+
+// ------------------------------
+
+name Devoted Researcher (Evolved);
+id BP19-047;
+class Rune;
+type Evolved Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity S;
+stats 2/2;
+
+text "On Evolve - Search your deck for a Volunteer Test Subject, put it into your EX area, then shuffle.
+      [act] [engage], bury a Volunteer Test Subject or Chimera Test Subject: Select an enemy follower on the field and deal it damage equal to the buried follower's attack.";
+
+ability OnEvolve {
+    effect Search(1, n(Volunteer Test Subject), ExArea);
+}
+ability Act {
+    condition p(#F) & f(n(Volunteer Test Subject)|(n(Chimera Test Subject)));
+    effect ComplexEffect(
+        let x = payCost(Damage).getValue(A)
+        performCostless Damage { amount = x }
+    );
+}
+ability Spell name Damage {
+    cost (EngageSelf), (SendToCemetery, TargetPlayerCard, n(Volunteer Test Subject)|(n(Chimera Test Subject))), (IgnorePrompt);
+    effect DealDamage(_) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Volunteer Test Subject;
+id BP19-048;
+class Rune;
+type Follower;
+trait Condemned / Arcaneform / Forbidden;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "When this is fused by an ability of a Condemned follower you control, draw a card, then discard a card.
+      [fanfare] If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane.
+      [lastwords] Draw a card.";
+
+ability OnThisFused {
+    filter Ft(Condemned);
+    effect Sequence(Draw, Discard);
+}
+ability LastWords name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+ability Fanfare {
+    effect Sequence(AtkDef, Rush, Assail, Bane);
+}
+ability Spell name AtkDef {
+    condition y(Ft(Condemned))>4;
+    effect GiveStat(AtkDef, 2) to Self;
+}
+ability Spell name Rush {
+    condition y(Ft(Condemned))>4;
+    effect GiveKeyword(Rush) to Self;
+}
+ability Spell name Assail {
+    condition y(Ft(Condemned))>9;
+    effect GiveKeyword(Assail) to Self;
+}
+ability Spell name Bane {
+    condition y(Ft(Condemned))>9;
+    effect GiveKeyword(Bane) to Self;
+}
+
+// ------------------------------
+
+name Astral Dancer;
+id BP19-049;
+class Rune;
+type Follower;
+trait Mage / Dancer;
+rarity S;
+cost 5;
+stats 4/4;
+
+text "Ward.
+      [fanfare] Select a follower on your field. Reveal the top card of your deck, give the selected follower [defense]+X, and draw a card. X equals the cost of the revealed card.";
+
+keyword Ward;
+ability Fanfare {
+    effect ComplexEffect(
+        let t = targetCard(F)
+        let x = revealTopDeck.getValue(P)
+        perform Def { amount = x, trigger = t }
+        perform Draw { }
+    );
+}
+ability Spell name Def {
+    effect GiveStat(Def, _) to TriggerCard;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Electrokitty;
+id BP19-050;
+class Rune;
+type Follower;
+trait Arcanaform;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Electrokitty (Evolved);
+id BP19-051;
+class Rune;
+type Evolved Follower;
+trait Arcanaform;
+rarity B;
+stats 3/3;
+
+text "On Evolve - Select an enemy leader or enemy follower on the field and deal it 2 damage.";
+
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCardOrLeader F;
+}
+
+// ------------------------------
+
+name Outdoorsmage;
+id BP19-052;
+class Rune;
+type Follower;
+trait Mage;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Summon a Magic Sediment token.
+      [act] [cost05], Earth Rite: Summon a total of 3 Guardform Golem and/or Strikeform Golem tokens.";
+
+ability Fanfare {
+    effect SummonToken(Magic Sediment, Field, 1);
+}
+ability Act {
+    cost (PP, 5), (EarthRite);
+    effect ChooseAmountFromListWithRepeats(3, Guard, Strike);
+}
+ability Spell name Guard {
+    effect SummonToken(Guardform Golem, Field, 1);
+}
+ability Spell name Strike {
+    effect SummonToken(Strikeform Golem, Field, 1);
+}
+
+// ------------------------------
+
+name Ultramarine Witch;
+id BP19-053;
+class Rune;
+type Follower;
+trait Mage;
+rarity B;
+cost 5;
+stats 3/3;
+
+text "Storm.
+      [fanfare] Select an enemy follower on the field and deal it 4 damage.
+      [act] [cost01], discard this: Search your deck for a Witch's Cauldron, summon it, then shuffle.";
+
+keyword Storm;
+ability Fanfare {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability ActFromHand {
+    cost (PP, 1), (SendToCemetery, SelfFromHand);
+    condition f()<5;
+    effect Search(1, n("Witch's Cauldron"), Field);
+}
+
+// ------------------------------
+
+name Feline Magic;
+id BP19-054;
+class Rune;
+type Spell;
+trait Mage / Arcanaform;
+rarity B;
+cost 1;
+
+text "Search your deck for an Electrokitty, put it into your EX area, then shuffle. Spellchain (7) - It costs 1 less to play this turn.";
+
+ability Spell {
+    condition x()<5;
+    effect SearchAndTarget(1, n(Electrokitty), ExArea, Cost);
+}
+ability Spell name Cost {
+    condition s(7);
+    effect GiveStat(Cost, -1) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Meandering Bolt;
+id BP19-055;
+class Rune;
+type Spell;
+trait Mage;
+rarity B;
+cost 3;
+
+text "Select an enemy follower on the field. Draw a card, then deal it damage equal to the number of cards in your hand.";
+
+ability Spell {
+    condition p(#F);
+    effect TargetForSequence(Draw, Damage) to TargetPlayerCard F;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Damage {
+    effect DealDamage(H) to AllOpponentCards;
+}

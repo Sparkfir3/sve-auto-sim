@@ -1,0 +1,325 @@
+[
+  {
+    "id": "BP19-038EN",
+    "name": "Sephie, Depraved Convict",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Remove a fusion counter from this: Summon a Chimera Test Subject token.\n[act] Fuse a non-token follower: Place a fusion counter on this. If you fused a Condemned follower, draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Remove a fusion counter from this",
+        "body": "Summon a Chimera Test Subject token."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "Fuse a non-token follower",
+        "body": "Place a fusion counter on this. If you fused a Condemned follower, draw a card."
+      },
+      {
+        "key": "Fuse",
+        "trigger": "[act]",
+        "cost": "Fuse a non-token follower",
+        "body": "Place a fusion counter on this. If you fused a Condemned follower, draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-039EN",
+    "name": "Sephie, Depraved Convict (Evolved)",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "On Evolve - Choose 1. If there are at least 10 Condemned followers in your cemetery, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 5 damage. (2) Summon a Chimera Test Subject token.\nOn Super-Evolve - Select up to 2 cards on your field named Volunteer Test Subject and/or Chimera Test Subject and give them Storm.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "On Evolve - Choose 1. If there are at least 10 Condemned followers in your cemetery, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 5 damage. (2) Summon a Chimera Test Subject token."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      },
+      {
+        "key": "Damage",
+        "body": "Summon a Chimera Test Subject token."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Select up to 2 cards on your field named Volunteer Test Subject and/or Chimera Test Subject and give them Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP19-040EN",
+    "name": "Simael, Cleansing Enforcer",
+    "trait": "Condemned / Mage",
+    "cardText": "This costs 1 less to play for every pair of Mage follower and Mage spell in your cemetery.\n----------\nStorm. Bane. Ward"
+  },
+  {
+    "id": "BP19-041EN",
+    "name": "Kyrzael, Killshot Enforcer",
+    "trait": "Condemned / Machina",
+    "cardText": "Storm.\n[fanfare] Search your deck for a Warden of the Trigger, summon it, then shuffle.\nStrike - Give each other Machina follower on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Warden of the Trigger, summon it, then shuffle."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Give each other Machina follower on your field [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-042EN",
+    "name": "Obsessive Scholar",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Remove a fusion counter from this: Summon a Chimera Test Subject token.\n[act] Fuse a non-token follower: Place a fusion counter on this. (To fuse a card, discard it or bury it from your EX area, and put this from your hand into your EX area.)",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Remove a fusion counter from this",
+        "body": "Summon a Chimera Test Subject token."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "Fuse a non-token follower",
+        "body": "Place a fusion counter on this."
+      }
+    ]
+  },
+  {
+    "id": "BP19-043EN",
+    "name": "Obsessive Scholar (Evolved)",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 3 damage.\n[act] [engage]: Select a Volunteer Test Subject or Chimera Test Subject on your field and give it Drain.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select a Volunteer Test Subject or Chimera Test Subject on your field and give it Drain."
+      }
+    ]
+  },
+  {
+    "id": "BP19-044EN",
+    "name": "Warden of the Trigger",
+    "trait": "Condemned / Machina",
+    "cardText": "[fanfare] Look at the top card of your deck. If it's a Machina card, you may put into your EX area.\n[act] [engage]: Select an enemy follower on the field and destroy it. Activate only if there's a Machina follower on your field that costs at least 6.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top card of your deck. If it's a Machina card, you may put into your EX area."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select an enemy follower on the field and destroy it. Activate only if there's a Machina follower on your field that costs at least 6."
+      }
+    ]
+  },
+  {
+    "id": "BP19-045EN",
+    "name": "Warden of the Arcane",
+    "trait": "Condemned / mage",
+    "cardText": "[fanfare] Deal 2 damage to each enemy follower on the field. Look at the top 3 cards of your deck. You may reveal a Mage card from among them and add it to your hand. Bury the rest. The next Mage card that costs 3 or less you play this turn costs 3 less.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 2 damage to each enemy follower on the field. Look at the top 3 cards of your deck. You may reveal a Mage card from among them and add it to your hand. Bury the rest. The next Mage card that costs 3 or less you play this turn costs 3 less."
+      },
+      {
+        "key": "CheckTop",
+        "body": "Look at the top 3 cards of your deck. You may reveal a Mage card from among them and add it to your hand. Bury the rest."
+      }
+    ]
+  },
+  {
+    "id": "BP19-046EN",
+    "name": "Devoted Researcher",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Remove a fusion counter from this: Summon a Chimera Test Subject token.\n[act] Fuse a non-token follower: Place a fusion counter on this. (To fuse a card, discard it or bury it from your EX area, and put this from your hand into your EX area.)",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Remove a fusion counter from this",
+        "body": "Summon a Chimera Test Subject token."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "Fuse a non-token follower",
+        "body": "Place a fusion counter on this."
+      }
+    ]
+  },
+  {
+    "id": "BP19-047EN",
+    "name": "Devoted Researcher (Evolved)",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "On Evolve - Search your deck for a Volunteer Test Subject, put it into your EX area, then shuffle.\n[act] [engage], bury a Volunteer Test Subject or Chimera Test Subject: Select an enemy follower on the field and deal it damage equal to the buried follower's attack.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for a Volunteer Test Subject, put it into your EX area, then shuffle."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury a Volunteer Test Subject or Chimera Test Subject",
+        "body": "Select an enemy follower on the field and deal it damage equal to the buried follower's attack."
+      },
+      {
+        "key": "Damage",
+        "trigger": "[act]",
+        "cost": "[engage], bury a Volunteer Test Subject or Chimera Test Subject",
+        "body": "Select an enemy follower on the field and deal it damage equal to the buried follower's attack."
+      }
+    ]
+  },
+  {
+    "id": "BP19-048EN",
+    "name": "Volunteer Test Subject",
+    "trait": "Condemned / Arcaneform / Forbidden",
+    "cardText": "When this is fused by an ability of a Condemned follower you control, draw a card, then discard a card.\n[fanfare] If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane.\n[lastwords] Draw a card.",
+    "effectText": [
+      {
+        "key": "OnThisFused",
+        "text": "When this is fused by an ability of a Condemned follower you control, draw a card, then discard a card.",
+        "trigger": "When this is fused by an ability of a Condemned follower you control,",
+        "body": "Draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 5 Condemned followers in your cemetery, give this [attack]+2/[defense]+2 and Rush. If there are at least 10, give it Assail and Bane."
+      }
+    ]
+  },
+  {
+    "id": "BP19-049EN",
+    "name": "Astral Dancer",
+    "trait": "Mage / Dancer",
+    "cardText": "Ward.\n[fanfare] Select a follower on your field. Reveal the top card of your deck, give the selected follower [defense]+X, and draw a card. X equals the cost of the revealed card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a follower on your field. Reveal the top card of your deck, give the selected follower [defense]+X, and draw a card. X equals the cost of the revealed card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-050EN",
+    "name": "Electrokitty",
+    "trait": "Arcanaform",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP19-051EN",
+    "name": "Electrokitty (Evolved)",
+    "trait": "Arcanaform",
+    "cardText": "On Evolve - Select an enemy leader or enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-052EN",
+    "name": "Outdoorsmage",
+    "trait": "Mage",
+    "cardText": "[fanfare] Summon a Magic Sediment token.\n[act] [cost05], Earth Rite: Summon a total of 3 Guardform Golem and/or Strikeform Golem tokens.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "Summon a Magic Sediment token."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost05], Earth Rite",
+        "body": "Summon a total of 3 Guardform Golem and/or Strikeform Golem tokens."
+      },
+      {
+        "key": "Guard",
+        "body": "Guardform Golem"
+      },
+      {
+        "key": "Strike",
+        "body": "Strikeform Golem"
+      }
+    ]
+  },
+  {
+    "id": "BP19-053EN",
+    "name": "Ultramarine Witch",
+    "trait": "Mage",
+    "cardText": "Storm.\n[fanfare] Select an enemy follower on the field and deal it 4 damage.\n[act] [cost01], discard this: Search your deck for a Witch's Cauldron, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "[cost01], discard this",
+        "body": "Search your deck for a Witch's Cauldron, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP19-054EN",
+    "name": "Feline Magic",
+    "trait": "Mage / Arcanaform",
+    "cardText": "Search your deck for an Electrokitty, put it into your EX area, then shuffle. Spellchain (7) - It costs 1 less to play this turn.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Search your deck for an Electrokitty, put it into your EX area, then shuffle. Spellchain (7) - It costs 1 less to play this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP19-055EN",
+    "name": "Meandering Bolt",
+    "trait": "Mage",
+    "cardText": "Select an enemy follower on the field. Draw a card, then deal it damage equal to the number of cards in your hand.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field. Draw a card, then deal it damage equal to the number of cards in your hand."
+      }
+    ]
+  }
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "id": "BP20-037EN",
+    "name": "Lishenna, Melody Manifest",
+    "trait": "Omen / Idolatry",
+    "cardText": "[fanfare] Choose 1. (1) Select another Idolatry card on your field. Destroy it and put a Melodious Monody token into your EX area. (2) Summon a White Psalm, New Revelation token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Select another Idolatry card on your field. Destroy it and put a Melodious Monody token into your EX area. (2) Summon a White Psalm, New Revelation token."
+      },
+      {
+        "key": "Sequence",
+        "body": "Select another Idolatry card on your field. Destroy it and put a Melodious Monody token into your EX area."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select another Idolatry card on your field. Destroy it and put a Melodious Monody token into your EX area."
+      },
+      {
+        "key": "Psalm",
+        "body": "Summon a White Psalm, New Revelation token."
+      }
+    ]
+  },
+  {
+    "id": "BP20-038EN",
+    "name": "Velharia, Heir to Truth",
+    "trait": "Omen / Heir / Mage",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-039EN",
+    "name": "Velharia, Heir to Truth (Evolved)",
+    "trait": "Omen / Heir / Mage",
+    "cardText": "On Evolve - Select an enemy follower on the field and destroy it.\nOn Super-Evolve - Select a [runecraft] spell in your cemetery that costs 9 or less and put it into your EX area. It costs 3 less to play this turn.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and destroy it."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Select a [runecraft] spell in your cemetery that costs 9 or less and put it into your EX area. It costs 3 less to play this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-040EN",
+    "name": "Axia, Heir to Destruction",
+    "trait": "Omen / Heir / Idolatry",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP20-041EN",
+    "name": "Axia, Heir to Destruction (Evolved)",
+    "trait": "Omen / Heir / Idolatry",
+    "cardText": "On Evolve - Bury another Idolatry card: Search your deck for a follower with \"Lishenna\" in its name, reveal it, add it to your hand, then shuffle.\nOn Super-Evolve - Deal each enemy leader damage equal to the number of Idolatry cards on your field.\nOnce per turn, when an Idolatry amulet is put onto your field, select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "cost": "Bury another Idolatry card",
+        "body": "Search your deck for a follower with \"Lishenna\" in its name, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Deal each enemy leader damage equal to the number of Idolatry cards on your field."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Once per turn, when an Idolatry amulet is put onto your field, select an enemy follower on the field and deal it 2 damage.",
+        "trigger": "Once per turn, when an Idolatry amulet is put onto your field,",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-042EN",
+    "name": "Raio, Elimination Manifest",
+    "trait": "Omen / Mage",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If this wasn't put onto the field from hand, evolve it.\n[act] Discard this and an Omen–Mage spell: Put an Ersatz Elimination token into your EX area.",
+    "effectText": [
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "If this wasn't put onto the field from hand, evolve it."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "Discard this and an Omen–Mage spell",
+        "body": "Put an Ersatz Elimination token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-043EN",
+    "name": "Raio, Elimination Manifest (Evolved)",
+    "trait": "Omen / Mage",
+    "cardText": "On Evolve - Deal 9 damage to each enemy follower on the field. Put 2 Ersatz Elimination tokens into your EX area. They cost 1 less to play this turn.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Deal 9 damage to each enemy follower on the field. Put 2 Ersatz Elimination tokens into your EX area. They cost 1 less to play this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-044EN",
+    "name": "Congregant of Destruction",
+    "trait": "Omen / Idolatry",
+    "cardText": "[fanfare] Bury another Idolatry card: Select an enemy follower on the field. Destroy it and deal 2 damage to its leader.\n[act] Bury another Idolatry card: Select an enemy follower on the field. Destroy it and deal 2 damage to its leader. Activate only once per turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "Bury another Idolatry card",
+        "body": "Select an enemy follower on the field. Destroy it and deal 2 damage to its leader."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury another Idolatry card",
+        "body": "Select an enemy follower on the field. Destroy it and deal 2 damage to its leader. Activate only once per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-045EN",
+    "name": "Devastating Soprano",
+    "trait": "Omen / Idolatry",
+    "cardText": "Choose 1. (1) Select an Idolatry card on your field. Destroy it and draw a card. (2) Summon a White Psalm, New Revelation token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Select an Idolatry card on your field. Destroy it and draw a card. (2) Summon a White Psalm, New Revelation token."
+      },
+      {
+        "key": "DestroyDraw",
+        "body": "Select an Idolatry card on your field. Destroy it and draw a card."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select an Idolatry card on your field. Destroy it and draw a card."
+      },
+      {
+        "key": "Token",
+        "body": "Summon a White Psalm, New Revelation token."
+      }
+    ]
+  },
+  {
+    "id": "BP20-046EN",
+    "name": "Congregant of Truth",
+    "trait": "Omen / Mage",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If this wasn't put onto the field from hand, evolve it.",
+    "effectText": [
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "If this wasn't put onto the field from hand, evolve it."
+      }
+    ]
+  },
+  {
+    "id": "BP20-047EN",
+    "name": "Congregant of Truth (Evolved)",
+    "trait": "Omen / Mage",
+    "cardText": "On Evolve - Select an enemy follower on the field. Deal it 3 damage, draw a card, then discard a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field. Deal it 3 damage, draw a card, then discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-048EN",
+    "name": "Supplicant of Destruction (Evolved)",
+    "trait": "Omen / Idolatry",
+    "cardText": "[act] [engage], bury another Idolatry card: Select an enemy leader or enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury another Idolatry card",
+        "body": "Select an enemy leader or enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-049EN",
+    "name": "Illusory Conjuration",
+    "trait": "Omen / Mage",
+    "cardText": "Look at the top 3 cards of your deck. You may reveal an Omen–Mage card from among them and add it to your hand or put it into your EX area. Put the rest on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Look at the top 3 cards of your deck. You may reveal an Omen–Mage card from among them and add it to your hand or put it into your EX area. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP20-050EN",
+    "name": "Devotee of Destruction",
+    "trait": "Omen / Idolatry",
+    "cardText": "[evolve] [cost01]: Evolve this.\nAssail."
+  },
+  {
+    "id": "BP20-051EN",
+    "name": "Devotee of Destruction (Evolved)",
+    "trait": "Omen / Idolatry",
+    "cardText": "Assail.\nOn Evolve - Bury another Idolatry card: Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "cost": "Bury another Idolatry card",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-052EN",
+    "name": "Supplicant of Truth",
+    "trait": "Omen / Mage",
+    "cardText": "Ward.\n[fanfare] Draw 2 cards. Discard a card. If this wasn't put onto the field from hand, give it [defense]+2.",
+    "effectText": [
+      {
+        "key": "FanfareHand",
+        "trigger": "[fanfare]",
+        "body": "Draw 2 cards. Discard a card. If this wasn't put onto the field from hand, give it [defense]+2."
+      },
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "Draw 2 cards. Discard a card. If this wasn't put onto the field from hand, give it [defense]+2."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-053EN",
+    "name": "Devotee of Truth",
+    "trait": "Omen / Mage",
+    "cardText": "[fanfare] Draw a card. Discard a card. If this wasn't put onto the field from hand, give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "FanfareHand",
+        "trigger": "[fanfare]",
+        "body": "Draw a card. Discard a card. If this wasn't put onto the field from hand, give your leader [defense]+2."
+      },
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "Draw a card. Discard a card. If this wasn't put onto the field from hand, give your leader [defense]+2."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-054EN",
+    "name": "Ascetic of Wuxing",
+    "trait": "Onmyoji",
+    "cardText": "[fanfare] Discard a card: Look at the top 3 cards of your deck. You may reveal a spell or Onmyoji follower from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] [engage]: Summon a Paper Shikigami token. Activate only if there are at least 7 spells and/or Onmyoji cards in your cemetery.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a card",
+        "body": "Look at the top 3 cards of your deck. You may reveal a spell or Onmyoji follower from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Summon a Paper Shikigami token. Activate only if there are at least 7 spells and/or Onmyoji cards in your cemetery."
+      }
+    ]
+  },
+  {
+    "id": "BP20-055EN",
+    "name": "Wasteland of Destruction",
+    "trait": "Omen / Idolatry",
+    "cardText": "[fanfare] Look at the top 2 cards of your deck. You may reveal an Omen–Idolatry card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] Bury this: Bury another Idolatry card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 2 cards of your deck. You may reveal an Omen–Idolatry card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury this",
+        "body": "Bury another Idolatry card."
+      }
+    ]
+  }
+]
