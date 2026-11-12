@@ -140,11 +140,11 @@ namespace SVESimulator
 
             // Pay cost
             waiting = true;
-            player.LocalEvents.PayAbilityCosts(card, costs, effectName, (movedCards, fusedCards, removedCounters) =>
+            player.LocalEvents.PayAbilityCosts(card, costs, effectName, costData =>
             {
-                movedCardsData = movedCards;
-                movedCardsData.AddRange(fusedCards);
-                removedCountersData = removedCounters;
+                movedCardsData = costData.CardsToMove.ToList();
+                movedCardsData.AddRange(costData.FusedCards);
+                removedCountersData = costData.CountersToRemove.ToList();
                 waiting = false;
             });
 

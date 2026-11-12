@@ -1334,15 +1334,15 @@ namespace SVESimulator
                 onComplete?.Invoke();
                 return;
             }
-            PayAbilityCosts(card, costs, abilityName, (_, _, _) => { onComplete?.Invoke(); });
+            PayAbilityCosts(card, costs, abilityName, _ => { onComplete?.Invoke(); });
         }
 
-        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<List<MoveCardToZoneData>, List<MoveCardToZoneData>, List<RemoveCounterData>> onComplete)
+        public void PayAbilityCosts(CardObject card, List<Cost> costs, string abilityName, Action<PaidCostData> onComplete)
         {
             if(costs == null || costs.Count == 0)
             {
                 IsPayingCosts = false;
-                onComplete?.Invoke(null, null, null);
+                onComplete?.Invoke(default);
                 return;
             }
             StartCoroutine(Resolve());
@@ -1388,7 +1388,14 @@ namespace SVESimulator
                 }
 
                 // Resolve paying cost
-                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, cardsToMove.ToArray(), fusedCards.ToArray(), countersToRemove.ToArray(), cardInstanceIdsToEngage.ToArray());
+                PaidCostData costData = new()
+                {
+                    CardsToMove = cardsToMove.ToArray(),
+                    FusedCards = fusedCards.ToArray(),
+                    CountersToRemove = countersToRemove.ToArray(),
+                    EngagedCardsInstanceIds = cardInstanceIdsToEngage.ToArray()
+                };
+                sveEffectSolver.PayAbilityCosts(playerInfo, card.RuntimeCard, costs, costData);
 
                 LocalPayEffectCostMessage msg = new()
                 {
@@ -1396,10 +1403,7 @@ namespace SVESimulator
                     cardInstanceId = card.RuntimeCard.instanceId,
                     originZone = cardOriginZone,
                     abilityName = abilityName,
-                    cardsMoveToZoneData = cardsToMove.ToArray(),
-                    fusedCardsData = fusedCards.ToArray(),
-                    countersToRemove = countersToRemove.ToArray(),
-                    cardInstanceIdsToEngage = cardInstanceIdsToEngage.ToArray()
+                    costData = costData
                 };
                 NetworkClient.Send(msg);
 
@@ -1417,7 +1421,7 @@ namespace SVESimulator
 
                 // Resolve
                 yield return new WaitForSeconds(0.1f);
-                onComplete?.Invoke(cardsToMove, fusedCards, countersToRemove);
+                onComplete?.Invoke(costData);
                 IsPayingCosts = false;
             }
         }

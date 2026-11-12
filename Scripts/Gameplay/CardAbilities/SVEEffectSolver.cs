@@ -797,8 +797,7 @@ namespace SVESimulator
 
         #region Effect Costs
 
-        public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, MoveCardToZoneData[] cardsMoveToZone, MoveCardToZoneData[] fusedCards,
-            RemoveCounterData[] countersToRemove, int[] cardInstanceIdsToEngage, List<RuntimeCard> additionalRuntimeCardData = null)
+        public void PayAbilityCosts(PlayerInfo player, RuntimeCard card, List<Cost> costs, PaidCostData costData, List<RuntimeCard> additionalRuntimeCardData = null)
         {
             foreach(Cost cost in costs)
             {
@@ -820,6 +819,7 @@ namespace SVESimulator
             }
 
             // Counters
+            RemoveCounterData[] countersToRemove = costData.CountersToRemove;
             for(int i = 0; i < countersToRemove.Length; i++)
             {
                 RuntimeCard targetCard = player.namedZones[countersToRemove[i].cardZone].cards.FirstOrDefault(x => x.instanceId == countersToRemove[i].cardInstanceId);
@@ -828,6 +828,7 @@ namespace SVESimulator
             }
 
             // Engage
+            int[] cardInstanceIdsToEngage = costData.EngagedCardsInstanceIds;
             for(int i = 0; i < cardInstanceIdsToEngage.Length; i++)
             {
                 RuntimeCard targetCard = player.namedZones[SVEProperties.Zones.Field].cards.FirstOrDefault(x => x.instanceId == cardInstanceIdsToEngage[i]);
@@ -835,7 +836,7 @@ namespace SVESimulator
             }
 
             // Move cards (move data + fuse)
-            MoveCardToZoneData[] cardsToMove = cardsMoveToZone.Concat(fusedCards).ToArray();
+            MoveCardToZoneData[] cardsToMove = costData.CardsToMove.Concat(costData.FusedCards).ToArray();
             for(int i = 0; i < cardsToMove.Length; i++)
             {
                 RuntimeCard cardToMove = player.namedZones[cardsToMove[i].startZone].cards.FirstOrDefault(x => x.instanceId == cardsToMove[i].cardInstanceId);
@@ -860,7 +861,7 @@ namespace SVESimulator
             // Effect triggers
             if(isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
-                List<RuntimeCard> fusedRuntimeCards = fusedCards.Select(x => CardManager.Instance.GetRuntimeCardByInstanceId(x.cardInstanceId)).ToList();
+                List<RuntimeCard> fusedRuntimeCards = costData.FusedCards.Select(x => CardManager.Instance.GetRuntimeCardByInstanceId(x.cardInstanceId)).ToList();
 
                 SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnPlayCardOrFuseTrigger>(gameState, card, SVEProperties.Zones.Field,
                     player.namedZones[SVEProperties.Zones.Field], player, x => fusedRuntimeCards.Any(x.MatchesFilter), false);

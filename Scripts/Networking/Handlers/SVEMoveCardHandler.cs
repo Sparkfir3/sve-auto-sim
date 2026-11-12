@@ -612,13 +612,13 @@ namespace SVESimulator
                 _ => null
             };
             List<NetCard> additionalNetCardData = new();
-            for(int i = 0; i < msg.cardsMoveToZoneData.Length; i++)
+            for(int i = 0; i < msg.costData.CardsToMove.Length; i++)
             {
-                if(!msg.cardsMoveToZoneData[i].startZone.Equals(SVEProperties.Zones.Deck))
+                if(!msg.costData.CardsToMove[i].startZone.Equals(SVEProperties.Zones.Deck))
                     continue;
-                foreach(RuntimeCard zoneCard in player.namedZones[msg.cardsMoveToZoneData[i].startZone].cards)
+                foreach(RuntimeCard zoneCard in player.namedZones[msg.costData.CardsToMove[i].startZone].cards)
                 {
-                    if(zoneCard.instanceId != msg.cardsMoveToZoneData[i].cardInstanceId)
+                    if(zoneCard.instanceId != msg.costData.CardsToMove[i].cardInstanceId)
                         continue;
                     additionalNetCardData.Add(NetworkingUtils.GetNetCard(zoneCard));
                     break;
@@ -631,14 +631,11 @@ namespace SVESimulator
                 cardInstanceId = msg.cardInstanceId,
                 originZone = msg.originZone,
                 abilityName = msg.abilityName,
-                cardsMoveToZoneData = msg.cardsMoveToZoneData,
-                fusedCardsData = msg.fusedCardsData,
-                countersToRemove = msg.countersToRemove,
-                cardInstanceIdsToEngage = msg.cardInstanceIdsToEngage,
+                costData = msg.costData,
                 additionalNetCardData = additionalNetCardData.ToArray()
             };
             server.SafeSendToClient(server.gameState.currentOpponent, payCostMsg);
-            (server.effectSolver as SVEEffectSolver).PayAbilityCosts(player, card, costList, msg.cardsMoveToZoneData, msg.fusedCardsData, msg.countersToRemove, msg.cardInstanceIdsToEngage);
+            (server.effectSolver as SVEEffectSolver).PayAbilityCosts(player, card, costList, msg.costData);
         }
 
         #endregion
