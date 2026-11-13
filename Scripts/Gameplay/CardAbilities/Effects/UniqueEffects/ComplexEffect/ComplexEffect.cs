@@ -140,9 +140,8 @@ namespace SVESimulator
             int pointer = line.IndexOf('.'); // TODO - better token reading
             if(pointer < 0)
                 pointer = line.Length;
-            else
-                pointer++;
             string token = line[..pointer].Trim();
+            ComplexLog(LogMode.Value, $"Parsing raw token {token} // {pointer}");
 
             string args = null;
             if(token.Contains('('))
@@ -150,6 +149,7 @@ namespace SVESimulator
                 args = token.TextInsideParentheses(out int left, out _);
                 token = token[..left];
             }
+            ComplexLog(LogMode.Value, $"Parsing token {token} // {pointer}");
 
             // Get root object
             CE_Object obj = token switch
@@ -176,18 +176,18 @@ namespace SVESimulator
                     case CE_EffectCost:
                         token = null;
                         string[] parameters = null;
-                        for(int i = pointer; token == null && i < line.Length; i++)
+                        for(int i = ++pointer; token == null && i < line.Length; i++)
                         {
                             switch(line[i])
                             {
                                 case '.':
                                     token = line[pointer..i];
-                                    pointer = i + 1;
+                                    pointer = i;
                                     break;
                                 case '(':
                                     token = line[pointer..i];
                                     parameters = line[i..].TextInsideParentheses(out _, out int length).Split();
-                                    pointer = i + length + 1;
+                                    pointer = i + length;
                                     break;
                                 default:
                                     continue;

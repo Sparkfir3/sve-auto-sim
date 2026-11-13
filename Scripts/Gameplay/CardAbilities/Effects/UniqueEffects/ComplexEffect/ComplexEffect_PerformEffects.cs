@@ -192,7 +192,7 @@ namespace SVESimulator
             while(waiting && !BreakCondition)
                 await Task.Yield();
             ComplexLog(LogMode.Value, $"[Target Card] Instance ID {(card != null ? card.card.instanceId : "null")} " +
-                $"with filer {filter}");
+                $"with filter {filter}");
             await Task.Delay(200);
             return card;
         }
