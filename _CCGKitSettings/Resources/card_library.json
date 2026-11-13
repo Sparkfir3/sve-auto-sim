@@ -64557,7 +64557,7 @@
             "name": "Act",
             "type": "Activated",
             "effect": {
-              "function": "let x = payCost(Damage).getValue(A)\nperformCostless Damage { amount = x }",
+              "function": "let x = payCost(Damage).firstMovedCard.getValue(A)\nperformCostless Damage { amount = x }",
               "$type": "SVESimulator.ComplexEffect"
             },
             "$type": "CCGKit.ActivatedAbility"

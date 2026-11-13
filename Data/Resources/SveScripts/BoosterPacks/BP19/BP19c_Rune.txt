@@ -252,7 +252,7 @@ ability OnEvolve {
 ability Act {
     condition p(#F) & f(n(Volunteer Test Subject)|(n(Chimera Test Subject)));
     effect ComplexEffect(
-        let x = payCost(Damage).getValue(A)
+        let x = payCost(Damage).firstMovedCard.getValue(A)
         performCostless Damage { amount = x }
     );
 }
