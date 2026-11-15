@@ -27,32 +27,36 @@ namespace SVESimulator
             string overrideAmount = null;
             int? overrideTriggerInstanceId = null;
             string overrideTriggerZone = null;
-            if(!arguments.IsNullOrWhiteSpace())
+            string[] argsSplit = arguments?.Split(",") ?? new string[0];
+            foreach(string arg in argsSplit)
             {
-                string token = arguments.NextWord(0, out int argPointer);
-                ComplexLog(LogMode.Perform, $"Token: {token}");
-                switch(token)
+                if(!arg.IsNullOrWhiteSpace())
                 {
-                    case "amount":
-                        arguments.NextWord(argPointer, out argPointer); // move past '='
-                        overrideAmount = ReplaceWithVariableValues(arguments[argPointer..].Trim());
-                        ComplexLog(LogMode.Perform, $"Override Amount: {arguments[argPointer..].Trim()} => {overrideAmount}");
-                        break;
-                    case "trigger":
-                        arguments.NextWord(argPointer, out argPointer); // move past '='
-                        RuntimeCard overrideTriggerCard = (variables.GetValueOrDefault(arguments[argPointer..].Trim(), null) as CE_Card)?.card;
-                        if(overrideTriggerCard != null)
-                        {
-                            overrideTriggerInstanceId = overrideTriggerCard.instanceId;
-                            // assuming if the card doesn't exist anywhere on the board, it is currently in the deck
-                            CardObject cardObject = CardManager.Instance.GetCardByInstanceId(overrideTriggerCard.instanceId);
-                            overrideTriggerZone = cardObject && cardObject.CurrentZone ? cardObject.CurrentZone.Runtime.name : SVEProperties.Zones.Deck;
-                        }
-                        ComplexLog(LogMode.Perform, $"Override Trigger: {arguments[argPointer..].Trim()} => " +
-                            $"Instance ID {overrideTriggerInstanceId} in zone {overrideTriggerZone}");
-                        break;
-                    default:
-                        break;
+                    string token = arg.NextWord(0, out int argPointer);
+                    ComplexLog(LogMode.Perform, $"Token: {token}");
+                    switch(token)
+                    {
+                        case "amount":
+                            arg.NextWord(argPointer, out argPointer); // move past '='
+                            overrideAmount = ReplaceWithVariableValues(arg[argPointer..].Trim());
+                            ComplexLog(LogMode.Perform, $"Override Amount: {arg[argPointer..].Trim()} => {overrideAmount}");
+                            break;
+                        case "trigger":
+                            arg.NextWord(argPointer, out argPointer); // move past '='
+                            RuntimeCard overrideTriggerCard = (variables.GetValueOrDefault(arg[argPointer..].Trim(), null) as CE_Card)?.card;
+                            if(overrideTriggerCard != null)
+                            {
+                                overrideTriggerInstanceId = overrideTriggerCard.instanceId;
+                                // assuming if the card doesn't exist anywhere on the board, it is currently in the deck
+                                CardObject cardObject = CardManager.Instance.GetCardByInstanceId(overrideTriggerCard.instanceId);
+                                overrideTriggerZone = cardObject && cardObject.CurrentZone ? cardObject.CurrentZone.Runtime.name : SVEProperties.Zones.Deck;
+                            }
+                            ComplexLog(LogMode.Perform, $"Override Trigger: {arg[argPointer..].Trim()} => " +
+                                $"Instance ID {overrideTriggerInstanceId} in zone {overrideTriggerZone}");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -104,6 +108,7 @@ namespace SVESimulator
             List<Cost> costs = trigger?.Costs;
             List<MoveCardToZoneData> movedCardsData = null;
             List<RemoveCounterData> removedCountersData = null;
+            List<int> engagedCardInstanceIds = null;
 
             // Select pay or decline
             bool waiting = false;
@@ -140,11 +145,12 @@ namespace SVESimulator
 
             // Pay cost
             waiting = true;
-            player.LocalEvents.PayAbilityCosts(card, costs, effectName, (movedCards, fusedCards, removedCounters) =>
+            player.LocalEvents.PayAbilityCosts(card, costs, effectName, costData =>
             {
-                movedCardsData = movedCards;
-                movedCardsData.AddRange(fusedCards);
-                removedCountersData = removedCounters;
+                movedCardsData = costData.CardsToMove.ToList();
+                movedCardsData.AddRange(costData.FusedCards);
+                removedCountersData = costData.CountersToRemove.ToList();
+                engagedCardInstanceIds = costData.EngagedCardsInstanceIds.ToList();
                 waiting = false;
             });
 
@@ -156,7 +162,8 @@ namespace SVESimulator
             return new CE_EffectCost
             {
                 movedCardsData = movedCardsData,
-                removedCountersData = removedCountersData
+                removedCountersData = removedCountersData,
+                engagedCardsInstanceIds = engagedCardInstanceIds
             };
         }
 
@@ -165,6 +172,30 @@ namespace SVESimulator
         // ------------------------------
 
         #region Other
+
+        private async Task<CE_Object> GetTargetCard(string filter)
+        {
+            bool waiting = true;
+            TargetCardForCostEffect getTargetsEffect = new()
+            {
+                text = text,
+                target = SVEProperties.SVEEffectTarget.TargetPlayerCard,
+                filter = filter
+            };
+
+            CE_Card card = null;
+            getTargetsEffect.GetTargets(player, sourceInstanceId, SVEProperties.Zones.Field, targets =>
+            {
+                card = new CE_Card(targets.FirstOrDefault()?.RuntimeCard);
+                waiting = false;
+            });
+            while(waiting && !BreakCondition)
+                await Task.Yield();
+            ComplexLog(LogMode.Value, $"[Target Card] Instance ID {(card != null ? card.card.instanceId : "null")} " +
+                $"with filter {filter}");
+            await Task.Delay(200);
+            return card;
+        }
 
         private async Task<CE_Object> RevealTopDeck()
         {

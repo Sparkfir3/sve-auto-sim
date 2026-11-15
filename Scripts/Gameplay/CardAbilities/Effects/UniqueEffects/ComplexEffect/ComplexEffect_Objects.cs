@@ -91,11 +91,14 @@ namespace SVESimulator
         {
             public List<MoveCardToZoneData> movedCardsData;
             public List<RemoveCounterData> removedCountersData;
+            public List<int> engagedCardsInstanceIds;
 
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
             {
                 switch(token)
                 {
+                    case "engagedCardsCount":
+                        return Task.FromResult<CE_Object>(new CE_Value(engagedCardsInstanceIds.Count.ToString()));
                     case "firstMovedCard":
                         return movedCardsData is { Count: > 0 }
                             ? Task.FromResult<CE_Object>(new CE_Card(player, movedCardsData[0].cardInstanceId, movedCardsData[0].endZone))

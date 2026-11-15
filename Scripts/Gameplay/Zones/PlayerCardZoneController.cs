@@ -169,9 +169,13 @@ namespace SVESimulator
 
         public void SendCardToExArea(CardObject card, int slotNumber, Action onComplete = null)
         {
-            MoveCardZone(card, card.CurrentZone, exAreaZone);
-            MoveCardTransform(card, exAreaZone.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, onComplete: onComplete);
+            CardZone startZone = card.CurrentZone;
+            CardMovementType moveType = Vector3.Dot(card.transform.up, Vector3.up) > 0.5f ? CardMovementType.PlayFromFaceUp : CardMovementType.PlayFromFaceDown;
 
+            MoveCardZone(card, startZone, exAreaZone);
+            MoveCardTransform(card, exAreaZone.GetSlotPosition(slotNumber), SVEProperties.CardFaceUpRotation, moveType: moveType, onComplete: onComplete);
+            if(startZone is PlayerHandZone)
+                RearrangeHand();
             exAreaZone.MoveCardToSlot(card, slotNumber, newInteractionType: TargetableSlot.InteractionType.None);
 
             card.SetStatOverlayActive(true);

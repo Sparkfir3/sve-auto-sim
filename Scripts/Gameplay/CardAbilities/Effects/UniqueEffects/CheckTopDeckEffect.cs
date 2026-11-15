@@ -23,6 +23,7 @@ namespace SVESimulator
             BottomDeck,
             TopOrBottomDeck,
             ExArea,
+            HandOrExArea,
 
             // Send to zone and target
             FieldAndTarget,
@@ -206,6 +207,7 @@ namespace SVESimulator
             {
                 // Send to zone
                 case CheckCardAction.Hand:
+                case CheckCardAction.HandOrExArea:
                     actionText = "Add to Hand";
                     confirmAction = selectedCards =>
                     {
@@ -369,6 +371,17 @@ namespace SVESimulator
                         {
                             foreach(CardObject card in selectedCards)
                                 player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                        }
+                    };
+                    return true;
+                case CheckCardAction.HandOrExArea:
+                    actionTexts = new List<string> { "Send to EX Area" };
+                    confirmActions = new List<Action<List<CardObject>>>
+                    {
+                        selectedCards =>
+                        {
+                            foreach(CardObject card in selectedCards)
+                                player.LocalEvents.SendToExArea(card, SVEProperties.Zones.Deck);
                         }
                     };
                     return true;

@@ -36,7 +36,7 @@ ability Fanfare {
     effect Sequence(AtkDef, Rush, Assail, Bane);
 }
 ability Spell name AtkDef {
-    effect GiveStat(AtkDef, 1) to Self;
+    effect GiveStat(AtkDef, 2) to Self;
 }
 ability Spell name Rush {
     effect GiveKeyword(Rush) to Self;

@@ -650,7 +650,7 @@ namespace SVESimulator
             List<RuntimeCard> additionalRuntimeCardData = new();
 
             // Move card objects
-            MoveCardToZoneData[] cardsToMove = msg.cardsMoveToZoneData.Concat(msg.fusedCardsData).ToArray();
+            MoveCardToZoneData[] cardsToMove = msg.costData.CardsToMove.Concat(msg.costData.FusedCards).ToArray();
             for(int i = 0; i < cardsToMove.Length; i++)
             {
                 // Get card & init new RuntimeCard if necessary
@@ -685,7 +685,7 @@ namespace SVESimulator
             oppZoneController.RearrangeHand();
 
             // Pay cost in backend
-            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.cardsMoveToZoneData, msg.fusedCardsData, msg.countersToRemove, msg.cardInstanceIdsToEngage, additionalRuntimeCardData);
+            sveEffectSolver.PayAbilityCosts(opponentInfo, card.RuntimeCard, costList, msg.costData, additionalRuntimeCardData);
         }
 
         #endregion

@@ -55,6 +55,7 @@ namespace SVESimulator.SveScript
             { "OnPlaySpell", new EffectTriggerInfo("SVESimulator.SveOnPlaySpellTrigger", TriggerParameterType.Filter) },
             { "OnPlayOrFuse", new EffectTriggerInfo("SVESimulator.SveOnPlayCardOrFuseTrigger", TriggerParameterType.Filter) },
             { "OnPlayOrFuseFromEx", new EffectTriggerInfo("SVESimulator.SveOnPlayCardOrFuseFromExTrigger", TriggerParameterType.Filter) },
+            { "OnThisFused", new EffectTriggerInfo("SVESimulator.SveOnThisFusedTrigger", TriggerParameterType.Filter) },
 
             // Combat
             { "Strike", new EffectTriggerInfo("SVESimulator.SveOnAttackTrigger", TriggerParameterType.Filter) },
