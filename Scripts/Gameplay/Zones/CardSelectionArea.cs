@@ -79,6 +79,7 @@ namespace SVESimulator
         private Dictionary<SVEFormulaParser.CardFilterSetting, string> currentFilter;
         private Vector3 contentPositionDiff;
         private Vector3 raycastHitPos;
+        private int actionButtonCount;
 
         public bool IsActive => gameObject.activeInHierarchy;
         public List<CardObject> CurrentSelectedCards => currentSelectedCards;
@@ -202,6 +203,7 @@ namespace SVESimulator
             OnDisableZone();
             OnUpdateSelection = null;
             UpdateActionButtonOverride = null;
+            actionButtonCount = 0;
             gameObject.SetActive(false);
         }
 
@@ -323,6 +325,7 @@ namespace SVESimulator
             GameUIManager.MultipleChoice.Open(zoneController.Player, cardName, entries, effectText,
                 showBackgroundTint: false, showTargetingToOpponent: showTargetingToOpponent, disablePlayerInputs: false,
                 position: displayPosition);
+            actionButtonCount = 1;
             UpdateActionButton();
         }
 
@@ -336,6 +339,7 @@ namespace SVESimulator
             });
             if(minSelectCount == 0) // move "Skip" button to end if it exists
                 GameUIManager.MultipleChoice.MoveButtonToEnd(GameUIManager.MultipleChoice.ActiveButtonCount - 2);
+            actionButtonCount++;
             UpdateActionButton();
         }
 
@@ -701,7 +705,9 @@ namespace SVESimulator
             }
 
             // If minSelectCount is 0, the "Close" button is an option, so the action button should be disabled if none are selected
-            GameUIManager.MultipleChoice.SetButtonActive(0, currentSelectedCards.Count >= Mathf.Max(minSelectCount, 1) || maxSelectCount == 0);
+            bool active = currentSelectedCards.Count >= Mathf.Max(minSelectCount, 1) || maxSelectCount == 0;
+            for(int i = 0; i < actionButtonCount; i++)
+                GameUIManager.MultipleChoice.SetButtonActive(i, active);
         }
 
         private void DeselectAllCards()
