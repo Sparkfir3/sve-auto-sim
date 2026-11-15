@@ -618,17 +618,10 @@ namespace SVESimulator
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
                 ? attacker.namedStats[SVEProperties.CardStats.Defense].effectiveValue
                 : attacker.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
-                damage += 1;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
-                damage += 2;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus3Damage))
-                damage += 3;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus4Damage))
-                damage += 4;
+            damage += attacker.GetDamageModifierAmount(SVEProperties.DamageModifier.PlusDamage);
 
-            if(isFollowerCombat && defender.HasKeyword(SVEProperties.PassiveAbilities.DamageReduction1))
-                damage = Mathf.Max(damage - 1, 0);
+            if(isFollowerCombat)
+                damage = Mathf.Max(damage - defender.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReduction), 0);
 
             if((isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleCombatDamage))
                || (!isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleLeaderDamage)))
@@ -670,9 +663,9 @@ namespace SVESimulator
             int modAmount = value;
             if(statId == 1 && adding) // Defense
             {
-                if(!isCombatDamage && card.HasKeyword(SVEProperties.PassiveAbilities.DamageReductionAbilities1))
+                if(!isCombatDamage)
                 {
-                    modAmount += 1;
+                    modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReductionAbilities);
                 }
             }
 

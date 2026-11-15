@@ -250,5 +250,15 @@ namespace SVESimulator
             public const string DoubleCombatDamage = "DoubleCombatDamage";
             public const string DoubleLeaderDamage = "DoubleLeaderDamage";
         }
+        
+        public enum DamageModifier
+        {
+            PlusDamage = 2,
+            DamageReduction = 3,
+            DamageReductionAbilities = 4,
+            DamageCap = 5,
+            TakeReducedDamage = 6,
+            TakeIncreasedDamage = 7
+        }
     }
 }

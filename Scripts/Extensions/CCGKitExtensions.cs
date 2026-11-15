@@ -94,7 +94,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Get Card Info
+        #region Get Main Card Info
 
         public static int TryGetIntProperty(this Card card, string name, int defaultValue = 0)
         {
@@ -180,6 +180,12 @@ namespace SVESimulator
             // for SOME REASON, CCG kit clamps stats' min value to 0 (which only affects effectiveValue, and not baseValue) so we have to have an extra check for -1
         }
 
+        #endregion
+
+        // ------------------------------
+
+        #region Get Keyword Info
+
         public static bool GetModifiedKeywords(this RuntimeCard card, out List<RuntimeKeyword> newKeywords, out List<RuntimeKeyword> removedKeywords)
         {
             Card baseCard = LibraryCardCache.GetCard(card.cardId);
@@ -234,6 +240,17 @@ namespace SVESimulator
 
         public static bool HasCounter(this CardObject card, SVEProperties.Counters counter) => card.CountOfCounter(counter) > 0;
         public static bool HasCounter(this RuntimeCard card, SVEProperties.Counters counter) => card.CountOfCounter(counter) > 0;
+
+        public static int GetDamageModifierAmount(this RuntimeCard card, SVEProperties.DamageModifier damageMod)
+        {
+            int modifier = 0;
+            foreach(RuntimeKeyword keyword in card.keywords)
+            {
+                if(keyword.keywordId == (int)damageMod)
+                    modifier += keyword.valueId;
+            }
+            return modifier;
+        }
 
         #endregion
 
