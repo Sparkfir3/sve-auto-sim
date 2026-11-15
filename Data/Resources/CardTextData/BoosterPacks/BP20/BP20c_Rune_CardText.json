@@ -126,9 +126,12 @@
     "effectText": [
       {
         "key": "Fanfare",
-        "text": "",
         "trigger": "[fanfare]",
         "cost": "Bury another Idolatry card",
+        "body": "Select an enemy follower on the field. Destroy it and deal 2 damage to its leader."
+      },
+      {
+        "key": "Destroy",
         "body": "Select an enemy follower on the field. Destroy it and deal 2 damage to its leader."
       },
       {
@@ -189,6 +192,10 @@
         "body": "Select an enemy follower on the field. Deal it 3 damage, draw a card, then discard a card."
       },
       {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Deal it 3 damage, draw a card, then discard a card."
+      },
+      {
         "key": "Discard",
         "body": "Discard a card."
       }
@@ -196,7 +203,7 @@
   },
   {
     "id": "BP20-048EN",
-    "name": "Supplicant of Destruction (Evolved)",
+    "name": "Supplicant of Destruction",
     "trait": "Omen / Idolatry",
     "cardText": "[act] [engage], bury another Idolatry card: Select an enemy leader or enemy follower on the field and deal it 2 damage.",
     "effectText": [

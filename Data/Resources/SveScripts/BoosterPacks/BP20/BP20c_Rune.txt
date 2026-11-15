@@ -10,7 +10,7 @@ stats 1/1;
 text "[fanfare] Choose 1. (1) Select another Idolatry card on your field. Destroy it and put a Melodious Monody token into your EX area. (2) Summon a White Psalm, New Revelation token.";
 
 ability Fanfare {
-    effect ChooseFromList(Destroy, Psalm);
+    effect ChooseFromList(Sequence, Psalm);
 }
 ability Spell name Sequence {
     condition f(t(Idolatry)X);
@@ -53,8 +53,7 @@ class Rune;
 type Evolved Follower;
 trait Omen / Heir / Mage;
 rarity L;
-cost 10;
-stats 3/5;
+stats 1/3;
 
 text "On Evolve - Select an enemy follower on the field and destroy it.
       On Super-Evolve - Select a [runecraft] spell in your cemetery that costs 9 or less and put it into your EX area. It costs 3 less to play this turn.";
@@ -66,7 +65,7 @@ ability OnSuperEvolve {
     effect CemeteryToExAreaAndTarget(1, Sc(Rune)p(m(0,9)), MinusCost);
 }
 ability Spell name MinusCost {
-    effect GiveStat(Cost, -3) to AllPlayerCardsEx;
+    effect GiveStatEndOfTurn(Cost, -3) to AllPlayerCardsEx;
 }
 
 // ------------------------------
@@ -159,7 +158,7 @@ ability Spell name Token {
     effect SummonTokenAndTarget(Ersatz Elimination, ExArea, 2, MinusCost);
 }
 ability Spell name MinusCost {
-    effect GiveStat(Cost, -1) to AllPlayerCardsEx;
+    effect GiveStatEndOfTurn(Cost, -1) to AllPlayerCardsEx;
 }
 
 // ------------------------------
@@ -273,7 +272,7 @@ ability Spell name Discard {
 name Supplicant of Destruction;
 id BP20-048;
 class Rune;
-type Evolved Follower;
+type Follower;
 trait Omen / Idolatry;
 rarity S;
 cost 2;
@@ -316,7 +315,8 @@ stats 1/1;
 text "[evolve] [cost01]: Evolve this.
       Assail.";
 
-evolve 1;c
+evolve 1;
+keyword Assail;
 
 // ------------------------------
 

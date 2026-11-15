@@ -53577,7 +53577,7 @@
       },
       {
         "cardTypeId": 2,
-        "name": "Melodius Monody",
+        "name": "Melodious Monody",
         "costs": [],
         "properties": [
           {
@@ -70033,7 +70033,7 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
-              "effectName1": "Destroy",
+              "effectName1": "Sequence",
               "effectName2": "Psalm",
               "$type": "SVESimulator.ChooseEffectFromList"
             },
@@ -70230,19 +70230,19 @@
         ],
         "stats": [
           {
-            "baseValue": 3,
+            "baseValue": 1,
             "statId": 0,
             "name": "Attack",
-            "originalValue": 3,
+            "originalValue": 1,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
           },
           {
-            "baseValue": 5,
+            "baseValue": 3,
             "statId": 1,
             "name": "Defense",
-            "originalValue": 5,
+            "originalValue": 3,
             "minValue": 0,
             "maxValue": 99,
             "modifiers": []
@@ -70315,7 +70315,7 @@
               "target": "AllPlayerCardsEx",
               "targetStats": "Cost",
               "amount": "-3",
-              "$type": "SVESimulator.GiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           }
@@ -70795,7 +70795,7 @@
               "target": "AllPlayerCardsEx",
               "targetStats": "Cost",
               "amount": "-1",
-              "$type": "SVESimulator.GiveStatBoostEffect"
+              "$type": "SVESimulator.GiveStatEndOfTurnEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           }
@@ -71302,8 +71302,8 @@
         "id": 100201047
       },
       {
-        "cardTypeId": 1,
-        "name": "Supplicant of Destruction (Evolved)",
+        "cardTypeId": 0,
+        "name": "Supplicant of Destruction",
         "costs": [],
         "properties": [
           {
@@ -71357,20 +71357,29 @@
           },
           {
             "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
             "statId": 5,
             "name": "Attached Instance IDs",
             "originalValue": -1,
             "minValue": -1,
             "maxValue": 999999,
-            "modifiers": []
-          },
-          {
-            "baseValue": 0,
-            "statId": 6,
-            "name": "Face Up",
-            "originalValue": 0,
-            "minValue": 0,
-            "maxValue": 1,
             "modifiers": []
           }
         ],
@@ -71546,6 +71555,10 @@
           {
             "keywordId": 0,
             "valueId": 9
+          },
+          {
+            "keywordId": 0,
+            "valueId": 3
           }
         ],
         "abilities": [],
