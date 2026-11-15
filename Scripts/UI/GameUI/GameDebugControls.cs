@@ -153,6 +153,19 @@ namespace SVESimulator
         }
 
         [Button]
+        public void CemeteryToField()
+        {
+            CemeteryToFieldEffect cemeteryToFieldEffect = new()
+            {
+                amount = "m(0,1)",
+                filter = "",
+                text = "[Debug Mode] Cemetery to Field"
+            };
+            SVEEffectPool.Instance.ResolveEffectImmediate(cemeteryToFieldEffect, Player.ZoneController.leaderZone.Runtime.cards[0], // dummy card to perform the effect
+                onComplete: () => SVEEffectPool.Instance.CmdExecuteConfirmationTiming());
+        }
+
+        [Button]
         public void CreateToken(string tokenName, SVEProperties.TokenCreationOption mode = SVEProperties.TokenCreationOption.Field)
         {
             SummonTokenEffect summonEffect = new()
