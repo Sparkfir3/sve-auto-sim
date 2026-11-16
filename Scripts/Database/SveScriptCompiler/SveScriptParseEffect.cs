@@ -549,6 +549,7 @@ namespace SVESimulator.SveScript
             { "FlipEvolveDeckFaceDown", new EffectParams("FlipEvolveDeckFaceDownEffect",            false, false, EffectParameterType.FilterOptional, EffectParameterType.AmountDefaultNull) },
             { "Fuse", new EffectParams("FuseEffect",                                                false, false, EffectParameterType.ListOfEffects) },
             { "MinusCostNextCardEndOfTurn", new EffectParams("MinusCostNextCardEndOfTurnEffect",    false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
+            { "MinusCostNextCardEndOfTurnEx", new EffectParams("MinusCostNextCardEndOfTurnEffectEx",false, false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "RevealTop", new EffectParams("RevealTopDeckEffect",                                  false, false, EffectParameterType.CheckCardActions) },
 
             // ------------------------------

@@ -459,11 +459,15 @@ namespace SVESimulator
             }
 
             // Play card to field
-            playerController.AdditionalStats.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
-            bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
-
             if(originZone.IsNullOrWhiteSpace())
                 originZone = card.CurrentZone.Runtime.name;
+            bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
+
+            PlayedCardData playedCardData = new(card.RuntimeCard.instanceId, card.RuntimeCard.cardId);
+            playerController.AdditionalStats.CardsPlayedThisTurn.Add(playedCardData);
+            if(originZone!.Equals(SVEProperties.Zones.ExArea))
+                playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
+
             sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
             localZoneController.PlayCardToField(card, slot);
 
@@ -942,7 +946,12 @@ namespace SVESimulator
             // Play Spell
             card.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.SendCardToResolution(card);
-            playerController.AdditionalStats.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+
+            PlayedCardData playedCardData = new(card.RuntimeCard.instanceId, card.RuntimeCard.cardId);
+            playerController.AdditionalStats.CardsPlayedThisTurn.Add(playedCardData);
+            if(originZone.Equals(SVEProperties.Zones.ExArea))
+                playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
+
             sveEffectSolver.PlaySpell(netIdentity, card.RuntimeCard, originZone, playPointCost, onComplete: () =>
             {
                 FinishSpell(card);

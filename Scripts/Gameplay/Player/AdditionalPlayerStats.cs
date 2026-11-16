@@ -12,6 +12,7 @@ namespace SVESimulator
         public bool UseRuneFollowersForSpellchain;
 
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
+        public readonly SyncList<PlayedCardData> CardsPlayedThisTurnFromExArea = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDestroyedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDiscardedThisTurn = new();
@@ -37,6 +38,7 @@ namespace SVESimulator
         public void Reset()
         {
             CardsPlayedThisTurn.Clear();
+            CardsPlayedThisTurnFromExArea.Clear();
             AbilitiesUsedThisTurn.Clear();
             CardsDestroyedThisTurn.Clear();
             CardsDiscardedThisTurn.Clear();
@@ -51,6 +53,15 @@ namespace SVESimulator
         public int CardsPlayedThisTurnWithFilter(Dictionary<SVEFormulaParser.CardFilterSetting, string> filter)
         {
             return CardsPlayedThisTurn.Count(x =>
+            {
+                RuntimeCard card = CardManager.Instance.GetRuntimeCardByInstanceId(x.instanceId);
+                return filter.MatchesCard(card);
+            });
+        }
+
+        public int CardsPlayedThisTurnFromExAreaWithFilter(Dictionary<SVEFormulaParser.CardFilterSetting, string> filter)
+        {
+            return CardsPlayedThisTurnFromExArea.Count(x =>
             {
                 RuntimeCard card = CardManager.Instance.GetRuntimeCardByInstanceId(x.instanceId);
                 return filter.MatchesCard(card);
