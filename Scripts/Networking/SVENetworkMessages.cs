@@ -550,7 +550,7 @@ namespace SVESimulator
         public int cardInstanceId;
         public int statId;
         public int value;
-        public bool adding;
+        public bool addingNewModifier;
         public int duration;
         public SVEProperties.StatModifierType modifierType;
     }
@@ -562,7 +562,7 @@ namespace SVESimulator
         public int cardInstanceId;
         public int statId;
         public int value;
-        public bool adding;
+        public bool addingNewModifier;
         public int duration;
         public SVEProperties.StatModifierType modifierType;
     }
