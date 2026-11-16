@@ -558,6 +558,7 @@ namespace SVESimulator.SveScript
             { "AdditionalCost", new EffectParams("AdditionalCostEffect",                    false, false) },
             { "AlternateCost", new EffectParams("AlternateCostEffect",                      false, false) },
             { "ReducedCost", new EffectParams("ReducedCostEffect",                          false, false, EffectParameterType.Amount) },
+            { "ReducedCostFromEx", new EffectParams("ReducedCostFromExEffect",              false, false, EffectParameterType.Amount) },
         };
 
         private static Dictionary<string, EffectParams> PassiveEffectInfoDictionary = new()

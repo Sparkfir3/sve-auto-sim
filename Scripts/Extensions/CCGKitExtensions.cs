@@ -124,10 +124,11 @@ namespace SVESimulator
             return id;
         }
 
-        public static int PlayPointCost(this RuntimeCard card, PlayerController player = null)
+        public static int PlayPointCost(this RuntimeCard card, PlayerController player)
         {
             int baseCost = card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat costStat) ? costStat.effectiveValue : 0;
             int reduction = 0;
+            bool isFromExArea = player.ZoneController.exAreaZone.Runtime.cards.Any(x => x.instanceId == card.instanceId);
 
             // Reduced cost from abilities on card
             List<TriggeredAbility> reducedCostAbilities = LibraryCardCache.GetCard(card.cardId).abilities.Where(x => x is TriggeredAbility && x.effect is ReducedCostEffect)
@@ -137,6 +138,8 @@ namespace SVESimulator
                 SveTrigger trigger = ability.trigger as SveTrigger;
                 ReducedCostEffect effect = ability.effect as ReducedCostEffect;
                 if(trigger == null || effect == null || (!trigger.condition.IsNullOrWhiteSpace() && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, card)))
+                    continue;
+                if(effect is ReducedCostFromExEffect && !isFromExArea)
                     continue;
                 reduction += effect.ReduceCostAmount(player, card);
             }
