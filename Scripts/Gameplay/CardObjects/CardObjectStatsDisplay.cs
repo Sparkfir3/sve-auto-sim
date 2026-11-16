@@ -24,7 +24,7 @@ namespace SVESimulator
             public CounterDisplay(int keywordId, TextMeshProUGUI textbox, int count)
             {
                 this.keywordId = keywordId;
-                counterName = GameManager.Instance.config.keywords[keywordId].name.Replace("Counter", "");
+                counterName = CounterUtilities.FormatName(keywordId);
                 this.textbox = textbox;
                 this.count = count;
             }

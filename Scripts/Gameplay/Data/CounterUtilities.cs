@@ -50,5 +50,16 @@ namespace SVESimulator
             player.LocalEvents.RemoveCountersFromCard(card.RuntimeCard, SVEProperties.Counters.Stack, 1);
             return true;
         }
+
+        public static string FormatName(int keywordId) => FormatName((SVEProperties.Counters)keywordId);
+        public static string FormatName(SVEProperties.Counters counter)
+        {
+            return counter switch
+            {
+                SVEProperties.Counters.DivineWater => "Divine Water",
+                SVEProperties.Counters.FightingSpirit => "Fighting Spirit",
+                _ => counter.ToString()
+            };
+        }
     }
 }
