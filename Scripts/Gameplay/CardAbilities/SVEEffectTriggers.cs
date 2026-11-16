@@ -112,6 +112,7 @@ namespace SVESimulator
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
+    public class SveOnTakeAbilityDamageTrigger : SveTrigger { }
 
     #endregion
 

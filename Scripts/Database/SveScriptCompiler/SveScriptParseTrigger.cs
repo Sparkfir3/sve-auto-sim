@@ -63,6 +63,7 @@ namespace SVESimulator.SveScript
             { "LeaderStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackLeaderTrigger") },
             { "OnOtherAttack", new EffectTriggerInfo("SVESimulator.SveOnOtherCardAttackTrigger", TriggerParameterType.Filter) },
             { "OnDealCombatDamage", new EffectTriggerInfo("SVESimulator.SveOnDealCombatDamageTrigger") },
+            { "OnTakeAbilityDamage", new EffectTriggerInfo("SVESimulator.SveOnTakeAbilityDamageTrigger") },
 
             // Game Phases
             { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },

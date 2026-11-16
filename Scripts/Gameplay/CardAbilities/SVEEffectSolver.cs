@@ -666,7 +666,7 @@ namespace SVESimulator
             int modAmount = value;
             if(statId == 1 && addingNewModifier && modifierType.HasFlag(SVEProperties.StatModifierType.Damage)) // Damage
             {
-                // note to self - damage is adding a negative value to the stat, math needs to be inverted
+                // note to self - damage is adding a negative value to the stat, so math needs to be inverted
                 if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
                     modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReductionAbilities);
                 // CombatDamage reduction is checked in GetCardDamageOutput(), not here
@@ -678,6 +678,9 @@ namespace SVESimulator
                     modAmount = Mathf.Max(modAmount, -damageCap);
             }
 
+            if(modAmount == 0)
+                return;
+
             Modifier modifier = new(modAmount, duration);
             if(addingNewModifier)
                 card.stats[statId].AddModifier(modifier);
@@ -685,6 +688,12 @@ namespace SVESimulator
                 card.stats[statId].RemoveModifier(modifier);
             if(checkDefense)
                 isDestroyed = DestroyZeroDefenseFollower(card.ownerPlayer.netId, card);
+
+            if(isPlayerEffectSolver && card.ownerPlayer.netId.isLocalPlayer && addingNewModifier)
+            {
+                if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnTakeAbilityDamageTrigger>(gameState, card, card.ownerPlayer, _ => true, executeConfirmationTiming: false);
+            }
         }
 
         private bool DestroyZeroDefenseFollower(NetworkIdentity playerNetId, RuntimeCard card)
