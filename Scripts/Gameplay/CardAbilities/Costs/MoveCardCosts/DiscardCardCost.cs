@@ -43,16 +43,19 @@ namespace SVESimulator
                 cards =>
                 {
                     foreach(CardObject discard in cards)
-                    {
-                        player.LocalEvents.SendToCemetery(discard, originZone: SVEProperties.Zones.Hand, onlyMoveObject: true);
-                        cardsToMove.Add(new MoveCardToZoneData(discard.RuntimeCard.instanceId, SVEProperties.Zones.Hand, SVEProperties.Zones.Cemetery));
-                    }
+                        MoveCard(player, discard, cardsToMove);
                     waiting = false;
                 });
 
             yield return new WaitUntil(() => !waiting);
             selectionArea.Disable();
             yield return null;
+        }
+
+        protected virtual void MoveCard(PlayerController player, CardObject card, List<MoveCardToZoneData> cardsToMove)
+        {
+            player.LocalEvents.SendToCemetery(card, originZone: SVEProperties.Zones.Hand, onlyMoveObject: true);
+            cardsToMove.Add(new MoveCardToZoneData(card.RuntimeCard.instanceId, SVEProperties.Zones.Hand, SVEProperties.Zones.Cemetery));
         }
     }
 }
