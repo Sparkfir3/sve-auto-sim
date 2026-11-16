@@ -657,14 +657,14 @@ namespace SVESimulator
             ApplyCardStatModifier(card, statId, diff, true, 0, SVEProperties.StatModifierType.StatChange, out isDestroyed);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, SVEProperties.StatModifierType modifierType, bool checkDefense = true, bool isCombatDamage = false)
-            => ApplyCardStatModifier(card, statId, value, adding, duration, modifierType, out _, checkDefense);
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, SVEProperties.StatModifierType modifierType,
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool addingNewModifier, int duration, SVEProperties.StatModifierType modifierType, bool checkDefense = true, bool isCombatDamage = false)
+            => ApplyCardStatModifier(card, statId, value, addingNewModifier, duration, modifierType, out _, checkDefense);
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool addingNewModifier, int duration, SVEProperties.StatModifierType modifierType,
             out bool isDestroyed, bool checkDefense = true)
         {
             isDestroyed = false;
             int modAmount = value;
-            if(statId == 1 && adding && modifierType.HasFlag(SVEProperties.StatModifierType.Damage)) // Damage
+            if(statId == 1 && addingNewModifier && modifierType.HasFlag(SVEProperties.StatModifierType.Damage)) // Damage
             {
                 // note to self - damage is adding a negative value to the stat, math needs to be inverted
                 if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
@@ -679,7 +679,7 @@ namespace SVESimulator
             }
 
             Modifier modifier = new(modAmount, duration);
-            if(adding)
+            if(addingNewModifier)
                 card.stats[statId].AddModifier(modifier);
             else
                 card.stats[statId].RemoveModifier(modifier);
