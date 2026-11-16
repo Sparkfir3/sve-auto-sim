@@ -65547,6 +65547,2216 @@
         "id": 100191055
       },
       {
+        "cardTypeId": 0,
+        "name": "Antemaria, Huntress Convict",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This can't be played from the EX area.\n----------\n[fanfare] Bury 2 Condemned cards from your EX area: Give this Storm and Drain.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-056",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 6,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 13
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCardEx\",\r\n    \"filter\": \"t(Condemned)m(2,2)\",\r\n    \"$type\": \"SVESimulator.SendToCemeteryCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Storm",
+              "effectName2": "Drain",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Storm",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Drain",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 0,
+              "keywordValue": 5,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191056
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Drazael, Ravening Enforcer",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This can't be played from the EX area.\n----------\n[evolve] [cost01]: Evolve this.\nWard.\nThis can't be destroyed by abilities.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-057",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 1,
+            "valueId": 13
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          },
+          {
+            "keywordId": 1,
+            "valueId": 4
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191057
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Drazael, Ravening Enforcer (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\nThis can't be destroyed by abilities.\nOn Evolve - Bury two Condemned cards from your EX area: Give each enemy follower on the field [attack]-5/[defense]-5. Give your leader [defense]+5.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-058",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          },
+          {
+            "keywordId": 1,
+            "valueId": 4
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCardEx\",\r\n    \"filter\": \"t(Condemned)m(2,2)\",\r\n    \"$type\": \"SVESimulator.SendToCemeteryCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "AtkDef",
+              "effectName2": "Def",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": "F",
+              "targetStats": "AttackDefense",
+              "amount": "-5",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "5",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191058
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Masamune, One-Eyed Dragon",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonheart / Draconic Duelist",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Assail. Bane.\n[fanfare] If there are at least 3 Draconic Duelist cards on your field, give this Storm.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-059",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 3
+          },
+          {
+            "keywordId": 0,
+            "valueId": 6
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(t(Draconic Duelist))>2",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191059
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Scorched-Earth Tyrant",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This can't be played from the EX area.\n----------\n[evolve] [cost01]: Evolve this.\n[fanfare] Bury a Condemned card from your EX area: Select an enemy follower on the field and deal it 4 damage.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-060",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 13
+          },
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"target\": \"TargetPlayerCardEx\",\r\n    \"filter\": \"t(Condemned)\",\r\n    \"$type\": \"SVESimulator.SendToCemeteryCost\"\r\n  }\r\n]",
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191060
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Scorched-Earth Tyrant (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve - Select an enemy follower on the field and deal it 4 damage.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-061",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191061
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Neptune, Arbiter of Tides",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonheart / Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Put a Megalorca token into your EX area. If Overflow is active for you, summon a Megalorca token.\nWhenever a Megalorca is put onto your field, give it Storm and your leader [defense]+1.\n[act] [cost00]: The next Marine card you play from the EX area this turn costs 1 less. Activate only once per turn.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-062",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Ex",
+              "effectName2": "Field",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Ex",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Megalorca",
+              "createTokenOption": "ExArea",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Field",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Megalorca",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "filter": "n(Megalorca)",
+              "$type": "SVESimulator.SveOnOtherCardEnterFieldTrigger"
+            },
+            "name": "OnOtherEnterField",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "effectName1": "Storm",
+              "effectName2": "Leader",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Storm",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllPlayerCards",
+              "keywordType": 0,
+              "keywordValue": 1,
+              "$type": "SVESimulator.GiveKeywordEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leader",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "0",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.OncePerTurnCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "amount": "1",
+              "filter": "t(Marine)",
+              "$type": "SVESimulator.MinusCostNextCardEndOfTurnExEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100191062
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Warden of the Adamant Claw",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This can't be played from the EX area.\n----------\nWard.\n[fanfare] Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-063",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 13
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "4",
+              "checkAction1": "Hand",
+              "checkFilter1": "t(Condemned)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191063
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Hotheaded Marauder",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This can't be played from the EX area.\n----------\n[evolve] [cost01]: Evolve this.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-064",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 1,
+            "valueId": 13
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191064
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Hotheaded Marauder (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve - Search your deck for a 1-cost Condemned follower, summon it, then shuffle.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-065",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "filter": "Ft(Condemned)p(1)",
+              "searchDeckAction": "Field",
+              "$type": "SVESimulator.SearchDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191065
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Razor-Clawed Thief",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Arcaneform / Forbidden",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This can't be played from the EX area.\n----------\nRush. Assail.\n[lastwords] Put this into its owner's EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-066",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 1,
+            "valueId": 13
+          },
+          {
+            "keywordId": 0,
+            "valueId": 2
+          },
+          {
+            "keywordId": 0,
+            "valueId": 3
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveLastWordsTrigger"
+            },
+            "name": "LastWords",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "$type": "SVESimulator.SendToExAreaEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191066
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Seasoned Merman",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Each Megalorca on your field has Rush and Assail.\n[fanfare] Summon 2 Megalorca tokens. Put the top card of your deck into your EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-067",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "target": "AllPlayerCards",
+              "filter": "n(Megalorca)",
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 2,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "target": "AllPlayerCards",
+              "filter": "n(Megalorca)",
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 3,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Tokens",
+              "effectName2": "Ex",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Tokens",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Megalorca",
+              "createTokenOption": "Field",
+              "amount": "2",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Ex",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "$type": "SVESimulator.TopDeckToExEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191067
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Dancing Crab",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve] [cost01]: Evolve this.\nIntimidate.\nStrike - Select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-068",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 0,
+            "valueId": 4
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "targetStats": "AttackDefense",
+              "amount": "-1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191068
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Dancing Crab (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Intimidate.\nOn Evolve - Select an enemy follower on the field and engage it.\nStrike - Select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-069",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 4
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.EngageCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "targetStats": "AttackDefense",
+              "amount": "-1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191069
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Mermaid Songstress",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine / Musical",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Discard a Marine card: Put the top card of your deck into your EX area. Then, if there are at least 2 cards in your EX area, give your leader [defense]+2.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-070",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"t(Marine)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Ex",
+              "effectName2": "Def",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Ex",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "$type": "SVESimulator.TopDeckToExEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "x()>1",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191070
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Dark Mermaid",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Select an enemy follower on the field. Destroy it and put the top card of your deck into your EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-071",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 6,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Destroy",
+              "effectName2": "Ex",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Destroy",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "$type": "SVESimulator.DestroyCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Ex",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "$type": "SVESimulator.TopDeckToExEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191071
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Dragonewt's Might",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt / Draconic Duelist",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select up to 2 enemy followers on the field and deal them 6 damage. You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-072",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "function": "performCostless Followers { }\nlet x = payCost(Followers).firstMovedCard.getValue(~(Ft(Dragonewt)))\nperformIf x then Leader",
+              "$type": "SVESimulator.ComplexEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Followers",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "Fm(0,2)",
+              "amount": "6",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leader",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191072
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Call of the Megalorca",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This costs 1 less to play from the EX area.\n----------\nSummon a Megalorca token. Draw a card. If Overflow is active for you, summon a Megalorca token.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP19-073",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Summon",
+              "effectName2": "Draw",
+              "effectName3": "Overflow",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Summon",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Megalorca",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Overflow",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Megalorca",
+              "createTokenOption": "Field",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.ModifiedCostTrigger"
+            },
+            "name": "ModifiedCost",
+            "type": "Triggered",
+            "effect": {
+              "amount": "1",
+              "$type": "SVESimulator.ReducedCostFromExEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100191073
+      },
+      {
         "cardTypeId": 2,
         "name": "Dread Pirate's Flag",
         "costs": [],
@@ -72185,6 +74395,2095 @@
           }
         ],
         "id": 100201055
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Galmieux, Ardor Manifest",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "While Overflow is active for you, this has Storm.\nOnce on each of your turns, when this takes ability damage, select an enemy follower on the field and deal it 2 damage.\n[fanfare] Put a Crest: Galmieux, Ardor Manifest token into your EX area.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-056",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "o",
+              "target": "Self",
+              "filter": null,
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 1,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OncePerTurnCost\"\r\n  }\r\n]",
+              "condition": "<<t",
+              "$type": "SVESimulator.SveOnTakeAbilityDamageTrigger"
+            },
+            "name": "OnTakeAbilityDamage",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Crest: Galmieux, Ardor Manifest",
+              "createTokenOption": "ExArea",
+              "amount": "1",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201056
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Azurifrit, Heir to Disdain",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Heir / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] If there's another Omen card on your field or in your EX area, deal 1 damage to each follower on the field.\nDuring your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-057",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(t(Omen)X) | x(t(Omen))",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "<<t",
+              "$type": "SVESimulator.SveOnTakeAbilityDamageTrigger"
+            },
+            "name": "OnTakeAbilityDamage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": "F",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201057
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Azurifrit, Heir to Disdain (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Heir / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\nOn Evolve - Deal 1 damage to each follower on the field.\nOn Super-Evolve - Deal 1 damage to each follower on the field and 4 damage to each enemy leader. Change this follower's defense to 7.\nDuring your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-058",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 6,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 6,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnSuperEvolveTrigger"
+            },
+            "name": "OnSuperEvolve",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "Followers",
+              "effectName2": "Leaders",
+              "effectName3": "Def",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Followers",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Leaders",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "targetStats": "Defense",
+              "amount": "7",
+              "$type": "SVESimulator.SetStatEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "<<t",
+              "$type": "SVESimulator.SveOnTakeAbilityDamageTrigger"
+            },
+            "name": "OnTakeAbilityDamage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": "F",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201058
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Dagon, Lord of the Seas",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "This costs 3 less to play from the EX area.\n----------\nRush. Assail.\nIf this would take more than 3 damage, it takes 3 instead.\nStrike - Refresh this. Perform only twice per turn.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-059",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 10,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 10,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 10,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 10,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 10,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 10,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 2
+          },
+          {
+            "keywordId": 0,
+            "valueId": 3
+          },
+          {
+            "keywordId": 5,
+            "valueId": 3
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.ModifiedCostTrigger"
+            },
+            "name": "ModifiedCost",
+            "type": "Triggered",
+            "effect": {
+              "amount": "3",
+              "$type": "SVESimulator.ReducedCostFromExEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.TwicePerTurnCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnAttackTrigger"
+            },
+            "name": "Strike",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "$type": "SVESimulator.ReserveCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201059
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Spoiled Mermanager",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve] [cost01]: Evolve this.\n[fanfare] Discard a Marine card: Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-060",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"t(Marine)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "CheckTop",
+              "effectName2": "Def",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "CheckTop",
+            "type": "Triggered",
+            "effect": {
+              "amount": "2",
+              "checkAction1": "ExArea",
+              "checkFilter1": "t(Marine)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201060
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Spoiled Mermanager (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Condemned / Alchemist / Forbidden",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "On Evolve - Discard a Marine card: Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-061",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"t(Marine)\",\r\n    \"$type\": \"SVESimulator.DiscardCardCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "CheckTop",
+              "effectName2": "Def",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "CheckTop",
+            "type": "Triggered",
+            "effect": {
+              "amount": "2",
+              "checkAction1": "ExArea",
+              "checkFilter1": "t(Marine)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201061
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Congregant of Disdain",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] If Overflow is active for you, deal 1 damage to each follower on the field.\nOnce on each of your turns, when this takes ability damage, increase your max play points by 1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-062",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "o",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OncePerTurnCost\"\r\n  }\r\n]",
+              "condition": "<<t",
+              "$type": "SVESimulator.SveOnTakeAbilityDamageTrigger"
+            },
+            "name": "OnTakeAbilityDamage",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "MaxPlayPoint",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201062
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Ferocious Flame",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Select a follower on your field and an enemy follower on the field. Deal 1 damage to the first follower and 4 damage to the second, draw a card, and if there's a follower on your field with \"Galmieux\" in its name, increase your max play points by 1.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-063",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "f(F) & p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "MultiTarget",
+              "effectName2": "Draw",
+              "effectName3": "PP",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "MultiTarget",
+            "type": "Triggered",
+            "effect": {
+              "target": "MultiTargetMode",
+              "filter": "(1, TargetPlayerCard, F), (1, TargetOpponentCard, F)",
+              "effectName1": "One",
+              "effectName2": "Four",
+              "$type": "SVESimulator.OrderedTargetForEffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "One",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Four",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "amount": "4",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "amount": "1",
+              "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "f(FnE(Galmieux))",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "PP",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "MaxPlayPoint",
+              "amount": "1",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201063
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Supplicant of Disdain",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Select a follower on the field. If Overflow is active for you, deal it 1 damage and give your leader [defense]+2.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-064",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          },
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetCard",
+              "filter": "F",
+              "effectName1": "Damage",
+              "effectName2": "Def",
+              "$type": "SVESimulator.TargetForEffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "o",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Def",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201064
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Supplicant of Disdain (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\nOn Evolve - Select an enemy follower on the field and deal it 2 damage.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-065",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 3,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnEvolveTrigger"
+            },
+            "name": "OnEvolve",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "2",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201065
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Encounter from the Deep",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Look at the top 5 cards of your deck. You may summon a Marine follower from among them. Put the rest on the bottom of your deck in any order. Deal X damage to each enemy follower on the field. X equals the defense of the Marine follower summoned this way.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-066",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 7,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 7,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "effectName1": "CheckTop",
+              "effectName2": "Damage",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "CheckTop",
+            "type": "Triggered",
+            "effect": {
+              "amount": "5",
+              "checkAction1": "FieldAndTarget",
+              "checkFilter1": "Ft(Marine)",
+              "checkAmount1": "1",
+              "checkParams1": "CalcX",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "CalcX",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllCards",
+              "amount": "D",
+              "effectName1": "Damage",
+              "$type": "SVESimulator.PerformWithTargetAmountEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Damage",
+            "type": "Triggered",
+            "effect": {
+              "target": "AllOpponentCards",
+              "filter": "F",
+              "amount": "_",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201066
+      },
+      {
+        "cardTypeId": 4,
+        "name": "Nation of Disdain",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[fanfare] Look at the top 2 cards of your deck. You may reveal an Omen–Wyrmkin card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] [engage], bury this: Select a follower on your field and deal it 1 damage.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-067",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "amount": "2",
+              "checkAction1": "Hand",
+              "checkFilter1": "t(Omen / Wyrmkin)",
+              "checkAmount1": "1",
+              "checkAction2": "BottomDeckAnyOrder",
+              "checkAction3": "None",
+              "$type": "SVESimulator.CheckTopDeckEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
+              },
+              {
+                "condition": "f(F)",
+                "$type": "SVESimulator.ConditionAsCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100201067
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Snowstorm Dragonewt",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[evolve] [cost01]: Evolve this.\n[fanfare] Select an enemy follower on the field and deal it 1 damage.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-068",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 4,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": 1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 9
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "TargetOpponentCard",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201068
+      },
+      {
+        "cardTypeId": 1,
+        "name": "Snowstorm Dragonewt (Evolved)",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Dragonewt",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "NOT IMPLEMENTED\nOn Evolve - Destroy each enemy follower on the field that has taken damage this turn.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-069",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 5,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 6,
+            "name": "Face Up",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [],
+        "id": 100201069
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Devotee of Disdain",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Omen / Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[act] [cost00]: Select a follower on your field and deal it 1 damage. Activate only once per turn.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-070",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "zoneId": 0,
+            "costs": [
+              {
+                "amount": "0",
+                "$type": "SVESimulator.PlayPointCost"
+              },
+              {
+                "$type": "SVESimulator.OncePerTurnCost"
+              }
+            ],
+            "name": "Act",
+            "type": "Activated",
+            "effect": {
+              "target": "TargetPlayerCard",
+              "filter": "F",
+              "amount": "1",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.ActivatedAbility"
+          }
+        ],
+        "id": 100201070
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Militant Mermaid",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Ward.\n[fanfare] Put a Marine card from your hand into your EX area: Recover 3 play points.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-071",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 1,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 5,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 5,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 0
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "cost": "[\r\n  {\r\n    \"amount\": \"1\",\r\n    \"filter\": \"t(Marine)\",\r\n    \"$type\": \"SVESimulator.HandToExAreaCost\"\r\n  }\r\n]",
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "PlayPoint",
+              "amount": "3",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201071
+      },
+      {
+        "cardTypeId": 0,
+        "name": "Ocean Rider",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Marine",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Each Megalorca on your field has Ward.\n[fanfare] Summon a Megalorca token. If Overflow is active for you, summon 3 instead.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-072",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 2,
+            "statId": 0,
+            "name": "Attack",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 2,
+            "statId": 1,
+            "name": "Defense",
+            "originalValue": 2,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 0,
+            "statId": 2,
+            "name": "Engaged",
+            "originalValue": 0,
+            "minValue": 0,
+            "maxValue": 1,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 3,
+            "name": "Evolve Cost",
+            "originalValue": -1,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": 3,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 3,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          },
+          {
+            "baseValue": -1,
+            "statId": 5,
+            "name": "Attached Instance IDs",
+            "originalValue": -1,
+            "minValue": -1,
+            "maxValue": 999999,
+            "modifiers": []
+          }
+        ],
+        "keywords": [],
+        "abilities": [
+          {
+            "trigger": {
+              "target": "AllPlayerCards",
+              "filter": "n(Megalorca)",
+              "$type": "SVESimulator.PassiveAbilityOnField"
+            },
+            "name": "Passive",
+            "type": "Triggered",
+            "effect": {
+              "keywordType": 0,
+              "keywordValue": 0,
+              "duration": "WhileOnField",
+              "$type": "SVESimulator.GiveKeywordPassive"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
+            },
+            "name": "Fanfare",
+            "type": "Triggered",
+            "effect": {
+              "tokenName": "Megalorca",
+              "createTokenOption": "Field",
+              "amount": "1o3",
+              "$type": "SVESimulator.SummonTokenEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201072
+      },
+      {
+        "cardTypeId": 2,
+        "name": "Raging Lightning",
+        "costs": [],
+        "properties": [
+          {
+            "value": "Dragoncraft",
+            "name": "Class",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "Wyrmkin",
+            "name": "Trait",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "[quick]\nSelect an enemy follower on the field and deal it 6 damage. If you selected a follower with 3 defense or less, deal 3 damage to its leader.",
+            "name": "Text",
+            "$type": "CCGKit.StringProperty"
+          },
+          {
+            "value": "BP20-073",
+            "name": "ID",
+            "$type": "CCGKit.StringProperty"
+          }
+        ],
+        "stats": [
+          {
+            "baseValue": 4,
+            "statId": 4,
+            "name": "Cost",
+            "originalValue": 4,
+            "minValue": 0,
+            "maxValue": 99,
+            "modifiers": []
+          }
+        ],
+        "keywords": [
+          {
+            "keywordId": 0,
+            "valueId": 8
+          }
+        ],
+        "abilities": [
+          {
+            "trigger": {
+              "condition": "p(#F)",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Spell",
+            "type": "Triggered",
+            "effect": {
+              "function": "let card = getTargetOpponentCard(F)\nlet x = getCardFromVar(card).getValue(~(d(m(0,3))))\nperform DamageFollower { trigger = card }\nperformIf x then DamageLeader",
+              "$type": "SVESimulator.ComplexEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "DamageFollower",
+            "type": "Triggered",
+            "effect": {
+              "target": "TriggerCard",
+              "amount": "6",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "DamageLeader",
+            "type": "Triggered",
+            "effect": {
+              "target": "OpponentLeader",
+              "amount": "3",
+              "$type": "SVESimulator.DealDamageEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          }
+        ],
+        "id": 100201073
       },
       {
         "cardTypeId": 7,

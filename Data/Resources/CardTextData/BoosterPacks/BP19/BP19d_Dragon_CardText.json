@@ -1,0 +1,297 @@
+[
+  {
+    "id": "BP19-056EN",
+    "name": "Antemaria, Huntress Convict",
+    "trait": "Condemned / Dragonewt",
+    "cardText": "This can't be played from the EX area.\n----------\n[fanfare] Bury 2 Condemned cards from your EX area: Give this Storm and Drain.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Bury 2 Condemned cards from your EX area",
+        "body": "Give this Storm and Drain."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-057EN",
+    "name": "Drazael, Ravening Enforcer",
+    "trait": "Condemned / Wyrmkin",
+    "cardText": "This can't be played from the EX area.\n----------\n[evolve] [cost01]: Evolve this.\nWard.\nThis can't be destroyed by abilities.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-058EN",
+    "name": "Drazael, Ravening Enforcer (Evolved)",
+    "trait": "Condemned / Wyrmkin",
+    "cardText": "Ward.\nThis can't be destroyed by abilities.\nOn Evolve - Bury two Condemned cards from your EX area: Give each enemy follower on the field [attack]-5/[defense]-5. Give your leader [defense]+5.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "cost": "Bury two Condemned cards from your EX area",
+        "body": "Give each enemy follower on the field [attack]-5/[defense]-5. Give your leader [defense]+5."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-059EN",
+    "name": "Masamune, One-Eyed Dragon",
+    "trait": "Dragonheart / Draconic Duelist",
+    "cardText": "Assail. Bane.\n[fanfare] If there are at least 3 Draconic Duelist cards on your field, give this Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 3 Draconic Duelist cards on your field, give this Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP19-060EN",
+    "name": "Scorched-Earth Tyrant",
+    "trait": "Condemned / Dragonewt",
+    "cardText": "This can't be played from the EX area.\n----------\n[evolve] [cost01]: Evolve this.\n[fanfare] Bury a Condemned card from your EX area: Select an enemy follower on the field and deal it 4 damage.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Bury a Condemned card from your EX area",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-061EN",
+    "name": "Scorched-Earth Tyrant (Evolved)",
+    "trait": "Condemned / Dragonewt",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 4 damage.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-062EN",
+    "name": "Neptune, Arbiter of Tides",
+    "trait": "Dragonheart / Marine",
+    "cardText": "[fanfare] Put a Megalorca token into your EX area. If Overflow is active for you, summon a Megalorca token.\nWhenever a Megalorca is put onto your field, give it Storm and your leader [defense]+1.\n[act] [cost00]: The next Marine card you play from the EX area this turn costs 1 less. Activate only once per turn.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Megalorca token into your EX area. If Overflow is active for you, summon a Megalorca token."
+      },
+      {
+        "key": "OnOtherEnterField",
+        "text": "Whenever a Megalorca is put onto your field, give it Storm and your leader [defense]+1."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost00]",
+        "body": "The next Marine card you play from the EX area this turn costs 1 less. Activate only once per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP19-063EN",
+    "name": "Warden of the Adamant Claw",
+    "trait": "Condemned / Wyrmkin",
+    "cardText": "This can't be played from the EX area.\n----------\nWard.\n[fanfare] Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-064EN",
+    "name": "Hotheaded Marauder",
+    "trait": "Condemned / Dragonewt",
+    "cardText": "This can't be played from the EX area.\n----------\n[evolve] [cost01]: Evolve this.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-065EN",
+    "name": "Hotheaded Marauder (Evolved)",
+    "trait": "Condemned / Dragonewt",
+    "cardText": "On Evolve - Search your deck for a 1-cost Condemned follower, summon it, then shuffle.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for a 1-cost Condemned follower, summon it, then shuffle."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-066EN",
+    "name": "Razor-Clawed Thief",
+    "trait": "Condemned / Arcaneform / Forbidden",
+    "cardText": "This can't be played from the EX area.\n----------\nRush. Assail.\n[lastwords] Put this into its owner's EX area.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Put this into its owner's EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-067EN",
+    "name": "Seasoned Merman",
+    "trait": "Marine",
+    "cardText": "Each Megalorca on your field has Rush and Assail.\n[fanfare] Summon 2 Megalorca tokens. Put the top card of your deck into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon 2 Megalorca tokens. Put the top card of your deck into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-068EN",
+    "name": "Dancing Crab",
+    "trait": "Marine",
+    "cardText": "[evolve] [cost01]: Evolve this.\nIntimidate.\nStrike - Select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Select an enemy follower on the field and give it [attack]-1/[defense]-1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-069EN",
+    "name": "Dancing Crab (Evolved)",
+    "trait": "Marine",
+    "cardText": "Intimidate.\nOn Evolve - Select an enemy follower on the field and engage it.\nStrike - Select an enemy follower on the field and give it [attack]-1/[defense]-1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and engage it."
+      },
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Select an enemy follower on the field and give it [attack]-1/[defense]-1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-070EN",
+    "name": "Mermaid Songstress",
+    "trait": "Marine / Musical",
+    "cardText": "[fanfare] Discard a Marine card: Put the top card of your deck into your EX area. Then, if there are at least 2 cards in your EX area, give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a Marine card",
+        "body": "Put the top card of your deck into your EX area. Then, if there are at least 2 cards in your EX area, give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP19-071EN",
+    "name": "Dark Mermaid",
+    "trait": "Marine",
+    "cardText": "[fanfare] Select an enemy follower on the field. Destroy it and put the top card of your deck into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. Destroy it and put the top card of your deck into your EX area."
+      },
+      {
+        "key": "Destroy",
+        "body": "Select an enemy follower on the field. Destroy it and put the top card of your deck into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP19-072EN",
+    "name": "Dragonewt's Might",
+    "trait": "Dragonewt / Draconic Duelist",
+    "cardText": "Select up to 2 enemy followers on the field and deal them 6 damage. You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 2 enemy followers on the field and deal them 6 damage. You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader."
+      },
+      {
+        "key": "Followers",
+        "text": "Select up to 2 enemy followers on the field and deal them 6 damage. You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader.",
+        "cost": "You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader."
+      },
+      {
+        "key": "Leader",
+        "text": "Select up to 2 enemy followers on the field and deal them 6 damage. You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader.",
+        "cost": "You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-073EN",
+    "name": "Call of the Megalorca",
+    "trait": "Marine",
+    "cardText": "This costs 1 less to play from the EX area.\n----------\nSummon a Megalorca token. Draw a card. If Overflow is active for you, summon a Megalorca token.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Summon a Megalorca token. Draw a card. If Overflow is active for you, summon a Megalorca token."
+      }
+    ]
+  }
+]
