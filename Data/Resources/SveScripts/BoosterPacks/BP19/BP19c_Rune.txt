@@ -323,7 +323,7 @@ text "Ward.
 keyword Ward;
 ability Fanfare {
     effect ComplexEffect(
-        let t = getTargetCard(F)
+        let t = getTargetPlayerCard(F)
         let x = revealTopDeck.getValue(P)
         perform Def { amount = x, trigger = t }
         perform Draw { }

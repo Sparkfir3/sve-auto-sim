@@ -160,7 +160,9 @@ namespace SVESimulator
                 "millDeck" =>                   await MillDeck(args),
                 "payCost" =>                    await PayEffectCost(args, true),
                 "mayPayCost" =>                 await PayEffectCost(args, false),
-                "getTargetCard" =>              await GetTargetCard(args),
+                "getTargetPlayerCard" =>        await GetTargetCard(args, SVEProperties.SVEEffectTarget.TargetPlayerCard),
+                "getTargetOpponentCard" =>      await GetTargetCard(args, SVEProperties.SVEEffectTarget.TargetOpponentCard),
+                "getCardFromVar" =>             variables.GetValueOrDefault(args, null) as CE_Card,
                 _ => null
             };
             if(obj == null)

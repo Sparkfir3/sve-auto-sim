@@ -173,13 +173,13 @@ namespace SVESimulator
 
         #region Other
 
-        private async Task<CE_Object> GetTargetCard(string filter)
+        private async Task<CE_Object> GetTargetCard(string filter, SVEProperties.SVEEffectTarget target)
         {
             bool waiting = true;
             TargetCardForCostEffect getTargetsEffect = new()
             {
                 text = text,
-                target = SVEProperties.SVEEffectTarget.TargetPlayerCard,
+                target = target,
                 filter = filter
             };
 
