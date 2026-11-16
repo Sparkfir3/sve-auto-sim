@@ -193,10 +193,11 @@ namespace SVESimulator
                 statId = msg.statId,
                 value = msg.value,
                 adding = msg.adding,
-                duration = msg.duration
+                duration = msg.duration,
+                modifierType = msg.modifierType
             };
             server.SafeSendToClient(server.gameState.currentOpponent, oppMsg);
-            (server.effectSolver as SVEEffectSolver).ApplyCardStatModifier(card, msg.statId, msg.value, msg.adding, msg.duration);
+            (server.effectSolver as SVEEffectSolver).ApplyCardStatModifier(card, msg.statId, msg.value, msg.adding, msg.duration, msg.modifierType);
         }
 
         #endregion

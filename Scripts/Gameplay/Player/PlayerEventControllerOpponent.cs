@@ -548,7 +548,7 @@ namespace SVESimulator
                 Debug.LogError($"Failed to find card with id {msg.cardInstanceId} on {(msg.isOpponentCard ? "player" : "opponent")}'s field to update stat");
                 return;
             }
-            sveEffectSolver.ApplyCardStatModifier(card.RuntimeCard, msg.statId, msg.value, msg.adding, msg.duration, out bool isDestroyed);
+            sveEffectSolver.ApplyCardStatModifier(card.RuntimeCard, msg.statId, msg.value, msg.adding, msg.duration, msg.modifierType, out bool isDestroyed);
             if(isDestroyed)
                 playerController.LocalEvents.SendToCemetery(card, onlyMoveObject: true, isDestroy: true);
         }

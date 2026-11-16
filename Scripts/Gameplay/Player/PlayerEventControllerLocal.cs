@@ -543,8 +543,8 @@ namespace SVESimulator
                 atkDiff++;
                 defDiff++;
             }
-            ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].statId, atkDiff, true);
-            ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, defDiff, true);
+            ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Attack].statId, atkDiff, true, SVEProperties.StatModifierType.StatChange);
+            ApplyModifierToCard(evolvedCard.RuntimeCard, evolvedCard.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, defDiff, true, SVEProperties.StatModifierType.StatChange);
 
             return true;
         }
@@ -1138,10 +1138,10 @@ namespace SVESimulator
                 AddLeaderDefense(targetPlayer, difference);
         }
 
-        public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool adding, int duration = 0)
+        public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool adding, SVEProperties.StatModifierType modifierType, int duration = 0)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
-            sveEffectSolver.ApplyCardStatModifier(card, statId, value, adding, duration, out bool isDestroyed);
+            sveEffectSolver.ApplyCardStatModifier(card, statId, value, adding, duration, modifierType, out bool isDestroyed);
             if(isDestroyed)
             {
                 // Runtime card gets moved in the effect solver, so we only need to move the game object here
@@ -1158,7 +1158,8 @@ namespace SVESimulator
                 statId = statId,
                 value = value,
                 adding = adding,
-                duration = duration
+                duration = duration,
+                modifierType = modifierType
             };
             NetworkClient.Send(msg);
         }

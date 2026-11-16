@@ -63,7 +63,7 @@ namespace SVESimulator
                     else if(secondaryBoostAmount == null) // Standard add
                     {
                         foreach(string stat in targetStats.AsNamedStatArray())
-                            player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, boostAmount, true);
+                            player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, boostAmount, true, SVEProperties.StatModifierType.StatChange);
                     }
                     else // Add with different secondary stat value (AtkDef)
                     {
@@ -71,7 +71,7 @@ namespace SVESimulator
                         for(int i = 0; i < statArray.Length; i++)
                         {
                             player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[statArray[i]].statId,
-                                i == 0 ? boostAmount : secondaryBoostAmount.Value, true);
+                                i == 0 ? boostAmount : secondaryBoostAmount.Value, true, SVEProperties.StatModifierType.StatChange);
                         }
                     }
                 }

@@ -45,7 +45,7 @@ namespace SVESimulator
                         if(card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeDamage) || card.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.DoesNotTakeAbilityDamage) ||
                             !card.CurrentZone.Runtime.name.Equals(SVEProperties.Zones.Field))
                             continue;
-                        player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, damageAmount, true);
+                        player.LocalEvents.ApplyModifierToCard(card.RuntimeCard, card.RuntimeCard.namedStats[SVEProperties.CardStats.Defense].statId, damageAmount, true, SVEProperties.StatModifierType.AbilityDamage);
                     }
 
                     // Leader

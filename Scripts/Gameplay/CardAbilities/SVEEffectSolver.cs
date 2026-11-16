@@ -556,8 +556,10 @@ namespace SVESimulator
             int defenderDamage = GetCardDamageOutput(defendingCard, attackingCard);
 
             // Do not check for 0 defense here - instead check below during Bane handling
-            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, 0, checkDefense: false, isCombatDamage: true);
-            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, 0, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, 0,
+                SVEProperties.StatModifierType.CombatDamage, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, 0,
+                SVEProperties.StatModifierType.CombatDamage, checkDefense: false, isCombatDamage: true);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
@@ -652,18 +654,19 @@ namespace SVESimulator
         public void SetCardStat(RuntimeCard card, int statId, int value, out bool isDestroyed)
         {
             int diff = value - card.stats[statId].effectiveValue;
-            ApplyCardStatModifier(card, statId, diff, true, 0, out isDestroyed);
+            ApplyCardStatModifier(card, statId, diff, true, 0, SVEProperties.StatModifierType.StatChange, out isDestroyed);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, bool checkDefense = true, bool isCombatDamage = false)
-            => ApplyCardStatModifier(card, statId, value, adding, duration, out _, checkDefense, isCombatDamage);
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, out bool isDestroyed, bool checkDefense = true, bool isCombatDamage = false)
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, SVEProperties.StatModifierType modifierType, bool checkDefense = true, bool isCombatDamage = false)
+            => ApplyCardStatModifier(card, statId, value, adding, duration, modifierType, out _, checkDefense);
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, SVEProperties.StatModifierType modifierType,
+            out bool isDestroyed, bool checkDefense = true)
         {
             isDestroyed = false;
             int modAmount = value;
             if(statId == 1 && adding) // Defense
             {
-                if(!isCombatDamage)
+                if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
                 {
                     modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReductionAbilities);
                 }
