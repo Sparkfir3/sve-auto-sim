@@ -556,8 +556,10 @@ namespace SVESimulator
             int defenderDamage = GetCardDamageOutput(defendingCard, attackingCard);
 
             // Do not check for 0 defense here - instead check below during Bane handling
-            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, 0, checkDefense: false, isCombatDamage: true);
-            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, 0, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(attackingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -defenderDamage, true, 0,
+                SVEProperties.StatModifierType.CombatDamage, checkDefense: false, isCombatDamage: true);
+            ApplyCardStatModifier(defendingCard, attackingCard.namedStats[SVEProperties.CardStats.Defense].statId, -attackerDamage, true, 0,
+                SVEProperties.StatModifierType.CombatDamage, checkDefense: false, isCombatDamage: true);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
@@ -618,17 +620,10 @@ namespace SVESimulator
             int damage = attacker.HasKeyword(SVEProperties.PassiveAbilities.UseDefAsAtk)
                 ? attacker.namedStats[SVEProperties.CardStats.Defense].effectiveValue
                 : attacker.namedStats[SVEProperties.CardStats.Attack].effectiveValue;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus1Damage))
-                damage += 1;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus2Damage))
-                damage += 2;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus3Damage))
-                damage += 3;
-            if(attacker.HasKeyword(SVEProperties.PassiveAbilities.Plus4Damage))
-                damage += 4;
+            damage += attacker.GetDamageModifierAmount(SVEProperties.DamageModifier.PlusDamage);
 
-            if(isFollowerCombat && defender.HasKeyword(SVEProperties.PassiveAbilities.DamageReduction1))
-                damage = Mathf.Max(damage - 1, 0);
+            if(isFollowerCombat)
+                damage = Mathf.Max(damage - defender.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReduction), 0);
 
             if((isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleCombatDamage))
                || (!isFollowerCombat && attacker.HasKeyword(SVEProperties.PassiveAbilities.DoubleLeaderDamage)))
@@ -659,25 +654,32 @@ namespace SVESimulator
         public void SetCardStat(RuntimeCard card, int statId, int value, out bool isDestroyed)
         {
             int diff = value - card.stats[statId].effectiveValue;
-            ApplyCardStatModifier(card, statId, diff, true, 0, out isDestroyed);
+            ApplyCardStatModifier(card, statId, diff, true, 0, SVEProperties.StatModifierType.StatChange, out isDestroyed);
         }
 
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, bool checkDefense = true, bool isCombatDamage = false)
-            => ApplyCardStatModifier(card, statId, value, adding, duration, out _, checkDefense, isCombatDamage);
-        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool adding, int duration, out bool isDestroyed, bool checkDefense = true, bool isCombatDamage = false)
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool addingNewModifier, int duration, SVEProperties.StatModifierType modifierType, bool checkDefense = true, bool isCombatDamage = false)
+            => ApplyCardStatModifier(card, statId, value, addingNewModifier, duration, modifierType, out _, checkDefense);
+        public void ApplyCardStatModifier(RuntimeCard card, int statId, int value, bool addingNewModifier, int duration, SVEProperties.StatModifierType modifierType,
+            out bool isDestroyed, bool checkDefense = true)
         {
             isDestroyed = false;
             int modAmount = value;
-            if(statId == 1 && adding) // Defense
+            if(statId == 1 && addingNewModifier && modifierType.HasFlag(SVEProperties.StatModifierType.Damage)) // Damage
             {
-                if(!isCombatDamage && card.HasKeyword(SVEProperties.PassiveAbilities.DamageReductionAbilities1))
-                {
-                    modAmount += 1;
-                }
+                // note to self - damage is adding a negative value to the stat, math needs to be inverted
+                if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
+                    modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReductionAbilities);
+                // CombatDamage reduction is checked in GetCardDamageOutput(), not here
+                modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.TakeReducedDamage);
+                modAmount -= card.GetDamageModifierAmount(SVEProperties.DamageModifier.TakeIncreasedDamage);
+
+                int damageCap = card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageCap, defaultValue: -1);
+                if(damageCap >= 0)
+                    modAmount = Mathf.Max(modAmount, -damageCap);
             }
 
             Modifier modifier = new(modAmount, duration);
-            if(adding)
+            if(addingNewModifier)
                 card.stats[statId].AddModifier(modifier);
             else
                 card.stats[statId].RemoveModifier(modifier);

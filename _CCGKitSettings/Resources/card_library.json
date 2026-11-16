@@ -2479,7 +2479,7 @@
             "effect": {
               "target": "TargetOpponentCard",
               "filter": "F",
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 0,
               "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
@@ -5216,7 +5216,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -5239,7 +5239,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 6,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -5578,7 +5578,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -5954,7 +5954,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 6,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -6401,7 +6401,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 7,
+              "keywordType": 11,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -6416,7 +6416,7 @@
                 "$type": "SVESimulator.ConditionAsCost"
               },
               {
-                "keywordType": 7,
+                "keywordType": 11,
                 "keywordValue": 1,
                 "amount": "3",
                 "target": "Self",
@@ -6510,7 +6510,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Earth Rite",
@@ -6719,7 +6719,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -6848,7 +6848,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "Earth Rite",
@@ -7122,7 +7122,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "Ar(Stack)",
-              "keywordType": 6,
+              "keywordType": 10,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -7519,7 +7519,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -7589,7 +7589,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -13532,7 +13532,7 @@
           },
           {
             "keywordId": 3,
-            "valueId": 0
+            "valueId": 1
           }
         ],
         "abilities": [],
@@ -13820,7 +13820,7 @@
             "type": "Triggered",
             "effect": {
               "keywordType": 2,
-              "keywordValue": 3,
+              "keywordValue": 4,
               "duration": "OpponentTurn",
               "$type": "SVESimulator.GiveKeywordPassive"
             },
@@ -18925,7 +18925,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -19941,7 +19941,7 @@
             "type": "Triggered",
             "effect": {
               "keywordType": 4,
-              "keywordValue": 0,
+              "keywordValue": 1,
               "duration": "WhileOnField",
               "$type": "SVESimulator.GiveKeywordPassive"
             },
@@ -21467,7 +21467,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 2,
               "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
@@ -23436,7 +23436,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 6,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -23469,7 +23469,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 6,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -24086,7 +24086,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "EarthRite",
@@ -24194,7 +24194,7 @@
           {
             "trigger": {
               "condition": "p(#F)",
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -24655,7 +24655,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "Ar(Stack)",
-              "keywordType": 6,
+              "keywordType": 10,
               "keywordValue": 1,
               "amount": "2",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -24853,7 +24853,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -26518,11 +26518,11 @@
         ],
         "keywords": [
           {
-            "keywordId": 5,
+            "keywordId": 8,
             "valueId": 4
           },
           {
-            "keywordId": 5,
+            "keywordId": 8,
             "valueId": 3
           }
         ],
@@ -28868,7 +28868,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 1,
               "$type": "SVESimulator.GiveKeywordEndOfNextTurnEffect"
             },
@@ -28956,7 +28956,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 8,
+              "keywordType": 12,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -32968,7 +32968,7 @@
             "name": "Passive",
             "type": "Triggered",
             "effect": {
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 1,
               "duration": "WhileOnField",
               "$type": "SVESimulator.GiveKeywordPassive"
@@ -33096,7 +33096,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -33152,7 +33152,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  },\r\n  {\r\n    \"keywordType\": 9,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"m(0, r(Fable))\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.IgnorePromptAsCost\"\r\n  },\r\n  {\r\n    \"keywordType\": 13,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"m(0, r(Fable))\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SpellAbility"
             },
             "name": "AtkDef",
@@ -33512,7 +33512,7 @@
             "type": "Activated",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -33527,7 +33527,7 @@
                 "$type": "SVESimulator.PlayPointCost"
               },
               {
-                "keywordType": 9,
+                "keywordType": 13,
                 "keywordValue": 1,
                 "amount": "",
                 "target": "Self",
@@ -34421,7 +34421,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -34439,7 +34439,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 9,
+                "keywordType": 13,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "Self",
@@ -34916,7 +34916,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "Ft(Fable)",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -35024,7 +35024,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -35033,7 +35033,7 @@
           },
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 9,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 13,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnAttackTrigger"
             },
             "name": "Strike",
@@ -35373,7 +35373,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -35395,7 +35395,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 9,
+                "keywordType": 13,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "Self",
@@ -36244,7 +36244,7 @@
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCards",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -37067,7 +37067,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "r(Stack)",
-              "keywordType": 6,
+              "keywordType": 10,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -37097,7 +37097,7 @@
                 "$type": "SVESimulator.QuickEffectAsCost"
               },
               {
-                "keywordType": 6,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -37507,7 +37507,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 6,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 10,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"TargetPlayerCard\",\r\n    \"filter\": \"A\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "EarthRite",
@@ -38286,7 +38286,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -38896,7 +38896,7 @@
         ],
         "keywords": [
           {
-            "keywordId": 6,
+            "keywordId": 10,
             "valueId": 1
           }
         ],
@@ -42886,7 +42886,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -44148,7 +44148,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -44159,7 +44159,7 @@
             "zoneId": 0,
             "costs": [
               {
-                "keywordType": 9,
+                "keywordType": 13,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "Self",
@@ -44293,7 +44293,7 @@
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCardsEx",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -44773,7 +44773,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -44784,7 +44784,7 @@
             "zoneId": 0,
             "costs": [
               {
-                "keywordType": 9,
+                "keywordType": 13,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "Self",
@@ -44797,7 +44797,7 @@
             "effect": {
               "target": "TargetPlayerCardFieldOrEx",
               "filter": "Ft(Fable)",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -44903,7 +44903,7 @@
             "zoneId": 0,
             "costs": [
               {
-                "keywordType": 9,
+                "keywordType": 13,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "Self",
@@ -44916,7 +44916,7 @@
             "effect": {
               "target": "TargetPlayerCardFieldOrEx",
               "filter": "Ft(Fable)",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -45602,7 +45602,7 @@
             "effect": {
               "target": "TargetPlayerCard",
               "filter": "FXt(Fable)",
-              "keywordType": 9,
+              "keywordType": 13,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -48778,7 +48778,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 11,
+              "keywordType": 15,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -48953,7 +48953,7 @@
             "valueId": 4
           },
           {
-            "keywordId": 5,
+            "keywordId": 8,
             "valueId": 5
           }
         ],
@@ -49070,7 +49070,7 @@
             "valueId": 4
           },
           {
-            "keywordId": 5,
+            "keywordId": 8,
             "valueId": 5
           }
         ],
@@ -51283,7 +51283,7 @@
             "name": "Passive",
             "type": "Triggered",
             "effect": {
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 5,
               "duration": "WhileOnField",
               "$type": "SVESimulator.GiveKeywordPassive"
@@ -57781,7 +57781,7 @@
               "target": "TargetPlayerCard",
               "filter": "n(Rowen, Dragon Lance)",
               "keywordType": 2,
-              "keywordValue": 0,
+              "keywordValue": 1,
               "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
@@ -58358,7 +58358,7 @@
             "effect": {
               "target": "AllPlayerCards",
               "filter": "n(Gigabyte Blade)",
-              "keywordType": 20,
+              "keywordType": 24,
               "keywordValue": 1,
               "amount": "3",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -58886,7 +58886,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 21,
+              "keywordType": 25,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -63354,7 +63354,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 22,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 26,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -63404,7 +63404,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 22,
+              "keywordType": 26,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -63887,7 +63887,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 22,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 26,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -63925,7 +63925,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 22,
+              "keywordType": 26,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -64409,7 +64409,7 @@
         "abilities": [
           {
             "trigger": {
-              "cost": "[\r\n  {\r\n    \"keywordType\": 22,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
+              "cost": "[\r\n  {\r\n    \"keywordType\": 26,\r\n    \"keywordValue\": 1,\r\n    \"amount\": \"1\",\r\n    \"target\": \"Self\",\r\n    \"filter\": \"\",\r\n    \"$type\": \"SVESimulator.RemoveCountersCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldTrigger"
             },
             "name": "Fanfare",
@@ -64447,7 +64447,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 22,
+              "keywordType": 26,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -65207,7 +65207,7 @@
                 "$type": "SVESimulator.PlayPointCost"
               },
               {
-                "keywordType": 6,
+                "keywordType": 10,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "TargetPlayerCard",
@@ -68086,7 +68086,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 22,
+              "keywordType": 26,
               "keywordValue": 1,
               "amount": "_",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -69200,7 +69200,7 @@
                 "$type": "SVESimulator.EngageSelfCost"
               },
               {
-                "keywordType": 22,
+                "keywordType": 26,
                 "keywordValue": 1,
                 "amount": "1",
                 "target": "Self",
@@ -69248,7 +69248,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 22,
+              "keywordType": 26,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -69933,7 +69933,7 @@
             "type": "Triggered",
             "effect": {
               "target": "AllPlayerCards",
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 1,
               "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
@@ -72310,7 +72310,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 24,
+              "keywordType": 28,
               "keywordValue": 1,
               "amount": "1",
               "$type": "SVESimulator.GiveCounterEffect"
@@ -74358,7 +74358,7 @@
             "type": "Triggered",
             "effect": {
               "target": "Self",
-              "keywordType": 5,
+              "keywordType": 8,
               "keywordValue": 1,
               "$type": "SVESimulator.GiveKeywordEndOfTurnEffect"
             },
@@ -90311,7 +90311,7 @@
             "type": "Triggered",
             "effect": {
               "keywordType": 2,
-              "keywordValue": 0,
+              "keywordValue": 1,
               "duration": "OpponentTurn",
               "$type": "SVESimulator.GiveKeywordPassive"
             },
@@ -90410,7 +90410,7 @@
             "type": "Triggered",
             "effect": {
               "keywordType": 2,
-              "keywordValue": 1,
+              "keywordValue": 2,
               "duration": "OpponentTurn",
               "$type": "SVESimulator.GiveKeywordPassive"
             },

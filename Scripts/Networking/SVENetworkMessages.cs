@@ -550,8 +550,9 @@ namespace SVESimulator
         public int cardInstanceId;
         public int statId;
         public int value;
-        public bool adding;
+        public bool addingNewModifier;
         public int duration;
+        public SVEProperties.StatModifierType modifierType;
     }
 
     public struct OpponentCardStatModifierMessage : NetworkMessage
@@ -561,8 +562,9 @@ namespace SVESimulator
         public int cardInstanceId;
         public int statId;
         public int value;
-        public bool adding;
+        public bool addingNewModifier;
         public int duration;
+        public SVEProperties.StatModifierType modifierType;
     }
 
     public struct LocalAddLeaderDefenseMessage : NetworkMessage

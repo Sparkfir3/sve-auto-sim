@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SVESimulator
@@ -8,28 +9,28 @@ namespace SVESimulator
 
         public enum Counters
         {
-            Stack = 6,
-            Spell = 7,
-            Prayer = 8,
-            Fable = 9,
-            Soul = 10,
-            Lightning = 11,
-            Grace = 12,
-            Calamity = 13,
-            Mana = 14,
-            Dormancy = 15,
-            Seasonal = 16,
-            DivineWater = 17,
-            FightingSpirit = 18,
-            Arrow = 19,
-            Gigabyte = 20,
-            Curse = 21,
-            Fusion = 22,
-            Pain = 23,
-            Reversal = 24,
-            Passion = 25,
-            Bunclie = 26,
-            Battery = 27,
+            Stack = 10,
+            Spell = 11,
+            Prayer = 12,
+            Fable = 13,
+            Soul = 14,
+            Lightning = 15,
+            Grace = 16,
+            Calamity = 17,
+            Mana = 18,
+            Dormancy = 19,
+            Seasonal = 20,
+            DivineWater = 21,
+            FightingSpirit = 22,
+            Arrow = 23,
+            Gigabyte = 24,
+            Curse = 25,
+            Fusion = 26,
+            Pain = 27,
+            Reversal = 28,
+            Passion = 29,
+            Bunclie = 30,
+            Battery = 31,
         }
 
         public enum SVEEffectTarget
@@ -80,6 +81,15 @@ namespace SVESimulator
 
         public enum StatBoostType { Attack, Defense, AttackDefense, Cost, EvolveCost, MaxPlayPoint, PlayPoint, EvolvePoint }
         public enum PassiveDuration  { WhileOnField, PlayerTurn, OpponentTurn, EndOfTurn, EndOfNextTurn }
+
+        [Flags]
+        public enum StatModifierType
+        {
+            StatChange = 1,
+            Damage = 2,
+            CombatDamage = 6,
+            AbilityDamage = 10
+        }
 
         public static Quaternion CardFaceUpRotation = Quaternion.Euler(0f, 0f, 0f);
         public static Quaternion CardFaceDownRotation = Quaternion.Euler(0f, 0f, 180f);
@@ -224,6 +234,7 @@ namespace SVESimulator
             public const string CannotAttackLeaders = "CannotAttackLeaders";
             public const string CannotUseAct = "CannotUseAct";
             public const string OpponentMustSelectAsTarget = "OpponentMustSelectAsTarget";
+            public const string CannotPlayFromEx = "CannotPlayFromEx";
 
             // Plus Damage
             public const string Plus1Damage = "Plus1Damage";
@@ -234,6 +245,13 @@ namespace SVESimulator
             // Damage Reduction
             public const string DamageReduction1 = "DamageReduction1";
             public const string DamageReductionAbilities1 = "DamageReductionAbilities1";
+            public const string DamageCap1 = "DamageCap1";
+            public const string DamageCap2 = "DamageCap2";
+            public const string DamageCap3 = "DamageCap3";
+
+            // Take Reduced/Increased Damage
+            public const string TakeReducedDamage1 = "TakeReducedDamage1";
+            public const string TakeIncreasedDamage1 = "TakeIncreasedDamage1";
 
             // Other Damage Mods
             public const string CannotDealDamage = "CannotDealDamage";
@@ -242,6 +260,16 @@ namespace SVESimulator
             public const string DoesNotTakeAbilityDamage = "DoesNotTakeAbilityDamage";
             public const string DoubleCombatDamage = "DoubleCombatDamage";
             public const string DoubleLeaderDamage = "DoubleLeaderDamage";
+        }
+        
+        public enum DamageModifier
+        {
+            PlusDamage = 2,
+            DamageReduction = 3,
+            DamageReductionAbilities = 4,
+            DamageCap = 5,
+            TakeReducedDamage = 6,
+            TakeIncreasedDamage = 7
         }
     }
 }

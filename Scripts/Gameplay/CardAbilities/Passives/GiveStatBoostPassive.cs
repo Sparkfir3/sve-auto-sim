@@ -20,7 +20,7 @@ namespace SVESimulator
             int boostAmount = SVEFormulaParser.ParseValue(amount, player);
             foreach(string stat in targetStats.AsNamedStatArray())
             {
-                player.LocalEvents.ApplyModifierToCard(card, card.namedStats[stat].statId, boostAmount, true);
+                player.LocalEvents.ApplyModifierToCard(card, card.namedStats[stat].statId, boostAmount, true, SVEProperties.StatModifierType.StatChange);
             }
         }
 
@@ -31,7 +31,7 @@ namespace SVESimulator
             int boostAmount = SVEFormulaParser.ParseValue(amount, player);
             foreach(string stat in targetStats.AsNamedStatArray())
             {
-                player.LocalEvents.ApplyModifierToCard(card, card.namedStats[stat].statId, boostAmount, false);
+                player.LocalEvents.ApplyModifierToCard(card, card.namedStats[stat].statId, boostAmount, false, SVEProperties.StatModifierType.StatChange);
             }
         }
     }
