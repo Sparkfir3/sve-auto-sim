@@ -80,6 +80,7 @@ namespace SVESimulator.SveScript
             { "CannotAttackLeaders",        new Keyword(1, 6) },
             { "CannotAct",                  new Keyword(1, 11) },
             { "OpponentMustSelectAsTarget", new Keyword(1, 12) },
+            { "CannotPlayFromEx",           new Keyword(1, 13) },
 
             // Plus Damage
             { "Plus1Damage",                new Keyword(2, 1) },

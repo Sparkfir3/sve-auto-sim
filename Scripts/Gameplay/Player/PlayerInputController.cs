@@ -106,7 +106,8 @@ namespace SVESimulator
             }
 
             #region Card
-            if(canInteract && currentSelectedCard && !currentSelectedCard.IsCrest())
+            if(canInteract && currentSelectedCard && !currentSelectedCard.IsCrest() &&
+               (currentSelectedCard.CurrentZone != Player.ZoneController.exAreaZone || !currentSelectedCard.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.CannotPlayFromEx)))
             {
                 if(Input.GetMouseButtonDown(0))
                     BeginInteract();

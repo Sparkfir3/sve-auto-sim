@@ -234,6 +234,7 @@ namespace SVESimulator
             public const string CannotAttackLeaders = "CannotAttackLeaders";
             public const string CannotUseAct = "CannotUseAct";
             public const string OpponentMustSelectAsTarget = "OpponentMustSelectAsTarget";
+            public const string CannotPlayFromEx = "CannotPlayFromEx";
 
             // Plus Damage
             public const string Plus1Damage = "Plus1Damage";
