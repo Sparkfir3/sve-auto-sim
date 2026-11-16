@@ -241,15 +241,18 @@ namespace SVESimulator
         public static bool HasCounter(this CardObject card, SVEProperties.Counters counter) => card.CountOfCounter(counter) > 0;
         public static bool HasCounter(this RuntimeCard card, SVEProperties.Counters counter) => card.CountOfCounter(counter) > 0;
 
-        public static int GetDamageModifierAmount(this RuntimeCard card, SVEProperties.DamageModifier damageMod)
+        public static int GetDamageModifierAmount(this RuntimeCard card, SVEProperties.DamageModifier damageMod, int defaultValue = 0)
         {
-            int modifier = 0;
+            int? modifier = null;
             foreach(RuntimeKeyword keyword in card.keywords)
             {
                 if(keyword.keywordId == (int)damageMod)
+                {
+                    modifier ??= 0;
                     modifier += keyword.valueId;
+                }
             }
-            return modifier;
+            return modifier ?? defaultValue;
         }
 
         #endregion

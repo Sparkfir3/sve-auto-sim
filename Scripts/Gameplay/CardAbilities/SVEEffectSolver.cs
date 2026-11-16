@@ -664,12 +664,18 @@ namespace SVESimulator
         {
             isDestroyed = false;
             int modAmount = value;
-            if(statId == 1 && adding) // Defense
+            if(statId == 1 && adding && modifierType.HasFlag(SVEProperties.StatModifierType.Damage)) // Damage
             {
+                // note to self - damage is adding a negative value to the stat, math needs to be inverted
                 if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
-                {
                     modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReductionAbilities);
-                }
+                // CombatDamage reduction is checked in GetCardDamageOutput(), not here
+                modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.TakeReducedDamage);
+                modAmount -= card.GetDamageModifierAmount(SVEProperties.DamageModifier.TakeIncreasedDamage);
+
+                int damageCap = card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageCap, defaultValue: -1);
+                if(damageCap >= 0)
+                    modAmount = Mathf.Max(modAmount, -damageCap);
             }
 
             Modifier modifier = new(modAmount, duration);
