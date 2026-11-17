@@ -470,6 +470,7 @@ namespace SVESimulator.SveScript
             { "CemeteryToExAreaAndTarget", new EffectParams("CemeteryToExAreaAndTargetEffect",          true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
             { "CemeteryToField", new EffectParams("CemeteryToFieldEffect",                              true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "CemeteryToFieldAndTarget", new EffectParams("CemeteryToFieldAndTargetEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.Filter, EffectParameterType.ListOfEffects) },
+            { "CemeteryToFieldNoFanfare", new EffectParams("CemeteryToFieldNoFanfareEffect",            true,  false, EffectParameterType.Amount, EffectParameterType.FilterOptional) },
             { "PlayCardFromCemeterySetCost", new EffectParams("PlayCardFromCemeterySetCostEffect",      false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },
             { "PlaySpellFromCemetery", new EffectParams("PlaySpellFromCemeteryEffect",                  false, false, EffectParameterType.Filter) },
             { "PlaySpellFromCemeterySetCost", new EffectParams("PlaySpellFromCemeterySetCostEffect",    false, false, EffectParameterType.Filter, EffectParameterType.Amount2) },

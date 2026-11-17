@@ -409,15 +409,25 @@ namespace SVESimulator
             }
         }
 
-        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null) =>
-            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
-        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
+        // Play card to first open slot
+        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+        {
+            return PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
+        }
+
+        // Play card to the closest slot from position
+        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
         {
             if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
                 return false;
-            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
         }
-        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
+
+        // Play card to specified slot
+        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;

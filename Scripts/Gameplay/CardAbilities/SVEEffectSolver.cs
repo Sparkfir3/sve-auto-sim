@@ -153,7 +153,7 @@ namespace SVESimulator
             }
         }
 
-        public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool executeConfirmationTiming = true)
+        public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool executeConfirmationTiming = true, bool triggerFanfare = true)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             if(player == null)
@@ -193,15 +193,18 @@ namespace SVESimulator
                     }
 
                     // Fanfare/other fanfare
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
+                    if(triggerFanfare)
+                    {
+                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
 
-                    // Fanfare from zone
-                    if(originZone.Equals(SVEProperties.Zones.Hand))
-                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
-                    else
-                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+                        // Fanfare from zone
+                        if(originZone.Equals(SVEProperties.Zones.Hand))
+                            SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
+                        else
+                            SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+                    }
                 }
                 else
                 {
