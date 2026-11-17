@@ -71,16 +71,17 @@ namespace SVESimulator.SveScript
             { "serve3",                     new Keyword(1, 9) },
 
             // Passive Abilities
-            { "IgnoreWard",                 new Keyword(1, 0) },
-            { "PutOnFieldEngaged",          new Keyword(1, 1) },
-            { "UseDefAsAtk",                new Keyword(1, 2) },
-            { "RuneFollowersForSpellchain", new Keyword(1, 3) },
-            { "CannotDestroyByAbilities",   new Keyword(1, 4) },
-            { "CannotAttack",               new Keyword(1, 5) },
-            { "CannotAttackLeaders",        new Keyword(1, 6) },
-            { "CannotAct",                  new Keyword(1, 11) },
-            { "OpponentMustSelectAsTarget", new Keyword(1, 12) },
-            { "CannotPlayFromEx",           new Keyword(1, 13) },
+            { "IgnoreWard",                         new Keyword(1, 0) },
+            { "PutOnFieldEngaged",                  new Keyword(1, 1) },
+            { "UseDefAsAtk",                        new Keyword(1, 2) },
+            { "RuneFollowersForSpellchain",         new Keyword(1, 3) },
+            { "CannotDestroyByAbilities",           new Keyword(1, 4) },
+            { "CannotAttack",                       new Keyword(1, 5) },
+            { "CannotAttackLeaders",                new Keyword(1, 6) },
+            { "CannotAct",                          new Keyword(1, 11) },
+            { "OpponentMustSelectAsTarget",         new Keyword(1, 12) },
+            { "CannotPlayFromEx",                   new Keyword(1, 13) },
+            { "PlayerChooseAnyNumberOfOptions",     new Keyword(1, 14) },
 
             // Plus Damage
             { "Plus1Damage",                new Keyword(2, 1) },

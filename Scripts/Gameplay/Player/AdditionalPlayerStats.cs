@@ -10,6 +10,8 @@ namespace SVESimulator
     {
         [SyncVar]
         public bool UseRuneFollowersForSpellchain;
+        [SyncVar]
+        public bool CanChooseAnyNumberOfOptions;
 
         [SyncVar]
         public int TimesLostDefenseThisTurn;
@@ -84,6 +86,10 @@ namespace SVESimulator
                 UseRuneFollowersForSpellchain = shouldUseRuneFollowersForSpellchain;
                 player.SetCemeteryCount(player.Necrocharge); // necrocharge = shortcut for cards in cemetery count
             }
+
+            bool canChooseAnyNumberOfOptions = player.ZoneController.fieldZone.GetAllPrimaryCards()
+                .Any(x => x.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.PlayerChooseAnyNumberOfOptions));
+            CanChooseAnyNumberOfOptions = canChooseAnyNumberOfOptions;
         }
     }
 }

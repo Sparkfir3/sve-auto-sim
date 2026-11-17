@@ -22,6 +22,8 @@ namespace SVESimulator
         public string effectName5;
 
         public List<string> allEffects => new() { effectName1, effectName2, effectName3, effectName4, effectName5 };
+
+        protected virtual bool RemoveEffectFromRemaining => true;
         protected bool ShouldAddSkipButton { get; set; }
 
         // ------------------------------
@@ -36,78 +38,97 @@ namespace SVESimulator
                 player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete));
         }
 
-        protected virtual IEnumerator ResolveCoroutine(List<string> effectList, CardObject cardObject, Card libraryCard, List<Ability> sveAbilities,
-            PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete, Action<string> onChooseOption = null)
+        protected IEnumerator ResolveCoroutine(List<string> effectList, CardObject cardObject, Card libraryCard, List<Ability> sveAbilities,
+            PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete)
         {
-            bool effectDone = false;
-            List<MultipleChoiceWindow.MultipleChoiceEntryData> choices = new();
-            foreach(string effectName in effectList)
+            GetMinMax(player, cardObject.RuntimeCard, effectList.Count(x => x != null), out int minRemaining, out int maxRemaining);
+            List<string> remainingEffectList = new(effectList);
+            while(maxRemaining > 0)
             {
-                if(string.IsNullOrWhiteSpace(effectName))
-                    continue;
-
-                // Fetch ability
-                Ability abilityToResolve = sveAbilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
-                if(abilityToResolve == null || abilityToResolve.effect is not SveEffect effect)
+                bool effectDone = false;
+                ShouldAddSkipButton = CanSkip(minRemaining);
+                List<MultipleChoiceWindow.MultipleChoiceEntryData> choices = new();
+                foreach(string effectName in remainingEffectList)
                 {
-                    Debug.LogWarning($"Failed to find effect \"{effectName}\" from card \"{libraryCard.name}\" for multiple choice options");
-                    continue;
-                }
+                    if(string.IsNullOrWhiteSpace(effectName))
+                        continue;
 
-                // Condition & cost check
-                bool enabled = true;
-                SveTrigger trigger = (abilityToResolve as TriggeredAbility)?.trigger as SveTrigger;
-                if(trigger != null)
-                {
-                    if((!string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
-                        || !player.LocalEvents.CanPayCosts(cardObject.RuntimeCard, trigger.Costs, effectName))
-                        enabled = false;
-                }
-                if(enabled)
-                    ShouldAddSkipButton = false;
-
-                // Populate multiple choice window
-                MultipleChoiceWindow.MultipleChoiceEntryData entry = new()
-                {
-                    text = effect.text ?? effectName,
-                    onSelect = () =>
+                    // Fetch ability
+                    Ability abilityToResolve = sveAbilities.FirstOrDefault(x => x.name.Trim().Equals(effectName.Trim()));
+                    if(abilityToResolve == null || abilityToResolve.effect is not SveEffect effect)
                     {
-                        // adding to abilities used list required for OncePerTurn checks
-                        player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(cardObject.RuntimeCard.instanceId, cardObject.LibraryCard.id, abilityToResolve.name));
-                        // no need for CanPayCost check, this button should be disabled if cost check above failed
-                        player.LocalEvents.PayAbilityCosts(cardObject, trigger?.Costs, effectName, () =>
-                        {
-                            effect.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () =>
-                            {
-                                onChooseOption?.Invoke(effectName);
-                                effectDone = true;
-                            });
-                        });
-                    },
-                    disabled = !enabled
-                };
-                choices.Add(entry);
-            }
-
-            // Skip button
-            if(ShouldAddSkipButton)
-            {
-                choices.Add(new MultipleChoiceWindow.MultipleChoiceEntryData()
-                {
-                    text = "Skip",
-                    onSelect = () =>
-                    {
-                        onChooseOption?.Invoke(null);
-                        effectDone = true;
+                        Debug.LogWarning($"Failed to find effect \"{effectName}\" from card \"{libraryCard.name}\" for multiple choice options");
+                        continue;
                     }
-                });
-            }
 
-            // Open menu
-            GameUIManager.MultipleChoice.Open(player, libraryCard.name, choices, text);
-            yield return new WaitUntil(() => effectDone);
+                    // Condition & cost check
+                    bool enabled = true;
+                    SveTrigger trigger = (abilityToResolve as TriggeredAbility)?.trigger as SveTrigger;
+                    if(trigger != null)
+                    {
+                        if((!string.IsNullOrWhiteSpace(trigger.condition) && !SVEFormulaParser.ParseValueAsCondition(trigger.condition, player, cardObject))
+                            || !player.LocalEvents.CanPayCosts(cardObject.RuntimeCard, trigger.Costs, effectName))
+                            enabled = false;
+                    }
+                    if(enabled)
+                        ShouldAddSkipButton = false;
+
+                    // Populate multiple choice window
+                    MultipleChoiceWindow.MultipleChoiceEntryData entry = new()
+                    {
+                        text = effect.text ?? effectName,
+                        onSelect = () =>
+                        {
+                            // adding to abilities used list required for OncePerTurn checks
+                            player.AdditionalStats.AbilitiesUsedThisTurn.Add(new PlayedAbilityData(cardObject.RuntimeCard.instanceId, cardObject.LibraryCard.id, abilityToResolve.name));
+                            // no need for CanPayCost check, this button should be disabled if cost check above failed
+                            player.LocalEvents.PayAbilityCosts(cardObject, trigger?.Costs, effectName, () =>
+                            {
+                                effect.Resolve(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, () =>
+                                {
+                                    if(RemoveEffectFromRemaining)
+                                        remainingEffectList.Remove(effectName);
+                                    effectDone = true;
+                                });
+                            });
+                        },
+                        disabled = !enabled
+                    };
+                    choices.Add(entry);
+                }
+
+                // Skip button
+                if(ShouldAddSkipButton)
+                {
+                    choices.Add(new MultipleChoiceWindow.MultipleChoiceEntryData()
+                    {
+                        text = "Skip",
+                        onSelect = () =>
+                        {
+                            maxRemaining = 0;
+                            effectDone = true;
+                        }
+                    });
+                }
+
+                // Open menu
+                GameUIManager.MultipleChoice.Open(player, libraryCard.name, choices, text);
+                yield return new WaitUntil(() => effectDone);
+                yield return new WaitForSeconds(0.2f);
+
+                minRemaining--;
+                maxRemaining--;
+            }
 
             onComplete?.Invoke();
         }
+
+        protected virtual void GetMinMax(PlayerController player, RuntimeCard card, in int effectListSize, out int min, out int max)
+        {
+            min = 1;
+            max = player.AdditionalStats.CanChooseAnyNumberOfOptions ? effectListSize : 1;
+        }
+
+        protected virtual bool CanSkip(int minRemaining) => true;
     }
 }
