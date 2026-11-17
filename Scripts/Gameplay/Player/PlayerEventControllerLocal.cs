@@ -468,7 +468,7 @@ namespace SVESimulator
                 }
             }
 
-            // Play card to field
+            // Handle stats & info
             if(originZone.IsNullOrWhiteSpace())
                 originZone = card.CurrentZone.Runtime.name;
             bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
@@ -478,6 +478,7 @@ namespace SVESimulator
             if(originZone!.Equals(SVEProperties.Zones.ExArea))
                 playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
 
+            // Play card to field
             sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
             localZoneController.PlayCardToField(card, slot);
 

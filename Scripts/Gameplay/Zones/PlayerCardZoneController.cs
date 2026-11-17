@@ -479,6 +479,8 @@ namespace SVESimulator
         {
             startZone.RemoveCard(card);
             endZone.AddCard(card);
+            if(card.CurrentZone is not CardSelectionArea && (card.PreviousZones.Count == 0 || card.PreviousZones[^1] != card.CurrentZone))
+                card.PreviousZones.Add(card.CurrentZone);
             card.CurrentZone = endZone;
 
             card.OnMoveZone();
