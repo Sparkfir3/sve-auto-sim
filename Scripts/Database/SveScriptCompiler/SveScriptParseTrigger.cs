@@ -23,6 +23,7 @@ namespace SVESimulator.SveScript
             // Card Movement - From Field (Self)
             { "Fanfare", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldTrigger") },
             { "FanfareHand", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromHandTrigger") },
+            { "FanfareCemetery", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromCemeteryTrigger") },
             { "FanfareNotHand", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromNotHandTrigger") },
 
             { "LastWords", new EffectTriggerInfo("SVESimulator.SveLastWordsTrigger", TriggerParameterType.Filter) },
@@ -34,6 +35,7 @@ namespace SVESimulator.SveScript
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherFieldToCemetery", new EffectTriggerInfo("SVESimulator.SveOnOtherCardFieldToCemetery", TriggerParameterType.Filter) },
             { "OnOtherReturnToHandFromField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardReturnToHandFromField", TriggerParameterType.Filter) },
+            { "OnOtherCemeteryToField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardCemeteryToField") },
 
             // Card Movement - From Field (Other, Opponent Cards)
             { "OnOpponentCardEnterField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardEnterFieldTrigger", TriggerParameterType.Filter) },

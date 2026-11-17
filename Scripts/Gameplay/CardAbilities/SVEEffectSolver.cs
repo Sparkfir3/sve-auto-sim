@@ -195,15 +195,24 @@ namespace SVESimulator
                     // Fanfare/other fanfare
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
+                    if(originZone.Equals(SVEProperties.Zones.Cemetery))
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardCemeteryToField>(gameState, card, originZone, field, player,
+                            x => x.MatchesFilter(card), false);
                     if(triggerFanfare)
                     {
                         SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
 
                         // Fanfare from zone
                         if(originZone.Equals(SVEProperties.Zones.Hand))
+                        {
                             SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
+                        }
                         else
+                        {
+                            if(originZone.Equals(SVEProperties.Zones.Cemetery))
+                                SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromCemeteryTrigger>(gameState, card, player, _ => true, false);
                             SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+                        }
                     }
                 }
                 else
