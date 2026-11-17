@@ -133,6 +133,8 @@ namespace SVESimulator.SveScript
                     // Cost Properties
                     case "OncePerTurn":
                     case "TwicePerTurn":
+                    case "ThreeTimesPerTurn":
+                    case "FourTimesPerTurn":
                         newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
                         break;
                     case "Quick":
