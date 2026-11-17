@@ -137,7 +137,10 @@ namespace SVESimulator
             {
                 int difference = newValue - oldValue;
                 if(difference < 0)
+                {
                     damageTakenThisTurn += -difference;
+                    AdditionalStats.TimesLostDefenseThisTurn++;
+                }
             };
             FieldManager.PlayerLeaderHealth.Initialize(playerInfo.namedStats[SVEProperties.PlayerStats.Defense]);
 

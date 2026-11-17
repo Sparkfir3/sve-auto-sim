@@ -11,6 +11,9 @@ namespace SVESimulator
         [SyncVar]
         public bool UseRuneFollowersForSpellchain;
 
+        [SyncVar]
+        public int TimesLostDefenseThisTurn;
+
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurnFromExArea = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
@@ -37,6 +40,8 @@ namespace SVESimulator
 
         public void Reset()
         {
+            TimesLostDefenseThisTurn = 0;
+
             CardsPlayedThisTurn.Clear();
             CardsPlayedThisTurnFromExArea.Clear();
             AbilitiesUsedThisTurn.Clear();

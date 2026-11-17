@@ -426,6 +426,8 @@ namespace SVESimulator
                 case "playPoints":
                 case "currentPlayPoints":
                     return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.PlayPoints].effectiveValue : 0;
+                case "timesLeaderLostDefenseThisTurn":
+                    return player ? player.AdditionalStats.TimesLostDefenseThisTurn : 0;
 
                 // Player Zone
                 case "evolveDeckFaceUp":

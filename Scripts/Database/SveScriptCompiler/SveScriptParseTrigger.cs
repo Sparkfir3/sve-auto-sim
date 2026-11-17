@@ -74,6 +74,7 @@ namespace SVESimulator.SveScript
 
             // Other
             { "OnLeaderGainDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderGainDefenseTrigger") },
+            { "OnLeaderLoseDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderLoseDefenseTrigger") },
             { "OnSelectedForAbility", new EffectTriggerInfo("SVESimulator.SveOnSelectedForAbilityTrigger") },
 
             { "Spell", new EffectTriggerInfo("SVESimulator.SpellAbility") },

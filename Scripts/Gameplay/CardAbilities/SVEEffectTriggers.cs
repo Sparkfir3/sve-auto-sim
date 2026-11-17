@@ -135,6 +135,7 @@ namespace SVESimulator
     #region Other
 
     public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
+    public class SveOnLeaderLoseDefenseTrigger : SveTrigger { }
     public class SveOnSelectedForAbilityTrigger : SveTrigger { }
 
     public class SpellAbility : SveTrigger { }
