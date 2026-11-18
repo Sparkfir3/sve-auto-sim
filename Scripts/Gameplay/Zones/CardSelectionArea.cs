@@ -503,15 +503,8 @@ namespace SVESimulator
             else if(Input.GetKeyUp(KeyCode.Mouse0) && Physics.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector3.down, out RaycastHit hit,
                     inputSettings.RaycastDistance, inputSettings.CardRaycastLayers | inputSettings.UIRaycastLayer) && Vector3.Distance(raycastHitPos, hit.point) < 5f)
             {
-                if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card))
-                {
-                    // deselect for XOR filter - bypass filter (it fails normal filter match because it checks against itself inside the filter)
-                    if((alwaysAllowDeselect || (currentFilter?.HasDynamicFilter() ?? false)) && currentSelectedCards.Contains(card))
-                        ToggleCardSelection(card);
-                    // regular toggle selection
-                    else if(currentFilter.MatchesCard(card))
-                        ToggleCardSelection(card);
-                }
+                if(hit.transform.TryGetComponent(out CardObject card) && cards.Contains(card) && IsValidTarget(card))
+                    ToggleCardSelection(card);
             }
         }
 
@@ -575,7 +568,7 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Internal Controls
+        #region Internal Controls - Move Cards
 
         protected void MoveCardsToSelectionArea(List<CardObject> cardsToMove, bool inverseDelay = false)
         {
@@ -601,7 +594,14 @@ namespace SVESimulator
         protected virtual void MoveCardToSelectionArea(CardObject card, float delay = 0f)
         {
             zoneController.MoveCardToSelectionArea(card, delay: delay, rearrangeHand: false);
+            UpdateCardHighlights(card);
         }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Internal Controls - Game Object Controls
 
         public void SetScrollViewTintActive(bool active)
         {
@@ -678,6 +678,24 @@ namespace SVESimulator
             cardContainer.position = scrollContent.position - contentPositionDiff;
         }
 
+        private void UpdateAllCardHighlights()
+        {
+            foreach(CardObject card in cards)
+                UpdateCardHighlights(card);
+        }
+
+        private void UpdateCardHighlights(CardObject card)
+        {
+            if(!currentSelectedCards.Contains(card))
+                card.SetHighlightMode(IsValidTarget(card) ? CardObject.HighlightMode.None : CardObject.HighlightMode.InvalidTarget);
+        }
+
+        #endregion
+
+        // ------------------------------
+
+        #region Internal Controls - Card Selection & UI Controls
+
         private void ToggleCardSelection(CardObject card)
         {
             if(!currentSelectedCards.Contains(card))
@@ -750,10 +768,20 @@ namespace SVESimulator
 
         // ------------------------------
 
-        #region Other
+        #region Other/Get Info
+
+        private bool IsValidTarget(CardObject card)
+        {
+            // XOR filter - bypass filter (it fails normal filter match because it checks against itself inside the filter)
+            if((alwaysAllowDeselect || (currentFilter?.HasDynamicFilter() ?? false)) && currentSelectedCards.Contains(card))
+                return true;
+            // regular
+            return currentFilter.MatchesCard(card);
+        }
 
         private void OnUpdateFilter()
         {
+            UpdateAllCardHighlights();
 #if UNITY_EDITOR
             debug_SerializedFilter.Clear();
             foreach(var kvPair in currentFilter)
