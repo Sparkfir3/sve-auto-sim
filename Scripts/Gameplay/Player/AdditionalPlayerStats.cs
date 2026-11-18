@@ -87,7 +87,8 @@ namespace SVESimulator
                 player.SetCemeteryCount(player.Necrocharge); // necrocharge = shortcut for cards in cemetery count
             }
 
-            bool canChooseAnyNumberOfOptions = player.ZoneController.fieldZone.GetAllPrimaryCards()
+            // At the time of writing, the only card that has this is a crest which only works from the EX area, so we're not going to bother checking the field
+            bool canChooseAnyNumberOfOptions = player.ZoneController.exAreaZone.GetAllPrimaryCards()
                 .Any(x => x.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.PlayerChooseAnyNumberOfOptions));
             CanChooseAnyNumberOfOptions = canChooseAnyNumberOfOptions;
         }

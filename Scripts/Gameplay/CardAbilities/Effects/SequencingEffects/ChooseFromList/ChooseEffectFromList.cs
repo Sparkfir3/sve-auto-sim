@@ -123,13 +123,13 @@ namespace SVESimulator
 
         protected virtual void GetMinMax(PlayerController player, RuntimeCard card, in int effectListSize, out int min, out int max)
         {
-            min = 1;
+            min = player.AdditionalStats.CanChooseAnyNumberOfOptions ? 0 : 1;
             max = player.AdditionalStats.CanChooseAnyNumberOfOptions ? effectListSize : 1;
         }
 
         protected virtual bool ShouldAddSkipButton(int minRemaining, int activeButtonCount)
         {
-            return activeButtonCount == 0;
+            return minRemaining <= 0 || activeButtonCount == 0;
         }
     }
 }
