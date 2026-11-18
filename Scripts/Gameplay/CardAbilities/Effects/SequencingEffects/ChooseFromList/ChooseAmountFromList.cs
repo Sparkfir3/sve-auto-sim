@@ -17,6 +17,9 @@ namespace SVESimulator
             min = Mathf.Min(min, max);
         }
 
-        protected override bool CanSkip(int minRemaining) => minRemaining <= 0;
+        protected override bool ShouldAddSkipButton(int minRemaining, int activeButtonCount)
+        {
+            return minRemaining <= 0 || activeButtonCount == 0;
+        }
     }
 }
