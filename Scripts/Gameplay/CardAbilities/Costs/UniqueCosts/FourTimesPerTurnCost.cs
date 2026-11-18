@@ -2,13 +2,13 @@ using CCGKit;
 
 namespace SVESimulator
 {
-    public class ThreeTimesPerTurn : XTimesPerTurnCost
+    public class FourTimesPerTurnCost : XTimesPerTurnCost
     {
-        protected override int Amount => 3;
+        protected override int Amount => 4;
 
         public override string GetReadableString(GameConfiguration config)
         {
-            return "Three Times Per Turn";
+            return "Four Times Per Turn";
         }
     }
 }
