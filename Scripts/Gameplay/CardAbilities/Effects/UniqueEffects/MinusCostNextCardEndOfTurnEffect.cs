@@ -16,24 +16,34 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            var filterDict = SVEFormulaParser.ParseCardFilterFormula(this.filter, sourceCardInstanceId);
-            int currentPlayedCount = player.AdditionalStats.CardsPlayedThisTurnWithFilter(filterDict);
+            var filterDict = SVEFormulaParser.ParseCardFilterFormula(filter, sourceCardInstanceId);
             RegisteredPassiveAbility passive = new()
             {
                 sourceCardInstanceId = sourceCardInstanceId,
                 filters = filterDict,
-                effect = new MinusCostOtherPassive
-                {
-                    duration = SVEProperties.PassiveDuration.EndOfTurn,
-                    amount = amount,
-                    ActiveCondition = (_, p) => p.AdditionalStats.CardsPlayedThisTurnWithFilter(filterDict) == currentPlayedCount
-                },
+                effect = GetPassiveEffect(GetActiveCondition(player,filterDict)),
                 affectedCards = new List<RuntimeCard>(),
                 target = SVEProperties.SVEEffectTarget.Self,
                 duration = SVEProperties.PassiveDuration.EndOfTurn
             };
             SVEEffectPool.Instance.RegisterPassiveAbility(passive);
             onComplete?.Invoke();
+        }
+
+        protected virtual MinusCostOtherPassive.ActiveConditionDelegate GetActiveCondition(PlayerController player, Dictionary<SVEFormulaParser.CardFilterSetting, string> filterDict)
+        {
+            int currentPlayedCount = player.AdditionalStats.CardsPlayedThisTurnWithFilter(filterDict);
+            return (_, p) => p.AdditionalStats.CardsPlayedThisTurnWithFilter(filterDict) == currentPlayedCount;
+        }
+
+        protected virtual MinusCostOtherPassive GetPassiveEffect(MinusCostOtherPassive.ActiveConditionDelegate activeCondition)
+        {
+            return new MinusCostOtherPassive
+            {
+                duration = SVEProperties.PassiveDuration.EndOfTurn,
+                amount = amount,
+                ActiveCondition = activeCondition
+            };
         }
     }
 }

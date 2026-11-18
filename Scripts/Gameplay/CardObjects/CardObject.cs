@@ -19,6 +19,8 @@ namespace SVESimulator
         [field: TitleGroup("Runtime Data"), SerializeField, ReadOnly]
         public CardZone CurrentZone { get; set; }
         [field: SerializeField, ReadOnly]
+        public List<CardZone> PreviousZones { get; set; } = new();
+        [field: SerializeField, ReadOnly]
         public bool IsVisible { get; set; }
         [field: HorizontalGroup("Attack"), SerializeField, ReadOnly, LabelWidth(180)]
         public bool CanAttack { get; set; }
@@ -129,6 +131,7 @@ namespace SVESimulator
             CanAttackLeader = false;
             IsValidDefender = false;
             attachedCard = null;
+            PreviousZones.Clear();
 
             gameObject.name = $"Card {runtimeCard.instanceId}";
         }
@@ -199,6 +202,17 @@ namespace SVESimulator
             return !RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.IsRacing) &&
                 (RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve1) || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve2)
                     || RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.Serve3));
+        }
+
+        public CardZone GetMostRecentZone()
+        {
+            for(int i = PreviousZones.Count - 1; i >= 0; i--)
+            {
+                if(PreviousZones[i] == CurrentZone || PreviousZones[i] == PreviousZones[i].ZoneController.resolutionZone)
+                    continue;
+                return PreviousZones[i];
+            }
+            return null;
         }
 
         #endregion
@@ -383,6 +397,7 @@ namespace SVESimulator
             if(isTrackingEngagedStatus)
                 StopTrackingEngagedStatus();
             statsDisplay.Reset();
+            PreviousZones.Clear();
         }
 
         public void OverrideLibraryCard(Card card)

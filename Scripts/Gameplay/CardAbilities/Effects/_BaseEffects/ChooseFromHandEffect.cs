@@ -21,6 +21,11 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
+            if(player.ZoneController.handZone.Runtime.cards.Count == 0)
+            {
+                onComplete?.Invoke();
+                return;
+            }
             SVEEffectPool.Instance.StartCoroutine(ResolveCoroutine(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, onComplete));
         }
 

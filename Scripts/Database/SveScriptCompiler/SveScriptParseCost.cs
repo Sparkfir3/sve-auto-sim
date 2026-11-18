@@ -99,6 +99,11 @@ namespace SVESimulator.SveScript
                         newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
                         newCost.Add("$type", "SVESimulator.DiscardCardCost");
                         break;
+                    case "HandToExArea":
+                        newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
+                        newCost.Add("filter", args.Length > 2 ? args[2].Trim() : "");
+                        newCost.Add("$type", "SVESimulator.HandToExAreaCost");
+                        break;
                     case "DiscardRandom":
                     case "DiscardRandomCard":
                         newCost.Add("amount", args.Length > 1 ? args[1].Trim() : "1");
@@ -128,6 +133,8 @@ namespace SVESimulator.SveScript
                     // Cost Properties
                     case "OncePerTurn":
                     case "TwicePerTurn":
+                    case "ThreeTimesPerTurn":
+                    case "FourTimesPerTurn":
                         newCost.Add("$type", $"SVESimulator.{args[0].Trim()}Cost");
                         break;
                     case "Quick":

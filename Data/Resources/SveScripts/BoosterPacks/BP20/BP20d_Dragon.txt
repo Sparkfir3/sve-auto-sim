@@ -1,0 +1,435 @@
+name Galmieux, Ardor Manifest;
+id BP20-056;
+class Dragon;
+type Follower;
+trait Omen / Wyrmkin;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "While Overflow is active for you, this has Storm.
+      Once on each of your turns, when this takes ability damage, select an enemy follower on the field and deal it 2 damage.
+      [fanfare] Put a Crest: Galmieux, Ardor Manifest token into your EX area.";
+
+ability Passive {
+    condition o;
+    effect GiveKeyword(Storm) to Self;
+}
+ability OnTakeAbilityDamage {
+    cost (OncePerTurn);
+    condition <<t;
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Fanfare {
+    effect SummonToken("Crest: Galmieux, Ardor Manifest", ExArea, 1);
+}
+
+// ------------------------------
+
+name Azurifrit, Heir to Disdain;
+id BP20-057;
+class Dragon;
+type Follower;
+trait Omen / Heir / Wyrmkin;
+rarity L;
+cost 4;
+stats 3/5;
+
+text "[evolve] [cost01]: Evolve this.
+      Ward.
+      [fanfare] If there's another Omen card on your field or in your EX area, deal 1 damage to each follower on the field.
+      During your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    condition f(t(Omen)X) | x(t(Omen));
+    effect DealDamage(1) to AllCards F;
+}
+ability OnTakeAbilityDamage {
+    condition <<t;
+    effect DealDamage(2) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Azurifrit, Heir to Disdain (Evolved);
+id BP20-058;
+class Dragon;
+type Evolved Follower;
+trait Omen / Heir / Wyrmkin;
+rarity L;
+stats 4/6;
+
+text "Ward.
+      On Evolve - Deal 1 damage to each follower on the field.
+      On Super-Evolve - Deal 1 damage to each follower on the field and 4 damage to each enemy leader. Change this follower's defense to 7.
+      During your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.";
+
+keyword Ward;
+ability OnEvolve {
+    effect DealDamage(1) to AllCards F;
+}
+ability OnSuperEvolve {
+    effect Sequence(Followers, Leaders, Def);
+}
+ability Spell name Followers {
+    effect DealDamage(1) to AllCards F;
+}
+ability Spell name Leaders {
+    effect DealDamage(4) to OpponentLeader;
+}
+ability Spell name Def {
+    effect SetStat(Def, 7) to Self;
+}
+ability OnTakeAbilityDamage {
+    condition <<t;
+    effect DealDamage(2) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Dagon, Lord of the Seas;
+id BP20-059;
+class Dragon;
+type Follower;
+trait Marine;
+rarity L;
+cost 10;
+stats 10/10;
+
+text "This costs 3 less to play from the EX area.
+      ----------
+      Rush. Assail.
+      If this would take more than 3 damage, it takes 3 instead.
+      Strike - Refresh this. Perform only twice per turn.";
+
+keywords Rush, Assail, DamageCap3;
+ability ModifiedCost {
+    effect ReducedCostFromEx(3);
+}
+ability Strike {
+    cost (TwicePerTurn);
+    effect Refresh() to Self;
+}
+
+// ------------------------------
+
+name Spoiled Mermanager;
+id BP20-060;
+class Dragon;
+type Follower;
+trait Marine;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Discard a Marine card: Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1.";
+
+evolve 1;
+ability Fanfare {
+    cost (Discard, 1, t(Marine));
+    effect Sequence(CheckTop, Def);
+}
+ability Spell name CheckTop {
+    effect CheckTop(2, (ExArea, t(Marine), 1), (BottomDeckAnyOrder));
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Spoiled Mermanager (Evolved);
+id BP20-061;
+class Dragon;
+type Evolved Follower;
+trait Condemned / Alchemist / Forbidden;
+rarity G;
+stats 3/3;
+
+text "On Evolve - Discard a Marine card: Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1.";
+
+ability OnEvolve {
+    cost (Discard, 1, t(Marine));
+    effect Sequence(CheckTop, Def);
+}
+ability Spell name CheckTop {
+    effect CheckTop(2, (ExArea, t(Marine), 1), (BottomDeckAnyOrder));
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Congregant of Disdain;
+id BP20-062;
+class Dragon;
+type Follower;
+trait Omen / Wyrmkin;
+rarity G;
+cost 3;
+stats 3/4;
+
+text "[fanfare] If Overflow is active for you, deal 1 damage to each follower on the field.
+      Once on each of your turns, when this takes ability damage, increase your max play points by 1.";
+
+ability Fanfare {
+    condition o;
+    effect DealDamage(1) to AllCards F;
+}
+ability OnTakeAbilityDamage {
+    cost (OncePerTurn);
+    condition <<t;
+    effect GiveStat(MaxPP, 1) to Leader;
+}
+
+// ------------------------------
+
+name Ferocious Flame;
+id BP20-063;
+class Dragon;
+type Spell;
+trait Omen / Wyrmkin;
+rarity G;
+cost 2;
+
+text "Select a follower on your field and an enemy follower on the field. Deal 1 damage to the first follower and 4 damage to the second, draw a card, and if there's a follower on your field with "Galmieux" in its name, increase your max play points by 1.";
+
+ability Spell {
+    condition f(F) & p(#F);
+    effect Sequence(MultiTarget, Draw, PP);
+}
+ability Spell name MultiTarget {
+    effect OrderedTargetForSequence(One, Four) to MultiTargetMode (1, TargetPlayerCard, F), (1, TargetOpponentCard, F);
+}
+ability Spell name One {
+    effect DealDamage(1) to AllCards;
+}
+ability Spell name Four {
+    effect DealDamage(4) to AllCards;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name PP {
+    condition f(FnE(Galmieux));
+    effect GiveStat(MaxPP, 1) to Leader;
+}
+
+// ------------------------------
+
+name Supplicant of Disdain;
+id BP20-064;
+class Dragon;
+type Follower;
+trait Omen / Wyrmkin;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      Ward.
+      [fanfare] Select a follower on the field. If Overflow is active for you, deal it 1 damage and give your leader [defense]+2.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    effect TargetForSequence(Damage, Def) to TargetCard F;
+}
+ability Spell name Damage {
+    condition o;
+    effect DealDamage(1) to AllCards;
+}
+ability Spell name Def {
+    condition o;
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Supplicant of Disdain (Evolved);
+id BP20-065;
+class Dragon;
+type Evolved Follower;
+trait Omen / Wyrmkin;
+rarity S;
+stats 3/3;
+
+text "Ward.
+      On Evolve - Select an enemy follower on the field and deal it 2 damage.";
+
+keyword Ward;
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Encounter from the Deep;
+id BP20-066;
+class Dragon;
+type Spell;
+trait Marine;
+rarity S;
+cost 7;
+
+text "Look at the top 5 cards of your deck. You may summon a Marine follower from among them. Put the rest on the bottom of your deck in any order. Deal X damage to each enemy follower on the field. X equals the defense of the Marine follower summoned this way.";
+
+ability Spell {
+    effect Sequence(CheckTop, Damage);
+}
+ability Spell name CheckTop {
+    effect CheckTop(5, (FieldAndTarget, Ft(Marine), 1, CalcX), (BottomDeckAnyOrder));
+}
+ability Spell name CalcX {
+    effect PerformWithTargetAmount(D, Damage) to AllCards;
+}
+ability Spell name Damage {
+    effect DealDamage(_) to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Nation of Disdain;
+id BP20-067;
+class Dragon;
+type Amulet;
+trait Omen / Wyrmkin;
+rarity S;
+cost 1;
+
+text "[fanfare] Look at the top 2 cards of your deck. You may reveal an Omen–Wyrmkin card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [act] [engage], bury this: Select a follower on your field and deal it 1 damage.";
+
+ability Fanfare {
+    effect CheckTop(2, (Hand, t(Omen / Wyrmkin), 1), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    condition f(F);
+    effect DealDamage(1) to TargetPlayerCard F;
+}
+
+// ------------------------------
+
+name Snowstorm Dragonewt;
+id BP20-068;
+class Dragon;
+type Follower;
+trait Dragonewt;
+rarity B;
+cost 5;
+stats 4/4;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Select an enemy follower on the field and deal it 1 damage.";
+
+evolve 1;
+ability Fanfare {
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Snowstorm Dragonewt (Evolved);
+id BP20-069;
+class Dragon;
+type Evolved Follower;
+trait Dragonewt;
+rarity B;
+stats 5/5;
+
+text "NOT IMPLEMENTED
+      On Evolve - Destroy each enemy follower on the field that has taken damage this turn.";
+
+// ------------------------------
+
+name Devotee of Disdain;
+id BP20-070;
+class Dragon;
+type Follower;
+trait Omen / Wyrmkin;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[act] [cost00]: Select a follower on your field and deal it 1 damage. Activate only once per turn.";
+
+ability Act {
+    cost (PP, 0), (OncePerTurn);
+    effect DealDamage(1) to TargetPlayerCard F;
+}
+
+// ------------------------------
+
+name Militant Mermaid;
+id BP20-071;
+class Dragon;
+type Follower;
+trait Marine;
+rarity B;
+cost 5;
+stats 1/5;
+
+text "Ward.
+      [fanfare] Put a Marine card from your hand into your EX area: Recover 3 play points.";
+
+keyword Ward;
+ability Fanfare {
+    cost (HandToExArea, 1, t(Marine));
+    effect GiveStat(PP, 3) to Leader;
+}
+
+// ------------------------------
+
+name Ocean Rider;
+id BP20-072;
+class Dragon;
+type Follower;
+trait Marine;
+rarity B;
+cost 3;
+stats 2/2;
+
+text "Each Megalorca on your field has Ward.
+      [fanfare] Summon a Megalorca token. If Overflow is active for you, summon 3 instead.";
+
+ability Passive {
+    effect GiveKeyword(Ward) to AllPlayerCards n(Megalorca);
+}
+ability Fanfare {
+    effect SummonToken(Megalorca, Field, 1o3);
+}
+
+// ------------------------------
+
+name Raging Lightning;
+id BP20-073;
+class Dragon;
+type Spell;
+trait Wyrmkin;
+rarity B;
+cost 4;
+
+text "[quick]
+      Select an enemy follower on the field and deal it 6 damage. If you selected a follower with 3 defense or less, deal 3 damage to its leader.";
+
+keyword Quick;
+ability Spell {
+    condition p(#F);
+    effect ComplexEffect(
+        let card = getTargetOpponentCard(F)
+        let x = getCardFromVar(card).getValue(~(d(m(0,3))))
+        perform DamageFollower { trigger = card }
+        performIf x then DamageLeader
+    );
+}
+ability Spell name DamageFollower {
+    effect DealDamage(6) to TriggerCard;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(3) to OpponentLeader;
+}

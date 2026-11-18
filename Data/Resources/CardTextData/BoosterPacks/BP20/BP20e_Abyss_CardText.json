@@ -1,0 +1,335 @@
+[
+  {
+    "id": "BP20-074EN",
+    "name": "Rulenye & Valnareik",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP20-075EN",
+    "name": "Rulenye & Valnareik (Evolved)",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "On Evolve - Choose 1. (1) Summon 2 Rulenye, Echoing Scream tokens. (2) Give this Storm. Give each [abysscraft] Omen follower on your field [attack]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Choose 1. (1) Summon 2 Rulenye, Echoing Scream tokens. (2) Give this Storm. Give each [abysscraft] Omen follower on your field [attack]+1."
+      },
+      {
+        "key": "Token",
+        "body": "Summon 2 Rulenye, Echoing Scream tokens."
+      },
+      {
+        "key": "Sequence",
+        "body": "Give this Storm. Give each [abysscraft] Omen follower on your field [attack]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-076EN",
+    "name": "Sham-Nacha, Heir to Entwining",
+    "trait": "Omen / Heir / Encroacher",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP20-077EN",
+    "name": "Sham-Nacha, Heir to Entwining (Evolved)",
+    "trait": "Omen / Heir / Encroacher",
+    "cardText": "On Evolve - Put a Crest: Sham-Nacha, Heir to Entwining token into your EX area.\nOn Super-Evolve - Select an [abysscraft] Omen follower in your cemetery. Summon it and evolve it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "text": "",
+        "trigger": "On Evolve - ",
+        "cost": "",
+        "body": "Put a Crest: Sham-Nacha, Heir to Entwining token into your EX area."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Select an [abysscraft] Omen follower in your cemetery. Summon it and evolve it."
+      },
+      {
+        "key": "Evolve",
+        "body": "Select an [abysscraft] Omen follower in your cemetery. Summon it and evolve it."
+      }
+    ]
+  },
+  {
+    "id": "BP20-078EN",
+    "name": "Diabolus Hedone",
+    "trait": "Demon",
+    "cardText": "[fanfare] Select up to 2 enemy followers on the field and, if Sanguine is active for you, destroy them.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select up to 2 enemy followers on the field and, if Sanguine is active for you, destroy them."
+      }
+    ]
+  },
+  {
+    "id": "BP20-079EN",
+    "name": "Congregant of Entwining",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "[evolve] [cost01]: Evolve this."
+  },
+  {
+    "id": "BP20-080EN",
+    "name": "Congregant of Entwining (Evolved)",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "On Evolve - Choose 1. (1) Select an enemy follower on the field and deal it 5 damage. (2) Select an [abysscraft] Omen follower in your cemetery that costs 3 or less and summon it. (3) Give each [abysscraft] Omen follower on your field [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Select an enemy follower on the field and deal it 5 damage. (2) Select an [abysscraft] Omen follower in your cemetery that costs 3 or less and summon it. (3) Give each [abysscraft] Omen follower on your field [attack]+1/[defense]+1."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      },
+      {
+        "key": "Summon",
+        "body": "Select an [abysscraft] Omen follower in your cemetery that costs 3 or less and summon it."
+      },
+      {
+        "key": "AtkDef",
+        "body": "Give each [abysscraft] Omen follower on your field [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-081EN",
+    "name": "Hervör",
+    "trait": "Demon",
+    "cardText": "[fanfare] Choose 1. (1) Deal 4 damage to each enemy follower on the field. (2) Give your leader [defense]+4. Draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Deal 4 damage to each enemy follower on the field. (2) Give your leader [defense]+4. Draw 2 cards."
+      },
+      {
+        "key": "Damage",
+        "body": "Deal 4 damage to each enemy follower on the field."
+      },
+      {
+        "key": "DefDraw",
+        "body": "Give your leader [defense]+4. Draw 2 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP20-082EN",
+    "name": "Screaming and Loathing",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "Choose 1. (1) Select an enemy follower on the field and deal it 3 damage. (2) Deal 2 damage to each enemy leader. (3) Draw a card. Discard a card. (4) Recover 1 play point.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose 1. (1) Select an enemy follower on the field and deal it 3 damage. (2) Deal 2 damage to each enemy leader. (3) Draw a card. Discard a card. (4) Recover 1 play point."
+      },
+      {
+        "key": "DamageFollower",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      },
+      {
+        "key": "DamageLeader",
+        "body": "Deal 2 damage to each enemy leader."
+      },
+      {
+        "key": "DrawDiscard",
+        "body": "Draw a card. Discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      },
+      {
+        "key": "PlayPoint",
+        "body": "Recover 1 play point."
+      }
+    ]
+  },
+  {
+    "id": "BP20-083EN",
+    "name": "Spirited Gravekeeper",
+    "trait": "Necromancer",
+    "cardText": "[evolve] [cost05]: Evolve this.\n[fanfare] Bury the top 2 cards of your deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Bury the top 2 cards of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP20-084EN",
+    "name": "Spirited Gravekeeper (Evolved)",
+    "trait": "Necromancer",
+    "cardText": "On Evolve - Select a non-[abysscraft] follower that costs 5 or less and a non-[abysscraft] follower that costs 3 or less in your cemetery and summon them.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select a non-[abysscraft] follower that costs 5 or less and a non-[abysscraft] follower that costs 3 or less in your cemetery and summon them."
+      },
+      {
+        "key": "Five",
+        "body": "Select a non-[abysscraft] follower that costs 5 or less and summon it."
+      },
+      {
+        "key": "Three",
+        "body": "Select a non-[abysscraft] follower that costs 3 or less and summon it."
+      }
+    ]
+  },
+  {
+    "id": "BP20-085EN",
+    "name": "Supplicant of Entwining",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "[fanfare] Choose 1. (1) Select an enemy follower on the field and deal it 1 damage. (2) Deal 2 damage to each enemy leader. (3) Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Select an enemy follower on the field and deal it 1 damage. (2) Deal 2 damage to each enemy leader. (3) Give your leader [defense]+2."
+      },
+      {
+        "key": "DamageFollower",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      },
+      {
+        "key": "DamageLeader",
+        "body": "Deal 2 damage to each enemy leader."
+      },
+      {
+        "key": "Def",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-086EN",
+    "name": "Castle of Entwining",
+    "trait": "Arcanaform",
+    "cardText": "[fanfare] Look at the top 3 cards of your deck. You may reveal an [abysscraft] Omen card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] [cost01], [engage], bury this: Choose 1. (1) Select a follower on your field and give it Rush. (2) Select a follower on your field and give it Assail.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. You may reveal an [abysscraft] Omen card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], bury this",
+        "body": "Choose 1. (1) Select a follower on your field and give it Rush. (2) Select a follower on your field and give it Assail."
+      },
+      {
+        "key": "Rush",
+        "body": "Select a follower on your field and give it Rush."
+      },
+      {
+        "key": "Assail",
+        "body": "Select a follower on your field and give it Assail."
+      }
+    ]
+  },
+  {
+    "id": "BP20-087EN",
+    "name": "Ephemeral Demon Princess",
+    "trait": "Yokai / Demon",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Bury the top 3 cards of your deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Bury the top 3 cards of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP20-088EN",
+    "name": "Ephemeral Demon Princess (Evolved)",
+    "trait": "Yokai / Demon",
+    "cardText": "On Evolve - Select up to 2 Yokai cards in your cemetery that cost a total of 4 or less and put them into your EX area. They cost 0 to play this turn.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select up to 2 Yokai cards in your cemetery that cost a total of 4 or less and put them into your EX area. They cost 0 to play this turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-089EN",
+    "name": "Devotee of Entwining",
+    "trait": "Omen / Necromancer / Demon",
+    "cardText": "[fanfare] Choose 1. (1) Select an enemy follower on the field and deal it 3 damage. (2) Deal 1 damage to each enemy leader and enemy follower on the field. (3) Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Select an enemy follower on the field and deal it 3 damage. (2) Deal 1 damage to each enemy leader and enemy follower on the field. (3) Draw a card."
+      },
+      {
+        "key": "DamageFollower",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      },
+      {
+        "key": "DamageLeader",
+        "body": "Deal 1 damage to each enemy leader and enemy follower on the field."
+      },
+      {
+        "key": "Draw",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-090EN",
+    "name": "Wicked Collector",
+    "trait": "Demon",
+    "cardText": "[fanfare] Put the top card of your deck into your EX area. If it's a follower, give it [attack]+1/[defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put the top card of your deck into your EX area. If it's a follower, give it [attack]+1/[defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-091EN",
+    "name": "Nemean Lion",
+    "trait": "Beast",
+    "cardText": "Strike - Select an [abysscraft] follower in your cemetery and add it to your hand.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Select an [abysscraft] follower in your cemetery and add it to your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP20-092EN",
+    "name": "March of the Brutes",
+    "trait": "Demon",
+    "cardText": "Select up to 2 enemy followers on the field and deal them 5 damage. Deal 3 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select up to 2 enemy followers on the field and deal them 5 damage. Deal 3 damage to each enemy leader."
+      },
+      {
+        "key": "Followers",
+        "body": "Select up to 2 enemy followers on the field and deal them 5 damage. Deal 3 damage to each enemy leader."
+      }
+    ]
+  }
+]

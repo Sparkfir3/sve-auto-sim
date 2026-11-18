@@ -1,0 +1,458 @@
+name Antemaria, Huntress Convict;
+id BP19-056;
+class Dragon;
+type Follower;
+trait Condemned / Dragonewt;
+rarity L;
+cost 6;
+stats 6/5;
+
+text "This can't be played from the EX area.
+      ----------
+      [fanfare] Bury 2 Condemned cards from your EX area: Give this Storm and Drain.
+      [lastwords] Put this into its owner's EX area.";
+
+keyword CantPlayFromEx;
+ability Fanfare {
+    cost (SendToCemetery, TargetPlayerCardEx, t(Condemned)m(2,2));
+    effect Sequence(Storm, Drain);
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to Self;
+}
+ability Spell name Drain {
+    effect GiveKeyword(Drain) to Self;
+}
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Drazael, Ravening Enforcer;
+id BP19-057;
+class Dragon;
+type Follower;
+trait Condemned / Wyrmkin;
+rarity L;
+cost 6;
+stats 4/5;
+
+text "This can't be played from the EX area.
+      ----------
+      [evolve] [cost01]: Evolve this.
+      Ward.
+      This can't be destroyed by abilities.
+      [lastwords] Put this into its owner's EX area.";
+
+evolve 1;
+keywords CantPlayFromEx, Ward, CantDestroyByAbilities;
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Drazael, Ravening Enforcer (Evolved);
+id BP19-058;
+class Dragon;
+type Evolved Follower;
+trait Condemned / Wyrmkin;
+rarity L;
+stats 5/6;
+
+text "Ward.
+      This can't be destroyed by abilities.
+      On Evolve - Bury two Condemned cards from your EX area: Give each enemy follower on the field [attack]-5/[defense]-5. Give your leader [defense]+5.
+      [lastwords] Put this into its owner's EX area.";
+
+keywords Ward, CantDestroyByAbilities;
+ability OnEvolve {
+    cost (SendToCemetery, TargetPlayerCardEx, t(Condemned)m(2,2));
+    effect Sequence(AtkDef, Def);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, -5) to AllOpponentCards F;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 5) to Leader;
+}
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Masamune, One-Eyed Dragon;
+id BP19-059;
+class Dragon;
+type Follower;
+trait Dragonheart / Draconic Duelist;
+rarity L;
+cost 2;
+stats 2/3;
+
+text "Assail. Bane.
+      [fanfare] If there are at least 3 Draconic Duelist cards on your field, give this Storm.";
+
+keywords Assail, Bane;
+ability Fanfare {
+    condition f(t(Draconic Duelist))>2;
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Scorched-Earth Tyrant;
+id BP19-060;
+class Dragon;
+type Follower;
+trait Condemned / Dragonewt;
+rarity G;
+cost 4;
+stats 4/4;
+
+text "This can't be played from the EX area.
+      ----------
+      [evolve] [cost01]: Evolve this.
+      [fanfare] Bury a Condemned card from your EX area: Select an enemy follower on the field and deal it 4 damage.
+      [lastwords] Put this into its owner's EX area.";
+
+keyword CantPlayFromEx;
+evolve 1;
+ability Fanfare {
+    cost (SendToCemetery, TargetPlayerCardEx, t(Condemned));
+    condition p(#F);
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Scorched-Earth Tyrant (Evolved);
+id BP19-061;
+class Dragon;
+type Evolved Follower;
+trait Condemned / Dragonewt;
+rarity G;
+stats 5/5;
+
+text "On Evolve - Select an enemy follower on the field and deal it 4 damage.
+      [lastwords] Put this into its owner's EX area.";
+
+ability OnEvolve {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Neptune, Arbiter of Tides;
+id BP19-062;
+class Dragon;
+type Follower;
+trait Dragonheart / Marine;
+rarity G;
+cost 3;
+stats 3/4;
+
+text "[fanfare] Put a Megalorca token into your EX area. If Overflow is active for you, summon a Megalorca token.
+      Whenever a Megalorca is put onto your field, give it Storm and your leader [defense]+1.
+      [act] [cost00]: The next Marine card you play from the EX area this turn costs 1 less. Activate only once per turn.";
+
+ability Fanfare {
+    effect Sequence(Ex, Field);
+}
+ability Spell name Ex {
+    effect SummonToken(Megalorca, ExArea, 1);
+}
+ability Spell name Field {
+    condition o;
+    effect SummonToken(Megalorca, Field, 1);
+}
+ability OnOtherEnterField {
+    filter n(Megalorca);
+    effect TargetForSequence(Storm, Leader) to TriggerCard;
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to AllPlayerCards;
+}
+ability Spell name Leader {
+    effect GiveStat(Def, 1) to Leader;
+}
+ability Act {
+    cost (PP, 0), (OncePerTurn);
+    effect MinusCostNextCardEndOfTurnEx(1, t(Marine));
+}
+
+// ------------------------------
+
+name Warden of the Adamant Claw;
+id BP19-063;
+class Dragon;
+type Follower;
+trait Condemned / Wyrmkin;
+rarity G;
+cost 1;
+stats 0/1;
+
+text "This can't be played from the EX area.
+      ----------
+      Ward.
+      [fanfare] Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [lastwords] Put this into its owner's EX area.";
+
+keywords CantPlayFromEx, Ward;
+ability Fanfare {
+    effect CheckTop(4, (Hand, t(Condemned), 1), (BottomDeckAnyOrder));
+}
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Hotheaded Marauder;
+id BP19-064;
+class Dragon;
+type Follower;
+trait Condemned / Dragonewt;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "This can't be played from the EX area.
+      ----------
+      [evolve] [cost01]: Evolve this.
+      [lastwords] Put this into its owner's EX area.";
+
+evolve 1;
+keyword CantPlayFromEx;
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Hotheaded Marauder (Evolved);
+id BP19-065;
+class Dragon;
+type Evolved Follower;
+trait Condemned / Dragonewt;
+rarity S;
+stats 3/3;
+
+text "On Evolve - Search your deck for a 1-cost Condemned follower, summon it, then shuffle.
+      [lastwords] Put this into its owner's EX area.";
+
+ability OnEvolve {
+    effect Search(1, Ft(Condemned)p(1), Field);
+}
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Razor-Clawed Thief;
+id BP19-066;
+class Dragon;
+type Follower;
+trait Condemned / Arcaneform / Forbidden;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "This can't be played from the EX area.
+      ----------
+      Rush. Assail.
+      [lastwords] Put this into its owner's EX area.";
+
+keywords CantPlayFromEx, Rush, Assail;
+ability LastWords {
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+
+name Seasoned Merman;
+id BP19-067;
+class Dragon;
+type Follower;
+trait Marine;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "Each Megalorca on your field has Rush and Assail.
+      [fanfare] Summon 2 Megalorca tokens. Put the top card of your deck into your EX area.";
+
+ability Passive {
+    effect GiveKeyword(Rush) to AllPlayerCards n(Megalorca);
+}
+ability Passive {
+    effect GiveKeyword(Assail) to AllPlayerCards n(Megalorca);
+}
+ability Fanfare {
+    effect Sequence(Tokens, Ex);
+}
+ability Spell name Tokens{
+    effect SummonToken(Megalorca, Field, 2);
+}
+ability Spell name Ex {
+    effect TopDeckToExArea(1);
+}
+
+// ------------------------------
+
+name Dancing Crab;
+id BP19-068;
+class Dragon;
+type Follower;
+trait Marine;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      Intimidate.
+      Strike - Select an enemy follower on the field and give it [attack]-1/[defense]-1.";
+
+evolve 1;
+keyword Intimidate;
+ability Strike {
+    effect GiveStat(AtkDef, -1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Dancing Crab (Evolved);
+id BP19-069;
+class Dragon;
+type Evolved Follower;
+trait Marine;
+rarity B;
+stats 4/4;
+
+text "Intimidate.
+      On Evolve - Select an enemy follower on the field and engage it.
+      Strike - Select an enemy follower on the field and give it [attack]-1/[defense]-1.";
+
+keyword Intimidate;
+ability OnEvolve {
+    effect Engage() to TargetOpponentCard F;
+}
+ability Strike {
+    effect GiveStat(AtkDef, -1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Mermaid Songstress;
+id BP19-070;
+class Dragon;
+type Follower;
+trait Marine / Musical;
+rarity B;
+cost 1;
+stats 1/2;
+
+text "[fanfare] Discard a Marine card: Put the top card of your deck into your EX area. Then, if there are at least 2 cards in your EX area, give your leader [defense]+2.";
+
+ability Fanfare {
+    cost (Discard, 1, t(Marine));
+    effect Sequence(Ex, Def);
+}
+ability Spell name Ex {
+    effect TopDeckToEx();
+}
+ability Spell name Def {
+    condition x()>1;
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Dark Mermaid;
+id BP19-071;
+class Dragon;
+type Follower;
+trait Marine;
+rarity B;
+cost 6;
+stats 6/6;
+
+text "[fanfare] Select an enemy follower on the field. Destroy it and put the top card of your deck into your EX area.";
+
+ability Fanfare {
+    condition p(#F);
+    effect Sequence(Destroy, Ex);
+}
+ability Spell name Destroy {
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name Ex {
+    effect TopDeckToEx();
+}
+
+// ------------------------------
+
+name Dragonewt's Might;
+id BP19-072;
+class Dragon;
+type Spell;
+trait Dragonewt / Draconic Duelist;
+rarity B;
+cost 4;
+
+text "Select up to 2 enemy followers on the field and deal them 6 damage. You may discard a card. If you discarded a Dragonewt follower, deal 2 damage to each enemy leader.";
+
+ability Spell {
+    effect ComplexEffect(
+        performCostless Followers { }
+        let x = payCost(Followers).firstMovedCard.getValue(~(Ft(Dragonewt)))
+        performIf x then Leader
+    );
+}
+ability Spell name Followers {
+    cost (Discard, 1);
+    effect DealDamage(6) to TargetOpponentCard Fm(0,2);
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Call of the Megalorca;
+id BP19-073;
+class Dragon;
+type Spell;
+trait Marine;
+rarity B;
+cost 2;
+
+text "This costs 1 less to play from the EX area.
+      ----------
+      Summon a Megalorca token. Draw a card. If Overflow is active for you, summon a Megalorca token.";
+
+ability Spell {
+    effect Sequence(Summon, Draw, Overflow);
+}
+ability Spell name Summon {
+    effect SummonToken(Megalorca, Field, 1);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Overflow {
+    condition o;
+    effect SummonToken(Megalorca, Field, 1);
+}
+ability ModifiedCost {
+    effect ReducedCostFromEx(1);
+}

@@ -409,15 +409,25 @@ namespace SVESimulator
             }
         }
 
-        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null) =>
-            PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
-        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
+        // Play card to first open slot
+        public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+        {
+            return PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
+        }
+
+        // Play card to the closest slot from position
+        public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
         {
             if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
                 return false;
-            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost);
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
         }
-        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false, bool ignoreAdditionalCosts = false, int? fixedCost = null)
+
+        // Play card to specified slot
+        public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -458,13 +468,18 @@ namespace SVESimulator
                 }
             }
 
-            // Play card to field
-            playerController.AdditionalStats.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
-            bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
-
+            // Handle stats & info
             if(originZone.IsNullOrWhiteSpace())
                 originZone = card.CurrentZone.Runtime.name;
-            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
+            bool cardHasWard = card.RuntimeCard.HasKeyword(SVEProperties.Keywords.Ward);
+
+            PlayedCardData playedCardData = new(card.RuntimeCard.instanceId, card.RuntimeCard.cardId);
+            playerController.AdditionalStats.CardsPlayedThisTurn.Add(playedCardData);
+            if(originZone!.Equals(SVEProperties.Zones.ExArea))
+                playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
+
+            // Play card to field
+            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false, triggerFanfare: triggerFanfare);
             localZoneController.PlayCardToField(card, slot);
 
             // Network message
@@ -942,7 +957,12 @@ namespace SVESimulator
             // Play Spell
             card.SetHighlightMode(CardObject.HighlightMode.None);
             localZoneController.SendCardToResolution(card);
-            playerController.AdditionalStats.CardsPlayedThisTurn.Add(new PlayedCardData(card.RuntimeCard.instanceId, card.RuntimeCard.cardId));
+
+            PlayedCardData playedCardData = new(card.RuntimeCard.instanceId, card.RuntimeCard.cardId);
+            playerController.AdditionalStats.CardsPlayedThisTurn.Add(playedCardData);
+            if(originZone.Equals(SVEProperties.Zones.ExArea))
+                playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
+
             sveEffectSolver.PlaySpell(netIdentity, card.RuntimeCard, originZone, playPointCost, onComplete: () =>
             {
                 FinishSpell(card);

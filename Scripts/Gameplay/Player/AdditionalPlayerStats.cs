@@ -10,8 +10,14 @@ namespace SVESimulator
     {
         [SyncVar]
         public bool UseRuneFollowersForSpellchain;
+        [SyncVar]
+        public bool CanChooseAnyNumberOfOptions;
+
+        [SyncVar]
+        public int TimesLostDefenseThisTurn;
 
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
+        public readonly SyncList<PlayedCardData> CardsPlayedThisTurnFromExArea = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDestroyedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsDiscardedThisTurn = new();
@@ -36,7 +42,10 @@ namespace SVESimulator
 
         public void Reset()
         {
+            TimesLostDefenseThisTurn = 0;
+
             CardsPlayedThisTurn.Clear();
+            CardsPlayedThisTurnFromExArea.Clear();
             AbilitiesUsedThisTurn.Clear();
             CardsDestroyedThisTurn.Clear();
             CardsDiscardedThisTurn.Clear();
@@ -57,6 +66,15 @@ namespace SVESimulator
             });
         }
 
+        public int CardsPlayedThisTurnFromExAreaWithFilter(Dictionary<SVEFormulaParser.CardFilterSetting, string> filter)
+        {
+            return CardsPlayedThisTurnFromExArea.Count(x =>
+            {
+                RuntimeCard card = CardManager.Instance.GetRuntimeCardByInstanceId(x.instanceId);
+                return filter.MatchesCard(card);
+            });
+        }
+
         // ------------------------------
 
         private void UpdateFieldAbilities()
@@ -68,6 +86,11 @@ namespace SVESimulator
                 UseRuneFollowersForSpellchain = shouldUseRuneFollowersForSpellchain;
                 player.SetCemeteryCount(player.Necrocharge); // necrocharge = shortcut for cards in cemetery count
             }
+
+            // At the time of writing, the only card that has this is a crest which only works from the EX area, so we're not going to bother checking the field
+            bool canChooseAnyNumberOfOptions = player.ZoneController.exAreaZone.GetAllPrimaryCards()
+                .Any(x => x.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.PlayerChooseAnyNumberOfOptions));
+            CanChooseAnyNumberOfOptions = canChooseAnyNumberOfOptions;
         }
     }
 }

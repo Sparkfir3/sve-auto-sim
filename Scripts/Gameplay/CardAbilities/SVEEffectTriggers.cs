@@ -44,6 +44,7 @@ namespace SVESimulator
     // Fanfare
     public class SveOnCardEnterFieldTrigger : SveTrigger { }
     public class SveOnCardEnterFieldFromHandTrigger : SveTrigger { }
+    public class SveOnCardEnterFieldFromCemeteryTrigger : SveTrigger { }
     public class SveOnCardEnterFieldFromNotHandTrigger : SveTrigger { }
 
     // Other
@@ -62,6 +63,7 @@ namespace SVESimulator
     public class SveOnOtherCardLeaveFieldTrigger : SveTriggerWithFilter { }
     public class SveOnOtherCardFieldToCemetery : SveTriggerWithFilter { }
     public class SveOnOtherCardReturnToHandFromField : SveTriggerWithFilter { }
+    public class SveOnOtherCardCemeteryToField : SveTriggerWithFilter { }
 
     // Opponent cards
     public class SveOnOpponentCardEnterFieldTrigger : SveTriggerWithFilter { }
@@ -112,6 +114,7 @@ namespace SVESimulator
     public class SveOnOtherCardAttackTrigger : SveTriggerWithFilter { }
 
     public class SveOnDealCombatDamageTrigger : SveTrigger { }
+    public class SveOnTakeAbilityDamageTrigger : SveTrigger { }
 
     #endregion
 
@@ -134,6 +137,7 @@ namespace SVESimulator
     #region Other
 
     public class SveOnLeaderGainDefenseTrigger : SveTrigger { }
+    public class SveOnLeaderLoseDefenseTrigger : SveTrigger { }
     public class SveOnSelectedForAbilityTrigger : SveTrigger { }
 
     public class SpellAbility : SveTrigger { }

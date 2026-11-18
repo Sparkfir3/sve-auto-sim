@@ -211,6 +211,7 @@ namespace SVESimulator
         {
             Player.InputController.allowedInputs = Player.isActivePlayer ? PlayerInputController.InputTypes.All : PlayerInputController.InputTypes.None;
             zoneController.handZone.SetAllCardsInteractable(Player.isActivePlayer);
+            zoneController.exAreaZone.SetAllCardsInteractable(Player.isActivePlayer);
             zoneController.fieldZone.HighlightCardsCanAttack();
             GameUIManager.NetworkedCalls.CmdCloseOpponentTargeting(zoneController.Player.GetOpponentInfo().netId);
         }
@@ -226,6 +227,7 @@ namespace SVESimulator
             if(currentMode == SelectionMode.PlaceCardsFromHand)
                 zoneController.handZone.SetTargetSlotActive(true);
             zoneController.handZone.SetAllCardsInteractable(false);
+            zoneController.exAreaZone.SetAllCardsInteractable(false);
 
             currentMode = newMode;
             switch(currentMode)

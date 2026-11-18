@@ -1069,6 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentZone>k__BackingField: {fileID: 0}
+  <PreviousZones>k__BackingField: []
   <IsVisible>k__BackingField: 0
   <CanAttack>k__BackingField: 0
   <CanAttackLeader>k__BackingField: 0

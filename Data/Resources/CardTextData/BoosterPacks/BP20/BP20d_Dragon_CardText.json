@@ -1,0 +1,276 @@
+[
+  {
+    "id": "BP20-056EN",
+    "name": "Galmieux, Ardor Manifest",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "While Overflow is active for you, this has Storm.\nOnce on each of your turns, when this takes ability damage, select an enemy follower on the field and deal it 2 damage.\n[fanfare] Put a Crest: Galmieux, Ardor Manifest token into your EX area.",
+    "effectText": [
+      {
+        "key": "OnTakeAbilityDamage",
+        "text": "Once on each of your turns, when this takes ability damage, select an enemy follower on the field and deal it 2 damage.",
+        "trigger": "Once on each of your turns, when this takes ability damage,",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Crest: Galmieux, Ardor Manifest token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-057EN",
+    "name": "Azurifrit, Heir to Disdain",
+    "trait": "Omen / Heir / Wyrmkin",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] If there's another Omen card on your field or in your EX area, deal 1 damage to each follower on the field.\nDuring your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there's another Omen card on your field or in your EX area, deal 1 damage to each follower on the field."
+      },
+      {
+        "key": "OnTakeAbilityDamage",
+        "text": "During your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.",
+        "trigger": "During your turn, whenever this takes ability damage,",
+        "body": "Deal 1 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP20-058EN",
+    "name": "Azurifrit, Heir to Disdain (Evolved)",
+    "trait": "Omen / Heir / Wyrmkin",
+    "cardText": "Ward.\nOn Evolve - Deal 1 damage to each follower on the field.\nOn Super-Evolve - Deal 1 damage to each follower on the field and 4 damage to each enemy leader. Change this follower's defense to 7.\nDuring your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Deal 1 damage to each follower on the field."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Deal 1 damage to each follower on the field and 4 damage to each enemy leader. Change this follower's defense to 7."
+      },
+      {
+        "key": "OnTakeAbilityDamage",
+        "text": "During your turn, whenever this takes ability damage, deal 1 damage to each enemy follower on the field.",
+        "trigger": "During your turn, whenever this takes ability damage,",
+        "body": "Deal 1 damage to each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP20-059EN",
+    "name": "Dagon, Lord of the Seas",
+    "trait": "Marine",
+    "cardText": "This costs 3 less to play from the EX area.\n----------\nRush. Assail.\nIf this would take more than 3 damage, it takes 3 instead.\nStrike - Refresh this. Perform only twice per turn.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Refresh this. Perform only twice per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-060EN",
+    "name": "Spoiled Mermanager",
+    "trait": "Marine",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Discard a Marine card: Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "Discard a Marine card",
+        "body": "Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1."
+      },
+      {
+        "key": "CheckTop",
+        "body": "Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP20-061EN",
+    "name": "Spoiled Mermanager (Evolved)",
+    "trait": "Condemned / Alchemist / Forbidden",
+    "cardText": "On Evolve - Discard a Marine card: Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "cost": "Discard a Marine card",
+        "body": "Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order. Give your leader [defense]+1."
+      },
+      {
+        "key": "CheckTop",
+        "body": "Look at the top 2 cards of your deck. You may put a Marine card from among them into your EX area. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP20-062EN",
+    "name": "Congregant of Disdain",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "[fanfare] If Overflow is active for you, deal 1 damage to each follower on the field.\nOnce on each of your turns, when this takes ability damage, increase your max play points by 1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "If Overflow is active for you, deal 1 damage to each follower on the field."
+      },
+      {
+        "key": "OnTakeAbilityDamage",
+        "text": "Once on each of your turns, when this takes ability damage, increase your max play points by 1.",
+        "trigger": "Once on each of your turns, when this takes ability damage,",
+        "body": "Increase your max play points by 1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-063EN",
+    "name": "Ferocious Flame",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "Select a follower on your field and an enemy follower on the field. Deal 1 damage to the first follower and 4 damage to the second, draw a card, and if there's a follower on your field with \"Galmieux\" in its name, increase your max play points by 1.",
+    "effectText": [
+      {
+        "key": "MultiTarget",
+        "body": "Select a follower on your field and an enemy follower on the field. Deal 1 damage to the first follower and 4 damage to the second, draw a card, and if there's a follower on your field with \"Galmieux\" in its name, increase your max play points by 1."
+      }
+    ]
+  },
+  {
+    "id": "BP20-064EN",
+    "name": "Supplicant of Disdain",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Select a follower on the field. If Overflow is active for you, deal it 1 damage and give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select a follower on the field. If Overflow is active for you, deal it 1 damage and give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-065EN",
+    "name": "Supplicant of Disdain (Evolved)",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "Ward.\nOn Evolve - Select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-066EN",
+    "name": "Encounter from the Deep",
+    "trait": "Marine",
+    "cardText": "Look at the top 5 cards of your deck. You may summon a Marine follower from among them. Put the rest on the bottom of your deck in any order. Deal X damage to each enemy follower on the field. X equals the defense of the Marine follower summoned this way.",
+    "effectText": [
+      {
+        "key": "CheckTop",
+        "body": "Look at the top 5 cards of your deck. You may summon a Marine follower from among them. Put the rest on the bottom of your deck in any order. Deal X damage to each enemy follower on the field. X equals the defense of the Marine follower summoned this way."
+      }
+    ]
+  },
+  {
+    "id": "BP20-067EN",
+    "name": "Nation of Disdain",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "[fanfare] Look at the top 2 cards of your deck. You may reveal an Omen–Wyrmkin card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] [engage], bury this: Select a follower on your field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 2 cards of your deck. You may reveal an Omen–Wyrmkin card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury this",
+        "body": "Select a follower on your field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-068EN",
+    "name": "Snowstorm Dragonewt",
+    "trait": "Dragonewt",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-069EN",
+    "name": "Snowstorm Dragonewt (Evolved)",
+    "trait": "Dragonewt",
+    "cardText": "NOT IMPLEMENTED\nOn Evolve - Destroy each enemy follower on the field that has taken damage this turn."
+  },
+  {
+    "id": "BP20-070EN",
+    "name": "Devotee of Disdain",
+    "trait": "Omen / Wyrmkin",
+    "cardText": "[act] [cost00]: Select a follower on your field and deal it 1 damage. Activate only once per turn.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost00]",
+        "body": "Select a follower on your field and deal it 1 damage. Activate only once per turn."
+      }
+    ]
+  },
+  {
+    "id": "BP20-071EN",
+    "name": "Militant Mermaid",
+    "trait": "Marine",
+    "cardText": "Ward.\n[fanfare] Put a Marine card from your hand into your EX area: Recover 3 play points.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Put a Marine card from your hand into your EX area",
+        "body": "Recover 3 play points."
+      }
+    ]
+  },
+  {
+    "id": "BP20-072EN",
+    "name": "Ocean Rider",
+    "trait": "Marine",
+    "cardText": "Each Megalorca on your field has Ward.\n[fanfare] Summon a Megalorca token. If Overflow is active for you, summon 3 instead.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Megalorca token. If Overflow is active for you, summon 3 instead."
+      }
+    ]
+  },
+  {
+    "id": "BP20-073EN",
+    "name": "Raging Lightning",
+    "trait": "Wyrmkin",
+    "cardText": "[quick]\nSelect an enemy follower on the field and deal it 6 damage. If you selected a follower with 3 defense or less, deal 3 damage to its leader.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Select an enemy follower on the field and deal it 6 damage. If you selected a follower with 3 defense or less, deal 3 damage to its leader."
+      }
+    ]
+  }
+]

@@ -1,20 +1,14 @@
-using System.Linq;
 using CCGKit;
 
 namespace SVESimulator
 {
-    public class OncePerTurnCost : SveCost
+    public class OncePerTurnCost : XTimesPerTurnCost
     {
-        public override bool IsInternalCost => true;
+        protected override int Amount => 1;
 
         public override string GetReadableString(GameConfiguration config)
         {
             return "Once Per Turn";
-        }
-
-        public override bool CanPayCost(PlayerController player, RuntimeCard card, string abilityName)
-        {
-            return !player.AdditionalStats.AbilitiesUsedThisTurn.Any(x => x.instanceId == card.instanceId && x.cardId == card.cardId && x.abilityName.Equals(abilityName));
         }
     }
 }

@@ -153,7 +153,7 @@ namespace SVESimulator
             }
         }
 
-        public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool executeConfirmationTiming = true)
+        public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool executeConfirmationTiming = true, bool triggerFanfare = true)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             if(player == null)
@@ -193,15 +193,27 @@ namespace SVESimulator
                     }
 
                     // Fanfare/other fanfare
-                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardEnterFieldTrigger>(gameState, card, originZone, field, player,
                         x => x.MatchesFilter(card), false);
+                    if(originZone.Equals(SVEProperties.Zones.Cemetery))
+                        SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnOtherCardCemeteryToField>(gameState, card, originZone, field, player,
+                            x => x.MatchesFilter(card), false);
+                    if(triggerFanfare)
+                    {
+                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldTrigger>(gameState, card, player, _ => true, false);
 
-                    // Fanfare from zone
-                    if(originZone.Equals(SVEProperties.Zones.Hand))
-                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
-                    else
-                        SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+                        // Fanfare from zone
+                        if(originZone.Equals(SVEProperties.Zones.Hand))
+                        {
+                            SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromHandTrigger>(gameState, card, player, _ => true, false);
+                        }
+                        else
+                        {
+                            if(originZone.Equals(SVEProperties.Zones.Cemetery))
+                                SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromCemeteryTrigger>(gameState, card, player, _ => true, false);
+                            SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+                        }
+                    }
                 }
                 else
                 {
@@ -666,7 +678,7 @@ namespace SVESimulator
             int modAmount = value;
             if(statId == 1 && addingNewModifier && modifierType.HasFlag(SVEProperties.StatModifierType.Damage)) // Damage
             {
-                // note to self - damage is adding a negative value to the stat, math needs to be inverted
+                // note to self - damage is adding a negative value to the stat, so math needs to be inverted
                 if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
                     modAmount += card.GetDamageModifierAmount(SVEProperties.DamageModifier.DamageReductionAbilities);
                 // CombatDamage reduction is checked in GetCardDamageOutput(), not here
@@ -678,6 +690,9 @@ namespace SVESimulator
                     modAmount = Mathf.Max(modAmount, -damageCap);
             }
 
+            if(modAmount == 0)
+                return;
+
             Modifier modifier = new(modAmount, duration);
             if(addingNewModifier)
                 card.stats[statId].AddModifier(modifier);
@@ -685,6 +700,12 @@ namespace SVESimulator
                 card.stats[statId].RemoveModifier(modifier);
             if(checkDefense)
                 isDestroyed = DestroyZeroDefenseFollower(card.ownerPlayer.netId, card);
+
+            if(isPlayerEffectSolver && card.ownerPlayer.netId.isLocalPlayer && addingNewModifier)
+            {
+                if(modifierType == SVEProperties.StatModifierType.AbilityDamage)
+                    SVEEffectPool.Instance.TriggerPendingEffects<SveOnTakeAbilityDamageTrigger>(gameState, card, card.ownerPlayer, _ => true, executeConfirmationTiming: false);
+            }
         }
 
         private bool DestroyZeroDefenseFollower(NetworkIdentity playerNetId, RuntimeCard card)
@@ -781,10 +802,14 @@ namespace SVESimulator
         public void AddLeaderDefense(PlayerInfo player, int amount)
         {
             player.namedStats[SVEProperties.PlayerStats.Defense].baseValue += amount;
-            if(amount > 0 && isPlayerEffectSolver && player.netId.isLocalPlayer)
+            if(isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnLeaderGainDefenseTrigger>(gameState, player.namedZones[SVEProperties.Zones.Leader].cards[0],
-                    SVEProperties.Zones.Leader, player.namedZones[SVEProperties.Zones.Field], player, _ => true, false);
+                if(amount > 0)
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnLeaderGainDefenseTrigger>(gameState, player.namedZones[SVEProperties.Zones.Leader].cards[0],
+                        SVEProperties.Zones.Leader, player.namedZones[SVEProperties.Zones.Field], player, _ => true, false);
+                else if(amount < 0)
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnLeaderLoseDefenseTrigger>(gameState, player.namedZones[SVEProperties.Zones.Leader].cards[0],
+                        SVEProperties.Zones.Leader, player.namedZones[SVEProperties.Zones.Field], player, _ => true, false);
             }
         }
 

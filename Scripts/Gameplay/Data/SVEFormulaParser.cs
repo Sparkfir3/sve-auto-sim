@@ -426,6 +426,8 @@ namespace SVESimulator
                 case "playPoints":
                 case "currentPlayPoints":
                     return player ? player.GetPlayerInfo().namedStats[SVEProperties.PlayerStats.PlayPoints].effectiveValue : 0;
+                case "timesLeaderLostDefenseThisTurn":
+                    return player ? player.AdditionalStats.TimesLostDefenseThisTurn : 0;
 
                 // Player Zone
                 case "evolveDeckFaceUp":
@@ -442,6 +444,13 @@ namespace SVESimulator
                         return 0;
                     CardObject cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
                     return cardObject ? cardObject.NumberOfTurnsOnBoard : -1;
+                case "isOnFieldFromCemetery":
+                    if(card == null)
+                        return 0;
+                    cardObject = CardManager.Instance.GetCardByInstanceId(card.instanceId);
+                    if(!cardObject || cardObject.CurrentZone != player.ZoneController.fieldZone || cardObject.GetMostRecentZone() != player.ZoneController.cemeteryZone)
+                        return 0;
+                    return 1;
 
                 // Default
                 default:

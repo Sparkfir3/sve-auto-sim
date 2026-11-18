@@ -23,6 +23,7 @@ namespace SVESimulator.SveScript
             // Card Movement - From Field (Self)
             { "Fanfare", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldTrigger") },
             { "FanfareHand", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromHandTrigger") },
+            { "FanfareCemetery", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromCemeteryTrigger") },
             { "FanfareNotHand", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromNotHandTrigger") },
 
             { "LastWords", new EffectTriggerInfo("SVESimulator.SveLastWordsTrigger", TriggerParameterType.Filter) },
@@ -34,6 +35,7 @@ namespace SVESimulator.SveScript
             { "OnOtherLeaveField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardLeaveFieldTrigger", TriggerParameterType.Filter) },
             { "OnOtherFieldToCemetery", new EffectTriggerInfo("SVESimulator.SveOnOtherCardFieldToCemetery", TriggerParameterType.Filter) },
             { "OnOtherReturnToHandFromField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardReturnToHandFromField", TriggerParameterType.Filter) },
+            { "OnOtherCemeteryToField", new EffectTriggerInfo("SVESimulator.SveOnOtherCardCemeteryToField") },
 
             // Card Movement - From Field (Other, Opponent Cards)
             { "OnOpponentCardEnterField", new EffectTriggerInfo("SVESimulator.SveOnOpponentCardEnterFieldTrigger", TriggerParameterType.Filter) },
@@ -63,6 +65,7 @@ namespace SVESimulator.SveScript
             { "LeaderStrike", new EffectTriggerInfo("SVESimulator.SveOnAttackLeaderTrigger") },
             { "OnOtherAttack", new EffectTriggerInfo("SVESimulator.SveOnOtherCardAttackTrigger", TriggerParameterType.Filter) },
             { "OnDealCombatDamage", new EffectTriggerInfo("SVESimulator.SveOnDealCombatDamageTrigger") },
+            { "OnTakeAbilityDamage", new EffectTriggerInfo("SVESimulator.SveOnTakeAbilityDamageTrigger") },
 
             // Game Phases
             { "StartMainPhase", new EffectTriggerInfo("SVESimulator.SveStartMainPhaseTrigger") },
@@ -73,6 +76,7 @@ namespace SVESimulator.SveScript
 
             // Other
             { "OnLeaderGainDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderGainDefenseTrigger") },
+            { "OnLeaderLoseDefense", new EffectTriggerInfo("SVESimulator.SveOnLeaderLoseDefenseTrigger") },
             { "OnSelectedForAbility", new EffectTriggerInfo("SVESimulator.SveOnSelectedForAbilityTrigger") },
 
             { "Spell", new EffectTriggerInfo("SVESimulator.SpellAbility") },
