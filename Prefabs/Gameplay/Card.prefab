@@ -1074,6 +1074,7 @@ MonoBehaviour:
   <CanAttack>k__BackingField: 0
   <CanAttackLeader>k__BackingField: 0
   <IsValidDefender>k__BackingField: 0
+  currentHighlightMode: 0
   _interactable: 1
   _isAnimating: 0
   canTrackEngageStatus: 0
