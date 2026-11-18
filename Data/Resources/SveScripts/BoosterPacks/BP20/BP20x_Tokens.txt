@@ -118,8 +118,9 @@ class Abyss;
 type Crest;
 trait Omen / Heir / Encroacher / Token;
 
-text "NOT IMPLEMENTED
-      If you would choose 1 or more options, choose any number instead.";
+text "If you would choose 1 or more options, choose any number instead.";
+
+keyword PlayerChooseAnyNumberOfOptions;
 
 // ------------------------------
 

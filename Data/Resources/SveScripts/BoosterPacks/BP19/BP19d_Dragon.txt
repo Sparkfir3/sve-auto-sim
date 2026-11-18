@@ -456,11 +456,3 @@ ability Spell name Overflow {
 ability ModifiedCost {
     effect ReducedCostFromEx(1);
 }
-
-// ------------------------------
-// ------------------------------
-// ------------------------------
-
-// keyword - CantPlayFromEx
-// effect - MinusCostNextCardEndOfTurnEx
-// modified cost - ReducedCostFromEx

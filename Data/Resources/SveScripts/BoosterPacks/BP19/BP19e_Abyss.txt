@@ -1,0 +1,475 @@
+name Istyndet, Soul Convict;
+id BP19-074;
+class Abyss;
+type Follower;
+trait Condemned / Necromancer;
+rarity L;
+cost 2;
+stats 3/2;
+
+text "Once on each of your turns, if there are at least 10 cards in your cemetery, when another Condemned follower that costs 3 or less is put from your field into the cemetery, put it onto its owner's field. Its [fanfare] abilities do not trigger.
+      [fanfare] Bury the top 2 cards of your deck.
+      [act] [engage], bury a Condemned follower not named Istyndet, Soul Convict: Select an enemy follower on the field and destroy it.";
+
+ability OnOtherFieldToCemetery {
+    filter Ft(Condemned)p(m(0,3));
+    cost (OncePerTurn);
+    condition <<t[y()>9];
+    effect CemeteryToFieldNoFanfare() to TriggerCard;
+}
+ability Fanfare {
+    effect Mill(2);
+}
+ability Act {
+    cost (EngageSelf), (SendToCemetery, TargetPlayerCard, Ft(Condemned)!n("Istyndet, Soul Convict")X);
+	condition p(#F);
+	effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Garodeth, Insurgent Convict;
+id BP19-075;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost05]: Evolve this.
+      During your turn, whenever your leader loses defense, if your leader has lost defense at least 4 times this turn, evolve this.
+      [fanfare] Deal 1 damage to your leader.";
+
+evolve 5;
+ability OnLeaderLoseDefense {
+    condition <<t[#(timesLeaderLostDefenseThisTurn)>3];
+    cost (Optional), (Optional);
+    effect EvolveNotOncePerTurn() to Self;
+}
+ability Fanfare {
+    effect DealDamage(1) to Leader;
+}
+
+// ------------------------------
+
+name Garodeth, Insurgent Convict (Evolved);
+id BP19-076;
+class Abyss;
+type Evolved Follower;
+trait Condemned / Demon;
+rarity L;
+stats 6/6;
+
+text "Storm.
+      On Evolve - Select an enemy follower on the field and deal it 8 damage.";
+
+keyword Storm;
+ability OnEvolve {
+    effect DealDamage(8) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Zeronua, Demon Dominator;
+id BP19-077;
+class Abyss;
+type Follower;
+trait Festive / Demon;
+rarity L;
+cost 2;
+stats 1/2;
+
+text "[fanfare] If there are 2 cards or less in your hand, search your deck for a Paracelise, Demon of Greed, put it into your EX area, then shuffle. If there are 0, it costs 3 less to play this turn.
+      [act] [cost01], put this from your hand into your EX area: Give your leader [defense]+1.";
+
+ability Fanfare {
+    condition H<3;
+    effect SearchAndTarget(1, n("Paracelise, Demon of Greed"), ExArea, MinusCost);
+}
+ability Spell name MinusCost {
+    condition H=0;
+    effect GiveStatEndOfTurn(Cost, 3) to AllPlayerCardsEx;
+}
+ability ActFromHand {
+    cost (PP, 1), (SendToExArea, SelfFromHand);
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Abyssal Colonel;
+id BP19-078;
+class Abyss;
+type Follower;
+trait Condemned / Departed;
+rarity G;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      Necrocharge (10) - This has Storm.
+      [lastwords] Select an enemy follower on the field and deal it 3 damage.";
+
+evolve 1;
+ability Passive {
+    condition n(10);
+    effect GiveKeyword(Storm) to Self;
+}
+ability LastWords {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Abyssal Colonel (Evolved);
+id BP19-079;
+class Abyss;
+type Evolved Follower;
+trait Condemned / Departed;
+rarity G;
+stats 4/4;
+
+text "Necrocharge (10) - This has Storm and Ward.
+      On Evolve - Give your leader [defense]+2.
+      [lastwords] Select an enemy follower on the field and deal it 3 damage.";
+
+ability Passive {
+    condition n(10);
+    effect GiveKeyword(Storm) to Self;
+}
+ability Passive {
+    condition n(10);
+    effect GiveKeyword(Ward) to Self;
+}
+ability OnEvolve {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability LastWords {
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Myroel, Death Enforcer;
+id BP19-080;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity G;
+cost 7;
+stats 5/5;
+
+text "[fanfare] Discard a Condemned card: Draw a card.
+      Whenever a follower is put onto your field from the cemetery, deal 1 damage to each enemy follower on the field.
+      [act] [engage]: Select up to 1 Condemned follower that costs 5 or less and up to 1 Condemned follower that costs 3 or less in your cemetery and summon them.";
+
+ability Fanfare {
+    cost (Discard, 1, t(Condemned));
+    effect Draw(1);
+}
+ability FanfareCemetery {
+    effect DealDamage(1) to AllOpponentCards F;
+}
+ability OnOtherCemeteryToField {
+    filter F;
+    effect DealDamage(1) to AllOpponentCards F;
+}
+ability Act {
+    cost (EngageSelf);
+    effect Sequence(Five, Three);
+}
+ability Spell name Five {
+    effect CemeteryToField(m(0,1), Ft(Condemned)p(m(0,5)));
+}
+ability Spell name Three {
+    effect CemeteryToField(m(0,1), Ft(Condemned)p(m(0,3)));
+}
+
+// ------------------------------
+
+name Genomuel, Wyrm Enforcer;
+id BP19-081;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity G;
+cost 5;
+stats 5/5;
+
+text "At the start of your end phase, give each enemy follower on the field [attack]-3/[defense]-3 and deal 3 damage to each enemy leader.";
+
+ability StartEndPhase {
+    effect Sequence(AtkDef, Damage);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, -3) to AllOpponentCards F;
+}
+ability Spell name Damage {
+    effect DealDamage(3) to OpponentLeader F;
+}
+
+// ------------------------------
+
+name Underworld Lieutenant;
+id BP19-082;
+class Abyss;
+type Follower;
+trait Condemned / Departed;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [evolve] [cost00]: Evolve this. Activate only if this was put onto the field from the cemetery.
+      [lastwords] Bury the top card of your deck.";
+
+evolve 1;
+ability Act {
+    cost (PP, 0);
+    condition #(isOnFieldFromCemetery);
+    effect Evolve() to Self;
+}
+ability LastWords {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Underworld Lieutenant (Evolved);
+id BP19-083;
+class Abyss;
+type Evolved Follower;
+trait Condemned / Departed;
+rarity S;
+stats 3/3;
+
+text "On Evolve - Select an enemy follower on the field and deal it 2 damage.
+      [lastwords] Bury the top card of your deck.";
+
+ability OnEvolve {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Warden of Corpses;
+id BP19-084;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity S;
+cost 3;
+stats 3/4;
+
+text "Ward.
+      [fanfare] Draw a card. If there's a Myroel, Death Enforcer on your field, give your leader [defense]+4.";
+
+keyword Ward;
+ability Fanfare {
+    effect Sequence(Draw, Def);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 4) to Leader;
+}
+
+// ------------------------------
+
+name Raging Commander;
+id BP19-085;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity S;
+cost 2;
+stats 2/1;
+
+text "Any Garodeth, Insurgent Convict you play costs 1 less.
+      [fanfare] Deal 1 damage to your leader. Draw a card.
+      4 times on each of your turns, when your leader loses defense, select an enemy follower on the field and deal it 1 damage.";
+
+ability Passive {
+    effect MinusCostOther(1) to AllPlayerCards n(Garodeth, Insurgent Convict);
+}
+ability Fanfare {
+    effect Sequence(Damage, Draw);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability OnLeaderLoseDefense {
+    cost (FourTimesPerTurn);
+    condition <<t;
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Vicious Blitzer;
+id BP19-086;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity B;
+cost 1;
+stats 1/1;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Deal 1 damage to your leader. If there's a Garodeth, Insurgent Convict on your field, evolve this.";
+
+evolve 1;
+ability Fanfare {
+    effect Sequence(Damage, Evolve);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Evolve {
+    condition f(n(Garodeth, Insurgent Convict));
+    cost (Optional);
+    effect EvolveNotOncePerTurn() to Self;
+}
+
+// ------------------------------
+
+name Vicious Blitzer (Evolved);
+id BP19-087;
+class Abyss;
+type Evolved Follower;
+trait Condemned / Demon;
+rarity B;
+stats 2/2;
+
+text "On Evolve - Deal 1 damage to each leader.";
+
+ability OnEvolve {
+    effect DealDamage(1) to AllLeaders;
+}
+
+// ------------------------------
+
+name Fallen Sergeant;
+id BP19-088;
+class Abyss;
+type Follower;
+trait Condemned / Departed;
+rarity B;
+cost 1;
+stats 2/2;
+
+text "[lastwords] Choose 1. (1) Select an enemy follower on the field. Necrocharge (10) - Deal it 2 damage. (2) Bury the top card of your deck.";
+
+ability LastWords {
+    effect ChooseFromList(Damage, Bury);
+}
+ability Spell name Damage {
+    condition p(#F);
+    effect DealDamage(0n(10)2) to TargetOpponentCard F;
+}
+ability Spell name Bury {
+    effect Mill(1);
+}
+
+// ------------------------------
+
+name Steamrolling Tank;
+id BP19-089;
+class Abyss;
+type Follower;
+trait Condemned / Demon;
+rarity B;
+cost 1;
+stats 0/2;
+
+text "Ward.
+      [fanfare] Deal 1 damage to your leader.
+      4 times on each of your turns, when your leader loses defense, give your leader [defense]+1.";
+
+keyword Ward;
+ability Fanfare {
+    effect DealDamage(1) to Leader;
+}
+ability OnLeaderLoseDefense {
+    cost (FourTimesPerTurn);
+    condition <<t;
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Howling Scream;
+id BP19-090;
+class Abyss;
+type Spell;
+trait Beast;
+rarity B;
+cost 0;
+
+text "Choose up to 2. (1) [cost01]: Select an enemy follower on the field. Deal 2 damage to it and 1 damage to your leader. (2) [cost01]: Deal 1 damage to your leader. Draw a card.";
+
+ability Spell {
+    effect ChooseAmountFromList(m(0,2), Option1, Option2);
+}
+
+ability Spell name Option1 {
+    condition p(#F);
+    cost (PP, 1);
+    effect Sequence(DamageEnemy, DamageLeader);
+}
+ability Spell name Option2 {
+    cost (PP, 1);
+    effect Sequence(DamageLeader, Draw);
+}
+
+ability Spell name DamageEnemy {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Prison of Pain;
+id BP19-091;
+class Abyss;
+type Amulet;
+trait Demon;
+rarity B;
+cost 2;
+
+text "[fanfare] Place 2 pain counters on this. Draw a card.
+      [act] [engage], remove a pain counter from this: Deal 1 damage to your leader. If this has no pain counters, bury it.";
+
+ability Fanfare {
+    effect Sequence(Counters, Draw);
+}
+ability Spell name Counters {
+    effect GiveCounter(Pain, 2) to Self;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Act {
+    cost (EngageSelf), (RemoveCounters, Pain, 1);
+    effect Sequence(Damage, Bury);
+}
+ability Spell name Damage {
+    effect DealDamage(1) to Leader;
+}
+ability Spell name Bury {
+    condition r(Pain)=0;
+    effect SendToCemetery() to Self;
+}

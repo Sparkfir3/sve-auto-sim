@@ -433,16 +433,3 @@ ability Spell name DamageFollower {
 ability Spell name DamageLeader {
     effect DealDamage(3) to OpponentLeader;
 }
-
-// ------------------------------
-// ------------------------------
-// ------------------------------
-
-// keyword ability - DamageCapX (up to 3)
-//    future proofing - TakeReducedDamageX, TakeIncreasedDamageX
-// cost - HandToExArea
-// trigger - OnTakeAbilityDamage
-// complex effect
-//    refactor getTargetCard => getTargetPlayerCard
-//    new getTargetOpponentCard
-//    getCardFromVar(<var>) => access CE_Card from new var declaration

@@ -1,0 +1,344 @@
+[
+  {
+    "id": "BP19-074EN",
+    "name": "Istyndet, Soul Convict",
+    "trait": "Condemned / Necromancer",
+    "cardText": "Once on each of your turns, if there are at least 10 cards in your cemetery, when another Condemned follower that costs 3 or less is put from your field into the cemetery, put it onto its owner's field. Its [fanfare] abilities do not trigger.\n[fanfare] Bury the top 2 cards of your deck.\n[act] [engage], bury a Condemned follower not named Istyndet, Soul Convict: Select an enemy follower on the field and destroy it.",
+    "effectText": [
+      {
+        "key": "OnOtherFieldToCemetery",
+        "text": "Once on each of your turns, if there are at least 10 cards in your cemetery, when another Condemned follower that costs 3 or less is put from your field into the cemetery, put it onto its owner's field. Its [fanfare] abilities do not trigger.",
+        "body": "When another Condemned follower that costs 3 or less is put from your field into the cemetery, put it onto its owner's field. Its [fanfare] abilities do not trigger."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Bury the top 2 cards of your deck."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury a Condemned follower not named Istyndet, Soul Convict",
+        "body": "Select an enemy follower on the field and destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP19-075EN",
+    "name": "Garodeth, Insurgent Convict",
+    "trait": "Condemned / Demon",
+    "cardText": "[evolve] [cost05]: Evolve this.\nDuring your turn, whenever your leader loses defense, if your leader has lost defense at least 4 times this turn, evolve this.\n[fanfare] Deal 1 damage to your leader.",
+    "effectText": [
+      {
+        "key": "OnLeaderLoseDefense",
+        "text": "During your turn, whenever your leader loses defense, if your leader has lost defense at least 4 times this turn, evolve this.",
+        "trigger": "During your turn, whenever your leader loses defense, if your leader has lost defense at least 4 times this turn,",
+        "body": "Evolve this."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 1 damage to your leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-076EN",
+    "name": "Garodeth, Insurgent Convict (Evolved)",
+    "trait": "Condemned / Demon",
+    "cardText": "Storm.\nOn Evolve - Select an enemy follower on the field and deal it 8 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 8 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-077EN",
+    "name": "Zeronua, Demon Dominator",
+    "trait": "Festive / Demon",
+    "cardText": "[fanfare] If there are 2 cards or less in your hand, search your deck for a Paracelise, Demon of Greed, put it into your EX area, then shuffle. If there are 0, it costs 3 less to play this turn.\n[act] [cost01], put this from your hand into your EX area: Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are 2 cards or less in your hand, search your deck for a Paracelise, Demon of Greed, put it into your EX area, then shuffle. If there are 0, it costs 3 less to play this turn."
+      },
+      {
+        "key": "ActFromHand",
+        "trigger": "[act]",
+        "cost": "[cost01], put this from your hand into your EX area",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-078EN",
+    "name": "Abyssal Colonel",
+    "trait": "Condemned / Departed",
+    "cardText": "[evolve] [cost01]: Evolve this.\nNecrocharge (10) - This has Storm.\n[lastwords] Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-079EN",
+    "name": "Abyssal Colonel (Evolved)",
+    "trait": "Condemned / Departed",
+    "cardText": "Necrocharge (10) - This has Storm and Ward.\nOn Evolve - Give your leader [defense]+2.\n[lastwords] Select an enemy follower on the field and deal it 3 damage.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Give your leader [defense]+2."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Select an enemy follower on the field and deal it 3 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-080EN",
+    "name": "Myroel, Death Enforcer",
+    "trait": "Condemned / Demon",
+    "cardText": "[fanfare] Discard a Condemned card: Draw a card.\nWhenever a follower is put onto your field from the cemetery, deal 1 damage to each enemy follower on the field.\n[act] [engage]: Select up to 1 Condemned follower that costs 5 or less and up to 1 Condemned follower that costs 3 or less in your cemetery and summon them.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "Discard a Condemned card",
+        "body": "Draw a card."
+      },
+      {
+        "key": "FanfareCemetery",
+        "body": "Whenever a follower is put onto your field from the cemetery, deal 1 damage to each enemy follower on the field."
+      },
+      {
+        "key": "OnOtherCemeteryToField",
+        "body": "Whenever a follower is put onto your field from the cemetery, deal 1 damage to each enemy follower on the field."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage]",
+        "body": "Select up to 1 Condemned follower that costs 5 or less and up to 1 Condemned follower that costs 3 or less in your cemetery and summon them."
+      },
+      {
+        "key": "Five",
+        "body": "Select up to 1 Condemned follower that costs 5 or less and summon it."
+      },
+      {
+        "key": "Three",
+        "body": "Select up to 1 Condemned follower that costs 3 or less and summon it."
+      }
+    ]
+  },
+  {
+    "id": "BP19-081EN",
+    "name": "Genomuel, Wyrm Enforcer",
+    "trait": "Condemned / Demon",
+    "cardText": "At the start of your end phase, give each enemy follower on the field [attack]-3/[defense]-3 and deal 3 damage to each enemy leader.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give each enemy follower on the field [attack]-3/[defense]-3 and deal 3 damage to each enemy leader.",
+        "trigger": "At the start of your end phase,",
+        "body": "Give each enemy follower on the field [attack]-3/[defense]-3 and deal 3 damage to each enemy leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-082EN",
+    "name": "Underworld Lieutenant",
+    "trait": "Condemned / Departed",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[evolve] [cost00]: Evolve this. Activate only if this was put onto the field from the cemetery.\n[lastwords] Bury the top card of your deck.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost00]",
+        "body": "Evolve this. Activate only if this was put onto the field from the cemetery."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Bury the top card of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP19-083EN",
+    "name": "Underworld Lieutenant (Evolved)",
+    "trait": "Condemned / Departed",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it 2 damage.\n[lastwords] Bury the top card of your deck.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Bury the top card of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP19-084EN",
+    "name": "Warden of Corpses",
+    "trait": "Condemned / Demon",
+    "cardText": "Ward.\n[fanfare] Draw a card. If there's a Myroel, Death Enforcer on your field, give your leader [defense]+4.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card. If there's a Myroel, Death Enforcer on your field, give your leader [defense]+4."
+      }
+    ]
+  },
+  {
+    "id": "BP19-085EN",
+    "name": "Raging Commander",
+    "trait": "Condemned / Demon",
+    "cardText": "Any Garodeth, Insurgent Convict you play costs 1 less.\n[fanfare] Deal 1 damage to your leader. Draw a card.\n4 times on each of your turns, when your leader loses defense, select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 1 damage to your leader. Draw a card."
+      },
+      {
+        "key": "OnLeaderLoseDefense",
+        "text": "4 times on each of your turns, when your leader loses defense, select an enemy follower on the field and deal it 1 damage.",
+        "trigger": "4 times on each of your turns, when your leader loses defense,",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-086EN",
+    "name": "Vicious Blitzer",
+    "trait": "Condemned / Demon",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Deal 1 damage to your leader. If there's a Garodeth, Insurgent Convict on your field, evolve this.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Deal 1 damage to your leader. If there's a Garodeth, Insurgent Convict on your field, evolve this."
+      },
+      {
+        "key": "Evolve",
+        "body": "If there's a Garodeth, Insurgent Convict on your field, evolve this."
+      }
+    ]
+  },
+  {
+    "id": "BP19-087EN",
+    "name": "Vicious Blitzer (Evolved)",
+    "trait": "Condemned / Demon",
+    "cardText": "On Evolve - Deal 1 damage to each leader.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Deal 1 damage to each leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-088EN",
+    "name": "Fallen Sergeant",
+    "trait": "Condemned / Departed",
+    "cardText": "[lastwords] Choose 1. (1) Select an enemy follower on the field. Necrocharge (10) - Deal it 2 damage. (2) Bury the top card of your deck.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Choose 1. (1) Select an enemy follower on the field. Necrocharge (10) - Deal it 2 damage. (2) Bury the top card of your deck."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. Necrocharge (10) - Deal it 2 damage."
+      },
+      {
+        "key": "Bury",
+        "body": "Bury the top card of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP19-089EN",
+    "name": "Steamrolling Tank",
+    "trait": "Condemned / Demon",
+    "cardText": "Ward.\n[fanfare] Deal 1 damage to your leader.\n4 times on each of your turns, when your leader loses defense, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "Deal 1 damage to your leader."
+      },
+      {
+        "key": "OnLeaderLoseDefense",
+        "text": "4 times on each of your turns, when your leader loses defense, give your leader [defense]+1.",
+        "trigger": "4 times on each of your turns, when your leader loses defense,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-090EN",
+    "name": "Howling Scream",
+    "trait": "Beast",
+    "cardText": "Choose up to 2. (1) [cost01]: Select an enemy follower on the field. Deal 2 damage to it and 1 damage to your leader. (2) [cost01]: Deal 1 damage to your leader. Draw a card.",
+    "effectText": [
+      {
+        "key": "Spell",
+        "body": "Choose up to 2. (1) [cost01]: Select an enemy follower on the field. Deal 2 damage to it and 1 damage to your leader. (2) [cost01]: Deal 1 damage to your leader. Draw a card."
+      },
+      {
+        "key": "Option1",
+        "cost": "[cost01]",
+        "body": "Select an enemy follower on the field. Deal 2 damage to it and 1 damage to your leader."
+      },
+      {
+        "key": "Option2",
+        "cost": "[cost01]",
+        "body": "Deal 1 damage to your leader. Draw a card."
+      },
+      {
+        "key": "DamageEnemy",
+        "body": "Select an enemy follower on the field. Deal 2 damage to it and 1 damage to your leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-091EN",
+    "name": "Prison of Pain",
+    "trait": "Demon",
+    "cardText": "[fanfare] Place 2 pain counters on this. Draw a card.\n[act] [engage], remove a pain counter from this: Deal 1 damage to your leader. If this has no pain counters, bury it.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Place 2 pain counters on this. Draw a card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], remove a pain counter from this",
+        "body": "Deal 1 damage to your leader. If this has no pain counters, bury it."
+      }
+    ]
+  }
+]

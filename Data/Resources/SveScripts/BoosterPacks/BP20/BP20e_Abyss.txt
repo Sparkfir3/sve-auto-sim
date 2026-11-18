@@ -1,0 +1,426 @@
+name Rulenye & Valnareik;
+id BP20-074;
+class Abyss;
+type Follower;
+trait Omen / Necromancer / Demon;
+rarity L;
+cost 3;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Rulenye & Valnareik (Evolved);
+id BP20-075;
+class Abyss;
+type Evolved Follower;
+trait Omen / Necromancer / Demon;
+rarity L;
+stats 3/3;
+
+text "On Evolve - Choose 1. (1) Summon 2 Rulenye, Echoing Scream tokens. (2) Give this Storm. Give each [abysscraft] Omen follower on your field [attack]+1.";
+
+ability OnEvolve {
+    effect ChooseFromList(Token, Sequence);
+}
+ability Spell name Token {
+    effect SummonToken("Rulenye, Echoing Scream", Field, 2);
+}
+ability Spell name Sequence {
+    effect Sequence(Storm, Atk);
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to Self;
+}
+ability Spell name Atk {
+    effect GiveStat(Atk, 1) to AllPlayerCards Ft(Omen)c(Abyss);
+}
+
+// ------------------------------
+
+name Sham-Nacha, Heir to Entwining;
+id BP20-076;
+class Abyss;
+type Follower;
+trait Omen / Heir / Encroacher;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Sham-Nacha, Heir to Entwining (Evolved);
+id BP20-077;
+class Abyss;
+type Evolved Follower;
+trait Omen / Heir / Encroacher;
+rarity L;
+stats 4/4;
+
+text "On Evolve - Put a Crest: Sham-Nacha, Heir to Entwining token into your EX area.
+      On Super-Evolve - Select an [abysscraft] Omen follower in your cemetery. Summon it and evolve it.";
+
+ability OnEvolve {
+    effect SummonToken("Crest: Sham-Nacha, Heir to Entwining", ExArea, 1);
+}
+ability OnSuperEvolve {
+    effect CemeteryToFieldAndTarget(1, Ft(Omen)c(Abyss), Evolve);
+}
+ability Spell name Evolve {
+    cost (Optional);
+    effect EvolveNotOncePerTurn() to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Diabolus Hedone;
+id BP20-078;
+class Abyss;
+type Follower;
+trait Demon;
+rarity L;
+cost 3;
+stats 4/4;
+
+text "[fanfare] Select up to 2 enemy followers on the field and, if Sanguine is active for you, destroy them.";
+
+ability Fanfare {
+    effect TargetForSequence(Destroy) to TargetOpponentCard Fm(0,2);
+}
+ability Spell name Destroy {
+    condition g;
+    effect Destroy() to AllOpponentCards;
+}
+
+// ------------------------------
+
+name Congregant of Entwining;
+id BP20-079;
+class Abyss;
+type Follower;
+trait Omen / Necromancer / Demon;
+rarity G;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.";
+
+evolve 1;
+
+// ------------------------------
+
+name Congregant of Entwining (Evolved);
+id BP20-080;
+class Abyss;
+type Evolved Follower;
+trait Omen / Necromancer / Demon;
+rarity G;
+stats 4/4;
+
+text "On Evolve - Choose 1. (1) Select an enemy follower on the field and deal it 5 damage. (2) Select an [abysscraft] Omen follower in your cemetery that costs 3 or less and summon it. (3) Give each [abysscraft] Omen follower on your field [attack]+1/[defense]+1.";
+
+ability OnEvolve {
+    effect ChooseFromList(Damage, Summon, AtkDef);
+}
+ability Spell name Damage {
+    condition p(#F);
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Summon {
+    effect CemeteryToField(1, Ft(Omen)c(Abyss)p(m(0,3)));
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCards Ft(Omen)c(Abyss);
+}
+
+// ------------------------------
+
+name Hervör;
+id BP20-081;
+class Abyss;
+type Follower;
+trait Demon;
+rarity G;
+cost 6;
+stats 4/4;
+
+text "[fanfare] Choose 1. (1) Deal 4 damage to each enemy follower on the field. (2) Give your leader [defense]+4. Draw 2 cards.";
+
+ability Fanfare {
+    effect ChooseFromList(Damage, DefDraw);
+}
+ability Spell name Damage {
+    effect DealDamage(4) to AllOpponentCards F;
+}
+ability Spell name DefDraw {
+    effect Sequence(Def, Draw);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 4) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(2);
+}
+
+// ------------------------------
+
+name Screaming and Loathing;
+id BP20-082;
+class Abyss;
+type Spell;
+trait Omen / Necromancer / Demon;
+rarity G;
+cost 2;
+
+text "Choose 1. (1) Select an enemy follower on the field and deal it 3 damage. (2) Deal 2 damage to each enemy leader. (3) Draw a card. Discard a card. (4) Recover 1 play point.";
+
+ability Spell {
+    effect ChooseFromList(DamageFollower, DamageLeader, DrawDiscard, PlayPoint);
+}
+ability Spell name DamageFollower {
+    condition p(#F);
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability Spell name DrawDiscard {
+    effect Sequence(Draw, Discard);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+ability Spell name PlayPoint {
+    effect GiveStat(PP, 1) to Leader;
+}
+
+// ------------------------------
+
+name Spirited Gravekeeper;
+id BP20-083;
+class Abyss;
+type Follower;
+trait Necromancer;
+rarity S;
+cost 2;
+stats 2/3;
+
+text "[evolve] [cost05]: Evolve this.
+      [fanfare] Bury the top 2 cards of your deck.";
+
+evolve 5;
+ability Fanfare {
+    effect Mill(2);
+}
+
+// ------------------------------
+
+name Spirited Gravekeeper (Evolved);
+id BP20-084;
+class Abyss;
+type Evolved Follower;
+trait Necromancer;
+rarity S;
+stats 4/5;
+
+text "On Evolve - Select a non-[abysscraft] follower that costs 5 or less and a non-[abysscraft] follower that costs 3 or less in your cemetery and summon them.";
+
+ability OnEvolve {
+    effect Sequence(Five, Three);
+}
+ability Spell name Five {
+    effect CemeteryToField(1, F!c(Abyss)p(m(0,5)));
+}
+ability Spell name Three {
+    effect CemeteryToField(1, F!c(Abyss)p(m(0,3)));
+}
+
+// ------------------------------
+
+name Supplicant of Entwining;
+id BP20-085;
+class Abyss;
+type Follower;
+trait Omen / Necromancer / Demon;
+rarity S;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Choose 1. (1) Select an enemy follower on the field and deal it 1 damage. (2) Deal 2 damage to each enemy leader. (3) Give your leader [defense]+2.";
+
+ability Fanfare {
+    effect ChooseFromList(DamageFollower, DamageLeader, Def);
+}
+ability Spell name DamageFollower {
+    condition p(#F);
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability Spell name Def {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Castle of Entwining;
+id BP20-086;
+class Abyss;
+type Amulet;
+trait Arcanaform;
+rarity S;
+cost 1;
+
+text "[fanfare] Look at the top 3 cards of your deck. You may reveal an [abysscraft] Omen card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [act] [cost01], [engage], bury this: Choose 1. (1) Select a follower on your field and give it Rush. (2) Select a follower on your field and give it Assail.";
+
+ability Fanfare {
+    effect CheckTop(3, (Hand, c(Abyss)t(Omen), 1), (BottomDeckAnyOrder));
+}
+ability Act {
+    condition f(F);
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self);
+    effect ChooseFromList(Rush, Assail);
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to TargetPlayerCard;
+}
+ability Spell name Assail {
+    effect GiveKeyword(Assail) to TargetPlayerCard;
+}
+
+// ------------------------------
+
+name Ephemeral Demon Princess;
+id BP20-087;
+class Abyss;
+type Follower;
+trait Yokai / Demon;
+rarity B;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Bury the top 3 cards of your deck.";
+
+evolve 1;
+ability Fanfare {
+    effect Mill(3);
+}
+
+// ------------------------------
+
+name Ephemeral Demon Princess (Evolved);
+id BP20-088;
+class Abyss;
+type Evolved Follower;
+trait Yokai / Demon;
+rarity B;
+stats 4/4;
+
+text "On Evolve - Select up to 2 Yokai cards in your cemetery that cost a total of 4 or less and put them into your EX area. They cost 0 to play this turn.";
+
+ability OnEvolve {
+    effect CemeteryToExAreaAndTarget(m(0,2), t(Yokai)pE(4), MinusCost);
+}
+ability Spell name MinusCost {
+    effect SetStatEndOfTurn(Cost, 0) to AllPlayerCardsEx;
+}
+
+// ------------------------------
+
+name Devotee of Entwining;
+id BP20-089;
+class Abyss;
+type Follower;
+trait Omen / Necromancer / Demon;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Choose 1. (1) Select an enemy follower on the field and deal it 3 damage. (2) Deal 1 damage to each enemy leader and enemy follower on the field. (3) Draw a card.";
+
+ability Fanfare {
+    effect ChooseFromList(DamageFollower, DamageLeader, Draw);
+}
+ability Spell name DamageFollower {
+    condition p(#F);
+    effect DealDamage(3) to TargetOpponentCard F;
+}
+ability Spell name DamageLeader {
+    effect DealDamage(1) to AllOpponentCardsAndLeader F;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Wicked Collector;
+id BP20-090;
+class Abyss;
+type Follower;
+trait Demon;
+rarity B;
+cost 2;
+stats 1/3;
+
+text "[fanfare] Put the top card of your deck into your EX area. If it's a follower, give it [attack]+1/[defense]+1.";
+
+ability Fanfare {
+    effect TopDeckToExAndTarget(1, AtkDef);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to AllPlayerCardsEx F;
+}
+
+// ------------------------------
+
+name Nemean Lion;
+id BP20-091;
+class Abyss;
+type Follower;
+trait Beast;
+rarity B;
+cost 3;
+stats 3/4;
+
+text "Strike - Select an [abysscraft] follower in your cemetery and add it to your hand.";
+
+ability Strike {
+    condition p(#F);
+    effect Salvage(1, Fc(Abyss));
+}
+
+// ------------------------------
+
+name March of the Brutes;
+id BP20-092;
+class Abyss;
+type Spell;
+trait Demon;
+rarity B;
+cost 6;
+
+text "Select up to 2 enemy followers on the field and deal them 5 damage. Deal 3 damage to each enemy leader.";
+
+ability Spell {
+    effect Sequence(Followers, Leader);
+}
+ability Spell name Followers {
+    effect DealDamage(5) to TargetOpponentCard Fm(0,2);
+}
+ability Spell name Leader {
+    effect DealDamage(3) to OpponentLeader;
+}
