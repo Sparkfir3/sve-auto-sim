@@ -479,7 +479,7 @@ namespace SVESimulator
                 playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
 
             // Play card to field
-            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false);
+            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false, triggerFanfare: triggerFanfare);
             localZoneController.PlayCardToField(card, slot);
 
             // Network message
