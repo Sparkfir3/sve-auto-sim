@@ -278,7 +278,7 @@ namespace SVESimulator
         [Command(requiresAuthority = false)]
         public void CmdExecuteConfirmationTiming()
         {
-            if(confirmationTimingState != ConfirmationTimingState.Idle)
+            if(confirmationTimingState != ConfirmationTimingState.Idle || IsResolvingEffect)
                 return;
             StartCoroutine(ConfirmationTimingCoroutine());
 
