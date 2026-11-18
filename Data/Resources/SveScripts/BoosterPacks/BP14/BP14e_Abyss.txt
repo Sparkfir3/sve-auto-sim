@@ -1,0 +1,55 @@
+name Paracelise, Demon of Greed;
+id BP14-072;
+class Abyss;
+type Follower;
+trait Festive / Demon;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this. Activate only if there are 0 cards in your hand.
+      [fanfare] Put the top card of your deck into your EX area. Discard a card.";
+
+ability Act {
+    condition H=0;
+    cost (PP, 1);
+    effect Evolve() to Self;
+}
+ability Fanfare {
+    effect Sequence(Ex, Discard);
+}
+ability Spell name Ex {
+    effect TopDeckToEx(1);
+}
+ability Spell name Discard {
+    effect Discard(1);
+}
+
+// ------------------------------
+
+name Paracelise, Demon of Greed (Evolved);
+id BP14-073;
+class Abyss;
+type Evolved Follower;
+trait Festive / Demon;
+rarity L;
+stats 4/4;
+
+text "On Evolve - Select an enemy follower on the field. Deal 5 damage to it, 2 damage to its leader, give your leader [defense]+2, and put the top card of your deck into your EX area.";
+
+ability OnEvolve {
+    condition p(#F);
+    effect Sequence(Follower, Leader, Defense, Ex);
+}
+ability Spell name Follower {
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Ex {
+    effect TopDeckToEx(1);
+}

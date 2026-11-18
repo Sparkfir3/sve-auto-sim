@@ -1,0 +1,42 @@
+[
+  {
+    "id": "BP14-072EN",
+    "name": "Paracelise, Demon of Greed",
+    "trait": "Festive / Demon",
+    "cardText": "[evolve] [cost01]: Evolve this. Activate only if there are 0 cards in your hand.\n[fanfare] Put the top card of your deck into your EX area. Discard a card.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[evolve]",
+        "cost": "[cost01]",
+        "body": "Evolve this. Activate only if there are 0 cards in your hand."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put the top card of your deck into your EX area. Discard a card."
+      },
+      {
+        "key": "Discard",
+        "body": "Discard a card."
+      }
+    ]
+  },
+  {
+    "id": "BP14-073EN",
+    "name": "Paracelise, Demon of Greed (Evolved)",
+    "trait": "Festive / Demon",
+    "cardText": "On Evolve - Select an enemy follower on the field. Deal 5 damage to it, 2 damage to its leader, give your leader [defense]+2, and put the top card of your deck into your EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field. Deal 5 damage to it, 2 damage to its leader, give your leader [defense]+2, and put the top card of your deck into your EX area."
+      },
+      {
+        "key": "Follower",
+        "body": "Select an enemy follower on the field. Deal 5 damage to it, 2 damage to its leader, give your leader [defense]+2, and put the top card of your deck into your EX area."
+      }
+    ]
+  }
+]

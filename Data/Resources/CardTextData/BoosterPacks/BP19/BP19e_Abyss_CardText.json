@@ -163,7 +163,7 @@
     "effectText": [
       {
         "key": "Act",
-        "trigger": "[act]",
+        "trigger": "[evolve]",
         "cost": "[cost00]",
         "body": "Evolve this. Activate only if this was put onto the field from the cemetery."
       },

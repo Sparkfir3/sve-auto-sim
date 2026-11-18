@@ -89,7 +89,7 @@ ability Fanfare {
 }
 ability Spell name MinusCost {
     condition H=0;
-    effect GiveStatEndOfTurn(Cost, 3) to AllPlayerCardsEx;
+    effect GiveStatEndOfTurn(Cost, -3) to AllPlayerCardsEx;
 }
 ability ActFromHand {
     cost (PP, 1), (SendToExArea, SelfFromHand);
