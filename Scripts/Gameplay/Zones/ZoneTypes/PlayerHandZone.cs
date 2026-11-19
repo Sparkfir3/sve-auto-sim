@@ -92,7 +92,7 @@ namespace SVESimulator
         {
             foreach(CardObject card in cards)
                 card.SetHighlightMode(card.HasQuickKeyword() && Player.LocalEvents.CanPayPlayPointsCost(card.RuntimeCard.PlayPointCost(Player))
-                    ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
+                    ? CardObject.HighlightMode.None : CardObject.HighlightMode.InvalidTarget);
         }
 
         public void SetTargetSlotActive(bool active)

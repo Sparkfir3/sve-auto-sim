@@ -293,10 +293,10 @@ namespace SVESimulator
                 card.SetHighlightMode(card.CanAttack ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
         }
 
-        public void HighlightInteractableCards()
+        public void HighlightUninteractableCards(CardObject.HighlightMode mode = CardObject.HighlightMode.InvalidTarget)
         {
             foreach(CardObject card in cards)
-                card.SetHighlightMode(card.Interactable ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.None);
+                card.SetHighlightMode(card.Interactable ? CardObject.HighlightMode.None : mode);
         }
 
         #endregion
