@@ -444,10 +444,7 @@ namespace SVESimulator
             }
 
             sveEffectSolver.FinishSpell(netIdentity, spell.RuntimeCard);
-            if(spell.IsToken())
-                CardManager.Instance.ReleaseCard(spell);
-            else
-                oppZoneController.SendCardToCemetery(spell);
+            StandardSendCardObjectToZone(spell, oppZoneController, (x, onComplete) => oppZoneController.SendCardToCemetery(x, onComplete));
         }
 
         #endregion
