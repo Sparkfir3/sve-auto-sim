@@ -286,7 +286,7 @@ namespace SVESimulator
                 Player.ZoneController.handZone.SetAllCardsInteractable(filter);
                 foreach(CardObject card in Player.ZoneController.handZone.AllCards)
                 {
-                    card.SetHighlightMode(card.Interactable ? CardObject.HighlightMode.None : CardObject.HighlightMode.InvalidTarget);
+                    card.SetHighlightMode(currentFilter.MatchesCard(card, Player) ? CardObject.HighlightMode.None : CardObject.HighlightMode.InvalidTarget);
                 }
             }
             OnUpdateFilter();
