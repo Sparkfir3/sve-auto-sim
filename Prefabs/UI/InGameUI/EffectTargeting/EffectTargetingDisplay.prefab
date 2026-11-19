@@ -1620,6 +1620,9 @@ MonoBehaviour:
         buttonPosition: -210
         buttonAnchor: {x: 0.5, y: 1}
         buttonPivot: {x: 0.5, y: 1}
+  OnSelectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
   OnSelectionComplete:
     m_PersistentCalls:
       m_Calls: []
@@ -1768,6 +1771,7 @@ GameObject:
   - component: {fileID: 1033119464679142166}
   - component: {fileID: 3402691995147585657}
   - component: {fileID: 8501797990984137936}
+  - component: {fileID: 6791091581440951428}
   m_Layer: 5
   m_Name: EffectText (TMP)
   m_TagString: Untagged
@@ -1791,8 +1795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 640, y: -62.815002}
-  m_SizeDelta: {x: 1280, y: 68.73}
+  m_AnchoredPosition: {x: 640, y: -103.45}
+  m_SizeDelta: {x: 1280, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3402691995147585657
 CanvasRenderer:
@@ -1852,12 +1856,12 @@ MonoBehaviour:
   m_fontSize: 58
   m_fontSizeBase: 58
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 58
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1891,6 +1895,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6791091581440951428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5711863742829900088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 150
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &5775279690119493792
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,7 +2742,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -175}
-  m_SizeDelta: {x: 1280, y: 97.18001}
+  m_SizeDelta: {x: 1280, y: 178.45}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7991301783262984223
 MonoBehaviour:
