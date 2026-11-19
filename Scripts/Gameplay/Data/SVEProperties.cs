@@ -99,7 +99,7 @@ namespace SVESimulator
         public const int StartingHandSize = 4;
         public const int MaxHandSize = 7;
         public const int MaxPlayPointsAmount = 10;
-        public const float CardThickness = 0.01f;
+        public const float CardThickness = 0.05f;
 
         // ------------------------------
 

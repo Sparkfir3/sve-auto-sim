@@ -200,7 +200,7 @@ namespace SVESimulator
                 return null;
 
             if(!zoneController.evolveDeckZone.TryGetCard(evolvedCard.instanceId, out CardObject evolvedCardObject))
-                evolvedCardObject = CardManager.Instance.RequestCard(evolvedCard);
+                evolvedCardObject = localZoneController.CreateNewCardObjectTopDeck(evolvedCard, localZoneController.evolveDeckZone);
             return evolvedCardObject;
         }
 

@@ -131,6 +131,7 @@ namespace SVESimulator
             OpponentInitDeckAndLeaderMessage initMsg = new()
             {
                 playerNetId = msg.playerNetId,
+                deckCount = msg.deckCount,
                 evolveDeckSize = msg.evolvedCardsInstanceIds.Length,
                 leaderCard = NetworkingUtils.GetNetCard(leaderCard)
             };

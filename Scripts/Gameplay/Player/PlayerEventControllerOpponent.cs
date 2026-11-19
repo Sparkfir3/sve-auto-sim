@@ -26,6 +26,9 @@ namespace SVESimulator
             oppZoneController.InitializeLeaderCard(leader, leader.cardId);
             oppZoneController.deckZone.Runtime.RemoveCard(leader);
             oppZoneController.leaderZone.Runtime.AddCard(leader);
+
+            // Deck
+            oppZoneController.deckZone.SetStackHeight(msg.deckCount);
         }
 
         public void SetGoingFirst(SetGoingFirstPlayerMessage msg)

@@ -39,6 +39,7 @@ namespace SVESimulator
     public struct LocalInitDeckAndLeaderMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
+        public int deckCount;
         public int[] evolvedCardsInstanceIds;
         public int leaderCardInstanceId;
     }
@@ -46,6 +47,7 @@ namespace SVESimulator
     public struct OpponentInitDeckAndLeaderMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
+        public int deckCount;
         public int evolveDeckSize;
         public NetCard leaderCard;
     }

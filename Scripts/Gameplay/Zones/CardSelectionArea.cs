@@ -159,7 +159,7 @@ namespace SVESimulator
                     break;
                 case SelectionMode.SelectCardsFromEvolveDeck:
                 case SelectionMode.ViewCardsEvolveDeck:
-                    for(int i = 0; i < cardsToMove.Count; i++)
+                    for(int i = cardsToMove.Count - 1; i >= 0; i--)
                         zoneController.SendCardToEvolveDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsBanished:
@@ -181,7 +181,7 @@ namespace SVESimulator
                         Player.OppZoneController.SendCardToCemetery(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsOppEvolveDeck:
-                    for(int i = 0; i < cardsToMove.Count; i++)
+                    for(int i = cardsToMove.Count - 1; i >= 0; i--)
                         Player.OppZoneController.SendCardToEvolveDeck(cardsToMove[i], delay: i * AddRemoveCardDelay);
                     break;
                 case SelectionMode.ViewCardsOppBanished:
@@ -432,6 +432,7 @@ namespace SVESimulator
                 CardObject cardObject = CardManager.Instance.RequestCard(runtimeCard);
                 cardObject.transform.SetPositionAndRotation(zoneController.evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation);
                 cardObject.CurrentZone = zoneController.evolveDeckZone;
+                zoneController.evolveDeckZone.DecrementStackHeight();
                 return cardObject;
             });
             SetScrollViewTintActive(true);
