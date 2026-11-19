@@ -65,6 +65,7 @@ namespace SVESimulator.UI
         private PlayerController player;
         private PlayerInputController mainInputController;
         private List<CardZone> currentZones = new();
+        private List<CardZone> allTargetingZones = new();
         private int minTargetAmount;
         private int maxTargetAmount;
         private int maxMultiSelectTargets;
@@ -85,6 +86,16 @@ namespace SVESimulator.UI
             IsActive = false;
             mainInputController = FindObjectOfType<PlayerInputController>();
             cam = Camera.main;
+            allTargetingZones = new List<CardZone>()
+            {
+                FieldManager.PlayerZones.handZone,
+                FieldManager.PlayerZones.leaderZone,
+                FieldManager.PlayerZones.fieldZone,
+                FieldManager.PlayerZones.exAreaZone,
+                FieldManager.OpponentZones.leaderZone,
+                FieldManager.OpponentZones.fieldZone,
+                FieldManager.OpponentZones.exAreaZone,
+            };
             confirmButton.onClick.AddListener(ConfirmSelection);
             SetDisplayPosition(position);
         }
@@ -163,8 +174,7 @@ namespace SVESimulator.UI
                 availableTargets.AddRange(requiredTargets);
             else
                 availableTargets.AddRange(allValidTargets);
-            foreach(CardObject card in availableTargets)
-                card.SetHighlightMode(CardObject.HighlightMode.ValidTarget);
+            UpdateValidTargetHighlightsForEntireField();
 
             // Enable object
             confirmButton.gameObject.SetActive(minTargetAmount == 0 || availableTargets.Count == 0);
@@ -182,8 +192,7 @@ namespace SVESimulator.UI
                 mainInputController.allowedInputs = PlayerInputController.InputTypes.All;
                 player.ZoneController.fieldZone.HighlightCardsCanAttack();
             }
-            foreach(CardObject card in availableTargets)
-                card.SetHighlightMode(CardObject.HighlightMode.None);
+            ClearValidTargetHighlightsForEntireField();
             foreach(EffectTargetingMultiSelectInfo box in multiSelectBoxes.Values)
             {
                 unusedMultiSelectBoxes.Add(box);
@@ -205,7 +214,7 @@ namespace SVESimulator.UI
 
         // ------------------------------
 
-        #region Set Display
+        #region UI Display & Card Highlights
 
         public void SetText(in string text) => SetText(null, text);
         public void SetText(in string cardName, in string text)
@@ -228,6 +237,45 @@ namespace SVESimulator.UI
             buttonTransform.anchorMax = positionData.buttonAnchor;
             buttonTransform.pivot = positionData.buttonPivot;
             buttonTransform.anchoredPosition = new Vector3(0f, positionData.buttonPosition, 0f);
+        }
+
+        private void UpdateValidTargetHighlights()
+        {
+            bool atMaxTargets = currentSelectedCards.Count >= maxTargetAmount;
+            foreach(CardObject card in allValidTargets)
+            {
+                if(currentSelectedCards.Contains(card))
+                    continue;
+                card.SetHighlightMode(atMaxTargets ? CardObject.HighlightMode.None : CardObject.HighlightMode.ValidTarget);
+            }
+        }
+
+        private void UpdateValidTargetHighlightsForEntireField()
+        {
+            foreach(CardZone zone in allTargetingZones)
+            {
+                foreach(CardObject card in zone.AllCards)
+                {
+                    if(currentSelectedCards.Contains(card))
+                        continue;
+                    card.SetHighlightMode(availableTargets.Contains(card) ? CardObject.HighlightMode.ValidTarget : CardObject.HighlightMode.InvalidTarget);
+                }
+            }
+        }
+
+        private void ClearValidTargetHighlightsForEntireField()
+        {
+            foreach(CardZone zone in allTargetingZones)
+            {
+                foreach(CardObject card in zone.AllCards)
+                {
+                    card.SetHighlightMode(CardObject.HighlightMode.None);
+                }
+            }
+            foreach(CardObject card in currentSelectedCards)
+            {
+                card.SetHighlightMode(CardObject.HighlightMode.None);
+            }
         }
 
         #endregion
@@ -278,6 +326,7 @@ namespace SVESimulator.UI
                 newCardList[i].SetHighlightMode(CardObject.HighlightMode.ValidTarget);
                 availableTargets.Add(newCardList[i]);
             }
+            UpdateValidTargetHighlights();
 
             if(updateConfirmButton)
                 UpdateConfirmButton();
@@ -287,6 +336,7 @@ namespace SVESimulator.UI
         {
             if(requiredTargets.Count == 0 || requiredTargets.Count >= maxTargetAmount)
             {
+                UpdateValidTargetHighlights();
                 if(updateConfirmButton)
                     UpdateConfirmButton();
                 return;
