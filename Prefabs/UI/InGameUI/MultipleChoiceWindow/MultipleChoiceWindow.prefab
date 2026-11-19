@@ -382,7 +382,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1250, y: 0}
+  m_SizeDelta: {x: 1320, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1790672346207641459
 CanvasRenderer:
@@ -721,7 +721,7 @@ MonoBehaviour:
         buttonPivot: {x: 0.5, y: 0.5}
     - key: 1
       value:
-        textPosition: -85
+        textPosition: -68
         textAnchor: {x: 0.5, y: 1}
         textPivot: {x: 0.5, y: 1}
         buttonPosition: -240
