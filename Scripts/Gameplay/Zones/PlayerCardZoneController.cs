@@ -191,7 +191,11 @@ namespace SVESimulator
 
             MoveCardZone(card, card.CurrentZone, deckZone);
             MoveCardTransform(card, deckZone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation,
-                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, delay: delay, disableOnComplete: true, onComplete: onComplete);
+                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, delay: delay, disableOnComplete: true, onComplete: () =>
+                {
+                    deckZone.IncrementStackHeight();
+                    onComplete?.Invoke();
+                });
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
@@ -204,7 +208,11 @@ namespace SVESimulator
 
             MoveCardZone(card, card.CurrentZone, deckZone);
             MoveCardTransform(card, deckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
-                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, delay: delay, disableOnComplete: true, onComplete: onComplete);
+                moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckLeft : CardMovementType.SlideIntoDeckRight, delay: delay, disableOnComplete: true, onComplete: () =>
+                {
+                    deckZone.IncrementStackHeight();
+                    onComplete?.Invoke();
+                });
             card.SetStatOverlayActive(false);
             card.SetCostOverlayActive(false);
         }
@@ -261,7 +269,7 @@ namespace SVESimulator
                 MoveCardTransform(card, evolveDeckZone.GetTopStackPosition(), SVEProperties.CardFaceUpRotation, moveType: CardMovementType.StackToStackNormal, delay: delay);
             else
                 MoveCardTransform(card, evolveDeckZone.GetBottomStackPosition(), SVEProperties.CardFaceDownRotation,
-                    moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckRight : CardMovementType.SlideIntoDeckLeft, delay: delay, disableOnComplete: true);
+                    moveType: IsLocalPlayer ? CardMovementType.SlideIntoDeckRight : CardMovementType.SlideIntoDeckLeft, delay: delay, disableOnComplete: true, onComplete: evolveDeckZone.IncrementStackHeight);
             card.SetStatOverlayActive(false);
         }
 
@@ -384,6 +392,7 @@ namespace SVESimulator
             card = CardManager.Instance.RequestCard(runtimeCard);
             card.transform.SetPositionAndRotation(zone.GetTopStackPosition(), SVEProperties.CardFaceDownRotation * (IsLocalPlayer ? Quaternion.identity : SVEProperties.OpponentCardRotation));
             card.CurrentZone = zone;
+            zone.DecrementStackHeight();
             return card;
         }
 

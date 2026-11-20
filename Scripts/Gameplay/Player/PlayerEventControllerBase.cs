@@ -104,7 +104,7 @@ namespace SVESimulator
                     continue;
                 }
 
-                Action onComplete = card.IsToken() || card.IsCrest() ? () => { cardToMove.gameObject.SetActive(false); } : null;
+                Action onComplete = card.IsToken() || card.IsCrest() ? () => { CardManager.Instance.ReleaseCard(card); } : null;
                 moveCardAction?.Invoke(cardToMove, onComplete);
             }
         }
@@ -200,7 +200,7 @@ namespace SVESimulator
                 return null;
 
             if(!zoneController.evolveDeckZone.TryGetCard(evolvedCard.instanceId, out CardObject evolvedCardObject))
-                evolvedCardObject = CardManager.Instance.RequestCard(evolvedCard);
+                evolvedCardObject = localZoneController.CreateNewCardObjectTopDeck(evolvedCard, localZoneController.evolveDeckZone);
             return evolvedCardObject;
         }
 

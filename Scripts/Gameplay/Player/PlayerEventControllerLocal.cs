@@ -38,10 +38,15 @@ namespace SVESimulator
             CardObject leaderCard = localZoneController.InitializeLeaderCard(leader, leader.cardId);
             sveEffectSolver.MoveCard(netIdentity, leaderCard.RuntimeCard, SVEProperties.Zones.Deck, SVEProperties.Zones.Leader);
 
+            // Deck
+            int deckCount = localZoneController.deckZone.Runtime.cards.Count;
+            localZoneController.deckZone.SetStackHeight(deckCount);
+
             // Send msg
             LocalInitDeckAndLeaderMessage msg = new()
             {
                 playerNetId = netIdentity,
+                deckCount = deckCount,
                 evolvedCardsInstanceIds = evolvedCards.Select(x => x.instanceId).ToArray(),
                 leaderCardInstanceId = leader.instanceId
             };

@@ -26,6 +26,9 @@ namespace SVESimulator
             oppZoneController.InitializeLeaderCard(leader, leader.cardId);
             oppZoneController.deckZone.Runtime.RemoveCard(leader);
             oppZoneController.leaderZone.Runtime.AddCard(leader);
+
+            // Deck
+            oppZoneController.deckZone.SetStackHeight(msg.deckCount);
         }
 
         public void SetGoingFirst(SetGoingFirstPlayerMessage msg)
@@ -444,10 +447,7 @@ namespace SVESimulator
             }
 
             sveEffectSolver.FinishSpell(netIdentity, spell.RuntimeCard);
-            if(spell.IsToken())
-                CardManager.Instance.ReleaseCard(spell);
-            else
-                oppZoneController.SendCardToCemetery(spell);
+            StandardSendCardObjectToZone(spell, oppZoneController, (x, onComplete) => oppZoneController.SendCardToCemetery(x, onComplete));
         }
 
         #endregion

@@ -21,7 +21,7 @@ namespace SVESimulator
                 if(IsLocalPlayerZone)
                 {
                     ZoneController.handZone.HighlightValidQuicks();
-                    ZoneController.fieldZone.HighlightInteractableCards();
+                    ZoneController.fieldZone.HighlightUninteractableCards();
                 }
                 return;
             }

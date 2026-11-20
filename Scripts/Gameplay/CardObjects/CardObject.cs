@@ -12,7 +12,8 @@ namespace SVESimulator
         #region Variables
 
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-        public enum HighlightMode { None, Hover, ValidTarget, Selected }
+        private static readonly Color InvalidTargetColor = new(0.2f, 0.2f, 0.2f);
+        public enum HighlightMode { None, Hover, ValidTarget, Selected, InvalidTarget }
 
         // ---
 
@@ -28,6 +29,8 @@ namespace SVESimulator
         public bool CanAttackLeader { get; set; }
         [field: SerializeField, ReadOnly]
         public bool IsValidDefender { get; set; }
+        [SerializeField, ReadOnly]
+        private HighlightMode currentHighlightMode = HighlightMode.None;
 
         [SerializeField, HorizontalGroup("Interactable"), LabelWidth(180)]
         private bool _interactable = true;
@@ -297,12 +300,20 @@ namespace SVESimulator
         [TitleGroup("Buttons"), Button]
         public void SetHighlightMode(HighlightMode mode)
         {
+            if(mode == currentHighlightMode)
+                return;
+
+            if(currentHighlightMode == HighlightMode.InvalidTarget)
+                cardFront.material.color = Color.white;
+            else if(mode == HighlightMode.InvalidTarget)
+                cardFront.material.color = InvalidTargetColor;
             foreach(KeyValuePair<HighlightMode, GameObject> kvPair in highlights)
             {
                 (HighlightMode m, GameObject highlight) = (kvPair.Key, kvPair.Value);
                 if(!highlight) continue;
                 highlight.SetActive(mode != HighlightMode.None && mode == m);
             }
+            currentHighlightMode = mode;
         }
 
         #endregion
@@ -398,6 +409,7 @@ namespace SVESimulator
                 StopTrackingEngagedStatus();
             statsDisplay.Reset();
             PreviousZones.Clear();
+            SetHighlightMode(HighlightMode.None);
         }
 
         public void OverrideLibraryCard(Card card)

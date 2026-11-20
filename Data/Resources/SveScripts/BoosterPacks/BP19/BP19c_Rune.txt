@@ -185,7 +185,7 @@ name Warden of the Arcane;
 id BP19-045;
 class Rune;
 type Follower;
-trait Condemned / mage;
+trait Condemned / Mage;
 rarity G;
 cost 5;
 stats 2/4;
