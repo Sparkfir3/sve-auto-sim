@@ -23,7 +23,7 @@ namespace SVESimulator
 
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            int targetAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
+            int targetAmount = GetStatAmount(player, sourceCardInstanceId, sourceCardZone);
 
             // Target leader
             if(target.IsLeader(out bool local, out bool opponent))
@@ -72,6 +72,11 @@ namespace SVESimulator
                 }
                 onComplete?.Invoke();
             });
+        }
+
+        protected virtual int GetStatAmount(PlayerController player, int sourceCardInstanceId, string sourceCardZone)
+        {
+            return SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
         }
     }
 }

@@ -490,6 +490,7 @@ namespace SVESimulator.SveScript
             { "Refresh", new EffectParams("ReserveCardEffect")                              },
             { "Reserve", new EffectParams("ReserveCardEffect")                              },
             { "ReserveCard", new EffectParams("ReserveCardEffect")                          },
+            { "ResetStat", new EffectParams("ResetStatEffect",                              EffectParameterType.StatType) },
             { "SetStat", new EffectParams("SetStatEffect",                                  EffectParameterType.StatType, EffectParameterType.Amount) },
             { "SetStatEndOfTurn", new EffectParams("SetStatEndOfTurnEffect",                EffectParameterType.StatType, EffectParameterType.Amount) },
             { "DealDamageDivided", new EffectParams("DealDamageDividedEffect",              false, true, EffectParameterType.Amount) },
