@@ -194,6 +194,7 @@ namespace SVESimulator
         public int fieldSlotId;
         public string originZone;
         public int playPointCost;
+        public bool isFromAbility;
     }
 
     public struct OpponentPlayCardMessage : NetworkMessage
@@ -203,6 +204,7 @@ namespace SVESimulator
         public int fieldSlotId;
         public string originZone;
         public int playPointCost;
+        public bool isFromAbility;
     }
 
     public struct LocalSendCardToCemeteryMessage : NetworkMessage

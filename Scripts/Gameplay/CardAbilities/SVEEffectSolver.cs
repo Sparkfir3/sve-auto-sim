@@ -153,7 +153,8 @@ namespace SVESimulator
             }
         }
 
-        public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool executeConfirmationTiming = true, bool triggerFanfare = true)
+        public void PlayCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, int playPoints, bool isFromAbility,
+            bool executeConfirmationTiming = true, bool triggerFanfare = true)
         {
             PlayerInfo player = GetPlayerInfo(playerNetId);
             if(player == null)
@@ -212,6 +213,12 @@ namespace SVESimulator
                             if(originZone.Equals(SVEProperties.Zones.Cemetery))
                                 SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromCemeteryTrigger>(gameState, card, player, _ => true, false);
                             SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldFromNotHandTrigger>(gameState, card, player, _ => true, false);
+                        }
+
+                        // By Ability
+                        if(isFromAbility)
+                        {
+                            SVEEffectPool.Instance.TriggerPendingEffects<SveOnCardEnterFieldByAbilityTrigger>(gameState, card, player, _ => true, false);
                         }
                     }
                 }

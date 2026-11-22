@@ -209,7 +209,7 @@ namespace SVESimulator
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return;
 
-            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost, executeConfirmationTiming: false);
+            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost, msg.isFromAbility, executeConfirmationTiming: false);
             oppZoneController.PlayCardToField(card, msg.fieldSlotId);
         }
 

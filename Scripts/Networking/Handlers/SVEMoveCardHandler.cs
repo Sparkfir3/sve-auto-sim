@@ -347,14 +347,15 @@ namespace SVESimulator
                 return;
             }
 
-            (server.effectSolver as SVEEffectSolver).PlayCard(msg.playerNetId, card, msg.originZone, msg.playPointCost);
+            (server.effectSolver as SVEEffectSolver).PlayCard(msg.playerNetId, card, msg.originZone, msg.playPointCost, msg.isFromAbility);
             OpponentPlayCardMessage playedCardMsg = new()
             {
                 playerNetId = msg.playerNetId,
                 card = NetworkingUtils.GetNetCard(card),
                 fieldSlotId = msg.fieldSlotId,
                 originZone = msg.originZone,
-                playPointCost = msg.playPointCost
+                playPointCost = msg.playPointCost,
+                isFromAbility = msg.isFromAbility
             };
             server.SafeSendToClient(server.gameState.currentOpponent, playedCardMsg);
         }

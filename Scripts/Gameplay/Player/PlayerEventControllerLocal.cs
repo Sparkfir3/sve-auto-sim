@@ -416,23 +416,23 @@ namespace SVESimulator
 
         // Play card to first open slot
         public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
-            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true, bool isFromAbility = true)
         {
-            return PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
+            return PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare, isFromAbility);
         }
 
         // Play card to the closest slot from position
         public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
-            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true, bool isFromAbility = true)
         {
             if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
                 return false;
-            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare, isFromAbility);
         }
 
         // Play card to specified slot
         public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
-            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true, bool isFromAbility = true)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -484,7 +484,7 @@ namespace SVESimulator
                 playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
 
             // Play card to field
-            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false, triggerFanfare: triggerFanfare);
+            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, isFromAbility, executeConfirmationTiming: false, triggerFanfare: triggerFanfare);
             localZoneController.PlayCardToField(card, slot);
 
             // Network message
@@ -494,7 +494,8 @@ namespace SVESimulator
                 cardInstanceId = card.RuntimeCard.instanceId,
                 fieldSlotId = slot,
                 originZone = originZone,
-                playPointCost = playPointCost
+                playPointCost = playPointCost,
+                isFromAbility = isFromAbility
             };
             NetworkClient.Send(msg);
 
