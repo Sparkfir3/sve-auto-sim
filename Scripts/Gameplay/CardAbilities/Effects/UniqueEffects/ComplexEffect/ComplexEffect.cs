@@ -163,6 +163,7 @@ namespace SVESimulator
                 "getTargetPlayerCard" =>        await GetTargetCard(args, SVEProperties.SVEEffectTarget.TargetPlayerCard),
                 "getTargetOpponentCard" =>      await GetTargetCard(args, SVEProperties.SVEEffectTarget.TargetOpponentCard),
                 "getCardFromVar" =>             variables.GetValueOrDefault(args, null) as CE_Card,
+                "parseValue" =>                 new CE_Value(SVEFormulaParser.ParseValue(args, player, sourceInstanceId, sourceZone).ToString()),
                 _ => null
             };
             if(obj == null)
