@@ -12,6 +12,8 @@ namespace SVESimulator
         public bool UseRuneFollowersForSpellchain;
         [SyncVar]
         public bool CanChooseAnyNumberOfOptions;
+        [SyncVar]
+        public int AdditionalStartEndPhaseTriggers;
 
         [SyncVar]
         public int TimesLostDefenseThisTurn;
@@ -28,6 +30,7 @@ namespace SVESimulator
 
         public List<PlayedCardData> SpellsPlayedThisTurn => CardsPlayedThisTurn.Where(x =>
             LibraryCardCache.GetCard(x.cardId).IsSpell()).ToList();
+        public int EndPhaseTriggerCount => 1 + AdditionalStartEndPhaseTriggers;
 
         private PlayerController player;
 
@@ -91,6 +94,9 @@ namespace SVESimulator
             bool canChooseAnyNumberOfOptions = player.ZoneController.exAreaZone.GetAllPrimaryCards()
                 .Any(x => x.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.PlayerChooseAnyNumberOfOptions));
             CanChooseAnyNumberOfOptions = canChooseAnyNumberOfOptions;
+
+            AdditionalStartEndPhaseTriggers = player.ZoneController.fieldZone.GetAllPrimaryCards()
+                .Count(x => x.RuntimeCard.HasKeyword(SVEProperties.PassiveAbilities.TriggerStartEndPhaseOnceMore));
         }
     }
 }

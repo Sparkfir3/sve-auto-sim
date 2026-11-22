@@ -236,6 +236,7 @@ namespace SVESimulator
             public const string OpponentMustSelectAsTarget = "OpponentMustSelectAsTarget";
             public const string CannotPlayFromEx = "CannotPlayFromEx";
             public const string PlayerChooseAnyNumberOfOptions = "PlayerChooseAnyNumberOfOptions";
+            public const string TriggerStartEndPhaseOnceMore = "TriggerStartEndPhaseOnceMore";
 
             // Plus Damage
             public const string Plus1Damage = "Plus1Damage";
