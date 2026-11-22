@@ -117,10 +117,11 @@ namespace SVESimulator
             OpponentAttackLeaderMessage oppAtkMsg = new()
             {
                 playerNetId = msg.playerNetId,
-                attackingCard = NetworkingUtils.GetNetCard(attackingCard)
+                attackingCard = NetworkingUtils.GetNetCard(attackingCard),
+                damage = msg.damage
             };
             server.SafeSendToClient(server.gameState.currentOpponent, oppAtkMsg);
-            (server.effectSolver as SVEEffectSolver).FightLeader(attackingPlayer.netId, attackingCard, defendingPlayer);
+            (server.effectSolver as SVEEffectSolver).FightLeader(attackingPlayer.netId, attackingCard, defendingPlayer, msg.damage);
         }
 
         #endregion

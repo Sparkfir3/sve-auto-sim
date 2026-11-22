@@ -495,7 +495,7 @@ namespace SVESimulator
 
             CardManager.Animator.PlayAttackAnimation(attacker, localZoneController.LeaderCardObject, () =>
             {
-                sveEffectSolver.FightLeader(msg.playerNetId, attacker.RuntimeCard, playerInfo);
+                sveEffectSolver.FightLeader(msg.playerNetId, attacker.RuntimeCard, playerInfo, msg.damage);
             });
         }
 
