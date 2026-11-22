@@ -1,0 +1,317 @@
+[
+  {
+    "id": "BP19-092EN",
+    "name": "Erralde, Troth Convict",
+    "trait": "Condemned / Luminary",
+    "cardText": "Abilities you control that trigger at the start of the end phase trigger an additional time.\nAt the start of your end phase, choose 1. If there's another Condemned follower on your field, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 4 damage. (2) Give your leader [defense]+1. Refresh this. (3) Draw a card.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, choose 1. If there's another Condemned follower on your field, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 4 damage. (2) Give your leader [defense]+1. Refresh this. (3) Draw a card.",
+        "trigger": "At the start of your end phase,",
+        "body": "Choose 1. If there's another Condemned follower on your field, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 4 damage. (2) Give your leader [defense]+1. Refresh this. (3) Draw a card."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "DefRefresh",
+        "body": "Give your leader [defense]+1. Refresh this."
+      },
+      {
+        "key": "Draw",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-093EN",
+    "name": "Uneriel, Winged Enforcer",
+    "trait": "Condemned / Avian",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Draw 2 cards.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw 2 cards."
+      }
+    ]
+  },
+  {
+    "id": "BP19-094EN",
+    "name": "Uneriel, Winged Enforcer (Evolved)",
+    "trait": "Condemned / Avian",
+    "cardText": "On Evolve - Destroy each amulet on your field. Deal X damage to each enemy leader and enemy follower on the field, give your leader [defense]+X, and recover X play points. X equals the number of amulets destroyed this way.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Destroy each amulet on your field. Deal X damage to each enemy leader and enemy follower on the field, give your leader [defense]+X, and recover X play points. X equals the number of amulets destroyed this way."
+      }
+    ]
+  },
+  {
+    "id": "BP19-095EN",
+    "name": "Zoe, Queen of Hope",
+    "trait": "Faith / Princess",
+    "cardText": "Ward.\n[fanfare] Search your deck for a 1-cost Faith follower, reveal it, add it to your hand, then shuffle. Give your leader [defense]+4.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a 1-cost Faith follower, reveal it, add it to your hand, then shuffle. Give your leader [defense]+4."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a 1-cost Faith follower, reveal it, add it to your hand, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP19-096EN",
+    "name": "Warden of the Wings",
+    "trait": "Condemned / Avian",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[lastwords] You may summon an amulet that costs 1 or less from your hand.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "You may summon an amulet that costs 1 or less from your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP19-097EN",
+    "name": "Warden of the Wings (Evolved)",
+    "trait": "Condemned / Avian",
+    "cardText": "On Evolve - Look at the top 4 cards of your deck. You may reveal an amulet or Uneriel, Winged Enforcer from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[lastwords] You may summon an amulet that costs 1 or less from your hand.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Look at the top 4 cards of your deck. You may reveal an amulet or Uneriel, Winged Enforcer from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "You may summon an amulet that costs 1 or less from your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP19-098EN",
+    "name": "Executor of the Oath",
+    "trait": "Condemned / Faith",
+    "cardText": "When playing this, [engage] an Erralde, Troth Convict on your field: This costs 0 to play.\n----------\n[fanfare] Search your deck for an Agent of the Commandments or Follower of the Precepts, summon it, then shuffle.\nAt the start of your end phase, select an enemy follower on the field and deal it 2 damage.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "cost": "When playing this, [engage] an Erralde, Troth Convict on your field",
+        "body": "This costs 0 to play."
+      },
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "Search your deck for an Agent of the Commandments or Follower of the Precepts, summon it, then shuffle."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, select an enemy follower on the field and deal it 2 damage.",
+        "trigger": "At the start of your end phase,",
+        "body": "Select an enemy follower on the field and deal it 2 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-099EN",
+    "name": "Meus Gourmand",
+    "trait": "Beast / Chef",
+    "cardText": "[fanfare] If this wasn't put onto the field from hand, choose 1. (1) Deal 2 damage to each enemy leader. (2) Give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "FanfareNotHand",
+        "trigger": "[fanfare]",
+        "body": "If this wasn't put onto the field from hand, choose 1. (1) Deal 2 damage to each enemy leader. (2) Give your leader [defense]+2."
+      },
+      {
+        "key": "Damage",
+        "body": "Deal 2 damage to each enemy leader."
+      },
+      {
+        "key": "Defense",
+        "body": "Give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP19-100EN",
+    "name": "Agent of the Commandments",
+    "trait": "Condemned / Faith",
+    "cardText": "When playing this, [engage] an Erralde, Troth Convict on your field: This costs 0 to play.\n----------\n[evolve] [cost01]: Evolve this.\nAt the start of your end phase, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "cost": "When playing this, [engage] an Erralde, Troth Convict on your field",
+        "body": "This costs 0 to play."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give your leader [defense]+1.",
+        "trigger": "At the start of your end phase,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-101EN",
+    "name": "Agent of the Commandments (Evolved)",
+    "trait": "Condemned / Faith",
+    "cardText": "On Evolve - Search your deck for an Erralde, Troth Convict, reveal it, add it to your hand, then shuffle.\nAt the start of your end phase, give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for an Erralde, Troth Convict, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, give your leader [defense]+1.",
+        "trigger": "At the start of your end phase,",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-102EN",
+    "name": "Follower of the Precepts",
+    "trait": "Condemned / Arcaneform / Forbidden",
+    "cardText": "When playing this, [engage] an Erralde, Troth Convict on your field: This costs 0 to play.\n----------\nAt the start of your end phase, select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "ModifiedCost",
+        "cost": "When playing this, [engage] an Erralde, Troth Convict on your field",
+        "body": "This costs 0 to play."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, select an enemy follower on the field and deal it 1 damage.",
+        "trigger": "At the start of your end phase,",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-103EN",
+    "name": "Sacrosanct Temple",
+    "trait": "Faith",
+    "cardText": "[act] [cost01], [engage], bury an amulet: Select an enemy follower on the field and deal it 1 damage.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], bury an amulet",
+        "body": "Select an enemy follower on the field and deal it 1 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP19-104EN",
+    "name": "Sacred Tiger",
+    "trait": "Lightborne / Beast",
+    "cardText": "[evolve] [cost01]: Evolve this.\nEach Holy Tiger on your field has Ward.\n[fanfare] Summon a Holy Tiger token.\n[act] Bury an amulet: Give this Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Holy Tiger token."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury an amulet",
+        "body": "Give this Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP19-105EN",
+    "name": "Sacred Tiger (Evolved)",
+    "trait": "Lightborne / Beast",
+    "cardText": "Each Holy Tiger on your field has Ward.\nOn Evolve - Summon a Holy Tiger token.\n[act] Bury an amulet: Give this Storm.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Summon a Holy Tiger token."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "Bury an amulet",
+        "body": "Give this Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP19-106EN",
+    "name": "Avaricious Altruist",
+    "trait": "Faith / Beast",
+    "cardText": "[fanfare] Search your deck for a Beast follower that costs 1 or less or Beast amulet that costs 1 or less, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Search your deck for a Beast follower that costs 1 or less or Beast amulet that costs 1 or less, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP19-107EN",
+    "name": "Sword Al-mi'raj",
+    "trait": "Beast",
+    "cardText": "Storm.\nAt the start of your end phase, select a follower on your field and change its defense to its original value.",
+    "effectText": [
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, select a follower on your field and change its defense to its original value.",
+        "trigger": "At the start of your end phase,",
+        "cost": "",
+        "body": "Select a follower on your field and change its defense to its original value."
+      }
+    ]
+  },
+  {
+    "id": "BP19-108EN",
+    "name": "Luminescent Gem",
+    "trait": "Lightborne",
+    "cardText": "[lastwords] Give your leader [defense]+1.",
+    "effectText": [
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Give your leader [defense]+1."
+      }
+    ]
+  },
+  {
+    "id": "BP19-109EN",
+    "name": "Holybeast Ruins",
+    "trait": "Faith / Eidolon",
+    "cardText": "[fanfare]/[lastwords] Summon a Holy Tiger token.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Summon a Holy Tiger token."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Summon a Holy Tiger token."
+      }
+    ]
+  }
+]

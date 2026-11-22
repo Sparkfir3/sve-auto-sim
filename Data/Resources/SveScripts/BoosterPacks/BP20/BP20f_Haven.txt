@@ -1,0 +1,382 @@
+name Marwynn, Despair Manifest;
+id BP20-093;
+class Haven;
+type Follower;
+trait Omen / Zealot;
+rarity L;
+cost 4;
+stats 4/4;
+
+text "[fanfare] Choose 1. (1) Select an enemy follower on the field. If there are at least 3 crests in your EX area, banish it and give your leader [defense]+2. (2) Put a Crest: Marwynn, Despair Manifest token into your EX area.";
+
+ability Fanfare {
+    effect ChooseFromList(BanishSequence, Crest);
+}
+ability Spell name BanishSequence {
+    effect TargetForSequence(Banish, Defense) to TargetOpponentCard F;
+}
+ability Spell name Banish {
+    condition x(T)>2;
+    effect Banish() to AllOpponentCards;
+}
+ability Spell name Defense {
+    condition x(T)>2;
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Crest {
+    effect SummonToken("Marwynn, Despair Manifest", ExArea, 1);
+}
+
+// ------------------------------
+
+name Himeka, Heir to Repose;
+id BP20-094;
+class Haven;
+type Follower;
+trait Omen / Heir / Zealot;
+rarity L;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Put a Crest: Himeka, Heir to Repose token into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken("Crest: Himeka, Heir to Repose", ExArea, 1);
+}
+
+// ------------------------------
+
+name Himeka, Heir to Repose (Evolved);
+id BP20-095;
+class Haven;
+type Evolved Follower;
+trait Omen / Heir / Zealot;
+rarity L;
+stats 3/3;
+
+text "On Evolve - Search your deck for an Omen–Zealot card not named Himeka, Heir to Repose, reveal it, add it to your hand, then shuffle.
+      On Super-Evolve - [cost02]: Search your deck for an Omen–Zealot follower not named Himeka, Heir to Repose that costs 4 or less, summon it, then shuffle.";
+
+ability OnEvolve {
+    effect Search(1, t(Omen / Zealot)!n(Himeka, Heir to Repose), Hand);
+}
+ability OnSuperEvolve {
+    cost (PP, 2);
+    effect Search(1, Ft(Omen / Zealot)!n(Himeka, Heir to Repose)p(m(0,4)), Field);
+}
+
+// ------------------------------
+
+name Holy Serpent's Blessing;
+id BP20-096;
+class Haven;
+type Amulet;
+trait Faith;
+rarity L;
+cost 3;
+
+text "[fanfare] Select an enemy follower on the field and deal it 4 damage.
+      [lastwords] Choose 1. (1) Give your leader [defense]+2. (2) [cost01]: Search your deck for a Holy Serpent's Blessing, summon it, then shuffle.";
+
+ability Fanfare {
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+ability LastWords {
+    effect ChooseFromList(Def, Search);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Search {
+    cost (PP, 1);
+    effect Search(1, n(Holy Serpent's Blessing), Field);
+}
+
+// ------------------------------
+
+name Congregant of Repose;
+id BP20-097;
+class Haven;
+type Follower;
+trait Omen / Zealot;
+rarity G;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Put a Crest: Congregant of Repose token into your EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect SummonToken("Crest: Congregant of Repose", ExArea, 1);
+}
+
+// ------------------------------
+
+name Congregant of Repose (Evolved);
+id BP20-098;
+class Haven;
+type Evolved Follower;
+trait Omen / Zealot;
+rarity G;
+stats 4/4;
+
+text "On Evolve - Select an enemy follower on the field and deal it damage equal to 2 times the number of crests in your EX area.";
+
+ability OnEvolve {
+    effect DealDamage(x(T)*2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Sacred Sheep;
+id BP20-099;
+class Haven;
+type Follower;
+trait Luminary;
+rarity G;
+cost 2;
+stats 2/3;
+
+text "At the start of each opponent's main phase, the next time your leader would take damage this turn, it doesn't.";
+
+ability StartOpponentMainPhase {
+    effect MinusNextLeaderDamageThisTurn(99);
+}
+
+// ------------------------------
+
+name Shining Disenchantment;
+id BP20-100;
+class Haven;
+type Amulet;
+trait Omen / Zealot;
+rarity G;
+cost 2;
+
+text "[fanfare] Draw a card.
+      [act] [engage], bury this: Select an enemy follower on the field and deal it 4 damage. Activate only if there are at least 3 crests in your EX area.";
+
+evolve 1;
+ability Fanfare {
+    effect Draw(1);
+}
+ability Act {
+    condition p(#F) & [x(T)>2]
+    cost (EngageSelf), (SendToCemetery, Self);
+    effect DealDamage(4) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Supplicant of Repose;
+id BP20-101;
+class Haven;
+type Follower;
+trait Omen / Zealot;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] If there are at least 3 crests in your EX area, give your leader [defense]+2.";
+
+evolve 1;
+ability Fanfare {
+    condition x(T)>2;
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Supplicant of Repose (Evolved);
+id BP20-102;
+class Haven;
+type Evolved Follower;
+trait Omen / Zealot;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "On Evolve - Put a Crest: Supplicant of Repose token into your EX area.";
+
+ability OnEvolve {
+    effect SummonToken("Crest: Supplicant of Repose", ExArea, 1);
+}
+
+// ------------------------------
+
+name Temple of Repose;
+id BP20-103;
+class Haven;
+type Amulet;
+trait Omen / Zealot;
+rarity S;
+cost 1;
+
+text "[fanfare] Look at the top 3 cards of your deck. You may reveal an Omen–Zealot card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [q][act] [cost01], [engage], bury this: The next time your leader would take damage this turn, it takes that much -2 instead. Activate only if there are at least 3 crests in your EX area.";
+
+ability Fanfare {
+    effect CheckTop(3, (Hand, t(Omen / Zealot), 1), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self), (Quick);
+    condition x(T)>2;
+    effect MinusNextLeaderDamageThisTurn(2);
+}
+
+// ------------------------------
+
+name Winged Lion Statue;
+id BP20-104;
+class Haven;
+type Amulet;
+trait Faith / Beast;
+rarity S;
+cost 2;
+
+text "[act] [cost01], [engage], bury this and another amulet: Summon a Holy Falcon and Holy Tiger token.";
+
+ability Act {
+    cost (PP, 1), (EngageSelf), (SendToCemetery, Self), (SendToCemetery, TargetPlayerCard, XA);
+    effect Sequence(Falcon, Tiger);
+}
+ability Spell name Falcon {
+    effect SummonToken(Holy Falcon, Field, 1);
+}
+ability Spell name Tiger {
+    effect SummonToken(Holy Tiger, Field, 1);
+}
+
+// ------------------------------
+
+name Knight of the Holy Order;
+id BP20-105;
+class Haven;
+type  Follower;
+trait Luminary;
+rarity B;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      Ward.
+      [fanfare] If this was put onto the field by an ability, evolve it.";
+
+evolve 1;
+keyword Ward;
+ability FanfareByAbility {
+    effect EvolveNotOncePerTurn() to Self;
+}
+
+// ------------------------------
+
+name Knight of the Holy Order (Evolved);
+id BP20-106;
+class Haven;
+type Evolved Follower;
+trait Luminary;
+rarity B;
+stats 3/3;
+
+text "Ward.
+      On Evolve - Give your leader [defense]+1. Draw a card.";
+
+keyword Ward;
+ability OnEvolve {
+    effect Sequence(Def, Draw);
+}
+ability Spell name Def {
+    effect GiveStat(Def, 1) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Devotee of Repose;
+id BP20-107;
+class Haven;
+type Follower;
+trait Omen / Zealot;
+rarity B;
+cost 1;
+stats 0/2;
+
+text "Ward.
+      [fanfare] Select an enemy follower on the field and deal it X damage. X equals the number of crests in your EX area.";
+
+keyword Ward;
+ability Fanfare {
+    effect DealDamage(x(T)) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Featherfolk Courier;
+id BP20-108;
+class Haven;
+type Follower;
+trait Avian;
+rarity B;
+cost 5;
+stats 3/4;
+
+text "Storm.
+      Strike - Draw a card.
+      [fanfare] [cost02]: Search your deck for a follower with Storm that has 3 attack or less, summon it, then shuffle.";
+
+keyword Storm;
+ability Strike {
+    effect Draw(1);
+}
+ability Fanfare {
+    cost (PP, 2);
+    effect Search(1, Fk(Storm)a(m(0,3)), Field);
+}
+
+// ------------------------------
+
+name Peckish Al-mi'raj;
+id BP20-109;
+class Haven;
+type Follower;
+trait Beast;
+rarity B;
+cost 2;
+stats 2/3;
+
+text "[fanfare] Look at the top 3 cards of your deck. You may put a Beast follower from among them into your EX area. Put the rest on the bottom of your deck in any order.";
+
+ability Fanfare {
+    effect CheckTop(3, (ExArea, Ft(Beast), 1), (BottomDeckAnyOrder));
+}
+
+// ------------------------------
+
+name Blinding Faith;
+id BP20-110;
+class Haven;
+type Spell;
+trait Faith;
+rarity B;
+cost 6;
+
+text "Deal 4 damage to each enemy follower on the field. Give your leader [defense]+2. Draw a card.";
+
+ability Spell {
+    effect Sequence(Damage, Defense, Draw);
+}
+ability Spell name Damage {
+    effect DealDamage(4) to AllOpponentCards F;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
