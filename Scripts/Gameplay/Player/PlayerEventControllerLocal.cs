@@ -1156,13 +1156,6 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void SetLeaderDefense(PlayerInfo targetPlayer, int amount)
-        {
-            int difference = amount - targetPlayer.namedStats[SVEProperties.PlayerStats.Defense].effectiveValue;
-            if(difference != 0)
-                AddLeaderDefense(targetPlayer, difference);
-        }
-
         public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool addingNewModifier, SVEProperties.StatModifierType modifierType, int duration = 0)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
@@ -1317,8 +1310,21 @@ namespace SVESimulator
 
         #region Player Stats
 
-        public void AddLeaderDefense(PlayerInfo targetPlayer, int amount)
+        public void SetLeaderDefense(PlayerInfo targetPlayer, int amount)
         {
+            int difference = amount - targetPlayer.namedStats[SVEProperties.PlayerStats.Defense].effectiveValue;
+            if(difference != 0)
+                AddLeaderDefense(targetPlayer, difference, SVEProperties.StatModifierType.StatChange);
+        }
+
+        public void AddLeaderDefense(PlayerInfo targetPlayer, int amount, SVEProperties.StatModifierType modifierType)
+        {
+            while(amount < 0 && playerController.AdditionalStats.LeaderDamageReductionInstances.Count > 0)
+            {
+                int reductionAmount = playerController.AdditionalStats.LeaderDamageReductionInstances[0];
+                playerController.AdditionalStats.LeaderDamageReductionInstances.RemoveAt(0);
+                amount = Mathf.Max(amount + reductionAmount, 0);
+            }
             sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
             LocalAddLeaderDefenseMessage msg = new()
             {

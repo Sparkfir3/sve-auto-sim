@@ -8,16 +8,18 @@ namespace SVESimulator
 {
     public class AdditionalPlayerStats : NetworkBehaviour
     {
+        // Additional stats/info
         [SyncVar]
         public bool UseRuneFollowersForSpellchain;
         [SyncVar]
         public bool CanChooseAnyNumberOfOptions;
         [SyncVar]
         public int AdditionalStartEndPhaseTriggers;
+        public readonly SyncList<int> LeaderDamageReductionInstances = new();
 
+        // Historical Stats
         [SyncVar]
         public int TimesLostDefenseThisTurn;
-
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurn = new();
         public readonly SyncList<PlayedCardData> CardsPlayedThisTurnFromExArea = new();
         public readonly SyncList<PlayedAbilityData> AbilitiesUsedThisTurn = new();
@@ -45,8 +47,9 @@ namespace SVESimulator
 
         public void Reset()
         {
-            TimesLostDefenseThisTurn = 0;
+            LeaderDamageReductionInstances.Clear();
 
+            TimesLostDefenseThisTurn = 0;
             CardsPlayedThisTurn.Clear();
             CardsPlayedThisTurnFromExArea.Clear();
             AbilitiesUsedThisTurn.Clear();

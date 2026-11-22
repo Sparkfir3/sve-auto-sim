@@ -86,9 +86,9 @@ namespace SVESimulator
                 case StatBoostType.Defense:
                 case StatBoostType.AttackDefense:
                     if(localLeader)
-                        player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), boostAmount);
+                        player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), boostAmount, SVEProperties.StatModifierType.StatChange);
                     if(opponentLeader)
-                        player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), boostAmount);
+                        player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), boostAmount, SVEProperties.StatModifierType.StatChange);
                     break;
                 case StatBoostType.MaxPlayPoint:
                     if(boostAmount <= 0)
