@@ -1,18 +1,39 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using CCGKit;
+using StatBoostType = SVESimulator.SVEProperties.StatBoostType;
 
 namespace SVESimulator
 {
-    public class ResetStatEffect : SetStatEffect
+    public class ResetStatEffect : SveEffect
     {
-        protected override int GetStatAmount(PlayerController player, int sourceCardInstanceId, string sourceCardZone)
+        [EnumField("Target", width = 200), Order(1)]
+        public SVEProperties.SVEEffectTarget target = SVEProperties.SVEEffectTarget.Self;
+
+        [StringField("Target Filter", width = 100), Order(2)]
+        public string filter;
+
+        [EnumField("Stat", width = 100), Order(3)]
+        public StatBoostType targetStats;
+
+        // ------------------------------
+
+        public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
-            Card libraryCard = LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId);
-            string[] stats = targetStats.AsNamedStatArray();
-            Debug.Assert(stats.Length == 1, $"{nameof(ResetStatEffect)} from card {sourceCardInstanceId} in {sourceCardZone} had " +
-                $"invalid targetStats value of {targetStats}. Only 1 type of stat at a time is supported");
-            return libraryCard.stats.FirstOrDefault(x => x.name.Equals(stats[0]))?.baseValue ?? 0;
+            ResolveOnTarget(player, triggeringCardInstanceId, triggeringCardZone, sourceCardInstanceId, sourceCardZone, target, filter, onTargetFound: targets =>
+            {
+                foreach(CardObject card in targets)
+                {
+                    Card libraryCard = card.LibraryCard;
+                    foreach(string stat in targetStats.AsNamedStatArray())
+                    {
+                        int targetAmount = libraryCard.stats.FirstOrDefault(x => x.name.Equals(stat))?.baseValue ?? 0;
+                        player.LocalEvents.SetCardStat(card.RuntimeCard, card.RuntimeCard.namedStats[stat].statId, targetAmount);
+                    }
+                }
+                onComplete?.Invoke();
+            });
         }
     }
 }

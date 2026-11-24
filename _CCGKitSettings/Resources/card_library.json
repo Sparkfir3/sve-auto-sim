@@ -70468,7 +70468,7 @@
             "name": "StartEndPhase",
             "type": "Triggered",
             "effect": {
-              "amount": "m(1,1?(f(Ft(Condemned)))2)",
+              "amount": "m(1,1?(f(XFt(Condemned)))2)",
               "effectName1": "Damage",
               "effectName2": "DefRefresh",
               "effectName3": "Draw",

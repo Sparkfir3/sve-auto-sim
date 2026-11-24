@@ -12,7 +12,7 @@ text "Abilities you control that trigger at the start of the end phase trigger a
 
 keyword TriggerStartEndPhaseOnceMore;
 ability StartEndPhase {
-    effect ChooseAmountFromList(m(1,1?(f(Ft(Condemned)))2), Damage, DefRefresh, Draw);
+    effect ChooseAmountFromList(m(1,1?(f(XFt(Condemned)))2), Damage, DefRefresh, Draw);
 }
 ability Spell name Damage {
     condition p(#F);
