@@ -147,7 +147,7 @@ trait Omen / Heir / Zealot / Token;
 text "At the start of your end phase, select an enemy follower on the field and, if there are at least 3 crests in your EX area, give it [attack]-2/[defense]-2. If there are 5, give [attack]-4/[defense]-4 instead.";
 
 ability StartEndPhaseFromExArea {
-    effect GiveStat(AtkDef, [0?(x(T)>2)-2]?(x(T)>8)-4) to TargetOpponentCard F;
+    effect GiveStat(AtkDef, [0?(x(T)>2)-2]?(x(T)>4)-4) to TargetOpponentCard F;
 }
 
 // ------------------------------

@@ -85884,7 +85884,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "targetStats": "AttackDefense",
-              "amount": "-[[0?(x(T)>2)2]?(x(T)>4)4]",
+              "amount": "[0?(x(T)>2)-2]?(x(T)>4)-4",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
