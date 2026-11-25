@@ -81,17 +81,6 @@ namespace SVESimulator
             });
         }
 
-        public int GetLeaderDamageAfterReductions(int damage)
-        {
-            while(damage > 0 && LeaderDamageReductionInstances.Count > 0)
-            {
-                int reductionAmount = LeaderDamageReductionInstances[0];
-                LeaderDamageReductionInstances.RemoveAt(0);
-                damage = Mathf.Max(damage - reductionAmount, 0);
-            }
-            return damage;
-        }
-
         // ------------------------------
 
         private void UpdateFieldAbilities()

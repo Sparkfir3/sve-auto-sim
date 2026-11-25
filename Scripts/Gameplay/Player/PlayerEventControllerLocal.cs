@@ -1092,16 +1092,11 @@ namespace SVESimulator
                         return;
                     }
 
-                    int damage = playerController.AdditionalStats.GetLeaderDamageAfterReductions(sveEffectSolver.GetCardDamageOutput(attackingCard.RuntimeCard));
-                    CardManager.Animator.PlayAttackAnimation(attackingCard, oppZoneController.LeaderCardObject, () =>
-                    {
-                        sveEffectSolver.FightLeader(playerInfo.netId, attackingCard.RuntimeCard, opponentInfo, damage);
-                    });
+                    CardManager.Animator.PlayAttackAnimation(attackingCard, oppZoneController.LeaderCardObject, () => { sveEffectSolver.FightLeader(playerInfo.netId, attackingCard.RuntimeCard, opponentInfo); });
                     LocalAttackLeaderMessage msg = new()
                     {
                         playerNetId = netIdentity,
-                        attackerInstanceId = attackingCard.RuntimeCard.instanceId,
-                        damage = damage
+                        attackerInstanceId = attackingCard.RuntimeCard.instanceId
                     };
                     NetworkClient.Send(msg);
                 });
@@ -1327,7 +1322,9 @@ namespace SVESimulator
         {
             while(amount < 0 && playerController.AdditionalStats.LeaderDamageReductionInstances.Count > 0)
             {
-                amount = -playerController.AdditionalStats.GetLeaderDamageAfterReductions(-amount);
+                int reductionAmount = playerController.AdditionalStats.LeaderDamageReductionInstances[0];
+                playerController.AdditionalStats.LeaderDamageReductionInstances.RemoveAt(0);
+                amount = Mathf.Max(amount + reductionAmount, 0);
             }
             sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
             LocalAddLeaderDefenseMessage msg = new()

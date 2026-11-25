@@ -613,8 +613,9 @@ namespace SVESimulator
             }
         }
 
-        public void FightLeader(NetworkIdentity playerNetId, RuntimeCard attackingCard, PlayerInfo defendingPlayer, int damage)
+        public void FightLeader(NetworkIdentity playerNetId, RuntimeCard attackingCard, PlayerInfo defendingPlayer)
         {
+            int damage = GetCardDamageOutput(attackingCard);
             AddLeaderDefense(defendingPlayer, -damage);
 
             // Attacker Drain
@@ -628,7 +629,7 @@ namespace SVESimulator
             }
         }
 
-        public int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
+        private int GetCardDamageOutput(RuntimeCard attacker, RuntimeCard defender = null)
         {
             bool isFollowerCombat = defender != null;
             if(attacker.HasKeyword(SVEProperties.PassiveAbilities.CannotDealDamage)

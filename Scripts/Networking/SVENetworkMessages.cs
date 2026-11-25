@@ -358,14 +358,12 @@ namespace SVESimulator
     {
         public NetworkIdentity playerNetId;
         public int attackerInstanceId;
-        public int damage;
     }
 
     public struct OpponentAttackLeaderMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
         public NetCard attackingCard;
-        public int damage;
     }
 
     #endregion
