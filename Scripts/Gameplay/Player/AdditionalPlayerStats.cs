@@ -15,7 +15,6 @@ namespace SVESimulator
         public bool CanChooseAnyNumberOfOptions;
         [SyncVar]
         public int AdditionalStartEndPhaseTriggers;
-        public readonly SyncList<int> LeaderDamageReductionInstances = new();
 
         // Historical Stats
         [SyncVar]
@@ -47,8 +46,6 @@ namespace SVESimulator
 
         public void Reset()
         {
-            LeaderDamageReductionInstances.Clear();
-
             TimesLostDefenseThisTurn = 0;
             CardsPlayedThisTurn.Clear();
             CardsPlayedThisTurnFromExArea.Clear();

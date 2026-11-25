@@ -1320,12 +1320,6 @@ namespace SVESimulator
 
         public void AddLeaderDefense(PlayerInfo targetPlayer, int amount, SVEProperties.StatModifierType modifierType)
         {
-            while(amount < 0 && playerController.AdditionalStats.LeaderDamageReductionInstances.Count > 0)
-            {
-                int reductionAmount = playerController.AdditionalStats.LeaderDamageReductionInstances[0];
-                playerController.AdditionalStats.LeaderDamageReductionInstances.RemoveAt(0);
-                amount = Mathf.Max(amount + reductionAmount, 0);
-            }
             sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
             LocalAddLeaderDefenseMessage msg = new()
             {
