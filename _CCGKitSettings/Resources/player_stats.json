@@ -43,5 +43,14 @@
         "maxValue": 1,
         "id": 4,
         "$type": "CCGKit.PlayerStat"
+    },
+    {
+        "name": "Minus Next Leader Damage",
+        "baseValue": 0,
+        "originalValue": 0,
+        "minValue": 0,
+        "maxValue": 2147483646,
+        "id": 5,
+        "$type": "CCGKit.PlayerStat"
     }
 ]

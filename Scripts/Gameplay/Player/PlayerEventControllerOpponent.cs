@@ -614,7 +614,13 @@ namespace SVESimulator
         public void AddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
         {
             PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
-            sveEffectSolver.AddLeaderDefense(targetPlayer, msg.amount);
+            sveEffectSolver.AddLeaderDefense(targetPlayer, msg.amount, msg.modifierType);
+        }
+
+        public void MinusNextLeaderDamage(OpponentMinusNextLeaderDamageMessage msg)
+        {
+            PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
+            sveEffectSolver.MinusNextLeaderDamage(targetPlayer, msg.amount);
         }
 
         public void AddEvolvePoints(OpponentAddEvolvePointsMessage msg)

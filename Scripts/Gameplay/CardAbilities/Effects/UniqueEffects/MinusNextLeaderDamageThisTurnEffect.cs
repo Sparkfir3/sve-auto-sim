@@ -14,7 +14,7 @@ namespace SVESimulator
         public override void Resolve(PlayerController player, int triggeringCardInstanceId, string triggeringCardZone, int sourceCardInstanceId, string sourceCardZone, Action onComplete = null)
         {
             int reductionAmount = SVEFormulaParser.ParseValue(amount, player, sourceCardInstanceId, sourceCardZone);
-            // player.AdditionalStats.LeaderDamageReductionInstances.Add(reductionAmount);
+            player.LocalEvents.MinusNextLeaderDamage(player.GetPlayerInfo(), reductionAmount);
             onComplete?.Invoke();
         }
     }

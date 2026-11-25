@@ -1320,8 +1320,21 @@ namespace SVESimulator
 
         public void AddLeaderDefense(PlayerInfo targetPlayer, int amount, SVEProperties.StatModifierType modifierType)
         {
-            sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
+            sveEffectSolver.AddLeaderDefense(targetPlayer, amount, modifierType);
             LocalAddLeaderDefenseMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetPlayer = targetPlayer.netId,
+                amount = amount,
+                modifierType = modifierType
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void MinusNextLeaderDamage(PlayerInfo targetPlayer, int amount)
+        {
+            sveEffectSolver.MinusNextLeaderDamage(targetPlayer, amount);
+            LocalMinusNextLeaderDamageMessage msg = new()
             {
                 playerNetId = netIdentity,
                 targetPlayer = targetPlayer.netId,

@@ -582,7 +582,7 @@ namespace SVESimulator
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
-                AddLeaderDefense(attackingCard.ownerPlayer, attackerDamage);
+                AddLeaderDefense(attackingCard.ownerPlayer, attackerDamage, SVEProperties.StatModifierType.StatChange);
 
             // Check attacker destruction
             if(defendingCard.HasKeyword(SVEProperties.Keywords.Bane))
@@ -616,11 +616,11 @@ namespace SVESimulator
         public void FightLeader(NetworkIdentity playerNetId, RuntimeCard attackingCard, PlayerInfo defendingPlayer)
         {
             int damage = GetCardDamageOutput(attackingCard);
-            AddLeaderDefense(defendingPlayer, -damage);
+            AddLeaderDefense(defendingPlayer, -damage, SVEProperties.StatModifierType.CombatDamage);
 
             // Attacker Drain
             if(attackingCard.HasKeyword(SVEProperties.Keywords.Drain))
-                AddLeaderDefense(attackingCard.ownerPlayer, damage);
+                AddLeaderDefense(attackingCard.ownerPlayer, damage, SVEProperties.StatModifierType.CombatDamage);
 
             // Confirmation timing
             if(isPlayerEffectSolver && playerNetId.isLocalPlayer)
@@ -806,8 +806,22 @@ namespace SVESimulator
 
         #region Player Stats
 
-        public void AddLeaderDefense(PlayerInfo player, int amount)
+        public void AddLeaderDefense(PlayerInfo player, int amount, SVEProperties.StatModifierType modifierType)
         {
+            if(amount < 0 && modifierType.HasFlag(SVEProperties.StatModifierType.Damage))
+            {
+                Stat stat = player.namedStats[SVEProperties.PlayerStats.MinusNextLeaderDamage];
+                while(stat.baseValue > 0)
+                {
+                    int reduction = stat.baseValue % 100;
+                    stat.baseValue /= 100;
+                    int reducedAmount = Mathf.Clamp(amount + reduction, amount, 0);
+                    if(isPlayerEffectSolver)
+                        Debug.Log($"Reduced leader damage by {reduction}, from {-amount} to {reducedAmount}");
+                    amount = reducedAmount;
+                }
+            }
+
             player.namedStats[SVEProperties.PlayerStats.Defense].baseValue += amount;
             if(isPlayerEffectSolver && player.netId.isLocalPlayer)
             {
@@ -818,6 +832,12 @@ namespace SVESimulator
                     SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveOnLeaderLoseDefenseTrigger>(gameState, player.namedZones[SVEProperties.Zones.Leader].cards[0],
                         SVEProperties.Zones.Leader, player.namedZones[SVEProperties.Zones.Field], player, _ => true, false);
             }
+        }
+
+        public void MinusNextLeaderDamage(PlayerInfo player, int amount)
+        {
+            Stat stat = player.namedStats[SVEProperties.PlayerStats.MinusNextLeaderDamage];
+            stat.baseValue = (stat.baseValue * 100) + Mathf.Clamp(amount, 0, 99);
         }
 
         public void AddEvolvePoints(PlayerInfo player, int amount)
@@ -847,7 +867,7 @@ namespace SVESimulator
                         EngageCard(card);
                         break;
                     case LeaderDefenseCost leaderDefCost:
-                        AddLeaderDefense(player, -SVEFormulaParser.ParseValue(leaderDefCost.amount));
+                        AddLeaderDefense(player, -SVEFormulaParser.ParseValue(leaderDefCost.amount), SVEProperties.StatModifierType.StatChange);
                         break;
                 }
             }

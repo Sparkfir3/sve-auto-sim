@@ -70,6 +70,7 @@ namespace SVESimulator
 
             // Player stats
             NetworkClient.RegisterHandler<OpponentAddLeaderDefenseMessage>(OnOpponentAddLeaderDefense);
+            NetworkClient.RegisterHandler<OpponentMinusNextLeaderDamageMessage>(OnOpponentMinusNextLeaderDamage);
             NetworkClient.RegisterHandler<OpponentAddEvolvePointsMessage>(OnOpponentAddEvolvePoints);
 
             // Other
@@ -142,6 +143,7 @@ namespace SVESimulator
 
             // Player stats
             NetworkClient.UnregisterHandler<OpponentAddLeaderDefenseMessage>();
+            NetworkClient.UnregisterHandler<OpponentMinusNextLeaderDamageMessage>();
             NetworkServer.UnregisterHandler<OpponentAddEvolvePointsMessage>();
 
             // Other
@@ -537,6 +539,14 @@ namespace SVESimulator
             if(!player)
                 return;
             player.OpponentEvents.AddLeaderDefense(msg);
+        }
+
+        protected void OnOpponentMinusNextLeaderDamage(OpponentMinusNextLeaderDamageMessage msg)
+        {
+            PlayerController player = GetPlayerOpponent(msg.playerNetId);
+            if(!player)
+                return;
+            player.OpponentEvents.MinusNextLeaderDamage(msg);
         }
 
         private void OnOpponentAddEvolvePoints(OpponentAddEvolvePointsMessage msg)

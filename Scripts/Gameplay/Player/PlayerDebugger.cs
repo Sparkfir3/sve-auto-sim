@@ -19,6 +19,10 @@ namespace SVESimulator
         private bool overflow => player.Overflow;
         [ShowInInspector, ReadOnly]
         private int necrocharge => player.ZoneController && player.ZoneController.cemeteryZone ? player.Necrocharge : 0;
+        [ShowInInspector, ReadOnly]
+        private int minusNextDamage => player.GetPlayerInfo().namedStats.TryGetValue(SVEProperties.PlayerStats.MinusNextLeaderDamage, out CCGKit.Stat stat)
+            ? stat.effectiveValue
+            : 0;
 
         [Title("Additional Stats"), ShowInInspector, TableList, ReadOnly]
         private List<PlayedCardData> cardsPlayedThisTurn => player.AdditionalStats.CardsPlayedThisTurn.ToList();

@@ -576,9 +576,25 @@ namespace SVESimulator
         public NetworkIdentity playerNetId;
         public NetworkIdentity targetPlayer;
         public int amount;
+        public SVEProperties.StatModifierType modifierType;
     }
 
     public struct OpponentAddLeaderDefenseMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetPlayer;
+        public int amount;
+        public SVEProperties.StatModifierType modifierType;
+    }
+
+    public struct LocalMinusNextLeaderDamageMessage : NetworkMessage
+    {
+        public NetworkIdentity playerNetId;
+        public NetworkIdentity targetPlayer;
+        public int amount;
+    }
+
+    public struct OpponentMinusNextLeaderDamageMessage : NetworkMessage
     {
         public NetworkIdentity playerNetId;
         public NetworkIdentity targetPlayer;
