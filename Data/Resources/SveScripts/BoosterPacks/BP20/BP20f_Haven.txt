@@ -24,7 +24,7 @@ ability Spell name Defense {
     effect GiveStat(Def, 2) to Leader;
 }
 ability Spell name Crest {
-    effect SummonToken("Marwynn, Despair Manifest", ExArea, 1);
+    effect SummonToken("Crest: Marwynn, Despair Manifest", ExArea, 1);
 }
 
 // ------------------------------
@@ -164,7 +164,7 @@ ability Fanfare {
     effect Draw(1);
 }
 ability Act {
-    condition p(#F) & [x(T)>2]
+    condition p(#F) & [x(T)>2];
     cost (EngageSelf), (SendToCemetery, Self);
     effect DealDamage(4) to TargetOpponentCard F;
 }
@@ -269,6 +269,7 @@ text "[evolve] [cost01]: Evolve this.
 evolve 1;
 keyword Ward;
 ability FanfareByAbility {
+    cost (Optional);
     effect EvolveNotOncePerTurn() to Self;
 }
 

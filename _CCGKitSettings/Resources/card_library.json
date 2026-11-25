@@ -83539,7 +83539,7 @@
             "name": "Crest",
             "type": "Triggered",
             "effect": {
-              "tokenName": "Marwynn, Despair Manifest",
+              "tokenName": "Crest: Marwynn, Despair Manifest",
               "createTokenOption": "ExArea",
               "amount": "1",
               "$type": "SVESimulator.SummonTokenEffect"
@@ -84236,8 +84236,16 @@
             "zoneId": 0,
             "costs": [
               {
-                "condition": "p(#F) & [x(T)>2]\n    cost (EngageSelf), (SendToCemetery, Self)",
+                "condition": "p(#F) & [x(T)>2]",
                 "$type": "SVESimulator.ConditionAsCost"
+              },
+              {
+                "$type": "SVESimulator.EngageSelfCost"
+              },
+              {
+                "target": "Self",
+                "filter": "",
+                "$type": "SVESimulator.SendToCemeteryCost"
               }
             ],
             "name": "Act",
@@ -84755,6 +84763,7 @@
         "abilities": [
           {
             "trigger": {
+              "cost": "[\r\n  {\r\n    \"$type\": \"SVESimulator.OptionalEffectAsCost\"\r\n  }\r\n]",
               "$type": "SVESimulator.SveOnCardEnterFieldByAbilityTrigger"
             },
             "name": "FanfareByAbility",
@@ -85875,7 +85884,7 @@
               "target": "TargetOpponentCard",
               "filter": "F",
               "targetStats": "AttackDefense",
-              "amount": "[0?(x(T)>2)2]?(x(T)>4)4",
+              "amount": "-[[0?(x(T)>2)2]?(x(T)>4)4]",
               "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
