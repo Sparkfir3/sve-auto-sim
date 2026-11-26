@@ -33,6 +33,7 @@ namespace SVESimulator
             TopDeckAnyOrder,
             TopDeckSameOrder,
             BottomDeckAnyOrder,
+            BottomDeckShuffled,
         }
 
         private struct CheckActionParameters
@@ -314,7 +315,7 @@ namespace SVESimulator
 
                 // Rearrange
                 case CheckCardAction.TopDeckAnyOrder:
-                    actionText = "Send to Top Deck";
+                    actionText = "Confirm Top Deck Order";
                     confirmAction = selectedCards =>
                     {
                         List<CardObject> cardsToMove = selectionArea.GetAllPrimaryCards().Where(selectedCards.Contains).Reverse().ToList();
@@ -334,7 +335,7 @@ namespace SVESimulator
                     }
                     return true;
                 case CheckCardAction.BottomDeckAnyOrder:
-                    actionText = "Send All to Bottom Deck";
+                    actionText = "Confirm Bottom Deck Order";
                     confirmAction = _ =>
                     {
                         List<CardObject> cardsToMove = new(selectionArea.GetAllPrimaryCards());
@@ -345,6 +346,19 @@ namespace SVESimulator
                     minSelect = 1; // don't allow selecting cards, only allow moving cards
                     maxSelect = 0;
                     selectionArea.SwitchMode(CardSelectionArea.SelectionMode.MoveSelectionArea);
+                    return true;
+                case CheckCardAction.BottomDeckShuffled:
+                    actionText = "Shuffle and Send to Bottom Deck";
+                    confirmAction = _ =>
+                    {
+                        List<CardObject> cardsToMove = new(selectionArea.GetAllPrimaryCards());
+                        player.LocalEvents.ShuffleCardList(ref cardsToMove);
+                        foreach(CardObject card in cardsToMove)
+                            player.LocalEvents.SendToBottomDeck(card, SVEProperties.Zones.Deck);
+                        onComplete?.Invoke();
+                    };
+                    minSelect = 1; // don't allow selecting cards, only viewing
+                    maxSelect = 0;
                     return true;
 
                 // ------------------------------

@@ -1499,6 +1499,26 @@ namespace SVESimulator
             return output;
         }
 
+        public void ShuffleCardList(ref List<CardObject> cardList)
+        {
+            int rngAdvances = 0;
+            int n = cardList.Count;
+            while(n > 1) // ref: SVEEffectSolver.ShuffleDeck
+            {
+                int k = sveEffectSolver.GetRandomNumber(0, n) % n;
+                n--;
+                (cardList[k], cardList[n])
+                    = (cardList[n], cardList[k]);
+                rngAdvances++;
+            }
+            LocalAdvanceRngMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                rngAdvanceCount = rngAdvances
+            };
+            NetworkClient.Send(msg);
+        }
+
         public void TellOpponentToPerformEffect(CardObject card, string effectName, int[] targetInstanceIds = null)
         {
             LocalTellOpponentPerformEffectMessage msg = new()

@@ -82,7 +82,7 @@ namespace SVESimulator
             int n = player.namedZones[SVEProperties.Zones.Deck].cards.Count;
             while(n > 1)
             {
-                int k = rng.Next(0, n) % n;
+                int k = GetRandomNumber(0, n) % n;
                 n--;
                 (player.namedZones[SVEProperties.Zones.Deck].cards[k], player.namedZones[SVEProperties.Zones.Deck].cards[n])
                     = (player.namedZones[SVEProperties.Zones.Deck].cards[n], player.namedZones[SVEProperties.Zones.Deck].cards[k]);
