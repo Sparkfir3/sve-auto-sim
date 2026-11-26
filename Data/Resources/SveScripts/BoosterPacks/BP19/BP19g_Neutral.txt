@@ -59,7 +59,18 @@ text "Ward.
 
 keyword Ward;
 ability Fanfare {
+    effect Sequence(Draw, AtkDef, LeaderDef);
+}
+ability Spell name Draw {
     effect Draw(1);
+}
+ability Spell name AtkDef {
+    condition #(superEvolvePoints)=0;
+    effect GiveStat(AtkDef, 2) to Self;
+}
+ability Spell name LeaderDef {
+    condition #(superEvolvePoints)=0;
+    effect GiveStat(Def, 2) to Leader;
 }
 
 // ------------------------------
@@ -242,11 +253,3 @@ keyword Storm;
 ability Strike {
     effect DealDamage(0?(f(FnE(Cutthroat))|y(FnE(Cutthroat)))4) to TargetOpponentCard F;
 }
-
-// ------------------------------
-
-// To Do
-// check top - BottomDeckShuffled
-// complex - var revealTopDeckCount(<amt>)
-// complex - card list filterCount(n^) with name XOR
-// advanced value - #(turnNumber)

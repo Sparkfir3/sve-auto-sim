@@ -1,0 +1,163 @@
+[
+  {
+    "id": "BP20-111EN",
+    "name": "Mjerrabaine, Great Manifest",
+    "trait": "Omen",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Discard your hand.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Discard your hand."
+      }
+    ]
+  },
+  {
+    "id": "BP20-112EN",
+    "name": "Mjerrabaine, Great Manifest (Evolved)",
+    "trait": "Omen",
+    "cardText": "On Evolve - Put a Crest: Mjerrabaine, Great Manifest token into your EX area.\nOn Super-Evolve - Select an enemy follower on the field. Destroy it and deal 2 damage to its leader.\nAt the start of your end phase, select an enemy follower on the field and, if there's 1 card or less in your hand, destroy it.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Put a Crest: Mjerrabaine, Great Manifest token into your EX area."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Select an enemy follower on the field. Destroy it and deal 2 damage to its leader."
+      },
+      {
+        "key": "Target",
+        "body": "Select an enemy follower on the field. Destroy it and deal 2 damage to its leader."
+      },
+      {
+        "key": "StartEndPhase",
+        "text": "At the start of your end phase, select an enemy follower on the field and, if there's 1 card or less in your hand, destroy it.",
+        "trigger": "At the start of your end phase,",
+        "body": "Select an enemy follower on the field and, if there's 1 card or less in your hand, destroy it."
+      }
+    ]
+  },
+  {
+    "id": "BP20-113EN",
+    "name": "Gilnelise, Voracity Manifest",
+    "trait": "Omen",
+    "cardText": "Drain.\n[fanfare] Select another follower on the field. Give it [attack]+3/[defense]-3 and, if you have 0 Super-Evolution Points, put a Ravenous Sweetness token into your EX area.\nWhenever you play a Ravenous Sweetness, select an enemy follower on the field and deal it 5 damage.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select another follower on the field. Give it [attack]+3/[defense]-3 and, if you have 0 Super-Evolution Points, put a Ravenous Sweetness token into your EX area."
+      },
+      {
+        "key": "Target",
+        "body": "Select another follower on the field. Give it [attack]+3/[defense]-3 and, if you have 0 Super-Evolution Points, put a Ravenous Sweetness token into your EX area."
+      },
+      {
+        "key": "OnPlayCard",
+        "text": "Whenever you play a Ravenous Sweetness, select an enemy follower on the field and deal it 5 damage.",
+        "trigger": "Whenever you play a Ravenous Sweetness,",
+        "body": "Select an enemy follower on the field and deal it 5 damage."
+      }
+    ]
+  },
+  {
+    "id": "BP20-114EN",
+    "name": "Dogged One",
+    "trait": "Lightborne",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If you have 0 Super-Evolution Points, give this [attack]+1/[defense]+1 and Storm.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If you have 0 Super-Evolution Points, give this [attack]+1/[defense]+1 and Storm."
+      }
+    ]
+  },
+  {
+    "id": "BP20-115EN",
+    "name": "Dogged One (Evolved)",
+    "trait": "Lightborne",
+    "cardText": "On Evolve - Select a follower on your field and give it Rush and Assail.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select a follower on your field and give it Rush and Assail."
+      }
+    ]
+  },
+  {
+    "id": "BP20-116EN",
+    "name": "Inspirational One",
+    "trait": "Lightborne",
+    "cardText": "Ward.\n[fanfare] Select an enemy follower on the field. If you have 0 Super-Evolution Points, deal it 5 damage and give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field. If you have 0 Super-Evolution Points, deal it 5 damage and give your leader [defense]+2."
+      },
+      {
+        "key": "Target",
+        "body": "Select an enemy follower on the field. If you have 0 Super-Evolution Points, deal it 5 damage and give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-117EN",
+    "name": "Tablet of Tribulations",
+    "trait": "Omen",
+    "cardText": "NOT IMPLEMENTED\n[act] [cost09], [engage], bury this: Search your deck for up to 10 differently named Omen followers with \"Mjerrabaine,\" \"Lishenna,\" \"Rulenye,\" \"Marwynn,\" \"Galmieux,\" \"Izudia,\" \"Valnareik,\" \"Octrice,\" \"Raio,\" or \"Gilnelise\" in their names, summon any number of them, put any number of them into your EX area, then shuffle.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost09], [engage], bury this",
+        "body": "Search your deck for up to 10 differently named Omen followers with \"Mjerrabaine,\" \"Lishenna,\" \"Rulenye,\" \"Marwynn,\" \"Galmieux,\" \"Izudia,\" \"Valnareik,\" \"Octrice,\" \"Raio,\" or \"Gilnelise\" in their names, summon any number of them, put any number of them into your EX area, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-118EN",
+    "name": "Apostle of Voracity",
+    "trait": "Omen / Beast",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Select another follower on the field and give it [attack]+2/[defense]-2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select another follower on the field and give it [attack]+2/[defense]-2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-119EN",
+    "name": "Apostle of Voracity (Evolved)",
+    "trait": "Omen / Beast",
+    "cardText": "On Evolve - Select another follower on the field and give it [attack]+2/[defense]-2.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select another follower on the field and give it [attack]+2/[defense]-2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-120EN",
+    "name": "Greatness Ascended",
+    "trait": "Omen",
+    "cardText": "This costs 2 less to play from the EX area.\nWhen this is discarded, if there's a follower on your field with \"Mjerrabaine\" in its name, you may put this into your EX area.\n----------\nDraw 2 cards.",
+    "effectText": [
+      {
+        "key": "OnDiscarded",
+        "text": "When this is discarded, if there's a follower on your field with \"Mjerrabaine\" in its name, you may put this into your EX area.",
+        "trigger": "When this is discarded, if there's a follower on your field with \"Mjerrabaine\" in its name,",
+        "body": "You may put this into your EX area."
+      }
+    ]
+  }
+]

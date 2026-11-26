@@ -231,13 +231,3 @@ ability OnDiscarded {
     cost (Optional);
     effect SendToExArea() to TriggerCard;
 }
-
-// ------------------------------
-// ------------------------------
-// ------------------------------
-
-// To Do
-// value - #(superEvolvePoints)
-// the entirety of Tablet of Tribulations
-//      easier multi-name contains nE(<name1>||<name2>...)
-//      Search into CheckTop
