@@ -1,0 +1,243 @@
+name Mjerrabaine, Great Manifest;
+id BP20-111;
+class Neutral;
+type Follower;
+trait Omen;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Discard your hand.";
+
+evolve 1;
+ability Fanfare {
+    effect DiscardHand();
+}
+
+// ------------------------------
+
+name Mjerrabaine, Great Manifest (Evolved);
+id BP20-112;
+class Neutral;
+type Evolved Follower;
+trait Omen;
+rarity L;
+stats 4/4;
+
+text "On Evolve - Put a Crest: Mjerrabaine, Great Manifest token into your EX area.
+      On Super-Evolve - Select an enemy follower on the field. Destroy it and deal 2 damage to its leader.
+      At the start of your end phase, select an enemy follower on the field and, if there's 1 card or less in your hand, destroy it.";
+
+ability OnEvolve {
+    effect SummonToken("Crest: Mjerrabaine, Great Manifest", ExArea, 1);
+}
+ability OnSuperEvolve {
+    condition p(#F);
+    effect Sequence(Target, Leader);
+}
+ability Spell name Target {
+    effect Destroy() to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(2) to OpponentLeader;
+}
+ability StartEndPhase {
+    condition H<2;
+    effect Destroy() to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Gilnelise, Voracity Manifest;
+id BP20-113;
+class Neutral;
+type Follower;
+trait Omen;
+rarity L;
+cost 3;
+stats 3/3;
+
+text "Drain.
+      [fanfare] Select another follower on the field. Give it [attack]+3/[defense]-3 and, if you have 0 Super-Evolution Points, put a Ravenous Sweetness token into your EX area.
+      Whenever you play a Ravenous Sweetness, select an enemy follower on the field and deal it 5 damage.";
+
+keyword Drain;
+ability Fanfare {
+    effect Sequence(Target, Token);
+}
+ability Spell name Target {
+    effect GiveStat(AtkDef, 3, -3) to TargetCard FX;
+}
+ability Spell name Token {
+    condition #(superEvolvePoints)=0;
+    effect SummonToken(Ravenous Sweetness, ExArea, 1);
+}
+ability OnPlayCard {
+    filter n(Ravenous Sweetness);
+    effect DealDamage(5) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Dogged One;
+id BP20-114;
+class Neutral;
+type Follower;
+trait Lightborne;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] If you have 0 Super-Evolution Points, give this [attack]+1/[defense]+1 and Storm.";
+
+evolve 1;
+ability Fanfare {
+    condition #(superEvolvePoints)=0;
+    effect Sequence(AtkDef, Storm);
+}
+ability Spell name AtkDef {
+    effect GiveStat(AtkDef, 1) to Self;
+}
+ability Spell name Storm {
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Dogged One (Evolved);
+id BP20-115;
+class Neutral;
+type Evolved Follower;
+trait Lightborne;
+rarity G;
+stats 3/3;
+
+text "On Evolve - Select a follower on your field and give it Rush and Assail.";
+
+ability OnEvolve {
+    effect TargetForSequence(Rush, Assail) to TargetPlayerCard F;
+}
+ability Spell name Rush {
+    effect GiveKeyword(Rush) to AllPlayerCards;
+}
+ability Spell name Assail {
+    effect GiveKeyword(Assail) to AllPlayerCards;
+}
+
+// ------------------------------
+
+name Inspirational One;
+id BP20-116;
+class Neutral;
+type Follower;
+trait Lightborne;
+rarity G;
+cost 2;
+stats 2/3;
+
+text "Ward.
+      [fanfare] Select an enemy follower on the field. If you have 0 Super-Evolution Points, deal it 5 damage and give your leader [defense]+2.";
+
+keyword Ward;
+ability Fanfare {
+    effect Sequence(Target, Token);
+}
+ability Spell name Target {
+    effect DealDamage(0?(#(superEvolvePoints)=0)5) to TargetOpponentCard F;
+}
+ability Spell name Token {
+    condition #(superEvolvePoints)=0;
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Tablet of Tribulations;
+id BP20-117;
+class Neutral;
+type Amulet;
+trait Omen;
+rarity G;
+cost 1;
+
+text "NOT IMPLEMENTED
+      [act] [cost09], [engage], bury this: Search your deck for up to 10 differently named Omen followers with "Mjerrabaine," "Lishenna," "Rulenye," "Marwynn," "Galmieux," "Izudia," "Valnareik," "Octrice," "Raio," or "Gilnelise" in their names, summon any number of them, put any number of them into your EX area, then shuffle.";
+
+ability Act {
+    cost (PP, 9), (EngageSelf), (SendToCemetery, Self);
+    effect Sequence();
+}
+
+// ------------------------------
+
+name Apostle of Voracity;
+id BP20-118;
+class Neutral;
+type Follower;
+trait Omen / Beast;
+rarity S;
+cost 4;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Select another follower on the field and give it [attack]+2/[defense]-2.";
+
+evolve 1;
+ability Fanfare {
+    effect GiveStat(AtkDef, 2, -2) to TargetCard FX;
+}
+
+// ------------------------------
+
+name Apostle of Voracity (Evolved);
+id BP20-119;
+class Neutral;
+type Evolved Follower;
+trait Omen / Beast;
+rarity S;
+stats 4/4;
+
+text "On Evolve - Select another follower on the field and give it [attack]+2/[defense]-2.";
+
+ability OnEvolve {
+    effect GiveStat(AtkDef, 2, -2) to TargetCard FX;
+}
+
+// ------------------------------
+
+name Greatness Ascended;
+id BP20-120;
+class Neutral;
+type Spell;
+trait Omen;
+rarity S;
+cost 3;
+
+text "This costs 2 less to play from the EX area.
+      When this is discarded, if there's a follower on your field with "Mjerrabaine" in its name, you may put this into your EX area.
+      ----------
+      Draw 2 cards.";
+
+ability Spell {
+    effect Draw(2);
+}
+ability ModifiedCost {
+    effect ReducedCostFromEx(2);
+}
+ability OnDiscarded {
+    condition f(FnE(Mjerrabaine));
+    cost (Optional);
+    effect SendToExArea() to TriggerCard;
+}
+
+// ------------------------------
+// ------------------------------
+// ------------------------------
+
+// To Do
+// value - #(superEvolvePoints)
+// the entirety of Tablet of Tribulations
+//      easier multi-name contains nE(<name1>||<name2>...)
+//      Search into CheckTop
