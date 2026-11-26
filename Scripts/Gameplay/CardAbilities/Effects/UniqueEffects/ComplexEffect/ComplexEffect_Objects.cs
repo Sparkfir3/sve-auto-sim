@@ -66,6 +66,11 @@ namespace SVESimulator
         {
             public List<RuntimeCard> cardList;
 
+            public CE_CardList(List<RuntimeCard> cardList)
+            {
+                this.cardList = cardList;
+            }
+
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
             {
                 switch(token)

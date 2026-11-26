@@ -155,6 +155,7 @@ namespace SVESimulator
             CE_Object obj = token switch
             {
                 "revealTopDeck" =>              await RevealTopDeck(),
+                "revealTopDeckCount" =>         await RevealTopDeckCount(args),
                 "revealTopDeckUntilValue" =>    await RevealTopDeckUntilValue(args),
                 "mill" =>                       await MillDeck(args),
                 "millDeck" =>                   await MillDeck(args),

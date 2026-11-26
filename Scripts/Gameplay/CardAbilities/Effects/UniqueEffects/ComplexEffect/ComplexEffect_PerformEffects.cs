@@ -217,6 +217,34 @@ namespace SVESimulator
             return card != null ? new CE_Card(card) : null;
         }
 
+        private async Task<CE_CardList> RevealTopDeckCount(string rawCount)
+        {
+            int count = SVEFormulaParser.ParseValue(ReplaceWithVariableValues(rawCount), player, sourceInstanceId, sourceZone);
+            List<RuntimeCard> cardList = new();
+            for(int i = 0; i < count; i++)
+            {
+                if(BreakCondition || i >= player.ZoneController.deckZone.Runtime.cards.Count)
+                    break;
+                // Reveal
+                bool waiting = true;
+                RuntimeCard card = player.ZoneController.deckZone.Runtime.cards[i];
+                CardObject cardObject = player.ZoneController.CreateNewCardObjectTopDeck(card);
+                player.LocalEvents.FlipTopDeckToFaceUp(cardObject, onComplete: async revealedCard =>
+                {
+                    await Task.Delay(300);
+                    player.LocalEvents.FlipTopDeckToFaceDown(cardObject, onComplete: () => waiting = false);
+                });
+                // Wait
+                while(waiting && !BreakCondition)
+                    await Task.Yield();
+                ComplexLog(LogMode.Value, $"[Reveal Top Deck Count] Card #{i+1}/{count} Instance ID {(card != null ? card.instanceId : "null")}");
+                cardList.Add(card);
+            }
+            await Task.Delay(200);
+            ComplexLog(LogMode.Value, $"[Reveal Top Deck Count] Revealed {cardList.Count} of {count} cards: {string.Join(", ", cardList.Select(x => x.instanceId))}");
+            return new CE_CardList(cardList);
+        }
+
         private async Task<CE_Object> RevealTopDeckUntilValue(string valueFormula)
         {
             RuntimeCard card = null;
@@ -271,10 +299,7 @@ namespace SVESimulator
                 await Task.Yield();
             await Task.Delay(200);
             ComplexLog(LogMode.Value, $"[Mill Deck] Milled {cardList.Count} cards, Instance IDs {string.Join(",", cardList.Select(x => x.instanceId))}");
-            return cardList != null ? new CE_CardList
-            {
-                cardList = cardList
-            } : null;
+            return cardList != null ? new CE_CardList(cardList) : null;
         }
 
         #endregion
