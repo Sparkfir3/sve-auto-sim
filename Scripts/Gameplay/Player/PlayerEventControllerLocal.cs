@@ -242,7 +242,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void RevealTopDeck(CardObject sourceCard, string abilityName, List<CardObject> cards)
+        public void RevealTopDeckToOpponent(CardObject sourceCard, string abilityName, List<CardObject> cards)
         {
             LocalRevealTopDeckMessage msg = new()
             {
@@ -254,7 +254,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void CloseRevealTopDeck()
+        public void CloseRevealTopDeckToOpponent()
         {
             LocalCloseRevealTopDeckMessage msg = new()
             {
