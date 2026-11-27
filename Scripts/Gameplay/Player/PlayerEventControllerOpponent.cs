@@ -127,7 +127,7 @@ namespace SVESimulator
             }
             selectionArea.Enable(CardSelectionArea.SelectionMode.ViewCardsOppDeck, msg.cards.Length, msg.cards.Length);
             selectionArea.AddFromOpponentDeck(cards);
-            EffectTargetingUI.OpponentTargeting.OpenOpponentIsTargeting(LibraryCardCache.GetName(msg.sourceCardId), LibraryCardCache.GetEffectText(msg.sourceCardId, msg.sourceAbilityName),
+            EffectTargetingUI.OpponentTargeting.OpenOpponentIsTargeting(LibraryCardCache.GetName(msg.sourceCardId), LibraryCardCache.GetEffectText(msg.sourceCardId, msg.sourceAbilityName ?? ""),
                 displayPosition: ButtonDisplayPosition.Top);
         }
 
