@@ -10,6 +10,7 @@ namespace SVESimulator
 {
     public abstract class SveEffect : Effect
     {
+        public string name;
         public string text;
 
         // ------------------------------

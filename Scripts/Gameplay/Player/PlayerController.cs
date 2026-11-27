@@ -405,11 +405,16 @@ namespace SVESimulator
                 {
                     waiting = false;
                 };
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseTrigger>(gameState, null,
-                    localPlayerZoneController.fieldZone.Runtime, playerInfo, _ => true, true);
-                SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseFromExAreaTrigger>(gameState, null,
-                    localPlayerZoneController.exAreaZone.Runtime, playerInfo, _ => true, true);
+                for(int i = 0; i < AdditionalStats.EndPhaseTriggerCount; i++)
+                {
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseTrigger>(gameState, null,
+                        localPlayerZoneController.fieldZone.Runtime, playerInfo, _ => true, false);
+                    SVEEffectPool.Instance.TriggerPendingEffectsForOtherCardsInZone<SveStartEndPhaseFromExAreaTrigger>(gameState, null,
+                        localPlayerZoneController.exAreaZone.Runtime, playerInfo, _ => true, false);
+                }
+                SVEEffectPool.Instance.CmdExecuteConfirmationTiming();
                 yield return new WaitUntil(() => !waiting);
+                yield return new WaitForSeconds(0.1f);
 
                 SelectWardCardsToEngage(() =>
                 {

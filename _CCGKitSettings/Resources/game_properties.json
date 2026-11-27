@@ -10,7 +10,18 @@
             "$type": "CCGKit.ShuffleCardsAction"
         }
     ],
-    "turnStartActions": [],
+    "turnStartActions": [
+        {
+            "statId": 5,
+            "value": {
+                "constant": 0,
+                "$type": "CCGKit.ConstantValue"
+            },
+            "name": "Set player stat",
+            "target": "AllPlayers",
+            "$type": "CCGKit.SetPlayerStatAction"
+        }
+    ],
     "turnEndActions": [],
     "endGameConditions": [
         {

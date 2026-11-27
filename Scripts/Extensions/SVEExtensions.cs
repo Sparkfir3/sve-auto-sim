@@ -290,26 +290,28 @@ namespace SVESimulator
         #region Zone Counts
 
         public static int CountMatchingFilter(this List<CardObject> cards, Dictionary<CardFilterSetting, string> filters)
+            => cards.Select(x => x.RuntimeCard).ToList().CountMatchingFilter(filters);
+        public static int CountMatchingFilter(this List<RuntimeCard> cards, Dictionary<CardFilterSetting, string> filters)
         {
             if(cards is not { Count: > 0 } || filters == null || filters.Count == 0)
                 return cards?.Count ?? 0;
             if(!filters.HasExclusiveOr())
-                return cards.Count(x => filters.MatchesCard(x.RuntimeCard));
+                return cards.Count(x => filters.MatchesCard(x));
 
             // Handle XOR counting
             int count = 0;
             bool checkNames = filters.HasNameExclusiveOr();
             bool checkCosts = filters.HasCostExclusiveOr();
-            foreach(CardObject card in cards)
+            foreach(RuntimeCard card in cards)
             {
-                if(!filters.MatchesCard(card.RuntimeCard))
+                if(!filters.MatchesCard(card))
                     continue;
                 if(checkNames)
                     filters[CardFilterSetting.NameXor] = $"{filters[CardFilterSetting.NameXor]}" +
-                        $"\n{LibraryCardCache.GetName(card.RuntimeCard.cardId)}";
+                        $"\n{LibraryCardCache.GetName(card.cardId)}";
                 if(checkCosts)
                 {
-                    if(!card.RuntimeCard.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat costStat))
+                    if(!card.namedStats.TryGetValue(SVEProperties.CardStats.Cost, out Stat costStat))
                         continue;
                     filters[CardFilterSetting.PlayPointCostXor] = $"{filters[CardFilterSetting.PlayPointCostXor]}" +
                         $"\n{costStat.effectiveValue}";

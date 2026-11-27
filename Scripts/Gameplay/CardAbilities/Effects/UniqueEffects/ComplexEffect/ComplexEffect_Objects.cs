@@ -66,6 +66,11 @@ namespace SVESimulator
         {
             public List<RuntimeCard> cardList;
 
+            public CE_CardList(List<RuntimeCard> cardList)
+            {
+                this.cardList = cardList;
+            }
+
             public override Task<CE_Object> GetValue(PlayerController player, string token, string[] parameters)
             {
                 switch(token)
@@ -74,7 +79,7 @@ namespace SVESimulator
                         if(parameters.Length == 0)
                             return Task.FromResult<CE_Object>(new CE_Value(cardList.Count.ToString()));
                         var filter = SVEFormulaParser.ParseCardFilterFormula(parameters[0]);
-                        return Task.FromResult<CE_Object>(new CE_Value(cardList.Count(x => filter.MatchesCard(x)).ToString()));
+                        return Task.FromResult<CE_Object>(new CE_Value(cardList.CountMatchingFilter(filter).ToString()));
                     default:
                         return Task.FromResult<CE_Object>(null);
                 }

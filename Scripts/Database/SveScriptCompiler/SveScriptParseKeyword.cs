@@ -82,6 +82,7 @@ namespace SVESimulator.SveScript
             { "OpponentMustSelectAsTarget",         new Keyword(1, 12) },
             { "CannotPlayFromEx",                   new Keyword(1, 13) },
             { "PlayerChooseAnyNumberOfOptions",     new Keyword(1, 14) },
+            { "TriggerStartEndPhaseOnceMore",       new Keyword(1, 15) },
 
             // Plus Damage
             { "Plus1Damage",                new Keyword(2, 1) },

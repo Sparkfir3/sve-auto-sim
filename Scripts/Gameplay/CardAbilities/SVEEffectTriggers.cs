@@ -46,6 +46,7 @@ namespace SVESimulator
     public class SveOnCardEnterFieldFromHandTrigger : SveTrigger { }
     public class SveOnCardEnterFieldFromCemeteryTrigger : SveTrigger { }
     public class SveOnCardEnterFieldFromNotHandTrigger : SveTrigger { }
+    public class SveOnCardEnterFieldByAbilityTrigger : SveTrigger { }
 
     // Other
     public class SveLastWordsTrigger : SveTriggerWithFilter { }

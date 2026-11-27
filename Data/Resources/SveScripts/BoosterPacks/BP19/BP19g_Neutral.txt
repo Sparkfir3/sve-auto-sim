@@ -1,0 +1,255 @@
+name Cutthroat, Discord Convict;
+id BP19-110;
+class Neutral;
+type Follower;
+trait Condemned / Supreme;
+rarity L;
+cost 1;
+stats 1/1;
+
+text "[evolve] [cost04]: Evolve this.
+      [fanfare] Look at the top 8 cards of your deck. Add one of them to your hand. Shuffle the rest and put them on the bottom of your deck.
+      ----------
+      [Not Implemented] Your main deck and evolve deck may only contain 1 copy of any card without "Cutthroat" in its name. ";
+
+evolve 4;
+ability Fanfare {
+    effect CheckTop(8, (Hand, 1), (BottomDeckShuffled));
+}
+
+// ------------------------------
+
+name Cutthroat, Discord Convict (Evolved);
+id BP19-111;
+class Neutral;
+type Evolved Follower;
+trait Condemned / Supreme;
+rarity L;
+stats 4/4;
+
+text "On Evolve - Select up to 2 enemy followers on the field and deal 4 damage divided between them.
+      On Super-Evolve - Select an enemy follower on the field. Deal 8 damage to it and its leader.";
+
+ability OnEvolve {
+    effect DealDamageDivided(4) to Fm(0,2);
+}
+ability OnSuperEvolve {
+    effect Sequence(Follower, Leader);
+}
+ability Spell name Follower {
+    effect DealDamage(8) to TargetOpponentCard F;
+}
+ability Spell name Leader {
+    effect DealDamage(8) to OpponentLeader;
+}
+
+// ------------------------------
+
+name Eudie, Maiden Reborn;
+id BP19-112;
+class Neutral;
+type Follower;
+trait Supreme;
+rarity L;
+cost 2;
+stats 2/3;
+
+text "Ward.
+      [fanfare] Draw a card. If you have 0 Super-Evolution Points, give this [attack]+2/[defense]+2 and your leader [defense]+2.";
+
+keyword Ward;
+ability Fanfare {
+    effect Sequence(Draw, AtkDef, LeaderDef);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name AtkDef {
+    condition #(superEvolvePoints)=0;
+    effect GiveStat(AtkDef, 2) to Self;
+}
+ability Spell name LeaderDef {
+    condition #(superEvolvePoints)=0;
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Zerael, Regent of Rebirth;
+id BP19-113;
+class Neutral;
+type Follower;
+trait Condemned / Deity;
+rarity G;
+cost 7;
+stats 9/9;
+
+text "[fanfare] Reveal the top 9 cards of your deck. Shuffle them and put them on the bottom of your deck. If you revealed 9 cards with different names this way, bury this, and you may summon a Zerael, Regent of Transmigration from your evolve deck.";
+
+ability Fanfare {
+    effect ComplexEffect(
+        let x = revealTopDeckCount(9).filterCount(n^)
+        let x = x=9
+        performIf x then Bury
+        performIf x then Summon
+    );
+}
+ability Spell name Bury {
+    effect SendToCemetery() to Self;
+}
+ability Spell name Summon {
+    effect SummonFromEvolveDeck(n("Zerael, Regent of Transmigration"), 1);
+}
+
+// ------------------------------
+
+name Zerael, Regent of Transmigration;
+id BP19-114;
+class Neutral;
+type Advanced Follower;
+trait Condemned / Deity;
+rarity G;
+cost 9;
+stats 9/9;
+
+text "Ward. Aura.
+      [fanfare] Destroy each enemy follower on the field.";
+
+keywords Ward, Aura;
+ability Fanfare {
+    effect Destroy() to AllOpponentCards F;
+}
+
+// ------------------------------
+
+name Ironforged Right Hand;
+id BP19-115;
+class Neutral;
+type Follower;
+trait Condemned / Supreme;
+rarity G;
+cost 2;
+stats 3/2;
+
+text "[fanfare] Draw a card. If there's a follower on your field or in your cemetery with "Cutthroat" in its name, recover 2 play points.";
+
+ability Fanfare {
+    effect Sequence(Draw, PlayPoints);
+}
+ability Spell name Draw {
+    effect Draw(1);
+}
+ability Spell name PlayPoints {
+    condition f(FnE(Cutthroat)) | y(FnE(Cutthroat));
+    effect GiveStat(PP, 2) to Leader;
+}
+
+// ------------------------------
+
+name Azvaldt;
+id BP19-116;
+class Neutral;
+type Amulet;
+trait Condemned;
+rarity G;
+cost 1;
+
+text "[fanfare] Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [act] [engage], bury this: If this is your 8th turn or later, draw a card.";
+
+ability Fanfare {
+    effect CheckTop(4, (Hand, t(Condemned), m(0,1)), (BottomDeckAnyOrder));
+}
+ability Act {
+    cost (EngageSelf), (SendToCemetery, Self);
+    effect Draw(0?(#(turnNumber)>7)1);
+}
+
+// ------------------------------
+
+name Smeltwork Bodyguard;
+id BP19-117;
+class Neutral;
+type Follower;
+trait Condemned / Supreme;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      Ward.
+      [fanfare] Draw a card.";
+
+evolve 1;
+keyword Ward;
+ability Fanfare {
+    effect Draw(1);
+}
+
+// ------------------------------
+
+name Smeltwork Bodyguard (Evolved);
+id BP19-118;
+class Neutral;
+type Evolved Follower;
+trait Condemned / Supreme;
+rarity S;
+stats 4/4;
+
+text "Ward.
+      On Evolve - Select an enemy follower on the field. If there's a follower on your field or in your cemetery with "Cutthroat" in its name, deal the selected follower 4 damage and give your leader [defense]+4.";
+
+keyword Ward;
+ability OnEvolve {
+    effect Sequence(Damage, Defense);
+}
+ability Spell name Damage {
+    effect DealDamage(0?(f(FnE(Cutthroat))|y(FnE(Cutthroat)))4) to TargetOpponentCard F;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 0?(f(FnE(Cutthroat))|y(FnE(Cutthroat)))4) to Leader;
+}
+
+// ------------------------------
+
+name Warden of Recurrence;
+id BP19-119;
+class Neutral;
+type Follower;
+trait Condemned / Angel;
+rarity S;
+cost 8;
+stats 4/4;
+
+text "Ward.
+      [fanfare] Choose 1. (1) Search your deck for a Zerael, Regent of Rebirth, summon it, then shuffle. (2) Recover 8 play points.";
+
+keyword Ward;
+ability Fanfare {
+    effect ChooseFromList(Search, PlayPoints);
+}
+ability Spell name Search {
+    effect Search(1, n("Zerael, Regent of Rebirth"), Field);
+}
+ability Spell name PlayPoints {
+    effect GiveStat(PP, 8) to Leader;
+}
+
+// ------------------------------
+
+name Blackrust Underling;
+id BP19-120;
+class Neutral;
+type Follower;
+trait Condemned / Supreme;
+rarity S;
+cost 3;
+stats 3/3;
+
+text "Storm.
+      Strike - Select an enemy follower on the field and, if there's a follower on your field or in your cemetery with "Cutthroat" in its name, deal the selected follower 4 damage.";
+
+keyword Storm;
+ability Strike {
+    effect DealDamage(0?(f(FnE(Cutthroat))|y(FnE(Cutthroat)))4) to TargetOpponentCard F;
+}

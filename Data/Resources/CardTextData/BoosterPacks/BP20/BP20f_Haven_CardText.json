@@ -1,0 +1,282 @@
+[
+  {
+    "id": "BP20-093EN",
+    "name": "Marwynn, Despair Manifest",
+    "trait": "Omen / Zealot",
+    "cardText": "[fanfare] Choose 1. (1) Select an enemy follower on the field. If there are at least 3 crests in your EX area, banish it and give your leader [defense]+2. (2) Put a Crest: Marwynn, Despair Manifest token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Select an enemy follower on the field. If there are at least 3 crests in your EX area, banish it and give your leader [defense]+2. (2) Put a Crest: Marwynn, Despair Manifest token into your EX area."
+      },
+      {
+        "key": "BanishSequence",
+        "body": "Select an enemy follower on the field. If there are at least 3 crests in your EX area, banish it and give your leader [defense]+2."
+      },
+      {
+        "key": "Banish",
+        "body": "Select an enemy follower on the field. If there are at least 3 crests in your EX area, banish it and give your leader [defense]+2."
+      },
+      {
+        "key": "Crest",
+        "body": "Put a Crest: Marwynn, Despair Manifest token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-094EN",
+    "name": "Himeka, Heir to Repose",
+    "trait": "Omen / Heir / Zealot",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Put a Crest: Himeka, Heir to Repose token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Crest: Himeka, Heir to Repose token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-095EN",
+    "name": "Himeka, Heir to Repose (Evolved)",
+    "trait": "Omen / Heir / Zealot",
+    "cardText": "On Evolve - Search your deck for an Omen–Zealot card not named Himeka, Heir to Repose, reveal it, add it to your hand, then shuffle.\nOn Super-Evolve - [cost02]: Search your deck for an Omen–Zealot follower not named Himeka, Heir to Repose that costs 4 or less, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Search your deck for an Omen–Zealot card not named Himeka, Heir to Repose, reveal it, add it to your hand, then shuffle."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "cost": "[cost02]",
+        "body": "Search your deck for an Omen–Zealot follower not named Himeka, Heir to Repose that costs 4 or less, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-096EN",
+    "name": "Holy Serpent's Blessing",
+    "trait": "Faith",
+    "cardText": "[fanfare] Select an enemy follower on the field and deal it 4 damage.\n[lastwords] Choose 1. (1) Give your leader [defense]+2. (2) [cost01]: Search your deck for a Holy Serpent's Blessing, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it 4 damage."
+      },
+      {
+        "key": "LastWords",
+        "trigger": "[lastwords]",
+        "body": "Choose 1. (1) Give your leader [defense]+2. (2) [cost01]: Search your deck for a Holy Serpent's Blessing, summon it, then shuffle."
+      },
+      {
+        "key": "Def",
+        "body": "Give your leader [defense]+2."
+      },
+      {
+        "key": "Search",
+        "cost": "[cost01]",
+        "body": "Search your deck for a Holy Serpent's Blessing, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-097EN",
+    "name": "Congregant of Repose",
+    "trait": "Omen / Zealot",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] Put a Crest: Congregant of Repose token into your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Put a Crest: Congregant of Repose token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-098EN",
+    "name": "Congregant of Repose (Evolved)",
+    "trait": "Omen / Zealot",
+    "cardText": "On Evolve - Select an enemy follower on the field and deal it damage equal to 2 times the number of crests in your EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field and deal it damage equal to 2 times the number of crests in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-099EN",
+    "name": "Sacred Sheep",
+    "trait": "Luminary",
+    "cardText": "At the start of each opponent's main phase, the next time your leader would take damage this turn, it doesn't.",
+    "effectText": [
+      {
+        "key": "StartOpponentMainPhase",
+        "text": "At the start of each opponent's main phase, the next time your leader would take damage this turn, it doesn't.",
+        "trigger": "At the start of each opponent's main phase,",
+        "body": "The next time your leader would take damage this turn, it doesn't."
+      }
+    ]
+  },
+  {
+    "id": "BP20-100EN",
+    "name": "Shining Disenchantment",
+    "trait": "Omen / Zealot",
+    "cardText": "[fanfare] Draw a card.\n[act] [engage], bury this: Select an enemy follower on the field and deal it 4 damage. Activate only if there are at least 3 crests in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "text": "",
+        "trigger": "[fanfare]",
+        "cost": "",
+        "body": "Draw a card."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury this",
+        "body": "Select an enemy follower on the field and deal it 4 damage. Activate only if there are at least 3 crests in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-101EN",
+    "name": "Supplicant of Repose",
+    "trait": "Omen / Zealot",
+    "cardText": "[evolve] [cost01]: Evolve this.\n[fanfare] If there are at least 3 crests in your EX area, give your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "If there are at least 3 crests in your EX area, give your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP20-102EN",
+    "name": "Supplicant of Repose (Evolved)",
+    "trait": "Omen / Zealot",
+    "cardText": "On Evolve - Put a Crest: Supplicant of Repose token into your EX area.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Put a Crest: Supplicant of Repose token into your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-103EN",
+    "name": "Temple of Repose",
+    "trait": "Omen / Zealot",
+    "cardText": "[fanfare] Look at the top 3 cards of your deck. You may reveal an Omen–Zealot card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[q][act] [cost01], [engage], bury this: The next time your leader would take damage this turn, it takes that much -2 instead. Activate only if there are at least 3 crests in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. You may reveal an Omen–Zealot card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], bury this",
+        "body": "The next time your leader would take damage this turn, it takes that much -2 instead. Activate only if there are at least 3 crests in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-104EN",
+    "name": "Winged Lion Statue",
+    "trait": "Faith / Beast",
+    "cardText": "[act] [cost01], [engage], bury this and another amulet: Summon a Holy Falcon and Holy Tiger token.",
+    "effectText": [
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[cost01], [engage], bury this and another amulet",
+        "body": "Summon a Holy Falcon and Holy Tiger token."
+      }
+    ]
+  },
+  {
+    "id": "BP20-105EN",
+    "name": "Knight of the Holy Order",
+    "trait": "Luminary",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] If this was put onto the field by an ability, evolve it.",
+    "effectText": [
+      {
+        "key": "FanfareByAbility",
+        "body": "If this was put onto the field by an ability, evolve it."
+      }
+    ]
+  },
+  {
+    "id": "BP20-106EN",
+    "name": "Knight of the Holy Order (Evolved)",
+    "trait": "Luminary",
+    "cardText": "Ward.\nOn Evolve - Give your leader [defense]+1. Draw a card.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Give your leader [defense]+1. Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP20-107EN",
+    "name": "Devotee of Repose",
+    "trait": "Omen / Zealot",
+    "cardText": "Ward.\n[fanfare] Select an enemy follower on the field and deal it X damage. X equals the number of crests in your EX area.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Select an enemy follower on the field and deal it X damage. X equals the number of crests in your EX area."
+      }
+    ]
+  },
+  {
+    "id": "BP20-108EN",
+    "name": "Featherfolk Courier",
+    "trait": "Avian",
+    "cardText": "Storm.\nStrike - Draw a card.\n[fanfare] [cost02]: Search your deck for a follower with Storm that has 3 attack or less, summon it, then shuffle.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Draw a card."
+      },
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "cost": "[cost02]",
+        "body": "Search your deck for a follower with Storm that has 3 attack or less, summon it, then shuffle."
+      }
+    ]
+  },
+  {
+    "id": "BP20-109EN",
+    "name": "Peckish Al-mi'raj",
+    "trait": "Beast",
+    "cardText": "[fanfare] Look at the top 3 cards of your deck. You may put a Beast follower from among them into your EX area. Put the rest on the bottom of your deck in any order.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 3 cards of your deck. You may put a Beast follower from among them into your EX area. Put the rest on the bottom of your deck in any order."
+      }
+    ]
+  },
+  {
+    "id": "BP20-110EN",
+    "name": "Blinding Faith",
+    "trait": "Faith",
+    "cardText": "Deal 4 damage to each enemy follower on the field. Give your leader [defense]+2. Draw a card."
+  }
+]

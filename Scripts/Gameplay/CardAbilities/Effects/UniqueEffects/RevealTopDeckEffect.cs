@@ -14,15 +14,6 @@ namespace SVESimulator
 
         protected override IEnumerator AddCardsFromDeck(PlayerController player, CardSelectionArea selectionArea, int sourceCardInstanceId, int minCheck, int maxCheck)
         {
-            // Get ability name (for networked text)
-            List<Ability> abilities = LibraryCardCache.GetCardFromInstanceId(sourceCardInstanceId)?.abilities
-                .Where(x => x is TriggeredAbility ability && ability.effect is RevealTopDeckEffect).ToList();
-            if(abilities == null || abilities.Count == 0)
-                Debug.LogError($"{nameof(RevealTopDeckEffect)} failed to find an ability matching it's type on card with instance ID {sourceCardInstanceId}.");
-            else if(abilities.Count > 1)
-                Debug.LogError($"{nameof(RevealTopDeckEffect)} found more than one ability matching it's type on card with instance ID {sourceCardInstanceId}, defaulting to the first one found.");
-            string abilityName = abilities?[0]?.name;
-
             // Resolve
             List<CardObject> cards = new();
             for(int i = 0; i < minCheck; i++)
@@ -32,12 +23,12 @@ namespace SVESimulator
                 yield return new WaitForSeconds(selectionArea.AddRemoveCardDelay);
             }
 
-            player.LocalEvents.RevealTopDeck(CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId), abilityName, cards);
+            player.LocalEvents.RevealTopDeckToOpponent(CardManager.Instance.GetCardByInstanceId(sourceCardInstanceId), name, cards);
         }
 
         protected override void OnCompleteInternal(PlayerController player)
         {
-            player.LocalEvents.CloseRevealTopDeck();
+            player.LocalEvents.CloseRevealTopDeckToOpponent();
         }
     }
 }

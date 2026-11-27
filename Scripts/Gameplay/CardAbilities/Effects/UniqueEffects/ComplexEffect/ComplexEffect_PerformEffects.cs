@@ -217,6 +217,42 @@ namespace SVESimulator
             return card != null ? new CE_Card(card) : null;
         }
 
+        private async Task<CE_CardList> RevealTopDeckCount(string rawCount)
+        {
+            int targetCount = SVEFormulaParser.ParseValue(ReplaceWithVariableValues(rawCount), player, sourceInstanceId, sourceZone);
+            int revealCount = Mathf.Min(targetCount, player.ZoneController.deckZone.Runtime.cards.Count);
+
+            // Reveal
+            List<CardObject> cardList = new();
+            player.ZoneController.selectionArea.Enable(CardSelectionArea.SelectionMode.SelectCardsFromDeck, revealCount, targetCount);
+            for(int i = 0; i < revealCount; i++)
+            {
+                player.ZoneController.selectionArea.AddCardFromTopDeck(out CardObject newCard);
+                cardList.Add(newCard);
+                await Task.Delay((int)(player.ZoneController.selectionArea.AddRemoveCardDelay * 1000));
+                if(BreakCondition)
+                    break;
+            }
+            CardObject sourceCardObject = CardManager.Instance.GetCardByInstanceId(sourceInstanceId);
+            GameUIManager.MultipleChoice.Open(player, LibraryCardCache.GetName(sourceCardObject.LibraryCard.id),
+                new List<MultipleChoiceWindow.MultipleChoiceEntryData>(), text,
+                showBackgroundTint: false, showTargetingToOpponent: false);
+            player.LocalEvents.RevealTopDeckToOpponent(sourceCardObject, name, cardList);
+
+            // Wait
+            await Task.Delay(2000 + (50 * cardList.Count));
+            if(BreakCondition)
+                return null;
+            player.ZoneController.selectionArea.Disable();
+            GameUIManager.MultipleChoice.Close();
+            player.LocalEvents.CloseRevealTopDeckToOpponent();
+            await Task.Delay(200);
+
+            // Return
+            ComplexLog(LogMode.Value, $"[Reveal Top Deck Count] Revealed {revealCount} of {targetCount} cards: {string.Join(", ", cardList.Select(x => x.RuntimeCard.instanceId))}");
+            return new CE_CardList(cardList.Select(x => x.RuntimeCard).ToList());
+        }
+
         private async Task<CE_Object> RevealTopDeckUntilValue(string valueFormula)
         {
             RuntimeCard card = null;
@@ -271,10 +307,7 @@ namespace SVESimulator
                 await Task.Yield();
             await Task.Delay(200);
             ComplexLog(LogMode.Value, $"[Mill Deck] Milled {cardList.Count} cards, Instance IDs {string.Join(",", cardList.Select(x => x.instanceId))}");
-            return cardList != null ? new CE_CardList
-            {
-                cardList = cardList
-            } : null;
+            return cardList != null ? new CE_CardList(cardList) : null;
         }
 
         #endregion

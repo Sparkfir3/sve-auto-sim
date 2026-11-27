@@ -1,0 +1,413 @@
+name Erralde, Troth Convict;
+id BP19-092;
+class Haven;
+type Follower;
+trait Condemned / Luminary;
+rarity L;
+cost 6;
+stats 5/5;
+
+text "Abilities you control that trigger at the start of the end phase trigger an additional time.
+      At the start of your end phase, choose 1. If there's another Condemned follower on your field, choose up to 2 instead. (1) Select an enemy follower on the field and deal it 4 damage. (2) Give your leader [defense]+1. Refresh this. (3) Draw a card.";
+
+keyword TriggerStartEndPhaseOnceMore;
+ability StartEndPhase {
+    effect ChooseAmountFromList(m(1,1?(f(XFt(Condemned)))2), Damage, DefRefresh, Draw);
+}
+ability Spell name Damage {
+    condition p(#F);
+	effect DealDamage(4) to TargetOpponentCard F;
+}
+ability Spell name DefRefresh {
+	effect Sequence(Def, Refresh);
+}
+ability Spell name Def {
+	effect GiveStat(Def, 1) to Leader;
+}
+ability Spell name Refresh {
+	effect Refresh() to Self;
+}
+ability Spell name Draw {
+	effect Draw(1);
+}
+
+// ------------------------------
+
+name Uneriel, Winged Enforcer;
+id BP19-093;
+class Haven;
+type Follower;
+trait Condemned / Avian;
+rarity L;
+cost 6;
+stats 5/5;
+
+text "[evolve] [cost01]: Evolve this.
+      [fanfare] Draw 2 cards.";
+
+evolve 1;
+ability Fanfare {
+	effect Draw(2);
+}
+
+// ------------------------------
+
+name Uneriel, Winged Enforcer (Evolved);
+id BP19-094;
+class Haven;
+type Evolved Follower;
+trait Condemned / Avian;
+rarity L;
+stats 6/6;
+
+text "On Evolve - Destroy each amulet on your field. Deal X damage to each enemy leader and enemy follower on the field, give your leader [defense]+X, and recover X play points. X equals the number of amulets destroyed this way.";
+
+ability OnEvolve {
+    effect ComplexEffect(
+        let x = parseValue(f(A))
+        perform Destroy { }
+        perform Damage { amount = x }
+        perform Def { amount = x }
+        perform PlayPoints { amount = x }
+    );
+}
+ability Spell name Destroy {
+    effect Destroy() to AllPlayerCards A;
+}
+ability Spell name Damage {
+    effect DealDamage(_) to AllOpponentCardsAndLeader F;
+}
+ability Spell name Def {
+    effect GiveStat(Def, _) to Leader;
+}
+ability Spell name PlayPoints {
+    effect GiveStat(PP, _) to Leader;
+}
+
+// ------------------------------
+
+name Zoe, Queen of Hope;
+id BP19-095;
+class Haven;
+type Follower;
+trait Faith / Princess;
+rarity L;
+cost 4;
+stats 4/4;
+
+text "Ward.
+      [fanfare] Search your deck for a 1-cost Faith follower, reveal it, add it to your hand, then shuffle. Give your leader [defense]+4.";
+
+keyword Ward;
+ability Fanfare {
+    effect Sequence(Search, Defense);
+}
+ability Spell name Search {
+    effect Search(1, Ft(Faith)p(1), Hand);
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 4) to Leader ;
+}
+
+// ------------------------------
+
+name Warden of the Wings;
+id BP19-096;
+class Haven;
+type Follower;
+trait Condemned / Avian;
+rarity G;
+cost 2;
+stats 2/2;
+
+text "[evolve] [cost01]: Evolve this.
+      [lastwords] You may summon an amulet that costs 1 or less from your hand.";
+
+evolve 1;
+ability LastWords {
+    condition H(Ap(m(0,1)));
+    cost (Optional);
+    effect HandToField(1, Ap(m(0,1)));
+}
+
+// ------------------------------
+
+name Warden of the Wings (Evolved);
+id BP19-097;
+class Haven;
+type Evolved Follower;
+trait Condemned / Avian;
+rarity G;
+stats 3/3;
+
+text "On Evolve - Look at the top 4 cards of your deck. You may reveal an amulet or Uneriel, Winged Enforcer from among them and add it to your hand. Put the rest on the bottom of your deck in any order.
+      [lastwords] You may summon an amulet that costs 1 or less from your hand.";
+
+ability OnEvolve {
+    effect CheckTop(4, (Hand, A|(n(Unerial, Winged Enforcer)), 1), (BottomDeckAnyOrder));
+}
+ability LastWords {
+    condition H(Ap(m(0,1)));
+    cost (Optional);
+    effect HandToField(1, Ap(m(0,1)));
+}
+
+// ------------------------------
+
+name Executor of the Oath;
+id BP19-098;
+class Haven;
+type Follower;
+trait Condemned / Faith;
+rarity G;
+cost 5;
+stats 4/4;
+
+text "When playing this, [engage] an Erralde, Troth Convict on your field: This costs 0 to play.
+      ----------
+      [fanfare] Search your deck for an Agent of the Commandments or Follower of the Precepts, summon it, then shuffle.
+      At the start of your end phase, select an enemy follower on the field and deal it 2 damage.";
+
+ability ModifiedCost {
+    cost (Engage, TargetPlayerCard, n(Erralde, Troth Convict));
+    effect AlternateCost();
+}
+ability Fanfare {
+    effect Search(1, n(Agent of the Commandments)|(n(Follower of the Precepts)), Field);
+}
+ability StartEndPhase {
+    effect DealDamage(2) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Meus Gourmand;
+id BP19-099;
+class Haven;
+type Follower;
+trait Beast / Chef;
+rarity G;
+cost 1;
+stats 2/2;
+
+text "[fanfare] If this wasn't put onto the field from hand, choose 1. (1) Deal 2 damage to each enemy leader. (2) Give your leader [defense]+2.";
+
+ability FanfareNotHand {
+    effect ChooseFromList(Damage, Defense);
+}
+ability Spell name Damage {
+    effect DealDamage(2) to OpponentLeader F;
+}
+ability Spell name Defense {
+    effect GiveStat(Def, 2) to Leader;
+}
+
+// ------------------------------
+
+name Agent of the Commandments;
+id BP19-100;
+class Haven;
+type Follower;
+trait Condemned / Faith;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "When playing this, [engage] an Erralde, Troth Convict on your field: This costs 0 to play.
+      ----------
+      [evolve] [cost01]: Evolve this.
+      At the start of your end phase, give your leader [defense]+1.";
+
+evolve 1;
+ability ModifiedCost {
+    cost (Engage, TargetPlayerCard, n(Erralde, Troth Convict));
+    effect AlternateCost();
+}
+ability StartEndPhase {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Agent of the Commandments (Evolved);
+id BP19-101;
+class Haven;
+type Evolved Follower;
+trait Condemned / Faith;
+rarity S;
+stats 3/3;
+
+text "On Evolve - Search your deck for an Erralde, Troth Convict, reveal it, add it to your hand, then shuffle.
+      At the start of your end phase, give your leader [defense]+1.";
+
+ability OnEvolve {
+    effect Search(1, n(Erralde, Troth Convict), Hand);
+}
+ability StartEndPhase {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Follower of the Precepts;
+id BP19-102;
+class Haven;
+type Follower;
+trait Condemned / Arcaneform / Forbidden;
+rarity S;
+cost 2;
+stats 2/2;
+
+text "When playing this, [engage] an Erralde, Troth Convict on your field: This costs 0 to play.
+      ----------
+      At the start of your end phase, select an enemy follower on the field and deal it 1 damage.";
+
+ability ModifiedCost {
+    cost (Engage, TargetPlayerCard, n(Erralde, Troth Convict));
+    effect AlternateCost();
+}
+ability StartEndPhase {
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Sacrosanct Temple;
+id BP19-103;
+class Haven;
+type Amulet;
+trait Faith;
+rarity S;
+cost 1;
+
+text "[act] [cost01], [engage], bury an amulet: Select an enemy follower on the field and deal it 1 damage.";
+
+ability Act {
+    condition p(#F);
+    cost (PP, 1), (EngageSelf), (SendToCemetery, TargetPlayerCard, A);
+    effect DealDamage(1) to TargetOpponentCard F;
+}
+
+// ------------------------------
+
+name Sacred Tiger;
+id BP19-104;
+class Haven;
+type Follower;
+trait Lightborne / Beast;
+rarity B;
+cost 6;
+stats 3/3;
+
+text "[evolve] [cost01]: Evolve this.
+      Each Holy Tiger on your field has Ward.
+      [fanfare] Summon a Holy Tiger token.
+      [act] Bury an amulet: Give this Storm.";
+
+evolve 1;
+ability Passive {
+    effect GiveKeyword(Ward) to AllPlayerCards n(Holy Tiger);
+}
+ability Fanfare {
+    effect SummonToken(Holy Tiger, Field, 1);
+}
+ability Act {
+    cost (SendToCemetery, TargetPlayerCard, A);
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Sacred Tiger (Evolved);
+id BP19-105;
+class Haven;
+type Evolved Follower;
+trait Lightborne / Beast;
+rarity B;
+stats 4/4;
+
+text "Each Holy Tiger on your field has Ward.
+      On Evolve - Summon a Holy Tiger token.
+      [act] Bury an amulet: Give this Storm.";
+
+ability Passive {
+    effect GiveKeyword(Ward) to AllPlayerCards n(Holy Tiger);
+}
+ability OnEvolve {
+    effect SummonToken(Holy Tiger, Field, 1);
+}
+ability Act {
+    cost (SendToCemetery, TargetPlayerCard, A);
+    effect GiveKeyword(Storm) to Self;
+}
+
+// ------------------------------
+
+name Avaricious Altruist;
+id BP19-106;
+class Haven;
+type Follower;
+trait Faith / Beast;
+rarity B;
+cost 3;
+stats 3/3;
+
+text "[fanfare] Search your deck for a Beast follower that costs 1 or less or Beast amulet that costs 1 or less, summon it, then shuffle.";
+
+ability Fanfare {
+    effect Search(1, Ft(Beast)p(m(0,1))|(At(Beast)p(m(0,1))), Field);
+}
+
+// ------------------------------
+
+name Sword Al-mi'raj;
+id BP19-107;
+class Haven;
+type Follower;
+trait Beast;
+rarity B;
+cost 5;
+stats 3/6;
+
+text "Storm.
+      At the start of your end phase, select a follower on your field and change its defense to its original value.";
+
+keyword Storm;
+ability StartEndPhase {
+    effect ResetStat(Def) to TargetPlayerCard F;
+}
+
+// ------------------------------
+
+name Luminescent Gem;
+id BP19-108;
+class Haven;
+type Amulet;
+trait Lightborne;
+rarity B;
+cost 0;
+
+text "[lastwords] Give your leader [defense]+1.";
+
+ability LastWords {
+    effect GiveStat(Def, 1) to Leader;
+}
+
+// ------------------------------
+
+name Holybeast Ruins;
+id BP19-109;
+class Haven;
+type Amulet;
+trait Faith / Eidolon;
+rarity B;
+cost 4;
+
+text "[fanfare]/[lastwords] Summon a Holy Tiger token.";
+
+ability Fanfare {
+    effect SummonToken(Holy Tiger, Field, 1);
+}
+ability LastWords {
+    effect SummonToken(Holy Tiger, Field, 1);
+}

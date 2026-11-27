@@ -396,7 +396,10 @@ namespace SVESimulator
             foreach(Ability ability in LibraryCard.abilities)
             {
                 if(ability.effect is SveEffect sveEffect)
+                {
+                    sveEffect.name ??= ability.name;
                     sveEffect.text ??= LibraryCardCache.GetEffectText(LibraryCard.id, ability.name);
+                }
             }
         }
 

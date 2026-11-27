@@ -28,6 +28,7 @@ namespace SVESimulator
 
             // Player stats
             NetworkServer.RegisterHandler<LocalAddLeaderDefenseMessage>(OnAddLeaderDefense);
+            NetworkServer.RegisterHandler<LocalMinusNextLeaderDamageMessage>(OnMinusNextLeaderDamage);
             NetworkServer.RegisterHandler<LocalAddEvolvePointsMessage>(OnAddEvolvePoints);
         }
 
@@ -49,6 +50,7 @@ namespace SVESimulator
 
             // Player stats
             NetworkServer.UnregisterHandler<LocalAddLeaderDefenseMessage>();
+            NetworkServer.UnregisterHandler<LocalMinusNextLeaderDamageMessage>();
             NetworkServer.UnregisterHandler<LocalAddEvolvePointsMessage>();
         }
 
@@ -242,10 +244,25 @@ namespace SVESimulator
             {
                 playerNetId = msg.playerNetId,
                 targetPlayer = msg.targetPlayer,
-                amount = msg.amount
+                amount = msg.amount,
+                modifierType = msg.modifierType
             };
             server.SafeSendToClient(server.gameState.currentOpponent, addDefMsg);
-            (server.effectSolver as SVEEffectSolver).AddLeaderDefense(targetPlayer, msg.amount);
+            (server.effectSolver as SVEEffectSolver).AddLeaderDefense(targetPlayer, msg.amount, msg.modifierType);
+        }
+
+        private void OnMinusNextLeaderDamage(NetworkConnection conn, LocalMinusNextLeaderDamageMessage msg)
+        {
+            PlayerInfo targetPlayer = server.gameState.players.Find(x => x.netId == msg.targetPlayer);
+
+            OpponentMinusNextLeaderDamageMessage minusDamageMsg = new()
+            {
+                playerNetId = msg.playerNetId,
+                targetPlayer = msg.targetPlayer,
+                amount = msg.amount
+            };
+            server.SafeSendToClient(server.gameState.currentOpponent, minusDamageMsg);
+            (server.effectSolver as SVEEffectSolver).MinusNextLeaderDamage(targetPlayer, msg.amount);
         }
 
         private void OnAddEvolvePoints(NetworkConnection conn, LocalAddEvolvePointsMessage msg)

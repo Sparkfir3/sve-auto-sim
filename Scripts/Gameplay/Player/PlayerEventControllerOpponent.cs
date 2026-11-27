@@ -127,7 +127,7 @@ namespace SVESimulator
             }
             selectionArea.Enable(CardSelectionArea.SelectionMode.ViewCardsOppDeck, msg.cards.Length, msg.cards.Length);
             selectionArea.AddFromOpponentDeck(cards);
-            EffectTargetingUI.OpponentTargeting.OpenOpponentIsTargeting(LibraryCardCache.GetName(msg.sourceCardId), LibraryCardCache.GetEffectText(msg.sourceCardId, msg.sourceAbilityName),
+            EffectTargetingUI.OpponentTargeting.OpenOpponentIsTargeting(LibraryCardCache.GetName(msg.sourceCardId), LibraryCardCache.GetEffectText(msg.sourceCardId, msg.sourceAbilityName ?? ""),
                 displayPosition: ButtonDisplayPosition.Top);
         }
 
@@ -209,7 +209,7 @@ namespace SVESimulator
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return;
 
-            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost, executeConfirmationTiming: false);
+            sveEffectSolver.PlayCard(msg.playerNetId, card.RuntimeCard, msg.originZone, msg.playPointCost, msg.isFromAbility, executeConfirmationTiming: false);
             oppZoneController.PlayCardToField(card, msg.fieldSlotId);
         }
 
@@ -614,7 +614,13 @@ namespace SVESimulator
         public void AddLeaderDefense(OpponentAddLeaderDefenseMessage msg)
         {
             PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
-            sveEffectSolver.AddLeaderDefense(targetPlayer, msg.amount);
+            sveEffectSolver.AddLeaderDefense(targetPlayer, msg.amount, msg.modifierType);
+        }
+
+        public void MinusNextLeaderDamage(OpponentMinusNextLeaderDamageMessage msg)
+        {
+            PlayerInfo targetPlayer = msg.targetPlayer.netId == playerInfo.netId.netId ? playerInfo : opponentInfo;
+            sveEffectSolver.MinusNextLeaderDamage(targetPlayer, msg.amount);
         }
 
         public void AddEvolvePoints(OpponentAddEvolvePointsMessage msg)

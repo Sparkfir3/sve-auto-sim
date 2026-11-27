@@ -242,7 +242,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void RevealTopDeck(CardObject sourceCard, string abilityName, List<CardObject> cards)
+        public void RevealTopDeckToOpponent(CardObject sourceCard, string abilityName, List<CardObject> cards)
         {
             LocalRevealTopDeckMessage msg = new()
             {
@@ -254,7 +254,7 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void CloseRevealTopDeck()
+        public void CloseRevealTopDeckToOpponent()
         {
             LocalCloseRevealTopDeckMessage msg = new()
             {
@@ -416,23 +416,23 @@ namespace SVESimulator
 
         // Play card to first open slot
         public bool PlayCardToField(CardObject card, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
-            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true, bool isFromAbility = true)
         {
-            return PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
+            return PlayCardToField(card, localZoneController.fieldZone.GetFirstOpenSlotId(), originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare, isFromAbility);
         }
 
         // Play card to the closest slot from position
         public bool PlayCardToField(CardObject card, Vector3 startPosition, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
-            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true, bool isFromAbility = true)
         {
             if(!localZoneController.fieldZone.TryGetClosestOpenSlotNumber(startPosition, out int slotId))
                 return false;
-            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare);
+            return PlayCardToField(card, slotId, originZone, payCost, ignoreAltCosts, ignoreAdditionalCosts, fixedCost, triggerFanfare, isFromAbility);
         }
 
         // Play card to specified slot
         public bool PlayCardToField(CardObject card, int slot, string originZone = null, bool payCost = true, bool ignoreAltCosts = false,
-            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true)
+            bool ignoreAdditionalCosts = false, int? fixedCost = null, bool triggerFanfare = true, bool isFromAbility = true)
         {
             if(card.IsCardType(SVEProperties.CardTypes.Spell))
                 return false;
@@ -484,7 +484,7 @@ namespace SVESimulator
                 playerController.AdditionalStats.CardsPlayedThisTurnFromExArea.Add(playedCardData);
 
             // Play card to field
-            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, executeConfirmationTiming: false, triggerFanfare: triggerFanfare);
+            sveEffectSolver.PlayCard(netIdentity, card.RuntimeCard, originZone, playPointCost, isFromAbility, executeConfirmationTiming: false, triggerFanfare: triggerFanfare);
             localZoneController.PlayCardToField(card, slot);
 
             // Network message
@@ -494,7 +494,8 @@ namespace SVESimulator
                 cardInstanceId = card.RuntimeCard.instanceId,
                 fieldSlotId = slot,
                 originZone = originZone,
-                playPointCost = playPointCost
+                playPointCost = playPointCost,
+                isFromAbility = isFromAbility
             };
             NetworkClient.Send(msg);
 
@@ -1156,13 +1157,6 @@ namespace SVESimulator
             NetworkClient.Send(msg);
         }
 
-        public void SetLeaderDefense(PlayerInfo targetPlayer, int amount)
-        {
-            int difference = amount - targetPlayer.namedStats[SVEProperties.PlayerStats.Defense].effectiveValue;
-            if(difference != 0)
-                AddLeaderDefense(targetPlayer, difference);
-        }
-
         public void ApplyModifierToCard(RuntimeCard card, int statId, int value, bool addingNewModifier, SVEProperties.StatModifierType modifierType, int duration = 0)
         {
             bool isLocalPlayersCard = card.ownerPlayer.netId.isLocalPlayer;
@@ -1317,10 +1311,30 @@ namespace SVESimulator
 
         #region Player Stats
 
-        public void AddLeaderDefense(PlayerInfo targetPlayer, int amount)
+        public void SetLeaderDefense(PlayerInfo targetPlayer, int amount)
         {
-            sveEffectSolver.AddLeaderDefense(targetPlayer, amount);
+            int difference = amount - targetPlayer.namedStats[SVEProperties.PlayerStats.Defense].effectiveValue;
+            if(difference != 0)
+                AddLeaderDefense(targetPlayer, difference, SVEProperties.StatModifierType.StatChange);
+        }
+
+        public void AddLeaderDefense(PlayerInfo targetPlayer, int amount, SVEProperties.StatModifierType modifierType)
+        {
+            sveEffectSolver.AddLeaderDefense(targetPlayer, amount, modifierType);
             LocalAddLeaderDefenseMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                targetPlayer = targetPlayer.netId,
+                amount = amount,
+                modifierType = modifierType
+            };
+            NetworkClient.Send(msg);
+        }
+
+        public void MinusNextLeaderDamage(PlayerInfo targetPlayer, int amount)
+        {
+            sveEffectSolver.MinusNextLeaderDamage(targetPlayer, amount);
+            LocalMinusNextLeaderDamageMessage msg = new()
             {
                 playerNetId = netIdentity,
                 targetPlayer = targetPlayer.netId,
@@ -1483,6 +1497,26 @@ namespace SVESimulator
             };
             NetworkClient.Send(msg);
             return output;
+        }
+
+        public void ShuffleCardList(ref List<CardObject> cardList)
+        {
+            int rngAdvances = 0;
+            int n = cardList.Count;
+            while(n > 1) // ref: SVEEffectSolver.ShuffleDeck
+            {
+                int k = sveEffectSolver.GetRandomNumber(0, n) % n;
+                n--;
+                (cardList[k], cardList[n])
+                    = (cardList[n], cardList[k]);
+                rngAdvances++;
+            }
+            LocalAdvanceRngMessage msg = new()
+            {
+                playerNetId = netIdentity,
+                rngAdvanceCount = rngAdvances
+            };
+            NetworkClient.Send(msg);
         }
 
         public void TellOpponentToPerformEffect(CardObject card, string effectName, int[] targetInstanceIds = null)

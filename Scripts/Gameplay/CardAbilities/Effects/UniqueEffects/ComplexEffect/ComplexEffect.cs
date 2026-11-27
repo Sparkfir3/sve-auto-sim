@@ -155,6 +155,7 @@ namespace SVESimulator
             CE_Object obj = token switch
             {
                 "revealTopDeck" =>              await RevealTopDeck(),
+                "revealTopDeckCount" =>         await RevealTopDeckCount(args),
                 "revealTopDeckUntilValue" =>    await RevealTopDeckUntilValue(args),
                 "mill" =>                       await MillDeck(args),
                 "millDeck" =>                   await MillDeck(args),
@@ -163,6 +164,7 @@ namespace SVESimulator
                 "getTargetPlayerCard" =>        await GetTargetCard(args, SVEProperties.SVEEffectTarget.TargetPlayerCard),
                 "getTargetOpponentCard" =>      await GetTargetCard(args, SVEProperties.SVEEffectTarget.TargetOpponentCard),
                 "getCardFromVar" =>             variables.GetValueOrDefault(args, null) as CE_Card,
+                "parseValue" =>                 new CE_Value(SVEFormulaParser.ParseValue(args, player, sourceInstanceId, sourceZone).ToString()),
                 _ => null
             };
             if(obj == null)

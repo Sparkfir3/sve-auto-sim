@@ -1,0 +1,176 @@
+[
+  {
+    "id": "BP19-110EN",
+    "name": "Cutthroat, Discord Convict",
+    "trait": "Condemned / Supreme",
+    "cardText": "[evolve] [cost04]: Evolve this.\n[fanfare] Look at the top 8 cards of your deck. Add one of them to your hand. Shuffle the rest and put them on the bottom of your deck.\n----------\n[Not Implemented] Your main deck and evolve deck may only contain 1 copy of any card without \"Cutthroat\" in its name. ",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 8 cards of your deck. Add one of them to your hand. Shuffle the rest and put them on the bottom of your deck."
+      }
+    ]
+  },
+  {
+    "id": "BP19-111EN",
+    "name": "Cutthroat, Discord Convict (Evolved)",
+    "trait": "Condemned / Supreme",
+    "cardText": "On Evolve - Select up to 2 enemy followers on the field and deal 4 damage divided between them.\nOn Super-Evolve - Select an enemy follower on the field. Deal 8 damage to it and its leader.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select up to 2 enemy followers on the field and deal 4 damage divided between them."
+      },
+      {
+        "key": "OnSuperEvolve",
+        "trigger": "On Super-Evolve - ",
+        "body": "Select an enemy follower on the field. Deal 8 damage to it and its leader."
+      },
+      {
+        "key": "Follower",
+        "body": "Select an enemy follower on the field. Deal 8 damage to it and its leader."
+      }
+    ]
+  },
+  {
+    "id": "BP19-112EN",
+    "name": "Eudie, Maiden Reborn",
+    "trait": "Supreme",
+    "cardText": "Ward.\n[fanfare] Draw a card. If you have 0 Super-Evolution Points, give this [attack]+2/[defense]+2 and your leader [defense]+2.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card. If you have 0 Super-Evolution Points, give this [attack]+2/[defense]+2 and your leader [defense]+2."
+      }
+    ]
+  },
+  {
+    "id": "BP19-113EN",
+    "name": "Zerael, Regent of Rebirth",
+    "trait": "Condemned / Deity",
+    "cardText": "[fanfare] Reveal the top 9 cards of your deck. Shuffle them and put them on the bottom of your deck. If you revealed 9 cards with different names this way, bury this, and you may summon a Zerael, Regent of Transmigration from your evolve deck.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Reveal the top 9 cards of your deck. Shuffle them and put them on the bottom of your deck. If you revealed 9 cards with different names this way, bury this, and you may summon a Zerael, Regent of Transmigration from your evolve deck."
+      },
+      {
+        "key": "Summon",
+        "body": "Reveal the top 9 cards of your deck. Shuffle them and put them on the bottom of your deck. If you revealed 9 cards with different names this way, bury this, and you may summon a Zerael, Regent of Transmigration from your evolve deck."
+      }
+    ]
+  },
+  {
+    "id": "BP19-114EN",
+    "name": "Zerael, Regent of Transmigration",
+    "trait": "Condemned / Deity",
+    "cardText": "Ward. Aura.\n[fanfare] Destroy each enemy follower on the field.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Destroy each enemy follower on the field."
+      }
+    ]
+  },
+  {
+    "id": "BP19-115EN",
+    "name": "Ironforged Right Hand",
+    "trait": "Condemned / Supreme",
+    "cardText": "[fanfare] Draw a card. If there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, recover 2 play points.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card. If there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, recover 2 play points."
+      }
+    ]
+  },
+  {
+    "id": "BP19-116EN",
+    "name": "Azvaldt",
+    "trait": "Condemned",
+    "cardText": "[fanfare] Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order.\n[act] [engage], bury this: If this is your 8th turn or later, draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Look at the top 4 cards of your deck. You may reveal a Condemned card from among them and add it to your hand. Put the rest on the bottom of your deck in any order."
+      },
+      {
+        "key": "Act",
+        "trigger": "[act]",
+        "cost": "[engage], bury this",
+        "body": "If this is your 8th turn or later, draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-117EN",
+    "name": "Smeltwork Bodyguard",
+    "trait": "Condemned / Supreme",
+    "cardText": "[evolve] [cost01]: Evolve this.\nWard.\n[fanfare] Draw a card.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Draw a card."
+      }
+    ]
+  },
+  {
+    "id": "BP19-118EN",
+    "name": "Smeltwork Bodyguard (Evolved)",
+    "trait": "Condemned / Supreme",
+    "cardText": "Ward.\nOn Evolve - Select an enemy follower on the field. If there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, deal the selected follower 4 damage and give your leader [defense]+4.",
+    "effectText": [
+      {
+        "key": "OnEvolve",
+        "trigger": "On Evolve - ",
+        "body": "Select an enemy follower on the field. If there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, deal the selected follower 4 damage and give your leader [defense]+4."
+      },
+      {
+        "key": "Damage",
+        "body": "Select an enemy follower on the field. If there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, deal the selected follower 4 damage and give your leader [defense]+4."
+      }
+    ]
+  },
+  {
+    "id": "BP19-119EN",
+    "name": "Warden of Recurrence",
+    "trait": "Condemned / Angel",
+    "cardText": "Ward.\n[fanfare] Choose 1. (1) Search your deck for a Zerael, Regent of Rebirth, summon it, then shuffle. (2) Recover 8 play points.",
+    "effectText": [
+      {
+        "key": "Fanfare",
+        "trigger": "[fanfare]",
+        "body": "Choose 1. (1) Search your deck for a Zerael, Regent of Rebirth, summon it, then shuffle. (2) Recover 8 play points."
+      },
+      {
+        "key": "Search",
+        "body": "Search your deck for a Zerael, Regent of Rebirth, summon it, then shuffle."
+      },
+      {
+        "key": "PlayPoints",
+        "body": "Recover 8 play points."
+      }
+    ]
+  },
+  {
+    "id": "BP19-120EN",
+    "name": "Blackrust Underling",
+    "trait": "Condemned / Supreme",
+    "cardText": "Storm.\nStrike - Select an enemy follower on the field and, if there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, deal the selected follower 4 damage.",
+    "effectText": [
+      {
+        "key": "Strike",
+        "trigger": "Strike - ",
+        "body": "Select an enemy follower on the field and, if there's a follower on your field or in your cemetery with \"Cutthroat\" in its name, deal the selected follower 4 damage."
+      }
+    ]
+  }
+]

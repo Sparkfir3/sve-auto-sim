@@ -25,6 +25,7 @@ namespace SVESimulator.SveScript
             { "FanfareHand", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromHandTrigger") },
             { "FanfareCemetery", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromCemeteryTrigger") },
             { "FanfareNotHand", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldFromNotHandTrigger") },
+            { "FanfareByAbility", new EffectTriggerInfo("SVESimulator.SveOnCardEnterFieldByAbilityTrigger") },
 
             { "LastWords", new EffectTriggerInfo("SVESimulator.SveLastWordsTrigger", TriggerParameterType.Filter) },
             { "OnReturnToHandFromField", new EffectTriggerInfo("SVESimulator.SveOnCardReturnToHandFromField") },

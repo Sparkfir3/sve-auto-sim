@@ -27,9 +27,9 @@ namespace SVESimulator
             if(target.IsLeader(out bool local, out bool opponent) && !target.IsFieldCard())
             {
                 if(local)
-                    player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), damageAmount);
+                    player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), damageAmount, SVEProperties.StatModifierType.AbilityDamage);
                 if(opponent)
-                    player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), damageAmount);
+                    player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), damageAmount, SVEProperties.StatModifierType.AbilityDamage);
                 onComplete?.Invoke();
                 return;
             }
@@ -50,9 +50,9 @@ namespace SVESimulator
 
                     // Leader
                     else if(card.CurrentZone.IsLocalPlayerZone)
-                        player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), damageAmount);
+                        player.LocalEvents.AddLeaderDefense(player.GetPlayerInfo(), damageAmount, SVEProperties.StatModifierType.AbilityDamage);
                     else
-                        player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), damageAmount);
+                        player.LocalEvents.AddLeaderDefense(player.GetOpponentInfo(), damageAmount, SVEProperties.StatModifierType.AbilityDamage);
                 }
                 onComplete?.Invoke();
             });
