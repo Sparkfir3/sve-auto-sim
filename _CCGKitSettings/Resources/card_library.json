@@ -72628,7 +72628,7 @@
             "name": "OnEvolve",
             "type": "Triggered",
             "effect": {
-              "filter": "TargetOpponentCard Fm(0,2)",
+              "filter": "Fm(0,2)",
               "amount": "4",
               "$type": "SVESimulator.DealDamageDividedEffect"
             },
@@ -72773,9 +72773,53 @@
             "name": "Fanfare",
             "type": "Triggered",
             "effect": {
+              "effectName1": "Draw",
+              "effectName2": "AtkDef",
+              "effectName3": "LeaderDef",
+              "$type": "SVESimulator.EffectSequence"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "Draw",
+            "type": "Triggered",
+            "effect": {
               "target": "Self",
               "amount": "1",
               "$type": "SVESimulator.DrawCardEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "#(superEvolvePoints)=0",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "AtkDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Self",
+              "targetStats": "AttackDefense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
+            },
+            "$type": "CCGKit.TriggeredAbility"
+          },
+          {
+            "trigger": {
+              "condition": "#(superEvolvePoints)=0",
+              "$type": "SVESimulator.SpellAbility"
+            },
+            "name": "LeaderDef",
+            "type": "Triggered",
+            "effect": {
+              "target": "Leader",
+              "targetStats": "Defense",
+              "amount": "2",
+              "$type": "SVESimulator.GiveStatBoostEffect"
             },
             "$type": "CCGKit.TriggeredAbility"
           }
@@ -73191,7 +73235,7 @@
             "effect": {
               "amount": "4",
               "checkAction1": "Hand",
-              "checkFilter1": "Ft(Condemned)",
+              "checkFilter1": "t(Condemned)",
               "checkAmount1": "m(0,1)",
               "checkAction2": "BottomDeckAnyOrder",
               "checkAction3": "None",

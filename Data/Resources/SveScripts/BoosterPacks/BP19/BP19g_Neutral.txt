@@ -31,7 +31,7 @@ text "On Evolve - Select up to 2 enemy followers on the field and deal 4 damage 
       On Super-Evolve - Select an enemy follower on the field. Deal 8 damage to it and its leader.";
 
 ability OnEvolve {
-    effect DealDamageDivided(4) to TargetOpponentCard Fm(0,2);
+    effect DealDamageDivided(4) to Fm(0,2);
 }
 ability OnSuperEvolve {
     effect Sequence(Follower, Leader);
@@ -158,7 +158,7 @@ text "[fanfare] Look at the top 4 cards of your deck. You may reveal a Condemned
       [act] [engage], bury this: If this is your 8th turn or later, draw a card.";
 
 ability Fanfare {
-    effect CheckTop(4, (Hand, Ft(Condemned), m(0,1)), (BottomDeckAnyOrder));
+    effect CheckTop(4, (Hand, t(Condemned), m(0,1)), (BottomDeckAnyOrder));
 }
 ability Act {
     cost (EngageSelf), (SendToCemetery, Self);
