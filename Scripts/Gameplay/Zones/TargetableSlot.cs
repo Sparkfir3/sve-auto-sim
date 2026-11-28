@@ -16,6 +16,8 @@ namespace SVESimulator
         public InteractionType CurrentInteractionType { get; set; }
         [SerializeField]
         public GameObject background;
+        [field: SerializeField]
+        public CardSlotStatsDisplay StatDisplay { get; private set; }
 
         [ShowInInspector, ReadOnly]
         public CardObject Card => (ParentZone is CardPositionedZone zone) ? zone.GetCard(SlotNumber) : null;

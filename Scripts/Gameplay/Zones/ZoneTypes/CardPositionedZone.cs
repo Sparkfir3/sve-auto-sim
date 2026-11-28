@@ -19,10 +19,22 @@ namespace SVESimulator
             [ReadOnly, LabelWidth(100)]
             public TargetableSlot target;
             [ReadOnly, LabelWidth(100)]
-            public CardObject card;
+            public CardObject card { get; private set; }
 
             public Vector3 position => transform.position;
             public Vector3 localPosition => transform.localPosition;
+
+            public void SetCard(CardObject card)
+            {
+                if(target.StatDisplay)
+                {
+                    if(card)
+                        target.StatDisplay.SetCard(card.RuntimeCard);
+                    else if(this.card)
+                        target.StatDisplay.Reset();
+                }
+                this.card = card;
+            }
         }
 
         // ---
@@ -90,7 +102,7 @@ namespace SVESimulator
             IEnumerable<CardSlot> oldSlots = cardSlots.Where(kvPair => kvPair.Value.card == card).Select(x => x.Value);
             foreach(CardSlot oldSlot in oldSlots)
             {
-                oldSlot.card = null;
+                oldSlot.SetCard(null);
                 oldSlot.target.CurrentInteractionType = endInteractionType;
             }
         }
@@ -113,9 +125,9 @@ namespace SVESimulator
             IEnumerable<CardSlot> oldSlots = cardSlots.Where(kvPair => kvPair.Value.card == card).Select(x => x.Value);
             foreach(CardSlot oldSlot in oldSlots)
             {
-                oldSlot.card = null;
+                oldSlot.SetCard(null);
             }
-            cardSlots[slot].card = card;
+            cardSlots[slot].SetCard(card);
             cardSlots[slot].target.CurrentInteractionType = newInteractionType;
         }
 
@@ -128,8 +140,8 @@ namespace SVESimulator
             int slotB = GetSlotNumber(cardB);
             if(slotA == slotB)
                 return false;
-            cardSlots[slotA].card = cardB;
-            cardSlots[slotB].card = cardA;
+            cardSlots[slotA].SetCard(cardB);
+            cardSlots[slotB].SetCard(cardA);
             return true;
         }
 
