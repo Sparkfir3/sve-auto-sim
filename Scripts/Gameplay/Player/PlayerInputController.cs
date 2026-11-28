@@ -394,7 +394,7 @@ namespace SVESimulator
                 return false;
 
             bool isOnField = card.CurrentZone.Runtime.zoneId == SVEProperties.ZoneIds.Field;
-            if(card.HasEvolveCost() || activatedAbilities.Count > 0 || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack) || card.CanServe())
+            if(activatedAbilities.Count > 0 || (isOnField && (card.HasEvolveCost() || card.RuntimeCard.HasCounter(SVEProperties.Counters.Stack) || card.CanServe())))
             {
                 GameUIManager.ActivateEffect.Open(Player, card, activatedAbilities, checkEvolveServe: isOnField, checkStack: isOnField, onlyQuicks: onlyQuicks);
                 return true;
